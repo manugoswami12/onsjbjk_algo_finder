@@ -179,18 +179,22 @@ class FactSet:
                     for a in self.facts[pred]]
             self.facts['call_at'] = [(a[0], SELF, a[2]) if a[0] in own and a[1] == b else a
                                      for a in self.facts['call_at']]
+            # every self-call updates its parameters (also non-tail calls such as n * f(n - 1),
+            # which equational lowerers do not model as one step)
+            ps = params.get(f, [])
+            updated = {(a[0], a[1]) for a in self.facts['assign']}
+            for s, _, args in [a for a in self.facts['call_at'] if a[0] in own and a[1] == SELF]:
+                for k, arg in enumerate(args[:len(ps)]):
+                    if arg != var(ps[k]) and (s, var(ps[k])) not in updated:
+                        self.facts['assign'].append((s, var(ps[k]), arg))
+                        updated.add((s, var(ps[k])))
             if f in rec:
-                continue  # equational lowerers already modelled the recursion
+                continue  # equational lowerers already modelled the recursion loop
             loop_id = self.new_id('s')
             self.facts['stmt'].append((loop_id, f, 'loop', line))
             self.facts['loop'].append((loop_id, f, 'recursion'))
             for s in sorted(own):
                 self.facts['in_loop'].append((s, loop_id))
-            ps = params.get(f, [])
-            for s, _, args in [a for a in self.facts['call_at'] if a[0] in own and a[1] == SELF]:
-                for k, arg in enumerate(args[:len(ps)]):
-                    if arg != var(ps[k]):
-                        self.facts['assign'].append((s, var(ps[k]), arg))
             # base cases end the recursion: guards of non-recursive returns give loop_cond
             for s, value in [a for a in self.facts['ret'] if a[0] in own]:
                 if has_call(value, SELF):

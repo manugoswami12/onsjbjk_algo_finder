@@ -441,7 +441,15 @@ class Lowerer:
             if self.lang == 'r':
                 inner = self.args(idx)
                 return elem(self.expr(self.role(node, roles, 'seq')), inner[0] if inner else other('none'))
-            return elem(self.expr(self.role(node, roles, 'seq')), self.expr(idx))
+            seq = self.expr(self.role(node, roles, 'seq'))
+            if idx is not None and idx.type in ('slice', 'range_expression'):
+                # a[k:] / a[k..]: the list without its first k elements (Haskell x:xs, Lisp rest)
+                parts = [c for c in idx.children]
+                if len(parts) == 2 and parts[0].is_named and not parts[1].is_named:
+                    k = self.expr(parts[0])
+                    if k[0] == 'int':
+                        return ('tail', seq, k[1])
+            return elem(seq, self.expr(idx))
         if kind in ('binary', 'compare'):
             spelled = text(self.role(node, roles, 'op'))
             name = OPERATORS.get(spelled, spelled)

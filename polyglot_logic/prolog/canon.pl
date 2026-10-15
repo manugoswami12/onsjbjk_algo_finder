@@ -103,10 +103,10 @@ lvar(L, var(N)) :- loop_var(L, N).
 
 % ----- values: copy propagation of single-definition temporaries --------------
 value(S, T, V) :- assign(S, T, V0), live(S), stmt_func(S, F), resolve(F, S, V0, V1),
-    canon_expr(V1, V2), elem_iter(S, V2, V).
+    deep_norm(V1, V2), elem_iter(S, V2, V).
 value(S, var(X), V) :-                           % a, b = b, a % b  (non-element targets)
     par_assign(S, Ts, Vs), live(S), nth0(K, Ts, var(X)), nth0(K, Vs, V0),
-    canon_expr(V0, V1), elem_iter(S, V1, V).
+    deep_norm(V0, V1), elem_iter(S, V1, V).
 
 % ----- G4: for x in s  ->  x is elem(s, x) inside that loop ---------------------
 elem_iter(S, T0, T) :-

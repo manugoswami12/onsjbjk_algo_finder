@@ -176,7 +176,7 @@ class Lowerer:
                         env[text(item)] = elem(var(pname), at(i))
                 tail = parts[-1]
                 if tail.type == 'variable':
-                    env[text(tail)] = ('tail', pname, len(parts) - 1)
+                    env[text(tail)] = ('tail', var(pname), len(parts) - 1)
                 uses_cursor, list_param = True, pname
             elif p.type == 'list' and not kids(p):
                 guards.append(op('eq', call('len', [var(pname)]), num(0)))
@@ -223,7 +223,7 @@ class Lowerer:
             stmts.append(s)
         else:
             s = self.facts.new_stmt(ctx, 'ret', line(node))
-            self.facts.add('ret', s, e if e[0] != 'tail' else var(e[1]))
+            self.facts.add('ret', s, e if e[0] != 'tail' else e[1])
             self.calls(e, s)
             stmts.append(s)
             if base_guard is not None and self.loop_id and base_guard[0] == 'op' \
@@ -345,6 +345,11 @@ class Lowerer:
             if fn.type == 'right_section':        # (>= x) e  ==  e >= x
                 return op(name, args[0], other_side)
             return op(name, other_side, args[0])  # (x <) e   ==  x < e
+        bare = text(fn).strip()
+        if bare.startswith('(') and bare.endswith(')') and len(args) == 2:   # (*) a b == a * b
+            o = bare[1:-1].strip().strip('`')
+            if o in OPERATORS:
+                return op(OPERATORS[o], args[0], args[1])
         return call(SYNONYMS.get(text(fn), text(fn)), args)
 
     def binary(self, tree, env):

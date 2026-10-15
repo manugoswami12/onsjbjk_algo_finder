@@ -195,7 +195,7 @@ head_arg([H|T], P, E0, E, C, C, list(P)) :- !,
     list_elems([H|T], 0, P, E0, E).
 head_arg(_, _, E, E, C, C, none).
 
-list_elems(v(T), K, P, E, [T-tail(P, K)|E]) :- !.
+list_elems(v(T), K, P, E, [T-tail(var(P), K)|E]) :- !.
 list_elems([], _, _, E, E) :- !.
 list_elems([v(X)|R], K, P, E0, E) :- !,
     at(K, Pos), K1 is K + 1,
