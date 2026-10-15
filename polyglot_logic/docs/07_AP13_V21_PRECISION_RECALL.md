@@ -106,9 +106,97 @@ A row is critical when the logic interfaces with another program or is the base 
 | R28 | `generalize` and `learn-dir` were slow (120 s timeouts; 16 min) | sequential and unbounded | per-reference inference budget; `learn-dir` traces files in parallel with one SQLite writer (64 s for 1,608 files) |
 
 ## 5. Measured results
-(filled in from the runs below; commands in section 7)
+**Setup:**
+- Frozen held-out set: 39 Rosetta Code tasks and 789 files in 8 languages, of which 718 are positives and 71 are negatives (Ackermann, Leap year, Dot product, Matrix multiplication).
+- References are learned from all 1,608 files of TheAlgorithms/Python at commit `e1a2a8b0`.
+- *Precision* = top-1 correct / files answered with a traced identification.
+- *Recall* = correct / positive files.
+- `LIBRARY` and `CONTAINS` answers are reported separately and never count as traced identifications.
+
+| Run (same held-out set) | Precision | Recall traced | Recall traced + library | Wrong on negatives | Errors |
+|---|---|---|---|---|---|
+| v2.1 start (before this work) | 29/50 = 58.0% | 4.0% | — | 0 | 16 |
+| r5: sound copy propagation, prefilter, R, folds, tail | 35/58 = 60.3% | 4.9% | 6.4% | 0 | 13 |
+| r6: + counter gate, operators | 35/48 = 72.9% | 4.9% | 6.4% | 0 | 13 |
+| r6 + validate (one-way subsumption) | 35/44 = 79.5% | 4.9% | 6.4% | 0 | 13 |
+| r7: + cover (CONTAINS), commutativity | 35/43 = 81.4% | 4.9% | 6.4% | 0 | 13 |
+| r7 + validate | 35/40 = 87.5% | 4.9% | 6.4% | 0 | 13 |
+| r7 + generalize + validate (before the R25 no-negative rule) | 32/47 = 68.1% | 4.5% | 6.0% | 0 | 13 |
+| r8: r7 + generalize + validate with the R25 rule | 35/40 = 87.5% | 4.9% | 6.4% | 0 | 13 |
+| **r9 (final): + seeds, Prolog reader recovery** | **35/39 = 89.7%** | 4.9% | 6.4% | 0 | **0** |
+| **r9 + validate** | **35/36 = 97.2%** | **4.9%** | **6.4%** | **0** | **0** |
+| **r9 + generalize + validate** | **35/36 = 97.2%** | 4.9% | 6.4% | 0 | 0 |
+
+**Final run (r9 + validate) by language:**
+
+| Language | Files | Traced correct | Library correct | Wrong |
+|---|---|---|---|---|
+| C | 76 | 7 | 0 | 0 |
+| Python | 176 | 10 | 3 | 1 |
+| Java | 93 | 5 | 1 | 0 |
+| Common Lisp | 85 | 4 | 1 | 0 |
+| Haskell | 157 | 4 | 1 | 0 |
+| Rust | 63 | 2 | 2 | 0 |
+| R | 55 | 2 | 2 | 0 |
+| Prolog | 84 | 1 | 1 | 0 |
+
+**By task:** only tasks with an answer are shown; all other tasks are UNKNOWN.
+
+| Task | Files | Traced correct | Library correct | CONTAINS |
+|---|---|---|---|---|
+| Factorial | 45 | 15 | 2 | 0 |
+| Greatest common divisor | 29 | 7 | 0 | 0 |
+| Bubble sort | 14 | 6 | 0 | 0 |
+| Fibonacci sequence | 86 | 4 | 0 | 0 |
+| Binary search | 22 | 3 | 2 | 0 |
+| Palindrome detection | 31 | 0 | 7 | 0 |
+| Cocktail sort | 12 | 0 | 0 | 3 (bubble sort) |
+
+**The one remaining wrong answer** is `Least-common-multiple/Python/…-2.py`. Its top identification is its own separate `gcd` function, which really is a GCD. The file-level scoring counts it as wrong, and it stays counted.
+
+**Run times, 4 workers, Linux container:**
+
+| Step | Time |
+|---|---|
+| `learn-dir` (1,608 files) | 58 s |
+| `validate` | 11 min |
+| `generalize` | 18 s |
+| held-out evaluation | 10 min |
+
+**Windows:** GitHub Actions `windows-latest` passes: the unit tests and the `RUN_AP13*.cmd` smoke test.
+
+**What generalisation adds:**
+- It produced 186 cores. After the no-negative rule, the validated catalog gives the same held-out numbers as validation alone.
+- On this held-out set it neither helps nor harms. The cores that survive cover variant pairs that the original references already matched.
 
 ## 6. What was not reached, and why
+| Target | Reached? | Measured |
+|---|---|---|
+| Corpus self-validation | yes | `validate`, one-way subsumption, 20 generic references removed |
+| Variant generalisation (LGG over constants) | yes, built and sound | `generalize`, no-negative rule; no measured gain on this set |
+| Precision ≥ ~90% on held-out | **yes** | 97.2% (35/36); 0 wrong on 71 negatives |
+| Common library and idiom forms | partly | folds (`reduce`, `sum`, `prod`, `product`, `foldl (*)`) are traced; direct library calls are reported as LIBRARY (11 correct) |
+| Recall ≥ ~40% | **no** | 6.4% (46/718) |
+| Runs on Windows | yes | CI `windows-latest` green |
+
+**Why recall stays low.** This is measured, not guessed: the misses were read file by file for Fibonacci, Factorial, Bubble sort, Insertion sort, Quicksort and GCD.
+
+1. **Different algorithms for one task.** Rosetta pages collect deliberately different solutions:
+   - Fibonacci by Binet's formula, a binomial expansion, matrix doubling, or memoised closures;
+   - a sieve by sets, generators or wheels.
+
+   Exact logic matching must not equate them. Each needs its own learned reference, and TheAlgorithms has only some of them.
+2. **Narrow frozen ground truth.** Sieve of Eratosthenes, for example, accepts only `maths/sieve_of_eratosthenes.py`, although the corpus has other true sieves, such as `maths/prime_sieve_eratosthenes.py`. The truth was frozen before the first run and is not widened afterwards, so these numbers are pessimistic.
+3. **Fragments and usage files.** Some positive files hold only a call or an import (R14). They count as misses.
+4. **Idioms still without a canonical form.** Haskell `(x:xs)` used as a pivot rather than as a traversal (`elem(xs, $cursor)` vs `xs[0]`), `scanl`/`zipWith` streams, Lisp `do`/`loop` variants, comparator-parameterised sorts (R15), and two-index insertion sort vs single-index insertion sort.
+
+**The honest conclusion.** The tracer is now precise: when it names an algorithm in another language it is right about 97% of the time, and it never names one for a negative. It is **not** general enough to find most implementations written by other people.
+
+Raising recall without losing precision needs:
+- more canonical forms (item 4), each measured like R1–R28;
+- references for the missing algorithm variants (item 1), from more corpora: TheAlgorithms in other languages, which give same-algorithm pairs across languages.
+
+Loosening the matcher is not an option. It would bring back the "everything is bubble sort" failure that the user ruled out.
 
 ## 7. How to reproduce
 ```
