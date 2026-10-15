@@ -113,9 +113,54 @@ class FactSet:
         self.add('loop', loop_id, ctx.func, kind)
         return loop_id
 
+    def expand_folds(self):
+        """doc 07: a library fold is the accumulator loop it stands for (as the Haskell
+        lowerer does for foldl): r = reduce(mul, xs, 1) / prod(xs) / sum(xs)  ->
+        acc = z; for e in xs: acc = acc (op) e; r = acc. Only named operators are
+        expanded; any other folding function stays an opaque call."""
+        from lang_tables import CALL_FOLDS, OPERATOR_FUNCTIONS
+        stmt = {a[0]: a for a in self.facts['stmt']}
+
+        def fold_of(t):
+            if not (isinstance(t, tuple) and t and t[0] == 'call' and t[1] in CALL_FOLDS):
+                return None
+            fixed, args = CALL_FOLDS[t[1]], t[2]
+            if fixed:
+                return (fixed[0], args[0], num(fixed[1])) if len(args) == 1 else None
+            if len(args) in (2, 3) and args[0][0] == 'var' and args[0][1].split('.')[-1] in OPERATOR_FUNCTIONS:
+                z = args[2] if len(args) == 3 else None
+                return OPERATOR_FUNCTIONS[args[0][1].split('.')[-1]], args[1], z
+            return None
+
+        def expand(s, t):
+            if isinstance(t, list):
+                return [expand(s, x) for x in t]
+            if not isinstance(t, tuple):
+                return t
+            f = fold_of(t)
+            if f is None:
+                return tuple(expand(s, x) for x in t)
+            name, seq, z = f
+            _, func, _, ln = stmt[s]
+            loops = tuple(l for x, l in self.facts['in_loop'] if x == s)
+            ctx = Ctx(func, loops, tuple((c, p) for x, c, p in self.facts['guard'] if x == s))
+            acc, el = var(f'$acc{s}'), var(f'$e{s}')
+            if z is not None:
+                self.add('assign', self.new_stmt(ctx, 'assign', ln), acc, z)
+            loop_id = self.new_loop(ctx, 'count', ln)
+            self.add('loop_var', loop_id, el[1])
+            self.add('loop_iter', loop_id, expand(s, seq))
+            self.add('assign', self.new_stmt(ctx.loop(loop_id), 'assign', ln), acc, op(name, acc, el))
+            return acc
+
+        for pred in ('ret', 'assign'):
+            self.facts[pred] = [(a[0],) + tuple(expand(a[0], x) for x in a[1:]) if a[0] in stmt else a
+                                for a in list(self.facts[pred])]
+
     def finish(self):
         """Shared post-pass (doc 05 G2): a self-calling function is a recursion loop;
         self-calls are named $self; recursive arguments become parameter updates."""
+        self.expand_folds()
         stmt_func = {a[0]: a[1] for a in self.facts['stmt']}
         params = {}
         for f, k, name in sorted(self.facts['param'], key=lambda a: (a[0], a[1])):

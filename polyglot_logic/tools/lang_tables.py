@@ -201,6 +201,11 @@ EXIT_STATEMENTS = {
 }
 # Higher-order folds: f(acc, element) over a sequence with an initial value (G5).
 FOLDS = {'foldl', "foldl'", 'foldr', 'reduce', 'Reduce', 'foldl1', 'fold'}
+# Library folds written as calls in any language (fact_io.FactSet.expand_folds):
+#   reduce(f, xs[, z]) with f a named operator, and the fixed folds sum / prod / product.
+CALL_FOLDS = {'reduce': None, 'Reduce': None, 'sum': ('add', 0), 'prod': ('mul', 1), 'product': ('mul', 1)}
+OPERATOR_FUNCTIONS = {'mul': 'mul', 'add': 'add', 'sub': 'sub', '*': 'mul', '+': 'add', '-': 'sub',
+                      'times': 'mul', 'plus': 'add', '__mul__': 'mul', '__add__': 'add'}
 
 # ----- library / idiom identification (doc 07, part 3) ------------------------------
 # A standard-library call is reported as "LIBRARY: <algorithm>", never as a traced match.

@@ -110,8 +110,10 @@ value(S, var(X), V) :-                           % a, b = b, a % b  (non-element
 
 % ----- G4: for x in s  ->  x is elem(s, x) inside that loop ---------------------
 elem_iter(S, T0, T) :-
-    findall(X-Q, (loop_iter(L, Q), loop_var(L, X), under(S, L)), Ps),
+    findall(X-Q, (loop_iter(L, Q), loop_var(L, X), under(S, L), \+ counting_range(Q)), Ps),
     foldl(elemize, Ps, T0, T).
+% an element of range(a, b) / seq_len(n) / [a..b] IS the counter: such a loop is a counting loop
+counting_range(call(R, _)) :- memberchk(R, [range, xrange, seq_len, seq, seq_along]).
 elemize(X-Q, T0, T) :- T0 == var(X), !, T = elem(Q, var(X)).
 elemize(_, T, T) :- atomic(T), !.
 elemize(P, T0, T) :- T0 =.. [F|As], maplist(elemize(P), As, Bs), T =.. [F|Bs].

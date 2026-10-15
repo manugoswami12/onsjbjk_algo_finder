@@ -195,6 +195,8 @@ def fact_features(facts: str) -> frozenset:
         f |= {'op:' + o for o in COMPARE}
     if 'op:shr' in f:                                  # (lo + hi) >>> 1 -> div
         f.add('op:div')
+    if f & {'op:add', 'op:sub'}:                       # index shift: swap(i-1, i) == swap(j, j+1)
+        f |= {'op:add', 'op:sub'}
     return frozenset(f)
 
 

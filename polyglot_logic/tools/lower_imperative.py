@@ -410,6 +410,8 @@ class Lowerer:
             return []
         out = []
         for a in named(node):
+            if a.type == 'comma':     # R grammar names its separators
+                continue
             if a.type == 'argument':  # R
                 a = a.child_by_field_name('value') or (named(a)[0] if named(a) else a)
             if a.type in ('keyword_argument',):
