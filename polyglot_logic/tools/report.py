@@ -64,8 +64,10 @@ def show_scan(path, lang, result, references):
         tag = 'IDENTIFIED' if i == 0 else 'ALSO CONSISTENT'
         print(f"LEAF MATCH: {m['label']} [{m['branch']}] functions={m['functions']} "
               f"names={m['bindings']} relations={m['relations']} ({tag})")
-    for p in partial:
+    for p in partial[:3]:
         print(f"LEAF PARTIAL: {p['label']} [{p['branch']}] relations {p['present']}; missing: {p['missing']}")
+    for algo in result.get('library', []):
+        print(f'LIBRARY: {algo} (a standard-library call or idiom; no algorithm body to trace)')
     if not matches:
         print('LEAF: UNKNOWN (no learned reference matched completely)')
     print(NOTICE)
@@ -76,3 +78,20 @@ def show_status(rows):
         print('AP13_STATUS: no learned references')
     for r in rows:
         print('AP13_STATUS: ' + ' '.join(f'{k}={v}' for k, v in r.items()))
+
+
+def library_calls(facts: str) -> list[str]:
+    """Algorithms used through a standard-library call or idiom (doc 07): 'gcd', 'sort', ...
+    A call to a function defined in the same source is never a library call."""
+    import re
+    from lang_tables import LIBRARY, PRODUCT_CALLS, RANGE_CALLS
+    defined = {n.split('.')[-1].split('/')[0] for n in re.findall(r"func\('?[^,]+'?,'?([^',]+)'?,", facts)}
+    called = set(re.findall(r"call_at\('?[^,]+'?,'?([^',\[]+)'?,", facts))
+    found = sorted(algo for algo, names in LIBRARY.items() if (names & called) - defined)
+    # product/prod over a range from 1 (or 2) to n: the factorial idiom
+    prod = '|'.join(PRODUCT_CALLS)
+    rng = '|'.join(RANGE_CALLS)
+    if re.search(rf"'?call'?\('?({prod})'?,\['?call'?\('?({rng})'?,\['?int'?\([12]\)", facts) \
+            or re.search(rf"'?call'?\('?({prod})'?,\['?op'?\('?:'?,\['?int'?\([12]\)", facts):
+        found = sorted(set(found) | {'factorial'})
+    return found

@@ -19,7 +19,7 @@ lower_main :-
            )).
 
 read_clauses(File, Clauses) :-
-    setup_call_cleanup(open(File, read, S),
+    setup_call_cleanup(open(File, read, S, [encoding(utf8)]),
                        read_all(S, Clauses),
                        close(S)).
 

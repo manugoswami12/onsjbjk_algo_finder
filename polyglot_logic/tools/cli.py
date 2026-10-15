@@ -61,13 +61,22 @@ def run_prolog(goal: str, facts: str, args: list[str]) -> list[str]:
     with tempfile.TemporaryDirectory(prefix='ap13_') as td:
         f = Path(td) / 'facts.pl'
         f.write_text(facts, encoding='utf-8')
+        if goal in ('scan_main', 'gen_main'):
+            # reference paths go through a list file: Windows caps a command line at ~32 KB
+            lst = Path(td) / 'refs.txt'
+            lst.write_text('\n'.join(args) + '\n', encoding='utf-8')
+            args = ['@' + str(lst)]
         return swipl(goal, [AP12_ROUTER, PROLOG_DIR / 'main.pl'], [str(f), *args])
 
 
 def scan(path: Path, store: Path, include_unreviewed: bool, quiet=False):
     lang, facts = facts_text(path)
     refs = store_mod.reference_files(store, include_unreviewed)
+    have = store_mod.fact_features(facts)
+    # sound prefilter: a reference needing an operator/call absent from the facts cannot match
+    refs = [r for r in refs if store_mod.ref_features(r) <= have]
     result = report.parse_scan(run_prolog('scan_main', facts, [str(r) for r in refs]))
+    result['library'] = report.library_calls(facts)
     if not quiet:
         report.show_scan(path, lang, result, len(refs))
     return result
@@ -113,6 +122,112 @@ def learn_file(path: Path, store: Path, prefix: str, relative: str, counts: dict
         key = outcome if outcome == 'already_present' else head[4]  # usable / trivial
         counts[key] = counts.get(key, 0) + 1
         i = j + 1
+
+
+STOP_TOKENS = {'recursive', 'iterative', 'simple', 'fast', 'naive', 'basic', 'optimized', 'with',
+               'using', 'of', 'the', 'and', 'in', 'by', 'algorithm', 'algorithms', 'implementation',
+               'sol1', 'sol2', 'sol3', 'sol4', 'main', 'test', 'tests', 'helper', 'py'}
+
+
+def family_tokens(source_path: str) -> set:
+    stem = source_path.rsplit('/', 1)[-1].rsplit('.', 1)[0]
+    return {t for t in stem.lower().split('_') if t and t not in STOP_TOKENS and not t.isdigit()}
+
+
+def generalize(corpus: Path, store: Path, workers: int = 4):
+    """doc 07: for variants A (file X) and B (file Y) of one family, store the core of A
+    that also holds in B, as a reference covering both."""
+    from concurrent.futures import ThreadPoolExecutor
+    meta = store_mod.metadata(store)
+    usable = {l: m for l, m in meta.items() if m['quality'] == 'usable' and m['origin'] == 'dir'}
+    by_file = {}
+    for label, m in usable.items():
+        by_file.setdefault(m['source_path'], []).append(label)
+    files = sorted(by_file)
+    toks = {f: family_tokens(f) for f in files}
+    jobs = []
+    for y in files:
+        refs = [store / meta[l]['clause_path'] for x in files if x != y and len(toks[x] & toks[y]) >= 2
+                for l in by_file[x]]
+        if refs:
+            jobs.append((y, refs))
+
+    def run_job(job):
+        y, refs = job
+        try:
+            _, facts = facts_text(corpus / y)
+            return y, run_prolog('gen_main', facts, [str(r) for r in refs]), None
+        except (ToolError, ValueError, OSError) as exc:
+            return y, [], str(exc)
+    counts = {'variant_pairs_files': len(jobs)}
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        for y, lines, err in pool.map(run_job, jobs):
+            if err:
+                counts['error'] = counts.get('error', 0) + 1
+                print(f'AP13_GEN_ERROR: {y}: {err[:150]}')
+                continue
+            i = 0
+            while i < len(lines):
+                head = lines[i].split('|')
+                if head[0] != 'GEN':
+                    raise ToolError('unexpected generalize output: ' + lines[i][:200])
+                j = lines.index('END', i)
+                a = head[1]
+                label = f"gen__{a}__{hashlib_short(y)}"
+                clause = '\n'.join(lines[i + 1:j]).replace('reference(gen,', f'reference({label},', 1) + '\n'
+                row = dict(label=label, language='python', source_path=meta[a]['source_path'],
+                           function_name=meta[a]['function_name'], branch=head[2], relations=int(head[3]),
+                           origin='generalized', ap11_label=a, category=meta[a]['category'],
+                           quality='usable', also_source=y)
+                outcome = store_mod.save(store, row, clause)
+                counts[outcome] = counts.get(outcome, 0) + 1
+                i = j + 1
+    print('AP13_GENERALIZE: ' + ' '.join(f'{k}={v}' for k, v in sorted(counts.items())))
+    return counts
+
+
+def hashlib_short(text: str) -> str:
+    import hashlib
+    return hashlib.sha256(text.encode()).hexdigest()[:8]
+
+
+def validate(corpus: Path, store: Path, workers: int = 4, min_files: int = 3, min_categories: int = 2):
+    """doc 07: a reference that matches functions of >= min_files OTHER corpus files spread over
+    >= min_categories OTHER categories is not discriminative: quality 'generic', never matched."""
+    from concurrent.futures import ThreadPoolExecutor
+    meta = store_mod.metadata(store)
+    files = sorted({m['source_path'] for m in meta.values()} | {m['also_source'] for m in meta.values()
+                                                                 if m['also_source']})
+    files = [f for f in files if (corpus / f).is_file()]
+
+    def run_one(f):
+        try:
+            return f, scan(corpus / f, store, True, quiet=True), None
+        except (ToolError, ValueError, OSError) as exc:
+            return f, None, str(exc)
+    hits = {}
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        for n, (f, r, err) in enumerate(pool.map(run_one, files), 1):
+            if r:
+                for x in r['leaves']:
+                    if x['result'] == 'MATCH':
+                        hits.setdefault(x['label'], set()).add(f)
+            if n % 200 == 0:
+                print(f'AP13_VALIDATE: {n}/{len(files)}', flush=True)
+    updates, counts = {}, {}
+    for label, m in meta.items():
+        if m['quality'] not in ('usable', 'generic'):
+            continue
+        own = {m['source_path'], m['also_source']}
+        others = sorted(hits.get(label, set()) - own)
+        own_cat = {p.split('/')[0] for p in own if p}
+        cats = {p.split('/')[0] for p in others} - own_cat
+        q = 'generic' if len(others) >= min_files and len(cats) >= min_categories else 'usable'
+        updates[label] = (q, ';'.join(others[:20]))
+        counts[q] = counts.get(q, 0) + 1
+    store_mod.set_quality(store, updates)
+    print('AP13_VALIDATE: ' + ' '.join(f'{k}={v}' for k, v in sorted(counts.items())))
+    return counts
 
 
 def learn_dir(root: Path, store: Path, limit: int):
@@ -177,6 +292,10 @@ def main(argv=None) -> int:
     s.add_argument('--limit', type=int, default=5000)
     s = sub.add_parser('learn-dir', help='learn every function of every source under DIR')
     s.add_argument('directory', type=Path); s.add_argument('--limit', type=int, default=100000)
+    s = sub.add_parser('generalize', help='merge variants of one algorithm family (doc 07)')
+    s.add_argument('corpus', type=Path)
+    s = sub.add_parser('validate', help='mark references that match unrelated corpus code (doc 07)')
+    s.add_argument('corpus', type=Path)
     s = sub.add_parser('approve'); s.add_argument('label')
     s.add_argument('action', choices=['approved', 'rejected', 'unreviewed'])
     sub.add_parser('status')
@@ -199,6 +318,10 @@ def main(argv=None) -> int:
         elif a.cmd == 'learn-dir':
             counts = learn_dir(a.directory, a.store, a.limit)
             return 2 if counts.get('error') else 0
+        elif a.cmd == 'generalize':
+            return 2 if generalize(a.corpus, a.store).get('error') else 0
+        elif a.cmd == 'validate':
+            validate(a.corpus, a.store)
         elif a.cmd == 'approve':
             store_mod.approve(a.store, a.label, a.action)
             print(f'AP13_REVIEW: {a.label} {a.action}')

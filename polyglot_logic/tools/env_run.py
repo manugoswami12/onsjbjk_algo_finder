@@ -26,8 +26,9 @@ def need(program: str) -> str:
 def run(argv: list[str], timeout: int = 60, cwd: Path | None = None) -> subprocess.CompletedProcess:
     """Run without stdin so a toplevel can never wait for keyboard input."""
     try:
+        # explicit UTF-8: Windows defaults to the ANSI code page for pipes
         return subprocess.run(argv, stdin=subprocess.DEVNULL, capture_output=True, text=True,
-                              timeout=timeout, cwd=cwd, check=False)
+                              encoding='utf-8', errors='replace', timeout=timeout, cwd=cwd, check=False)
     except subprocess.TimeoutExpired as exc:
         raise ToolError(f'{Path(argv[0]).name} timed out after {timeout}s') from exc
 
@@ -39,7 +40,8 @@ def swipl(goal: str, files: list[Path], args: list[str], timeout: int = 120) -> 
     # Some SWI-Prolog versions honour only one -s flag, so every file is loaded
     # by one goal; paths are quoted Prolog atoms, never spliced as code.
     quoted = ','.join("'" + str(f).replace('\\', '/').replace("'", "\\'") + "'" for f in files)
-    argv = [need('swipl'), '-q', '-g', f'load_files([{quoted}],[silent(true)]),{goal}',
+    argv = [need('swipl'), '-q', '-g',
+            f'set_stream(user_output,encoding(utf8)),load_files([{quoted}],[silent(true),encoding(utf8)]),{goal}',
             '-t', 'halt', '--', *args]
     done = run(argv, timeout)
     if done.returncode or done.stderr.strip():

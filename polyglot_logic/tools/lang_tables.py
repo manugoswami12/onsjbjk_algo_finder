@@ -201,3 +201,19 @@ EXIT_STATEMENTS = {
 }
 # Higher-order folds: f(acc, element) over a sequence with an initial value (G5).
 FOLDS = {'foldl', "foldl'", 'foldr', 'reduce', 'Reduce', 'foldl1', 'fold'}
+
+# ----- library / idiom identification (doc 07, part 3) ------------------------------
+# A standard-library call is reported as "LIBRARY: <algorithm>", never as a traced match.
+# Names are the canonical short call names produced by the lowerers (module prefixes dropped).
+LIBRARY = {
+    'gcd': {'gcd'},
+    'lcm': {'lcm'},
+    'factorial': {'factorial'},
+    'sort': {'sorted', 'sort', 'sort_unstable', 'sort_by', 'sortBy', 'sortOn', 'qsort', 'msort',
+             'predsort', 'stable-sort', 'order'},
+    'binary_search': {'bisect_left', 'bisect_right', 'bisect', 'binary_search', 'binarySearch', 'bsearch'},
+    'reverse': {'reverse', 'reversed'},
+}
+# Idioms: product of the range 1..n is the factorial.
+PRODUCT_CALLS = {'product', 'prod'}
+RANGE_CALLS = {'range', 'seq_len', 'seq'}

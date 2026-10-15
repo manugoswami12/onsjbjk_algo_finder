@@ -286,6 +286,9 @@ class Lowerer:
             return self.comprehension(node, env)
         if t == 'list':
             return ('list', [self.expr(e, env) for e in kids(node)])
+        if t == 'arithmetic_sequence':  # [a..b]
+            lo, hi = node.child_by_field_name('from'), node.child_by_field_name('to')
+            return call('range', [self.expr(lo, env), self.expr(hi, env) if hi is not None else other('inf')])
         if t == 'apply':
             arg_nodes, head = [], node
             while head.type == 'apply':

@@ -4,7 +4,9 @@ The AP11 catalog is opened strictly read-only (sqlite URI mode=ro).
 """
 from __future__ import annotations
 
+import functools
 import hashlib
+import re
 import sqlite3
 import sys
 from contextlib import contextmanager
@@ -29,7 +31,9 @@ CREATE TABLE IF NOT EXISTS pattern (
  review_status TEXT NOT NULL DEFAULT 'unreviewed'
    CHECK(review_status IN ('unreviewed','approved','rejected')),
  quality TEXT NOT NULL DEFAULT 'usable',
- grp TEXT NOT NULL DEFAULT ''
+ grp TEXT NOT NULL DEFAULT '',
+ also_source TEXT NOT NULL DEFAULT '',
+ corpus_matches TEXT NOT NULL DEFAULT ''
 );
 CREATE TABLE IF NOT EXISTS attempt (
  label TEXT PRIMARY KEY,
@@ -48,7 +52,9 @@ def connect(store: Path):
         conn.row_factory = sqlite3.Row
         conn.executescript(SCHEMA)
         cols = {r[1] for r in conn.execute('PRAGMA table_info(pattern)')}
-        for col, decl in (('quality', "TEXT NOT NULL DEFAULT 'usable'"), ('grp', "TEXT NOT NULL DEFAULT ''")):
+        for col, decl in (('quality', "TEXT NOT NULL DEFAULT 'usable'"), ('grp', "TEXT NOT NULL DEFAULT ''"),
+                          ('also_source', "TEXT NOT NULL DEFAULT ''"),
+                          ('corpus_matches', "TEXT NOT NULL DEFAULT ''")):
             if col not in cols:  # v1 catalogs gain the v2 columns, nothing is rewritten
                 conn.execute(f'ALTER TABLE pattern ADD COLUMN {col} {decl}')
         with conn:
@@ -114,6 +120,13 @@ def metadata(store: Path) -> dict:
         return {r['label']: dict(r) for r in db.execute('SELECT * FROM pattern')}
 
 
+def set_quality(store: Path, updates: dict):
+    """label -> (quality, corpus_matches text). Only the validation columns change."""
+    with connect(store) as db:
+        for label, (quality, matches) in updates.items():
+            db.execute('UPDATE pattern SET quality=?, corpus_matches=? WHERE label=?', (quality, matches, label))
+
+
 def approve(store: Path, label: str, action: str):
     if action not in ('approved', 'rejected', 'unreviewed'):
         raise ValueError('review status must be approved, rejected or unreviewed')
@@ -161,3 +174,31 @@ def ap11_source_path(corpus: Path, relative: str) -> Path:
         sys.path.insert(0, root)
     from ap11.source import source_path
     return source_path(corpus.resolve(), relative)
+
+
+# ----- sound prefilter (inverted-index style) -------------------------------------
+_OP = re.compile(r"'?op'?\('?([a-z_]+)'?,")
+_CALL = re.compile(r"'?call'?\('?([^',\[\]()]+)'?,")
+COMPARE = {'gt', 'ge', 'lt', 'le', 'eq', 'ne', 'not'}
+
+
+def _features(text: str) -> frozenset:
+    ops = set(_OP.findall(text))
+    calls = {c for c in _CALL.findall(text) if c != '$self' and not c[:1].isupper() and c[:1] != '_'}
+    return frozenset({'op:' + o for o in ops} | {'call:' + c for c in calls})
+
+
+def fact_features(facts: str) -> frozenset:
+    """Operators/calls a candidate can offer after canonicalisation (canon.pl)."""
+    f = set(_features(facts))
+    if any('op:' + o in f for o in COMPARE):          # direction / negation normalisation
+        f |= {'op:' + o for o in COMPARE}
+    if 'op:shr' in f:                                  # (lo + hi) >>> 1 -> div
+        f.add('op:div')
+    return frozenset(f)
+
+
+@functools.lru_cache(maxsize=None)
+def ref_features(path: Path) -> frozenset:
+    """Operators/calls a learned reference requires (variables never count)."""
+    return _features(path.read_text(encoding='utf-8'))

@@ -92,47 +92,63 @@ def evaluate_v1(rosetta):
     print('AP13_ROSETTA: ' + ' '.join(f'{k}={v}' for k, v in totals.items()))
 
 
-def evaluate_v2(rosetta, store, truth):
+def evaluate_v2(rosetta, store, truth, workers=4):
+    from concurrent.futures import ThreadPoolExecutor
     meta = store_mod.metadata(store)
     stats = defaultdict(lambda: defaultdict(int))  # key -> metric -> count
     wrong = []
-    for task, good in truth['tasks'].items():
-        for lang, f in files(rosetta, task):
-            r, err = scan_safe(f, store)
-            keys = ('ALL', 'lang:' + lang, 'task:' + task, 'positive' if good else 'negative')
+    jobs = [(task, good, lang, f) for task, good in truth['tasks'].items() for lang, f in files(rosetta, task)]
+    with ThreadPoolExecutor(max_workers=workers) as pool:   # scans are independent subprocesses
+        results = list(pool.map(lambda j: scan_safe(j[3], store), jobs))
+    for (task, good, lang, f), (r, err) in zip(jobs, results):
+        keys = ('ALL', 'lang:' + lang, 'task:' + task, 'positive' if good else 'negative')
+        for k in keys:
+            stats[k]['files'] += 1
+        if err:
             for k in keys:
-                stats[k]['files'] += 1
-            if err:
-                for k in keys:
-                    stats[k]['error'] += 1
-                print(f'ERROR|{task}|{lang}|{f.name}|{err[:150]}')
-                continue
-            ids = identifications(r, meta)
-            paths = [{meta[l]['source_path'] for l in labels} for _, labels in ids]
-            ok = [bool(p & set(good)) for p in paths]
-            outcome = 'unknown'
-            if ids:
-                outcome = 'top1_correct' if ok[0] else ('any_correct' if any(ok) else 'top1_wrong')
-                if not ok[0]:
-                    culprit = ids[0][1][0]
-                    wrong.append((task, lang, f.name, meta[culprit]['source_path'] + '::' + meta[culprit]['function_name']))
-            for k in keys:
-                stats[k][outcome] += 1
-            top = ''
-            if ids:
-                lab = ids[0][1][0]
-                top = meta[lab]['source_path'] + '::' + meta[lab]['function_name'] + f' (+{len(ids[0][1]) - 1} same)'
-            print(f'{task}|{lang}|{f.name}|{outcome}|{top}')
+                stats[k]['error'] += 1
+            print(f'ERROR|{task}|{lang}|{f.name}|{err[:150]}')
+            continue
+        ids = identifications(r, meta)
+        paths = [{meta[l]['source_path'] for l in labels} for _, labels in ids]
+        ok = [bool(p & set(good)) for p in paths]
+        outcome = 'unknown'
+        lib_ok = set(r.get('library', [])) & set(truth.get('library', {}).get(task, []))
+        if not ids and r.get('library'):  # library call/idiom only (reported separately)
+            outcome = 'library_correct' if lib_ok else 'library_other'
+        if ids:
+            outcome = 'top1_correct' if ok[0] else ('any_correct' if any(ok) else 'top1_wrong')
+            if not ok[0]:
+                culprit = ids[0][1][0]
+                wrong.append((task, lang, f.name, meta[culprit]['source_path'] + '::' + meta[culprit]['function_name']))
+        for k in keys:
+            stats[k][outcome] += 1
+        top = ''
+        if ids:
+            lab = ids[0][1][0]
+            top = meta[lab]['source_path'] + '::' + meta[lab]['function_name'] + f' (+{len(ids[0][1]) - 1} same)'
+        print(f'{task}|{lang}|{f.name}|{outcome}|{top}')
 
     def row(k):
         s = stats[k]
         return (f"{k:44s} files={s['files']:4d} top1_correct={s['top1_correct']:3d} "
                 f"correct_not_top1={s['any_correct']:3d} wrong={s['top1_wrong']:3d} "
+                f"library_correct={s['library_correct']:3d} library_other={s['library_other']:3d} "
                 f"unknown={s['unknown']:4d} errors={s['error']:2d}")
     print('\n=== AP13 v2 HELD-OUT RESULTS (references learned from the whole corpus) ===')
     for k in ['ALL', 'positive', 'negative'] + sorted(k for k in stats if k.startswith('lang:')) + \
             sorted(k for k in stats if k.startswith('task:')):
         print(row(k))
+    a = stats['ALL']
+    answered = a['top1_correct'] + a['top1_wrong'] + a['any_correct']
+    pos = stats['positive']
+    print(f"\nPRECISION (top-1 correct / answered) = {a['top1_correct']}/{answered}"
+          f" = {a['top1_correct'] / answered:.1%}" if answered else '\nPRECISION: no answers')
+    print(f"RECALL traced (top-1 correct / positive files) = {pos['top1_correct']}/{pos['files']}"
+          f" = {pos['top1_correct'] / max(pos['files'], 1):.1%}")
+    lib = pos['top1_correct'] + pos['library_correct']
+    print(f"RECALL traced + library (correct / positive files) = {lib}/{pos['files']}"
+          f" = {lib / max(pos['files'], 1):.1%}")
     print('\n=== WRONG TOP-1 IDENTIFICATIONS (culprit reference) ===')
     for w in wrong:
         print(' | '.join(w))

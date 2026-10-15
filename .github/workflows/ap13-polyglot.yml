@@ -1,0 +1,51 @@
+# AP13 polyglot_logic: run the test suites on Windows (the user's platform) and Linux.
+name: ap13-polyglot
+
+on:
+  push:
+    paths: ['polyglot_logic/**', '.github/workflows/ap13-polyglot.yml']
+  pull_request:
+    paths: ['polyglot_logic/**', '.github/workflows/ap13-polyglot.yml']
+  workflow_dispatch:
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install SWI-Prolog (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          choco install swi-prolog --no-progress -y
+          "C:\Program Files\swipl\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+      - name: Install SWI-Prolog (Linux)
+        if: runner.os == 'Linux'
+        run: sudo apt-get update -q && sudo apt-get install -y -q swi-prolog-nox
+      - name: Install Python dependency
+        run: python -m pip install -r polyglot_logic/requirements.txt
+      - name: Tool versions
+        run: |
+          swipl --version
+          python --version
+      - name: Prefetch tree-sitter grammars
+        working-directory: polyglot_logic
+        run: python tools/cli.py prefetch
+      - name: AP13 tests (v1 + v2)
+        working-directory: polyglot_logic
+        run: python -m unittest discover -s tests -v
+      - name: Windows CMD runner smoke test
+        if: runner.os == 'Windows'
+        shell: cmd
+        working-directory: polyglot_logic
+        run: |
+          call RUN_AP13.cmd --store "%RUNNER_TEMP%\ap13store" learn-dir examples\v2\reference
+          call RUN_AP13.cmd --store "%RUNNER_TEMP%\ap13store" scan examples\v2\candidates\hash.hs
+          call RUN_AP13.cmd --store "%RUNNER_TEMP%\ap13store" scan examples\v2\candidates\gcd.rs

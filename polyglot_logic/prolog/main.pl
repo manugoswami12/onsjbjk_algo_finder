@@ -21,11 +21,11 @@ specificity(comparison_driven_reordering, 2).
 specificity(sequence_rearrangement, 1).
 specificity(unknown, 0).
 
-load_data(File) :- load_files(File, [if(true)]).
+load_data(File) :- load_files(File, [if(true), encoding(utf8)]).
 
 % Learned references are read as data terms: only reference/4 facts are accepted.
 load_reference(File) :-
-    setup_call_cleanup(open(File, read, S), read_references(S, File), close(S)).
+    setup_call_cleanup(open(File, read, S, [encoding(utf8)]), read_references(S, File), close(S)).
 read_references(S, File) :-
     read_term(S, T, []),
     (   T == end_of_file -> true
@@ -41,8 +41,15 @@ assert_observations :-
 
 routes(F, Rs) :- findall(R, route(F, R), R0), sort(R0, Rs).
 
+% '@File' = one reference path per line (keeps the command line short on Windows)
+ref_args([A], Refs) :- atom_concat('@', File, A), !,
+    read_file_to_string(File, S, [encoding(utf8)]),
+    split_string(S, "\n", "\r ", Parts), exclude(==(""), Parts, Strs),
+    maplist([X, Y]>>atom_string(Y, X), Strs, Refs).
+ref_args(Refs, Refs).
+
 scan_main :-
-    current_prolog_flag(argv, [Facts|Refs]),
+    current_prolog_flag(argv, [Facts|Args]), ref_args(Args, Refs),
     load_data(Facts), maplist(load_reference, Refs),
     assert_observations,
     forall(func(F, Name, Line), (
@@ -60,7 +67,7 @@ leaf_line(Label, Branch) :-
     ->  reference(Label, Branch, Rels, _), length(Rels, NR),
         atomic_list_concat(Names, ',', N), atomic_list_concat(Funcs, ',', Fs),
         format('LEAF|MATCH|~w|~w|~w|~w|~w~n', [Label, Branch, Fs, N, NR])
-    ;   leaf_result(Label, Branch, partial(Missing, Present, Total))
+    ;   leaf_result(Label, Branch, partial(Missing, Present, Total)), Present * 4 >= Total * 3
     ->  atomic_list_concat(Missing, ',', M0), ( M0 == '' -> M = 'inconsistent_bindings' ; M = M0 ),
         format('LEAF|PARTIAL|~w|~w|~w/~w|~w~n', [Label, Branch, Present, Total, M])
     ;   true
@@ -71,7 +78,7 @@ learn_all_main :-
     current_prolog_flag(argv, [Facts, Prefix]),
     load_data(Facts),
     assert_observations,
-    forall(func(F, Name, _), learn_one(F, Name, Prefix)).
+    forall(( func(F, Name, _), Name \== '<toplevel>' ), learn_one(F, Name, Prefix)).   % scripts are not references
 
 learn_one(F, Name, Prefix) :-
     safe_label(Prefix, Name, Label),
@@ -113,3 +120,46 @@ learn_main :-
 
 best_branch([], unknown).
 best_branch(BS, B) :- BS \== [], findall(S-B0, member(B0-S, BS), P), max_member(_-B, P).
+
+% ----- generalisation of variants (doc 07) ------------------------------------
+% Greedy maximal core: the relations of reference A that hold TOGETHER in the
+% facts of variant B. A relation that fails is retried with its integer
+% constants abstracted (least general generalisation over constants).
+gen_main :-
+    current_prolog_flag(argv, [Facts|Args]), ref_args(Args, Refs),
+    load_data(Facts), maplist(load_reference, Refs),
+    forall(reference(Label, Branch, Rels, _), gen_one(Label, Branch, Rels)).
+
+gen_one(Label, Branch, Rels) :-
+    copy_term(Rels, R0),
+    \+ ( copy_term(R0, T), maplist(call, T) ),          % A already matches B: nothing to learn
+    greedy_core(R0, [], Core),
+    length(Rels, N), length(Core, NC),
+    NC * 10 >= N * 6, NC < N,
+    quality(Core, usable), !,
+    term_variables(Core, Vs0), core_names(Core, Vs0, Names),
+    format('GEN|~w|~w|~w~n', [Label, Branch, NC]),
+    portray_clause(reference(gen, Branch, Core, Names)),
+    format('END~n').
+gen_one(_, _, _).
+
+greedy_core([], Kept, Kept).
+greedy_core([R|Rs], Kept, Core) :-
+    (   append(Kept, [R], Try), copy_term(Try, T), once(maplist(call, T))
+    ->  greedy_core(Rs, Try, Core)
+    ;   abstract_ints(R, RA), RA \== R,
+        append(Kept, [RA], Try), copy_term(Try, T), once(maplist(call, T))
+    ->  greedy_core(Rs, Try, Core)
+    ;   greedy_core(Rs, Kept, Core)
+    ).
+
+abstract_ints(int(_), int(_)) :- !.
+abstract_ints(T, T) :- \+ compound(T), !.
+abstract_ints(T0, T) :- T0 =.. [F|As], maplist(abstract_ints, As, Bs), T =.. [F|Bs].
+
+% variables that stand for program names: those inside var(_)
+core_names(Core, _, Names) :-
+    findall(V, (sub_term(var(V), Core), var(V)), Vs), list_to_ord_set_vars(Vs, Names).
+list_to_ord_set_vars([], []).
+list_to_ord_set_vars([V|Vs], Out) :-
+    ( member(W, Vs), W == V -> list_to_ord_set_vars(Vs, Out) ; Out = [V|Rest], list_to_ord_set_vars(Vs, Rest) ).

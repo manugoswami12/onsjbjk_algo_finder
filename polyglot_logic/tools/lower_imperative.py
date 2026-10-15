@@ -65,7 +65,27 @@ class Lowerer:
     # ----- functions ------------------------------------------------------
     def run(self, root):
         self.scan(root, prefix='')
+        if self.lang in ('python', 'r'):  # scripts: top-level code as pseudo-function <toplevel>
+            top = [c for c in named(root) if self.top_level_statement(c)]
+            if top:
+                f = self.facts.new_func('<toplevel>', line(top[0]))
+                prev = None
+                for c in top:
+                    st = self.stmt(c, Ctx(f))
+                    if prev and st:
+                        self.facts.add('next_stmt', prev, st)
+                    prev = st
         return self.facts.finish()
+
+    def top_level_statement(self, c):
+        """Script code: not a definition and not an `if __name__ == "__main__"` test block."""
+        kind = self.kind(c)[0]
+        if kind in ('function', 'class', 'decorated'):
+            return False
+        if kind == 'r_assign':
+            rhs = c.child_by_field_name('rhs')
+            return not (rhs is not None and rhs.type == 'function_definition')
+        return not (c.type == 'if_statement' and '__main__' in text(c))
 
     def scan(self, node, prefix):
         kind, roles = self.kind(node)

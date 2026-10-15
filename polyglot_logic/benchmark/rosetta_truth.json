@@ -1,46 +1,162 @@
 {
   "_about": "Ground truth for the AP13 v2 held-out evaluation, written BEFORE the first v2 run. Rosetta Code task -> TheAlgorithms/Python files (commit e1a2a8b0) that implement the same algorithm. An identification is correct when its reference comes from one of these files. Empty list = negative control (no counterpart): only false identifications are counted. Files are never edited.",
   "corpus_commit": "e1a2a8b016001309a73d5fec4818c35cca139795",
-  "languages": ["Python", "Rust", "Java", "C", "R", "Haskell", "Common-Lisp", "Prolog"],
+  "languages": [
+    "Python",
+    "Rust",
+    "Java",
+    "C",
+    "R",
+    "Haskell",
+    "Common-Lisp",
+    "Prolog"
+  ],
   "tasks": {
-    "Sorting-algorithms-Bubble-sort": ["sorts/bubble_sort.py", "sorts/bubble_sort_recursive.py"],
-    "Sorting-algorithms-Insertion-sort": ["sorts/insertion_sort.py", "sorts/recursive_insertion_sort.py", "sorts/binary_insertion_sort.py"],
-    "Sorting-algorithms-Selection-sort": ["sorts/selection_sort.py"],
-    "Sorting-algorithms-Gnome-sort": ["sorts/gnome_sort.py"],
-    "Sorting-algorithms-Cocktail-sort": ["sorts/cocktail_shaker_sort.py"],
-    "Sorting-algorithms-Quicksort": ["sorts/quick_sort.py", "sorts/recursive_quick_sort.py", "sorts/quick_sort_3_partition.py"],
-    "Sorting-algorithms-Merge-sort": ["sorts/merge_sort.py", "sorts/iterative_merge_sort.py", "sorts/adaptive_merge_sort.py"],
-    "Sorting-algorithms-Heapsort": ["sorts/heap_sort.py"],
-    "Sorting-algorithms-Shell-sort": ["sorts/shell_sort.py", "sorts/shrink_shell_sort.py"],
-    "Sorting-algorithms-Counting-sort": ["sorts/counting_sort.py"],
-    "Sorting-algorithms-Comb-sort": ["sorts/comb_sort.py"],
-    "Sorting-algorithms-Pancake-sort": ["sorts/pancake_sort.py"],
-    "Sorting-algorithms-Stooge-sort": ["sorts/stooge_sort.py"],
-    "Sorting-algorithms-Cycle-sort": ["sorts/cycle_sort.py"],
-    "Binary-search": ["searches/binary_search.py", "searches/simple_binary_search.py"],
-    "Greatest-common-divisor": ["maths/greatest_common_divisor.py", "maths/gcd_of_n_numbers.py"],
-    "Factorial": ["maths/factorial.py", "dynamic_programming/factorial.py"],
-    "Fibonacci-sequence": ["maths/fibonacci.py", "dynamic_programming/fibonacci.py", "dynamic_programming/fast_fibonacci.py"],
-    "Sieve-of-Eratosthenes": ["maths/sieve_of_eratosthenes.py"],
-    "Towers-of-Hanoi": ["other/tower_of_hanoi.py"],
-    "Levenshtein-distance": ["strings/levenshtein_distance.py", "strings/edit_distance.py", "dynamic_programming/edit_distance.py"],
-    "Longest-common-subsequence": ["dynamic_programming/longest_common_subsequence.py"],
-    "Caesar-cipher": ["ciphers/caesar_cipher.py"],
-    "Run-length-encoding": ["data_compression/run_length_encoding.py"],
-    "Primality-by-trial-division": ["maths/prime_check.py"],
-    "Luhn-test-of-credit-card-numbers": ["hashes/luhn.py"],
-    "Josephus-problem": ["maths/josephus_problem.py"],
-    "Knapsack-problem-0-1": ["knapsack/knapsack.py", "dynamic_programming/knapsack.py", "knapsack/recursive_approach_knapsack.py"],
-    "Roman-numerals-Encode": ["conversions/roman_numerals.py"],
-    "Hailstone-sequence": ["maths/collatz_sequence.py"],
-    "Sum-digits-of-an-integer": ["maths/sum_of_digits.py"],
-    "Least-common-multiple": ["maths/least_common_multiple.py"],
-    "Perfect-numbers": ["maths/perfect_number.py", "maths/special_numbers/perfect_number.py"],
-    "Palindrome-detection": ["strings/palindrome.py"],
-    "N-queens-problem": ["backtracking/n_queens.py", "backtracking/n_queens_math.py"],
+    "Sorting-algorithms-Bubble-sort": [
+      "sorts/bubble_sort.py",
+      "sorts/bubble_sort_recursive.py"
+    ],
+    "Sorting-algorithms-Insertion-sort": [
+      "sorts/insertion_sort.py",
+      "sorts/recursive_insertion_sort.py",
+      "sorts/binary_insertion_sort.py"
+    ],
+    "Sorting-algorithms-Selection-sort": [
+      "sorts/selection_sort.py"
+    ],
+    "Sorting-algorithms-Gnome-sort": [
+      "sorts/gnome_sort.py"
+    ],
+    "Sorting-algorithms-Cocktail-sort": [
+      "sorts/cocktail_shaker_sort.py"
+    ],
+    "Sorting-algorithms-Quicksort": [
+      "sorts/quick_sort.py",
+      "sorts/recursive_quick_sort.py",
+      "sorts/quick_sort_3_partition.py"
+    ],
+    "Sorting-algorithms-Merge-sort": [
+      "sorts/merge_sort.py",
+      "sorts/iterative_merge_sort.py",
+      "sorts/adaptive_merge_sort.py"
+    ],
+    "Sorting-algorithms-Heapsort": [
+      "sorts/heap_sort.py"
+    ],
+    "Sorting-algorithms-Shell-sort": [
+      "sorts/shell_sort.py",
+      "sorts/shrink_shell_sort.py"
+    ],
+    "Sorting-algorithms-Counting-sort": [
+      "sorts/counting_sort.py"
+    ],
+    "Sorting-algorithms-Comb-sort": [
+      "sorts/comb_sort.py"
+    ],
+    "Sorting-algorithms-Pancake-sort": [
+      "sorts/pancake_sort.py"
+    ],
+    "Sorting-algorithms-Stooge-sort": [
+      "sorts/stooge_sort.py"
+    ],
+    "Sorting-algorithms-Cycle-sort": [
+      "sorts/cycle_sort.py"
+    ],
+    "Binary-search": [
+      "searches/binary_search.py",
+      "searches/simple_binary_search.py"
+    ],
+    "Greatest-common-divisor": [
+      "maths/greatest_common_divisor.py",
+      "maths/gcd_of_n_numbers.py"
+    ],
+    "Factorial": [
+      "maths/factorial.py",
+      "dynamic_programming/factorial.py"
+    ],
+    "Fibonacci-sequence": [
+      "maths/fibonacci.py",
+      "dynamic_programming/fibonacci.py",
+      "dynamic_programming/fast_fibonacci.py"
+    ],
+    "Sieve-of-Eratosthenes": [
+      "maths/sieve_of_eratosthenes.py"
+    ],
+    "Towers-of-Hanoi": [
+      "other/tower_of_hanoi.py"
+    ],
+    "Levenshtein-distance": [
+      "strings/levenshtein_distance.py",
+      "strings/edit_distance.py",
+      "dynamic_programming/edit_distance.py"
+    ],
+    "Longest-common-subsequence": [
+      "dynamic_programming/longest_common_subsequence.py"
+    ],
+    "Caesar-cipher": [
+      "ciphers/caesar_cipher.py"
+    ],
+    "Run-length-encoding": [
+      "data_compression/run_length_encoding.py"
+    ],
+    "Primality-by-trial-division": [
+      "maths/prime_check.py"
+    ],
+    "Luhn-test-of-credit-card-numbers": [
+      "hashes/luhn.py"
+    ],
+    "Josephus-problem": [
+      "maths/josephus_problem.py"
+    ],
+    "Knapsack-problem-0-1": [
+      "knapsack/knapsack.py",
+      "dynamic_programming/knapsack.py",
+      "knapsack/recursive_approach_knapsack.py"
+    ],
+    "Roman-numerals-Encode": [
+      "conversions/roman_numerals.py"
+    ],
+    "Hailstone-sequence": [
+      "maths/collatz_sequence.py"
+    ],
+    "Sum-digits-of-an-integer": [
+      "maths/sum_of_digits.py"
+    ],
+    "Least-common-multiple": [
+      "maths/least_common_multiple.py"
+    ],
+    "Perfect-numbers": [
+      "maths/perfect_number.py",
+      "maths/special_numbers/perfect_number.py"
+    ],
+    "Palindrome-detection": [
+      "strings/palindrome.py"
+    ],
+    "N-queens-problem": [
+      "backtracking/n_queens.py",
+      "backtracking/n_queens_math.py"
+    ],
     "Ackermann-function": [],
     "Leap-year": [],
     "Dot-product": [],
     "Matrix-multiplication": []
+  },
+  "_library_about": "Added for doc 07 part 3 (library/idiom identification), AFTER the v2 runs: task -> standard-library algorithm names that correctly answer it. Objective names only; specific sorts (bubble, quick, ...) have none because a call to sort() is not that algorithm. File-level truth above is unchanged.",
+  "library": {
+    "Greatest-common-divisor": [
+      "gcd"
+    ],
+    "Least-common-multiple": [
+      "lcm"
+    ],
+    "Factorial": [
+      "factorial"
+    ],
+    "Binary-search": [
+      "binary_search"
+    ],
+    "Palindrome-detection": [
+      "reverse"
+    ]
   }
 }
