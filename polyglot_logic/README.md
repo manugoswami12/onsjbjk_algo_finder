@@ -24,3 +24,16 @@ The guarantees, as in AP2–AP12:
 
 Quick start: `python -m pip install -r requirements.txt`, then `RUN_AP13.cmd prefetch`,
 `RUN_AP13_SELFTEST.cmd` and `RUN_AP13.cmd scan <file>`. See `docs/03_*` §5.
+
+## Learning from the whole corpus (v2, v2.1)
+```
+RUN_AP13.cmd learn-dir  <TheAlgorithms/Python checkout>   # every function -> traced reference
+RUN_AP13.cmd validate   <same checkout>    # drop references that match unrelated code one-way
+RUN_AP13.cmd generalize <same checkout>    # common core of two variants of one algorithm
+RUN_AP13.cmd validate   <same checkout>    # again, for the generalised references
+RUN_AP13.cmd scan <file in any of the 8 languages>
+RUN_AP13_ROSETTA.cmd --store store          # held-out measurement (Rosetta Code)
+```
+Design and measured results: `docs/04_*`, `docs/05_*` (v2) and `docs/07_*` (v2.1:
+validation, generalisation, library folds, Windows). Library calls such as `math.gcd`
+or `sorted` are reported as `LIBRARY: <algorithm>`, separately from traced matches.
