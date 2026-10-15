@@ -242,6 +242,12 @@ def validate(corpus: Path, store: Path, workers: int = 4, min_files: int = 3, mi
         own_cat = {p.split('/')[0] for p in own if p}
         cats = {p.split('/')[0] for p in one_way} - own_cat
         q = 'generic' if len(one_way) >= min_files and len(cats) >= min_categories else 'usable'
+        if m['origin'] == 'generalized':
+            # ILP: a generalisation covers its positives (the two variant files) and NO
+            # negative - every other corpus function is a negative example
+            outside = sorted({f for f, _ in hits.get(label, set()) if f not in own})
+            if outside:
+                q, one_way = 'generic', outside
         updates[label] = (q, ';'.join(one_way[:20]))
         counts[q] = counts.get(q, 0) + 1
     store_mod.set_quality(store, updates)
