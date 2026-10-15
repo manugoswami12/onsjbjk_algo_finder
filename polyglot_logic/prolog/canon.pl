@@ -130,8 +130,33 @@ capp(S, Q, X) :- call_at(S, append, [Q, X0]), live(S), cexpr(S, X0, X).
 % updates of a recursive call are simultaneous, never a definition of the same statement)
 resolve(F, S, var(X), V) :-
     \+ param(F, _, X),
-    findall(D-V0, (assign(D, var(X), V0), stmt_func(D, F)), [D-V0]), D \== S, V0 \= var(_), !, V = V0.
+    findall(D-V0, (assign(D, var(X), V0), stmt_func(D, F)), [D-V0]), D \== S, V0 \= var(_),
+    \+ killed(F, D, S, V0), !, V = V0.
 resolve(_, _, V, V).
+
+% Reaching definitions (Aho-Sethi-Ullman, approximated by line order and loop
+% nesting): the copy D of V0 may replace a use at S only if no operand of V0 is
+% redefined on a path from D to S. An operand var(Y) is killed by an assignment
+% to Y (or loop variable Y); a sequence Q read as elem(var(Q), _) is killed by an
+% element write or exchange on Q. A kill K is on a path D -> S when it lies
+% between them in the text, or in a loop around S that does not re-run D.
+killed(F, D, S, V0) :-
+    stmt(D, F, _, LD), stmt(S, F, _, LS),
+    operand(V0, Kind, Y), kill(F, Kind, Y, K, LK), K \== D, \+ exclusive(K, S),
+    (   LD < LK, LK < LS                % a statement reads before it writes
+    ;   under(S, L), stmt(L, F, _, _), \+ under(D, L), ( K == L ; under(K, L) )
+    ), !.
+% opposite outcomes of the same test: the two statements never run in one pass
+exclusive(K, S) :- guard(K, C, P1), guard(S, C2, P2), C2 == C, P1 \== P2, !.
+operand(V0, var, Y) :- sub_term(var(Y), V0), atom(Y).
+operand(V0, seq, Q) :- sub_term(elem(var(Q), _), V0), atom(Q).
+kill(F, var, Y, K, LK) :- assign(K, var(Y), _), stmt(K, F, _, LK).
+kill(F, var, Y, K, LK) :- par_assign(K, Ts, _), memberchk(var(Y), Ts), stmt(K, F, _, LK).
+kill(F, var, Y, L, LL) :- loop_var(L, Y), stmt(L, F, _, LL).
+kill(F, seq, Q, K, LK) :- assign(K, elem(var(Q), _), _), stmt(K, F, _, LK).
+kill(F, seq, Q, K, LK) :- par_assign(K, Ts, _), memberchk(elem(var(Q), _), Ts), stmt(K, F, _, LK).
+kill(F, seq, Q, K, LK) :- call_at(K, Fn, [var(Q)|_]), memberchk(Fn, [swap, append, pop, insert, remove]),
+    stmt(K, F, _, LK).
 
 % Two spellings of the same midpoint: lo + (hi - lo) / 2  ==  (lo + hi) / 2
 canon_expr(op(add, [L, op(div, [op(sub, [H, L2]), int(2)])]), op(div, [op(add, [L, H]), int(2)])) :-
@@ -148,12 +173,18 @@ deep_norm(T0, T) :- T0 =.. [F|As], maplist(deep_norm, As, Bs), T1 =.. [F|Bs], ca
 % Forward substitution of single-definition locals (SSA copy/expression propagation):
 % `lesser = filter(...); f(lesser)` == `f(filter(...))`. Bounded depth, never params
 % or loop variables, never a self-referencing definition.
+% inline/3 has no use site, so it is refused if ANY use of X can see a kill
+killed_any_use(F, D, X, V0) :-
+    stmt(S, F, _, _), S \== D, uses_var(S, X), killed(F, D, S, V0), !.
+uses_var(S, X) :- ( assign(S, T, V) ; ret(S, V), T = none ; call_at(S, _, V), T = none
+                  ; guard(S, V, _), T = none ; loop_cond(S, V), T = none ),
+    ( sub_term(var(Y), V) ; T \= none, sub_term(var(Y), T) ), Y == X, !.
 inline(F, T0, T) :- inline(F, 3, T0, T).
 inline(_, 0, T, T) :- !.
 inline(F, D, var(X), T) :-
     \+ param(F, _, X), \+ (loop_var(L, X), loop(L, F, _)),
-    findall(V0, (assign(S, var(X), V0), stmt_func(S, F)), [V0]),
-    \+ (sub_term(var(Y), V0), Y == X), !,
+    findall(D0-V0, (assign(D0, var(X), V0), stmt_func(D0, F)), [D0-V0]),
+    \+ (sub_term(var(Y), V0), Y == X), \+ killed_any_use(F, D0, X, V0), !,
     D1 is D - 1, inline(F, D1, V0, T).
 inline(_, _, T, T) :- atomic(T), !.
 inline(_, _, T, T) :- T = var(_), !.

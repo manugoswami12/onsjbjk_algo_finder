@@ -128,11 +128,19 @@ best_branch(BS, B) :- BS \== [], findall(S-B0, member(B0-S, BS), P), max_member(
 gen_main :-
     current_prolog_flag(argv, [Facts|Args]), ref_args(Args, Refs),
     load_data(Facts), maplist(load_reference, Refs),
-    forall(reference(Label, Branch, Rels, _), gen_one(Label, Branch, Rels)).
+    forall(reference(Label, Branch, Rels, _), bounded_gen(Label, Branch, Rels)).
+
+% Matching a conjunction is backtracking search: each reference gets a fixed
+% inference budget (SWI call_with_inference_limit/3), so one large pair can
+% never stall a run. Exceeding it means "no generalisation", never a guess.
+bounded_gen(Label, Branch, Rels) :-
+    call_with_inference_limit(gen_one(Label, Branch, Rels), 2000000, R),
+    ( R == inference_limit_exceeded -> format('SKIP|~w|budget~n', [Label]) ; true ), !.
+bounded_gen(_, _, _).
 
 gen_one(Label, Branch, Rels) :-
     copy_term(Rels, R0),
-    \+ ( copy_term(R0, T), maplist(call, T) ),          % A already matches B: nothing to learn
+    \+ ( copy_term(R0, T), consistent(T) ),            % A already matches B: nothing to learn
     greedy_core(R0, [], Core),
     length(Rels, N), length(Core, NC),
     NC * 10 >= N * 6, NC < N,
@@ -145,13 +153,16 @@ gen_one(_, _, _).
 
 greedy_core([], Kept, Kept).
 greedy_core([R|Rs], Kept, Core) :-
-    (   append(Kept, [R], Try), copy_term(Try, T), once(maplist(call, T))
+    (   append(Kept, [R], Try), copy_term(Try, T), once(consistent(T))
     ->  greedy_core(Rs, Try, Core)
     ;   abstract_ints(R, RA), RA \== R,
-        append(Kept, [RA], Try), copy_term(Try, T), once(maplist(call, T))
+        append(Kept, [RA], Try), copy_term(Try, T), once(consistent(T))
     ->  greedy_core(Rs, Try, Core)
     ;   greedy_core(Rs, Kept, Core)
     ).
+
+% the same test the leaf matcher applies: one binding, distinct program names
+consistent(T) :- core_names(T, _, Names), maplist(call, T), all_distinct_atoms(Names).
 
 abstract_ints(int(_), int(_)) :- !.
 abstract_ints(T, T) :- \+ compound(T), !.

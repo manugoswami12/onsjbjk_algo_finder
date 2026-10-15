@@ -169,6 +169,10 @@ def generalize(corpus: Path, store: Path, workers: int = 4):
             i = 0
             while i < len(lines):
                 head = lines[i].split('|')
+                if head[0] == 'SKIP':          # inference budget exceeded: no generalisation
+                    counts['budget_skipped'] = counts.get('budget_skipped', 0) + 1
+                    i += 1
+                    continue
                 if head[0] != 'GEN':
                     raise ToolError('unexpected generalize output: ' + lines[i][:200])
                 j = lines.index('END', i)
