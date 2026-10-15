@@ -45,6 +45,13 @@ class LoweringV21(unittest.TestCase):
         text = facts(V21 / 'recursive_write.py')
         self.assertIn("assign('s4','var'('i'),'op'('add',['var'('i'),'int'(1)]))", text)
 
+    @unittest.skipUnless(HAVE_SWIPL, 'needs swipl')
+    def test_unreadable_prolog_clause_is_reported_and_the_rest_lowered(self):
+        text = facts(V21 / 'syntax_error.pl')
+        self.assertIn("func(f1,'ok/1',1).", text)
+        self.assertIn("func(f2,'good/1',3).", text)
+        self.assertIn("'syntax error (dialect operator or fragment)',2)", text)
+
     def test_prefilter_keeps_index_shift_family(self):
         from knowledge_store import fact_features
         have = fact_features("assign('s1','elem'('var'('a'),'op'('sub',['var'('i'),'int'(1)])),'int'(0)).")

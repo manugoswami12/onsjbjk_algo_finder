@@ -16,7 +16,10 @@ lower_main :-
     forall(member(Key-Cs, Groups),
            (   lower_predicate(Key, Cs) -> true
            ;   format(user_error, 'AP13: lowering failed for ~q~n', [Key]), halt(2)
-           )).
+           )),
+    forall(member(syntax_error(Line), Clauses),       % explicit limitation, never silent
+           ( new_id(f, F), emit(func(F, '<unreadable clause>', Line)),
+             emit(unsupported(F, 'syntax error (dialect operator or fragment)', Line)) )).
 
 read_clauses(File, Clauses) :-
     setup_call_cleanup(open(File, read, S, [encoding(utf8)]),
@@ -24,8 +27,13 @@ read_clauses(File, Clauses) :-
                        close(S)).
 
 read_all(S, Clauses) :-
-    read_term(S, T, [variable_names(Vs), term_position(P)]),
-    (   T == end_of_file
+    catch(read_term(S, T, [variable_names(Vs), term_position(P)]),
+          error(syntax_error(_), Ctx), true),
+    (   var(T)                        % an unreadable clause (dialect operator, fragment):
+    ->  syntax_line(Ctx, Line),       % reported, skipped, the rest of the file is still read
+        Clauses = [syntax_error(Line)|Rest],
+        read_all(S, Rest)
+    ;   T == end_of_file
     ->  Clauses = []
     ;   stream_position_data(line_count, P, Line),
         maplist(bind_name, Vs),
@@ -38,6 +46,12 @@ read_all(S, Clauses) :-
     ).
 
 bind_name(Name=v(Name)).
+
+syntax_line(Ctx, Line) :-
+    (   sub_term(T, Ctx), compound(T), ( T = stream(_, Line, _, _) ; T = file(_, Line, _, _) ), integer(Line)
+    ->  true
+    ;   Line = 0
+    ).
 
 clause_parts((H :- B), H, B) :- !.
 clause_parts(H, H, true).
