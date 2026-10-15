@@ -155,6 +155,7 @@ quality(Rels, usable) :-
 quality(_, trivial).
 
 content(exchange(_, _, _, _)).
+content(value(_, var(X), E)) :- !, \+ counter(X, E).    % a counter update is not a computation
 content(value(_, _, _)).
 content(capp(_, _, _)).
 content(nguard(_, _, _)).

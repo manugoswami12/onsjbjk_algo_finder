@@ -95,14 +95,15 @@ def record_attempt(store: Path, label: str, status: str, reason: str = ''):
         db.execute('INSERT OR REPLACE INTO attempt VALUES (?,?,?)', (label, status, reason[:600]))
 
 
-def reference_files(store: Path, include_unreviewed: bool, branches=None) -> list[Path]:
+def reference_files(store: Path, include_unreviewed: bool, branches=None,
+                    qualities=('usable',)) -> list[Path]:
     if not (store / 'polyglot.sqlite3').is_file():
         return []
     with connect(store) as db:
         rows = db.execute('SELECT * FROM pattern').fetchall()
     out = []
     for r in rows:
-        if r['review_status'] == 'rejected' or r['quality'] != 'usable':
+        if r['review_status'] == 'rejected' or r['quality'] not in qualities:
             continue
         if r['review_status'] == 'unreviewed' and not include_unreviewed:
             continue

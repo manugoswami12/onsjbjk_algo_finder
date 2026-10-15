@@ -69,9 +69,9 @@ def run_prolog(goal: str, facts: str, args: list[str]) -> list[str]:
         return swipl(goal, [AP12_ROUTER, PROLOG_DIR / 'main.pl'], [str(f), *args])
 
 
-def scan(path: Path, store: Path, include_unreviewed: bool, quiet=False):
+def scan(path: Path, store: Path, include_unreviewed: bool, quiet=False, qualities=('usable',)):
     lang, facts = facts_text(path)
-    refs = store_mod.reference_files(store, include_unreviewed)
+    refs = store_mod.reference_files(store, include_unreviewed, qualities=qualities)
     have = store_mod.fact_features(facts)
     # sound prefilter: a reference needing an operator/call absent from the facts cannot match
     refs = [r for r in refs if store_mod.ref_features(r) <= have]
@@ -200,8 +200,11 @@ def hashlib_short(text: str) -> str:
 
 
 def validate(corpus: Path, store: Path, workers: int = 4, min_files: int = 3, min_categories: int = 2):
-    """doc 07: a reference that matches functions of >= min_files OTHER corpus files spread over
-    >= min_categories OTHER categories is not discriminative: quality 'generic', never matched."""
+    """doc 07 H1: a reference is NOT discriminative when it matches functions of >= min_files
+    other corpus files (>= min_categories other categories) whose own references do not match
+    it back. A mutual match is the same algorithm implemented twice (equivalence under the
+    subsumption order) and never counts; a one-way match means the reference is a weaker
+    sub-pattern of unrelated code. Such a reference becomes 'generic' and is never matched."""
     from concurrent.futures import ThreadPoolExecutor
     meta = store_mod.metadata(store)
     files = sorted({m['source_path'] for m in meta.values()} | {m['also_source'] for m in meta.values()
@@ -209,29 +212,37 @@ def validate(corpus: Path, store: Path, workers: int = 4, min_files: int = 3, mi
     files = [f for f in files if (corpus / f).is_file()]
 
     def run_one(f):
-        try:
-            return f, scan(corpus / f, store, True, quiet=True), None
+        try:   # generic references are scanned too, so re-validation sees them
+            return f, scan(corpus / f, store, True, quiet=True, qualities=('usable', 'generic')), None
         except (ToolError, ValueError, OSError) as exc:
             return f, None, str(exc)
-    hits = {}
+    hits = {}            # label -> {(file, function)}
     with ThreadPoolExecutor(max_workers=workers) as pool:
         for n, (f, r, err) in enumerate(pool.map(run_one, files), 1):
             if r:
                 for x in r['leaves']:
                     if x['result'] == 'MATCH':
-                        hits.setdefault(x['label'], set()).add(f)
+                        for fn in x['functions'].split(','):
+                            hits.setdefault(x['label'], set()).add((f, fn))
             if n % 200 == 0:
                 print(f'AP13_VALIDATE: {n}/{len(files)}', flush=True)
+    labels_of = {}
+    for label, m in meta.items():
+        labels_of.setdefault((m['source_path'], m['function_name']), []).append(label)
+
+    def matched_back(label, other):
+        m = meta[label]
+        return any((m['source_path'], m['function_name']) in hits.get(b, set()) for b in labels_of.get(other, []))
     updates, counts = {}, {}
     for label, m in meta.items():
         if m['quality'] not in ('usable', 'generic'):
             continue
         own = {m['source_path'], m['also_source']}
-        others = sorted(hits.get(label, set()) - own)
+        one_way = sorted({f for f, fn in hits.get(label, set()) if f not in own and not matched_back(label, (f, fn))})
         own_cat = {p.split('/')[0] for p in own if p}
-        cats = {p.split('/')[0] for p in others} - own_cat
-        q = 'generic' if len(others) >= min_files and len(cats) >= min_categories else 'usable'
-        updates[label] = (q, ';'.join(others[:20]))
+        cats = {p.split('/')[0] for p in one_way} - own_cat
+        q = 'generic' if len(one_way) >= min_files and len(cats) >= min_categories else 'usable'
+        updates[label] = (q, ';'.join(one_way[:20]))
         counts[q] = counts.get(q, 0) + 1
     store_mod.set_quality(store, updates)
     print('AP13_VALIDATE: ' + ' '.join(f'{k}={v}' for k, v in sorted(counts.items())))

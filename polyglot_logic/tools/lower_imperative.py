@@ -5,7 +5,7 @@ One table-driven walker (lang_tables.SPEC); no per-language algorithm rules.
 from __future__ import annotations
 
 from fact_io import Ctx, FactSet, call, elem, num, op, other, var
-from lang_tables import (AUGMENTED, EXIT_STATEMENTS, IGNORED_STATEMENTS, IMPLICIT_RETURN, INT_SLASH,
+from lang_tables import (AUGMENTED, EXIT_STATEMENTS, IGNORED_STATEMENTS, IMPLICIT_RETURN, INT_SLASH, LANG_OPERATORS,
                          LENGTH_CALLS, OPERATORS, R_ASSIGN, R_ASSIGN_RIGHT, SPEC, SYNONYMS, WRAPPERS)
 
 ERROR_EXITS = {'raise_statement', 'throw_statement'}
@@ -346,7 +346,8 @@ class Lowerer:
         opnode = self.role(node, roles, 'op') if kind != 'r_assign' else None
         aug = AUGMENTED.get(text(opnode)) if opnode is not None else None
         if kind == 'aug_assign' and aug is None:
-            aug = AUGMENTED.get(text(opnode), 'unknown')
+            # an operator without a table entry keeps its spelling: two unknown operators never unify
+            aug = AUGMENTED.get(text(opnode), 'op' + text(opnode))
         lkind, _ = self.kind(lhs)
         rkind, _ = self.kind(rhs)
         if lkind == 'tuple' and rkind == 'tuple':
@@ -452,7 +453,7 @@ class Lowerer:
             return elem(seq, self.expr(idx))
         if kind in ('binary', 'compare'):
             spelled = text(self.role(node, roles, 'op'))
-            name = OPERATORS.get(spelled, spelled)
+            name = LANG_OPERATORS.get(self.lang, {}).get(spelled) or OPERATORS.get(spelled, spelled)
             if name == 'fdiv' and self.lang in INT_SLASH:
                 name = 'div'
             return normalise(op(name, self.expr(self.role(node, roles, 'left')),

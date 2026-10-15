@@ -21,13 +21,17 @@ OPERATORS = {
     'quot': 'div', 'floor': 'div', '%': 'mod', 'mod': 'mod', 'rem': 'mod',
     '%%': 'mod', '/': 'fdiv', '&&': 'and', 'and': 'and', '||': 'or', 'or': 'or',
     '&': 'and', '|': 'or', '!': 'not', 'not': 'not', '1+': 'inc', '1-': 'dec',
-    '>>': 'shr', '>>>': 'shr', 'ash': 'shl',
+    '>>': 'shr', '>>>': 'shr', 'ash': 'shl', '<<': 'shl', '^': 'xor', 'xor': 'xor',
+    '**': 'pow', '^^': 'pow',
 }
+# Same spelling, different meaning: '^' is xor in C-family languages, power in Haskell and R.
+LANG_OPERATORS = {'haskell': {'^': 'pow', '^^': 'pow', '**': 'pow'}, 'r': {'^': 'pow'}}
 # Constructors that only wrap a result ("found" markers): transparent (Some x, Just x, Ok x).
 WRAPPERS = {'Some', 'Just', 'Ok'}
 # Languages whose '/' on integers is integer division.
 INT_SLASH = {'c', 'java', 'rust', 'commonlisp'}
-AUGMENTED = {'+=': 'add', '-=': 'sub', '*=': 'mul', '/=': 'div', '//=': 'div', '%=': 'mod'}
+AUGMENTED = {'+=': 'add', '-=': 'sub', '*=': 'mul', '/=': 'div', '//=': 'div', '%=': 'mod',
+             '>>=': 'shr', '>>>=': 'shr', '<<=': 'shl', '^=': 'xor', '&=': 'and', '|=': 'or', '**=': 'pow'}
 # Calls that only measure a sequence (P7 in doc 02).
 LENGTH_CALLS = {'len', 'length', 'size', 'count', 'nrow'}
 # Calls that exchange two positions of a sequence: (sequence, i, j).

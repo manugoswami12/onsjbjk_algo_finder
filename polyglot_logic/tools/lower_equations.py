@@ -6,7 +6,7 @@ updates; list patterns x:y:rest address positions $cursor, $cursor+1 (doc 01 §7
 from __future__ import annotations
 
 from fact_io import Ctx, FactSet, call, elem, num, op, other, var
-from lang_tables import FOLDS, HASKELL_FIXITY, HASKELL_INDEX, LENGTH_CALLS, OPERATORS, SYNONYMS, WRAPPERS
+from lang_tables import FOLDS, HASKELL_FIXITY, HASKELL_INDEX, LANG_OPERATORS, LENGTH_CALLS, OPERATORS, SYNONYMS, WRAPPERS
 
 CURSOR = var('$cursor')
 
@@ -363,7 +363,7 @@ class Lowerer:
             return ('concat', (a[1] if a[0] == 'concat' else [a]) + (b[1] if b[0] == 'concat' else [b]))
         if o in HASKELL_INDEX:
             return elem(a, b)
-        name = OPERATORS.get(o, o)
+        name = LANG_OPERATORS['haskell'].get(o) or OPERATORS.get(o, o)
         if name == 'add' and a[0] == 'int' and b[0] != 'int':
             a, b = b, a
         return op(name, a, b)
