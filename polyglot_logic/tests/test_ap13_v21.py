@@ -40,6 +40,11 @@ class LoweringV21(unittest.TestCase):
         self.assertNotIn("'comma'", text)
         self.assertIn("'call'('c',['var'('i'),'op'('add',['var'('i'),'int'(1)])])", text)
 
+    def test_recursive_function_with_element_writes_lowers(self):
+        # parameter updates are de-duplicated by rendered term (terms hold lists)
+        text = facts(V21 / 'recursive_write.py')
+        self.assertIn("assign('s4','var'('i'),'op'('add',['var'('i'),'int'(1)]))", text)
+
     def test_prefilter_keeps_index_shift_family(self):
         from knowledge_store import fact_features
         have = fact_features("assign('s1','elem'('var'('a'),'op'('sub',['var'('i'),'int'(1)])),'int'(0)).")

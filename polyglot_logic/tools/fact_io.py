@@ -182,12 +182,12 @@ class FactSet:
             # every self-call updates its parameters (also non-tail calls such as n * f(n - 1),
             # which equational lowerers do not model as one step)
             ps = params.get(f, [])
-            updated = {(a[0], a[1]) for a in self.facts['assign']}
+            updated = {(a[0], term(a[1])) for a in self.facts['assign']}   # terms hold lists
             for s, _, args in [a for a in self.facts['call_at'] if a[0] in own and a[1] == SELF]:
                 for k, arg in enumerate(args[:len(ps)]):
-                    if arg != var(ps[k]) and (s, var(ps[k])) not in updated:
+                    if arg != var(ps[k]) and (s, term(var(ps[k]))) not in updated:
                         self.facts['assign'].append((s, var(ps[k]), arg))
-                        updated.add((s, var(ps[k])))
+                        updated.add((s, term(var(ps[k]))))
             if f in rec:
                 continue  # equational lowerers already modelled the recursion loop
             loop_id = self.new_id('s')
