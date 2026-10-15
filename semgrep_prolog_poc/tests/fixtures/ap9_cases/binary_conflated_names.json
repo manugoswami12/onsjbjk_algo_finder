@@ -1,0 +1,1267 @@
+{
+ "Pr": [
+  {
+   "ExprStmt": [
+    {
+     "L": {
+      "String": [
+       "Positive example; function name intentionally avoids 'binary_search'.",
+       "()"
+      ]
+     }
+    },
+    "()"
+   ]
+  },
+  {
+   "DefStmt": [
+    {
+     "name": {
+      "EN": {
+       "Id": [
+        [
+         "locate_item",
+         "()"
+        ],
+        {
+         "id_info_id": 23,
+         "id_flags": {
+          "ref@": 0
+         },
+         "id_resolved_alternative": {
+          "ref@": []
+         },
+         "id_resolved": {
+          "ref@": null
+         },
+         "id_type": {
+          "ref@": null
+         },
+         "id_svalue": {
+          "ref@": "Unknown"
+         }
+        }
+       ]
+      }
+     },
+     "attrs": [],
+     "tparams": null
+    },
+    {
+     "FuncDef": {
+      "fkind": [
+       "Function",
+       "()"
+      ],
+      "fparams": [
+       {
+        "Param": {
+         "pname": {
+          "some": [
+           "values",
+           "()"
+          ]
+         },
+         "pdefault": null,
+         "ptype": null,
+         "pattrs": [],
+         "pinfo": {
+          "id_info_id": 1,
+          "id_flags": {
+           "ref@": 0
+          },
+          "id_resolved_alternative": {
+           "ref@": []
+          },
+          "id_resolved": {
+           "ref@": {
+            "some": [
+             "Parameter",
+             0
+            ]
+           }
+          },
+          "id_type": {
+           "ref@": null
+          },
+          "id_svalue": {
+           "ref@": "Unknown"
+          }
+         }
+        }
+       },
+       {
+        "Param": {
+         "pname": {
+          "some": [
+           "target",
+           "()"
+          ]
+         },
+         "pdefault": null,
+         "ptype": null,
+         "pattrs": [],
+         "pinfo": {
+          "id_info_id": 2,
+          "id_flags": {
+           "ref@": 0
+          },
+          "id_resolved_alternative": {
+           "ref@": []
+          },
+          "id_resolved": {
+           "ref@": {
+            "some": [
+             "Parameter",
+             1
+            ]
+           }
+          },
+          "id_type": {
+           "ref@": null
+          },
+          "id_svalue": {
+           "ref@": "Unknown"
+          }
+         }
+        }
+       }
+      ],
+      "frettype": null,
+      "fbody": {
+       "FBStmt": {
+        "Block": [
+         {
+          "ExprStmt": [
+           {
+            "Assign": [
+             {
+              "N": {
+               "Id": [
+                [
+                 "upper",
+                 "()"
+                ],
+                {
+                 "id_info_id": 3,
+                 "id_flags": {
+                  "ref@": 0
+                 },
+                 "id_resolved_alternative": {
+                  "ref@": []
+                 },
+                 "id_resolved": {
+                  "ref@": {
+                   "some": [
+                    "LocalVar",
+                    2
+                   ]
+                  }
+                 },
+                 "id_type": {
+                  "ref@": {
+                   "some": {
+                    "t_attrs": [],
+                    "t": {
+                     "TyN": {
+                      "Id": [
+                       [
+                        "int",
+                        "()"
+                       ],
+                       {
+                        "id_info_id": 24,
+                        "id_flags": {
+                         "ref@": 0
+                        },
+                        "id_resolved_alternative": {
+                         "ref@": []
+                        },
+                        "id_resolved": {
+                         "ref@": null
+                        },
+                        "id_type": {
+                         "ref@": null
+                        },
+                        "id_svalue": {
+                         "ref@": "Unknown"
+                        }
+                       }
+                      ]
+                     }
+                    }
+                   }
+                  }
+                 },
+                 "id_svalue": {
+                  "ref@": "Unknown"
+                 }
+                }
+               ]
+              }
+             },
+             "()",
+             {
+              "L": {
+               "Int": [
+                {
+                 "some": 0
+                },
+                "()"
+               ]
+              }
+             }
+            ]
+           },
+           "()"
+          ]
+         },
+         {
+          "ExprStmt": [
+           {
+            "Assign": [
+             {
+              "N": {
+               "Id": [
+                [
+                 "upper",
+                 "()"
+                ],
+                {
+                 "id_info_id": 4,
+                 "id_flags": {
+                  "ref@": 0
+                 },
+                 "id_resolved_alternative": {
+                  "ref@": []
+                 },
+                 "id_resolved": {
+                  "ref@": {
+                   "some": [
+                    "LocalVar",
+                    3
+                   ]
+                  }
+                 },
+                 "id_type": {
+                  "ref@": null
+                 },
+                 "id_svalue": {
+                  "ref@": "Unknown"
+                 }
+                }
+               ]
+              }
+             },
+             "()",
+             {
+              "Call": [
+               {
+                "Special": [
+                 {
+                  "Op": "Minus"
+                 },
+                 "()"
+                ]
+               },
+               [
+                {
+                 "Arg": {
+                  "Call": [
+                   {
+                    "N": {
+                     "Id": [
+                      [
+                       "len",
+                       "()"
+                      ],
+                      {
+                       "id_info_id": 5,
+                       "id_flags": {
+                        "ref@": 0
+                       },
+                       "id_resolved_alternative": {
+                        "ref@": []
+                       },
+                       "id_resolved": {
+                        "ref@": null
+                       },
+                       "id_type": {
+                        "ref@": null
+                       },
+                       "id_svalue": {
+                        "ref@": "Unknown"
+                       }
+                      }
+                     ]
+                    }
+                   },
+                   [
+                    {
+                     "Arg": {
+                      "N": {
+                       "Id": [
+                        [
+                         "values",
+                         "()"
+                        ],
+                        {
+                         "id_info_id": 6,
+                         "id_flags": {
+                          "ref@": 0
+                         },
+                         "id_resolved_alternative": {
+                          "ref@": []
+                         },
+                         "id_resolved": {
+                          "ref@": {
+                           "some": [
+                            "Parameter",
+                            0
+                           ]
+                          }
+                         },
+                         "id_type": {
+                          "ref@": null
+                         },
+                         "id_svalue": {
+                          "ref@": "Unknown"
+                         }
+                        }
+                       ]
+                      }
+                     }
+                    }
+                   ]
+                  ]
+                 }
+                },
+                {
+                 "Arg": {
+                  "L": {
+                   "Int": [
+                    {
+                     "some": 1
+                    },
+                    "()"
+                   ]
+                  }
+                 }
+                }
+               ]
+              ]
+             }
+            ]
+           },
+           "()"
+          ]
+         },
+         {
+          "While": [
+           "()",
+           {
+            "Cond": {
+             "Call": [
+              {
+               "Special": [
+                {
+                 "Op": "LtE"
+                },
+                "()"
+               ]
+              },
+              [
+               {
+                "Arg": {
+                 "N": {
+                  "Id": [
+                   [
+                    "upper",
+                    "()"
+                   ],
+                   {
+                    "id_info_id": 7,
+                    "id_flags": {
+                     "ref@": 0
+                    },
+                    "id_resolved_alternative": {
+                     "ref@": []
+                    },
+                    "id_resolved": {
+                     "ref@": {
+                      "some": [
+                       "LocalVar",
+                       2
+                      ]
+                     }
+                    },
+                    "id_type": {
+                     "ref@": {
+                      "some": {
+                       "t_attrs": [],
+                       "t": {
+                        "TyN": {
+                         "Id": [
+                          [
+                           "int",
+                           "()"
+                          ],
+                          {
+                           "id_info_id": 24,
+                           "id_flags": {
+                            "ref@": 0
+                           },
+                           "id_resolved_alternative": {
+                            "ref@": []
+                           },
+                           "id_resolved": {
+                            "ref@": null
+                           },
+                           "id_type": {
+                            "ref@": null
+                           },
+                           "id_svalue": {
+                            "ref@": "Unknown"
+                           }
+                          }
+                         ]
+                        }
+                       }
+                      }
+                     }
+                    },
+                    "id_svalue": {
+                     "ref@": "Unknown"
+                    }
+                   }
+                  ]
+                 }
+                }
+               },
+               {
+                "Arg": {
+                 "N": {
+                  "Id": [
+                   [
+                    "upper",
+                    "()"
+                   ],
+                   {
+                    "id_info_id": 8,
+                    "id_flags": {
+                     "ref@": 0
+                    },
+                    "id_resolved_alternative": {
+                     "ref@": []
+                    },
+                    "id_resolved": {
+                     "ref@": {
+                      "some": [
+                       "LocalVar",
+                       3
+                      ]
+                     }
+                    },
+                    "id_type": {
+                     "ref@": null
+                    },
+                    "id_svalue": {
+                     "ref@": "Unknown"
+                    }
+                   }
+                  ]
+                 }
+                }
+               }
+              ]
+             ]
+            }
+           },
+           {
+            "Block": [
+             {
+              "ExprStmt": [
+               {
+                "Assign": [
+                 {
+                  "N": {
+                   "Id": [
+                    [
+                     "pivot",
+                     "()"
+                    ],
+                    {
+                     "id_info_id": 9,
+                     "id_flags": {
+                      "ref@": 0
+                     },
+                     "id_resolved_alternative": {
+                      "ref@": []
+                     },
+                     "id_resolved": {
+                      "ref@": {
+                       "some": [
+                        "LocalVar",
+                        4
+                       ]
+                      }
+                     },
+                     "id_type": {
+                      "ref@": null
+                     },
+                     "id_svalue": {
+                      "ref@": "Unknown"
+                     }
+                    }
+                   ]
+                  }
+                 },
+                 "()",
+                 {
+                  "Call": [
+                   {
+                    "Special": [
+                     {
+                      "Op": "FloorDiv"
+                     },
+                     "()"
+                    ]
+                   },
+                   [
+                    {
+                     "Arg": {
+                      "Call": [
+                       {
+                        "Special": [
+                         {
+                          "Op": "Plus"
+                         },
+                         "()"
+                        ]
+                       },
+                       [
+                        {
+                         "Arg": {
+                          "N": {
+                           "Id": [
+                            [
+                             "upper",
+                             "()"
+                            ],
+                            {
+                             "id_info_id": 10,
+                             "id_flags": {
+                              "ref@": 0
+                             },
+                             "id_resolved_alternative": {
+                              "ref@": []
+                             },
+                             "id_resolved": {
+                              "ref@": {
+                               "some": [
+                                "LocalVar",
+                                2
+                               ]
+                              }
+                             },
+                             "id_type": {
+                              "ref@": {
+                               "some": {
+                                "t_attrs": [],
+                                "t": {
+                                 "TyN": {
+                                  "Id": [
+                                   [
+                                    "int",
+                                    "()"
+                                   ],
+                                   {
+                                    "id_info_id": 24,
+                                    "id_flags": {
+                                     "ref@": 0
+                                    },
+                                    "id_resolved_alternative": {
+                                     "ref@": []
+                                    },
+                                    "id_resolved": {
+                                     "ref@": null
+                                    },
+                                    "id_type": {
+                                     "ref@": null
+                                    },
+                                    "id_svalue": {
+                                     "ref@": "Unknown"
+                                    }
+                                   }
+                                  ]
+                                 }
+                                }
+                               }
+                              }
+                             },
+                             "id_svalue": {
+                              "ref@": "Unknown"
+                             }
+                            }
+                           ]
+                          }
+                         }
+                        },
+                        {
+                         "Arg": {
+                          "N": {
+                           "Id": [
+                            [
+                             "upper",
+                             "()"
+                            ],
+                            {
+                             "id_info_id": 11,
+                             "id_flags": {
+                              "ref@": 0
+                             },
+                             "id_resolved_alternative": {
+                              "ref@": []
+                             },
+                             "id_resolved": {
+                              "ref@": {
+                               "some": [
+                                "LocalVar",
+                                3
+                               ]
+                              }
+                             },
+                             "id_type": {
+                              "ref@": null
+                             },
+                             "id_svalue": {
+                              "ref@": "Unknown"
+                             }
+                            }
+                           ]
+                          }
+                         }
+                        }
+                       ]
+                      ]
+                     }
+                    },
+                    {
+                     "Arg": {
+                      "L": {
+                       "Int": [
+                        {
+                         "some": 2
+                        },
+                        "()"
+                       ]
+                      }
+                     }
+                    }
+                   ]
+                  ]
+                 }
+                ]
+               },
+               "()"
+              ]
+             },
+             {
+              "If": [
+               "()",
+               {
+                "Cond": {
+                 "Call": [
+                  {
+                   "Special": [
+                    {
+                     "Op": "Eq"
+                    },
+                    "()"
+                   ]
+                  },
+                  [
+                   {
+                    "Arg": {
+                     "ArrayAccess": [
+                      {
+                       "N": {
+                        "Id": [
+                         [
+                          "values",
+                          "()"
+                         ],
+                         {
+                          "id_info_id": 12,
+                          "id_flags": {
+                           "ref@": 0
+                          },
+                          "id_resolved_alternative": {
+                           "ref@": []
+                          },
+                          "id_resolved": {
+                           "ref@": {
+                            "some": [
+                             "Parameter",
+                             0
+                            ]
+                           }
+                          },
+                          "id_type": {
+                           "ref@": null
+                          },
+                          "id_svalue": {
+                           "ref@": "Unknown"
+                          }
+                         }
+                        ]
+                       }
+                      },
+                      {
+                       "N": {
+                        "Id": [
+                         [
+                          "pivot",
+                          "()"
+                         ],
+                         {
+                          "id_info_id": 13,
+                          "id_flags": {
+                           "ref@": 0
+                          },
+                          "id_resolved_alternative": {
+                           "ref@": []
+                          },
+                          "id_resolved": {
+                           "ref@": {
+                            "some": [
+                             "LocalVar",
+                             4
+                            ]
+                           }
+                          },
+                          "id_type": {
+                           "ref@": null
+                          },
+                          "id_svalue": {
+                           "ref@": "Sym"
+                          }
+                         }
+                        ]
+                       }
+                      }
+                     ]
+                    }
+                   },
+                   {
+                    "Arg": {
+                     "N": {
+                      "Id": [
+                       [
+                        "target",
+                        "()"
+                       ],
+                       {
+                        "id_info_id": 14,
+                        "id_flags": {
+                         "ref@": 0
+                        },
+                        "id_resolved_alternative": {
+                         "ref@": []
+                        },
+                        "id_resolved": {
+                         "ref@": {
+                          "some": [
+                           "Parameter",
+                           1
+                          ]
+                         }
+                        },
+                        "id_type": {
+                         "ref@": null
+                        },
+                        "id_svalue": {
+                         "ref@": "Unknown"
+                        }
+                       }
+                      ]
+                     }
+                    }
+                   }
+                  ]
+                 ]
+                }
+               },
+               {
+                "Block": [
+                 {
+                  "Return": [
+                   "()",
+                   {
+                    "some": {
+                     "N": {
+                      "Id": [
+                       [
+                        "pivot",
+                        "()"
+                       ],
+                       {
+                        "id_info_id": 15,
+                        "id_flags": {
+                         "ref@": 0
+                        },
+                        "id_resolved_alternative": {
+                         "ref@": []
+                        },
+                        "id_resolved": {
+                         "ref@": {
+                          "some": [
+                           "LocalVar",
+                           4
+                          ]
+                         }
+                        },
+                        "id_type": {
+                         "ref@": null
+                        },
+                        "id_svalue": {
+                         "ref@": "Sym"
+                        }
+                       }
+                      ]
+                     }
+                    }
+                   },
+                   "()"
+                  ]
+                 }
+                ]
+               },
+               null
+              ]
+             },
+             {
+              "If": [
+               "()",
+               {
+                "Cond": {
+                 "Call": [
+                  {
+                   "Special": [
+                    {
+                     "Op": "Lt"
+                    },
+                    "()"
+                   ]
+                  },
+                  [
+                   {
+                    "Arg": {
+                     "ArrayAccess": [
+                      {
+                       "N": {
+                        "Id": [
+                         [
+                          "values",
+                          "()"
+                         ],
+                         {
+                          "id_info_id": 16,
+                          "id_flags": {
+                           "ref@": 0
+                          },
+                          "id_resolved_alternative": {
+                           "ref@": []
+                          },
+                          "id_resolved": {
+                           "ref@": {
+                            "some": [
+                             "Parameter",
+                             0
+                            ]
+                           }
+                          },
+                          "id_type": {
+                           "ref@": null
+                          },
+                          "id_svalue": {
+                           "ref@": "Unknown"
+                          }
+                         }
+                        ]
+                       }
+                      },
+                      {
+                       "N": {
+                        "Id": [
+                         [
+                          "pivot",
+                          "()"
+                         ],
+                         {
+                          "id_info_id": 17,
+                          "id_flags": {
+                           "ref@": 0
+                          },
+                          "id_resolved_alternative": {
+                           "ref@": []
+                          },
+                          "id_resolved": {
+                           "ref@": {
+                            "some": [
+                             "LocalVar",
+                             4
+                            ]
+                           }
+                          },
+                          "id_type": {
+                           "ref@": null
+                          },
+                          "id_svalue": {
+                           "ref@": "Sym"
+                          }
+                         }
+                        ]
+                       }
+                      }
+                     ]
+                    }
+                   },
+                   {
+                    "Arg": {
+                     "N": {
+                      "Id": [
+                       [
+                        "target",
+                        "()"
+                       ],
+                       {
+                        "id_info_id": 18,
+                        "id_flags": {
+                         "ref@": 0
+                        },
+                        "id_resolved_alternative": {
+                         "ref@": []
+                        },
+                        "id_resolved": {
+                         "ref@": {
+                          "some": [
+                           "Parameter",
+                           1
+                          ]
+                         }
+                        },
+                        "id_type": {
+                         "ref@": null
+                        },
+                        "id_svalue": {
+                         "ref@": "Unknown"
+                        }
+                       }
+                      ]
+                     }
+                    }
+                   }
+                  ]
+                 ]
+                }
+               },
+               {
+                "Block": [
+                 {
+                  "ExprStmt": [
+                   {
+                    "Assign": [
+                     {
+                      "N": {
+                       "Id": [
+                        [
+                         "upper",
+                         "()"
+                        ],
+                        {
+                         "id_info_id": 19,
+                         "id_flags": {
+                          "ref@": 0
+                         },
+                         "id_resolved_alternative": {
+                          "ref@": []
+                         },
+                         "id_resolved": {
+                          "ref@": {
+                           "some": [
+                            "LocalVar",
+                            2
+                           ]
+                          }
+                         },
+                         "id_type": {
+                          "ref@": {
+                           "some": {
+                            "t_attrs": [],
+                            "t": {
+                             "TyN": {
+                              "Id": [
+                               [
+                                "int",
+                                "()"
+                               ],
+                               {
+                                "id_info_id": 24,
+                                "id_flags": {
+                                 "ref@": 0
+                                },
+                                "id_resolved_alternative": {
+                                 "ref@": []
+                                },
+                                "id_resolved": {
+                                 "ref@": null
+                                },
+                                "id_type": {
+                                 "ref@": null
+                                },
+                                "id_svalue": {
+                                 "ref@": "Unknown"
+                                }
+                               }
+                              ]
+                             }
+                            }
+                           }
+                          }
+                         },
+                         "id_svalue": {
+                          "ref@": "Unknown"
+                         }
+                        }
+                       ]
+                      }
+                     },
+                     "()",
+                     {
+                      "Call": [
+                       {
+                        "Special": [
+                         {
+                          "Op": "Plus"
+                         },
+                         "()"
+                        ]
+                       },
+                       [
+                        {
+                         "Arg": {
+                          "N": {
+                           "Id": [
+                            [
+                             "pivot",
+                             "()"
+                            ],
+                            {
+                             "id_info_id": 20,
+                             "id_flags": {
+                              "ref@": 0
+                             },
+                             "id_resolved_alternative": {
+                              "ref@": []
+                             },
+                             "id_resolved": {
+                              "ref@": {
+                               "some": [
+                                "LocalVar",
+                                4
+                               ]
+                              }
+                             },
+                             "id_type": {
+                              "ref@": null
+                             },
+                             "id_svalue": {
+                              "ref@": "Sym"
+                             }
+                            }
+                           ]
+                          }
+                         }
+                        },
+                        {
+                         "Arg": {
+                          "L": {
+                           "Int": [
+                            {
+                             "some": 1
+                            },
+                            "()"
+                           ]
+                          }
+                         }
+                        }
+                       ]
+                      ]
+                     }
+                    ]
+                   },
+                   "()"
+                  ]
+                 }
+                ]
+               },
+               {
+                "some": {
+                 "Block": [
+                  {
+                   "ExprStmt": [
+                    {
+                     "Assign": [
+                      {
+                       "N": {
+                        "Id": [
+                         [
+                          "upper",
+                          "()"
+                         ],
+                         {
+                          "id_info_id": 21,
+                          "id_flags": {
+                           "ref@": 0
+                          },
+                          "id_resolved_alternative": {
+                           "ref@": []
+                          },
+                          "id_resolved": {
+                           "ref@": {
+                            "some": [
+                             "LocalVar",
+                             3
+                            ]
+                           }
+                          },
+                          "id_type": {
+                           "ref@": null
+                          },
+                          "id_svalue": {
+                           "ref@": "Unknown"
+                          }
+                         }
+                        ]
+                       }
+                      },
+                      "()",
+                      {
+                       "Call": [
+                        {
+                         "Special": [
+                          {
+                           "Op": "Minus"
+                          },
+                          "()"
+                         ]
+                        },
+                        [
+                         {
+                          "Arg": {
+                           "N": {
+                            "Id": [
+                             [
+                              "pivot",
+                              "()"
+                             ],
+                             {
+                              "id_info_id": 22,
+                              "id_flags": {
+                               "ref@": 0
+                              },
+                              "id_resolved_alternative": {
+                               "ref@": []
+                              },
+                              "id_resolved": {
+                               "ref@": {
+                                "some": [
+                                 "LocalVar",
+                                 4
+                                ]
+                               }
+                              },
+                              "id_type": {
+                               "ref@": null
+                              },
+                              "id_svalue": {
+                               "ref@": "Sym"
+                              }
+                             }
+                            ]
+                           }
+                          }
+                         },
+                         {
+                          "Arg": {
+                           "L": {
+                            "Int": [
+                             {
+                              "some": 1
+                             },
+                             "()"
+                            ]
+                           }
+                          }
+                         }
+                        ]
+                       ]
+                      }
+                     ]
+                    },
+                    "()"
+                   ]
+                  }
+                 ]
+                }
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         },
+         {
+          "Return": [
+           "()",
+           {
+            "some": {
+             "Call": [
+              {
+               "Special": [
+                {
+                 "Op": "Minus"
+                },
+                "()"
+               ]
+              },
+              [
+               {
+                "Arg": {
+                 "L": {
+                  "Int": [
+                   {
+                    "some": 1
+                   },
+                   "()"
+                  ]
+                 }
+                }
+               }
+              ]
+             ]
+            }
+           },
+           "()"
+          ]
+         }
+        ]
+       }
+      }
+     }
+    }
+   ]
+  }
+ ]
+}

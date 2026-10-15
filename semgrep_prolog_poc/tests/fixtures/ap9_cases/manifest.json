@@ -1,0 +1,89 @@
+{
+  "note": "Captured real binary AST, AP8 derived synthetic positive interleaved AST; labels manually assigned, not inferred.",
+  "references": [
+    {
+      "label": "binary_search_ref",
+      "ast_json": "binary_exact.json",
+      "function": "locate_item",
+      "region": "body"
+    },
+    {
+      "label": "sort_hash_ref",
+      "ast_json": "sort_hash_reference.json",
+      "function": "inspect_items",
+      "region": "body"
+    }
+  ],
+  "cases": [
+    {
+      "id": "binary_exact",
+      "ast_json": "binary_exact.json",
+      "expected": [
+        {
+          "label": "binary_search_ref",
+          "function": "locate_item"
+        }
+      ]
+    },
+    {
+      "id": "binary_renamed",
+      "ast_json": "binary_renamed.json",
+      "expected": [
+        {
+          "label": "binary_search_ref",
+          "function": "renamed_search"
+        }
+      ]
+    },
+    {
+      "id": "binary_bad_operator",
+      "ast_json": "binary_bad_operator.json",
+      "expected": []
+    },
+    {
+      "id": "binary_bad_literal",
+      "ast_json": "binary_bad_literal.json",
+      "expected": []
+    },
+    {
+      "id": "binary_bad_builtin",
+      "ast_json": "binary_bad_builtin.json",
+      "expected": []
+    },
+    {
+      "id": "binary_conflated_names",
+      "ast_json": "binary_conflated_names.json",
+      "expected": []
+    },
+    {
+      "id": "sort_hash_reference",
+      "ast_json": "sort_hash_reference.json",
+      "expected": [
+        {
+          "label": "sort_hash_ref",
+          "function": "inspect_items"
+        }
+      ]
+    },
+    {
+      "id": "sort_hash_renamed",
+      "ast_json": "sort_hash_renamed.json",
+      "expected": [
+        {
+          "label": "sort_hash_ref",
+          "function": "blend"
+        }
+      ]
+    },
+    {
+      "id": "sort_hash_wrong_bounds",
+      "ast_json": "sort_hash_wrong_bounds.json",
+      "expected": []
+    },
+    {
+      "id": "sort_hash_wrong_state",
+      "ast_json": "sort_hash_wrong_state.json",
+      "expected": []
+    }
+  ]
+}

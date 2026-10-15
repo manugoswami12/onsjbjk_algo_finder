@@ -1,0 +1,26 @@
+# Generated data, caches, local environments, secret files
+**/__pycache__/
+*.py[cod]
+**/.pytest_cache/
+**/.mypy_cache/
+**/.ruff_cache/
+**/.venv/
+**/venv/
+**/.env
+**/.env.*
+*.sqlite
+*.sqlite3
+*.sqlite3-*
+*.db
+*.db-*
+*.log
+*.tmp
+*.bak
+*.zip
+*.7z
+*.rar
+*.pem
+*.key
+**/out/
+**/store/
+algo_reference_corpus/TheAlgorithms_Python/
