@@ -49,6 +49,7 @@ ref_args([A], Refs) :- atom_concat('@', File, A), !,
 ref_args(Refs, Refs).
 
 scan_main :-
+    nb_setval(ap13_commute, true),
     current_prolog_flag(argv, [Facts|Args]), ref_args(Args, Refs),
     load_data(Facts), maplist(load_reference, Refs),
     assert_observations,
@@ -63,10 +64,11 @@ scan_main :-
            leaf_line(Label, Branch)).
 
 leaf_line(Label, Branch) :-
-    (   leaf_result(Label, Branch, match(Names, Funcs))
+    (   leaf_result(Label, Branch, match(Names, Funcs, Cover))
     ->  reference(Label, Branch, Rels, _), length(Rels, NR),
         atomic_list_concat(Names, ',', N), atomic_list_concat(Funcs, ',', Fs),
-        format('LEAF|MATCH|~w|~w|~w|~w|~w~n', [Label, Branch, Fs, N, NR])
+        ( Cover == full -> Tag = 'MATCH' ; Tag = 'CONTAINS' ),
+        format('LEAF|~w|~w|~w|~w|~w|~w~n', [Tag, Label, Branch, Fs, N, NR])
     ;   leaf_result(Label, Branch, partial(Missing, Present, Total)), Present * 4 >= Total * 3
     ->  atomic_list_concat(Missing, ',', M0), ( M0 == '' -> M = 'inconsistent_bindings' ; M = M0 ),
         format('LEAF|PARTIAL|~w|~w|~w/~w|~w~n', [Label, Branch, Present, Total, M])
@@ -126,6 +128,7 @@ best_branch(BS, B) :- BS \== [], findall(S-B0, member(B0-S, BS), P), max_member(
 % facts of variant B. A relation that fails is retried with its integer
 % constants abstracted (least general generalisation over constants).
 gen_main :-
+    nb_setval(ap13_commute, true),
     current_prolog_flag(argv, [Facts|Args]), ref_args(Args, Refs),
     load_data(Facts), maplist(load_reference, Refs),
     forall(reference(Label, Branch, Rels, _), bounded_gen(Label, Branch, Rels)).
@@ -141,15 +144,29 @@ bounded_gen(_, _, _).
 gen_one(Label, Branch, Rels) :-
     copy_term(Rels, R0),
     \+ ( copy_term(R0, T), consistent(T) ),            % A already matches B: nothing to learn
-    greedy_core(R0, [], Core),
+    informative_first(R0, R1), greedy_core(R1, [], Core),
     length(Rels, N), length(Core, NC),
     NC * 10 >= N * 6, NC < N,
-    quality(Core, usable), !,
-    term_variables(Core, Vs0), core_names(Core, Vs0, Names),
+    copy_term(Core, Ground), numbervars(Ground, 0, _), quality(Ground, usable), !,   % never bind the core
+    core_names(Core, _, Names),
     format('GEN|~w|~w|~w~n', [Label, Branch, NC]),
     portray_clause(reference(gen, Branch, Core, Names)),
     format('END~n').
 gen_one(_, _, _).
+
+% the greedy core is order dependent: effects first, bare returns last, so a
+% returned variable cannot claim a name the traced computation needs
+informative_first(Rs, Sorted) :-
+    map_list_to_pairs(rel_rank, Rs, Ps), keysort(Ps, S), pairs_values(S, Sorted).
+rel_rank(exchange(_, _, _, _), 0) :- !.
+rel_rank(capp(_, _, _), 0) :- !.
+rel_rank(value(_, _, _), 1) :- !.
+rel_rank(nguard(_, _, _), 2) :- !.
+rel_rank(lcond(_, _), 2) :- !.
+rel_rank(cret(_, V), 4) :- var_term(V), !.
+rel_rank(cret(_, _), 1) :- !.
+rel_rank(_, 3).
+var_term(V) :- compound(V), V = var(_).
 
 greedy_core([], Kept, Kept).
 greedy_core([R|Rs], Kept, Core) :-
@@ -168,9 +185,8 @@ abstract_ints(int(_), int(_)) :- !.
 abstract_ints(T, T) :- \+ compound(T), !.
 abstract_ints(T0, T) :- T0 =.. [F|As], maplist(abstract_ints, As, Bs), T =.. [F|Bs].
 
-% variables that stand for program names: those inside var(_)
+% variables that stand for program names: those inside var(_). Collected from
+% term_variables/2, never with findall/3 (which would copy them: fresh variables).
 core_names(Core, _, Names) :-
-    findall(V, (sub_term(var(V), Core), var(V)), Vs), list_to_ord_set_vars(Vs, Names).
-list_to_ord_set_vars([], []).
-list_to_ord_set_vars([V|Vs], Out) :-
-    ( member(W, Vs), W == V -> list_to_ord_set_vars(Vs, Out) ; Out = [V|Rest], list_to_ord_set_vars(Vs, Rest) ).
+    term_variables(Core, Vs), include(name_var(Core), Vs, Names).
+name_var(Core, V) :- sub_term(S, Core), compound(S), S = var(W), W == V, !.

@@ -103,10 +103,22 @@ lvar(L, var(N)) :- loop_var(L, N).
 
 % ----- values: copy propagation of single-definition temporaries --------------
 value(S, T, V) :- assign(S, T, V0), live(S), stmt_func(S, F), resolve(F, S, V0, V1),
-    deep_norm(V1, V2), elem_iter(S, V2, V).
+    deep_norm(V1, V2), elem_iter(S, V2, V3), commute(V3, V).
 value(S, var(X), V) :-                           % a, b = b, a % b  (non-element targets)
     par_assign(S, Ts, Vs), live(S), nth0(K, Ts, var(X)), nth0(K, Vs, V0),
-    deep_norm(V0, V1), elem_iter(S, V1, V).
+    deep_norm(V0, V1), elem_iter(S, V1, V2), commute(V2, V).
+
+% ----- commutativity (matching only) -------------------------------------------
+% a + b == b + a: while MATCHING, a value may be read with the operands of a
+% commutative operator in either order (two outer levels, at most 8 variants).
+% Learning never sees the variants (the flag is off), so references stay single.
+commute(T0, T) :- ( nb_current(ap13_commute, true) -> comm(2, T0, T) ; T = T0 ).
+commutative(O) :- memberchk(O, [add, mul, and, or, xor, eq, ne, min, max]).
+comm(0, T, T) :- !.
+comm(_, T, T) :- \+ compound(T), !.
+comm(D, op(O, [A, B]), T) :- commutative(O), !, D1 is D - 1, comm(D1, A, A1), comm(D1, B, B1),
+    ( T = op(O, [A1, B1]) ; A1 \== B1, T = op(O, [B1, A1]) ).
+comm(D, T0, T) :- T0 =.. [F|As], D1 is D - 1, maplist(comm(D1), As, Bs), T =.. [F|Bs].
 
 % ----- G4: for x in s  ->  x is elem(s, x) inside that loop ---------------------
 elem_iter(S, T0, T) :-
@@ -119,14 +131,14 @@ elemize(_, T, T) :- atomic(T), !.
 elemize(P, T0, T) :- T0 =.. [F|As], maplist(elemize(P), As, Bs), T =.. [F|Bs].
 
 % canonical outputs: returns (and yields) and appends, with element iteration applied
-cret(S, V) :- ret(S, V0), live(S), cexpr(S, V0, V1), strip_self(V1, V).
+cret(S, V) :- ret(S, V0), live(S), cexpr(S, V0, V1), strip_self(V1, V2), commute(V2, V).
 
 % a recursive call is represented by its parameter updates (value/3), so the
 % call's argument order never matters: gcd(b % a, a) == gcd b (a mod b)
 strip_self(T, T) :- atomic(T), !.
 strip_self(call('$self', _), call('$self', [])) :- !.
 strip_self(T0, T) :- T0 =.. [F|As], maplist(strip_self, As, Bs), T =.. [F|Bs].
-capp(S, Q, X) :- call_at(S, append, [Q, X0]), live(S), cexpr(S, X0, X).
+capp(S, Q, X) :- call_at(S, append, [Q, X0]), live(S), cexpr(S, X0, X1), commute(X1, X).
 
 % copy propagation of a single-definition TEMPORARY (never a parameter: parameter
 % updates of a recursive call are simultaneous, never a definition of the same statement)

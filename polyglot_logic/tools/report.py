@@ -20,8 +20,8 @@ def parse_scan(lines):
             funcs[parts[1]]['evidence'].append(f'{parts[2]}@{parts[3]}')
         elif tag == 'UNSUP' and len(parts) == 4 and parts[1] in funcs:
             funcs[parts[1]]['unsupported'].append(f'{parts[2]}@{parts[3]}')
-        elif tag == 'LEAF' and parts[1] == 'MATCH' and len(parts) == 7:
-            leaves.append({'result': 'MATCH', 'label': parts[2], 'branch': parts[3],
+        elif tag == 'LEAF' and parts[1] in ('MATCH', 'CONTAINS') and len(parts) == 7:
+            leaves.append({'result': parts[1], 'label': parts[2], 'branch': parts[3],
                            'functions': parts[4], 'bindings': parts[5], 'relations': int(parts[6])})
         elif tag == 'LEAF' and parts[1] == 'PARTIAL' and len(parts) == 6:
             leaves.append({'result': 'PARTIAL', 'label': parts[2], 'branch': parts[3],
@@ -32,7 +32,8 @@ def parse_scan(lines):
         if not f['routes']:
             raise ToolError('Prolog omitted the route of ' + f['name'])
     # G9: most specific (most relations) first
-    leaves.sort(key=lambda x: (x['result'] != 'MATCH', -x.get('relations', 0), x['label']))
+    order = {'MATCH': 0, 'CONTAINS': 1, 'PARTIAL': 2}
+    leaves.sort(key=lambda x: (order[x['result']], -x.get('relations', 0), x['label']))
     return {'functions': list(funcs.values()), 'leaves': leaves}
 
 
@@ -64,6 +65,9 @@ def show_scan(path, lang, result, references):
         tag = 'IDENTIFIED' if i == 0 else 'ALSO CONSISTENT'
         print(f"LEAF MATCH: {m['label']} [{m['branch']}] functions={m['functions']} "
               f"names={m['bindings']} relations={m['relations']} ({tag})")
+    for c in [x for x in result['leaves'] if x['result'] == 'CONTAINS'][:3]:
+        print(f"LEAF CONTAINS: {c['label']} [{c['branch']}] functions={c['functions']} "
+              f"relations={c['relations']} (the function does more than this reference explains)")
     for p in partial[:3]:
         print(f"LEAF PARTIAL: {p['label']} [{p['branch']}] relations {p['present']}; missing: {p['missing']}")
     for algo in result.get('library', []):

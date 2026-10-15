@@ -188,8 +188,12 @@ class LiveAcceptance(unittest.TestCase):
             self.assertNotIn('interval_lookup', self.routes(result), path.name)
 
     def test_A5_mixed_function_reports_both_algorithms(self):
+        # v2.1 (doc 07): neither algorithm explains the whole function, so both are
+        # reported as CONTAINED, never as the identification of the function
         result = self.scan(POC / 'mixed.py')
-        self.assertEqual(self.leaf_matches(result), {'ref_bubble_py', 'ref_binary_py'})
+        self.assertEqual({x['label'] for x in result['leaves'] if x['result'] == 'CONTAINS'},
+                         {'ref_bubble_py', 'ref_binary_py'})
+        self.assertEqual(self.leaf_matches(result), set())
 
     def test_A5b_independent_candidate_that_ap11_missed(self):
         result = self.scan(REPO / 'semgrep_prolog_poc' / 'examples' / 'candidate.py')

@@ -221,7 +221,7 @@ def validate(corpus: Path, store: Path, workers: int = 4, min_files: int = 3, mi
         for n, (f, r, err) in enumerate(pool.map(run_one, files), 1):
             if r:
                 for x in r['leaves']:
-                    if x['result'] == 'MATCH':
+                    if x['result'] in ('MATCH', 'CONTAINS'):    # any one-way hold counts
                         for fn in x['functions'].split(','):
                             hits.setdefault(x['label'], set()).add((f, fn))
             if n % 200 == 0:

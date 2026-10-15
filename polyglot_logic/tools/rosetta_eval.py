@@ -114,6 +114,9 @@ def evaluate_v2(rosetta, store, truth, workers=4):
         ok = [bool(p & set(good)) for p in paths]
         outcome = 'unknown'
         lib_ok = set(r.get('library', [])) & set(truth.get('library', {}).get(task, []))
+        contained = {meta[x['label']]['source_path'] for x in r['leaves'] if x['result'] == 'CONTAINS'}
+        if not ids and contained:          # the function does more than any reference explains
+            outcome = 'contains_correct' if contained & set(good) else 'contains_other'
         if not ids and r.get('library'):  # library call/idiom only (reported separately)
             outcome = 'library_correct' if lib_ok else 'library_other'
         if ids:
@@ -134,6 +137,7 @@ def evaluate_v2(rosetta, store, truth, workers=4):
         return (f"{k:44s} files={s['files']:4d} top1_correct={s['top1_correct']:3d} "
                 f"correct_not_top1={s['any_correct']:3d} wrong={s['top1_wrong']:3d} "
                 f"library_correct={s['library_correct']:3d} library_other={s['library_other']:3d} "
+                f"contains_correct={s['contains_correct']:3d} contains_other={s['contains_other']:3d} "
                 f"unknown={s['unknown']:4d} errors={s['error']:2d}")
     print('\n=== AP13 v2 HELD-OUT RESULTS (references learned from the whole corpus) ===')
     for k in ['ALL', 'positive', 'negative'] + sorted(k for k in stats if k.startswith('lang:')) + \

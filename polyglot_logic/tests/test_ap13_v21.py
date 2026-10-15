@@ -80,6 +80,31 @@ class TracingV21(unittest.TestCase):
         self.assertIn('factorial', funcs)
         self.assertNotIn('product_of', funcs)
 
+    def test_commutative_operands_match_in_either_order(self):
+        from cli import scan
+        self.learned('sum_sq', V21 / 'sum_ab.py', 'total')
+        r = scan(V21 / 'sum_ba.c', self.store, True, quiet=True)
+        self.assertIn('sum_sq', {x['label'] for x in r['leaves'] if x['result'] == 'MATCH'})
+
+    def test_a_function_doing_more_only_contains_the_algorithm(self):
+        # GRASPR-style cover: the backward pass is not explained by bubble sort
+        from cli import scan
+        self.learned('bubble', ROOT / 'examples' / 'bubble' / 'bubble.py', 'bubble_sort')
+        r = scan(V21 / 'shaker.py', self.store, True, quiet=True)
+        self.assertEqual({x['label'] for x in r['leaves'] if x['result'] == 'CONTAINS'}, {'bubble'})
+        self.assertFalse([x for x in r['leaves'] if x['result'] == 'MATCH'])
+
+    def test_generalized_core_is_the_shared_logic_with_its_own_names(self):
+        from cli import generalize, learn_dir
+        learn_dir(V21 / 'variants', self.store, 100)
+        self.assertEqual(generalize(V21 / 'variants', self.store, workers=1).get('generated'), 1)
+        gen = next((self.store / 'patterns').glob('gen__*.pl')).read_text(encoding='utf-8')
+        self.assertIn('exchange(', gen)                 # the shared computation is kept
+        self.assertNotIn('cret(', gen)                  # the extra swap count is not
+        names = gen.rsplit('[', 1)[1].split(']')[0].split(', ')
+        for n in names:                                 # names are the clause's own variables
+            self.assertIn(f'var({n})', gen)
+
     def test_validate_and_generalize_commands_run(self):
         from cli import generalize, learn_dir, validate
         learn_dir(V2 / 'reference', self.store, 100)
