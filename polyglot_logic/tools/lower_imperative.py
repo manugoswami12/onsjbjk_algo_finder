@@ -5,8 +5,19 @@ One table-driven walker (lang_tables.SPEC); no per-language algorithm rules.
 from __future__ import annotations
 
 from fact_io import Ctx, FactSet, call, elem, num, op, other, var
-from lang_tables import (AUGMENTED, IMPLICIT_RETURN, INT_SLASH, LENGTH_CALLS, OPERATORS,
-                         R_ASSIGN, R_ASSIGN_RIGHT, SPEC, WRAPPERS)
+from lang_tables import (AUGMENTED, EXIT_STATEMENTS, IGNORED_STATEMENTS, IMPLICIT_RETURN, INT_SLASH,
+                         LENGTH_CALLS, OPERATORS, R_ASSIGN, R_ASSIGN_RIGHT, SPEC, SYNONYMS, WRAPPERS)
+
+ERROR_EXITS = {'raise_statement', 'throw_statement'}
+COUNTING_ITERS = {'range', 'xrange', 'seq_len', 'seq_along', 'seq'}
+ITER_ADAPTERS = {'iter', 'iter_mut', 'into_iter', 'chars', 'bytes', 'items', 'values'}
+EXTRA_SPEC = {  # v2 statement forms shared by the imperative languages
+    'yield': ('return', {'value': '#0'}),
+    'with_statement': ('wrap', {'body': 'body'}),
+    'try_statement': ('wrap', {'body': 'body'}),
+    'assert_statement': ('assert', {'cond': '#0'}),
+    'ternary_expression': ('ternary', {'cond': 'condition', 'then': 'consequence', 'else': 'alternative'}),
+}
 
 FALSE = ('bool', 'false')
 
@@ -35,7 +46,9 @@ class Lowerer:
             o = text(node.child_by_field_name('operator'))
             if o in R_ASSIGN or o in R_ASSIGN_RIGHT:
                 return 'r_assign', {}
-        return self.spec.get(node.type, (None, {}))
+        if node.type in self.spec:
+            return self.spec[node.type]
+        return EXTRA_SPEC.get(node.type, (None, {}))
 
     def role(self, node, roles, name, many=False):
         key = roles.get(name)
@@ -52,12 +65,14 @@ class Lowerer:
     # ----- functions ------------------------------------------------------
     def run(self, root):
         self.scan(root, prefix='')
-        return self.facts
+        return self.facts.finish()
 
     def scan(self, node, prefix):
         kind, roles = self.kind(node)
         if kind == 'function':
-            self.function(node, roles, prefix)
+            name = self.function(node, roles, prefix)
+            for child in named(self.role(node, roles, 'body') or node):
+                self.scan(child, f'{name}.')  # nested helpers (merge inside merge_sort)
             return
         if kind == 'class':
             name = text(self.role(node, roles, 'name'))
@@ -108,6 +123,7 @@ class Lowerer:
             self.facts.add('param', f, k, pname)
         body = self.role(node, roles, 'body')
         self.block(body, Ctx(f), last_returns=self.lang in IMPLICIT_RETURN)
+        return name
 
     # ----- statements ------------------------------------------------------
     def block(self, node, ctx, last_returns=False):
@@ -123,6 +139,7 @@ class Lowerer:
             exit_cond = self.early_exit(child)
             if exit_cond is not None:  # control dependence: later code runs only if cond is false
                 ctx = ctx.guard(exit_cond, 'false')
+
 
     def early_exit(self, node):
         """`if c: return ...` without alternatives -> c, else None (PDG control dependence)."""
@@ -140,17 +157,28 @@ class Lowerer:
             if lkind == 'expr_stmt':
                 body = [self.role(last, lroles, 'inner')]
                 continue
-            if lkind == 'return' or (lkind == 'call' and self.lang == 'r'
-                                     and text(self.role(last, lroles, 'fn')) == 'return'):
+            if last.type in ERROR_EXITS or (lkind == 'call' and self.lang == 'r'
+                                             and text(self.role(last, lroles, 'fn')) == 'stop'):
+                return None  # input validation / error handling is not algorithm logic
+            if lkind == 'return' or last.type in EXIT_STATEMENTS or (
+                    lkind == 'call' and self.lang == 'r' and text(self.role(last, lroles, 'fn')) == 'return'):
                 return self.expr(self.role(node, roles, 'cond'))
             return None
         return None
 
     def stmt(self, node, ctx, implicit=False):
+        if node is None or node.type in IGNORED_STATEMENTS or node.type in EXIT_STATEMENTS - {
+                'return_statement', 'return_expression'}:
+            return None  # docstrings, imports; exits act through early_exit (G6)
         kind, roles = self.kind(node)
         if kind == 'expr_stmt':
             inner = self.role(node, roles, 'inner')
-            return self.stmt(inner, ctx) if inner is not None else None
+            return self.stmt(inner, ctx, implicit) if inner is not None else None
+        if kind == 'wrap':
+            self.block(self.role(node, roles, 'body'), ctx)
+            return None
+        if kind == 'assert':
+            return None
         if kind == 'block':
             self.block(node, ctx)
             return None
@@ -161,7 +189,11 @@ class Lowerer:
             v = self.role(node, roles, 'var')
             if v is not None:
                 self.facts.add('loop_var', loop_id, text(v))
-            self.calls(self.role(node, roles, 'iter'), loop_id)
+            it = self.role(node, roles, 'iter')
+            seq = self.iterated_sequence(it, node)
+            if seq is not None:  # for x in s: x is the current element of s (G4)
+                self.facts.add('loop_iter', loop_id, seq)
+            self.calls(it, loop_id)
             self.block(self.role(node, roles, 'body'), ctx.loop(loop_id))
             return loop_id
         if kind == 'c_for':
@@ -186,7 +218,7 @@ class Lowerer:
             self.block(self.role(node, roles, 'body'), ctx.loop(loop_id))
             return loop_id
         if kind == 'if':
-            return self.if_chain(node, roles, ctx)
+            return self.if_chain(node, roles, ctx, implicit)
         if kind == 'decl':
             last = None
             for d in self.role(node, roles, 'declarator', many=True):
@@ -209,11 +241,13 @@ class Lowerer:
         self.calls(node, s)
         return s
 
-    def if_chain(self, node, roles, ctx):
+    def if_chain(self, node, roles, ctx, implicit=False):
+        """implicit: this if is the function's final expression (Rust/R), so the last
+        expression of each branch is the returned value."""
         cond = self.expr(self.role(node, roles, 'cond'))
         then = self.role(node, roles, 'then')
         if cond != FALSE:  # P17: statically dead branch is not live code
-            self.block(then, ctx.guard(cond, 'true'))
+            self.block(then, ctx.guard(cond, 'true'), last_returns=implicit)
         if cond == ('bool', 'true'):
             return None
         rest = ctx.guard(cond, 'false')
@@ -226,17 +260,32 @@ class Lowerer:
                         self.block(self.role(alt, aroles, 'then'), rest.guard(rest_cond, 'true'))
                     rest = rest.guard(rest_cond, 'false')
                 else:
-                    self.if_chain(alt, aroles, rest)
+                    self.if_chain(alt, aroles, rest, implicit)
             elif akind == 'else':
                 body = self.role(alt, aroles, 'body')
                 bkind, broles = self.kind(body)
                 if bkind == 'if':
-                    self.if_chain(body, broles, rest)
+                    self.if_chain(body, broles, rest, implicit)
                 else:
-                    self.block(body, rest)
+                    self.block(body, rest, last_returns=implicit)
             else:
-                self.block(alt, rest)
+                self.block(alt, rest, last_returns=implicit)
         return None
+
+    def iterated_sequence(self, it, node):
+        """Sequence of a for-each loop, or None for a counting loop (range, a..b, 1:n)."""
+        if node.type == 'enhanced_for_statement':
+            return self.expr(it)
+        if it is None or it.type == 'range_expression':
+            return None
+        t = self.expr(it)
+        if t[0] == 'call' and t[1] in COUNTING_ITERS:
+            return None
+        if t[0] == 'op' and t[1] == ':':
+            return None
+        if t[0] == 'call' and t[1] in ITER_ADAPTERS and t[2]:
+            return t[2][0]
+        return t if t[0] in ('var', 'elem', 'call') else None
 
     def updated_name(self, upd):
         if upd is None:
@@ -264,6 +313,15 @@ class Lowerer:
             lhs, rhs = self.role(node, roles, 'left'), self.role(node, roles, 'right')
         if rhs is None:
             return None  # declaration without value
+        t = self.ternary(rhs)
+        if t is not None and kind != 'aug_assign':  # x = a if c else b: two guarded assignments
+            c, target = self.expr(t[0]), self.expr(lhs)
+            last = None
+            for branch, pol in ((t[1], 'true'), (t[2], 'false')):
+                last = self.facts.new_stmt(ctx.guard(c, pol), 'assign', line(node))
+                self.facts.add('assign', last, target, self.expr(branch))
+                self.calls(branch, last)
+            return last
         s = self.facts.new_stmt(ctx, 'assign', line(node))
         opnode = self.role(node, roles, 'op') if kind != 'r_assign' else None
         aug = AUGMENTED.get(text(opnode)) if opnode is not None else None
@@ -281,13 +339,33 @@ class Lowerer:
         self.calls(rhs, s)
         return s
 
-    def ret(self, value, ctx, node):
-        return self.ret_term(self.expr(value) if value is not None else other('none'), ctx, node)
+    def ternary(self, node):
+        """(cond, then, else) nodes of a conditional expression, or None."""
+        if node is None:
+            return None
+        if node.type == 'conditional_expression' and self.lang == 'python':
+            a, c, b = named(node)[:3]
+            return c, a, b
+        if node.type in ('conditional_expression', 'ternary_expression'):
+            return (node.child_by_field_name('condition'), node.child_by_field_name('consequence'),
+                    node.child_by_field_name('alternative'))
+        if node.type == 'parenthesized_expression' and named(node):
+            return self.ternary(named(node)[0])
+        return None
 
-    def ret_term(self, value, ctx, node):
+    def ret(self, value, ctx, node):
+        t = self.ternary(value)
+        if t is not None:  # return a if c else b  ==  if c: return a  else: return b
+            c = self.expr(t[0])
+            self.ret(t[1], ctx.guard(c, 'true'), node)
+            return self.ret(t[2], ctx.guard(c, 'false'), node)
+        return self.ret_term(self.expr(value) if value is not None else other('none'), ctx, node,
+                             call_node=value)
+
+    def ret_term(self, value, ctx, node, call_node=None):
         s = self.facts.new_stmt(ctx, 'ret', line(node))
         self.facts.add('ret', s, value)
-        self.calls(node, s)
+        self.calls(call_node if call_node is not None else node, s)  # calls of THIS branch only
         return s
 
     def calls(self, node, s):
@@ -382,7 +460,45 @@ class Lowerer:
             return other('field')
         if kind == 'tuple':
             return ('tuple', [self.expr(x) for x in named(node)])
+        if node.type in ('list', 'array_expression', 'array_creation_expression'):
+            parts = [self.expr(x) for x in named(node)]
+            if any(p[0] == 'splat' for p in parts):   # [*a, b, *c] -> concat of parts
+                return ('concat', [p[1] if p[0] == 'splat' else ('list', [p]) for p in parts])
+            return ('list', parts)
+        if node.type in ('list_splat', 'dictionary_splat'):
+            return ('splat', self.expr(named(node)[0]))
+        if node.type in ('list_comprehension', 'generator_expression'):
+            return self.comprehension(node)
+        t = self.ternary(node)
+        if t is not None:
+            return ('cond', self.expr(t[0]), self.expr(t[1]), self.expr(t[2]))
         return other(node.type)
+
+    def comprehension(self, node):
+        """[v for x in s if c]  ->  filter(s, c) when v is x, else map(s, v, c);
+        x inside c and v is the current element elem(s, x) (G4)."""
+        kids = named(node)
+        value, clauses = kids[0], kids[1:]
+        fors = [c for c in clauses if c.type == 'for_in_clause']
+        ifs = [c for c in clauses if c.type == 'if_clause']
+        if len(fors) != 1:
+            return other('nested_comprehension')
+        x = text(fors[0].child_by_field_name('left'))
+        seq = self.expr(fors[0].child_by_field_name('right'))
+
+        def el(t):
+            if t == ('var', x):
+                return ('elem', seq, ('var', x))
+            if isinstance(t, tuple):
+                return tuple(el(a) if isinstance(a, (tuple, list)) else a for a in t)
+            if isinstance(t, list):
+                return [el(a) for a in t]
+            return t
+        cond = el(self.expr(named(ifs[0])[0])) if ifs else ('bool', 'true')
+        v = self.expr(value)
+        if v == ('var', x):
+            return ('filter', seq, cond)
+        return ('map', seq, el(v), cond)
 
     def call_term(self, name, args):
         short = name.split('::')[-1].split('.')[-1]
@@ -390,7 +506,7 @@ class Lowerer:
             return call('len', args[:1])
         if short in WRAPPERS and len(args) == 1:
             return args[0]
-        return call(short, args)
+        return call(SYNONYMS.get(short, short), args)
 
 
 def normalise(t):

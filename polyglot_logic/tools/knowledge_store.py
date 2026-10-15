@@ -27,7 +27,9 @@ CREATE TABLE IF NOT EXISTS pattern (
  ap11_label TEXT NOT NULL DEFAULT '',
  category TEXT NOT NULL DEFAULT '',
  review_status TEXT NOT NULL DEFAULT 'unreviewed'
-   CHECK(review_status IN ('unreviewed','approved','rejected'))
+   CHECK(review_status IN ('unreviewed','approved','rejected')),
+ quality TEXT NOT NULL DEFAULT 'usable',
+ grp TEXT NOT NULL DEFAULT ''
 );
 CREATE TABLE IF NOT EXISTS attempt (
  label TEXT PRIMARY KEY,
@@ -45,6 +47,10 @@ def connect(store: Path):
     try:
         conn.row_factory = sqlite3.Row
         conn.executescript(SCHEMA)
+        cols = {r[1] for r in conn.execute('PRAGMA table_info(pattern)')}
+        for col, decl in (('quality', "TEXT NOT NULL DEFAULT 'usable'"), ('grp', "TEXT NOT NULL DEFAULT ''")):
+            if col not in cols:  # v1 catalogs gain the v2 columns, nothing is rewritten
+                conn.execute(f'ALTER TABLE pattern ADD COLUMN {col} {decl}')
         with conn:
             yield conn
     finally:
@@ -68,7 +74,9 @@ def save(store: Path, row: dict, clause: str) -> str:
             return 'already_present'
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_bytes(data)
-        row = dict(row, clause_path='patterns/' + target.name, pattern_sha256=digest)
+        structure = clause.split(',', 1)[1] if ',' in clause else clause  # label removed
+        row = dict(row, clause_path='patterns/' + target.name, pattern_sha256=digest,
+                   grp=row.get('grp') or sha256(structure.encode('utf-8'))[:16])
         names = tuple(row)
         db.execute('INSERT INTO pattern (' + ','.join(names) + ') VALUES (' + ','.join('?' * len(names)) + ')',
                    tuple(row[n] for n in names))
@@ -88,7 +96,7 @@ def reference_files(store: Path, include_unreviewed: bool, branches=None) -> lis
         rows = db.execute('SELECT * FROM pattern').fetchall()
     out = []
     for r in rows:
-        if r['review_status'] == 'rejected':
+        if r['review_status'] == 'rejected' or r['quality'] != 'usable':
             continue
         if r['review_status'] == 'unreviewed' and not include_unreviewed:
             continue
@@ -97,6 +105,13 @@ def reference_files(store: Path, include_unreviewed: bool, branches=None) -> lis
             raise ValueError('missing or corrupted learned reference: ' + r['label'])
         out.append(path)
     return out
+
+
+def metadata(store: Path) -> dict:
+    if not (store / 'polyglot.sqlite3').is_file():
+        return {}
+    with connect(store) as db:
+        return {r['label']: dict(r) for r in db.execute('SELECT * FROM pattern')}
 
 
 def approve(store: Path, label: str, action: str):
@@ -113,7 +128,8 @@ def status(store: Path) -> list[dict]:
         return []
     with connect(store) as db:
         rows = [dict(r) for r in db.execute(
-            'SELECT branch, review_status, count(*) AS count FROM pattern GROUP BY branch, review_status')]
+            'SELECT branch, quality, review_status, count(*) AS count FROM pattern '
+            'GROUP BY branch, quality, review_status')]
         rows += [dict(r) for r in db.execute(
             "SELECT 'attempts' AS kind, status, count(*) AS count FROM attempt GROUP BY status")]
     return rows

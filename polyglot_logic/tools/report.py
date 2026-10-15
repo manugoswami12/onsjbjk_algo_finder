@@ -20,9 +20,9 @@ def parse_scan(lines):
             funcs[parts[1]]['evidence'].append(f'{parts[2]}@{parts[3]}')
         elif tag == 'UNSUP' and len(parts) == 4 and parts[1] in funcs:
             funcs[parts[1]]['unsupported'].append(f'{parts[2]}@{parts[3]}')
-        elif tag == 'LEAF' and parts[1] == 'MATCH' and len(parts) == 6:
+        elif tag == 'LEAF' and parts[1] == 'MATCH' and len(parts) == 7:
             leaves.append({'result': 'MATCH', 'label': parts[2], 'branch': parts[3],
-                           'functions': parts[4], 'bindings': parts[5]})
+                           'functions': parts[4], 'bindings': parts[5], 'relations': int(parts[6])})
         elif tag == 'LEAF' and parts[1] == 'PARTIAL' and len(parts) == 6:
             leaves.append({'result': 'PARTIAL', 'label': parts[2], 'branch': parts[3],
                            'present': parts[4], 'missing': parts[5]})
@@ -31,7 +31,22 @@ def parse_scan(lines):
     for f in funcs.values():
         if not f['routes']:
             raise ToolError('Prolog omitted the route of ' + f['name'])
+    # G9: most specific (most relations) first
+    leaves.sort(key=lambda x: (x['result'] != 'MATCH', -x.get('relations', 0), x['label']))
     return {'functions': list(funcs.values()), 'leaves': leaves}
+
+
+def identifications(result, meta):
+    """Ranked matches collapsed by structural group: [(group_key, [labels...]), ...]."""
+    out, seen = [], {}
+    for m in (x for x in result['leaves'] if x['result'] == 'MATCH'):
+        g = meta.get(m['label'], {}).get('grp') or m['label']
+        if g in seen:
+            out[seen[g]][1].append(m['label'])
+        else:
+            seen[g] = len(out)
+            out.append((g, [m['label']]))
+    return out
 
 
 def show_scan(path, lang, result, references):
@@ -45,8 +60,10 @@ def show_scan(path, lang, result, references):
             print('  LIMITATIONS: ' + ', '.join(f['unsupported']))
     matches = [x for x in result['leaves'] if x['result'] == 'MATCH']
     partial = [x for x in result['leaves'] if x['result'] == 'PARTIAL']
-    for m in matches:
-        print(f"LEAF MATCH: {m['label']} [{m['branch']}] functions={m['functions']} names={m['bindings']}")
+    for i, m in enumerate(matches):
+        tag = 'IDENTIFIED' if i == 0 else 'ALSO CONSISTENT'
+        print(f"LEAF MATCH: {m['label']} [{m['branch']}] functions={m['functions']} "
+              f"names={m['bindings']} relations={m['relations']} ({tag})")
     for p in partial:
         print(f"LEAF PARTIAL: {p['label']} [{p['branch']}] relations {p['present']}; missing: {p['missing']}")
     if not matches:

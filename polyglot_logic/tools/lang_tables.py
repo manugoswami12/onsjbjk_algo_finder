@@ -176,3 +176,28 @@ HASKELL_INDEX = {'!', '!!'}
 # Common Lisp operators that are expressions, not statements.
 LISP_COMPARE = {'>', '<', '>=', '<=', '=', '/='}
 LISP_ARITH = {'+', '-', '*', '/', 'floor', 'mod', 'rem', 'truncate'}
+
+# ----- AP13 v2 (doc 04) -------------------------------------------------------
+# Library calls with one meaning across languages -> one canonical name (G7).
+SYNONYMS = {
+    'ord': 'ord', 'fromEnum': 'ord', 'char-code': 'ord', 'charCodeAt': 'ord', 'utf8ToInt': 'ord',
+    'chr': 'chr', 'toEnum': 'chr', 'code-char': 'chr', 'intToUtf8': 'chr',
+    'append': 'append', 'push': 'append', 'push_back': 'append', 'add': 'append',
+    'vector-push-extend': 'append',
+    'abs': 'abs', 'sqrt': 'sqrt', 'isqrt': 'sqrt', 'max': 'max', 'min': 'min',
+    'reverse': 'reverse', 'rev': 'reverse', 'nreverse': 'reverse',
+}
+# Statements that carry no algorithmic logic (docstrings, imports, declarations).
+IGNORED_STATEMENTS = {
+    'pass_statement', 'import_statement', 'import_from_statement', 'global_statement',
+    'nonlocal_statement', 'future_import_statement', 'string', 'comment', 'line_comment',
+    'block_comment', 'empty_statement', 'ellipsis', 'preproc_include', 'use_declaration',
+}
+# Early exits: after `if c: <exit>` the rest of the block runs only when c is false (G6).
+EXIT_STATEMENTS = {
+    'return_statement', 'return_expression', 'raise_statement', 'throw_statement',
+    'break_statement', 'break_expression', 'continue_statement', 'continue_expression',
+    'break', 'next',
+}
+# Higher-order folds: f(acc, element) over a sequence with an initial value (G5).
+FOLDS = {'foldl', "foldl'", 'foldr', 'reduce', 'Reduce', 'foldl1', 'fold'}

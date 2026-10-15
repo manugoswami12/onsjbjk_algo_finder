@@ -33,6 +33,8 @@ def to_lists(node, line_of):
     if t == 'defun':
         header = next(c for c in node.named_children if c.type == 'defun_header')
         name = header.child_by_field_name('function_name')
+        if name is None:  # defmethod / unusual headers: not modelled
+            return ('other', 'defun_without_name')
         lam = header.child_by_field_name('lambda_list')
         params = [c.text.decode().lower() for c in lam.named_children] if lam else []
         body = [to_lists(c, line_of) for c in node.children_by_field_name('value')]
@@ -67,7 +69,7 @@ class Lowerer:
             form = to_lists(node, self.lines)
             if isinstance(form, list) and form and form[0] == 'defun':
                 self.defun(form)
-        return self.facts
+        return self.facts.finish()
 
     def defun(self, form):
         f = self.facts.new_func(form[1], self.line(form))

@@ -15,7 +15,34 @@ sys.path.insert(0, str(REPO / 'semgrep_prolog_poc' / 'tools'))
 from export_ast_facts import atom  # noqa: E402  (frozen, reused unchanged)
 
 PREDICATES = ('lang', 'func', 'param', 'stmt', 'loop', 'in_loop', 'loop_var', 'loop_cond',
-              'guard', 'assign', 'par_assign', 'call_at', 'ret', 'next_stmt', 'unsupported')
+              'guard', 'assign', 'par_assign', 'call_at', 'ret', 'next_stmt', 'unsupported',
+              'loop_iter')
+SELF = '$self'
+
+
+def base_name(name: str) -> str:
+    return name.split('.')[-1].split('/')[0]
+
+
+def rename_calls(t, old, new):
+    """Replace call(old, ...) by call(new, ...) anywhere inside a term."""
+    if isinstance(t, list):
+        return [rename_calls(x, old, new) for x in t]
+    if isinstance(t, tuple):
+        if t and t[0] == 'call' and t[1] == old:
+            return ('call', new, rename_calls(t[2], old, new))
+        return tuple(rename_calls(x, old, new) for x in t)
+    return t
+
+
+def has_call(t, name):
+    if isinstance(t, list):
+        return any(has_call(x, name) for x in t)
+    if isinstance(t, tuple):
+        if t and t[0] == 'call' and t[1] == name:
+            return True
+        return any(has_call(x, name) for x in t)
+    return False
 
 
 def var(name): return ('var', str(name))
@@ -85,6 +112,48 @@ class FactSet:
         loop_id = self.new_stmt(ctx, 'loop', line)
         self.add('loop', loop_id, ctx.func, kind)
         return loop_id
+
+    def finish(self):
+        """Shared post-pass (doc 05 G2): a self-calling function is a recursion loop;
+        self-calls are named $self; recursive arguments become parameter updates."""
+        stmt_func = {a[0]: a[1] for a in self.facts['stmt']}
+        params = {}
+        for f, k, name in sorted(self.facts['param'], key=lambda a: (a[0], a[1])):
+            params.setdefault(f, []).append(name)
+        rec = {a[1] for a in self.facts['loop'] if a[2] == 'recursion'}
+        for f, name, line in list(self.facts['func']):
+            b = base_name(name)
+            own = {s for s, g in stmt_func.items() if g == f}
+            selfcalls = [a for a in self.facts['call_at'] if a[0] in own and a[1] == b]
+            if not selfcalls:
+                continue
+            for pred in ('ret', 'assign', 'par_assign', 'guard', 'call_at', 'loop_cond'):
+                self.facts[pred] = [
+                    (a[0],) + tuple(rename_calls(x, b, SELF) for x in a[1:])
+                    if (a[0] in own or pred == 'loop_cond') else a
+                    for a in self.facts[pred]]
+            self.facts['call_at'] = [(a[0], SELF, a[2]) if a[0] in own and a[1] == b else a
+                                     for a in self.facts['call_at']]
+            if f in rec:
+                continue  # equational lowerers already modelled the recursion
+            loop_id = self.new_id('s')
+            self.facts['stmt'].append((loop_id, f, 'loop', line))
+            self.facts['loop'].append((loop_id, f, 'recursion'))
+            for s in sorted(own):
+                self.facts['in_loop'].append((s, loop_id))
+            ps = params.get(f, [])
+            for s, _, args in [a for a in self.facts['call_at'] if a[0] in own and a[1] == SELF]:
+                for k, arg in enumerate(args[:len(ps)]):
+                    if arg != var(ps[k]):
+                        self.facts['assign'].append((s, var(ps[k]), arg))
+            # base cases end the recursion: guards of non-recursive returns give loop_cond
+            for s, value in [a for a in self.facts['ret'] if a[0] in own]:
+                if has_call(value, SELF):
+                    continue
+                for g_s, cond, pol in self.facts['guard']:
+                    if g_s == s and pol == 'true' and cond[0] == 'op':
+                        self.facts['loop_cond'].append((loop_id, op('not', cond)))
+        return self
 
     def functions(self):
         return [(f, name) for f, name, _ in self.facts['func']]

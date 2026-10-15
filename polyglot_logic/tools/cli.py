@@ -28,6 +28,16 @@ from parse_source import parse, prefetch  # noqa: E402
 
 def facts_text(path: Path) -> tuple[str, str]:
     """Return (language, base facts text) for one source file."""
+    try:
+        return _facts_text(path)
+    except ToolError:
+        raise
+    except (AttributeError, IndexError, KeyError, TypeError, ValueError, RecursionError) as exc:
+        # a construct the lowering tables do not model: explicit error, never a guess
+        raise ToolError(f'lowering failed ({type(exc).__name__}: {exc})') from exc
+
+
+def _facts_text(path: Path) -> tuple[str, str]:
     lang, _, root = parse(path)
     if lang == 'prolog':
         lines = swipl('lower_main', [PROLOG_DIR / 'lower_prolog.pl'], [str(path.resolve())])
@@ -71,13 +81,59 @@ def learn(label: str, path: Path, function: str, store: Path, origin='file', ap1
     if head[0] == 'LEARN_EMPTY':
         store_mod.record_attempt(store, label, 'no_effects', head[-1])
         return 'no_effects'
-    if head[0] != 'LEARN' or len(head) != 4:
+    if head[0] != 'LEARN' or len(head) != 5:
         raise ToolError('unexpected learn output: ' + ' / '.join(lines[:3]))
     clause = '\n'.join(lines[1:]) + '\n'
     row = dict(label=label, language=lang, source_path=str(path), function_name=function,
                branch=head[2], relations=int(head[3]), origin=origin, ap11_label=ap11_label,
-               category=category)
-    return store_mod.save(store, row, clause) + f' branch={head[2]} relations={head[3]}'
+               category=category, quality=head[4])
+    return store_mod.save(store, row, clause) + f' branch={head[2]} relations={head[3]} quality={head[4]}'
+
+
+def learn_file(path: Path, store: Path, prefix: str, relative: str, counts: dict):
+    """G10: learn EVERY function of one source with one SWI-Prolog process."""
+    lang, facts = facts_text(path)
+    lines = run_prolog('learn_all_main', facts, [prefix])
+    i = 0
+    while i < len(lines):
+        head = lines[i].split('|')
+        if head[0] == 'LEARN_EMPTY':
+            store_mod.record_attempt(store, head[1], 'no_effects', head[2])
+            counts['no_effects'] = counts.get('no_effects', 0) + 1
+            i += 1
+            continue
+        if head[0] != 'LEARN' or len(head) != 6:
+            raise ToolError('unexpected learn output: ' + lines[i][:200])
+        j = lines.index('END', i)
+        clause = '\n'.join(lines[i + 1:j]) + '\n'
+        row = dict(label=head[1], language=lang, source_path=relative, function_name=head[5],
+                   branch=head[2], relations=int(head[3]), origin='dir', ap11_label='',
+                   category=relative.split('/')[0], quality=head[4])
+        outcome = store_mod.save(store, row, clause)
+        key = outcome if outcome == 'already_present' else head[4]  # usable / trivial
+        counts[key] = counts.get(key, 0) + 1
+        i = j + 1
+
+
+def learn_dir(root: Path, store: Path, limit: int):
+    import hashlib
+    counts = {}
+    files = sorted(p for p in root.rglob('*') if p.suffix.lower() in ('.py', '.rs', '.java', '.c', '.r',
+                   '.hs', '.lisp', '.pl') and '.git' not in p.parts and p.is_file())[:limit]
+    for n, path in enumerate(files, 1):
+        rel = path.relative_to(root).as_posix()
+        prefix = 'lg_' + ''.join(ch if ch.isalnum() else '_' for ch in rel.rsplit('.', 1)[0])[:60] + \
+            '_' + hashlib.sha256(rel.encode()).hexdigest()[:8]
+        try:
+            learn_file(path, store, prefix, rel, counts)
+        except (ToolError, ValueError, OSError) as exc:
+            counts['error'] = counts.get('error', 0) + 1
+            store_mod.record_attempt(store, prefix, 'error', f'{rel}: {exc}')
+            print(f'AP13_LEARN_ERROR: {rel}: {str(exc)[:200]}', flush=True)
+        if n % 100 == 0 or n == len(files):
+            print(f'AP13_LEARN_DIR: {n}/{len(files)} ' + ' '.join(f'{k}={v}' for k, v in sorted(counts.items())),
+                  flush=True)
+    return counts
 
 
 def learn_corpus(corpus: Path, ap11_store: Path, store: Path, categories, limit: int):
@@ -119,6 +175,8 @@ def main(argv=None) -> int:
     s = sub.add_parser('learn-corpus'); s.add_argument('corpus', type=Path); s.add_argument('ap11_store', type=Path)
     s.add_argument('--categories', nargs='*', default=['sorts', 'searches'])
     s.add_argument('--limit', type=int, default=5000)
+    s = sub.add_parser('learn-dir', help='learn every function of every source under DIR')
+    s.add_argument('directory', type=Path); s.add_argument('--limit', type=int, default=100000)
     s = sub.add_parser('approve'); s.add_argument('label')
     s.add_argument('action', choices=['approved', 'rejected', 'unreviewed'])
     sub.add_parser('status')
@@ -137,6 +195,9 @@ def main(argv=None) -> int:
             print('AP13_LEARN: ' + a.label + ' ' + learn(a.label, a.source, a.function, a.store))
         elif a.cmd == 'learn-corpus':
             counts = learn_corpus(a.corpus, a.ap11_store, a.store, a.categories, a.limit)
+            return 2 if counts.get('error') else 0
+        elif a.cmd == 'learn-dir':
+            counts = learn_dir(a.directory, a.store, a.limit)
             return 2 if counts.get('error') else 0
         elif a.cmd == 'approve':
             store_mod.approve(a.store, a.label, a.action)

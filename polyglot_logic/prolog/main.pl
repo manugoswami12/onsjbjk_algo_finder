@@ -6,9 +6,9 @@
    Output is a line protocol parsed by tools/report.py. Labels are candidates only.
 */
 :- dynamic lang/1, func/3, param/3, stmt/4, loop/3, in_loop/2, loop_var/2, loop_cond/2,
-           guard/3, assign/3, par_assign/3, call_at/3, ret/2, next_stmt/2, unsupported/3.
+           guard/3, assign/3, par_assign/3, call_at/3, ret/2, next_stmt/2, unsupported/3, loop_iter/2.
 :- discontiguous lang/1, func/3, param/3, stmt/4, loop/3, in_loop/2, loop_var/2, loop_cond/2,
-                guard/3, assign/3, par_assign/3, call_at/3, ret/2, next_stmt/2, unsupported/3.
+                guard/3, assign/3, par_assign/3, call_at/3, ret/2, next_stmt/2, unsupported/3, loop_iter/2.
 
 :- prolog_load_context(directory, Dir),
    forall(member(F, ['canon.pl', 'evidence.pl', 'slice.pl', 'leaf.pl']),
@@ -57,13 +57,41 @@ scan_main :-
 
 leaf_line(Label, Branch) :-
     (   leaf_result(Label, Branch, match(Names, Funcs))
-    ->  atomic_list_concat(Names, ',', N), atomic_list_concat(Funcs, ',', Fs),
-        format('LEAF|MATCH|~w|~w|~w|~w~n', [Label, Branch, Fs, N])
+    ->  reference(Label, Branch, Rels, _), length(Rels, NR),
+        atomic_list_concat(Names, ',', N), atomic_list_concat(Funcs, ',', Fs),
+        format('LEAF|MATCH|~w|~w|~w|~w|~w~n', [Label, Branch, Fs, N, NR])
     ;   leaf_result(Label, Branch, partial(Missing, Present, Total))
     ->  atomic_list_concat(Missing, ',', M0), ( M0 == '' -> M = 'inconsistent_bindings' ; M = M0 ),
         format('LEAF|PARTIAL|~w|~w|~w/~w|~w~n', [Label, Branch, Present, Total, M])
     ;   true
     ).
+
+% G10: learn every function of one source in ONE process.
+learn_all_main :-
+    current_prolog_flag(argv, [Facts, Prefix]),
+    load_data(Facts),
+    assert_observations,
+    forall(func(F, Name, _), learn_one(F, Name, Prefix)).
+
+learn_one(F, Name, Prefix) :-
+    safe_label(Prefix, Name, Label),
+    (   catch(slice(F, Rels), _, fail)
+    ->  findall(B-S, (reaches(F, G), route(G, B), specificity(B, S)), BS),
+        best_branch(BS, Branch),
+        quality(Rels, Quality),
+        variabilise(Rels, VRels, Names),
+        length(Rels, N),
+        format('LEARN|~w|~w|~w|~w|~w~n', [Label, Branch, N, Quality, Name]),
+        portray_clause(reference(Label, Branch, VRels, Names)),
+        format('END~n')
+    ;   format('LEARN_EMPTY|~w|~w~n', [Label, Name])
+    ).
+
+safe_label(Prefix, Name, Label) :-
+    atom_codes(Name, Cs), maplist(safe_code, Cs, Ds), atom_codes(Safe, Ds),
+    atomic_list_concat([Prefix, '__', Safe], Label).
+safe_code(C, C) :- code_type(C, alnum), !.
+safe_code(_, 0'_).
 
 learn_main :-
     current_prolog_flag(argv, [Facts, Function, Label]),
@@ -77,8 +105,8 @@ learn_main :-
     ->  findall(B-S, (reaches(F, G), route(G, B), specificity(B, S)), BS),
         best_branch(BS, Branch),
         variabilise(Rels, VRels, Names),
-        length(Rels, N),
-        format('LEARN|~w|~w|~w~n', [Label, Branch, N]),
+        length(Rels, N), quality(Rels, Quality),
+        format('LEARN|~w|~w|~w|~w~n', [Label, Branch, N, Quality]),
         portray_clause(reference(Label, Branch, VRels, Names))
     ;   format('LEARN_EMPTY|~w|no effects (no exchange, element write or loop return)~n', [Label])
     ).

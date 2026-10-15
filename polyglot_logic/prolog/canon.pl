@@ -78,7 +78,7 @@ flip(false, true).
 norm_pol(op(not, [C]), P0, N, P) :- !, flip(P0, P1), norm_pol(C, P1, N, P).
 norm_pol(C, P, N, P) :- norm(C, N).
 
-nguard(S, N, P) :- nguard0(S, N0, P), shift_term(S, N0, N1),
+nguard(S, N, P) :- nguard0(S, N0, P), shift_term(S, N0, N2), elem_iter(S, N2, N1),
     ( N = N1 ; N1 = op(eq, [A, B]), N = op(eq, [B, A]) ).
 
 nguard0(S, N, P) :- guard(S, C, P0), norm_pol(C, P0, N, P).
@@ -102,17 +102,64 @@ lcond(L, N) :- loop_cond(L, C), norm_pol(C, true, N0, P),
 lvar(L, var(N)) :- loop_var(L, N).
 
 % ----- values: copy propagation of single-definition temporaries --------------
-value(S, T, V) :- assign(S, T, V0), live(S), stmt_func(S, F), resolve(F, V0, V1), canon_expr(V1, V).
+value(S, T, V) :- assign(S, T, V0), live(S), stmt_func(S, F), resolve(F, S, V0, V1),
+    canon_expr(V1, V2), elem_iter(S, V2, V).
+value(S, var(X), V) :-                           % a, b = b, a % b  (non-element targets)
+    par_assign(S, Ts, Vs), live(S), nth0(K, Ts, var(X)), nth0(K, Vs, V0),
+    canon_expr(V0, V1), elem_iter(S, V1, V).
 
-resolve(F, var(X), V) :-
-    findall(V0, (assign(D, var(X), V0), stmt_func(D, F)), [V0]), V0 \= var(_), !, V = V0.
-resolve(_, V, V).
+% ----- G4: for x in s  ->  x is elem(s, x) inside that loop ---------------------
+elem_iter(S, T0, T) :-
+    findall(X-Q, (loop_iter(L, Q), loop_var(L, X), under(S, L)), Ps),
+    foldl(elemize, Ps, T0, T).
+elemize(X-Q, T0, T) :- T0 == var(X), !, T = elem(Q, var(X)).
+elemize(_, T, T) :- atomic(T), !.
+elemize(P, T0, T) :- T0 =.. [F|As], maplist(elemize(P), As, Bs), T =.. [F|Bs].
+
+% canonical outputs: returns (and yields) and appends, with element iteration applied
+cret(S, V) :- ret(S, V0), live(S), cexpr(S, V0, V1), strip_self(V1, V).
+
+% a recursive call is represented by its parameter updates (value/3), so the
+% call's argument order never matters: gcd(b % a, a) == gcd b (a mod b)
+strip_self(T, T) :- atomic(T), !.
+strip_self(call('$self', _), call('$self', [])) :- !.
+strip_self(T0, T) :- T0 =.. [F|As], maplist(strip_self, As, Bs), T =.. [F|Bs].
+capp(S, Q, X) :- call_at(S, append, [Q, X0]), live(S), cexpr(S, X0, X).
+
+% copy propagation of a single-definition TEMPORARY (never a parameter: parameter
+% updates of a recursive call are simultaneous, never a definition of the same statement)
+resolve(F, S, var(X), V) :-
+    \+ param(F, _, X),
+    findall(D-V0, (assign(D, var(X), V0), stmt_func(D, F)), [D-V0]), D \== S, V0 \= var(_), !, V = V0.
+resolve(_, _, V, V).
 
 % Two spellings of the same midpoint: lo + (hi - lo) / 2  ==  (lo + hi) / 2
 canon_expr(op(add, [L, op(div, [op(sub, [H, L2]), int(2)])]), op(div, [op(add, [L, H]), int(2)])) :-
     L2 == L, !.
 canon_expr(op(shr, [X, int(1)]), op(div, [X, int(2)])) :- !.     % (lo + hi) >>> 1
 canon_expr(V, V).
+
+% Deep normal form of an expression: comparisons point the same way everywhere.
+deep_norm(T, T) :- atomic(T), !.
+deep_norm(op(lt, [A, B]), op(gt, [B1, A1])) :- !, deep_norm(A, A1), deep_norm(B, B1).
+deep_norm(op(le, [A, B]), op(ge, [B1, A1])) :- !, deep_norm(A, A1), deep_norm(B, B1).
+deep_norm(T0, T) :- T0 =.. [F|As], maplist(deep_norm, As, Bs), T1 =.. [F|Bs], canon_expr(T1, T).
+
+% Forward substitution of single-definition locals (SSA copy/expression propagation):
+% `lesser = filter(...); f(lesser)` == `f(filter(...))`. Bounded depth, never params
+% or loop variables, never a self-referencing definition.
+inline(F, T0, T) :- inline(F, 3, T0, T).
+inline(_, 0, T, T) :- !.
+inline(F, D, var(X), T) :-
+    \+ param(F, _, X), \+ (loop_var(L, X), loop(L, F, _)),
+    findall(V0, (assign(S, var(X), V0), stmt_func(S, F)), [V0]),
+    \+ (sub_term(var(Y), V0), Y == X), !,
+    D1 is D - 1, inline(F, D1, V0, T).
+inline(_, _, T, T) :- atomic(T), !.
+inline(_, _, T, T) :- T = var(_), !.
+inline(F, D, T0, T) :- T0 =.. [Fn|As], maplist(inline(F, D), As, Bs), T =.. [Fn|Bs].
+
+cexpr(S, T0, T) :- stmt_func(S, F), inline(F, T0, T1), deep_norm(T1, T2), elem_iter(S, T2, T).
 
 % ----- nesting, also across calls (SDG, Horwitz-Reps-Binkley) ------------------
 under(X, L) :- in_loop(X, L).

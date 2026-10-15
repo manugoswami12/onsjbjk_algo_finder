@@ -57,6 +57,7 @@ emit(Fact) :- format('~q.~n', [Fact]).
 % ----- one predicate = one function -------------------------------------------
 lower_predicate(Name/Arity, Clauses) :-
     Clauses = [clause(_, Line0)|_],
+    nb_setval(ap13_current, Name/Arity),
     new_id(f, F),
     format(atom(Qualified), '~w/~w', [Name, Arity]),
     emit(func(F, Qualified, Line0)),
@@ -261,8 +262,9 @@ goal((If -> Then ; Else), Key, Params, Outs, E, E, C, C, In, Line, false) :- !,
 goal(G, Name/Arity, Params, Outs, E, E, C, C, In, Line, false) :-
     callable(G), functor(G, Name, Arity), !,
     G =.. [_|Args],
-    forall(nth1(K, Args, A), recursive_arg(K, A, Params, Outs, E, C, In, Line)),
-    maplist(expr(E), Args, Vs), stmt(C, call, Line, S), emit(call_at(S, Name, Vs)).
+    maplist(expr(E), Args, Vs), stmt(C, call, Line, S), emit(call_at(S, '$self', Vs)),
+    emit(ret(S, call('$self', Vs))),                 % a tail self-call is the result
+    forall(nth1(K, Args, A), recursive_arg(K, A, Params, Outs, E, C, In, Line-S)).
 goal(G, _, _, _, E, E, C, C, _, Line, false) :-
     callable(G), functor(G, N, _), memberchk(N, [(;), (','), (->), (\+), (*->)]), !,
     C = ctx(F, _, _), emit(unsupported(F, 'nested control construct', Line)).
@@ -271,14 +273,15 @@ goal(G, _, _, _, E, E, C, C, _, Line, false) :-
     stmt(C, call, Line, S), emit(call_at(S, N, Vs)).
 
 recursive_arg(K, _, _, Outs, _, _, _, _) :- memberchk(K, Outs), !.
-recursive_arg(K, [H|T], Params, _, E, C, list(P), Line) :- !,   % continue with [X|Rest]
+recursive_arg(K, [H|T], Params, _, E, C, list(P), Line0) :- !,  % continue with [X|Rest]
+    ( Line0 = Line-_ -> true ; Line = Line0 ),
     nth1(K, Params, P), P = P, nb_getval(ap13_emitted, Start),
     cons_writes([H|T], Start, P, E, Writes),
     forall(member(Tw-Vw, Writes), add_write(C, Tw, Vw)), Line = Line.
-recursive_arg(K, A, Params, _, E, C, _, Line) :-
+recursive_arg(K, A, Params, _, E, _, _, _-S) :-     % update on the call statement itself
     nth1(K, Params, P), expr(E, A, V),
     (   ( V == var(P) ; V = tail(_, _) ) -> true
-    ;   stmt(C, assign, Line, S), emit(assign(S, var(P), V))
+    ;   emit(assign(S, var(P), V))
     ).
 
 cons_writes(v(_), _, _, _, []) :- !.
@@ -310,6 +313,8 @@ expr(E, G, op(Op, [X, Y])) :- compound(G), G =.. [F, A, B], arith_op(F, Op), !,
     expr(E, A, X0), expr(E, B, Y0), order_add(Op, X0, Y0, X, Y).
 expr(E, [H|T], cons(X, Y)) :- !, expr(E, H, X), expr(E, T, Y).
 expr(_, [], nil) :- !.
+expr(E, G, call('$self', Xs)) :- compound(G), nb_current(ap13_current, N/A), functor(G, N, A), !,
+    G =.. [_|As], maplist(expr(E), As, Xs).
 expr(E, G, call(F, Xs)) :- compound(G), !, G =.. [F|As], maplist(expr(E), As, Xs).
 expr(_, A, other(A)).
 
