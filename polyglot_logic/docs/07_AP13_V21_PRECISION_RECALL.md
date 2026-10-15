@@ -91,6 +91,19 @@ A row is critical when the logic interfaces with another program or is the base 
 | R13 | parameter-update de-duplication crashed on 37 corpus files | Python tuples holding lists are unhashable | key by the rendered term; regression test |
 | R14 | some held-out "positive" files contain no algorithm (usage lines such as `(bubble-sort (list 5 4 3 2 1))`, imports only) | Rosetta pages split one solution over several files | kept in the frozen denominator; they count as misses, honestly |
 | R15 | Lisp `(funcall compare a b)` with a passed-in predicate | the comparison direction is unknown statically | stays UNKNOWN (correct behaviour) |
+| R16 ★ | `validate` marked the real factorial references generic | factorial is *reused* in many corpus files; "matches ≥ 3 other files" took reuse for genericness | only **one-way** matches count: if the matched function's own reference matches back, the two are the same algorithm (equivalence under subsumption) |
+| R17 | re-validation un-marked generic references | generic references were not scanned, so they had no hits | validation scans `usable` and `generic` |
+| R18 | `get_prime` (a pure counter `x += 1` twice) passed the gate | counter updates counted as content | `x = x ± c` is not a content relation |
+| R19 ★ | `op(unknown, …)` unified with every other unknown operator (`parity` matched a binary gcd) | augmented operators missing from the table fell back to one shared atom | `^` `<<` `**` and augmented forms added; `^` is xor in C-family languages and power in Haskell and R; an unknown operator keeps its own spelling |
+| R20 | `x = a + b` vs `x = b + a` | matching was not commutative | while **matching** (never while learning), the operands of commutative operators unify in either order, two outer levels (≤ 8 variants) |
+| R21 ★ | cocktail sort and LCM identified as bubble sort and GCD | a reference that explains *part* of a function was taken as its identity | GRASPR cover: MATCH only if every effect of the involved functions is explained; otherwise `LEAF CONTAINS`. Bare recursive returns and delegations are plumbing |
+| R22 ★ | every generalised reference matched with unbound names (235 evaluation errors) | `core_names` used `findall/3`, which copies variables | names collected from `term_variables/2` |
+| R23 | a generalised core contained `cret(_, var(call('$self', _)))` | `quality/2` was called on the non-ground core and bound it | quality judged on a `numbervars` copy |
+| R24 | greedy core dropped the exchange logic | a bare `return a` bound the name the exchange needed | informative relations first (effects, values, conditions, nesting, bare returns last) |
+| R25 ★ | after generalisation, real bubble sorts were "odd-even sort" | a core reduced to a bubble pass still carried odd_even_sort's identity | ILP rule: a generalisation covers its two variant files and **no negative** — any match in another corpus file makes it generic |
+| R26 | Fibonacci files identified as Lucas numbers | one recurrence, different seeds; initialisation was outside every trace | `seed(var(X), int(K))` for true recurrences (X reaches itself through the traced values), from constant initialisation or the wrapper call `step(0, 1, n)`; counters, offsets (`low = mid + 1`) and subscripts never get seeds |
+| R27 | 12 held-out Prolog files failed completely | one clause with a dialect operator or a fragment aborted `read_term` | the clause is skipped and reported as `unsupported(…, 'syntax error …', Line)`; the rest of the file is lowered |
+| R28 | `generalize` and `learn-dir` were slow (120 s timeouts; 16 min) | sequential and unbounded | per-reference inference budget; `learn-dir` traces files in parallel with one SQLite writer (64 s for 1,608 files) |
 
 ## 5. Measured results
 (filled in from the runs below; commands in section 7)
