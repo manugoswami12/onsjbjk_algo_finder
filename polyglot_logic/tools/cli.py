@@ -102,7 +102,11 @@ def learn(label: str, path: Path, function: str, store: Path, origin='file', ap1
 def learn_file(path: Path, store: Path, prefix: str, relative: str, counts: dict):
     """G10: learn EVERY function of one source with one SWI-Prolog process."""
     lang, facts = facts_text(path)
-    lines = run_prolog('learn_all_main', facts, [prefix])
+    store_learned(store, lang, relative, run_prolog('learn_all_main', facts, [prefix]), counts)
+
+
+def store_learned(store: Path, lang: str, relative: str, lines: list, counts: dict):
+    """Save the LEARN blocks of one file (single writer: SQLite stays on one thread)."""
     i = 0
     while i < len(lines):
         head = lines[i].split('|')
@@ -234,24 +238,39 @@ def validate(corpus: Path, store: Path, workers: int = 4, min_files: int = 3, mi
     return counts
 
 
-def learn_dir(root: Path, store: Path, limit: int):
+def learn_dir(root: Path, store: Path, limit: int, workers: int = 4):
+    """Files are lowered and traced in parallel (independent subprocesses); results are
+    stored in sorted file order by this thread only, so the catalog is deterministic."""
     import hashlib
+    from concurrent.futures import ThreadPoolExecutor
     counts = {}
     files = sorted(p for p in root.rglob('*') if p.suffix.lower() in ('.py', '.rs', '.java', '.c', '.r',
                    '.hs', '.lisp', '.pl') and '.git' not in p.parts and p.is_file())[:limit]
-    for n, path in enumerate(files, 1):
+
+    def trace(path):
         rel = path.relative_to(root).as_posix()
         prefix = 'lg_' + ''.join(ch if ch.isalnum() else '_' for ch in rel.rsplit('.', 1)[0])[:60] + \
             '_' + hashlib.sha256(rel.encode()).hexdigest()[:8]
         try:
-            learn_file(path, store, prefix, rel, counts)
-        except (ToolError, ValueError, OSError) as exc:
-            counts['error'] = counts.get('error', 0) + 1
-            store_mod.record_attempt(store, prefix, 'error', f'{rel}: {exc}')
-            print(f'AP13_LEARN_ERROR: {rel}: {str(exc)[:200]}', flush=True)
-        if n % 100 == 0 or n == len(files):
-            print(f'AP13_LEARN_DIR: {n}/{len(files)} ' + ' '.join(f'{k}={v}' for k, v in sorted(counts.items())),
-                  flush=True)
+            lang, facts = facts_text(path)
+            return rel, prefix, lang, run_prolog('learn_all_main', facts, [prefix]), None
+        except (ToolError, ValueError, OSError, RecursionError) as exc:
+            return rel, prefix, None, None, exc
+
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        for n, (rel, prefix, lang, lines, exc) in enumerate(pool.map(trace, files), 1):
+            if exc is None:
+                try:
+                    store_learned(store, lang, rel, lines, counts)
+                except (ToolError, ValueError) as e:
+                    exc = e
+            if exc is not None:
+                counts['error'] = counts.get('error', 0) + 1
+                store_mod.record_attempt(store, prefix, 'error', f'{rel}: {exc}')
+                print(f'AP13_LEARN_ERROR: {rel}: {str(exc)[:200]}', flush=True)
+            if n % 100 == 0 or n == len(files):
+                print(f'AP13_LEARN_DIR: {n}/{len(files)} ' + ' '.join(f'{k}={v}' for k, v in sorted(counts.items())),
+                      flush=True)
     return counts
 
 
