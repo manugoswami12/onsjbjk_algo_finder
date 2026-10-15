@@ -112,6 +112,22 @@ class TracingV21(unittest.TestCase):
         for n in names:                                 # names are the clause's own variables
             self.assertIn(f'var({n})', gen)
 
+    def test_seeds_separate_lucas_from_fibonacci(self):
+        # one recurrence, different seeds (2, 1) vs (0, 1): never the same algorithm
+        from cli import scan
+        ref = self.learned('lucas', V21 / 'lucas.py', 'lucas')
+        self.assertIn('seed(var(A), int(2))', ref)
+        r = scan(V21 / 'fib_helper.py', self.store, True, quiet=True)
+        self.assertFalse([x for x in r['leaves'] if x['result'] == 'MATCH'])
+        self.learned('fib', V21 / 'fib_helper.py', 'fib_loop')
+        r = scan(V21 / 'fib_helper.py', self.store, True, quiet=True)
+        # the recursive helper started as step(0, 1, n) has the loop's seeds (one leaf per reference)
+        self.assertEqual({x['functions'] for x in r['leaves'] if x['result'] == 'MATCH'}, {'fib.step'})
+
+    def test_indexes_get_no_seeds(self):
+        self.assertNotIn('seed(', self.learned('bs', ROOT / 'examples' / 'binary_search' / 'binary_search.py',
+                                               'binary_search'))
+
     def test_validate_and_generalize_commands_run(self):
         from cli import generalize, learn_dir, validate
         learn_dir(V2 / 'reference', self.store, 100)

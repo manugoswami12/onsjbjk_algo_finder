@@ -58,7 +58,49 @@ slice(F, Rels) :-
     once(( member(E0, Es), effect_stmt(E0, S0), stmt(S0, F, _, _) )),  % F computes itself;
                                                                      % pure wrappers are not learned
     foldl(effect_relations(F), Es, [], R0),
-    reverse(R0, R1), list_to_set(R1, Rels).
+    reverse(R0, R1), list_to_set(R1, Rels0), add_seeds(Rels0, Rels).
+
+% ----- seeds of recurrences -----------------------------------------------------
+% Fibonacci, Lucas and Pell are ONE recurrence with different starting values, so
+% the constant seed of a recurrence variable is part of the algorithm. Counters
+% (x = x +/- c) never get seeds: their start is indexing convention (0- or 1-based).
+add_seeds(Rels, Out) :-
+    findall(seed(var(X), C),
+            ( member(value(D, var(X), E), Rels), recurrence(Rels, X, E),
+              stmt(D, G, _, _), unique_seed(G, X, C) ), Ss0),
+    sort(Ss0, Ss), append(Rels, Ss, Out).
+% the relation as matched: X has this one constant seed in some function
+seed(var(X), C) :- func(G, _, _), unique_seed(G, X, C).
+recurrence(Rels, X, E) :-
+    \+ counter(X, E), \+ offset(E), \+ index_like(Rels, X, E),
+    reach(Rels, X, [X], X), !.
+% x_{n+1} = f(..x_n..): following the traced values from X leads back to X
+reach(Rels, Target, Seen, A) :-
+    member(value(_, var(A1), E), Rels), A1 == A,
+    sub_term(V, E), compound(V), V = var(Y), atom(Y),
+    (   Y == Target -> true
+    ;   \+ memberchk(Y, Seen), reach(Rels, Target, [Y|Seen], Y)
+    ), !.
+offset(op(O, [var(_), int(_)])) :- memberchk(O, [add, sub]).
+
+% positions are conventions too: a subscript, or an offset of one (low = mid + 1)
+index_like(Rels, X, _) :- index_var(Rels, X), !.
+index_like(Rels, _, E) :-
+    ( E = var(Y) ; E = op(O, [var(Y), int(_)]), memberchk(O, [add, sub]) ), atom(Y),
+    index_var(Rels, Y), !.
+index_var(Rels, Y) :- sub_term(T, Rels), compound(T), T = elem(_, I), sub_term(V, I), V == var(Y), !.
+unique_seed(G, X, C) :-
+    findall(C0, seed_value(G, X, C0), Cs0), sort(Cs0, [C]).
+% a constant initialisation before (outside) every loop of G
+seed_value(G, X, int(K)) :-
+    stmt(S, G, _, _), \+ in_loop(S, _),
+    ( assign(S, var(X), int(K)) ; par_assign(S, Ts, Vs), nth0(I, Ts, var(X)), nth0(I, Vs, int(K)) ).
+% a recursive helper started by its wrapper: go(0, 1, n) passes constants beside the
+% wrapper's own parameter (never a test call such as gcd(48, 18) in main)
+seed_value(G, X, int(K)) :-
+    param(G, I, X), func(G, Name, _), base_name(Name, B),
+    call_at(S, B, Args), stmt(S, W, _, _), W \== G,
+    nth0(I, Args, int(K)), member(var(P), Args), param(W, _, P).
 
 effect_relations(F, E, Acc0, Acc) :-
     effect_stmt(E, S),
