@@ -1,0 +1,6 @@
+(defun count-bigger (a)
+  (let ((c 0))
+    (dotimes (j (- (length a) 1))
+      (when (> (aref a j) (aref a (+ j 1)))
+        (setf c (+ c 1))))
+    c))

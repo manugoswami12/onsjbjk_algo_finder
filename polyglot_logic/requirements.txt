@@ -1,0 +1,2 @@
+# AP13 needs one package beyond the Python standard library (plus SWI-Prolog on PATH).
+tree-sitter-language-pack>=1.22

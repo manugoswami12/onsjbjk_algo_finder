@@ -2,13 +2,14 @@
 
 Experimental deterministic Python algorithm-structure recognition using Semgrep's OCaml generic AST, Python, SWI-Prolog and SQLite.
 
-The repository contains three related components:
+The repository contains four related components:
 
 | Directory | Responsibility |
 | --- | --- |
 | `semgrep_prolog_poc/` | AP2–AP10: existing structural AST-to-Prolog extraction, exact reference matching, and compositional recognition. |
 | `onsjbjk_algo_io_fallback_poc_v0_1/` | Independent input/output relationship experiment and SWI-Prolog candidate-family routing. |
 | `algo_reference_corpus/` | AP11 immutable reference ingestion and AP12 separate automatic-fallback/full-corpus orchestration. |
+| `polyglot_logic/` | AP13 multi-language logic tracing: learn from Python, recognise the same traced logic in Rust, Java, C, R, Haskell, Common Lisp and Prolog (tree-sitter + SWI-Prolog; reuses the AP12 router unchanged). |
 
 ## Why publish this?
 
