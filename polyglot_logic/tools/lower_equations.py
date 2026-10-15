@@ -151,9 +151,9 @@ class Lowerer:
             n = stack.pop()
             if n.type == 'apply':
                 head = n
-                while head.type == 'apply':
+                while head is not None and head.type == 'apply':
                     head = head.child_by_field_name('function')
-                if head.type == 'variable' and text(head) == name:
+                if head is not None and head.type == 'variable' and text(head) == name:
                     return True
             stack.extend(kids(n))
         return False
