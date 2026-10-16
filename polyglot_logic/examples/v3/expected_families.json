@@ -1,0 +1,107 @@
+{
+ "_note": "Written before families.pl existed (doc 08). Path = broad -> narrow; a result is correct if it is this path or a prefix of it (a broader, still true, answer).",
+ "cases/c01_bubble.c": [
+  "sequence_transformation",
+  "comparison_sort",
+  "adjacent_exchange"
+ ],
+ "cases/c02_insertion.java": [
+  "sequence_transformation",
+  "comparison_sort",
+  "shift_insertion"
+ ],
+ "cases/c03_selection.rs": [
+  "sequence_transformation",
+  "comparison_sort",
+  "select_extreme"
+ ],
+ "cases/c04_quicksort.hs": [
+  "sequence_transformation",
+  "comparison_sort",
+  "partition_recursive"
+ ],
+ "cases/c05_counting.py": [
+  "sequence_transformation",
+  "distribution_sort",
+  "histogram"
+ ],
+ "cases/c06_reverse.r": [
+  "sequence_transformation",
+  "uncompared_rearrangement"
+ ],
+ "cases/c07_linear.lisp": [
+  "sequence_query",
+  "target_search",
+  "linear_scan"
+ ],
+ "cases/c08_binary.pl": [
+  "sequence_query",
+  "target_search",
+  "interval_halving"
+ ],
+ "cases/c09_sum.java": [
+  "sequence_query",
+  "aggregate",
+  "gatherer"
+ ],
+ "cases/c10_max.c": [
+  "sequence_query",
+  "aggregate",
+  "most_wanted"
+ ],
+ "cases/c11_fib.rs": [
+  "numeric",
+  "recurrence",
+  "pair_recurrence"
+ ],
+ "cases/c12_factorial.hs": [
+  "numeric",
+  "recurrence",
+  "range_accumulation"
+ ],
+ "cases/c13_gcd.lisp": [
+  "numeric",
+  "recurrence",
+  "modulo_recurrence"
+ ],
+ "cases/c14_digitsum.py": [
+  "numeric",
+  "decomposition",
+  "digits"
+ ],
+ "cases/c15_prime.c": [
+  "numeric",
+  "divisor_test"
+ ],
+ "cases/c16_sieve.py": [
+  "marking",
+  "stride_marking"
+ ],
+ "cases/c17_collatz.r": [
+  "numeric",
+  "conditional_iteration"
+ ],
+ "cases/c18_leapyear.py": [
+  "numeric",
+  "predicate"
+ ],
+ "cases/c19_dot.java": [
+  "sequence_query",
+  "aggregate",
+  "gatherer"
+ ],
+ "cases/c20_lcs.py": [
+  "marking",
+  "table_fill"
+ ],
+ "cases/c21_merge.py": [
+  "sequence_transformation",
+  "comparison_sort",
+  "merge"
+ ],
+ "cases/c22_hanoi.java": [
+  "numeric",
+  "recurrence",
+  "double_recursion"
+ ]
+}

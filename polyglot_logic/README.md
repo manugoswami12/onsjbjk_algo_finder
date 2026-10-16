@@ -37,3 +37,16 @@ RUN_AP13_ROSETTA.cmd --store store          # held-out measurement (Rosetta Code
 Design and measured results: `docs/04_*`, `docs/05_*` (v2) and `docs/07_*` (v2.1:
 validation, generalisation, library folds, Windows). Library calls such as `math.gcd`
 or `sorted` are reported as `LIBRARY: <algorithm>`, separately from traced matches.
+
+## Input→output family branching (v3, added beside the exact matcher)
+When no learned reference matches exactly, the tracer still reports the narrowest
+algorithm *family* the input→output trace supports, for example
+`numeric > recurrence > pair_recurrence` or `sequence_transformation > comparison_sort > merge`.
+It is built on roles of variables (Sajaniemi), chains of recurrences (LLVM ScalarEvolution)
+and loop idioms (LoopIdiomRecognize, Ginsbach and O'Boyle), and on the unchanged AP12 router.
+```
+RUN_AP13_FAMILY.cmd <source file>
+python tools/family_eval.py --rosetta <RosettaCodeData clone> --split test
+```
+Design, the problems found and the measured results: `docs/08_*`. A family is a candidate
+category, never an identity claim; exact identification is unchanged.
