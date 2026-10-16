@@ -26,15 +26,37 @@ def run_family(goal: str, facts: str) -> list[str]:
         return swipl(goal, [AP12_ROUTER, FAMILY_MAIN], [str(fp)])
 
 
-def families(path: Path) -> dict:
-    """function name -> list of family paths (each a list, broad -> narrow)."""
-    _, facts = facts_text(path)
-    out = {}
-    for line in run_family('family_main', facts):
+def _parse(lines):
+    rows = []
+    for line in lines:
         tag, _, name, path_text = line.split('|', 3)
-        if tag != 'FAMILY':
+        if tag not in ('FAMILY', 'ANSWER'):
             raise ToolError('unexpected family output: ' + line[:200])
-        out.setdefault(name, []).append(path_text.split('>'))
+        rows.append((tag, name, path_text.split('>')))
+    return rows
+
+
+def family_rows(path: Path) -> list:
+    """[(tag, function, path)] where tag ANSWER marks the file's answer (doc 09: functions
+    with a family that no other function with a family calls); FAMILY marks helpers."""
+    _, facts = facts_text(path)
+    return _parse(run_family('family_main', facts))
+
+
+def families(path: Path) -> dict:
+    """function name -> list of family paths (each a list, broad -> narrow); all functions."""
+    out = {}
+    for _, name, p in family_rows(path):
+        out.setdefault(name, []).append(p)
+    return out
+
+
+def answers(path: Path) -> dict:
+    """Only the answer functions of the file (helpers left out)."""
+    out = {}
+    for tag, name, p in family_rows(path):
+        if tag == 'ANSWER':
+            out.setdefault(name, []).append(p)
     return out
 
 
@@ -48,6 +70,6 @@ if __name__ == '__main__':
     if cmd == 'dump':
         print(dump(target))
     else:
-        for name, paths in families(target).items():
+        for name, paths in answers(target).items():
             for p in paths:
                 print(f'FAMILY: {name}: ' + ' > '.join(p))

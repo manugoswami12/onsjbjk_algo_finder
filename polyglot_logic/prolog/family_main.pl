@@ -12,6 +12,7 @@
 % family layer only: base facts are rewritten after loading, no lowerer is changed.
 accessor(call(A, [Q, I]), elem(Q, I)) :- memberchk(A, [elt, aref, svref, char, schar, at, get]).
 accessor(call(nth, [I, Q]), elem(Q, I)).
+accessor(call(charAt, [Q, I]), elem(Q, I)).
 accessor(call(A, [Q]), elem(Q, int(0))) :- memberchk(A, [car, first, head, hd]).
 accessor(call(A, [Q]), tail(Q, 1)) :- memberchk(A, [cdr, rest, tail, tl]).
 accessor(call(A, [_, Q]), filter(Q, other(predicate))) :- memberchk(A, ['remove-if-not', 'remove-if', filter]).
@@ -30,8 +31,9 @@ family_main :-
     load_family_data(Facts),
     forall(func(F, Name, _),
            ( deepest_families(F, Paths),
+             ( answer_function(F) -> Tag = 'ANSWER' ; Tag = 'FAMILY' ),
              forall(member(P, Paths),
-                    ( atomic_list_concat(P, '>', A), format('FAMILY|~w|~w|~w~n', [F, Name, A]) )) )).
+                    ( atomic_list_concat(P, '>', A), format('~w|~w|~w|~w~n', [Tag, F, Name, A]) )) )).
 
 dump_main :-
     current_prolog_flag(argv, [Facts|_]),

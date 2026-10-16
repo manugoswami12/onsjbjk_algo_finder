@@ -23,7 +23,7 @@ HAVE_SWIPL = shutil.which('swipl') is not None
 class FamilyBranching(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        from family_scan import families
+        from family_scan import answers as families   # one answer per file (doc 09)
         truth = json.loads((V3 / 'expected_families.json').read_text())
         cls.truth = {k: v for k, v in truth.items() if not k.startswith('_')}
         cls.got = {rel: [p for ps in families(V3 / rel).values() for p in ps] for rel in cls.truth}

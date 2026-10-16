@@ -1,0 +1,44 @@
+{
+ "_note": "v3.1 outcome expectations, written before outcome.py; c32 reason corrected 16 Oct: the Lisp lowerer does not trace top-level forms, so the tool states that instead of claiming the call it cannot see",
+ "cases/c30_sortlib.py": {
+  "outcome": "LIBRARY",
+  "family": [
+   "sequence_transformation",
+   "comparison_sort"
+  ]
+ },
+ "cases/c31_gcdlib.lisp": {
+  "outcome": "LIBRARY",
+  "family": [
+   "numeric",
+   "recurrence",
+   "modulo_recurrence"
+  ]
+ },
+ "cases/c32_fragment.lisp": {
+  "outcome": "NO_ALGORITHM_BODY",
+  "reason": "no function definition (top-level forms of this language are not traced)"
+ },
+ "cases/c33_import.py": {
+  "outcome": "NO_ALGORITHM_BODY",
+  "reason": "import only"
+ },
+ "cases/c35_fibrec.java": {
+  "outcome": "FAMILY",
+  "family": [
+   "numeric",
+   "recurrence",
+   "double_recursion"
+  ],
+  "single_answer": true
+ },
+ "cases/c36_helpers.py": {
+  "outcome": "FAMILY",
+  "family": [
+   "sequence_transformation",
+   "comparison_sort",
+   "select_extreme"
+  ],
+  "single_answer": true
+ }
+}

@@ -15,7 +15,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from env_run import ROOT, ToolError  # noqa: E402
-from family_scan import families  # noqa: E402
+from family_scan import answers as families  # noqa: E402  (one answer per file, doc 09)
 
 CASES = ROOT / 'examples' / 'v3'
 

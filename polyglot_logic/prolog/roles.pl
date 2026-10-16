@@ -48,6 +48,9 @@ role(F, most_wanted, X) :-
     in_func(S, F), in_some_loop(S), value(S, var(X), E), E \= int(_),
     nguard(S, op(O, [P, Q]), true), memberchk(O, [gt, ge]),
     beats(P, Q, E, X).
+role(F, most_wanted, X) :-                         % raw assign: robust to copy propagation of loop vars
+    in_func(S, F), in_some_loop(S), assign(S, var(X), E), E \= int(_),
+    nguard(S, op(O, [P, Q]), true), memberchk(O, [gt, ge]), beats(P, Q, E, X).
 beats(P, Q, E, X) :- ( P == E ; P = elem(_, I), I == E ), ( Q == var(X) ; Q = elem(_, J), J == var(X) ).
 beats(P, Q, E, X) :- ( Q == E ; Q = elem(_, I), I == E ), ( P == var(X) ; P = elem(_, J), J == var(X) ).
 
@@ -178,6 +181,67 @@ idiom(F, gap, Q) :- in_func(S, F), ( exchange(S, Q, I, J) ; value(S, elem(Q, I),
     J = op(sub, [I1, var(G)]), I1 == I, atom(G), \+ ( loop(L, F, _), lvar(L, var(G2)), G2 == G ).
 idiom(F, heap, Q) :- in_func(S, F), rel_of(S, R), sub_term(E, R), compound(E), E = elem(Q, I),
     heap_child(I).
+idiom(F, heap, Q) :-                               % child = 2 * root + 1; ... q[child]
+    in_func(S0, F), ( assign(S0, var(C), E0) ; value(S0, var(C), E0) ), heap_child(E0),
+    in_func(S, F), rel_of(S, R), sub_term(E, R), compound(E), E = elem(Q, I), I == var(C).
+idiom(F, heap, Q) :-                               % the sift-down helper's evidence belongs to the sort
+    in_func(Cs, F), call_at(Cs, Gn, Args), Gn \== '$self', func(G, N, _), G \== F, base_name(N, Gn),
+    clause(idiom(G, heap, Q0), Body), Body \= ( in_func(_, G), call_at(_, _, _), _ ), call(Body),
+    member(Q, Args), Q = var(_), Q0 = var(_).
 heap_child(op(add, [op(mul, [int(2), _]), int(K)])) :- memberchk(K, [1, 2]).
 heap_child(op(add, [op(mul, [_, int(2)]), int(K)])) :- memberchk(K, [1, 2]).
 heap_child(op(add, [op(add, [V, V2]), int(K)])) :- V == V2, memberchk(K, [1, 2]).
+
+% ----- v3.1 beacons (doc 09) -----------------------------------------------------------
+% s[i] compared with its mirror s[n - 1 - i] (or s[0] with s[-1] recursively)
+idiom(F, mirror_compare, Q) :-
+    in_func(S, F), ( nguard(S, C, _) ; cret(S, C) ; under(S, L), lcond(L, C) ),
+    sub_term(O, C), compound(O), O = op(Op, [A, B]), memberchk(Op, [eq, ne]),
+    A = elem(var(Q), I), B = elem(var(Q2), J), Q2 == Q, mirror(I, J).
+% the mirror position n - 1 - i: i is the SUBTRAHEND (i - 1 is a neighbour, not a mirror)
+mirror(I, J) :- J = op(sub, [_, X]), X == I, !.
+mirror(I, J) :- I = op(sub, [_, X]), X == J, !.
+mirror(int(0), int(-1)).
+mirror(int(-1), int(0)).
+% s == reverse(s)
+idiom(F, mirror_compare, Q) :-
+    in_func(S, F), ( cret(S, C) ; nguard(S, C, _) ), sub_term(O, C), compound(O), O = op(eq, [A, B]),
+    ( A = var(Q), B = call(R, [var(Q2)]) ; B = var(Q), A = call(R, [var(Q2)]) ), Q2 == Q,
+    memberchk(R, [reverse, reversed, rev, strrev]).
+% q[i] = f(q[i]) with arithmetic (Caesar, ROT13): element-wise map
+idiom(F, elementwise_map, Q) :-                     % every element visited: its index is the loop variable
+    in_func(S, F), ( value(S, elem(var(Q), I), E) ; capp(S, _, E), I = _ ),
+    sub_term(X, E), compound(X), X = elem(var(Q), I2), ( var(I) -> true ; I2 == I ), E \== X,
+    under(S, L), lvar(L, V), V == I2,
+    \+ ( sub_term(Y, E), compound(Y), Y = elem(_, _), Y \== X ),             % reads only its own element
+    \+ ( sub_term(Mm, E), compound(Mm), Mm = call(Fm, _), memberchk(Fm, [min, max]) ),
+    shift_arith(E), !.
+idiom(F, elementwise_map, Q) :-
+    in_func(S, F), ( value(S, _, M) ; cret(S, M) ), sub_term(Mp, M), compound(Mp), Mp = map(var(Q), E, _),
+    shift_arith(E), !.
+% the defining feature of a cipher-like map: a modular or character-code shift
+shift_arith(E) :- sub_term(A, E), compound(A), ( A = op(Op, _), memberchk(Op, [mod, xor])
+                                               ; A = call(C, _), memberchk(C, [ord, chr]) ), !.
+% runs: a condition loop compares q[i + r] with q[i]; appends (count, element)
+idiom(F, run_length, Q) :-
+    loop(L, F, cond), lcond(L, C), sub_term(O, C), compound(O), O = op(eq, [A, B]),
+    A = elem(var(Q), _), B = elem(var(Q2), _), Q2 == Q, in_func(S, F), capp(S, _, _), !.
+% recursion inside a loop over candidates, guarded by a test (N-queens, subsets)
+idiom(F, backtracking, F) :-
+    in_func(S, F), call_at(S, '$self', _), under(S, L), loop(L, F, K), K \== recursion,
+    once(nguard(S, _, _)), !.
+% while n >= v[i]: n -= v[i]  (greedy over a value table)
+idiom(F, greedy_denominations, N) :-
+    in_func(S, F), value(S, var(N), op(sub, [var(N2), E])), N2 == N, E = elem(var(V), _),
+    \+ param(F, _, V), under(S, L), lcond(L, op(ge, [var(N3), E2])), N3 == N, E2 == E, !.
+% (f + k) mod i: Josephus
+rec_class(F, josephus, N) :-
+    in_func(S, F), cret(S, op(mod, [A, var(N)])), sub_term(Sf, A), compound(Sf), Sf = call('$self', _),
+    param(F, _, N), !.
+rec_class(F, josephus, I) :-
+    in_func(S, F), value(S, var(X), op(mod, [op(add, [var(X2), var(K)]), var(I)])), X2 == X, K \== X,
+    role(F, stepper, I), !.
+% prefix reversal: the index of the maximum, then a local reversal function called on that prefix
+idiom(F, prefix_reversal, F) :-
+    role(F, most_wanted, M), in_func(C, F), call_at(C, Gn, Args), member(V, Args), V == var(M),
+    func(G, N, _), G \== F, base_name(N, Gn), in_func(S, G), exchange(S, _, _, _), !.

@@ -1,5 +1,5 @@
 {
- "_note": "Written before families.pl existed (doc 08). Path = broad -> narrow; a result is correct if it is this path or a prefix of it (a broader, still true, answer).",
+ "_note": "Written before families.pl existed (doc 08). Path = broad -> narrow; a result is correct if it is this path or a prefix of it (a broader, still true, answer). v3.1 cases c23+ added 16 Oct before their rules.",
  "cases/c01_bubble.c": [
   "sequence_transformation",
   "comparison_sort",
@@ -103,5 +103,53 @@
   "numeric",
   "recurrence",
   "double_recursion"
+ ],
+ "cases/c23_palindrome.py": [
+  "sequence_query",
+  "predicate",
+  "symmetric_compare"
+ ],
+ "cases/c24_caesar.c": [
+  "sequence_transformation",
+  "elementwise_map"
+ ],
+ "cases/c25_rle.java": [
+  "sequence_transformation",
+  "construction",
+  "run_length"
+ ],
+ "cases/c26_queens.py": [
+  "search",
+  "backtracking"
+ ],
+ "cases/c27_roman.rs": [
+  "numeric",
+  "decomposition",
+  "greedy_denominations"
+ ],
+ "cases/c28_josephus.hs": [
+  "numeric",
+  "recurrence",
+  "josephus_recurrence"
+ ],
+ "cases/c29_pancake.c": [
+  "sequence_transformation",
+  "comparison_sort",
+  "prefix_reversal"
+ ],
+ "cases/c35_fibrec.java": [
+  "numeric",
+  "recurrence",
+  "double_recursion"
+ ],
+ "cases/c36_helpers.py": [
+  "sequence_transformation",
+  "comparison_sort",
+  "select_extreme"
+ ],
+ "cases/c34_toplevel.r": [
+  "sequence_query",
+  "aggregate",
+  "gatherer"
  ]
 }
