@@ -42,6 +42,11 @@ LISP = {
     'lcm-all': ('(defun lcm-all (&rest xs) (reduce (lambda (m n) (/ (* m n) (gcd m n))) xs :initial-value 1))',
                 [[[4, 6]], [[3, 5, 7]]]),
     'pal': ('(defun pal (s) (equal s (reverse s)))', [[[1, 2, 1]], [[1, 2]]]),
+    'msort': ('(defun msort (l comp) (if (null (rest l)) l (let ((h (floor (length l) 2))) '
+              '(merge2 (msort (subseq l 0 h) comp) (msort (subseq l h) comp) comp))))\n'
+              '(defun merge2 (a b comp) (cond ((null a) b) ((null b) a) '
+              '((funcall comp (first a) (first b)) (cons (first a) (merge2 (rest a) b comp))) '
+              '(t (cons (first b) (merge2 a (rest b) comp)))))', [[[3, 1, 2]], [[5, 4, 4, 1]]]),
 }
 
 
@@ -118,6 +123,8 @@ class LispFrontEnd(unittest.TestCase):
         for name, (_, inputs) in LISP.items():
             for x in inputs:
                 args = ' '.join(lisp_lit(a) for a in x) if name != 'lcm-all' else ' '.join(map(str, x[0]))
+                if name == 'msort':
+                    args += " #'<"
                 calls.append(f'(print ({name} {args}))')
         with tempfile.TemporaryDirectory() as td:
             prog = Path(td) / 't.lisp'
@@ -128,7 +135,7 @@ class LispFrontEnd(unittest.TestCase):
             lib.write_text(src + '\n', encoding='utf-8')
             k = 0
             for name, (_, inputs) in LISP.items():
-                got = interp_outputs(lib, name, inputs)
+                got = interp_outputs(lib, name + '$asc' if name == 'msort' else name, inputs)
                 for x, g in zip(inputs, got, strict=True):
                     with self.subTest(fn=name, x=x):
                         self.assertEqual(norm(native[k]), norm(g))

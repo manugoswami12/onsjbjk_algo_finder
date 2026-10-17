@@ -118,6 +118,22 @@ def _make_class():
             return stmts + [('par_assign', ts, vs)], ('none',)
         f_psetf = f_psetq
 
+        def f_subseq(self, a):
+            s, vs = self.many(a[:3])
+            return s, ('slice', vs[0], vs[1], vs[2] if len(vs) > 2 else ('none',), ('none',))
+
+        def f_first(self, a):
+            s, (q,) = self.many(a[:1])
+            return s, ('elem', q, ('int', 0))
+
+        def f_rest(self, a):
+            s, (q,) = self.many(a[:1])
+            return s, ('slice', q, ('int', 1), ('none',), ('none',))
+
+        def f_last(self, a):
+            s, (q,) = self.many(a[:1])
+            return s, ('slice', q, ('int', -1), ('none',), ('none',))   # (last l) is the last CONS
+
         def f_vector(self, a):
             return self.f_list(a)
 

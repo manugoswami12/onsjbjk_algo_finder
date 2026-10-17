@@ -32,6 +32,11 @@
       "modules/misc/AbsoluteValue.hs::absoluteValue": null
     },
     "sample3": [
+      "modules/lists/Palindrome.hs::palindrome",
+      "modules/lists/Reverse.hs::reverse",
+      "modules/misc/Factorial.hs::factorial"
+    ],
+    "retired_sample3": [
       "modules/lists/Sum.hs::sum",
       "modules/lists/Safetails.hs::safetail'",
       "modules/sorting/Quicksort.hs::quicksort'"
@@ -93,6 +98,11 @@
       "ch4-data-structures.lisp::uf-find": null
     },
     "sample3": [
+      "ch5-arrays.lisp::bin-search",
+      "ch6-lists.lisp::merge-lists",
+      "ch5-arrays.lisp::selection-sort"
+    ],
+    "retired_sample3": [
       "ch6-lists.lisp::merge-sort",
       "ch11-strings.lisp::kmp-match",
       "ch6-lists.lisp::arith-eval"

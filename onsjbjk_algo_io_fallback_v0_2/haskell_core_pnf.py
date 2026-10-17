@@ -282,7 +282,6 @@ class Lower:
         self.listy = set()
         self.alias = {}            # let-bound partial applications, inlined (per function scope)
         self.locfun_arity = {}     # local (lifted) function -> value-parameter count
-        self.params_fn = set()
 
     def fresh(self):
         return f'h${next(self.tmp)}'
@@ -703,8 +702,8 @@ class Lower:
             return s, ('elem', q, ('int', 0 if h == 'fst' else 1))
         if h in ('flip',) and len(args) >= 3:
             return self.apply(args[0], [args[2], args[1]] + args[3:])
-        if h in self.params_fn:
-            s, vs = self.many(args)
+        if re.search(r'_[a-zA-Z0-9]{3,5}$', h) and h not in self.local and h not in self.globals:
+            s, vs = self.many(args)                    # a function-valued parameter / local
             return s, ('callv', ('var', h), vs)
         if h in ('IP', 'IN') and len(args) == 1:
             return self.compile(args[0])

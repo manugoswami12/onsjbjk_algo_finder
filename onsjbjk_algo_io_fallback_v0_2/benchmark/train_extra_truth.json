@@ -1,0 +1,9 @@
+{
+  "_source": "TheAlgorithms/Python @ 25c712f2: extra training reference added for the training omission found in stage 1 (no plain list-sum function exists; product_sum_array equals the element sum on flat lists). Label from the name.",
+  "files": {
+    "data_structures/arrays/product_sum.py": [
+      "element_accumulation",
+      "aggregate"
+    ]
+  }
+}
