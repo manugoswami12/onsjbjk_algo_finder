@@ -36,11 +36,15 @@ def learn(labelled: dict[Path, str | None], rules: Path = RULES) -> dict[Path, i
     return count
 
 
-def apply(path: Path, rules: Path = RULES) -> tuple[list[str], list[tuple[str, str, str]]]:
-    """([tree nodes of the file], [(node, label, rule)] of the learned branches that hold, deepest node first)."""
+def apply(path: Path, rules: Path = RULES, io_labels=()) -> tuple[list[str], list[tuple[str, str, str]]]:
+    """([tree nodes of the file], [(node, label, rule)] of every learned rule holding at its deepest node);
+    io_labels: the training labels whose input->output behaviour the file has (for learned_branch/4)."""
     kind, text = learn_facts.tree_facts(path)
     if not text.strip():
         return [], []
-    lines = learn_facts.swipl_facts('learn_apply_main', PROLOG / 'learn_apply.pl', kind, text, str(rules))
+    with tempfile.TemporaryDirectory(prefix='v02_io_') as td:
+        io = Path(td) / 'io.pl'
+        io.write_text(''.join(f"io_equal('{lab}').\n" for lab in sorted(io_labels)), encoding='utf-8')
+        lines = learn_facts.swipl_facts('learn_apply_main', PROLOG / 'learn_apply.pl', kind, text, str(rules), str(io))
     nodes = [line.split('|', 1)[1] for line in lines if line.startswith('NODE|')]
     return nodes, [tuple(line.split('|')[1:]) for line in lines if line.startswith('LEARNED|')]

@@ -164,3 +164,37 @@ def apply(file):
 | 15 of 41 Python training files reach no node (Caesar, leap year, matrix multiplication) | C = root; their rules are checked against all negatives (as in round 2) |
 | files of one label at different nodes (N-queens: backtracking and sequence_query) | one group per node, each its own child |
 | a test file reaching a node only through a helper function | file level: a file reaches the nodes of all its functions |
+
+## 9. Round 3, run 3: a branch first; another rule only when a branch cannot work, by arity, never by order
+
+**Problems** (stage 15, run 2):
+1. Ackermann in C reaches `search>backtracking`. The N-queens branch learned there had an empty condition (no other Python program reached that node), so it accepted every program there.
+2. Heapsort in Lisp reaches the known leaf `…>comparison_sort>heap`. The learned Levenshtein branch of an ancestor node (`sequence_query`, reached by a helper) claimed it.
+
+**Rule (user).** Prolog is order sensitive, and more rules in one predicate keep breaking old answers, so:
+- add a **branch** whenever one works;
+- **only when it cannot**, add another rule. The rule must not interfere with existing ones and uses no cut.
+
+A rule of another arity is another predicate (`p/3` for a plain sort, `p/4` for the complex ones), so it cannot change the answers of the existing ones. Its extra argument is the input→output behaviour, the project's fallback.
+
+| Case at node C (learning, Python) | Learned | Predicate |
+|---|---|---|
+| a non-empty logic condition separates the file from every other training program at C (and at least one other is there: with none, any token would do, so nothing is shown) | branch | `learned_branch(C, L, R) --> pattern(S).` (`learned_branch/5` as compiled) |
+| no logic condition works (no other program at C, or only the whole skeleton separates) | input→output rule | `learned_branch(C, L, R, io) :- io_equal(L).` (`learned_branch/4`) |
+
+`io_equal(L)`: the test file's behaviour equals that of a training file of L (AP13 `io_catalog` through `compare_learners.IoCatalog`; the Prolog normal form is run, never the source).
+
+**Applying** (`learn_apply.pl`, no cut, no first-match):
+- Only the deepest node(s) the file reaches are used. Its ancestors are not: a file on a deeper known branch is not a sibling of that branch's ancestors' children.
+- Every answer of both predicates there is collected (`findall`). One label is the answer; several labels give UNKNOWN; none goes to the input→output fallback over all training files.
+
+```python
+def learn_at(C, file):
+    S = general(seed(file), negatives_at(C))         # shortest separating sub-pattern, or None
+    emit(branch(C, label, S)) if S else emit(io_rule(C, label))   # at most one io rule per (C, label)
+
+def apply(file):
+    D = deepest(nodes(file))
+    found = {L for C in D for L in branches_holding(C, streams(file)) | io_rules_holding(C, io_equal(file))}
+    return found if len(found) == 1 else (UNKNOWN if found else io_fallback(file))
+```

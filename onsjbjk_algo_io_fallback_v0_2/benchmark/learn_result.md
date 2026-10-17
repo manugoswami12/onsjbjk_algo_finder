@@ -140,3 +140,25 @@ The other 8 units are right: Josephus (Lisp) and Hanoi (C) found, and 6 negative
 - **Ancestors are tried too.** The applying step goes up from the deepest node, so a file that reached a known leaf (heapsort's `heap`) was claimed by a learned child of an ancestor. In the tree, a file at a deeper known branch is not a sibling of that branch.
 - **The same algorithm at different nodes across languages.** Ackermann in C reaches `search>backtracking` (a self-call inside a guarded loop); the Python Ackermann files reach only `numeric`. N-queens in Haskell reaches no node, while in Python it reaches backtracking.
 - **Empty conditions are too general.** An empty condition under a node (n_queens under backtracking) names every program at that node, and the Python training set had no other program there.
+
+## Round 3, run 3: a branch first; an input->output rule (another arity) only when a branch cannot work
+
+Design: docs/04 section 9.
+- **Branch:** `learned_branch(C, L, R) --> pattern(S)`, when a non-empty logic condition separates the file from the other training programs at C, and at least one other program is at C.
+- **Otherwise, another predicate:** `learned_branch(C, L, R, io) :- io_equal(L)`. A different arity is a different predicate, so it cannot change any branch's answers.
+- **Applying:** only the deepest node(s) of the file are used; every answer of both predicates is collected (findall, no cut). One label is the answer, several give UNKNOWN, none goes to the input->output fallback.
+
+Learned: 35 branches and 10 input->output rules, for example:
+- n_queens under `search>backtracking` (no other program there);
+- josephus under `numeric>recurrence>josephus_recurrence`;
+- leap_year and matrix_multiplication at the root.
+
+**Stage 3: precision 1/1 = 100%, recall 1/2 = 50%: FAIL.** Stopped, as instructed.
+- Hanoi in C is found by its branch under `double_recursion`, `[output]`.
+- Hailstone in Haskell (negative) gets no answer.
+- **Josephus in Lisp: UNKNOWN.**
+  - Its rule is now input->output only, since no other training program reaches `josephus_recurrence`.
+  - The Lisp file runs and gives outputs (kill: `[12,18]->6, [7,5]->5, ...`).
+  - The Python training file `josephus-problem-2.py` has no behaviour: it returns `'Survivor: %d' % r`, a formatted string, and its Prolog normal form fails on all inputs (`runs: False`). So `io_equal(josephus)` cannot hold.
+
+(Before this last step, the same run with a one-token condition at nodes with no other program gave stage 3 = 100% / 100%. That condition separated nothing: `[loop]` for Josephus, `[call(list)]` for N-queens. It was replaced by the input->output rule on purpose, so the run was not continued with it.)

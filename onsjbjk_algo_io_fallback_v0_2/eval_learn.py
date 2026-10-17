@@ -60,21 +60,23 @@ def answer(path, labels, io):
     the file has no algorithm of its own (a Lisp file defining no function: output zero)."""
     if path.suffix == '.lisp' and ecl_logic.NOCODE in ecl_logic.families(path):
         return None
+    try:                                          # the file's input->output behaviour (AP13 io_catalog)
+        by_fn = io.labels_by_function(path)
+    except ERRORS:
+        by_fn = {}
+    io_labels = {lab for v in by_fn.values() for lab in v} & labels
     try:
-        nodes, found = learn_apply.apply(path)
+        nodes, found = learn_apply.apply(path, io_labels=io_labels)
     except ERRORS as exc:
         print(f'  ({path.name}: {type(exc).__name__}: {str(exc)[:100]})')
         nodes, found = [], []
     got = {lab for _, lab, _ in found} & labels
-    where = f"[{' '.join(nodes) or 'root'}]"
+    tags = [f"[{' '.join(nodes) or 'root'}]"] + sorted(f'learned:{lab}:{r}@{c or "root"}' for c, lab, r in found)
+    if len(got) > 1:                              # several learned rules hold: no guess
+        return set(), tags + ['ambiguous']
     if got:
-        return got, [where] + sorted({f'learned:{lab}:{r}@{c or "root"}' for c, lab, r in found if lab in got})
-    try:                                          # no learned branch holds: the input->output fallback
-        by_fn = io.labels_by_function(path)
-    except ERRORS:
-        by_fn = {}
-    got = {lab for v in by_fn.values() for lab in v} & labels
-    return got, [where] + sorted(f'io:{lab}' for lab in got)
+        return got, tags
+    return io_labels, tags + sorted(f'io:{lab}' for lab in io_labels)   # the input->output fallback
 
 
 def score(rosetta, units, labels, io, title):
