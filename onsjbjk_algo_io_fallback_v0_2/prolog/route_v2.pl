@@ -48,6 +48,11 @@ route(F, selection_exchange) :-
 route(F, membership_lookup) :-
     observed(F, element_equality_controls_true_return, _).
 
+% recursive halving on slices with a boolean result: an interval lookup without an index
+route(F, interval_lookup) :-
+    route(F, membership_lookup),
+    observed(F, slice_halving_self_call, _).
+
 % ---- aggregate over input elements ----
 route(F, aggregate) :- observed(F, input_element_accumulated, _).
 route(F, aggregate) :- observed(F, best_so_far_update, _).
@@ -67,13 +72,15 @@ recurrence_evidence(range_product).
 recurrence_evidence(range_sum).
 recurrence_evidence(linear_self_product).
 recurrence_evidence(self_calls_minus_one_minus_two).
+recurrence_evidence(list_recurrence_two_terms).
 
 route(F, recurrence) :-
     once((recurrence_evidence(E), observed(F, E, _))).
 
 route(F, fibonacci_like) :-
     route(F, recurrence),
-    once((observed(F, pair_recurrence, _) ; observed(F, self_calls_minus_one_minus_two, _))).
+    once((observed(F, pair_recurrence, _) ; observed(F, self_calls_minus_one_minus_two, _) ;
+          observed(F, list_recurrence_two_terms, _))).
 
 route(F, euclid_like) :-
     route(F, recurrence),

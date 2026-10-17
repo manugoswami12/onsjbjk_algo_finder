@@ -2,7 +2,7 @@
 
 usage: python eval_heldout.py <checkout root> [benchmark/heldout_truth.json]
 A file's answer is the union of its functions' routes minus `unknown`.
-  positive: correct if the expected branch is in the answer; WRONG if answered without it
+  positive: correct if the expected branch (or one of a listed set) is in the answer; WRONG if answered without it
   negative: WRONG if answered with anything beyond the allowed broad branches
 One SWI-Prolog call for all files; a file Python cannot parse counts as UNKNOWN.
 """
@@ -22,7 +22,7 @@ def main():
     for rel, _ in files:
         try:
             found = load(root / rel)
-        except SyntaxError as exc:
+        except (SyntaxError, ValueError) as exc:
             notes[rel] = 'not parseable: ' + str(exc).split(' (')[0]
             found = []
         analyses += found
@@ -43,9 +43,10 @@ def main():
         else:
             positives += 1
             answered += bool(got)
-            outcome = 'ok' if expected in got else ('WRONG' if got else 'UNKNOWN')
+            accepted = set(expected) if isinstance(expected, list) else {expected}
+            outcome = 'ok' if accepted & got else ('WRONG' if got else 'UNKNOWN')
             correct += outcome == 'ok'
-        print(f"{rel:38s} {str(expected):30s} {outcome:9s} {','.join(sorted(got)) or '-'} {notes.get(rel, '')}")
+        print(f"{rel:38s} {str(expected)[:30]:30s} {outcome:9s} {','.join(sorted(got)) or '-'} {notes.get(rel, '')}")
     print(f"\nPRECISION = correct / answered = {correct}/{answered} = {correct / max(answered, 1):.1%}")
     print(f"RECALL    = correct / positives = {correct}/{positives} = {correct / max(positives, 1):.1%}")
     print(f"WRONG ON NEGATIVES = {wrong_neg} of {len(files) - positives}")

@@ -28,6 +28,8 @@ def returned_names(rows) -> set[str]:
     for stmt, _, _ in rows:
         if isinstance(stmt, ast.Return) and stmt.value is not None:
             out |= used_names(stmt.value)
+        if isinstance(stmt, ast.Expr) and isinstance(stmt.value, (ast.Yield, ast.YieldFrom)) and stmt.value.value:
+            out |= used_names(stmt.value.value)      # a generator's output
     return out
 
 
@@ -50,11 +52,23 @@ def loop_driven_by(loop, tainted):
 
 
 def element_of_input(expr, loops, inputs):
-    """An input element: A[...] with A an input, or the target of `for x in A`."""
+    """An input element: A[...] with A an input, the target of `for x in A`,
+    or x of `for i, x in enumerate(A)`."""
     if subscript_on(expr, inputs):
         return True
-    return is_name(expr) and any(isinstance(l, ast.For) and is_name(l.target, expr.id)
-                                 and is_name(l.iter) and l.iter.id in inputs for l in loops)
+    return is_name(expr) and any((isinstance(l, ast.For) and is_name(l.target, expr.id)
+                                  and is_name(l.iter) and l.iter.id in inputs)
+                                 or enumerate_pair(l, inputs)[2:] == (expr.id,) for l in loops)
+
+
+def enumerate_pair(loop, inputs):
+    """`for i, x in enumerate(A)` with A an input -> (A, i, x), else ()."""
+    if (isinstance(loop, ast.For) and isinstance(loop.target, ast.Tuple) and len(loop.target.elts) == 2
+            and all(is_name(t) for t in loop.target.elts) and isinstance(loop.iter, ast.Call)
+            and is_name(loop.iter.func, 'enumerate') and len(loop.iter.args) == 1
+            and is_name(loop.iter.args[0]) and loop.iter.args[0].id in inputs):
+        return (loop.iter.args[0].id,) + tuple(t.id for t in loop.target.elts)
+    return ()
 
 
 def range_loop_var(expr, loops, tainted):
@@ -170,6 +184,12 @@ def w_aggregate(result, rows, inputs, tainted, returned):
                 if value_vs_best or index_vs_index:
                     result.add('best_so_far_update', if_stmt.lineno)
                     result.add('best_so_far_update', stmt.lineno)
+            # best = min(best, x) / max(x, best): the builtin is the guarded update
+            if (isinstance(value, ast.Call) and is_name(value.func) and value.func.id in ('min', 'max')
+                    and len(value.args) == 2 and not value.keywords
+                    and any(is_name(a, best) and element_of_input(b, loops, inputs)
+                            for a, b in (value.args, value.args[::-1]))):
+                result.add('best_so_far_update', stmt.lineno)
 
 
 def w_lookup(result, rows, inputs, returned):
@@ -181,6 +201,9 @@ def w_lookup(result, rows, inputs, returned):
         if (loops and isinstance(stmt, ast.Assign) and len(stmt.targets) == 1 and is_name(stmt.targets[0])
                 and subscript_on(stmt.value, inputs) and is_name(stmt.value.slice)):
             followers[stmt.targets[0].id] = (stmt.value.value.id, stmt.value.slice.id)
+        pair = enumerate_pair(stmt, inputs)
+        if pair:
+            followers[pair[2]] = (pair[0], pair[1])
     witnesses = []
     for stmt, guards, loops in rows:
         if not loops:
@@ -218,6 +241,32 @@ def w_lookup(result, rows, inputs, returned):
                 break
 
 
+def w_slice_halving(result, fn, rows, inputs):
+    """mid = len(A) // 2 and self-calls on A[:mid] and A[mid + 1:] (recursive halving search)."""
+    mids = {s.targets[0].id for s, _, _ in rows if isinstance(s, ast.Assign) and len(s.targets) == 1
+            and is_name(s.targets[0]) and binop(s.value, ast.FloorDiv) and is_const(s.value.right, 2)
+            and isinstance(s.value.left, ast.Call) and is_name(s.value.left.func, 'len')
+            and len(s.value.left.args) == 1 and is_name(s.value.left.args[0])
+            and s.value.left.args[0].id in inputs}
+    halves = set()
+    for stmt, guards, _ in rows:
+        if not (isinstance(stmt, ast.Return) and guards):
+            continue
+        for c in self_calls(stmt, fn.name):
+            for a in c.args:
+                if (isinstance(a, ast.Subscript) and is_name(a.value) and a.value.id in inputs
+                        and isinstance(a.slice, ast.Slice) and a.slice.step is None):
+                    lo, hi = a.slice.lower, a.slice.upper
+                    if lo is None and is_name(hi) and hi.id in mids:
+                        halves.add(('low', stmt.lineno))
+                    if (hi is None and binop(lo, ast.Add) and is_name(lo.left) and lo.left.id in mids
+                            and is_const(lo.right, 1)):
+                        halves.add(('high', stmt.lineno))
+    if {h for h, _ in halves} == {'low', 'high'}:
+        for _, line in halves:
+            result.add('slice_halving_self_call', line)
+
+
 def w_membership(result, rows, inputs):
     """`for x in A: if x == t: return True` with A and t inputs."""
     for stmt, guards, loops in rows:
@@ -250,6 +299,24 @@ def w_recurrence(result, fn, rows, inputs, tainted, returned):
             if (binop(v2, ast.Mod) and is_name(v2.left, x) and is_name(v2.right, y)
                     and isinstance(loops[-1], ast.While) and y in used_names(loops[-1].test)):
                 result.add('modulo_recurrence', stmt.lineno)
+    for stmt, _, loops in rows:                 # list recurrence L.append(L[-1] + L[-2]) / L[i] = L[i-1] + L[i-2]
+        if not (loops and loop_driven_by(loops[-1], tainted)):
+            continue
+        if (isinstance(stmt, ast.Expr) and isinstance(stmt.value, ast.Call)
+                and isinstance(stmt.value.func, ast.Attribute) and stmt.value.func.attr == 'append'
+                and is_name(stmt.value.func.value) and len(stmt.value.args) == 1):
+            arr, v, dst = stmt.value.func.value.id, stmt.value.args[0], None
+            terms = {'-1', '-2'}
+        elif (isinstance(stmt, ast.Assign) and len(stmt.targets) == 1 and isinstance(stmt.targets[0], ast.Subscript)
+              and is_name(stmt.targets[0].value) and is_name(stmt.targets[0].slice)):
+            arr, v, dst = stmt.targets[0].value.id, stmt.value, stmt.targets[0].slice.id
+            terms = {f'{dst} - 1', f'{dst} - 2'}
+        else:
+            continue
+        if (arr in returned and binop(v, ast.Add) and all(isinstance(x, ast.Subscript) and is_name(x.value, arr)
+                                                          for x in (v.left, v.right))
+                and {ast.unparse(v.left.slice), ast.unparse(v.right.slice)} == terms):
+            result.add('list_recurrence_two_terms', stmt.lineno)
     for stmt, _, _ in rows:                     # three-statement Euclid: t = a % b; a = b; b = t
         if isinstance(stmt, ast.While) and len(stmt.body) >= 3:
             for s1, s2, s3 in zip(stmt.body, stmt.body[1:], stmt.body[2:]):
@@ -304,7 +371,11 @@ def w_number(result, rows, tainted):
     for stmt, _, loops in rows:
         if isinstance(stmt, ast.While):
             loop_rows = [(s, g, l) for s, g, l in rows if stmt in l]
-            for n in used_names(stmt.test) & tainted:
+            heads = used_names(stmt.test)
+            if is_const(stmt.test, True):            # while True: ... if <test on n>: break
+                heads = set().union(*(used_names(s.test) for s, _, _ in loop_rows if isinstance(s, ast.If)
+                                      and any(isinstance(b, ast.Break) for b in s.body)))
+            for n in heads & tainted:
                 values = [(s.lineno, assigns(s, n)) for s, _, _ in loop_rows]
                 values = [(line, v) for line, v in values if v is not None]
                 halves = [line for line, v in values
@@ -317,7 +388,9 @@ def w_number(result, rows, tainted):
                            and {ast.unparse(v.left.left), ast.unparse(v.left.right)} == {n, '3'}]
                 mods = [x for s, _, _ in loop_rows for x in ast.walk(s) if binop(x, ast.Mod)
                         and is_name(x.left, n)]
-                if tens and any(is_const(x.right, 10) for x in mods):
+                counts = [s for s, _, _ in loop_rows if isinstance(s, ast.AugAssign) and isinstance(s.op, ast.Add)
+                          and is_name(s.target) and is_const(s.value, 1)]
+                if tens and (any(is_const(x.right, 10) for x in mods) or counts):
                     for line in [stmt.lineno] + tens:
                         result.add('digit_decomposition', line)
                 parity = [s.lineno for s, _, _ in loop_rows if isinstance(s, ast.If) and any(
@@ -339,6 +412,12 @@ def w_number(result, rows, tainted):
                     result.add('divisor_test_in_loop', stmt.lineno)
 
 
+def stepped(loop, name):
+    """Stepper role in a while loop: `name += 1` in its body (top level)."""
+    return any(isinstance(s, ast.AugAssign) and is_name(s.target, name) and isinstance(s.op, ast.Add)
+               and is_const(s.value, 1) for s in loop.body)
+
+
 def w_marking(result, rows, tainted):
     """Strided marking: for j in range(s, n, p): M[j] = const, inside `for p in ...`;
     one-way flag M[p] guarding the strided loop (sieve)."""
@@ -348,9 +427,10 @@ def w_marking(result, rows, tainted):
                 and is_name(stmt.iter.args[2]) and used_names(stmt.iter.args[1]) & tainted):
             continue
         j, p = stmt.target.id, stmt.iter.args[2].id
-        if not any(isinstance(l, ast.For) and is_name(l.target, p) for l in loops):
+        if not any((isinstance(l, ast.For) and is_name(l.target, p)) or
+                   (isinstance(l, ast.While) and p in used_names(l.test) and stepped(l, p)) for l in loops):
             continue
-        marks = [s for s in stmt.body if isinstance(s, ast.Assign) and len(s.targets) == 1
+        marks = [s for s in ast.walk(stmt) if isinstance(s, ast.Assign) and len(s.targets) == 1
                  and isinstance(s.targets[0], ast.Subscript) and is_name(s.targets[0].value)
                  and is_name(s.targets[0].slice, j) and isinstance(s.value, ast.Constant)]
         for s in marks:
@@ -416,6 +496,7 @@ def analyse_v2(fn) -> Analysis:
     w_aggregate(result, rows, inputs, tainted, returned)
     w_lookup(result, rows, inputs, returned)
     w_membership(result, rows, inputs)
+    w_slice_halving(result, fn, rows, inputs)
     w_recurrence(result, fn, rows, inputs, tainted, returned)
     w_number(result, rows, tainted)
     w_marking(result, rows, tainted)
