@@ -55,7 +55,7 @@ def tokens(fn) -> list[str]:
     def emit(node):
         if isinstance(node, list):
             for x in node:
-                if not (isinstance(x, ast.stmt) and is_guard(x)):
+                if isinstance(x, ast.AST) and not (isinstance(x, ast.stmt) and is_guard(x)):
                     emit(x)
             return
         if isinstance(node, ast.Name):
