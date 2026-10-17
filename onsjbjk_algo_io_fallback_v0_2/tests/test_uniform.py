@@ -45,11 +45,15 @@ class BuiltBranchTests(unittest.TestCase):
         import learn_apply
         cases = {'ackermann': (['ack.py', 'ack.c', 'ack.lisp'], ['mc91.py', 'fib.py']),
                  'knapsack_01': (['knap.py', 'knap.c'], ['lcs_table.py', 'matrix_table.py']),
-                 'caesar_cipher': (['caesar_loop.py', 'caesar_loop.lisp'], ['vigenere.py']),
-                 'matrix_multiplication': (['matrix_table.py', 'matrix_table.lisp', 'matrix_collect.py', 'matrix_collect.lisp'],
+                 'caesar_cipher': (['caesar_loop.py', 'caesar_loop.lisp', 'caesar_pf.hs'], ['vigenere.py']),
+                 'matrix_multiplication': (['matrix_table.py', 'matrix_table.lisp', 'matrix_collect.py', 'matrix_collect.lisp',
+                                            'matrix_fn.lisp'],
                                            ['dot.py', 'knap.py']),
                  'run_length_encoding': (['rle_group.lisp', 'rle_scan.py'], ['dedup.py']),
-                 'n_queens': (['queens_perm.py', 'queens_perm.hs'], ['perm_sort.py'])}
+                 'n_queens': (['queens_perm.py', 'queens_perm.hs', 'queens_bt.py', 'queens_bt.c'], ['perm_sort.py', 'grid_paths.py']),
+                 'lcs': (['lcs_rec.py', 'lcs_rec.lisp', 'lcs_table.py'], ['lev_table.py', 'knap.py']),
+                 'levenshtein': (['lev_table.py', 'lev_table.c'], ['lcs_table.py', 'lcs_rec.py']),
+                 'roman_encode': (['roman_fmt.lisp'], ['plain_fmt.lisp'])}
         for task, (positives, negatives) in cases.items():
             for f in positives:
                 with self.subTest(task=task, file=f):

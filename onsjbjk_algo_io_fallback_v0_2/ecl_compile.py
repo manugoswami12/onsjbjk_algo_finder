@@ -30,6 +30,8 @@ def ecl_units(path: Path, timeout=120) -> list[str]:
     for f in top_forms(text):
         if re.match(r'\((defun|defmethod)\s', f, re.IGNORECASE):     # a method body is computation too
             forms.append(f)
+        elif re.match(r'\(defmacro\s', f, re.IGNORECASE):           # the file's own macro: expanded where used
+            prelude += f'(eval-when (:compile-toplevel) {f})\n'
         elif not DECLARATION.match(f):
             forms.append(f'(defun ecl-toplevel () {f})')
     with tempfile.TemporaryDirectory(prefix='v02_eclu_') as td:

@@ -243,7 +243,7 @@ def constants(root, src: bytes) -> list[str]:
 
 
 def vv_object(objects: list[str], index: str):
-    """('symbol' | 'keyword', name) of VV[index], or None (numbers, forms, strings stay as they are)."""
+    """('symbol' | 'keyword', name) or ('string', s<hex of the text>) of VV[index], or None (numbers, forms)."""
     if not index.isdigit() or int(index) >= len(objects):
         return None
     obj = objects[int(index)]
@@ -251,6 +251,8 @@ def vv_object(objects: list[str], index: str):
         return 'keyword', c_name(obj[1:])
     if obj[:1].isalpha() or obj[:1] in '*%+-<>=/':
         return ('symbol', c_name(obj.split(':')[-1])) if not obj.lstrip('+-').isdigit() else None
+    if len(obj) >= 2 and obj[0] == obj[-1] == '"':      # a string constant: its text, hex-coded for C (ecl_norm decodes)
+        return 'string', 's' + obj[1:-1].encode('utf-8').hex()
     return None
 
 

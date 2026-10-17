@@ -2,6 +2,7 @@
 its tree nodes (prolog/tree_main.pl). Nothing is run."""
 from __future__ import annotations
 
+import subprocess
 import tempfile
 from pathlib import Path
 
@@ -22,7 +23,39 @@ def tree_facts(path: Path) -> tuple[str, str]:
     if path.suffix == '.lisp':
         units = ecl_compile.ecl_units(path)
         return 'lisp', ecl_facts.facts_of(units) if any(units) else ''
+    if path.suffix == '.c':
+        return 'ap13', c_facts(path)
     return 'ap13', cli.facts_text(path)[1]
+
+
+def c_facts(path: Path) -> str:
+    """AP13 facts of a C file after its own macros are expanded by the C preprocessor (a function-like macro
+    MAT_ELEM(r, c) is the expression it stands for); system headers are not read (#include lines dropped)."""
+    text = ''.join(line for line in path.read_text(encoding='utf-8', errors='replace').splitlines(keepends=True)
+                   if not line.lstrip().startswith('#include'))
+    done = subprocess.run(['cpp', '-P', '-w', '-undef'], input=text, capture_output=True, text=True, check=False)
+    if done.returncode != 0 or not done.stdout.strip():
+        return cli.facts_text(path)[1]               # the preprocessor cannot read it: the file as it is
+    with tempfile.TemporaryDirectory(prefix='v02_cpp_') as td:
+        f = Path(td) / path.name
+        f.write_text(done.stdout, encoding='utf-8')
+        return cli.facts_text(f)[1]
+
+
+def defines_code(path: Path) -> bool:
+    """The source defines something (a function or a binding): a REPL transcript (*Main> f x) defines nothing.
+    Haskell is read from its syntax tree (tree-sitter, AP13 parse_source), since AP13's lowerer gives no facts
+    for some definitions too; the other languages' lowerers give a function for every definition."""
+    if path.suffix == '.hs':
+        from parse_source import parse
+        stack = [parse(path)[2]]
+        while stack:
+            node = stack.pop()
+            if node.type in ('function', 'bind'):
+                return True
+            stack.extend(node.children)
+        return False
+    return 'func(' in tree_facts(path)[1]
 
 
 def swipl_facts(goal: str, program: Path, kind: str, text: str, *args: str) -> list[str]:

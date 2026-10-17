@@ -286,3 +286,25 @@ Where the Python examples cannot teach an algorithm in another language, a branc
 | Branch | Logic (relations) | Built from | Logic test (`tests/test_uniform.py`) |
 |---|---|---|---|
 | `towers_of_hanoi` under `numeric>recurrence>double_recursion` | Two recursive calls, each on n - 1, made one after the other for their effect only: their results are discarded (AP13 `rec_class(double_recursion, F)`, the sequential form). For Lisp, ECL's tail jump sets n to n - 1 in its own statement. It extends the existing clause: fibonacci_like first, then towers_of_hanoi, else recursive_decomposition. | towers-of-hanoi-1.c | hanoi .py/.c/.lisp → towers_of_hanoi. Negatives: fib → fibonacci_like; in-order walk → recursive_decomposition; Ackermann (its jump sets n to 1); an edit distance (call results used) |
+
+### 15b. Built branches and front-end fixes (stages 15 and 55)
+
+Built branches (`families_v02.pl` relations, `family_to_v02.pl` branches; logic tests in `tests/test_uniform.py`):
+
+| Task | Node | Relation (every language) |
+|---|---|---|
+| ackermann | numeric>recurrence>nested_recursion | `f(m-1, f(m, n-1))`: a self-call inside the argument of a self-call that counts the first parameter down (Lisp: the tail jump's update is the inner call) |
+| knapsack_01 | marking>table_fill>capacity_reduction | a cell from the previous row at a capacity reduced by a non-constant amount, `T[i-1][j - w]` |
+| caesar_cipher | sequence_transformation>elementwise_map>alphabet_rotation | `chr((code(c) - b + k) mod 26 + b)` with one non-literal character code (Vigenere has two); the Haskell point-free form |
+| matrix_multiplication | sequence_transformation>construction>matrix_product | the accumulated `a[r][k] * b[k][c]` (or `col(b, c)[k]`); the functional form, rows mapped to `(apply #'mapcar dot b)` |
+| run_length_encoding | sequence_transformation>construction>run_length (AP13's node) | a group extended while the element equals its first, else emitted and restarted |
+| n_queens | search>permutation_filter, search>diagonal_conflict | the permutations with distinct `x_i + i` and `x_i - i`; the sum and the difference of the same positions used as keys (membership or occupancy index); the bit-mask diagonals shifted left and right |
+| lcs | sequence_query>two_sequence_match>longest_common | on a match the diagonal + 1 (or the element in front), else the larger of the two one-sided steps |
+| levenshtein | sequence_query>two_sequence_match>edit_distance | a min with at least two +1 alternatives; or, by recursion, the diagonal unchanged on a match and +1 otherwise |
+| roman_encode | library>roman_numerals | Lisp `format` with the `~@R` directive (AP13 doc 07: a library call names its algorithm) |
+| josephus | numeric>recurrence>josephus_recurrence (AP13's node) | AP13's own relation, mapped |
+
+Front-end fixes found while building (each the same component as the same term):
+- C: the file's own macros are expanded by `cpp` (without system headers); a row-major index `q[r*d + c]` with a non-constant stride is `q[r][c]`, as ECL's.
+- ECL: a `&key` comparator that defaults to an equality predicate is `=`; the file's own `defmacro` is defined before its uses compile; a call of the function's own name is `$self`; VV string constants keep their text (`str(...)`).
+- No-algorithm files in every language: a source that defines nothing (a REPL transcript) gives zero. For Haskell this is decided from the tree-sitter tree, since AP13's lowerer gives no facts for some definitions too.

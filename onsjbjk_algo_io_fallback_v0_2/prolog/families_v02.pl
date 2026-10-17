@@ -172,3 +172,102 @@ distinct_diagonals :- in_func(S, _), ( value(S, _, V) ; ret(S, V) ; guard(S, V, 
     sub_term(D, V), compound(D), index_distinct(D), !.
 index_distinct(call(len, [call(set, [op(O, [elem(var(Q), var(I)), var(I2)])|_])])) :- memberchk(O, [add, sub]), I == I2, atom(Q).
 index_distinct(op('.', [var(length), op('.', [var(nub), call(zipWith, [_, call(range, [int(0), _])])])])).
+
+% --- two sequences compared element by element: LCS and edit distance --------------------------------
+% a statement under (Pol = true) or not under (false) the equality of the current elements of two
+% different sequences (a[i] = b[j], or their heads)
+under_match(S, Pol) :- guard(S, C, P), ( C = op(not, [E]) -> flip(P, P1) ; E = C, P1 = P ),    % flip/2: canon.pl
+    E = op(eq, [X, Y]), seq_item(X, A), seq_item(Y, B), A \== B, P1 == Pol, !.
+seq_item(elem(var(A), _), A) :- atom(A).
+% a step of both positions (the diagonal): a self-call with every sequence argument advanced, or the table
+% cell T[i-1][j-1]; a step of one: a self-call advancing exactly one of two
+stepped(tail(V, 1), V) :- !.
+stepped(op(O, [V, int(1)]), V) :- memberchk(O, [add, sub]).
+diagonal(call('$self', As)) :- include([A]>>stepped(A, _), As, Ss), length(Ss, N), N >= 2.
+diagonal(elem(elem(var(_), op(sub, [_, int(1)])), op(sub, [_, int(1)]))).
+one_step(call('$self', As)) :- include([A]>>stepped(A, _), As, [_]).
+% LCS: on a match the diagonal plus one (or the matched element put in front), else the larger of the two
+% one-sided steps (max, or a helper of the file that returns the longer of its two arguments). Built from
+% longest-common-subsequence-4.lisp.
+family_path_v02(F, [sequence_query, two_sequence_match, longest_common]) :-
+    once(( in_func(S1, F), under_match(S1, true), ( value(S1, _, V1) ; ret(S1, V1) ),
+           sub_term(G1, V1), compound(G1),
+           ( G1 = op(add, [D, int(1)]) ; G1 = cons(_, D) ; G1 = op(add, [list([_]), D]) ), diagonal(D),
+           larger_step(F) )).
+% the larger of the two one-sided steps: max, a helper returning the longer, or the two steps assigned and
+% the longer returned (a := f(xs[1:], ys); b := f(xs, ys[1:]); a if len(a) > len(b) else b)
+larger_step(F) :- in_func(S, F), under_match(S, false), ( value(S, _, V) ; ret(S, V) ),
+    sub_term(M, V), compound(M), M = call(Mx, [X, Y]), larger_of(Mx), one_or_cell(X), one_or_cell(Y), !.
+larger_step(F) :- in_func(S, F), \+ guard(S, _, _), ( value(S, _, V) ; ret(S, V) ),
+    sub_term(M, V), compound(M), M = call(Mx, [X, Y]), larger_of(Mx), one_or_cell(X), one_or_cell(Y), !.
+larger_step(F) :- in_func(Sa, F), value(Sa, var(A), Xa), one_step(Xa), in_func(Sb, F), value(Sb, var(B), Xb), one_step(Xb),
+    A \== B, in_func(S, F), guard(S, C, _), sub_term(L, C), compound(L), L = op(_, [call(len, [La]), call(len, [Lb])]),
+    ( La == var(A), Lb == var(B) ; La == var(B), Lb == var(A) ), !.
+larger_of(max) :- !.
+larger_of(G) :- atom(G), func(H, G, _), in_func(S, H), guard(S, C, _), sub_term(L, C), compound(L), L = call(len, _), !.
+one_or_cell(X) :- one_step(X), !.
+one_or_cell(elem(elem(var(_), _), _)).
+% edit distance: the minimum of alternatives of which at least two add one (min(t[i-1][j]+1, t[i][j-1]+1,
+% t[i-1][j-1] + cost)); or, by recursion, on a match the diagonal unchanged and else the result plus one.
+% Built from levenshtein-distance-2.c (recursion) and levenshtein-distance-3.py (one row).
+family_path_v02(F, [sequence_query, two_sequence_match, edit_distance]) :-
+    once((   in_func(S, F), ( value(S, _, V) ; ret(S, V) ), sub_term(M, V), compound(M), M = call(min, As),
+             include([A]>>( A = op(add, [_, int(1)]) ), As, Ones), length(Ones, K), K >= 2,
+             in_func(S0, F), ( value(S0, _, V0) ; guard(S0, V0, _) ), sub_term(E, V0), compound(E), E = op(Op, [X, Y]),
+             memberchk(Op, [eq, ne]), seq_item(X, A1), seq_item(Y, B1), A1 \== B1
+         ;   in_func(S1, F), under_match(S1, true), value(S1, var(R), D), diagonal(D),
+             in_func(S2, F), under_match(S2, false), value(S2, var(R2), op(add, [var(R3), int(1)])), R2 == R, R3 == R
+         )).
+
+% --- N-queens: the diagonal conflict of a queen placed at (i, j) --------------------------------------
+% the sum and the difference of the same two positions as the keys tested (j not in cols, i + j not in
+% one diagonal, i - j not in the other; or arrays indexed by them), |x - y| compared with a row distance,
+% or the bit-mask form: the diagonal masks shifted left and right each row. Built from
+% n-queens-problem-5.py, n-queens-problem-2.lisp and n-queens-problem-5.c.
+family_path_v02(F, [search, diagonal_conflict]) :-
+    once((   in_func(S, F), findall(C0, guard(S, C0, _), C), C \== [],      % the tests of one statement together
+             variant(F, C, R1), keyed(R1, Sum), Sum = op(add, [X, Y]), var_pair(X, Y),
+             variant(F, C, R2), keyed(R2, Dif), Dif = op(sub, [P, Q]), ( P == X, Q == Y ; P == Y, Q == X )
+         ;   in_func(S, F), guard(S, C, _), sub_term(A, C), compound(A), A = call(abs, [op(sub, [_, _])]),
+             sub_term(B, C), compound(B), B = op(Op, [L, Rr]), memberchk(Op, [eq, ne]), ( L == A ; Rr == A )
+         ;   in_func(S1, F), ( value(S1, _, V1) ; assign(S1, _, V1) ), V1 = op(shl, [op(or, [M1, Bit]), int(1)]),
+             in_func(S2, F), ( value(S2, _, V2) ; assign(S2, _, V2) ), V2 = op(shr, [op(or, [M2, Bit2]), int(1)]),
+             Bit2 == Bit, M1 \== M2
+         )).
+% T used as a key of the test: tested for membership (x not in d) or as an index of an occupancy table (d[x])
+keyed(R, T) :- sub_term(M, R), compound(M), ( M = op(O, [K, _]), memberchk(O, ['not in', in]) ; M = elem(_, K) ),
+    sub_term(T, K), compound(T).
+% the two positions: non-constant terms (a variable, or an element such as a[j])
+var_pair(X, Y) :- X \= int(_), Y \= int(_), X \== Y, ( X = var(_) ; X = elem(_, _) ), ( Y = var(_) ; Y = elem(_, _) ).
+% the tests as they are, or with one variable that indexes an array replaced by one value it is given
+% (u[p] with p := i - y + n - 1): bounded by the index variables and their values
+variant(_, C, C).
+variant(F, C, R) :- sub_term(E, C), compound(E), E = elem(_, I), sub_term(var(V), I), atom(V),
+    in_func(S, F), value(S, var(V2), W), V2 == V, compound(W), replace_var(V, W, C, R).
+replace_var(V, W, var(V2), W) :- V2 == V, !.
+replace_var(_, _, T, T) :- \+ compound(T), !.
+replace_var(V, W, T0, T) :- T0 =.. [Fn|As], maplist(replace_var(V, W), As, Bs), T =.. [Fn|Bs].
+
+% --- matrix product, the functional form: each row of one matrix mapped to (apply #'mapcar g other), g a
+% dot product (the accumulated sum of products of the two element lists it receives). Built from
+% matrix-multiplication-2.lisp.
+family_path_v02(F, [sequence_transformation, construction, matrix_product]) :-
+    once(( in_func(S, F), ret(S, R), sub_term(A, R), compound(A),
+           A = call(cl_apply, [int(_), fn(mapcar), call(ecl_make_cclosure_va, [var(C)|_])|_]),
+           closure_function(C, G), in_func(S2, G), value(S2, T, op(add, [T2, op(mul, [_, _])])), T2 == T,
+           in_func(S3, G), ret(S3, T3), T3 == T )).
+closure_function(C, G) :- atom(C), atom_codes(C, [0'L, 0'C|Cs]), closure_digits(Cs, Ns), atom_codes(N, Ns), func(G, N, _), !.
+closure_digits([D|Cs], Ns) :- code_type(D, digit), !, closure_digits(Cs, Ns).
+closure_digits(Ns, Ns).
+
+% --- Caesar, point-free (Haskell): chr composed after a mod 26 of one input character's code
+family_path_v02(F, [sequence_transformation, elementwise_map, alphabet_rotation]) :-
+    once(( in_func(S, F), ret(S, V), sub_term(Cm, V), compound(Cm), Cm = op('.', [var(chr), X]),
+           sub_term(Md, X), compound(Md), Md = call(flip, [var(mod), int(26)]),
+           findall(Q, ( sub_term(Q, V), char_code_of(F, Q) ), [_]) )).
+
+% --- library forms (AP13 doc 07: a standard-library call names its algorithm): Common Lisp's format
+% directive ~@R writes a number in Roman numerals. Built from roman-numerals-encode.lisp.
+family_path_v02(F, [library, roman_numerals]) :-
+    once(( in_func(S, F), ( ret(S, V) ; value(S, _, V) ; call_at(S, _, V) ), sub_term(Fm, V), compound(Fm),
+           Fm = call(cl_format, Args), member(str(D), Args), sub_atom(D, _, _, _, '@R') )).

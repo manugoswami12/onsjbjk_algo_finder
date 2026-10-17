@@ -1,0 +1,5 @@
+(defun longer (a b) (if (> (length a) (length b)) a b))
+(defun lcs (xs ys)
+  (cond ((or (null xs) (null ys)) nil)
+        ((eql (car xs) (car ys)) (cons (car xs) (lcs (cdr xs) (cdr ys))))
+        (t (longer (lcs (cdr xs) ys) (lcs xs (cdr ys))))))

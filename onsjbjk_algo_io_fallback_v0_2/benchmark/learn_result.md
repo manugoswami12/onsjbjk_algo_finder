@@ -297,3 +297,23 @@ The missing piece is a relation that separates two algorithms at the same node. 
 | 15 | 2/2 = 100% | 2/2 = 100% | 2/8 = 25% | 6 | PASS on learnable recall |
 
 Since token rules were removed, "learnable" means a runnable Python reference and a runnable file. Stage 15's 6 not-learnable positives are the cases to build, by the rule above: ackermann-function-4.c, n-queens-problem-3.hs, matrix-multiplication-1.lisp, caesar-cipher-2.lisp, run-length-encoding.lisp and knapsack-problem-0-1.c.
+
+## Run 12: built branches up to stage 55 (docs/04 section 15b)
+
+Each stage passes on precision and full-key recall (built branches cover what learning cannot).
+
+| Stage | Precision | Recall (full key) | Result |
+|---|---|---|---|
+| 3 | 2/2 = 100% | 2/2 = 100% | PASS |
+| 15 | 7/7 = 100% | 7/8 = 87.5% | PASS |
+| 55 | 20/20 = 100% | 20/27 = 74.1% (3 transcripts ignored) | FAIL: stopped |
+
+**Lisp staged regression (stage 101, old key):** 51 correct (+1: fibonacci-sequence-8), and the same 1 wrong (insertion-sort-3), recall 86.4%. Its 15 other "wrong" answers are files of the 12 new tasks now named by their task (that key predates these labels: Hanoi, Run-length, Roman, Matrix x4, Caesar x2, Josephus, Ackermann x2, N-queens x2, LCS). On its own labels the precision is 51/52 = 98.1%.
+
+**The 7 misses at stage 55:**
+- **AP13's Haskell lowerer drops the code** (so no facts to state a relation on): longest-common-subsequence-2.hs (only `maxl` remains), n-queens-problem-2.hs (the diagonal check is an opaque `nested_comprehension`), knapsack-problem-0-1-2.hs (only the empty case), matrix-multiplication-2.hs (indented module: nothing).
+- **ackermann-function-4.c:** Ackermann-Péter through hyperoperations and an explicit stack (`APH = H(m, 2, n + 3) - 3`, `APIA`), not the recursion `A(m-1, A(m, n-1))`.
+- **n-queens-problem-2.py:** the file holds only a board printer.
+- **run-length-encoding.c:** a PackBits encoder spread over a stream protocol. A relation loose enough to catch it would also catch de-duplication and sortedness checks, so none is built.
+
+Without a fuller Haskell front end, the best reachable at stage 55 is about 21/27 = 78%.

@@ -39,6 +39,12 @@ ecl_box(F) :- memberchk(F, [ecl_make_fixnum, ecl_fixnum, ecl_make_integer, ecl_t
 % ecl_facts.py) gives the one name every language uses
 lisp_library(F, S) :- atom(F), atom_concat(cl_, U, F), atomic_list_concat(Ps, '_', U), atomic_list_concat(Ps, '-', L),
     lib_synonym(L, S), !.
+% a string constant's text from its hex code (ecl_facts.vv_object)
+hex_text(Hex, S) :- atom_codes(Hex, Cs), hex_bytes(Cs, Bs), utf8_codes(Bs, Us), atom_codes(S, Us).
+hex_bytes([], []).
+hex_bytes([A, B|Cs], [X|Xs]) :- char_type(A, xdigit(H)), char_type(B, xdigit(L)), X is H * 16 + L, hex_bytes(Cs, Xs).
+utf8_codes(Bs, Us) :- catch(( phrase(utf8_codes(Us), Bs) ), _, Us = Bs), !.
+utf8_codes(Bs, Bs).
 ecl_aref(F) :- memberchk(F, [ecl_aref_unsafe, ecl_aref1, ecl_aref, ecl_elt, ecl_char, cl_char, cl_schar, cl_elt]).
 ecl_aset(F) :- memberchk(F, [ecl_aset_unsafe, ecl_aset1, ecl_aset, ecl_elt_set, ecl_char_set]).
 
@@ -61,6 +67,7 @@ ecl_op(call(F, [X]), elem(X, int(1))) :- memberchk(F, [ecl_cadr, cl_cadr, cl_sec
 ecl_op(call(F, [A, B]), cons(A, B)) :- memberchk(F, [ecl_cons, 'CONS', cl_cons]), !.
 ecl_op(call(ecl_list1, [X]), list([X])) :- !.
 ecl_op(call(cl_list, [int(_)|As]), list(As)) :- !.
+ecl_op(call(ecl_string, [var(H)]), str(S)) :- atom(H), atom_concat(s, Hex, H), hex_text(Hex, S), !.   % VV string
 ecl_op(call(ecl_endp, [X]), op(not, [X])) :- !.                  % (endp l): l is empty
 ecl_op(call(coerce_to_list, [X]), X) :- !.                      % si::coerce-to-list: the same sequence
 ecl_op(op(add, [int(0), X]), X) :- !.                            % 0 + x
@@ -451,8 +458,8 @@ ecl_function(F) :-
     stable_env(F, Evs, Stable), symex(F, Evs, Stable, Items0), split_webs(F, Items0, Items1),
     copy_temps(F, Items1, Items1b), known_calls(Items1b, Items2), comparator_calls(F, Items2, Items),
     loops(Items, Loops),
-    findall(Fact, item_fact(F, Items, Loops, Fact), Facts0),
-    recursion_facts(F, Facts0, Facts1), list_loops(Facts1, Facts2), collect_loops(Facts2, Facts3),
+    findall(Fact, item_fact(F, Items, Loops, Fact), Facts0a),
+    self_named(F, Facts0a, Facts0), recursion_facts(F, Facts0, Facts1), list_loops(Facts1, Facts2), collect_loops(Facts2, Facts3),
     fold_fusion(Facts3, Facts4), push_collections(Facts4, Facts5), dead_temporaries(F, Facts5, Facts),
     retract_function(F), forall(member(Fa, Facts), assertz(Fa)).
 
@@ -587,6 +594,17 @@ collect_loops(Facts0, Facts) :-
     ;   Facts = Facts0
     ).
 replace_fact(Old, New, F0, F) :- ( F0 == Old -> F = New ; F = F0 ).
+
+% ----- 6b. a call of the function's own name is its self-call ($self, as AP13's lowerers mark it): ECL
+% calls a function through its symbol when it is defined inside a closure (a memoizing macro's let) -------
+self_named(F, Facts0, Facts) :-
+    (   func(F, N0, _), compiled_name(N0, B), B \== ecl_toplevel      % the C name's Lisp part: L2lcs is lcs
+    ->  maplist(self_fact(B), Facts0, Facts) ; Facts = Facts0 ).
+self_fact(B, call_at(S, G, As), call_at(S, '$self', As)) :- G == B, !.
+self_fact(B, F0, F) :- replace_call(B, F0, F).
+replace_call(_, T, T) :- \+ compound(T), !.
+replace_call(B, call(G, As0), call('$self', As)) :- G == B, !, maplist(replace_call(B), As0, As).
+replace_call(B, T0, T) :- T0 =.. [Fn|As0], maplist(replace_call(B), As0, As), T =.. [Fn|As].
 
 % ----- 7c. a compiler temporary that is written and never read is not part of the program (dead
 % assignment elimination, Aho-Sethi-Ullman): the Lisp source has no such variable ----------------------

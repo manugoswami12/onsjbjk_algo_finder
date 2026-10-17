@@ -38,6 +38,10 @@ family_branch([sequence_transformation, construction, matrix_product], _, matrix
 family_branch([sequence_transformation, construction, run_length], _, run_length_encoding).
 family_branch([numeric, recurrence, josephus_recurrence], _, josephus).
 family_branch([search, permutation_filter], _, n_queens).
+family_branch([search, diagonal_conflict], _, n_queens).
+family_branch([sequence_query, two_sequence_match, longest_common], _, lcs).
+family_branch([sequence_query, two_sequence_match, edit_distance], _, levenshtein).
+family_branch([library, roman_numerals], _, roman_encode).
 
 % range accumulation: a product is factorial-like, a sum a series sum
 range_branch(mul, factorial_like).

@@ -61,8 +61,11 @@ def answer(path, labels, io):
     """(labels, tags, learnable): the learned labels holding at the file's deepest node, else the io
     fallback; learnable: the labels a learned branch or the fallback could recognise in this file (a
     runnable Python reference of the label while the file itself has a behaviour). None when the file has no
-    algorithm of its own (a Lisp file defining no function: output zero)."""
+    algorithm of its own (output zero): a Lisp file defining no function (ecl_logic.NOCODE), or a file of another
+    language that defines nothing (a REPL transcript; learn_facts.defines_code)."""
     if path.suffix == '.lisp' and ecl_logic.NOCODE in ecl_logic.families(path):
+        return None
+    if path.suffix != '.lisp' and not learn_apply.learn_facts.defines_code(path):
         return None
     me = io.describe(path)                        # the file's input->output behaviour (AP13 io_catalog)
     try:
