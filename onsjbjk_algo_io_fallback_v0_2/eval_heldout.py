@@ -23,7 +23,12 @@ def main():
     p.add_argument('--kb', default='none', help="learned KB json, or 'none' (default: witnesses only)")
     p.add_argument('--leave-one-out', nargs='+', metavar='TRUTH',
                    help='learn from these truth files, excluding the file under test each time')
+    p.add_argument('--learner', nargs='+', default=[], choices=['ap13dir', 'iocat'],
+                   help='original AP13 learners (compare_learners.py), trained on --train')
+    p.add_argument('--train', nargs='+', default=[], metavar='TRUTH', help='labelled training files')
     a = p.parse_args()
+    import compare_learners
+    learners = [compare_learners.LEARNERS[n](a.root, a.train) for n in a.learner]
     root = a.root
     truth = json.loads(Path(a.truth).read_text(encoding='utf-8'))
     kb_all = None if a.kb == 'none' else learn_v2.load_kb(a.kb)
@@ -33,6 +38,10 @@ def main():
         try:
             kb = (learn_v2.learn(root, a.leave_one_out, exclude={rel}) if a.leave_one_out else kb_all)
             found = load(root / rel, kb)
+            if found:
+                for learner in learners:
+                    for label in sorted(learner.labels_for(root / rel)):
+                        found[0].add(f'learned({label})', 1)   # file-level answer: union of functions
         except (SyntaxError, ValueError) as exc:
             notes[rel] = 'not parseable: ' + str(exc).split(' (')[0]
             found = []
