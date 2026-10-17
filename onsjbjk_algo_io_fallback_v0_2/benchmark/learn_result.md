@@ -317,3 +317,30 @@ Each stage passes on precision and full-key recall (built branches cover what le
 - **run-length-encoding.c:** a PackBits encoder spread over a stream protocol. A relation loose enough to catch it would also catch de-duplication and sortedness checks, so none is built.
 
 Without a fuller Haskell front end, the best reachable at stage 55 is about 21/27 = 78%.
+
+## Run 13: front ends extended (docs/04 section 16); built branches up to stage 101. PASSED all stages
+
+| Stage | Precision | Recall (full key) | Result |
+|---|---|---|---|
+| 3 | 2/2 = 100% | 2/2 = 100% | PASS |
+| 15 | 7/7 = 100% | 7/8 = 87.5% | PASS |
+| 55 | 23/23 = 100% | 23/27 = 85.2% | PASS |
+| 101 | 40/40 = 100% | 40/49 = 81.6% (6 files with no algorithm ignored) | PASS |
+
+There are no wrong answers at any stage.
+
+**Lisp staged regression (stage 101, old key):**
+- On that key's own labels: 51 correct and the same 1 wrong (insertion-sort-3), recall 86.4%.
+- Its other 16 "wrong" answers are files of the 12 new tasks named by their own task. That key predates these labels. longest-common-subsequence-1.lisp is now `lcs`; in run 12 it was wrongly `levenshtein`, a real error found and fixed here.
+
+**The 9 misses at stage 101:**
+- **Not the algorithm:** ackermann-function-4.c computes hyperoperations, not the recursion.
+- **No algorithm in the file:** n-queens-problem-2.py holds only a board printer.
+- **Not valid Haskell:** matrix-multiplication-2.hs, whose module is indented under the `import`.
+- **Constructs not read:**
+  - n-queens-problem-1.c is built of `goto`s, which AP13's C lowerer does not model;
+  - josephus-problem-2.lisp uses a circular list;
+  - run-length-encoding.c is a PackBits stream encoder (a relation for it would also catch de-duplication).
+- **Point-free tricks with no stated relation:** matrix-multiplication-4.hs, ackermann-function-2.hs (`iterate`/`mapAccumL` rows), longest-common-subsequence-5.hs (`scanr1`).
+
+**Note on the method.** Most answers now come from built branches: relations stated by hand, each from a named case and with own-program tests and negatives. A few come from learned Python behaviour at a tree node (`learned:...@node`, e.g. Josephus at josephus_recurrence). Building was used where the Python examples could not teach the other languages' forms (user's rule), and the stage files were read to build them, so this measures the built recogniser on these files, not unseen learning.
