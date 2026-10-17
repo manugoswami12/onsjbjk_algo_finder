@@ -360,12 +360,15 @@ scope_param(F, P) :- func(F, N, _), atom_codes(N, [0'L, 0'C|_]), param(G, _, P0)
 comparator_param(Items, P) :-
     once(( member(it(_, _, goto(_, C, _)), Items), funcall_of(C, P, _) )),
     \+ ( member(it(_, _, st(_, Fs)), Items), funcall_of(Fs, P, _) ).
-funcall_of(T, P, Call) :- sub_term(Call, T), compound(Call), Call = call(ecl_funcall, [V, _, _]), V == var(P).
+funcall_of(T, P, Call) :- sub_term(Call, T), compound(Call), Call = call(ecl_funcall, [V0, _, _]),
+    ( V0 = call(cl_complement, [V]) -> true ; V = V0 ), V == var(P).
 comparator_param_calls(P, Items0, Items) :- maplist(comparator_item(P), Items0, Items).
 comparator_item(P, it(S, L, goto(N, C0, Pol)), it(S, L, goto(N, C, Pol))) :- !, comparator_term(P, C0, C).
 comparator_item(_, It, It).
 comparator_term(P, T0, T) :- compound(T0), T0 = call(ecl_funcall, [V, A, B]), V == var(P), !,
     comparator_term(P, A, A1), comparator_term(P, B, B1), T = op(lt, [A1, B1]).
+comparator_term(P, T0, T) :- compound(T0), T0 = call(ecl_funcall, [call(cl_complement, [V]), A, B]), V == var(P), !,
+    comparator_term(P, A, A1), comparator_term(P, B, B1), T = op(not, [op(lt, [A1, B1])]).   % (complement p)
 comparator_term(_, T, T) :- \+ compound(T), !.
 comparator_term(P, T0, T) :- T0 =.. [Fn|As], maplist(comparator_term(P), As, Bs), T =.. [Fn|Bs].
 
@@ -622,4 +625,39 @@ rename_function(F) :-
     forall(retract(param(F, K, P0)), ( ecl_term(var(P0), var(P)), assertz(param(F, K, P)) )).
 rename_function(_).
 
-ecl_normalise :- forall(func(F, _, _), ecl_function(F)), forall(func(F, _, _), rename_function(F)).
+ecl_normalise :- forall(func(F, _, _), ecl_function(F)), forall(func(F, _, _), rename_function(F)),
+    inline_helpers.
+
+% ----- 9. inlining of one-expression helpers ---------------------------------------------------
+% A function of the file whose whole body is one returned expression without calls of itself
+% (hlt(i) = hrt(i) - 1, hrt(i) = (i + 1) * 2) is replaced at its calls by that expression with the
+% arguments substituted (bounded rounds: helpers of helpers); an inlined affine index in one
+% variable is written a*x + b (2*i + 1), the form the AP13 heap idiom reads.
+inline_helpers :-
+    findall(Name-Ps-Body, inlinable(Name, Ps, Body), Hs),
+    (   Hs == [] -> true
+    ;   forall(member(P/A, [assign/3, par_assign/3, ret/2, call_at/3, guard/3, loop_cond/2]),
+               ( functor(H, P, A), forall(retract(H), ( inline_term(Hs, 3, H, H1), assertz(H1) )) ))
+    ).
+inlinable(Name, Ps, Body) :-
+    func(G, Name, _), atom(Name), Name \== '<toplevel>',
+    findall(S, ( stmt(S, G, K, _), K \== loop ), [S]), ret(S, Body),
+    \+ ( sub_term(C, Body), compound(C), C = call('$self', _) ),
+    findall(K-P, param(G, K, P), KPs), msort(KPs, Sorted), pairs_values(Sorted, Ps).
+% depth-bounded (3): a helper's body is itself inlined, so helpers of helpers resolve, and calls
+% that would go deeper (mutually calling helpers) stay calls
+inline_term(_, _, T, T) :- \+ compound(T), !.
+inline_term(Hs, D, call(Name, Args0), T) :- D > 0, member(Name-Ps-Body, Hs), length(Ps, L), length(Args0, L), !,
+    maplist(inline_term(Hs, D), Args0, Args), D1 is D - 1, inline_term(Hs, D1, Body, Body1),
+    foldl([P, A, B0, B]>>replace_term(var(P), A, B0, B), Ps, Args, Body1, T0), affine(T0, T).
+inline_term(Hs, D, T0, T) :- T0 =.. [F|As], maplist(inline_term(Hs, D), As, Bs), T =.. [F|Bs].
+affine(T0, T) :- lin(T0, X, A, B), nonvar(X), A > 1, !,
+    ( B =:= 0 -> T = op(mul, [int(A), var(X)]) ; B > 0 -> T = op(add, [op(mul, [int(A), var(X)]), int(B)])
+    ; NB is -B, T = op(sub, [op(mul, [int(A), var(X)]), int(NB)]) ).
+affine(T, T).
+lin(var(X), X, 1, 0) :- atom(X).
+lin(int(N), _, 0, N) :- integer(N).
+lin(op(add, [P, Q]), X, A, B) :- lin(P, X, A1, B1), lin(Q, X, A2, B2), A is A1 + A2, B is B1 + B2.
+lin(op(sub, [P, Q]), X, A, B) :- lin(P, X, A1, B1), lin(Q, X, A2, B2), A is A1 - A2, B is B1 - B2.
+lin(op(mul, [P, int(K)]), X, A, B) :- integer(K), lin(P, X, A1, B1), A is A1 * K, B is B1 * K.
+lin(op(mul, [int(K), P]), X, A, B) :- integer(K), lin(P, X, A1, B1), A is A1 * K, B is B1 * K.

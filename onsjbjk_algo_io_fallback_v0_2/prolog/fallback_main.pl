@@ -26,6 +26,7 @@ result_tokens(F, Ts) :- body_terms(F, Vs), Vs \== [], phrase(terms_tokens(F, [F]
 body_terms(F, Vs) :-
     findall(L-N-S, ( stmt(S, F, _, L), sub_atom(S, 1, _, 0, NA), atom_number(NA, N) ), Ks), msort(Ks, Sorted),
     findall(V, ( member(_-_-S, Sorted), stmt_term(F, S, V) ), Vs).
+stmt_term(_, S, guard(C)) :- guard(S, C, _).                 % the statement's conditions first
 stmt_term(_, S, V) :- assign(S, T, V), T \= elem(other(field), _).
 stmt_term(_, S, call(G, As)) :- call_at(S, G, As), G \== '$self'.
 stmt_term(F, S, V) :- ret(S, V0), result_value(F, V0, V).
@@ -56,6 +57,9 @@ tokens(F, P, D, call(cl_subseq, [int(_)|As])) --> !, [subseq], terms_tokens(F, P
 tokens(F, P, D, call(cl_replace, [int(_), Q, R|_])) --> !, [replace], tokens(F, P, D, Q), tokens(F, P, D, R).
 tokens(F, P, D, call(reverse, [Q])) --> !, [reverse], tokens(F, P, D, Q).
 tokens(F, P, D, list([X])) --> !, [single], tokens(F, P, D, X).
+tokens(F, P, D, guard(C)) --> !, [test], tokens(F, P, D, C).
+tokens(F, P, D, cons(A, B)) --> !, [cons], tokens(F, P, D, A), tokens(F, P, D, B).
+tokens(F, P, D, tail(Q, _)) --> !, [rest], tokens(F, P, D, Q).
 tokens(_, _, _, elem(other(field), int(K))) --> !, [value(K)].        % (values a b): the K-th value
 tokens(F, P, D, op(O, As)) --> { memberchk(O, [lt, le, gt, ge]) }, !, [cmp(O)], terms_tokens(F, P, D, As).
 tokens(F, P, D, op(O, As)) --> !, [op(O)], terms_tokens(F, P, D, As).
@@ -73,7 +77,7 @@ fold_init(_, _, _, _) --> [].
 
 % a link to a function of this file: its result tokens in between, bounded and acyclic
 link(_, P, D, G) --> { func(H, G, _), ( D =< 0 ; memberchk(H, P) ) }, !, [link(G)].
-link(_, P, D, G) --> { func(H, G, _), D1 is D - 1, results(H, Vs) },
+link(_, P, D, G) --> { func(H, G, _), D1 is D - 1, body_terms(H, Vs) },
     [link(G), enter(G)], terms_tokens(H, [H|P], D1, Vs), [leave(G)].
 linked(G) :- atom(G), func(_, G, _), !.
 closure_name(C, G) :- atom(C), atom_codes(C, [0'L, 0'C|Cs]), drop_digits(Cs, Ns), atom_codes(G, Ns).

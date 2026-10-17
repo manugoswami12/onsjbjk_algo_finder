@@ -19,7 +19,7 @@ params(0) --> [].
 % input = insertion sort. Learned from Rosetta insertion-sort-1.
 fallback_pattern(shift_insertion, fold_ordered_insert) -->
     [fold, link(G), enter(G)], ordered_insert, [leave(G), param, init, empty].
-ordered_insert --> [append(3)], cut_by_comparison, [single], ... .
+ordered_insert --> ..., [append(3)], cut_by_comparison, [single], ... .
 cut_by_comparison --> ..., [cmp(_)], ... .
 
 % the position of the extreme of a prefix, then a linked function that reverses a prefix in place:
@@ -28,3 +28,9 @@ cut_by_comparison --> ..., [cmp(_)], ... .
 fallback_pattern(comparison_driven_reordering, prefix_reversal) -->
     ..., [position, fold, op(E)], { memberchk(E, [max, min]) }, [subseq], ...,
     [link(G), enter(G)], ..., [reverse, subseq], ..., [leave(G)], ... .
+
+% f(xs) = insert(first(xs), f(rest(xs))) where the linked insert compares, conses and recurses: the
+% recursive insertion sort of a list. Learned from Rosetta insertion-sort-2.
+fallback_pattern(shift_insertion, recursive_ordered_insert) -->
+    ..., [link(G), enter(G)], ..., [cmp(_)], ..., [cons], ..., [call('$self')], ..., [leave(G)],
+    ..., [call('$self')], ... .

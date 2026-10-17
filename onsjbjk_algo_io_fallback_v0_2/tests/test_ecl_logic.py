@@ -46,6 +46,11 @@ class EclLogicTests(unittest.TestCase):
         self.assertNotIn(ecl_logic.NOCODE, fams)
         self.assertIn('fibonacci_like', {b for v in fams.values() for _, b in v})
 
+    def test_inlined_index_helpers(self):
+        fams = ecl_logic.families(ROOT / 'tests' / 'data' / 'heap_helpers.lisp')
+        self.assertIn('sequence_transformation>comparison_sort>heap', {f for f, _ in fams['hsort']})
+        self.assertNotIn('comparison_driven_reordering', {b for _, b in fams['usesq']})
+
     def test_fallback(self):
         data = ROOT / 'tests' / 'data'
         normal, export = ecl_logic.trace(data / 'fallback_fold.lisp')
@@ -60,6 +65,10 @@ class EclLogicTests(unittest.TestCase):
         found = ecl_fallback.answers(export)
         self.assertEqual(found.get('psort'), [('comparison_driven_reordering', 'prefix_reversal')])
         self.assertNotIn('maxpos', found)                  # the extreme's position, never flipped
+        _, export = ecl_logic.trace(data / 'fallback_recinsert.lisp')
+        found = ecl_fallback.answers(export)
+        self.assertEqual(found.get('risort'), [('shift_insertion', 'recursive_ordered_insert')])
+        self.assertNotIn('rcopy', found)                   # recursion over a copy: no comparison
         _, export = ecl_logic.trace(data / 'fallback_noorder.lisp')
         self.assertEqual(ecl_fallback.answers(export), {})   # an insertion without a comparison
 
