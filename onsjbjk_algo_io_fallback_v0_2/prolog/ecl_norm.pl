@@ -58,12 +58,13 @@ ecl_op(var('ECL_T'), bool(true)) :- !.
 ecl_op(var(V), var(N)) :- lisp_name(V, N), !.
 
 % ECL names a Lisp variable v<k><name> (v2b, v4lo); temporaries are T<k>, v<k>, value0, env0
-lisp_name(V, N) :- atom(V), atom_codes(V, [0'v|Cs]), Cs = [D|_], code_type(D, digit),
+lisp_name(V, N) :- atom(V), \+ ecl_temp(V), atom_codes(V, [0'v|Cs]), Cs = [D|_], code_type(D, digit),
     drop_digits(Cs, Ns), Ns = [C|_], \+ code_type(C, digit), atom_codes(N, Ns).
 drop_digits([D|Cs], Ns) :- code_type(D, digit), !, drop_digits(Cs, Ns).
 drop_digits(Ns, Ns).
 ecl_temp(X) :- memberchk(X, [value0, env0, cl_env_copy]), !.
-ecl_temp(X) :- atom_codes(X, [C|Ds]), memberchk(C, [0'T, 0'v]), Ds \== [], forall(member(D, Ds), code_type(D, digit)).
+ecl_temp(X) :- atom_codes(X, [C|Ds]), memberchk(C, [0'T, 0'v]), Ds = [D|_], code_type(D, digit),
+    drop_digits(Ds, Rest), ( Rest == [] ; Rest = [0'_|Ks], Ks \== [], drop_digits(Ks, []) ).   % v8, v8_1 (scoped)
 lisp_var(F, X) :- ( \+ ecl_temp(X) ; ecl_lispvar(F, X) ), !.
 
 ecl_term(T, T) :- \+ compound(T), !.
@@ -309,9 +310,11 @@ retract_function(F) :-
     forall(loop(LR, F, recursion), ( retractall(in_loop(_, LR)), retractall(loop_cond(LR, _)) )).
 
 % compiled function L<k><name> is the Lisp function <name>; parameters lose ECL's v<k> prefix
+% (a top-level form, compiled as ecl_toplevel by ecl_compile.py, is <toplevel> as in the AP13 lowerers)
 rename_function(F) :-
     func(F, N0, Line), atom_codes(N0, [0'L|Cs]), drop_digits(Cs, Ns), Ns \== [], !,
-    atom_codes(N, Ns), retract(func(F, N0, Line)), assertz(func(F, N, Line)),
+    atom_codes(N1, Ns), ( N1 == ecl_toplevel -> N = '<toplevel>' ; N = N1 ),
+    retract(func(F, N0, Line)), assertz(func(F, N, Line)),
     forall(retract(param(F, K, P0)), ( ecl_term(var(P0), var(P)), assertz(param(F, K, P)) )).
 rename_function(_).
 

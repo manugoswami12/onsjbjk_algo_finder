@@ -44,9 +44,38 @@ def callee(node, inner_target):
     return None
 
 
+def scoped_names(fn) -> dict:
+    """ECL re-declares temporaries (`cl_object v8;`) in nested blocks: every later declaration of a
+    name in a function is a different variable, renamed v8_1, v8_2 for its scope (C block scoping)."""
+    renames, count = {}, {}
+
+    def walk(node, scopes):
+        if node.type == 'compound_statement':
+            scopes = [*scopes, {}]
+        elif node.type == 'declaration':
+            for d in node.children_by_field_name('declarator'):
+                while d.type != 'identifier' and d.child_by_field_name('declarator') is not None:
+                    d = d.child_by_field_name('declarator')
+                if d.type == 'identifier':
+                    name = d.text.decode()
+                    k = count[name] = count.get(name, -1) + 1
+                    scopes[-1][name] = f'{name}_{k}' if k else name
+        elif node.type == 'identifier':
+            name = node.text.decode()
+            new = next((sc[name] for sc in reversed(scopes) if name in sc), name)
+            if new != name:
+                renames[(node.start_byte, node.end_byte)] = new
+            return
+        for child in node.children:
+            walk(child, scopes)
+    walk(fn, [{}])
+    return renames
+
+
 def marked_c(c_text: str) -> str:
     """The compiled Lisp functions of one ECL C unit, rewritten bottom-up (tree rewriting)."""
     src = c_text.encode('utf-8')
+    renames: dict = {}
 
     def text(node) -> str:                      # the node's source with its children rewritten
         out, pos = [], node.start_byte
@@ -58,6 +87,8 @@ def marked_c(c_text: str) -> str:
         return ''.join(out)
 
     def render(node) -> str:
+        if node.type == 'identifier':
+            return renames.get((node.start_byte, node.end_byte), node.text.decode())
         if node.type == 'labeled_statement':
             label = node.child_by_field_name('label')
             rest = [render(c) for c in node.children if c.start_byte > label.end_byte and c.type != ':']
@@ -77,7 +108,7 @@ def marked_c(c_text: str) -> str:
                 args = [render(a) for a in node.child_by_field_name('arguments').named_children[1:]]
                 name = None if target.type == 'identifier' else callee(node, target)
                 if name is None:
-                    return f'ecl_funcall({", ".join([target.text.decode(), *args])})'
+                    return f'ecl_funcall({", ".join([render(target), *args])})'
                 return f'{name}({", ".join(args)})'
         return text(node)
 
@@ -87,6 +118,7 @@ def marked_c(c_text: str) -> str:
             decl = node.child_by_field_name('declarator')
             name = decl.child_by_field_name('declarator') if decl is not None else None
             if name is not None and name.text.decode().startswith('L') and name.text.decode()[1:2].isdigit():
+                renames = scoped_names(node)
                 kept.append(render(node))
     return '\n\n'.join(kept)
 
