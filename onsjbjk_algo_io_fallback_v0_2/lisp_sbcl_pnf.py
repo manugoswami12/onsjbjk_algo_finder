@@ -380,4 +380,35 @@ def lisp_normal_form_sbcl(path: Path):
     if _CLS is None:
         _CLS = _make_class()
     expanded = sbcl_expand(path)
-    return _CLS().run(expanded) if expanded.strip() else []
+    return list_probes(_CLS().run(expanded)) if expanded.strip() else []
+
+
+SEQ_CALLS = {'len', 'reverse', 'sorted', 'sum', 'product', 'max', 'min', 'list', 'index', 'all', 'any'}
+
+
+def list_probes(funs):
+    """A parameter used as a sequence (element access, slicing, iteration, sequence builtins,
+    string/list equality with a reversed copy) gets a len() probe, so the battery feeds it lists."""
+    out = []
+    for name, params, body in funs:
+        seq = set()
+
+        def walk(t):
+            if isinstance(t, tuple) and t:
+                if t[0] in ('elem', 'slice') and t[1][:1] == ('var',):
+                    seq.add(t[1][1])
+                if t[0] == 'call' and t[1] in SEQ_CALLS:
+                    seq.update(a[1] for a in t[2] if a[:1] == ('var',))
+                if t[0] == 'comp' and t[2][:1] == ('var',):
+                    seq.add(t[2][1])
+                if t[0] == 'for_each' and t[2][:1] == ('var',):
+                    seq.add(t[2][1])
+                for x in t[1:]:
+                    walk(x)
+            elif isinstance(t, list):
+                for x in t:
+                    walk(x)
+        walk(body)
+        probes = [('expr', ('call', 'len', [('var', p)])) for p in params if p in seq]
+        out.append((name, params, ('seq', probes + list(body[1])) if probes and body[0] == 'seq' else body))
+    return out
