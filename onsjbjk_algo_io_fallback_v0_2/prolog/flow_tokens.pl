@@ -12,10 +12,18 @@
 % find(T): the next token that T matches (greedy; the tokens of a learned rule are independent, so the
 % first occurrence is as good as any and no backtracking over gaps is needed)
 find(T) --> [X], ( { \+ X \= T } -> { X = T } ; find(T) ).
+% pattern(S): the tokens of S in order, with gaps: the form of every fallback rule. One relation, run
+% both ways (doc 04): S known -> does a stream hold it; S unbound -> the tokens streams share (learn_dcg.pl)
+pattern([]) --> ... .
+pattern([T|Ts]) --> next(T), pattern(Ts).
+% a ground token is matched at its first occurrence (earliest match is complete for a subsequence of
+% ground symbols); a token with a variable (a helper's name) may bind at any occurrence
+next(T) --> { ground(T) }, !, find(T).
+next(T) --> ..., [T].
 
 % the root function: its statements in source order (assigned values, calls, returns); a linked
 % function contributes its result values (link//4)
-result_tokens(F, Ts) :- body_terms(F, Vs), Vs \== [], phrase(terms_tokens(F, [F], 4, Vs), Ts).
+result_tokens(F, Ts) :- body_terms(F, Vs), Vs \== [], b_setval(inlined, []), phrase(terms_tokens(F, [F], 4, Vs), Ts).
 body_terms(F, Vs) :-
     findall(L-N-S, ( stmt(S, F, _, L), sub_atom(S, 1, _, 0, NA), atom_number(NA, N) ), Ks), msort(Ks, Sorted),
     findall(V, ( member(_-_-S, Sorted), stmt_term(F, S, V) ), Vs).
@@ -91,9 +99,11 @@ output_call(G) :- memberchk(G, [print, println, printf, puts, putchar, putStrLn,
 fold_init(F, P, D, [call(ecl_keyword, [var(initial_value)]), V|_]) --> !, [init], tokens(F, P, D, V).
 fold_init(_, _, _, _) --> [].
 
-% a link to a function of this file: its result tokens in between, bounded and acyclic
-link(_, P, D, G) --> { func_named(G, H), ( D =< 0 ; memberchk(H, P) ) }, !, [link(G)].
-link(_, P, D, G) --> { func_named(G, H), D1 is D - 1, body_terms(H, Vs) },
+% a link to a function of this file: its result tokens in between, bounded and acyclic; each function is
+% spliced in once per stream (its first call), a later call is the link alone (shared, not re-expanded)
+link(_, P, D, G) --> { func_named(G, H), ( D =< 0 ; memberchk(H, P) ; b_getval(inlined, I), memberchk(H, I) ) }, !,
+    [link(G)].
+link(_, P, D, G) --> { func_named(G, H), D1 is D - 1, body_terms(H, Vs), b_getval(inlined, I), b_setval(inlined, [H|I]) },
     [link(G), enter(G)], terms_tokens(H, [H|P], D1, Vs), [leave(G)].
 linked(G) :- atom(G), func_named(G, _), !.
 % a function of the file by its own name or its base name (Python's nested hanoi.go is go)

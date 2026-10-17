@@ -1,4 +1,4 @@
-"""Learning tests (doc 04): anti-unification, and learn-from-Python / apply-to-Lisp-and-C on own programs."""
+"""Learning tests (doc 04): the pattern relation in both directions, and learn-from-Python / apply-to-Lisp-and-C on own programs."""
 import subprocess
 import sys
 import tempfile
@@ -13,14 +13,16 @@ DATA = ROOT / 'tests' / 'data' / 'learn'
 
 
 class LearningTests(unittest.TestCase):
-    def test_anti_unification(self):
-        goal = ("lgg([a, op(add), b, c], [a, x, op(mul), c], G), print(G), nl, "
-                "lgg([test, call('$self'), output, call('$self')], [test, ret, call('$self'), call(append), call('$self')], H), "
-                "print(H), nl")
+    def test_pattern_both_directions(self):
+        """pattern//1 like sum/3: S known -> does the stream hold it; S unbound -> the skeleton streams share;
+        a helper's name is a variable, so two files' helpers unify."""
+        goal = ("( phrase(pattern([a, link(G), b, leave(G)]), [x, a, link(go), y, b, leave(go)], _) -> writeln(G) ; writeln(no) ), "
+                "( phrase(pattern([a, b]), [b, a], _) -> writeln(yes) ; writeln(no) ), "
+                "shared([[a, b, link(X), c, leave(X), d], [a, z, link(Y), c, leave(Y), b, d]], S), print(S), nl")
         out = subprocess.run(['swipl', '-q', '-g', f"consult('{ROOT / 'prolog' / 'learn_dcg.pl'}'), {goal}", '-t', 'halt'],
                              capture_output=True, text=True, check=True).stdout.split('\n')
-        self.assertRegex(out[0], r"^\[a,op\(_\w*\),c\]$")
-        self.assertEqual(out[1], "[test,call('$self'),call('$self')]")
+        self.assertEqual(out[:2], ['go', 'no'])
+        self.assertRegex(out[2], r"^\[a,link\((_\w*)\),c,leave\(\1\),d\]$")
 
     def test_learn_python_apply_lisp_and_c(self):
         with tempfile.TemporaryDirectory() as td:

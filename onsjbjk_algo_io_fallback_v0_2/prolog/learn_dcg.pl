@@ -1,16 +1,34 @@
-/* v0.2 learning (doc 04): a new algorithm learned as DCG clauses by anti-unification.
+/* v0.2 learning (doc 04): a new algorithm learned as a DCG by running the fallback rule form backwards.
      learn_main -- Streams Out : reads train(Label, File, Tokens) facts (Label none: negative),
                                  writes learned_pattern(Label, Rule)//0 clauses to Out
-   Anti-unification (Plotkin's least general generalisation) of two token streams: the longest
-   common subsequence of tokens with the same functor, each aligned pair generalised by
-   term_subsumer/3 (library(terms)): op(add) and op(mul) give op(_). Covering (as in Golem): the
-   seed is a file's longest stream; it is generalised with each further file of the label while the
-   result parses no negative stream (other labels, negatives) and stays informative.
+   pattern(S)//1 is the form of every fallback rule (fallback_rules.pl): the tokens of S in order, with
+   gaps. Like sum(2,X,10) and sum(X,5,20), the one relation runs both ways:
+     apply:  S known, stream known      -> does the stream hold S          (phrase(pattern(S), Ts))
+     learn:  streams of one label known -> S, the tokens they all hold     (pattern on every stream, S unbound)
+   Names of functions of the file (link/enter/leave) are Prolog variables (AP13 G7: alpha-renaming),
+   so unification across the streams relates the helpers of different files.
 */
-:- use_module(library(terms)).
 :- dynamic train/3.
 :- prolog_load_context(directory, Dir), directory_file_path(Dir, 'flow_tokens.pl', T), load_files(T, []).
 
+parses(S, Stream) :- copy_term(S, P), phrase(pattern(P), Stream, _), !.
+
+% learn direction: S unbound, every stream known: the tokens of the first stream taken in order when
+% every other stream holds them after its previous match (the streams in lockstep, nothing skipped
+% first). The longest S found within a fixed inference budget is the most specific (AP13 generalize's
+% budget, call_with_inference_limit/3).
+shared(Streams, S) :-
+    nb_setval(best, 0-[]),
+    catch(call_with_inference_limit(( lockstep(Streams, S0), length(S0, N), nb_getval(best, B-_), N > B,
+                                      nb_setval(best, N-S0), fail ; true ), 2000000, _), _, true),
+    nb_getval(best, _-S), S \== [].
+lockstep([First|Others], S) :- take(First, Others, S).
+take(_, _, []).
+take([T|Ts], Others, [T|S]) :- maplist(after(T), Others, Rest), take(Ts, Rest, S).
+take([_|Ts], Others, S) :- take(Ts, Others, S).
+after(T, Stream, Rest) :- phrase(next(T), Stream, Rest).
+
+% ----- covering over the files of one label ------------------------------------------------
 learn_main :-
     current_prolog_flag(argv, [Streams, Out|_]), load_files(Streams, [if(true)]),
     findall(L, ( train(L, _, _), L \== none ), Ls0), sort(Ls0, Ls),
@@ -21,92 +39,58 @@ learn_all(Ls, O) :-
     format(O, ':- discontiguous learned_pattern//2.~n~n', []),
     forall(member(L, Ls), ( learn_label(L, Rules), write_rules(O, L, Rules) )).
 
-% ----- covering ---------------------------------------------------------------------------
 learn_label(L, Rules) :-
     findall(F, train(L, F, _), Fs0), sort(Fs0, Fs),
     findall(T, ( train(L2, _, T), L2 \== L ), Negs),
     cover(Fs, L, Negs, 1, Rules).
+% seed: the file's most specific stream; each further file joins the group while the shared S of the
+% group stays informative and parses no negative (Golem-style covering)
 cover([], _, _, _, []) :- !.
 cover([F|Fs], L, Negs, K, Rules) :-
-    (   longest_stream(L, F, Seed), informative(Seed), specific(Seed, Negs)
-    ->  foldl(generalise(L, Negs), Fs, Seed-[F], Pat0-Used),
-        reduce(Pat0, L, Used, Negs, Pat),
-        exclude(covered_by(L, Pat), Fs, Rest),
-        Rules = [rule(K, Pat, Used)|More], K1 is K + 1, cover(Rest, L, Negs, K1, More)
-    ;   cover(Fs, L, Negs, K, Rules)                      % no specific pattern from this file
+    (   seed(L, F, Negs, Seed)
+    ->  foldl(join(L, Negs), Fs, [F]-Seed, Used0-S0),
+        reverse(Used0, Used), general(S0, Negs, S),
+        exclude(covered_by(L, S), Fs, Rest),
+        Rules = [rule(K, S, Used)|More], K1 is K + 1, cover(Rest, L, Negs, K1, More)
+    ;   cover(Fs, L, Negs, K, Rules)
     ).
-longest_stream(L, F, S) :-
-    findall(N-T, ( train(L, F, T), length(T, N) ), Ns), msort(Ns, Sorted), last(Sorted, _-S).
-generalise(L, Negs, F, Pat0-Used0, Pat-Used) :-
-    (   covered_by(L, Pat0, F) -> Pat = Pat0, Used = [F|Used0]
-    ;   findall(N-G, ( train(L, F, T), lgg(Pat0, T, G), informative(G), specific(G, Negs), length(G, N) ), Gs),
-        Gs \== [], msort(Gs, Sorted), last(Sorted, _-Best)
-    ->  Pat = Best, Used = [F|Used0]
-    ;   Pat = Pat0, Used = Used0
+seed(L, F, Negs, S) :-
+    findall(N-T, ( train(L, F, T0), named_vars(T0, T), length(T, N) ), Ns), msort(Ns, Sorted),
+    reverse(Sorted, Desc), member(_-S, Desc), informative(S), specific(S, Negs), !.
+join(L, Negs, F, Used-S0, Used1-S) :-
+    (   covered_by(L, S0, F) -> Used1 = [F|Used], S = S0
+    ;   findall(N-G, ( train(L, F, T0), named_vars(T0, T), copy_term(S0, P),
+                       shared([P, T], G), informative(G), specific(G, Negs), length(G, N) ), Gs),
+        Gs \== [], msort(Gs, Sorted), last(Sorted, _-S)
+    ->  Used1 = [F|Used]
+    ;   Used1 = Used, S = S0
     ).
-covered_by(L, Pat, F) :- train(L, F, T), parses(Pat, T), !.
-
-% reduction (ILP negative-based reduction): drop tokens, operands first, while the rule still parses
-% no negative, still parses its training files and stays informative: the minimal pattern that
-% separates the algorithm from every other training task
-reduce(Pat0, L, Used, Negs, Pat) :-
-    reduce_pass(operand, Pat0, L, Used, Negs, Pat1), reduce_pass(logic, Pat1, L, Used, Negs, Pat).
-% one pass over the tokens of one kind, from the last to the first (earlier positions stay valid)
-reduce_pass(Kind, P0, L, Used, Negs, P) :-
-    findall(I, ( nth1(I, P0, T), token_kind(T, Kind) ), Is), reverse(Is, Desc),
-    foldl(try_drop(L, Used, Negs), Desc, P0, P).
-token_kind(T, logic) :- logic_token(T), !.
-token_kind(_, operand).
-try_drop(L, Used, Negs, I, P0, P) :-
-    length(P0, N), ( I =< N -> nth1(I, P0, _, P1) ; P1 = P0 ),
-    (   I =< N, informative_min(P1), specific(P1, Negs), forall(member(F, Used), covered_by(L, P1, F))
-    ->  P = P1 ; P = P0 ).
-informative_min(Pat) :- include(logic_token, Pat, Ls), length(Ls, N), N >= 3.
-
-% a pattern parses a stream: its tokens occur in order (each matched at its first occurrence)
-parses(Pat, Stream) :- copy_term(Pat, P), phrase(finds(P), Stream, _), !.
-finds([]) --> [].
-finds([T|Ts]) --> find(T), finds(Ts).
-specific(Pat, Negs) :- \+ ( member(N, Negs), parses(Pat, N) ).
-% at least 4 tokens that say something about the logic (not only operands and markers)
-informative(Pat) :- include(logic_token, Pat, Ls), length(Ls, N), N >= 4.
+% the other end (version space): the most general rule below S, the same relation with the rule unbound
+% over S itself: the shortest sub-pattern of S's logic tokens (operands are the language's spelling) that
+% stays informative and parses no negative; S itself when none is found within the budget
+general(S, Negs, G) :-
+    include(logic_token, S, Ls), length(Ls, Max),
+    catch(call_with_inference_limit(( between(4, Max, N), length(G0, N), phrase(pattern(G0), Ls, _),
+                                      specific(G0, Negs) -> true ), 5000000, R), _, fail),
+    R \== inference_limit_exceeded, nonvar(G0), !, G = G0.
+general(S, _, S).
+covered_by(L, S, F) :- train(L, F, T), parses(S, T), !.
+specific(S, Negs) :- \+ ( member(N, Negs), parses(S, N) ).
+% at least 4 tokens that say something about the logic (AP13's quality gate)
+informative(S) :- include(logic_token, S, Ls), length(Ls, N), N >= 4.
 logic_token(T) :- nonvar(T), \+ memberchk(T, [param, local, other, unknown, test, empty, elem, single]),
-    \+ T = int(_), \+ T = enter(_), \+ T = leave(_).
+    \+ T = int(_), \+ T = enter(_), \+ T = leave(_), \+ T = link(_).
 
-% ----- anti-unification of two token sequences (LCS alignment + term_subsumer/3) ------------
-lgg(A, B, G) :-
-    length(A, N), length(B, M), lcs_table(A, B, N, M, Tab), backtrack(Tab, A, B, N, M, [], G).
-same_kind(X, Y) :- ( var(X) ; var(Y) ), !, fail.
-same_kind(X, Y) :- functor(X, F, Ar), functor(Y, F, Ar).
-% rows of the dynamic-programming table (weighted LCS), row I for I in 0..N, each M+1 scores
-lcs_table(A, B, N, M, Tab) :-
-    length(Z, M), maplist(=(0), Z), Row0 = [0|Z],
-    foldl(lcs_row(B), A, [Row0], Rows), reverse(Rows, Tab0), Tab0 = Tab, length(Tab, N1), N1 =:= N + 1, M >= 0.
-lcs_row(B, X, [Prev|Rs], [Row, Prev|Rs]) :- lcs_cells(B, X, Prev, 0, Cells), Row = [0|Cells].
-lcs_cells([], _, _, _, []).
-lcs_cells([Y|Ys], X, [Pd, Pu|Ps], Left, [C|Cs]) :-
-    ( same_kind(X, Y) -> weight(X, Y, W), C is max(Pd + W, max(Pu, Left)) ; C is max(Pu, Left) ),
-    lcs_cells(Ys, X, [Pu|Ps], C, Cs).
-cell(Tab, I, J, V) :- nth0(I, Tab, Row), nth0(J, Row, V).
-% least general: an identical token outweighs a generalised one
-weight(X, Y, 2) :- X =@= Y, !.
-weight(_, _, 1).
-backtrack(_, _, _, 0, _, G, G) :- !.
-backtrack(_, _, _, _, 0, G, G) :- !.
-backtrack(Tab, A, B, I, J, Acc, G) :-
-    nth1(I, A, X), nth1(J, B, Y), I1 is I - 1, J1 is J - 1,
-    (   same_kind(X, Y), weight(X, Y, W), cell(Tab, I, J, V), cell(Tab, I1, J1, V1), V =:= V1 + W
-    ->  term_subsumer(X, Y, T), backtrack(Tab, A, B, I1, J1, [T|Acc], G)
-    ;   cell(Tab, I1, J, Up), cell(Tab, I, J1, Lf), Up >= Lf
-    ->  backtrack(Tab, A, B, I1, J, Acc, G)
-    ;   backtrack(Tab, A, B, I, J1, Acc, G)
-    ).
+% the names of the file's own functions become variables, one per name (alpha-renaming)
+named_vars(T0, T) :- named_vars(T0, T, [], _).
+named_vars([], [], A, A).
+named_vars([X0|Xs0], [X|Xs], A0, A) :- rename(X0, X, A0, A1), named_vars(Xs0, Xs, A1, A).
+rename(X0, X, A0, A) :- compound(X0), X0 =.. [F, G], memberchk(F, [link, enter, leave]), atom(G), !,
+    ( memberchk(G-V, A0) -> A = A0 ; A = [G-V|A0] ), X =.. [F, V].
+rename(X, X, A, A).
 
-% ----- the rules as DCG clauses -------------------------------------------------------------
+% ----- the rules as DCG clauses (pattern//1 unfolded: the same form as fallback_rules.pl) -----------
 write_rules(O, L, Rules) :-
-    forall(member(rule(K, Pat, Used), Rules),
+    forall(member(rule(K, S, Used), Rules),
            ( atom_concat(r, K, R), format(O, '% ~w ~w: learned from ~w~n', [L, R, Used]),
-             finds_body(Pat, Body),
-             portray_clause(O, (learned_pattern(L, R) --> Body)) )).
-finds_body([], ...).
-finds_body([T|Ts], (find(T), B)) :- finds_body(Ts, B).
+             portray_clause(O, (learned_pattern(L, R) --> pattern(S))) )).

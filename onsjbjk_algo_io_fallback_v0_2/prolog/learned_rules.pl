@@ -2,276 +2,491 @@
    files; each lists its files. Do not edit; relearn instead. */
 :- discontiguous learned_pattern//2.
 
-% ackermann r1: learned from [ackermann-function-4.py,ackermann-function-2.py,ackermann-function-1.py]
+% ackermann r1: learned from [ackermann-function-1.py,ackermann-function-2.py,ackermann-function-4.py]
 learned_pattern(ackermann, r1) -->
-    find(op(eq)),
-    find(int(0)),
-    find(op(add)),
-    find(int(1)),
-    find(op(eq)),
-    find(param),
-    find(call('$self')),
-    ... .
-% ackermann r2: learned from [ackermann-function-5.py,ackermann-function-3.py]
+    pattern([op(eq), op(add), op(eq), call('$self'), op(eq)]).
+% ackermann r2: learned from [ackermann-function-3.py]
 learned_pattern(ackermann, r2) -->
-    find(call(_)),
-    find(call(_)),
-    find(int(0)),
-    find(int(0)),
-    find(call(_)),
-    find(int(3)),
-    find(int(_)),
-    ... .
-% caesar_cipher r1: learned from [caesar-cipher-3.py,caesar-cipher-2.py]
+    pattern([call(setrecursionlimit), call(ack1), call(ack1), call(ack2)]).
+% caesar_cipher r1: learned from [caesar-cipher-2.py]
 learned_pattern(caesar_cipher, r1) -->
-    find(op(sub)),
-    find(int(26)),
-    find(call(_)),
-    find(call(_)),
-    ... .
+    pattern([op(sub), call(translate), call(maketrans), op(add)]).
 % caesar_cipher r2: learned from [caesar-cipher-4.py]
 learned_pattern(caesar_cipher, r2) -->
-    find(call(dict)),
-    find(call(zip)),
-    find(op(add)),
-    ... .
-% fibonacci_like r1: learned from [fibonacci-sequence-12.py,fibonacci-sequence-1.py]
+    pattern([call(dict), call(zip), op(add), call(dict)]).
+% fibonacci_like r1: learned from [fibonacci-sequence-1.py,fibonacci-sequence-2.py]
 learned_pattern(fibonacci_like, r1) -->
-    find(call(_)),
-    find(int(_)),
-    find(int(_)),
-    find(op(_)),
-    find(local),
-    find(int(1)),
-    find(int(2)),
-    find(op(_)),
-    find(op(add)),
-    find(op(_)),
-    find(local),
-    find(param),
-    find(local),
-    find(op(_)),
-    find(op(_)),
-    ... .
-% fibonacci_like r2: learned from [fibonacci-sequence-2.py,fibonacci-sequence-10.py]
+    pattern([op(fdiv), op(add), op(fdiv), op(fdiv)]).
+% fibonacci_like r2: learned from [fibonacci-sequence-10.py]
 learned_pattern(fibonacci_like, r2) -->
-    find(test),
-    find(param),
-    find(param),
-    find(param),
-    find(param),
-    find(param),
-    find(int(1)),
-    find(int(1)),
-    find(int(2)),
-    find(test),
-    find(test),
-    find(op(_)),
-    find(int(2)),
-    find(int(2)),
-    find(op(_)),
-    find(op(_)),
-    find(test),
-    ... .
-% fibonacci_like r3: learned from [fibonacci-sequence-3.py,fibonacci-sequence-11.py]
+    pattern([op(eq), op(and), op(neg), op(or)]).
+% fibonacci_like r3: learned from [fibonacci-sequence-11.py]
 learned_pattern(fibonacci_like, r3) -->
-    find(param),
-    find(op(_)),
-    find(param),
-    find(int(2)),
-    find(op(mul)),
-    find(local),
-    find(op(sub)),
-    find(op(sub)),
-    find(param),
-    find(op(sub)),
-    ... .
-% fibonacci_like r4: learned from [fibonacci-sequence-14.py,fibonacci-sequence-13.py]
+    pattern([op('not in'), op(div), op('not in'), op(add)]).
+% fibonacci_like r4: learned from [fibonacci-sequence-12.py]
 learned_pattern(fibonacci_like, r4) -->
-    find(int(1)),
-    find(call('$self')),
-    find(call(next)),
-    find(loop),
-    ... .
-% fibonacci_like r5: learned from [fibonacci-sequence-17.py,fibonacci-sequence-16.py]
+    pattern([op(in), op(in), call('$self'), op(add)]).
+% fibonacci_like r5: learned from [fibonacci-sequence-13.py,fibonacci-sequence-14.py]
 learned_pattern(fibonacci_like, r5) -->
-    find(call(reduce)),
-    find(call(range)),
-    find(call(range)),
-    find(elem),
-    ... .
-% fibonacci_like r6: learned from [fibonacci-sequence-18.py]
+    pattern([call('$self'), loop, call(next), call(next), call(next)]).
+% fibonacci_like r6: learned from [fibonacci-sequence-16.py,fibonacci-sequence-17.py]
 learned_pattern(fibonacci_like, r6) -->
-    find(int(21)),
-    find(loop),
-    find(call(range)),
-    find(op(sub)),
-    ... .
-% fibonacci_like r7: learned from [fibonacci-sequence-4.py]
+    pattern([ call(reduce),
+              other,
+              call(range),
+              param,
+              other,
+              call(range),
+              param,
+              elem,
+              call(reduce),
+              other,
+              call(range),
+              param,
+              other,
+              int(0)
+            ]).
+% fibonacci_like r7: learned from [fibonacci-sequence-18.py]
 learned_pattern(fibonacci_like, r7) -->
-    find(loop),
-    find(call(range)),
-    find(call(sum)),
-    ... .
-% fibonacci_like r8: learned from [fibonacci-sequence-6.py]
+    pattern([loop, call(range), op(add), call(append)]).
+% fibonacci_like r8: learned from [fibonacci-sequence-3.py]
 learned_pattern(fibonacci_like, r8) -->
-    find(op(not)),
-    find(op(in)),
-    find(op(add)),
-    ... .
-% fibonacci_like r9: learned from [fibonacci-sequence-7.py]
+    pattern([loop, call(range), call(int), op(fdiv)]).
+% fibonacci_like r9: learned from [fibonacci-sequence-4.py]
 learned_pattern(fibonacci_like, r9) -->
-    find(link(inner_fib)),
-    find(cmp(lt)),
-    find(cmp(lt)),
-    ... .
-% josephus r1: learned from [josephus-problem-4.py,josephus-problem-3.py,josephus-problem-1.py]
+    pattern([loop, call(range), op(sub), call(sum)]).
+% fibonacci_like r10: learned from [fibonacci-sequence-5.py,fibonacci-sequence-6.py]
+learned_pattern(fibonacci_like, r10) -->
+    pattern([ test,
+              param,
+              op(add),
+              call('$self'),
+              op(sub),
+              param,
+              int(1),
+              call('$self'),
+              op(sub),
+              param,
+              int(2)
+            ]).
+% fibonacci_like r11: learned from [fibonacci-sequence-7.py]
+learned_pattern(fibonacci_like, r11) -->
+    pattern([ link(A),
+              enter(A),
+              test,
+              cmp(lt),
+              param,
+              int(1),
+              param,
+              test,
+              cmp(lt),
+              param,
+              int(1),
+              call('$self'),
+              param,
+              op(add),
+              param,
+              param,
+              op(sub),
+              param,
+              int(1),
+              leave(A),
+              int(0),
+              int(1),
+              param,
+              link(A),
+              int(0),
+              int(1),
+              param
+            ]).
+% josephus r1: learned from [josephus-problem-2.py]
 learned_pattern(josephus, r1) -->
-    find(call(list)),
-    find(call(range)),
-    find(call(append)),
-    ... .
-% knapsack_01 r1: learned from [knapsack-problem-0-1-4.py,knapsack-problem-0-1-2.py,knapsack-problem-0-1-1.py]
+    pattern([ int(0),
+              loop,
+              call(range),
+              int(1),
+              op(add),
+              param,
+              int(1),
+              op(mod),
+              op(add),
+              local,
+              param,
+              local,
+              op(mod),
+              other,
+              local
+            ]).
+% josephus r2: learned from [josephus-problem-3.py]
+learned_pattern(josephus, r2) -->
+    pattern([call(list), call(range), op(add), call(append)]).
+% josephus r3: learned from [josephus-problem-4.py]
+learned_pattern(josephus, r3) -->
+    pattern([call(list), call(range), call(list), call(compress)]).
+% knapsack_01 r1: learned from [knapsack-problem-0-1-1.py,knapsack-problem-0-1-4.py]
 learned_pattern(knapsack_01, r1) -->
-    find(other),
-    find(loop),
-    find(op(add)),
-    find(cmp(le)),
-    ... .
+    pattern([ other,
+              loop,
+              op(add),
+              local,
+              local,
+              op(add),
+              local,
+              local,
+              test,
+              cmp(le),
+              local,
+              test,
+              cmp(le),
+              local
+            ]).
 % lcs r1: learned from [longest-common-subsequence-1.py]
 learned_pattern(lcs, r1) -->
-    find(test),
-    find(op(or)),
-    find(op(not)),
-    find(param),
-    find(op(eq)),
-    ... .
-% levenshtein r1: learned from [levenshtein-distance-4.py,levenshtein-distance-3.py,levenshtein-distance-2.py]
+    pattern([op(or), op(not), op(not), op(or)]).
+% levenshtein r1: learned from [levenshtein-distance-2.py,levenshtein-distance-4.py]
 learned_pattern(levenshtein, r1) -->
-    find(test),
-    find(call(len)),
-    find(param),
-    find(call(len)),
-    find(call(_)),
-    find(op(_)),
-    find(int(_)),
-    find(op(_)),
-    find(op(_)),
-    find(op(eq)),
-    ... .
+    pattern([call(len), call(len), op(eq), call(min)]).
 % levenshtein r2: learned from [levenshtein-distance-5.py]
 learned_pattern(levenshtein, r2) -->
-    find(link(go)),
-    find(call('scanl(gap)(succ(n))')),
-    find(call(zip)),
-    ... .
+    pattern([call('scanl(gap)(succ(n))'), call(zip), call(zip), call('scanl(gap)')]).
 % luhn r1: learned from [luhn-test-of-credit-card-numbers-2.py]
 learned_pattern(luhn, r1) -->
-    find(call(reduce)),
-    find(call(map)),
-    find(call(cycle)),
-    ... .
+    pattern([call(reduce), call(map), call(cycle), call(map)]).
 % luhn r2: learned from [luhn-test-of-credit-card-numbers-4.py]
 learned_pattern(luhn, r2) -->
-    find(op(mod)),
-    find(call(len)),
-    find(int(2)),
-    find(call(len)),
-    ... .
+    pattern([op(mod), call(len), call(len), call(int)]).
 % matrix_multiplication r1: learned from [matrix-multiplication-2.py]
 learned_pattern(matrix_multiplication, r1) -->
-    find(call(map)),
-    find(call(map)),
-    find(call(sum)),
-    ... .
-% n_queens r1: learned from [n-queens-problem-4.py,n-queens-problem-3.py,n-queens-problem-1.py]
+    pattern([call(map), call(map), call(sum), call(map)]).
+% n_queens r1: learned from [n-queens-problem-3.py,n-queens-problem-4.py,n-queens-problem-6.py,n-queens-problem-7.py]
 learned_pattern(n_queens, r1) -->
-    find(call(range)),
-    find(op(eq)),
-    find(call(len)),
-    ... .
-% n_queens r2: learned from [n-queens-problem-2.py]
+    pattern([ single,
+              loop,
+              call(range),
+              param,
+              other,
+              param,
+              local,
+              op(sub),
+              param,
+              local,
+              param,
+              param,
+              op(sub),
+              param,
+              local,
+              param,
+              local,
+              local,
+              leave(_)
+            ]).
+% n_queens r2: learned from [n-queens-problem-8.py]
 learned_pattern(n_queens, r2) -->
-    find(output),
-    find(call(join)),
-    find(op(mul)),
-    ... .
-% n_queens r3: learned from [n-queens-problem-9.py,n-queens-problem-5.py]
+    pattern([op(sub), cmp(lt), call(reduce), call('$self')]).
+% n_queens r3: learned from [n-queens-problem-9.py]
 learned_pattern(n_queens, r3) -->
-    find(op(and)),
-    find(op('not in')),
-    find(op(add)),
-    find(param),
-    ... .
-% n_queens r4: learned from [n-queens-problem-8.py,n-queens-problem-7.py,n-queens-problem-6.py]
-learned_pattern(n_queens, r4) -->
-    find(call(_)),
-    find(call(_)),
-    find(call(list)),
-    find(other),
-    find(single),
-    ... .
+    pattern([call(set), call(set), loop, call('*variants')]).
 % roman_encode r1: learned from [roman-numerals-encode-2.py]
 learned_pattern(roman_encode, r1) -->
-    find(loop),
-    find(cmp(lt)),
-    find(int(4000)),
-    find(cmp(lt)),
-    ... .
-% roman_encode r2: learned from [roman-numerals-encode-6.py,roman-numerals-encode-3.py]
+    pattern([ other,
+              param,
+              loop,
+              test,
+              cmp(lt),
+              local,
+              int(4000),
+              test,
+              cmp(lt),
+              local,
+              int(4000),
+              op(add),
+              local,
+              other,
+              test,
+              cmp(lt),
+              local,
+              int(4000),
+              op(sub),
+              local,
+              int(1000),
+              test,
+              cmp(lt),
+              local,
+              int(4000),
+              test,
+              cmp(ge),
+              local,
+              int(900),
+              op(add),
+              local,
+              other,
+              test,
+              cmp(lt),
+              local,
+              int(4000),
+              test,
+              cmp(ge),
+              local,
+              int(900),
+              op(sub),
+              local,
+              int(900),
+              test,
+              cmp(lt),
+              local,
+              int(4000),
+              test,
+              cmp(ge),
+              local,
+              int(500),
+              op(add),
+              local,
+              other,
+              test,
+              cmp(lt),
+              local,
+              int(4000),
+              test,
+              cmp(ge),
+              local,
+              int(500),
+              op(sub),
+              local,
+              int(500),
+              test,
+              cmp(lt),
+              local,
+              int(4000),
+              test,
+              cmp(ge),
+              local,
+              int(400),
+              op(add),
+              local,
+              other,
+              test,
+              cmp(lt),
+              local,
+              int(4000),
+              test,
+              cmp(ge),
+              local,
+              int(400),
+              op(sub),
+              local,
+              int(400),
+              loop,
+              test,
+              cmp(lt),
+              local,
+              int(4000),
+              test,
+              cmp(lt),
+              local,
+              int(4000),
+              op(add),
+              local,
+              other,
+              test,
+              cmp(lt),
+              local,
+              int(4000),
+              op(sub),
+              local,
+              int(100),
+              test,
+              cmp(lt),
+              local,
+              int(4000),
+              test,
+              cmp(ge),
+              local,
+              int(90),
+              op(add),
+              local,
+              other,
+              test,
+              cmp(lt),
+              local,
+              int(4000),
+              test,
+              cmp(ge),
+              local,
+              int(90),
+              op(sub),
+              local,
+              int(90),
+              test,
+              cmp(lt),
+              local,
+              int(4000),
+              test,
+              cmp(ge),
+              local,
+              int(50),
+              op(add),
+              local,
+              other,
+              test,
+              cmp(lt),
+              local,
+              int(4000),
+              test,
+              cmp(ge),
+              local,
+              int(50),
+              op(sub),
+              local,
+              int(50),
+              test,
+              cmp(lt),
+              local,
+              int(4000),
+              test,
+              cmp(ge),
+              local,
+              int(40),
+              op(add),
+              local,
+              other,
+              test,
+              cmp(lt),
+              local,
+              int(4000),
+              test,
+              cmp(ge),
+              local,
+              int(40),
+              op(sub),
+              local,
+              int(40),
+              loop,
+              test,
+              cmp(lt),
+              local,
+              int(4000),
+              test,
+              cmp(lt),
+              local,
+              int(4000),
+              op(add),
+              local,
+              other,
+              test,
+              cmp(lt),
+              local,
+              int(4000),
+              op(sub),
+              local,
+              int(10),
+              test,
+              cmp(lt),
+              local,
+              int(4000),
+              test,
+              cmp(ge),
+              local,
+              int(9),
+              op(add),
+              local,
+              other,
+              test,
+              cmp(lt),
+              local,
+              int(4000),
+              test,
+              cmp(ge),
+              local,
+              int(9),
+              op(sub),
+              local,
+              int(9),
+              test,
+              cmp(lt),
+              local,
+              int(4000),
+              test,
+              cmp(ge),
+              local,
+              int(5),
+              op(add),
+              local,
+              other,
+              test,
+              cmp(lt),
+              local,
+              int(4000),
+              test,
+              cmp(ge),
+              local,
+              int(5),
+              op(sub),
+              local,
+              int(5),
+              test,
+              cmp(lt),
+              local,
+              int(4000),
+              test,
+              cmp(ge),
+              local,
+              int(4),
+              op(add),
+              local,
+              other,
+              test,
+              cmp(lt),
+              local,
+              int(4000),
+              test,
+              cmp(ge),
+              local,
+              int(4),
+              op(sub),
+              local,
+              int(4),
+              loop,
+              test,
+              cmp(lt),
+              local,
+              int(4000),
+              test,
+              cmp(lt),
+              local,
+              int(4000),
+              op(add),
+              local,
+              other,
+              test,
+              cmp(lt),
+              local,
+              int(4000),
+              op(sub),
+              local,
+              int(1),
+              local
+            ]).
+% roman_encode r2: learned from [roman-numerals-encode-3.py,roman-numerals-encode-4.py]
 learned_pattern(roman_encode, r2) -->
-    find(other),
-    find(loop),
-    find(call(enumerate)),
-    find(op(eq)),
-    ... .
-% roman_encode r3: learned from [roman-numerals-encode-5.py,roman-numerals-encode-4.py]
+    pattern([loop, op(eq), op(eq), cmp(ge)]).
+% roman_encode r3: learned from [roman-numerals-encode-5.py]
 learned_pattern(roman_encode, r3) -->
-    find(loop),
-    find(call(_)),
-    find(local),
-    find(call(divmod)),
-    ... .
+    pattern([loop, call(zip), call(divmod), call(divmod)]).
 % roman_encode r4: learned from [roman-numerals-encode-7.py]
 learned_pattern(roman_encode, r4) -->
-    find(cmp(lt)),
-    find(int(-1)),
-    find(call(reduce)),
-    find(call(map)),
-    ... .
+    pattern([cmp(lt), call(reduce), call(map), call(zfill)]).
 % roman_encode r5: learned from [roman-numerals-encode-8.py]
 learned_pattern(roman_encode, r5) -->
-    find(link(concat)),
-    find(call(list)),
-    find(call(from_iterable)),
-    ... .
+    pattern([call(list), call(from_iterable), call(list), call('mapAccumL(go)(n)')]).
 % run_length_encoding r1: learned from [run-length-encoding-1.py]
 learned_pattern(run_length_encoding, r1) -->
-    find(empty),
-    find(loop),
-    find(op(ne)),
-    find(op(ne)),
-    ... .
-% run_length_encoding r2: learned from [run-length-encoding-3.py]
+    pattern([loop, op(ne), op(ne), call(append)]).
+% run_length_encoding r2: learned from [run-length-encoding-2.py]
 learned_pattern(run_length_encoding, r2) -->
-    find(call(sub)),
-    find(call(group)),
-    find(call(str)),
-    ... .
+    pattern([call(join), op(mul), call(join), op(mul)]).
 % towers_of_hanoi r1: learned from [towers-of-hanoi-1.py]
 learned_pattern(towers_of_hanoi, r1) -->
-    find(call('$self')),
-    find(op(sub)),
-    find(output),
-    ... .
-% towers_of_hanoi r2: learned from [towers-of-hanoi-3.py,towers-of-hanoi-2.py]
+    pattern([call('$self'), op(sub), op(sub), output]).
+% towers_of_hanoi r2: learned from [towers-of-hanoi-3.py]
 learned_pattern(towers_of_hanoi, r2) -->
-    find(link(go)),
-    find(op(sub)),
-    find(param),
-    find(int(1)),
-    find(test),
-    find(op(add)),
-    find(op(add)),
-    find(call('$self')),
-    ... .
+    pattern([cmp(lt), call(len), call(list), call(chain)]).

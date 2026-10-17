@@ -1,8 +1,9 @@
 """Learning test (doc 04): learn new algorithms from Python, recognise them in unseen Lisp, C, Haskell.
 
-usage: python eval_learn.py <rosetta checkout> --learn            (learn from the Python training files)
-       python eval_learn.py <rosetta checkout> --lang Common-Lisp|C|Haskell|hard
-Frozen key benchmark/learn_truth.json. A unit is a file; its answer is the learned labels of its root
+usage: python eval_learn.py <rosetta checkout> --learn [--staged]   (learn from the Python training files)
+       python eval_learn.py <rosetta checkout> --lang Common-Lisp|C|Haskell|hard          (round 1)
+       python eval_learn.py <rosetta checkout> --stage 3|15|55|101                       (round 2)
+Frozen keys benchmark/learn_truth.json (round 1), benchmark/learn_staged_truth.json (round 2). A unit is a file; its answer is the learned labels of its root
 functions (tagged learned:Rule), or, when no learned rule parses, the labels of the training functions
 with equal input->output behaviour (tagged io). Success per language: precision and recall >= 80 %.
 """
@@ -27,39 +28,63 @@ def main():
     p.add_argument('rosetta', type=Path)
     p.add_argument('--learn', action='store_true')
     p.add_argument('--freeze', action='store_true')
+    p.add_argument('--staged', action='store_true', help='round 2: learn from the staged key\'s training files')
     p.add_argument('--lang', choices=['Common-Lisp', 'C', 'Haskell', 'hard'])
+    p.add_argument('--stage', choices=['3', '15', '55', '101'])
     a = p.parse_args()
     key = json.loads((ROOT / 'benchmark' / 'learn_truth.json').read_text(encoding='utf-8'))
+    staged = json.loads((ROOT / 'benchmark' / 'learn_staged_truth.json').read_text(encoding='utf-8'))
     if a.freeze:
         return freeze(a.rosetta, key)
     if a.learn:
-        train = {a.rosetta / f: None for f in key['train']['negatives']}
-        train.update({a.rosetta / f: lab for f, lab in key['train']['hard_case_positives'].items()})
-        train.update({a.rosetta / f: lab for f, lab in key['train']['positives'].items()})
+        train_key = (staged if a.staged else key)['train']
+        train = {a.rosetta / f: None for f in train_key['negatives']}
+        train.update({a.rosetta / f: lab for f, lab in train_key['hard_case_positives'].items()})
+        train.update({a.rosetta / f: lab for f, lab in train_key['positives'].items()})
         count = learn_apply.learn(train)
         print(f'learned from {len(train)} Python files ({sum(1 for v in count.values() if v)} with streams) '
               f'-> {learn_apply.RULES}')
-        return
+        return None
     if a.lang == 'hard':
         return hard_cases(a, key)
-    units, labels = key['tests'][a.lang]['units'], set(key['new_tasks'].values())
-    io = io_references(a.rosetta, key)
-    correct = answered = positives = wrong_neg = 0
-    for rel, expected in sorted(units.items()):
-        try:
-            found = learn_apply.apply(a.rosetta / rel)
-        except ERRORS as exc:
-            print(f'  ({rel}: {type(exc).__name__}: {str(exc)[:100]})')
-            found = []
-        got = {lab for _, lab, _ in found} & labels
-        rules = sorted({f'learned:{lab}:{r}' for _, lab, r in found if lab in got})
-        if not got:                               # no learned logic rule: the input->output fallback
-            try:
-                by_fn = io.labels_by_function(a.rosetta / rel)
-            except ERRORS:
-                by_fn = {}
-            got = {lab for v in by_fn.values() for lab in v} & labels
-            rules = sorted(f'io:{lab}' for lab in got)
+    if a.stage:
+        units = {u: staged['units'][u] for u in staged['stages'][a.stage]}
+        return score(a.rosetta, units, set(key['new_tasks'].values()), io_references(a.rosetta, staged),
+                     f'stage {a.stage} (Python, Common-Lisp, C, Haskell)')
+    return score(a.rosetta, key['tests'][a.lang]['units'], set(key['new_tasks'].values()),
+                 io_references(a.rosetta, key), a.lang)
+
+
+def answer(path, labels, io):
+    """The learned labels of the file's root functions, else the io fallback; (labels, tags) or None when
+    the file has no algorithm of its own (a Lisp file defining no function: output zero)."""
+    if path.suffix == '.lisp' and ecl_logic.NOCODE in ecl_logic.families(path):
+        return None
+    try:
+        found = learn_apply.apply(path)
+    except ERRORS as exc:
+        print(f'  ({path.name}: {type(exc).__name__}: {str(exc)[:100]})')
+        found = []
+    got = {lab for _, lab, _ in found} & labels
+    if got:
+        return got, sorted({f'learned:{lab}:{r}' for _, lab, r in found if lab in got})
+    try:                                          # no learned logic rule: the input->output fallback
+        by_fn = io.labels_by_function(path)
+    except ERRORS:
+        by_fn = {}
+    got = {lab for v in by_fn.values() for lab in v} & labels
+    return got, sorted(f'io:{lab}' for lab in got)
+
+
+def score(rosetta, units, labels, io, title):
+    correct = answered = positives = wrong_neg = ignored = 0
+    for rel, expected in units.items():
+        res = answer(rosetta / rel, labels, io)
+        if res is None:
+            ignored += 1
+            print(f"{rel.split('/')[-1][:44]:44s} {str(expected)[:22]:22s} ignored(0) no algorithm in the file")
+            continue
+        got, tags = res
         if expected is None:
             bad = bool(got)
             outcome, wrong_neg, answered = ('WRONG' if bad else 'ok(neg)'), wrong_neg + bad, answered + bad
@@ -68,14 +93,13 @@ def main():
             answered += bool(got)
             outcome = 'ok' if expected in got else ('WRONG' if got else 'UNKNOWN')
             correct += outcome == 'ok'
-        print(f"{rel.split('/')[-1][:44]:44s} {str(expected)[:22]:22s} {outcome:8s} {' '.join(rules) or '-'}")
+        print(f"{rel.split('/')[-1][:44]:44s} {str(expected)[:22]:22s} {outcome:8s} {' '.join(tags) or '-'}")
     prec, rec = correct / max(answered, 1), correct / max(positives, 1)
-    print(f'\nlearned from Python, tested on {a.lang}: {len(units)} units')
+    print(f'\nlearned from Python, tested on {title}: {len(units)} units, {ignored} ignored (no algorithm)')
     print(f'PRECISION = {correct}/{answered} = {prec:.1%}')
     print(f'RECALL    = {correct}/{positives} = {rec:.1%}')
-    print(f'WRONG ON NEGATIVES = {wrong_neg} of {len(units) - positives}')
+    print(f'WRONG ON NEGATIVES = {wrong_neg} of {len(units) - positives - ignored}')
     print('STAGE', 'PASS' if prec >= 0.8 and rec >= 0.8 else 'FAIL')
-    return None
 
 
 def freeze(rosetta, key, seed=20261019):
@@ -90,10 +114,9 @@ def freeze(rosetta, key, seed=20261019):
     by_task = {}
     for rel, lab in sorted(key['train']['positives'].items()):
         by_task.setdefault(lab, []).append(rel)
-    held = {rel: lab for lab, fs in sorted(by_task.items()) for rel in rng.sample(fs, len(fs) // 3 or 0)}
+    held = {rel: lab for lab, fs in sorted(by_task.items()) for rel in rng.sample(fs, len(fs) // 3)}
     if any(len(fs) >= 2 and not set(fs) & set(held) for fs in by_task.values()):
         held.update({fs[0]: lab for lab, fs in by_task.items() if len(fs) >= 2 and not set(fs) & set(held)})
-    used = set(key['train']['negatives']) | set(key['train']['hard_case_positives']) | set(key['train']['positives'])
     tasks = set(key['new_tasks']) | {r.split('/')[1] for r in key['train']['hard_case_positives']}
     # unseen negatives: the Python files of 30 seeded other tasks of the checkout (sparse: fetched here)
     names = subprocess.run(['git', '-C', str(rosetta), 'ls-tree', '--name-only', 'HEAD', 'Task/'], check=True,
