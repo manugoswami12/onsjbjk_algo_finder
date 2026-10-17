@@ -24,10 +24,10 @@ def install():
         suffix = Path(path).suffix.lower()
         if suffix == '.hs':
             from haskell_core_pnf import haskell_normal_form
-            return 'haskell', with_comparator_wrappers(haskell_normal_form(Path(path)), '<=')
+            return 'haskell', with_swapped_search(with_comparator_wrappers(haskell_normal_form(Path(path)), '<='))
         if suffix in ('.lisp', '.cl', '.lsp'):
             from lisp_sbcl_pnf import lisp_normal_form_sbcl
-            return 'commonlisp', with_comparator_wrappers(lisp_normal_form_sbcl(Path(path)), '<')
+            return 'commonlisp', with_swapped_search(with_comparator_wrappers(lisp_normal_form_sbcl(Path(path)), '<'))
         return original(path)
     io_trace.normal_form = normal_form
     _installed = True
@@ -84,4 +84,19 @@ def with_comparator_wrappers(funs, op):
             probes = [st for st in body[1] if st[:1] == ('expr',) and st[1][2][0][1] in rest] \
                 if body[0] == 'seq' else []
             out.append((f'{name}$asc', rest, ('seq', probes + [('return', ('call', name, args))])))
+    return out
+
+
+def with_swapped_search(funs):
+    """Value-first search signatures `f(x, seq)` get a `f$swap(seq, x)` wrapper, so they meet the
+    (sequence, target) inputs that sequence-first references are run on."""
+    out = list(funs)
+    for name, params, body in funs:
+        if len(params) != 2 or body[0] != 'seq':
+            continue
+        probed = {st[1][2][0][1] for st in body[1] if st[:1] == ('expr',) and st[1][:2] == ('call', 'len')}
+        if params[1] in probed and params[0] not in probed:
+            x, q = params
+            out.append((f'{name}$swap', [q, x], ('seq', [('expr', ('call', 'len', [('var', q)])),
+                                                         ('return', ('call', name, [('var', x), ('var', q)]))])))
     return out

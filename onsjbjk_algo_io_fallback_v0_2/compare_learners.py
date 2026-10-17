@@ -112,10 +112,29 @@ class IoCatalog:
                     if d['discriminative']:
                         self.cat[(rel, name)] = d
 
+    def run_isolated(self, path: Path) -> dict:
+        """All functions of a file in one interpreter run; if that run fails (one function can
+        crash it), each function is run on its own so the others are not lost."""
+        try:
+            return self.iot.run_functions(path)
+        except ERRORS:
+            pass
+        try:
+            names = [n for n, _, _ in self.iot.normal_form(path)[1]]
+        except ERRORS:
+            return {}
+        out = {}
+        for n in names:
+            try:
+                out.update(self.iot.run_functions(path, functions={n}))
+            except ERRORS:
+                continue
+        return out
+
     def labels_by_function(self, path: Path) -> dict[str, set[str]]:
         """{function name: labels of the training references with equal behaviour}."""
         try:
-            me = self.ioc.describe(self.iot.run_functions(path))
+            me = self.ioc.describe(self.run_isolated(path))
         except ERRORS:
             return {}
         out: dict[str, set[str]] = {}
@@ -129,7 +148,7 @@ class IoCatalog:
 
     def labels_for(self, path: Path) -> set[str]:
         try:
-            me = self.ioc.describe(self.iot.run_functions(path))
+            me = self.ioc.describe(self.run_isolated(path))
         except ERRORS:
             return set()
         out = set()

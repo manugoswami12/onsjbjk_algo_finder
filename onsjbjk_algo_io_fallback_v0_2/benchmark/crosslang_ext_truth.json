@@ -98,14 +98,21 @@
       "ch4-data-structures.lisp::uf-find": null
     },
     "sample3": [
-      "ch5-arrays.lisp::bin-search",
-      "ch6-lists.lisp::merge-lists",
-      "ch5-arrays.lisp::selection-sort"
+      "ch5-arrays.lisp::bogosort",
+      "ch8-hash-tables.lisp::djb2-str",
+      "ch9-trees.lisp::heapsort"
     ],
     "retired_sample3": [
       "ch6-lists.lisp::merge-sort",
       "ch11-strings.lisp::kmp-match",
       "ch6-lists.lisp::arith-eval"
+    ],
+    "retired_samples": [
+      [
+        "ch5-arrays.lisp::bin-search",
+        "ch6-lists.lisp::merge-lists",
+        "ch5-arrays.lisp::selection-sort"
+      ]
     ]
   }
 }

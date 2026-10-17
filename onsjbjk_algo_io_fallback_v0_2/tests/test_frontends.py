@@ -42,6 +42,11 @@ LISP = {
     'lcm-all': ('(defun lcm-all (&rest xs) (reduce (lambda (m n) (/ (* m n) (gcd m n))) xs :initial-value 1))',
                 [[[4, 6]], [[3, 5, 7]]]),
     'pal': ('(defun pal (s) (equal s (reverse s)))', [[[1, 2, 1]], [[1, 2]]]),
+    'isort-cmp': ('(defun isort-cmp (vec comp) (dotimes (i (1- (length vec))) (do ((j i (1- j))) ((minusp j)) '
+                  '(if (funcall comp (aref vec (1+ j)) (aref vec j)) (rotatef (aref vec (1+ j)) (aref vec j)) (return)))) vec)',
+                  [[[3, 1, 2]], [[5, 4, 4, 1]]]),
+    'lsearch': ('(defun lsearch (x v) (dotimes (i (length v)) (when (= (aref v i) x) (return-from lsearch i))) -1)',
+                [[2, [1, 2, 3]], [9, [1, 2, 3]]]),
     'msort': ('(defun msort (l comp) (if (null (rest l)) l (let ((h (floor (length l) 2))) '
               '(merge2 (msort (subseq l 0 h) comp) (msort (subseq l h) comp) comp))))\n'
               '(defun merge2 (a b comp) (cond ((null a) b) ((null b) a) '
@@ -54,15 +59,17 @@ def hs_lit(v):
     return '[' + ','.join(map(str, v)) + ']' if isinstance(v, list) else (f'({v})' if v < 0 else str(v))
 
 
-def lisp_lit(v):
-    return "'(" + ' '.join(map(str, v)) + ')' if isinstance(v, list) else str(v)
+def lisp_lit(v, vector=False):
+    if not isinstance(v, list):
+        return str(v)
+    return ('(vector ' if vector else "'(") + ' '.join(map(str, v)) + ')'
 
 
 def norm(s):
     """Haskell `show` / Lisp `print` / interpreter output -> one spelling. In Lisp NIL is both
     false and the empty list, so both spell `nil`."""
-    s = s.strip()
-    if s.startswith('('):                                    # Lisp list (1 9)
+    s = s.strip().lstrip('#')
+    if s.startswith('('):                                    # Lisp list (1 9) / vector #(1 9)
         s = '[' + ','.join(s[1:-1].split()) + ']'
     s = s.replace(' ', '')
     s = {'True': 'true', 'False': 'false', 'T': 'true', 'NIL': 'false'}.get(s, s)
@@ -122,8 +129,9 @@ class LispFrontEnd(unittest.TestCase):
         calls = []
         for name, (_, inputs) in LISP.items():
             for x in inputs:
-                args = ' '.join(lisp_lit(a) for a in x) if name != 'lcm-all' else ' '.join(map(str, x[0]))
-                if name == 'msort':
+                vec = name in ('isort-cmp', 'lsearch')            # these use aref: vectors
+                args = ' '.join(lisp_lit(a, vec) for a in x) if name != 'lcm-all' else ' '.join(map(str, x[0]))
+                if name in ('msort', 'isort-cmp'):
                     args += " #'<"
                 calls.append(f'(print ({name} {args}))')
         with tempfile.TemporaryDirectory() as td:
@@ -135,7 +143,10 @@ class LispFrontEnd(unittest.TestCase):
             lib.write_text(src + '\n', encoding='utf-8')
             k = 0
             for name, (_, inputs) in LISP.items():
-                got = interp_outputs(lib, name + '$asc' if name == 'msort' else name, inputs)
+                if name == 'lsearch':                    # value-first: via the $swap wrapper
+                    got = interp_outputs(lib, 'lsearch$swap', [[x[1], x[0]] for x in inputs])
+                else:
+                    got = interp_outputs(lib, name + '$asc' if name in ('msort', 'isort-cmp') else name, inputs)
                 for x, g in zip(inputs, got, strict=True):
                     with self.subTest(fn=name, x=x):
                         self.assertEqual(norm(native[k]), norm(g))

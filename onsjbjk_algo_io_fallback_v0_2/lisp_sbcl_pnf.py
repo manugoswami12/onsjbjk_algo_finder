@@ -118,6 +118,44 @@ def _make_class():
             return stmts + [('par_assign', ts, vs)], ('none',)
         f_psetf = f_psetq
 
+        # (return x) leaves the innermost NIL block: inside do/dotimes/dolist that is the loop,
+        # not the function (the AP13 base translator returned from the function).
+        loop_depth = 0
+
+        def _in_loop(self, method, a):
+            self.loop_depth += 1
+            try:
+                return method(self, a)
+            finally:
+                self.loop_depth -= 1
+
+        def f_do(self, a):
+            return self._in_loop(L.LispPNF.f_do, a)
+
+        def f_dotimes(self, a):
+            return self._in_loop(L.LispPNF.f_dotimes, a)
+
+        def f_dolist(self, a):
+            return self._in_loop(L.LispPNF.f_dolist, a)
+
+        def f_return(self, a):
+            if self.loop_depth > 0:
+                s, _ = self.compile(a[0]) if a else ([], ('none',))
+                return s + ['break'], ('none',)
+            return super().f_return(a)
+
+        def f_minusp(self, a):
+            s, (x,) = self.many(a[:1])
+            return s, ('op', 'lt', [x, ('int', 0)])
+
+        def f_plusp(self, a):
+            s, (x,) = self.many(a[:1])
+            return s, ('op', 'gt', [x, ('int', 0)])
+
+        def f_rtl__with(self, a):
+            # RUTILS `with` (used by the book): sequential bindings like let*
+            return self.f_let(a)
+
         def f_subseq(self, a):
             s, vs = self.many(a[:3])
             return s, ('slice', vs[0], vs[1], vs[2] if len(vs) > 2 else ('none',), ('none',))
