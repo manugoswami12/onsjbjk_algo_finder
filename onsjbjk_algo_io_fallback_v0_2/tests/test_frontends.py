@@ -42,6 +42,12 @@ LISP = {
     'lcm-all': ('(defun lcm-all (&rest xs) (reduce (lambda (m n) (/ (* m n) (gcd m n))) xs :initial-value 1))',
                 [[[4, 6]], [[3, 5, 7]]]),
     'pal': ('(defun pal (s) (equal s (reverse s)))', [[[1, 2, 1]], [[1, 2]]]),
+    'hsort': ('(defun hdown (v b &optional (e (length v))) (let ((l (1+ (* 2 b))) (r (+ 2 (* 2 b)))) '
+              '(when (< l e) (let ((c (if (or (>= r e) (> (aref v l) (aref v r))) l r))) '
+              '(when (> (aref v c) (aref v b)) (rotatef (aref v b) (aref v c)) (hdown v c e))))) v)\n'
+              '(defun hsort (v) (let ((m (floor (length v) 2))) (dotimes (i m) (hdown v (- m i 1)))) '
+              '(dotimes (i (length v)) (let ((last (- (length v) i 1))) (rotatef (aref v 0) (aref v last)) '
+              '(hdown v 0 last))) v)', [[[3, 1, 2]], [[1, 2, 3, 4]], [[5, 4, 4, 1, 9]]]),
     'isort-cmp': ('(defun isort-cmp (vec comp) (dotimes (i (1- (length vec))) (do ((j i (1- j))) ((minusp j)) '
                   '(if (funcall comp (aref vec (1+ j)) (aref vec j)) (rotatef (aref vec (1+ j)) (aref vec j)) (return)))) vec)',
                   [[[3, 1, 2]], [[5, 4, 4, 1]]]),
@@ -129,7 +135,7 @@ class LispFrontEnd(unittest.TestCase):
         calls = []
         for name, (_, inputs) in LISP.items():
             for x in inputs:
-                vec = name in ('isort-cmp', 'lsearch')            # these use aref: vectors
+                vec = name in ('isort-cmp', 'lsearch', 'hsort')   # these use aref: vectors
                 args = ' '.join(lisp_lit(a, vec) for a in x) if name != 'lcm-all' else ' '.join(map(str, x[0]))
                 if name in ('msort', 'isort-cmp'):
                     args += " #'<"

@@ -90,10 +90,70 @@ def _make_class():
     Sym = L.Sym
 
     class LispPNF2(L.LispPNF):
+        def compile_body(self, forms):
+            """A call whose value is not used (in a loop body, or before the last form) still runs:
+            its value goes to a temporary, so every call executes exactly once, in order (the AP13
+            base translator dropped such calls, losing their side effects on shared sequences)."""
+            stmts, val = [], ('none',)
+            for f in forms:
+                s, val = self.compile(f)
+                stmts += s
+                if val[:1] in (('call',), ('callv',)):
+                    t = self.fresh()
+                    stmts.append(('assign', ('var', t), val))
+                    val = ('var', t)
+            return stmts, val
+
+        def run(self, src):
+            """Pre-scan every defun's lambda list, so calls with omitted &optional arguments can be
+            completed with the callee's defaults (functions may be called before their definition)."""
+            self.sig: dict = {}
+            for f in L.read_all(src):
+                if isinstance(f, list) and len(f) >= 3 and f[0] == 'defun' and isinstance(f[2], list):
+                    req, opt, mode = [], [], 'req'
+                    for p in f[2]:
+                        if p in ('&optional', '&key', '&aux', '&rest', '&body'):
+                            mode = str(p)
+                            continue
+                        if mode == 'req':
+                            req.append(str(p))
+                        elif mode == '&optional':
+                            opt.append((str(p[0]), p[1] if len(p) > 1 else Sym('nil')) if isinstance(p, list)
+                                       else (str(p), Sym('nil')))
+                    self.sig[str(f[1])] = (req, opt)
+            return super().run(src)
+
         def defun(self, f):
-            lam = [p for p in f[2] if p not in ('&rest', '&body')] if isinstance(f[2], list) else f[2]
+            # &rest / &optional parameters are real parameters (the AP13 base translator dropped
+            # &optional ones and always used their default, ignoring the caller's argument)
+            lam, mode = [], 'req'
+            for p in (f[2] if isinstance(f[2], list) else []):
+                if p in ('&rest', '&body'):
+                    mode = 'rest'
+                    continue
+                if p == '&optional':
+                    mode = 'opt'
+                    continue
+                if p in ('&key', '&aux'):
+                    mode = 'other'
+                if mode == 'opt':
+                    lam.append(p[0] if isinstance(p, list) else p)
+                else:
+                    lam.append(p)
             self.scope = [str(p) for p in lam if isinstance(p, Sym) and not str(p).startswith('&')]
             return super().defun([f[0], f[1], lam] + f[3:])
+
+        def compile(self, f):
+            if (isinstance(f, list) and f and isinstance(f[0], Sym) and str(f[0]) in self.sig):
+                req, opt = self.sig[str(f[0])]
+                args = list(f[1:])
+                if len(req) <= len(args) < len(req) + len(opt):
+                    bound = dict(zip(req + [n for n, _ in opt], args))
+                    for n, default in opt[len(args) - len(req):]:
+                        bound[n] = _subst_syms(default, bound)
+                        args.append(bound[n])
+                    f = [f[0]] + args
+            return super().compile(f)
 
         def f_block(self, a):
             return self.compile_body(a[1:])
@@ -482,3 +542,12 @@ def list_probes(funs):
         probes = [('expr', ('call', 'len', [('var', p)])) for p in params if p in seq]
         out.append((name, params, ('seq', probes + list(body[1])) if probes and body[0] == 'seq' else body))
     return out
+
+
+def _subst_syms(t, bound):
+    """Replace parameter symbols in a default form by the actual argument forms."""
+    if isinstance(t, list):
+        return [_subst_syms(x, bound) for x in t]
+    if isinstance(t, str) and not isinstance(t, tuple) and str(t) in bound:
+        return bound[str(t)]
+    return t
