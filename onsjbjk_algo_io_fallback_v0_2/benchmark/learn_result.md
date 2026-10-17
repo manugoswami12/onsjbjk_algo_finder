@@ -134,6 +134,8 @@ Same frozen key (`benchmark/learn_staged_truth.json`), learned from Python only 
 
 The other 8 units are right: Josephus (Lisp) and Hanoi (C) found, and 6 negatives correctly given no answer.
 
+**Regression.** The Lisp staged test, stage 101, with the new double_recursion clause gives precision 50/51 = 98.0% and recall 50/59 = 84.7%: PASS, every unit answered as before.
+
 **Seen, not fixed (stopped):**
 - **Ancestors are tried too.** The applying step goes up from the deepest node, so a file that reached a known leaf (heapsort's `heap`) was claimed by a learned child of an ancestor. In the tree, a file at a deeper known branch is not a sibling of that branch.
 - **The same algorithm at different nodes across languages.** Ackermann in C reaches `search>backtracking` (a self-call inside a guarded loop); the Python Ackermann files reach only `numeric`. N-queens in Haskell reaches no node, while in Python it reaches backtracking.
