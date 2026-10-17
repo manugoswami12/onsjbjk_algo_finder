@@ -14,7 +14,7 @@ from pathlib import Path
 from ecl_filter import RUTILS_SHIM, _compile, top_forms
 from lisp_sbcl_pnf import readable_source
 
-# forms that define or configure instead of compute (defvar, defmacro, in-package, declaim, ...)
+# forms that define or configure instead of compute (defvar, defmacro, defgeneric, in-package, ...)
 DECLARATION = re.compile(r'\(\s*([\w-]+:{1,2})?(def|in-package|eval-when|declaim|proclaim|require|provide|'
                          r'use-package|export|import|shadow|load|quickload)', re.IGNORECASE)
 
@@ -28,7 +28,7 @@ def ecl_units(path: Path, timeout=120) -> list[str]:
         prelude += f'(eval-when (:compile-toplevel) {RUTILS_SHIM})\n'   # a macro: no C function
     forms = []
     for f in top_forms(text):
-        if re.match(r'\(defun\s', f, re.IGNORECASE):
+        if re.match(r'\((defun|defmethod)\s', f, re.IGNORECASE):     # a method body is computation too
             forms.append(f)
         elif not DECLARATION.match(f):
             forms.append(f'(defun ecl-toplevel () {f})')

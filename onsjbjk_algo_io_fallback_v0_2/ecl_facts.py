@@ -331,6 +331,10 @@ def marked_c(c_text: str) -> str:
         if node.type == 'call_expression' and raw(node.child_by_field_name('function')) == 'ECL_SYM':
             name = raw(node.child_by_field_name('arguments').named_children[0]).strip('"')
             return f'ecl_symbol({FUNCTION_OBJECT.get(name, c_name(name))})'
+        if node.type == 'subscript_expression' and raw(node.child_by_field_name('argument')).replace(' ', '').endswith('->array.dims'):
+            arr = node.child_by_field_name('argument').child_by_field_name('argument')   # (x)->array.dims[k]
+            arr = arr.child_by_field_name('argument') if arr.type == 'field_expression' else arr
+            return f'ecl_array_dimension({render(arr)}, {raw(node.child_by_field_name("index"))})'
         if node.type == 'subscript_expression' and raw(node).replace(' ', '').startswith('cl_env_copy->values['):
             k = raw(node.child_by_field_name('index'))          # ECL's value registers: values[k] = ecl_mv<k>
             return 'ecl_mv' if k == '0' else f'ecl_mv{k}'

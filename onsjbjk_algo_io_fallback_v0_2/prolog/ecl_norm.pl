@@ -59,6 +59,9 @@ ecl_op(call(ecl_list1, [X]), list([X])) :- !.
 ecl_op(call(cl_list, [int(_)|As]), list(As)) :- !.
 ecl_op(call(ecl_endp, [X]), op(not, [X])) :- !.                  % (endp l): l is empty
 ecl_op(call(coerce_to_list, [X]), X) :- !.                      % si::coerce-to-list: the same sequence
+ecl_op(op(add, [int(0), X]), X) :- !.                            % 0 + x
+ecl_op(elem(Q, op(add, [op(mul, [I, call(ecl_array_dimension, [Q2, int(1)])]), J])), elem(elem(Q, I), J)) :-
+    Q2 == Q, !.                                                      % row-major index of (aref m i j)
 ecl_op(call(F, [int(_), A, B|Cs]), T) :- chain(F, O), !, chain_term(O, [A, B|Cs], T).   % (< a b c): a<b, b<c
 ecl_op(call(ecl_apply, [call(ecl_symbol, [var(list)])|Vs]), list(Vs)) :- !.   % (multiple-value-list ...)
 ecl_op(elem(list(Xs), int(K)), X) :- nth0(K, Xs, X), !.                % car / cadr of a known list
@@ -66,6 +69,7 @@ ecl_op(tail(list([_|Xs]), 1), list(Xs)) :- !.
 ecl_op(call(cl_mapcar, [int(_), Fn, Q|Qs]), map(Q, Fn, Qs)) :- !.      % (mapcar f q ...): AP13's map term
 ecl_op(call(cl_map, [int(_), _, Fn, Q|Qs]), map(Q, Fn, Qs)) :- !.      % (map type f q ...)
 ecl_op(call(F, [int(_), Q, I]), elem(Q, I)) :- memberchk(F, [cl_bit, cl_sbit, cl_aref]), !.   % (bit v i), (aref v i)
+ecl_op(call(cl_aref, [int(_), Q, I|Is]), E) :- Is \== [], !, foldl([J, E0, elem(E0, J)]>>true, [I|Is], Q, E).   % (aref m i j)
 ecl_op(call('Null', [X]), op(not, [X])) :- !.
 ecl_op(call(ecl_funcall, [fn(Op), A, B]), op(Op, [A, B])) :- !.  % (funcall #'* a b): the known function
 % Common Lisp library functions; ECL passes the argument count first to the variadic cl_ ones
@@ -93,6 +97,7 @@ drop_digits([D|Cs], Ns) :- code_type(D, digit), !, drop_digits(Cs, Ns).
 drop_digits(Ns, Ns).
 ecl_temp(X) :- memberchk(X, [value0, env0, cl_env_copy]), !.
 ecl_temp(X) :- atom(X), sub_atom(X, 0, _, _, ecl_mv), !.             % ECL's value registers values[k]
+ecl_temp(X) :- atom(X), atom_codes(X, [0'd, 0'i, 0'm|Ds]), Ds \== [], forall(member(D, Ds), code_type(D, digit)), !.  % dim0: array index
 ecl_temp(X) :- atom_codes(X, [C|Ds]), memberchk(C, [0'T, 0'v]), Ds = [D|_], code_type(D, digit),
     drop_digits(Ds, Rest), ( Rest == [] ; Rest = [0'_|Ks], Ks \== [], drop_digits(Ks, []) ).   % v8, v8_1 (scoped)
 lisp_var(F, X) :- ( \+ ecl_temp(X) ; ecl_lispvar(F, X) ), !.
@@ -315,6 +320,7 @@ copy_temp(X, Items0, Items) :-
     ;   Items = Items0
     ).
 pure_value(V) :- atomic(V), !.
+pure_value(call(F, As)) :- memberchk(F, [len, ecl_array_dimension]), !, forall(member(A, As), pure_value(A)).   % reads only
 pure_value(V) :- V =.. [F|As], memberchk(F, [op, elem, tail, var, int, bool]), !,
     forall(member(A, As), ( is_list(A) -> forall(member(B, A), pure_value(B)) ; pure_value(A) )).
 copy_use(Items, X, D, V, Ops, U, it(S, L, W0), it(S, L, W)) :-
@@ -374,7 +380,8 @@ inside(I, lp(B, G)) :- B =< I, I =< G.
 innermost(Loops, I, Lp) :-
     findall(W-lp(B, G), ( member(lp(B, G), Loops), inside(I, lp(B, G)), W is G - B ), Ws), msort(Ws, [_-Lp|_]).
 exit_goto(Items, Loops, I, Lp) :- goto_at(Items, I, _, _, _, T), innermost(Loops, I, Lp), \+ inside(T, Lp).
-% a conditional goto that only skips exits of its loop is the loop's test
+% a conditional goto that only skips exits of its loop is the loop's test (a guarded RETURN inside
+% the loop is not: it is a test of the body, e.g. the divisor test of (loop ... never (zerop (rem n i))))
 loop_test(Items, Loops, I) :-
     goto_at(Items, I, _, C, _, T), C \== none, T > I, innermost(Loops, I, Lp), inside(T, Lp),
     I1 is I + 1, T1 is T - 1, I1 =< T1,

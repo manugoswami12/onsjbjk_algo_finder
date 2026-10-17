@@ -33,6 +33,8 @@ range_branch(mul, factorial_like).
 range_branch(add, series_sum).
 range_op(F, O) :- rec_class(F, range_accumulation, X), role(F, gatherer(O), X), !.
 range_op(F, O) :- in_func(S, F), cret(S, op(O, Args)), memberchk(O, [mul, add]), self_count(Args, 1), !.
+range_op(F, O) :- family_path_v02(F, [numeric, recurrence, range_accumulation]),   % families_v02.pl
+    role(F, gatherer(O), _), memberchk(O, [mul, add]), !.
 % f(n - 1) and f(n - 2): the Fibonacci recurrence (the v0.2 fact self_calls_minus_one_minus_two)
 self_minus_one_minus_two(F) :- param(F, _, N),
     in_func(S1, F), call_at(S1, '$self', A1), member(op(sub, [var(N1), int(1)]), A1), N1 == N,

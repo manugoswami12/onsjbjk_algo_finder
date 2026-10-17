@@ -15,12 +15,20 @@
 
 fallback_main :-
     current_prolog_flag(argv, [Export|_]), load_files(Export, [if(true)]),
-    forall(( func(F, Name, _), \+ answered(F), result_tokens(F, Ts), phrase(fallback_pattern(B, Rule), Ts) ),
+    forall(( func(F, Name, _), \+ answered(F), result_tokens(F, Ts), once(phrase(fallback_pattern(B, Rule), Ts)) ),
            format('FALLBACK|~w|~w|~w|~w~n', [F, Name, B, Rule])).
 answered(F) :- family(F, _, B), B \== none, !.
 
 % the function's results: its returned values, in statement order
-result_tokens(F, Ts) :- results(F, Vs), Vs \== [], phrase(terms_tokens(F, [F], 4, Vs), Ts).
+% the root function: its statements in source order (assigned values, calls, returns); a linked
+% function contributes its result values (link//4)
+result_tokens(F, Ts) :- body_terms(F, Vs), Vs \== [], phrase(terms_tokens(F, [F], 4, Vs), Ts).
+body_terms(F, Vs) :-
+    findall(L-N-S, ( stmt(S, F, _, L), sub_atom(S, 1, _, 0, NA), atom_number(NA, N) ), Ks), msort(Ks, Sorted),
+    findall(V, ( member(_-_-S, Sorted), stmt_term(F, S, V) ), Vs).
+stmt_term(_, S, V) :- assign(S, T, V), T \= elem(other(field), _).
+stmt_term(_, S, call(G, As)) :- call_at(S, G, As), G \== '$self'.
+stmt_term(F, S, V) :- ret(S, V0), result_value(F, V0, V).
 % (values a b) returns values[0] and sets values[1] in the same function: a returned values[k] is
 % the term the function stored there
 results(F, Vs) :- findall(V, ( ret(S, V0), stmt(S, F, _, _), result_value(F, V0, V) ), Vs).
@@ -43,6 +51,10 @@ tokens(F, P, D, call(G, As)) --> { linked(G) }, !, link(F, P, D, G), terms_token
 tokens(F, P, D, call(cl_member_if_not, [int(_), Pr, Q])) --> !, [split_point], tokens(F, P, D, Pr), tokens(F, P, D, Q).
 tokens(F, P, D, call(cl_ldiff, [Q, T])) --> !, [prefix_until], tokens(F, P, D, Q), tokens(F, P, D, T).
 tokens(F, P, D, concat(Parts)) --> !, { length(Parts, N) }, [append(N)], terms_tokens(F, P, D, Parts).
+tokens(F, P, D, call(cl_position, [int(_), X, Q|_])) --> !, [position], tokens(F, P, D, X), tokens(F, P, D, Q).
+tokens(F, P, D, call(cl_subseq, [int(_)|As])) --> !, [subseq], terms_tokens(F, P, D, As).
+tokens(F, P, D, call(cl_replace, [int(_), Q, R|_])) --> !, [replace], tokens(F, P, D, Q), tokens(F, P, D, R).
+tokens(F, P, D, call(reverse, [Q])) --> !, [reverse], tokens(F, P, D, Q).
 tokens(F, P, D, list([X])) --> !, [single], tokens(F, P, D, X).
 tokens(_, _, _, elem(other(field), int(K))) --> !, [value(K)].        % (values a b): the K-th value
 tokens(F, P, D, op(O, As)) --> { memberchk(O, [lt, le, gt, ge]) }, !, [cmp(O)], terms_tokens(F, P, D, As).

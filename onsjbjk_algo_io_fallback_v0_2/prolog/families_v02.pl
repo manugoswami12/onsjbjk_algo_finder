@@ -85,3 +85,15 @@ family_path_v02(F, [sequence_query, target_search, interval_halving]) :-
 compared_element(_, C, Q) :- sub_term(E, C), compound(E), E = elem(V, _), V == var(Q), !.
 compared_element(F, C, Q) :- sub_term(W, C), compound(W), W = var(V), atom(V),
     in_func(S, F), value(S, var(V2), elem(var(Q2), _)), V2 == V, Q2 == Q, !.
+
+% acc = acc op counter (product / sum over a range) where the update's only guards are its loop's own
+% continuation condition (an accumulator recursion: f(n - 1, m * n) under n /= 0): every counter value is
+% still taken. Learned from Rosetta factorial-3.
+family_path_v02(F, [numeric, recurrence, range_accumulation]) :-
+    numeric(F),
+    once(( role(F, gatherer(O), X), memberchk(O, [mul, add]),
+           in_func(S, F), value(S, var(X2), op(O, Args)), X2 == X, member(var(I), Args), I \== X,
+           role(F, stepper, I), guard(S, _, _),
+           forall(guard(S, C, P), continuation_guard(F, S, C, P)) )).
+continuation_guard(F, S, C, P) :- under(S, L), loop(L, F, _), loop_cond(L, LC),
+    ( P == true, LC == C ; P == false, LC == op(not, [C]) ), !.

@@ -21,3 +21,10 @@ fallback_pattern(shift_insertion, fold_ordered_insert) -->
     [fold, link(G), enter(G)], ordered_insert, [leave(G), param, init, empty].
 ordered_insert --> [append(3)], cut_by_comparison, [single], ... .
 cut_by_comparison --> ..., [cmp(_)], ... .
+
+% the position of the extreme of a prefix, then a linked function that reverses a prefix in place:
+% select the extreme and flip it to its end (pancake sort, prefix reversal). Learned from Rosetta
+% pancake-sort-1: (position (apply #'max (subseq lst 0 i)) lst), (flip lst k) = reverse (subseq lst 0 k).
+fallback_pattern(comparison_driven_reordering, prefix_reversal) -->
+    ..., [position, fold, op(E)], { memberchk(E, [max, min]) }, [subseq], ...,
+    [link(G), enter(G)], ..., [reverse, subseq], ..., [leave(G)], ... .

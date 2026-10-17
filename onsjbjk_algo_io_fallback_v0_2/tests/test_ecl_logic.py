@@ -18,7 +18,8 @@ EXPECTED = {
     'qsl': 'comparison_driven_reordering', 'rfact': 'factorial_like', 'rsum': 'series_sum',
     'fibl': 'fibonacci_like', 'bsr': 'interval_lookup', 'bsieve': 'sieve_like',
     'dotl': 'element_accumulation', 'dsumb': 'digit_processing', 'msort': 'comparison_driven_reordering',
-    'mergel': None, 'bsk': 'interval_lookup', 'bss': 'interval_lookup', 'pass': 'comparison_driven_reordering',   # closure comparator 'bsearch': 'interval_lookup', 'vmax': 'extremum_search', 'vsum': 'element_accumulation',
+    'mergel': None, 'bsk': 'interval_lookup', 'bss': 'interval_lookup',
+    'facta': 'factorial_like', 'gsort': 'comparison_driven_reordering', 'm2max': 'extremum_search', 'pass': 'comparison_driven_reordering',   # closure comparator 'bsearch': 'interval_lookup', 'vmax': 'extremum_search', 'vsum': 'element_accumulation',
     # near misses: no v0.2 branch
     'twice': None, 'countdown': None, 'vcopy': None, 'lastel': None, 'addmod': None, 'countup': None, 'lcount': None, 'squares': None,
     'inrange': None, 'shiftc': None, 'applyf': None,
@@ -55,6 +56,10 @@ class EclLogicTests(unittest.TestCase):
         self.assertIn('element_accumulation', {b for _, b in normal['vsum2']})
         _, export = ecl_logic.trace(data / 'fallback_insert.lisp')
         self.assertEqual(ecl_fallback.answers(export).get('fsort'), [('shift_insertion', 'fold_ordered_insert')])
+        _, export = ecl_logic.trace(data / 'fallback_pancake.lisp')
+        found = ecl_fallback.answers(export)
+        self.assertEqual(found.get('psort'), [('comparison_driven_reordering', 'prefix_reversal')])
+        self.assertNotIn('maxpos', found)                  # the extreme's position, never flipped
         _, export = ecl_logic.trace(data / 'fallback_noorder.lisp')
         self.assertEqual(ecl_fallback.answers(export), {})   # an insertion without a comparison
 
