@@ -1,6 +1,6 @@
 """Held-out precision/recall of v0.2 on real files (source parsed only, never executed).
 
-usage: python eval_heldout.py <checkout root> [benchmark/heldout_truth.json]
+usage: python eval_heldout.py <checkout root> [truth.json] [--kb kb/learned.json | --leave-one-out T.json ...]
 A file's answer is the union of its functions' routes minus `unknown`.
   positive: correct if the expected branch (or one of a listed set) is in the answer; WRONG if answered without it
   negative: WRONG if answered with anything beyond the allowed broad branches
@@ -10,18 +10,29 @@ import json
 import sys
 from pathlib import Path
 
+import argparse
+
+import learn_v2
 from run_v2 import ROOT, load, route_live
 
 
 def main():
-    root = Path(sys.argv[1])
-    truth = json.loads(Path(sys.argv[2] if len(sys.argv) > 2 else ROOT / 'benchmark' / 'heldout_truth.json')
-                       .read_text(encoding='utf-8'))
+    p = argparse.ArgumentParser()
+    p.add_argument('root', type=Path)
+    p.add_argument('truth', nargs='?', default=str(ROOT / 'benchmark' / 'heldout_truth.json'))
+    p.add_argument('--kb', default='none', help="learned KB json, or 'none' (default: witnesses only)")
+    p.add_argument('--leave-one-out', nargs='+', metavar='TRUTH',
+                   help='learn from these truth files, excluding the file under test each time')
+    a = p.parse_args()
+    root = a.root
+    truth = json.loads(Path(a.truth).read_text(encoding='utf-8'))
+    kb_all = None if a.kb == 'none' else learn_v2.load_kb(a.kb)
     allowed = set(truth['_allowed_on_negative'])
     files, analyses, owner, notes = list(truth['files'].items()), [], [], {}
     for rel, _ in files:
         try:
-            found = load(root / rel)
+            kb = (learn_v2.learn(root, a.leave_one_out, exclude={rel}) if a.leave_one_out else kb_all)
+            found = load(root / rel, kb)
         except (SyntaxError, ValueError) as exc:
             notes[rel] = 'not parseable: ' + str(exc).split(' (')[0]
             found = []

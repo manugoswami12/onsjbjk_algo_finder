@@ -8,6 +8,7 @@ import sys
 import tempfile
 
 from static_trace_v2 import analyze_source
+import learn_v2
 
 ROOT = Path(__file__).resolve().parent
 ROUTER = ROOT / 'prolog' / 'route_v2.pl'
@@ -62,11 +63,15 @@ def route_live(analyses):
         return routes
 
 
-def load(path):
+def load(path, kb=None):
+    """Static analysis; with a learned KB (learn_v2.py) also the nearest learned algorithm."""
     path = Path(path)
     if path.stat().st_size > 1_000_000:
         raise ValueError('Input too large for this bounded pilot (1 MB limit)')
-    return analyze_source(path.read_text(encoding='utf-8-sig'))
+    source = path.read_text(encoding='utf-8-sig')
+    analyses = analyze_source(source)
+    learn_v2.tag(source, analyses, kb)
+    return analyses
 
 
 # v0.1 acceptance cases, unchanged: (file, expected routes)
@@ -181,13 +186,14 @@ def main():
     p.add_argument('--selftest', action='store_true')
     p.add_argument('--offline-tests', action='store_true', help='Only static extraction, no Prolog')
     p.add_argument('--json', action='store_true', help='Print observations as JSON')
+    p.add_argument('--kb', default=str(learn_v2.DEFAULT_KB), help="learned KB (learn_v2.py); 'none' = off")
     args = p.parse_args()
     if args.selftest or args.offline_tests:
         selftest(offline=args.offline_tests)
         return
     if not args.source:
         p.error('Pass a source file or --selftest')
-    analyses = load(args.source)
+    analyses = load(args.source, None if args.kb == 'none' else learn_v2.load_kb(args.kb))
     if not analyses:
         print('UNKNOWN: no top-level functions found')
         return

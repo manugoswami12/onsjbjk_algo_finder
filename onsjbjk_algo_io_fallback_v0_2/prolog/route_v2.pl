@@ -131,6 +131,29 @@ route(F, palindrome_check) :-
     route(F, symmetric_compare),
     observed(F, mirror_compare_decides_result, _).
 
+% ---- learned: nearest learned algorithm (learn_v2.py); the branch plus its ancestors ----
+parent(comparison_driven_reordering, sequence_rearrangement).
+parent(shift_insertion, comparison_driven_reordering).
+parent(selection_exchange, comparison_driven_reordering).
+parent(interval_lookup, indexed_lookup).
+parent(element_accumulation, aggregate).
+parent(extremum_search, aggregate).
+parent(fibonacci_like, recurrence).
+parent(euclid_like, recurrence).
+parent(factorial_like, recurrence).
+parent(series_sum, recurrence).
+parent(digit_processing, number_property).
+parent(divisor_search, number_property).
+parent(collatz_like, number_property).
+parent(sieve_like, marking).
+parent(palindrome_check, symmetric_compare).
+
+ancestor(B, P) :- parent(B, P).
+ancestor(B, P) :- parent(B, Q), ancestor(Q, P).
+
+route(F, B) :- observed(F, learned(B), _).
+route(F, P) :- observed(F, learned(B), _), ancestor(B, P).
+
 % ---- UNKNOWN: no broad family has its evidence (replaces the v0.1 two-family rule) ----
 broad(sequence_rearrangement).
 broad(indexed_lookup).
