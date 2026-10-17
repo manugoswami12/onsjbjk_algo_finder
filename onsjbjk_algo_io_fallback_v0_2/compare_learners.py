@@ -142,7 +142,8 @@ class IoCatalog:
             if not d['discriminative']:
                 continue
             for (rel, _), ref in self.cat.items():
-                if self.ioc.compare(d, ref) in ('logic', 'io') and self.labels[rel] != 'none':
+                if self.labels[rel] != 'none' and (self.ioc.compare(d, ref) in ('logic', 'io')
+                                                   or shifted_sequence(d, ref)):
                     out.setdefault(name, set()).add(self.labels[rel])
         return out
 
@@ -159,6 +160,35 @@ class IoCatalog:
                 if self.ioc.compare(d, ref) in ('logic', 'io'):
                     out.add(self.labels[rel])
         return out - {'none'}
+
+
+SHIFT_MIN = 20     # equal positions required for a shifted-index sequence match
+
+
+def shifted_sequence(a, b):
+    """Integer sequences equal up to a one-step index shift (0- vs 1-based numbering, e.g.
+    fib(0)=1 vs fib(0)=0): on the consecutive inputs n = 0..40, a(n) == b(n + k) for k = +1 or -1
+    on at least SHIFT_MIN positions, none unequal, and not constant."""
+    if a['sig'] != ['int'] or b['sig'] != ['int']:
+        return False
+    xa, xb = a['outputs'][:41], b['outputs'][:41]
+    for k in (1, -1):
+        pairs = [(xa[i], xb[i + k]) for i in range(41) if 0 <= i + k < 41
+                 and xa[i] is not None and xb[i + k] is not None]
+        if (len(pairs) >= SHIFT_MIN and all(p == q for p, q in pairs)
+                and len({p for p, _ in pairs}) > 2 and not _arithmetic([p for p, _ in pairs])):
+            return True
+    return False
+
+
+def _arithmetic(values):
+    """An arithmetic progression (n, n+1, 2n, ...) equals its own shift plus a constant, so a shift
+    match carries no evidence there."""
+    try:
+        xs = [int(v) for v in values]
+    except ValueError:
+        return False
+    return len({b - a for a, b in zip(xs, xs[1:])}) <= 1
 
 
 LEARNERS = {'ap13dir': Ap13Dir, 'iocat': IoCatalog}

@@ -19,7 +19,7 @@ import compare_learners
 
 KEEP = '''defun let let* setf setq incf decf rotatef push if when unless cond and or not progn quote
 function lambda dotimes dolist do loop return return-from block the declare locally labels flet
-multiple-value-bind psetq psetf'''.split()
+multiple-value-bind psetq psetf check-type assert'''.split()
 
 SBCL_SCRIPT = r'''
 (defpackage :v02x (:use :cl))
@@ -203,6 +203,10 @@ def _make_class():
                 s, _ = self.compile(a[0]) if a else ([], ('none',))
                 return s + ['break'], ('none',)
             return super().f_return(a)
+
+        def f_check_type(self, a):
+            return [], ('none',)          # a type assertion: a guard, like Python's assert
+        f_assert = f_check_type
 
         def f_minusp(self, a):
             s, (x,) = self.many(a[:1])

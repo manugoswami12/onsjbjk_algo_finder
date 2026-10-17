@@ -42,6 +42,8 @@ LISP = {
     'lcm-all': ('(defun lcm-all (&rest xs) (reduce (lambda (m n) (/ (* m n) (gcd m n))) xs :initial-value 1))',
                 [[[4, 6]], [[3, 5, 7]]]),
     'pal': ('(defun pal (s) (equal s (reverse s)))', [[[1, 2, 1]], [[1, 2]]]),
+    'nfib': ('(defun nfib (i) (check-type i (integer 0)) (if (< i 2) 1 (+ (nfib (- i 1)) (nfib (- i 2)))))',
+             [[0], [1], [10]]),
     'hsort': ('(defun hdown (v b &optional (e (length v))) (let ((l (1+ (* 2 b))) (r (+ 2 (* 2 b)))) '
               '(when (< l e) (let ((c (if (or (>= r e) (> (aref v l) (aref v r))) l r))) '
               '(when (> (aref v c) (aref v b)) (rotatef (aref v b) (aref v c)) (hdown v c e))))) v)\n'

@@ -98,9 +98,9 @@
       "ch4-data-structures.lisp::uf-find": null
     },
     "sample3": [
-      "ch12-dynamic-programming.lisp::naive-fib",
-      "ch8-hash-tables.lisp::fnv-1a",
-      "ch12-dynamic-programming.lisp::lev-dist"
+      "ch1-complexity.lisp::mat-max",
+      "ch4-data-structures.lisp::uf-find",
+      "ch5-arrays.lisp::bin-search-v0"
     ],
     "retired_sample3": [
       "ch6-lists.lisp::merge-sort",
@@ -122,6 +122,11 @@
         "ch14-compression.lisp::b64-encode",
         "ch9-trees.lisp::bfs",
         "ch5-arrays.lisp::insertion-sort"
+      ],
+      [
+        "ch12-dynamic-programming.lisp::naive-fib",
+        "ch8-hash-tables.lisp::fnv-1a",
+        "ch12-dynamic-programming.lisp::lev-dist"
       ]
     ]
   }
