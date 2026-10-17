@@ -190,10 +190,14 @@ one_step(call('$self', As)) :- include([A]>>stepped(A, _), As, [_]).
 % one-sided steps (max, or a helper of the file that returns the longer of its two arguments). Built from
 % longest-common-subsequence-4.lisp.
 family_path_v02(F, [sequence_query, two_sequence_match, longest_common]) :-
-    once(( in_func(S1, F), under_match(S1, true), ( value(S1, _, V1) ; ret(S1, V1) ),
-           sub_term(G1, V1), compound(G1),
-           ( G1 = op(add, [D, int(1)]) ; G1 = cons(_, D) ; G1 = op(add, [list([_]), D]) ), diagonal(D),
+    once(( in_func(S1, F), under_match(S1, true), matched_plus_one(S1),
            larger_step(F) )).
+% on a match: the diagonal plus one, the matched element put in front (cons, [x] + rest), or, as AP13 writes
+% x : f xs ys, the diagonal self-call with the element written to the output
+matched_plus_one(S) :- ( value(S, _, V) ; ret(S, V) ), sub_term(G, V), compound(G),
+    ( G = op(add, [D, int(1)]) ; G = cons(_, D) ; G = op(add, [list([_]), D]) ), diagonal(D), !.
+matched_plus_one(S) :- call_at(S, '$self', As), diagonal(call('$self', As)),
+    stmt(S, F, _, _), in_func(S2, F), under_match(S2, true), par_assign(S2, _, _), !.
 % the larger of the two one-sided steps: max, a helper returning the longer, or the two steps assigned and
 % the longer returned (a := f(xs[1:], ys); b := f(xs, ys[1:]); a if len(a) > len(b) else b)
 larger_step(F) :- in_func(S, F), under_match(S, false), ( value(S, _, V) ; ret(S, V) ),
@@ -228,7 +232,8 @@ family_path_v02(F, [search, diagonal_conflict]) :-
     once((   in_func(S, F), findall(C0, guard(S, C0, _), C), C \== [],      % the tests of one statement together
              variant(F, C, R1), keyed(R1, Sum), Sum = op(add, [X, Y]), var_pair(X, Y),
              variant(F, C, R2), keyed(R2, Dif), Dif = op(sub, [P, Q]), ( P == X, Q == Y ; P == Y, Q == X )
-         ;   in_func(S, F), guard(S, C, _), sub_term(A, C), compound(A), A = call(abs, [op(sub, [_, _])]),
+         ;   in_func(S, F), ( guard(S, C, _) ; ret(S, C) ; value(S, _, C) ),
+             sub_term(A, C), compound(A), A = call(abs, [op(sub, [_, _])]),
              sub_term(B, C), compound(B), B = op(Op, [L, Rr]), memberchk(Op, [eq, ne]), ( L == A ; Rr == A )
          ;   in_func(S1, F), ( value(S1, _, V1) ; assign(S1, _, V1) ), V1 = op(shl, [op(or, [M1, Bit]), int(1)]),
              in_func(S2, F), ( value(S2, _, V2) ; assign(S2, _, V2) ), V2 = op(shr, [op(or, [M2, Bit2]), int(1)]),
@@ -271,3 +276,12 @@ family_path_v02(F, [sequence_transformation, elementwise_map, alphabet_rotation]
 family_path_v02(F, [library, roman_numerals]) :-
     once(( in_func(S, F), ( ret(S, V) ; value(S, _, V) ; call_at(S, _, V) ), sub_term(Fm, V), compound(Fm),
            Fm = call(cl_format, Args), member(str(D), Args), sub_atom(D, _, _, _, '@R') )).
+
+% 0-1 knapsack by recursion: when the item fits (its weight w <= the capacity c), a self-call with the
+% capacity reduced by that weight, c - w (w not a constant). Built from knapsack-problem-0-1-2.hs.
+family_path_v02(F, [numeric, recurrence, capacity_reduction]) :-
+    once(( param(F, _, P), in_func(S, F), guard(S, G, true), fits(G, P, W), W \= int(_),
+           call_at(S, '$self', As), member(op(sub, [V, W2]), As), V == var(P), W2 == W )).
+fits(op(le, [W, V]), P, W) :- V == var(P).
+fits(op(ge, [V, W]), P, W) :- V == var(P).
+fits(op(not, [op(gt, [W, V])]), P, W) :- V == var(P).

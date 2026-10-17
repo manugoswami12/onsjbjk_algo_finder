@@ -33,6 +33,7 @@ family_branch([marking, stride_marking], _, sieve_like).
 % built branches (doc 04 section 15, families_v02.pl): one task each
 family_branch([numeric, recurrence, nested_recursion], _, ackermann).
 family_branch([marking, table_fill, capacity_reduction], _, knapsack_01).
+family_branch([numeric, recurrence, capacity_reduction], _, knapsack_01).
 family_branch([sequence_transformation, elementwise_map, alphabet_rotation], _, caesar_cipher).
 family_branch([sequence_transformation, construction, matrix_product], _, matrix_multiplication).
 family_branch([sequence_transformation, construction, run_length], _, run_length_encoding).
@@ -72,6 +73,10 @@ counted_down_twice(F) :-
         ( assign(S3, var(N2), V) ; par_assign(S3, Ts, Vs), nth1(K, Ts, var(N2)), nth1(K, Vs, V) ),
         N2 == N, counted_down(N, [V])
     ), !.
+% the functional form: the two results joined with the move between them, f(n-1) ++ [move] ++ f(n-1)
+counted_down_twice(F) :- param(F, _, N), in_func(S, F), ret(S, concat(Parts)),
+    append(_, [call('$self', A1), Mid, call('$self', A2)|_], Parts), Mid \= call('$self', _),
+    counted_down(N, A1), counted_down(N, A2), !.
 counted_down(N, Args) :- member(op(sub, [V, int(1)]), Args), V == var(N), !.
 combined_self_calls(F) :- in_func(S, F), cret(S, V), self_count(V, K), K >= 2, !.
 % the statement's recursive call is made for its effect: no value of the statement holds the call

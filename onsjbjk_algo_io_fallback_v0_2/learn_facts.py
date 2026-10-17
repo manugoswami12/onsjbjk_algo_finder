@@ -25,6 +25,9 @@ def tree_facts(path: Path) -> tuple[str, str]:
         return 'lisp', ecl_facts.facts_of(units) if any(units) else ''
     if path.suffix == '.c':
         return 'ap13', c_facts(path)
+    if path.suffix == '.hs':                          # AP13's Haskell lowerer, subclassed (haskell_logic.py)
+        import haskell_logic
+        return 'ap13', haskell_logic.lower(path)
     return 'ap13', cli.facts_text(path)[1]
 
 
