@@ -25,7 +25,7 @@ def ecl_units(path: Path, timeout=120) -> list[str]:
     prelude = ''.join(f'(eval-when (:compile-toplevel :load-toplevel :execute) (unless (find-package "{p.upper()}") '
                       f'(make-package "{p.upper()}" :use (list "CL"))))\n' for p in pkgs)
     if 'rtl' in pkgs:
-        prelude += RUTILS_SHIM
+        prelude += f'(eval-when (:compile-toplevel) {RUTILS_SHIM})\n'   # a macro: no C function
     forms = []
     for f in top_forms(text):
         if re.match(r'\(defun\s', f, re.IGNORECASE):

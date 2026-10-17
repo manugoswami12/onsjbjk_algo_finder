@@ -7,10 +7,11 @@ ordinary call statements with lines and guards; prolog/ecl_norm.pl turns them in
 Calls through the symbol table, `ecl_function_dispatch(env, VV[k])(n, args) /* NAME */`, become
 `name(args)` (ECL's own C name mangling) and calls of a function object (funcall of a parameter)
 `ecl_funcall(f, args)`. Only the compiled Lisp functions (`L<n><name>`) are kept, not ECL's module
-initialiser; each ECL unit is parsed on its own (the initialiser's `#ifdef extern "C"` is not C).
+initialiser (local functions LC<k>name are kept); each ECL unit is parsed on its own (the initialiser's `#ifdef extern "C"` is not C).
 """
 from __future__ import annotations
 
+import bisect
 import tempfile
 from pathlib import Path
 
@@ -31,17 +32,37 @@ def c_name(lisp_name: str) -> str:
     return ''.join(ch if ch.isalnum() else '_' for ch in lisp_name.lower())
 
 
-def callee(node, inner_target):
+def line_comments(root, src: bytes) -> dict:
+    """{line: [(byte offset, text)]} of every comment, in one top-down pass. Only byte offsets are
+    read: in tree-sitter 0.26 node.parent / next_sibling / start_point corrupted memory here."""
+    starts = [0] + [i + 1 for i, ch in enumerate(src) if ch == 0x0A]
+    rows: dict = {'starts': starts}
+    stack = [root]
+    while stack:
+        n = stack.pop()
+        if n.type == 'comment':
+            rows.setdefault(bisect.bisect_right(starts, n.start_byte), []).append(
+                (n.start_byte, src[n.start_byte:n.end_byte].decode('utf-8', 'replace').strip('/* ')))
+        stack.extend(n.children)
+    return rows
+
+
+def trailing_comment(node, comments: dict):
+    """ECL's /* NAME */ after a call or cell on the same line."""
+    end = node.end_byte
+    after = sorted(c for c in comments.get(bisect.bisect_right(comments['starts'], end - 1), []) if c[0] >= end)
+    return after[0][1] if after else None
+
+
+def callee(node, inner_target, src: bytes, comments: dict):
     """Lisp name of a dispatched call: ECL_SYM("NAME",n), else ECL's trailing /* NAME */ comment."""
-    if inner_target.type == 'call_expression' and inner_target.child_by_field_name('function').text == b'ECL_SYM':
-        return c_name(inner_target.child_by_field_name('arguments').named_children[0].text.decode().strip('"'))
-    n = node
-    while n is not None and n.type not in ('expression_statement', 'compound_statement'):
-        sib = n.next_sibling
-        if sib is not None and sib.type == 'comment' and sib.start_point.row == node.end_point.row:
-            return c_name(sib.text.decode().strip('/* '))
-        n = n.parent
-    return None
+    if inner_target.type == 'call_expression':
+        fn = inner_target.child_by_field_name('function')
+        if src[fn.start_byte:fn.end_byte] == b'ECL_SYM':
+            first = inner_target.child_by_field_name('arguments').named_children[0]
+            return c_name(src[first.start_byte:first.end_byte].decode().strip('"'))
+    name = trailing_comment(node, comments)
+    return c_name(name) if name else None
 
 
 def scoped_names(fn) -> dict:
@@ -72,10 +93,45 @@ def scoped_names(fn) -> dict:
     return renames
 
 
+def closure_cells(root, src: bytes, comments: dict) -> dict:
+    """ECL keeps a variable captured by a closure in a cell, `lex0[0] = v1list; /* LIST */`, shared
+    with the local functions (LC<k>name) of the unit: each cell is that Lisp variable (v0list)."""
+    cells = {}
+    stack = [root]
+    while stack:
+        node = stack.pop()
+        if node.type == 'assignment_expression':
+            left = node.child_by_field_name('left')
+            text = src[left.start_byte:left.end_byte].decode().replace(' ', '')
+            name = trailing_comment(node, comments) if left.type == 'subscript_expression' and text.startswith('lex') else None
+            if name:
+                cells.setdefault(text, f'v0{c_name(name)}')
+        stack.extend(node.children)
+    return cells
+
+
+# a standard function passed as an object (#'*): its neutral operator name
+FUNCTION_OBJECT = {'*': 'mul', '+': 'add', '-': 'sub', '/': 'div', 'MAX': 'max', 'MIN': 'min', '<': 'lt',
+                   '>': 'gt', '<=': 'le', '>=': 'ge', '=': 'eq'}
+
+
+def compiled(name: str) -> bool:
+    """ECL's C name of a compiled Lisp function: L<k>name, or LC<k>name for a local function."""
+    rest = name[2:] if name.startswith('LC') else name[1:] if name.startswith('L') else ''
+    return rest[:1].isdigit()
+
+
 def marked_c(c_text: str) -> str:
     """The compiled Lisp functions of one ECL C unit, rewritten bottom-up (tree rewriting)."""
     src = c_text.encode('utf-8')
     renames: dict = {}
+    tree = pack.get_parser("c").parse(src)   # a fresh parser per unit; the Tree must outlive its nodes
+    root = tree.root_node
+    comments = line_comments(root, src)
+    cells = closure_cells(root, src, comments)
+
+    def raw(node) -> str:                       # source slice (not node.text: kept off the binding)
+        return src[node.start_byte:node.end_byte].decode('utf-8', 'replace')
 
     def text(node) -> str:                      # the node's source with its children rewritten
         out, pos = [], node.start_byte
@@ -88,36 +144,51 @@ def marked_c(c_text: str) -> str:
 
     def render(node) -> str:
         if node.type == 'identifier':
-            return renames.get((node.start_byte, node.end_byte), node.text.decode())
+            return renames.get((node.start_byte, node.end_byte), raw(node))
+        if node.type == 'subscript_expression' and raw(node).replace(' ', '') in cells:
+            return cells[raw(node).replace(' ', '')]
         if node.type == 'labeled_statement':
             label = node.child_by_field_name('label')
             rest = [render(c) for c in node.children if c.start_byte > label.end_byte and c.type != ':']
-            return f'ecl_label({label_number(label.text.decode())});\n' + ' '.join(rest)
+            return f'ecl_label({label_number(raw(label))});\n' + ' '.join(rest)
         if node.type == 'goto_statement':
-            return f'ecl_goto({label_number(node.child_by_field_name("label").text.decode())});'
+            return f'ecl_goto({label_number(raw(node.child_by_field_name("label")))});'
+        if node.type == 'field_expression' and raw(node).replace(' ', '').endswith('->symbol.gfdef'):
+            sym = node.child_by_field_name('argument')
+            sym = sym.child_by_field_name('argument') if sym.type == 'field_expression' else sym
+            if sym.type == 'call_expression' and raw(sym.child_by_field_name('function')) == 'ECL_SYM':
+                name = raw(sym.child_by_field_name('arguments').named_children[0]).strip('"')
+                return f'ecl_function({FUNCTION_OBJECT.get(name, c_name(name))})'
         if node.type == 'comma_expression' and node.child_count >= 3:
+            # (ECL_CONS_CDR(t)=x, t): the tail of a cons is set (rplacd), as `loop ... collect` does
+            left = node.children[0]
+            if left.type == 'assignment_expression':
+                target = left.child_by_field_name('left')
+                if target.type == 'call_expression' and raw(target.child_by_field_name('function')) == 'ECL_CONS_CDR':
+                    cell = render(target.child_by_field_name('arguments').named_children[0])
+                    return f'ecl_rplacd({cell}, {render(left.child_by_field_name("right"))})'
             # (ecl_floor2(a,b), cl_env_copy->values[1]): the remainder, ECL's second value of floor
             left, right = node.children[0], node.children[2]
-            if (left.type == 'call_expression' and left.child_by_field_name('function').text == b'ecl_floor2'
-                    and right.text.replace(b' ', b'') == b'cl_env_copy->values[1]'):
+            if (left.type == 'call_expression' and raw(left.child_by_field_name('function')) == 'ecl_floor2'
+                    and raw(right).replace(' ', '') == 'cl_env_copy->values[1]'):
                 return 'ecl_rem' + text(left.child_by_field_name('arguments'))
         if node.type == 'call_expression' and node.child_by_field_name('function').type == 'call_expression':
             inner = node.child_by_field_name('function')
-            if inner.child_by_field_name('function').text == b'ecl_function_dispatch':
+            if raw(inner.child_by_field_name('function')) == 'ecl_function_dispatch':
                 target = inner.child_by_field_name('arguments').named_children[-1]
                 args = [render(a) for a in node.child_by_field_name('arguments').named_children[1:]]
-                name = None if target.type == 'identifier' else callee(node, target)
+                name = None if target.type == 'identifier' else callee(node, target, src, comments)
                 if name is None:
                     return f'ecl_funcall({", ".join([render(target), *args])})'
                 return f'{name}({", ".join(args)})'
         return text(node)
 
     kept = []
-    for node in PARSER.parse(src).root_node.children:
+    for node in root.children:
         if node.type == 'function_definition':
             decl = node.child_by_field_name('declarator')
             name = decl.child_by_field_name('declarator') if decl is not None else None
-            if name is not None and name.text.decode().startswith('L') and name.text.decode()[1:2].isdigit():
+            if name is not None and compiled(raw(name)):
                 renames = scoped_names(node)
                 kept.append(render(node))
     return '\n\n'.join(kept)

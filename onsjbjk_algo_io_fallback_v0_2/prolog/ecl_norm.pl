@@ -53,11 +53,22 @@ ecl_op(call(ecl_cons, [A, B]), cons(A, B)) :- !.
 ecl_op(call(ecl_list1, [X]), list([X])) :- !.
 ecl_op(call('Null', [X]), op(not, [X])) :- !.
 ecl_op(call(ecl_funcall, [_, A, B]), op(lt, [A, B])) :- !.      % comparator: ascending assumed
+% Common Lisp library functions; ECL passes the argument count first to the variadic cl_ ones
+ecl_op(call(F, [X]), call(reverse, [X])) :- memberchk(F, [cl_reverse, cl_nreverse, ecl_reverse]), !.
+ecl_op(call(F, [int(_), A, B|_]), op(eq, [A, B])) :- memberchk(F, [cl_stringE, cl_string_equal, cl_equalp]), !.
+ecl_op(call(F, [A, B]), op(eq, [A, B])) :- memberchk(F, [cl_equal, cl_equalp]), !.
+ecl_op(call(F, [int(_)|As]), concat(As)) :- memberchk(F, [cl_nconc, cl_append]), !.
+ecl_op(call(F, [int(_), _, Q|_]), filter(Q, other(predicate))) :-
+    memberchk(F, [cl_remove, cl_remove_if, cl_remove_if_not, cl_delete, cl_delete_if, cl_delete_if_not]), !.
+ecl_op(call(F, As), call(N, As)) :- compiled_name(F, N), !.     % L2helper(x) / LC1pivot(x): helper, pivot
+ecl_op(call(ecl_function, [var(N)]), fn(N)) :- !.                % #'* as an object: fn(mul)
 ecl_op(var('ECL_NIL'), bool(false)) :- !.
 ecl_op(var('ECL_T'), bool(true)) :- !.
 ecl_op(var(V), var(N)) :- lisp_name(V, N), !.
 
 % ECL names a Lisp variable v<k><name> (v2b, v4lo); temporaries are T<k>, v<k>, value0, env0
+compiled_name(F, N) :- atom(F), atom_codes(F, [0'L|Cs0]), ( Cs0 = [0'C|Cs] -> true ; Cs = Cs0 ),
+    Cs = [D|_], code_type(D, digit), drop_digits(Cs, Ns), Ns \== [], atom_codes(N, Ns).
 lisp_name(V, N) :- atom(V), \+ ecl_temp(V), atom_codes(V, [0'v|Cs]), Cs = [D|_], code_type(D, digit),
     drop_digits(Cs, Ns), Ns = [C|_], \+ code_type(C, digit), atom_codes(N, Ns).
 drop_digits([D|Cs], Ns) :- code_type(D, digit), !, drop_digits(Cs, Ns).
@@ -86,6 +97,7 @@ event(S, write(T, V)) :- stmt(S, _, assign, _), assign(S, T0, V0), T0 \= other(_
     ecl_term(T0, T), ecl_term(V0, V).
 event(S, write(elem(Q, I), V)) :- stmt(S, _, call, _), call_at(S, Fn, [Q0, I0, V0]), ecl_aset(Fn), !,
     ecl_term(elem(Q0, I0), elem(Q, I)), ecl_term(V0, V).
+event(S, call(ecl_rplacd, As)) :- call_at(S, ecl_rplacd, As0), !, ecl_term(As0, As).   % `(rplacd);` is `other`
 event(S, call(Fn, As)) :- stmt(S, _, call, _), call_at(S, Fn0, As0), \+ boiler_call(Fn0), !,
     ecl_term(call(Fn0, As0), T), ( T = call(Fn, As) -> true ; Fn = expr, As = [T] ).
 event(_, drop).
@@ -117,7 +129,8 @@ fixed(V, Changed, Acc) :-
     \+ ( sub_term(var(Y), V), memberchk(Y, Changed) ),
     \+ ( sub_term(E, V), compound(E), E = elem(var(Q), _), memberchk(Q, Changed) ),
     \+ ( sub_term(var(T), V), ecl_temp(T), \+ memberchk(T-_, Acc) ),
-    \+ ( sub_term(C, V), compound(C), C = call('$self', _) ).
+    \+ ( sub_term(C, V), compound(C), C = call('$self', _) ),
+    \+ V = list(_), \+ V = cons(_, _).          % a new cons is a mutable cell, not a value
 
 % ----- 2. symbolic execution of basic blocks --------------------------------------------------
 % st(Env, Elems, Pending): values of variables in the block (in block-entry terms), element
@@ -139,8 +152,10 @@ symex([ev(S, L, E)|Evs], F, Stable, St0, Items) :- step(E, S, L, F, Stable, St0,
     symex(Evs, F, Stable, St, Rest).
 
 step(write(var(X), V0), S, L, F, _, st(Env0, El, P), st(Env, El, P1), Items, Items) :- !,
-    subst(F, Env0, El, V0, V), put_assoc(X, Env0, V, Env),
-    ( lisp_var(F, X) -> append(P, [w(S, L, var(X), V)], P1) ; P1 = P ).
+    subst(F, Env0, El, V0, V),
+    ( lisp_var(F, X), ( V = list(_) ; V = cons(_, _) ) -> Read = cur(var(X)) ; Read = V ),   % a new cell: its identity
+    put_assoc(X, Env0, Read, Env),
+    ( lisp_var(F, X), V \== var(X) -> append(P, [w(S, L, var(X), V)], P1) ; P1 = P ).   % x = x: nothing
 step(write(elem(Q0, I0), V0), S, L, F, _, st(Env, El0, P), st(Env, [elem(Q, I)-V|El1], P1), Items, Items) :- !,
     subst(F, Env, El0, Q0, Q), subst(F, Env, El0, I0, I), subst(F, Env, El0, V0, V),
     exclude(same_key(elem(Q, I)), El0, El1), append(P, [w(S, L, elem(Q, I), V)], P1).
@@ -150,6 +165,14 @@ step(goto(N, C0, P), S, L, F, Stable, St, st(Stable, [], []), Items, Rest) :- !,
     flush(F, St, Env, Items, [it(S, L, goto(N, C, P))|Rest]), ( C0 == none -> C = none ; subst(F, Env, [], C0, C) ).
 step(ret(V0), S, L, F, Stable, St, st(Stable, [], []), Items, Rest) :- !,
     flush(F, St, Env, Items, [it(S, L, st(ret, [ret(S, V)]))|Rest]), subst(F, Env, [], V0, V).
+% rplacd(cell, list(x)): its operands are read BEFORE the block's writes are emitted (the cell is
+% the list's old last cons, kept in a temporary); the list gains x at its end
+step(call(Fn, [A0, B0]), S, L, F, _, st(Env0, El, P), st(Env, [], []), Items, Rest) :-
+    memberchk(Fn, [ecl_rplacd, 'ECL_RPLACD', cl_rplacd]), !,
+    subst(F, Env0, El, A0, A1), subst(F, Env0, El, B0, B1), uncur(A1, A),
+    ( B1 = cur(T), member(w(_, _, T2, VB), P), T2 == T -> B = VB ; uncur(B1, B) ),   % the cell just made
+    ( B = list([X]) -> Fact = call_at(S, collect, [A, X]) ; Fact = call_at(S, rplacd, [A, B]) ),
+    flush(F, st(Env0, El, P), Env, Items, [it(S, L, st(call, [Fact]))|Rest]).
 step(call(Fn, As0), S, L, F, _, St, st(Env, [], []), Items, Rest) :-
     flush(F, St, Env, Items, [it(S, L, st(call, [call_at(S, Fn, As)]))|Rest]), subst(F, Env, [], As0, As).
 same_key(K, E-_) :- E == K.
@@ -159,11 +182,12 @@ same_key(K, E-_) :- E == K.
 flush(_, st(Env, _, []), Env, Items, Items) :- !.
 flush(_, st(Env0, _, P0), Env, Items, Rest) :-
     last_writes(P0, P),
-    findall(T, member(w(_, _, T, _), P), Ts),
+    findall(T, ( member(w(_, _, T0, _), P), uncur(T0, T) ), Ts),
     (   parallel(P)
-    ->  P = [w(S1, L1, _, _)|_], findall(V, member(w(_, _, _, V), P), Vs),
+    ->  P = [w(S1, L1, _, _)|_], findall(V, ( member(w(_, _, _, V0), P), uncur(V0, V) ), Vs),
         Items = [it(S1, L1, st(assign, [par_assign(S1, Ts, Vs)]))|Rest]
-    ;   findall(it(S, L, st(assign, [assign(S, T, V)])), member(w(S, L, T, V), P), Ws), append(Ws, Rest, Items)
+    ;   findall(it(S, L, st(assign, [assign(S, T, V)])), ( member(w(S, L, T, V0), P), uncur(V0, V) ), Ws),
+        append(Ws, Rest, Items)
     ),
     findall(V-cur(T), ( member(w(_, _, T, V), P), T = var(_) ), News),
     assoc_to_list(Env0, KVs),
@@ -185,7 +209,7 @@ last_writes(P0, P) :- reverse(P0, R0), first_per_target(R0, [], R), reverse(R, P
 first_per_target([], _, []).
 first_per_target([W|Ws], Seen, Out) :- W = w(_, _, T, _),
     ( member(T2, Seen), T2 == T -> Out = Rest ; Out = [W|Rest] ), first_per_target(Ws, [T|Seen], Rest).
-parallel(P) :- nth1(K, P, w(_, _, _, V)), nth1(J, P, w(_, _, T, _)), J < K, sub_term(T2, V), T2 == T, !.
+parallel(P) :- nth1(K, P, w(_, _, _, V)), nth1(J, P, w(_, _, T, _)), J < K, old_read(V, T), !.
 
 % ----- 3./4. loops and branches over the item list --------------------------------------------
 % positions are item indices; label N at position B and a goto to N at G >= B: loop [B, G]
@@ -243,7 +267,8 @@ ecl_function(F) :-
     stable_env(F, Evs, Stable), symex(F, Evs, Stable, Items),
     loops(Items, Loops),
     findall(Fact, item_fact(F, Items, Loops, Fact), Facts0),
-    recursion_facts(F, Facts0, Facts),
+    recursion_facts(F, Facts0, Facts1), list_loops(Facts1, Facts2), collect_loops(Facts2, Facts3),
+    fold_fusion(Facts3, Facts),
     retract_function(F), forall(member(Fa, Facts), assertz(Fa)).
 
 item_fact(F, Items, Loops, Fact) :-
@@ -299,6 +324,66 @@ fact_stmt(call_at(S, _, _), S).
 self_fact(_, S, Args, call_at(S, '$self', Args)).
 self_fact(F, S, Args, assign(S, var(P), A)) :- nth0(K, Args, A), param(F, K, P0), ecl_term(var(P0), var(P)), A \== var(P).
 
+% ----- 6. list traversal: dolist / loop for x in l --------------------------------------------
+% c := q before loop L, c := cdr(c) in L, x := car(c) in L: the for-each loop of every language,
+% so the same facts as AP13's lowerers emit (loop_var x, loop_iter q, no cursor statements)
+list_loops(Facts0, Facts) :-
+    (   member(loop(L, F, cond), Facts0), member(in_loop(Sc, L), Facts0), member(assign(Sc, var(C), tail(var(C2), 1)), Facts0),
+        C2 == C, member(assign(S0, var(C3), Q), Facts0), C3 == C, S0 \== Sc, \+ member(in_loop(S0, L), Facts0)
+    ->  (   member(in_loop(Sx, L), Facts0), member(assign(Sx, var(X), E), Facts0), E == elem(var(C), int(0))
+        ->  Drop = [S0, Sc, Sx]
+        ;   X = C, Drop = [S0, Sc]
+        ),
+        exclude(list_cursor_fact(L, Drop), Facts0, Facts1),
+        maplist(replace_term(elem(var(C), int(0)), var(X)), Facts1, Facts2),
+        append(Facts2, [loop(L, F, count), loop_var(L, X), loop_iter(L, Q)], Facts3),
+        list_loops(Facts3, Facts)
+    ;   Facts = Facts0
+    ).
+list_cursor_fact(L, _, loop(L2, _, cond)) :- L2 == L.
+list_cursor_fact(L, _, loop_cond(L2, _)) :- L2 == L.
+list_cursor_fact(L, _, loop_var(L2, _)) :- L2 == L.
+list_cursor_fact(_, Drop, Fact) :- fact_about(Fact, S), memberchk(S, Drop).
+fact_about(Fact, S) :- Fact =.. [P, S0|_], memberchk(P, [stmt, assign, par_assign, guard, in_loop, next_stmt, ret, call_at]), S = S0.
+fact_about(next_stmt(_, S), S).
+replace_term(Old, New, T0, T) :- T0 == Old, !, T = New.
+replace_term(_, _, T, T) :- \+ compound(T), !.
+replace_term(Old, New, T0, T) :- T0 =.. [F|As], maplist(replace_term(Old, New), As, Bs), T =.. [F|Bs].
+
+% ----- 7. loop ... collect: h := list(nil); c := h; in L: c := list(x), rplacd(old c, ...) ---------
+% the list h (its cdr is the result) receives x in loop L: the neutral append(h, x)
+collect_loops(Facts0, Facts) :-
+    (   member(call_at(Sr, collect, [var(C), X]), Facts0), member(in_loop(Sr, L), Facts0),
+        member(assign(S0, var(C2), var(H)), Facts0), C2 == C, \+ member(in_loop(S0, L), Facts0),
+        member(assign(Sh, var(H2), list([bool(false)])), Facts0), H2 == H
+    ->  findall(S1, ( member(assign(S1, var(C3), _), Facts0), C3 == C ), Cs),
+        exclude(list_cursor_fact(none, Cs), Facts0, Facts1),
+        maplist(replace_term(tail(var(H), 1), var(H)), Facts1, Facts2),
+        maplist(replace_fact(assign(Sh, var(H), list([bool(false)])), assign(Sh, var(H), list([]))), Facts2, Facts3),
+        maplist(replace_fact(call_at(Sr, collect, [var(C), X]), call_at(Sr, append, [var(H), X])), Facts3, Facts4),
+        collect_loops(Facts4, Facts)
+    ;   Facts = Facts0
+    ).
+replace_fact(Old, New, F0, F) :- ( F0 == Old -> F = New ; F = F0 ).
+
+% ----- 8. fold fusion (deforestation): reduce(op, h) of a list h built in loop L is the loop
+% with the accumulator h := h op x, started at op's identity -----------------------------------
+fold_fusion(Facts0, Facts) :-
+    (   member(Fa, Facts0), sub_term(R, Fa), compound(R), R = call(cl_reduce, [int(_), fn(Op), A]),
+        fold_identity(Op, Id), folded_list(Facts0, A, H),
+        member(call_at(Sa, append, [V, X]), Facts0), V == var(H),
+        member(assign(Sh, var(H2), list([])), Facts0), H2 == H
+    ->  maplist(replace_term(R, var(H)), Facts0, Facts1),
+        maplist(replace_fact(call_at(Sa, append, [var(H), X]), assign(Sa, var(H), op(Op, [var(H), X]))), Facts1, Facts2),
+        maplist(replace_fact(assign(Sh, var(H), list([])), assign(Sh, var(H), Id)), Facts2, Facts3),
+        fold_fusion(Facts3, Facts)
+    ;   Facts = Facts0
+    ).
+fold_identity(mul, int(1)).
+fold_identity(add, int(0)).
+folded_list(_, var(H), H).
+folded_list(Facts, var(T), H) :- member(assign(_, var(T2), var(H)), Facts), T2 == T.
+
 % the old facts of F go; the lowerer's recursion loop statement stays
 retract_function(F) :-
     findall(S, ( stmt(S, F, K, _), \+ ( K == loop, loop(S, F, recursion) ) ), Ss),
@@ -312,8 +397,7 @@ retract_function(F) :-
 % compiled function L<k><name> is the Lisp function <name>; parameters lose ECL's v<k> prefix
 % (a top-level form, compiled as ecl_toplevel by ecl_compile.py, is <toplevel> as in the AP13 lowerers)
 rename_function(F) :-
-    func(F, N0, Line), atom_codes(N0, [0'L|Cs]), drop_digits(Cs, Ns), Ns \== [], !,
-    atom_codes(N1, Ns), ( N1 == ecl_toplevel -> N = '<toplevel>' ; N = N1 ),
+    func(F, N0, Line), compiled_name(N0, N1), !, ( N1 == ecl_toplevel -> N = '<toplevel>' ; N = N1 ),
     retract(func(F, N0, Line)), assertz(func(F, N, Line)),
     forall(retract(param(F, K, P0)), ( ecl_term(var(P0), var(P)), assertz(param(F, K, P)) )).
 rename_function(_).
