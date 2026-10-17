@@ -155,3 +155,42 @@ Normal-path fixes:
 
 Regression: logic tests 3/3 files + 54 cases pass, selftest 47/47, stage 3 3/3, stage 15 now 10/10 recall
 (100% precision).
+
+## Final: staged Lisp test COMPLETE (all four stages pass; success = precision and recall >= 80%)
+
+| Stage | Run | Precision | Recall | Wrong on negatives | Ignored (no algorithm) | Result |
+|---|---|---|---|---|---|---|
+| 3 | retry 2 (earlier round) | 3/3 | 3/3 | 0/0 | 0 | PASS |
+| 15 | retry 2 (earlier round), now | 10/10 | 10/10 | 0/5 | 0 | PASS |
+| 55 | run 1 of this round | 31/31 = 100% | 31/36 = 86.1% | 0/15 | 4 | PASS |
+| 101 | run 1 | 45/45 = 100% | 45/59 = 76.3% | 0/34 | 8 | FAIL |
+| 101 | retry 1 | 48/49 = 98.0% | 48/59 = 81.4% | 0/34 | 8 | PASS |
+
+Stage 55 was first scored with 5 ignored units. luhn-2 defines `luhn` but ECL cannot compile it (curly reader
+syntax), so it was wrongly ignored. "No algorithm" now also requires that the source defines no function; with
+that, 4 are ignored and stage 55 is 31/36. The ignored units are files whose whole content is a call of a function
+defined elsewhere, or a REPL transcript (bubble-sort-2, sum-digits-2, lcm-1, lcs-2, gcd-1, pancake-sort-2,
+matrix-multiplication-4, lcs-5). They are listed in every run, outside precision and recall.
+
+Retry-1 fixes (general, each with a logic test of my own program; stages 3/15/55 re-checked, still PASS):
+- `defmethod` bodies are compiled.
+- Range accumulation whose only guards are its loop's continuation condition (accumulator recursion,
+  factorial-3).
+- 2-D arrays: `x->array.dims[k]` and the row-major index become `elem(elem(m,i),j)` (mat-max).
+- New fallback DCG rule `prefix_reversal` (pancake-1); the root function's tokens now come from its statements.
+
+Kept honest: a loop-test extension (a guarded return counted as a loop exit) broke primality-1 and was reverted
+before the run.
+
+Stage-101 remaining misses (11):
+- 1 wrong: insertion-sort-3 is an adjacent-swap sort, answered as a generic comparison sort, while its key is
+  shift_insertion.
+- 10 unknown:
+  - fib-8 `defmethod` with eql dispatch;
+  - fib-9 / fib-10 growing a list;
+  - fib-6 fast-doubling Fibonacci;
+  - Rosetta merge-sort, built-in `merge`;
+  - luhn-1 / luhn-2 digit-character checksum (luhn-2: reader extension);
+  - gcd-3, which calls an undefined `gcd2` (a bug in the entry);
+  - book heapsort, whose index helpers `hlt`/`hrt` are separate functions;
+  - insertion-sort-2, a recursive list insert through `complement`.
