@@ -1,6 +1,7 @@
 """Cross-language test: knowledge learned from labelled PYTHON files, applied to other languages.
 
 usage: python eval_crosslang.py <test root> <train root> --lang Common-Lisp --sample 3 --train T1.json ...
+Front ends (crosslang_frontends.py): Haskell via GHC Core, Lisp via SBCL macro-expansion.
 Only the language-independent channels apply (the v0.2 witnesses are Python-only):
   ap13dir  AP13 exact traced logic (tree-sitter lowering of Lisp / Haskell)
   iocat    AP13 behaviour catalog (Prolog normal form run in SWI-Prolog; Lisp yes, Haskell no translator)
@@ -11,6 +12,7 @@ import json
 from pathlib import Path
 
 import compare_learners
+import crosslang_frontends
 from run_v2 import ROOT, route_live
 from static_trace import Analysis
 
@@ -22,12 +24,14 @@ def main():
     p.add_argument('--truth', default=str(ROOT / 'benchmark' / 'crosslang_truth.json'))
     p.add_argument('--lang', required=True)
     p.add_argument('--sample', default='3')
+    p.add_argument('--samples-key', default='samples_v2', help="'samples' (first draw) or 'samples_v2'")
     p.add_argument('--train', nargs='+', required=True)
     p.add_argument('--learner', nargs='+', default=['ap13dir', 'iocat'], choices=['ap13dir', 'iocat'])
     a = p.parse_args()
     truth = json.loads(Path(a.truth).read_text(encoding='utf-8'))
     allowed = set(truth['_allowed_on_negative'])
-    files = [(rel, truth['files'][rel]) for rel in truth['samples'][a.lang][a.sample]]
+    crosslang_frontends.install()
+    files = [(rel, truth['files'][rel]) for rel in truth[a.samples_key][a.lang][a.sample]]
     learners = {n: compare_learners.LEARNERS[n](a.train_root, a.train) for n in a.learner}
     analyses, via = [], {}
     for rel, _ in files:
