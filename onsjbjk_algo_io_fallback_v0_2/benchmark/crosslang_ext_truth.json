@@ -1,0 +1,101 @@
+{
+  "_source": "kaveet/haskell-snippets @ aed1423e (all 11 functions) and Apress/programming-algorithms-lisp @ 1a83448b (21 functions: every algorithm function whose name names a v0.2 branch, plus named non-members). Function-level labels from names only, frozen before any run. Sorts returning a new sequence accept any sorting branch (behaviour = sorting).",
+  "_allowed_on_negative": [
+    "recursive_decomposition"
+  ],
+  "Haskell": {
+    "root": "haskell-snippets",
+    "functions": {
+      "modules/sorting/Quicksort.hs::quicksort": [
+        "comparison_driven_reordering",
+        "sequence_rearrangement",
+        "shift_insertion",
+        "selection_exchange"
+      ],
+      "modules/sorting/Quicksort.hs::quicksort'": [
+        "comparison_driven_reordering",
+        "sequence_rearrangement",
+        "shift_insertion",
+        "selection_exchange"
+      ],
+      "modules/misc/Fibonacci.hs::fib": "fibonacci_like",
+      "modules/misc/Factorial.hs::factorial": "factorial_like",
+      "modules/lists/Palindrome.hs::palindrome": "palindrome_check",
+      "modules/lists/Sum.hs::sum": [
+        "element_accumulation",
+        "aggregate"
+      ],
+      "modules/lists/Reverse.hs::reverse": null,
+      "modules/lists/Length.hs::length": null,
+      "modules/lists/Safetails.hs::safetail": null,
+      "modules/lists/Safetails.hs::safetail'": null,
+      "modules/misc/AbsoluteValue.hs::absoluteValue": null
+    },
+    "sample3": [
+      "modules/lists/Sum.hs::sum",
+      "modules/lists/Safetails.hs::safetail'",
+      "modules/sorting/Quicksort.hs::quicksort'"
+    ]
+  },
+  "Common-Lisp": {
+    "root": "programming-algorithms-lisp",
+    "functions": {
+      "ch5-arrays.lisp::bin-search-v0": [
+        "interval_lookup",
+        "indexed_lookup"
+      ],
+      "ch5-arrays.lisp::bin-search": [
+        "interval_lookup",
+        "indexed_lookup"
+      ],
+      "ch5-arrays.lisp::selection-sort": [
+        "selection_exchange",
+        "comparison_driven_reordering"
+      ],
+      "ch5-arrays.lisp::insertion-sort": [
+        "shift_insertion",
+        "comparison_driven_reordering"
+      ],
+      "ch5-arrays.lisp::quicksort": [
+        "comparison_driven_reordering",
+        "sequence_rearrangement",
+        "shift_insertion",
+        "selection_exchange"
+      ],
+      "ch6-lists.lisp::merge-sort": [
+        "comparison_driven_reordering",
+        "sequence_rearrangement",
+        "shift_insertion",
+        "selection_exchange"
+      ],
+      "ch9-trees.lisp::heapsort": [
+        "comparison_driven_reordering",
+        "sequence_rearrangement",
+        "shift_insertion",
+        "selection_exchange"
+      ],
+      "ch12-dynamic-programming.lisp::naive-fib": "fibonacci_like",
+      "ch1-complexity.lisp::mat-max": [
+        "extremum_search",
+        "aggregate"
+      ],
+      "ch5-arrays.lisp::bogosort": null,
+      "ch6-lists.lisp::merge-lists": null,
+      "ch6-lists.lisp::arith-eval": null,
+      "ch10-graphs.lisp::topo-sort": null,
+      "ch11-strings.lisp::naive-match": null,
+      "ch11-strings.lisp::kmp-match": null,
+      "ch12-dynamic-programming.lisp::lev-dist": null,
+      "ch14-compression.lisp::b64-encode": null,
+      "ch8-hash-tables.lisp::fnv-1a": null,
+      "ch8-hash-tables.lisp::djb2-str": null,
+      "ch9-trees.lisp::bfs": null,
+      "ch4-data-structures.lisp::uf-find": null
+    },
+    "sample3": [
+      "ch6-lists.lisp::merge-sort",
+      "ch11-strings.lisp::kmp-match",
+      "ch6-lists.lisp::arith-eval"
+    ]
+  }
+}
