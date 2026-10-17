@@ -11,9 +11,10 @@ EXPECTED = {
     'gcd2': 'euclid_like', 'gcdr': 'euclid_like', 'fact': 'factorial_like', 'facti': 'factorial_like',
     'fib': 'fibonacci_like', 'dsum': 'digit_processing', 'isort': 'comparison_driven_reordering',
     'csort': 'comparison_driven_reordering', 'shsort': 'shift_insertion', 'ssort': 'selection_exchange',
-    'bsearch': 'interval_lookup', 'vmax': 'extremum_search', 'vsum': 'element_accumulation',
+    'vsel': 'selection_exchange', 'bsearch': 'interval_lookup', 'vmax': 'extremum_search', 'vsum': 'element_accumulation',
     # near misses: no v0.2 branch
     'twice': None, 'countdown': None, 'vcopy': None, 'lastel': None, 'addmod': None, 'countup': None,
+    'vrev': 'sequence_rearrangement',   # a reversal: rearranged, never compared (no comparison sort)
 }
 
 
