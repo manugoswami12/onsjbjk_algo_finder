@@ -25,10 +25,13 @@ def main():
                    help='learn from these truth files, excluding the file under test each time')
     p.add_argument('--learner', nargs='+', default=[], choices=['ap13dir', 'iocat'],
                    help='original AP13 learners (compare_learners.py), trained on --train')
+    p.add_argument('--train-root', type=Path, help='checkout of the training files (default: root)')
     p.add_argument('--train', nargs='+', default=[], metavar='TRUTH', help='labelled training files')
+    p.add_argument('--popper-rules', help='SEPARATE Popper fallback rules (popper_fallback.py), applied only '
+                   'to files the system above leaves UNKNOWN')
     a = p.parse_args()
     import compare_learners
-    learners = [compare_learners.LEARNERS[n](a.root, a.train) for n in a.learner]
+    learners = [compare_learners.LEARNERS[n](a.train_root or a.root, a.train) for n in a.learner]
     root = a.root
     truth = json.loads(Path(a.truth).read_text(encoding='utf-8'))
     kb_all = None if a.kb == 'none' else learn_v2.load_kb(a.kb)
@@ -51,6 +54,23 @@ def main():
     answer = {rel: set() for rel, _ in files}
     for i, rel in enumerate(owner, 1):
         answer[rel] |= set(routes['f' + str(i)]) - {'unknown'}
+    if a.popper_rules:                      # separate fallback stage, second Prolog call
+        import popper_fallback
+        rules = popper_fallback.load_rules(a.popper_rules)
+        fired = 0
+        for rel, _ in files:
+            if answer[rel] or rel not in owner:
+                continue
+            first = analyses[owner.index(rel)]
+            for label in sorted(popper_fallback.labels_for((root / rel).read_text(encoding='utf-8-sig'), rules)):
+                first.add(f'learned({label})', 1)
+                fired += 1
+                notes[rel] = (notes.get(rel, '') + ' popper').strip()
+        if fired:
+            routes = route_live(analyses)
+            answer = {rel: set() for rel, _ in files}
+            for i, rel in enumerate(owner, 1):
+                answer[rel] |= set(routes['f' + str(i)]) - {'unknown'}
     correct = answered = positives = wrong_neg = 0
     print(f"{'file':38s} {'expected':30s} outcome   routes")
     for rel, expected in files:

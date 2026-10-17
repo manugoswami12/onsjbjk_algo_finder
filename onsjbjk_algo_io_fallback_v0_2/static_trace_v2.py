@@ -159,10 +159,13 @@ def w_sorting(result, rows, inputs):
 
 
 def w_aggregate(result, rows, inputs, tainted, returned):
-    """Gatherer over input elements; most-wanted holder (best-so-far); range sum/product."""
+    """Gatherer over input elements; most-wanted holder (best-so-far); range sum/product.
+    A gatherer started from a string constant builds text (`out = ""; out += ch`): not a reduction."""
+    text = {s.targets[0].id for s, _, _ in rows if isinstance(s, ast.Assign) and len(s.targets) == 1
+            and is_name(s.targets[0]) and isinstance(s.value, ast.Constant) and isinstance(s.value.value, str)}
     for stmt, guards, loops in rows:
         acc = accumulation(stmt)
-        if acc and loops and acc[0] in returned:
+        if acc and loops and acc[0] in returned and acc[0] not in text:
             name, op, value = acc
             if element_of_input(value, loops, inputs):
                 result.add('input_element_accumulated', stmt.lineno)
