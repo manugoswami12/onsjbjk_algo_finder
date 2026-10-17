@@ -62,7 +62,9 @@ terms_tokens(F, Path, D, [T|Ts]) --> tokens(F, Path, D, T), terms_tokens(F, Path
 tokens(_, _, _, T) --> { var(T) }, !, [unknown].
 tokens(F, P, D, call(Fold, [int(_), Fn, Q|Rest])) --> { memberchk(Fold, [cl_reduce, cl_apply]) }, !,
     [fold], tokens(F, P, D, Fn), tokens(F, P, D, Q), fold_init(F, P, D, Rest).
-tokens(F, P, D, map(Q, Fn, Qs)) --> !, [map], tokens(F, P, D, Fn), terms_tokens(F, P, D, [Q|Qs]).
+% map(Q, Fn, Qs): Lisp's map over the sequences [Q|Qs]; a Python comprehension has a filter term there
+tokens(F, P, D, map(Q, Fn, Qs)) --> { is_list(Qs) }, !, [map], tokens(F, P, D, Fn), terms_tokens(F, P, D, [Q|Qs]).
+tokens(F, P, D, map(Q, Fn, C)) --> !, [map], tokens(F, P, D, Fn), tokens(F, P, D, Q), tokens(F, P, D, C).
 tokens(F, P, D, fn(G)) --> { linked(G) }, !, link(F, P, D, G).
 tokens(_, _, _, fn(Op)) --> !, [op(Op)].
 tokens(F, P, D, call(ecl_make_cclosure_va, [var(C)|_])) --> { closure_name(C, G), linked(G) }, !, link(F, P, D, G).

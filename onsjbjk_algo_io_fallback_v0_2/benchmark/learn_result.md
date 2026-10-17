@@ -201,3 +201,28 @@ The learner and the rules are unchanged from run 4. A positive is learnable iff 
 **Stage 15, learnable but missed:**
 - **caesar-cipher-2.lisp** (root). The Caesar branches at the root are the Python library calls `[op(sub), call(translate), call(maketrans), op(add)]` and `[call(dict), call(zip), op(add), call(dict)]`. The Lisp file has neither.
 - **run-length-encoding.lisp** (sequence_query, sequence_transformation). The branch `run_length_encoding r2 --> pattern([op(ne), call(append)])` does not hold for its stream.
+
+## Run 6: augmented Python examples (docs/04 section 11)
+
+**Changes:**
+- Five textbook Python examples, written without reading the test files and committed before the run (33dd331): Ackermann as a loop, Caesar by character arithmetic, the Knapsack DP table, Matrix multiplication by three loops, and Run-length by scanning runs.
+- A tokenizer fix: `map(Q, Fn, C)` with a non-list third argument (a Python comprehension) made a whole stream fail silently. 162 of 166 training files now have streams (148 before).
+
+| Stage | Precision | Recall (learnable) | Recall (full key) | Result |
+|---|---|---|---|---|
+| 3 | 2/2 = 100% | 2/2 = 100% | 2/2 | PASS |
+| 15 | 3/5 = 60% | 3/6 = 50% | 3/8 = 37.5% | FAIL: stopped |
+
+**Gained:** ackermann-function-4.c is found by `ackermann r3 --> pattern([op(eq)])` under `search>backtracking` (learned from ackermann_loop.py).
+
+**New wrong answers** (precision):
+
+| Unit | Node | Wrong answer | Cause (from its stream) |
+|---|---|---|---|
+| knapsack-problem-0-1.c | marking>table_fill (right node) | matrix_multiplication r4 `[op(mul), op(mul)]` | The C index arithmetic `calloc(n * m)` multiplies. The knapsack branch `[cmp(le)]` does not hold: the C tests `w > j` (`cmp(gt)`), and the tokens do not equate a comparison with its negated converse. |
+| matrix-multiplication-1.lisp | sequence_query, sequence_transformation | levenshtein r3 at sequence_query | The Lisp builds rows with `collect` (no element writes), so it does not reach table_fill, where the matrix branch is. |
+
+**Still missed:**
+- **caesar-cipher-2.lisp** has the arithmetic (`cl_char_code`, `op(add)`, `op(mod)`, `cl_code_char`) but reaches the root, while the example reaches gatherer. The ECL names are not mapped to Python's `ord`/`chr` (AP13's synonym table covers `char-code`, not `cl_char_code`).
+- **run-length-encoding.lisp:** its node is sequence_query; the example's node is run_length.
+- **n-queens-problem-3.hs:** not learnable (root, no branch there).
