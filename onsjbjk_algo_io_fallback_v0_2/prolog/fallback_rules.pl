@@ -2,8 +2,7 @@
    One fallback_pattern(Branch, Rule)//0 clause per learned pattern; each states the case it was
    learned from. Add a learning: one clause here plus a logic test (tests/test_ecl_logic.py).
 */
-:- discontiguous fallback_pattern//2.
-... --> [] | [_], ... .
+:- discontiguous fallback_pattern//2.          % ...//0 and find//1: flow_tokens.pl
 
 % (reduce #'+ (map 'vector #'* a b)): a fold of an arithmetic operator over an element-wise
 % arithmetic map of two or more parameter sequences (fold/map fusion law): an aggregate over the

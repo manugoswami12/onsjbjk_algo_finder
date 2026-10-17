@@ -21,7 +21,7 @@
    comparator parameter) is read as a < b; a Lisp variable is ECL's v<k><name>, every other
    variable (T<k>, v<k>, value0, env0) is a compiler temporary.
 */
-:- dynamic ecl_unresolved/2, ecl_lispvar/2.
+:- dynamic ecl_unresolved/2, ecl_lispvar/2, tail_loop/1.
 
 % ----- 1. operator table -----------------------------------------------------------------
 % Every row is checked against its definition in ECL's headers (/usr/include/ecl, ECL 21.2.1;
@@ -458,6 +458,7 @@ loop_facts(F, Items, Loops, Lp, S, L, Fact) :-
     Lp = lp(B, G),
     (   Fact = stmt(S, F, loop, L)
     ;   Fact = loop(S, F, cond)
+    ;   nth1(B, Items, it(_, _, label(0))), Fact = tail_loop(S)      % TTL: a tail self-call made a loop
     ;   loop_cont(Items, Loops, Lp, C), Fact = loop_cond(S, C)
     ;   loop_cont(Items, Loops, Lp, C), findall(A, ( between(B, G, K), nth1(K, Items, it(_, _, st(_, Fs))), member(A, Fs) ), As),
         loop_counter(As, C, X), Fact = loop_var(S, X)
@@ -614,7 +615,7 @@ retract_function(F) :-
                             retractall(par_assign(S, _, _)), retractall(ret(S, _)), retractall(call_at(S, _, _)),
                             retractall(in_loop(S, _)), retractall(next_stmt(S, _)), retractall(next_stmt(_, S)),
                             retractall(loop(S, _, _)), retractall(loop_var(S, _)), retractall(loop_cond(S, _)),
-                            retractall(loop_iter(S, _)) )),
+                            retractall(loop_iter(S, _)), retractall(tail_loop(S)) )),
     forall(loop(LR, F, recursion), ( retractall(in_loop(_, LR)), retractall(loop_cond(LR, _)) )).
 
 % compiled function L<k><name> is the Lisp function <name>; parameters lose ECL's v<k> prefix

@@ -47,7 +47,7 @@ ecl_dump :-
 % FAMILY answers, as Prolog terms (read by prolog/fallback_main.pl only)
 ecl_export :-
     current_prolog_flag(argv, [Facts|_]), ecl_load(Facts),
-    forall(member(P/N, [func/3, param/3, stmt/4, loop/3, in_loop/2, loop_var/2, loop_cond/2, loop_iter/2,
+    forall(member(P/N, [func/3, param/3, stmt/4, loop/3, in_loop/2, loop_var/2, loop_cond/2, loop_iter/2, tail_loop/1,
                         guard/3, assign/3, par_assign/3, call_at/3, ret/2]),
            ( functor(H, P, N), forall(H, portray_clause(H)) )),
     forall(func(F, _, _),
