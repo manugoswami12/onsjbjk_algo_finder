@@ -8,6 +8,7 @@ with equal input->output behaviour (tagged io). Success per language: precision 
 """
 import argparse
 import json
+import random
 import subprocess
 import tempfile
 from pathlib import Path
@@ -25,9 +26,12 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument('rosetta', type=Path)
     p.add_argument('--learn', action='store_true')
+    p.add_argument('--freeze', action='store_true')
     p.add_argument('--lang', choices=['Common-Lisp', 'C', 'Haskell', 'hard'])
     a = p.parse_args()
     key = json.loads((ROOT / 'benchmark' / 'learn_truth.json').read_text(encoding='utf-8'))
+    if a.freeze:
+        return freeze(a.rosetta, key)
     if a.learn:
         train = {a.rosetta / f: None for f in key['train']['negatives']}
         train.update({a.rosetta / f: lab for f, lab in key['train']['hard_case_positives'].items()})
@@ -72,6 +76,54 @@ def main():
     print(f'WRONG ON NEGATIVES = {wrong_neg} of {len(units) - positives}')
     print('STAGE', 'PASS' if prec >= 0.8 and rec >= 0.8 else 'FAIL')
     return None
+
+
+def freeze(rosetta, key, seed=20261019):
+    """Staged key, written once before any learning: about a third of each new task's Python files is held
+    out as unseen Python tests (a task with one file stays training only), with as many Python negatives
+    from other tasks that are not training negatives; with the Lisp, C and Haskell test files of the round-1
+    key, positives and negatives shuffled (seeded) and interleaved; stages are the first 3/15/55/101 units."""
+    out = ROOT / 'benchmark' / 'learn_staged_truth.json'
+    if out.exists():
+        raise SystemExit(f'{out} is frozen')
+    rng = random.Random(seed)
+    by_task = {}
+    for rel, lab in sorted(key['train']['positives'].items()):
+        by_task.setdefault(lab, []).append(rel)
+    held = {rel: lab for lab, fs in sorted(by_task.items()) for rel in rng.sample(fs, len(fs) // 3 or 0)}
+    if any(len(fs) >= 2 and not set(fs) & set(held) for fs in by_task.values()):
+        held.update({fs[0]: lab for lab, fs in by_task.items() if len(fs) >= 2 and not set(fs) & set(held)})
+    used = set(key['train']['negatives']) | set(key['train']['hard_case_positives']) | set(key['train']['positives'])
+    tasks = set(key['new_tasks']) | {r.split('/')[1] for r in key['train']['hard_case_positives']}
+    # unseen negatives: the Python files of 30 seeded other tasks of the checkout (sparse: fetched here)
+    names = subprocess.run(['git', '-C', str(rosetta), 'ls-tree', '--name-only', 'HEAD', 'Task/'], check=True,
+                           capture_output=True, text=True).stdout.split()
+    present = {p.parts[-3] for p in (rosetta / 'Task').glob('*/Python')}
+    picked = rng.sample(sorted(n for n in names if n.split('/')[1] not in tasks | present), 30)
+    subprocess.run(['git', '-C', str(rosetta), 'sparse-checkout', 'add', *[f'{n}/Python' for n in picked]], check=True)
+    others = sorted(p.relative_to(rosetta).as_posix() for n in picked for p in (rosetta / n).glob('Python/*.py'))
+    units = {**held, **{rel: None for rel in rng.sample(others, len(held))}}
+    for lang in ('Common-Lisp', 'C', 'Haskell'):
+        units.update(key['tests'][lang]['units'])
+    pos, neg = sorted(u for u in units if units[u]), sorted(u for u in units if not units[u])
+    rng.shuffle(pos)
+    rng.shuffle(neg)
+    order = [u for pair in zip(pos, neg) for u in pair] + pos[len(neg):] + neg[len(pos):]   # every stage ~half positive
+    staged = {
+        '_source': 'Staged learning test (docs/04_LEARNING_DESIGN.md, round 2). Learned from Python only: the '
+                   'round-1 training files minus the held-out Python tests. Units: the held-out Python files of '
+                   'the 12 new tasks plus as many unseen Python negatives, and the Common-Lisp, C and Haskell test '
+                   'units of benchmark/learn_truth.json. Stages are the first 3/15/55/101 units of seeded '
+                   'shuffles of the positives and negatives, interleaved. Frozen and committed before any learning.',
+        'seed': seed,
+        'train': {'positives': {r: lab for r, lab in key['train']['positives'].items() if r not in held},
+                  'negatives': key['train']['negatives'],
+                  'hard_case_positives': key['train']['hard_case_positives']},
+        'units': {u: units[u] for u in order},
+        'stages': {str(n): order[:n] for n in (3, 15, 55, 101)},
+    }
+    out.write_text(json.dumps(staged, indent=1) + '\n', encoding='utf-8')
+    print(f'{out}: {len(held)} held-out Python positives, {len(units)} units')
 
 
 def io_references(rosetta, key):
