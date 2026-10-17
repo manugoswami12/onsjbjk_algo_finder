@@ -11,7 +11,9 @@ from pathlib import Path
 _installed = False
 
 
-def install():
+def install(lisp_sbcl: bool = True):
+    """Front ends into io_trace: Haskell via GHC Core; Lisp via SBCL unless lisp_sbcl is False (then
+    AP13's own lisp_to_prolog translator stays)."""
     global _installed
     if _installed:
         return
@@ -25,7 +27,7 @@ def install():
         if suffix == '.hs':
             from haskell_core_pnf import haskell_normal_form
             return 'haskell', with_swapped_search(with_comparator_wrappers(haskell_normal_form(Path(path)), '<='))
-        if suffix in ('.lisp', '.cl', '.lsp'):
+        if lisp_sbcl and suffix in ('.lisp', '.cl', '.lsp'):
             from lisp_sbcl_pnf import lisp_normal_form_sbcl
             return 'commonlisp', with_swapped_search(with_comparator_wrappers(lisp_normal_form_sbcl(Path(path)), '<'))
         return original(path)
