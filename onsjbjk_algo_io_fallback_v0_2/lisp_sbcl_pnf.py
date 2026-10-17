@@ -102,6 +102,9 @@ def _make_class():
             return stmts + [('par_assign', ts, vs)], ('none',)
         f_psetf = f_psetq
 
+        def f_vector(self, a):
+            return self.f_list(a)
+
         def f_values(self, a):
             return self.compile(a[0]) if a else ([], ('none',))
 

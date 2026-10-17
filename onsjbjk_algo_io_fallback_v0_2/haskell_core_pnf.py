@@ -59,7 +59,7 @@ def core_text(path: Path, timeout=90) -> str:
 
 # --------------------------------------------------------------------------------- Core parse
 TOKEN = re.compile(r'''
-  (?P<ws>\s+) | (?P<cast>\|>\s*<Co:\d+>|`cast`\s*<Co:\d+>\s*::\s*\.\.\.) | (?P<co><Co:\d+>)
+  (?P<ws>\s+|--(?![!#$%&*+./<=>?^|~:])[^\n]*) | (?P<cast>\|>\s*<Co:\d+>|`cast`\s*<Co:\d+>\s*::\s*\.\.\.) | (?P<co><Co:\d+>)
 | (?P<str>"(?:\\.|[^"\\])*"\#*) | (?P<chr>'(?:\\.|[^'\\])'\#*)
 | (?P<num>-?\d+\.\d+(?:e-?\d+)?\#*|-?\d+\#*)
 | (?P<punct>\\|->|[(){};,]|\[\]|=(?![=>])|@)
@@ -80,8 +80,7 @@ class Tok:
 
 def tokenize(text):
     """Whole-text scan (string literals of deferred errors may span lines); col = column."""
-    lines = [l for l in text.splitlines() if not (l.lstrip().startswith('--') or l.startswith('Result size')
-                                                 or l.strip().startswith('= {terms'))]
+    lines = [l for l in text.splitlines() if not (l.startswith('Result size') or l.strip().startswith('= {terms'))]
     text = '\n'.join(lines)
     toks, pos = [], 0
     while pos < len(text):
@@ -622,6 +621,32 @@ class Lower:
             s, (q, i) = self.many(args)
             self.mark_list(q)
             return s, ('elem', q, i)
+        it = self.iterate_of(args[-1]) if args else None
+        if h in ('take', 'takeWhile', '!!') and len(args) == 2 and (it or h == 'takeWhile'):
+            return self.unfold(h, args, it)
+        if h in ('zipWith', 'zip') and len(args) == (3 if h == 'zipWith' else 2):
+            s, (q1, q2) = self.many(args[-2:])
+            self.mark_list(q1)
+            self.mark_list(q2)
+            i = self.fresh()
+            a1, a2 = ('elem', q1, ('var', i)), ('elem', q2, ('var', i))
+            if h == 'zip':
+                sb, vb = [], ('tuple', [a1, a2])
+            else:
+                x1, x2 = self.fresh(), self.fresh()
+                sb, vb = self.apply(args[0], [('v', x1), ('v', x2)])
+                sb = [('assign', ('var', x1), a1), ('assign', ('var', x2), a2)] + sb
+            n = ('call', 'min', [('call', 'len', [q1]), ('call', 'len', [q2])])
+            idx = ('call', 'range', [('int', 0), n])
+            if not sb:
+                return s, ('comp', i, idx, ('bool', 'true'), vb)
+            return self.loop_over('map', idx, i, sb, vb, s)
+        if h == 'uncurry' and len(args) == 2:
+            s, q = self.compile(args[1])
+            t = self.fresh()
+            sa, va = self.apply(args[0], [('v', t + 'a'), ('v', t + 'b')])
+            return s + [('assign', ('var', t + 'a'), ('elem', q, ('int', 0))),
+                        ('assign', ('var', t + 'b'), ('elem', q, ('int', 1)))] + sa, va
         if h in ('take', 'drop', 'splitAt') and len(args) == 2:
             s, (n, q) = self.many(args)
             self.mark_list(q)
@@ -680,6 +705,58 @@ class Lower:
         raise _Unsupported('function_' + h)
 
     params_fn = set()
+
+    def iterate_of(self, e):
+        """`iterate f x` (dictionaries dropped) -> (f, x), else None."""
+        if e[0] == 'app' and e[1] == ('v', 'iterate'):
+            xs = [a for a in e[2] if not dictish(a)]
+            if len(xs) == 2:
+                return xs + [None]
+        if e[0] == 'app' and e[1] == ('v', 'map'):              # map g (iterate f x)
+            xs = [a for a in e[2] if not dictish(a)]
+            if len(xs) == 2:
+                inner = self.iterate_of(xs[1])
+                if inner and inner[2] is None:
+                    return inner[:2] + [xs[0]]
+        return None
+
+    def unfold(self, h, args, it):
+        """take n (iterate f x) / takeWhile p (iterate f x) / iterate f x !! n / takeWhile p xs:
+        explicit loops (the infinite list is never built)."""
+        out, cur, cnt = self.fresh(), self.fresh(), self.fresh()
+        O, C, N = ('var', out), ('var', cur), ('var', cnt)
+        if it is None:                                          # takeWhile p xs (finite)
+            s, q = self.compile(args[1])
+            self.mark_list(q)
+            x = self.fresh()
+            sp, vp = self.apply(args[0], [('v', x)])
+            return s + [('assign', O, ('list', [])),
+                        ('for_each', x, q, ('seq', sp + [('if', vp, ('assign', O, ('op', 'add', [O, ('list', [('var', x)])])),
+                                                          'break')]))], O
+        f, x0, g = it
+        s, v0 = self.compile(x0)
+        sf, vf = self.apply(f, [('v', cur)])
+        stepper = sf + [('assign', C, vf)]
+        if g is not None:                                       # elements are g(cur)
+            gv = self.fresh()
+            sg, vg = self.apply(g, [('v', cur)])
+            stepper = stepper
+            emit = sg + [('assign', ('var', gv), vg)]
+            G = ('var', gv)
+        else:
+            emit, G = [], C
+        if h == '!!':                                           # (iterate f x) !! n
+            sn, n = self.compile(args[1])
+            return s + sn + [('assign', C, v0), ('for_range', cnt, ('int', 0), n, ('int', 1), ('seq', stepper))] + emit, G
+        if h == 'take':
+            sn, n = self.compile(args[0])
+            return s + sn + [('assign', C, v0), ('assign', O, ('list', [])),
+                             ('for_range', cnt, ('int', 0), n, ('int', 1),
+                              ('seq', emit + [('assign', O, ('op', 'add', [O, ('list', [G])]))] + stepper))], O
+        sp, vp = self.apply(args[0], [('v', gv) if g is not None else ('v', cur)])   # takeWhile p (iterate f x)
+        return s + [('assign', C, v0), ('assign', O, ('list', [])),
+                    ('while', ('bool', 'true'), ('seq', emit + sp + [('if', vp, ('skip',), 'break'),
+                                                                ('assign', O, ('op', 'add', [O, ('list', [G])]))] + stepper))], O
 
     def loop_over(self, h, q, x, sb, vb, s):
         """map/filter/all/any whose element function needs statements: an explicit loop."""
