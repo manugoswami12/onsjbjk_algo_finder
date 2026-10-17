@@ -33,13 +33,15 @@ def core_text(path: Path, timeout=90) -> str:
     src = re.sub(r'^(?:Prelude|\*?Main|ghci|λ)?>.*$', '', src, flags=re.M)          # GHCi transcript lines
     pragmas = re.findall(r'^\{-#.*?#-\}', src, re.M | re.S)
     src = re.sub(r'^\{-#.*?#-\}', '', src, flags=re.M | re.S)
-    if not re.search(r'^module\s', src, re.M):
+    defined = set(re.findall(r'^([a-z_][\w\']*)\s*(?:::|[^\n=]*=)', src, re.M))
+    hide = sorted(defined & CLASH)
+    hiding = f'import Prelude hiding ({", ".join(hide)})\n' if hide and not re.search(r'^import\s+Prelude', src, re.M) else ''
+    header = re.search(r'^module\s[\s\S]*?\bwhere\b[^\n]*\n', src, re.M)
+    if header:                                   # keep the header; hiding import right after it
+        src = src[:header.end()] + hiding + src[header.end():]
+    else:
         has_main = re.search(r'^main\s*(::|=)', src, re.M)
-        head = 'module Main where\n' if has_main else 'module M where\n'
-        defined = set(re.findall(r'^([a-z_][\w\']*)\s*(?:::|[^\n=]*=)', src, re.M))
-        hide = sorted(defined & CLASH)
-        if hide and not re.search(r'^import\s+Prelude', src, re.M):
-            head += f'import Prelude hiding ({", ".join(hide)})\n'
+        head = ('module Main where\n' if has_main else 'module M where\n') + hiding
         # imports must come right after the header: move them up
         imports = re.findall(r'^import .*$', src, re.M)
         body = re.sub(r'^import .*$', '', src, flags=re.M)

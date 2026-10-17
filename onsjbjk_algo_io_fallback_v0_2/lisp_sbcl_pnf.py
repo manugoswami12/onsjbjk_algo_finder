@@ -10,6 +10,7 @@ is then extended here by subclassing: lambda folds (reduce), &rest parameters, l
 """
 from __future__ import annotations
 
+import re
 import subprocess
 import tempfile
 from pathlib import Path
@@ -22,6 +23,7 @@ multiple-value-bind psetq psetf'''.split()
 
 SBCL_SCRIPT = r'''
 (defpackage :v02x (:use :cl))
+;%PKGS%
 (in-package :v02x)
 (defparameter *keep* '(%KEEP%))
 (defparameter *names* (make-hash-table :test 'eq))
@@ -53,12 +55,26 @@ SBCL_SCRIPT = r'''
 '''
 
 
+PKG_PREFIX = re.compile(r'(?<![\w:#|])([A-Za-z][\w.+-]*):(?=[^\s:()])')
+
+
+def readable_source(src: str) -> tuple[str, list[str]]:
+    """Symbols of packages that are not loaded (`rtl:with`) would stop the reader: each such
+    package is pre-defined and its prefix made internal (`rtl::with`), so every form is read."""
+    pkgs = sorted({m.group(1).lower() for m in PKG_PREFIX.finditer(src)} - {'cl', 'common-lisp', 'keyword'})
+    return PKG_PREFIX.sub(lambda m: m.group(1) + '::', src), pkgs
+
+
 def sbcl_expand(path: Path, timeout=60) -> str:
-    script = SBCL_SCRIPT.replace('%KEEP%', ' '.join(f'"{k}"' for k in KEEP))
+    src, pkgs = readable_source(path.read_text(encoding='utf-8', errors='replace'))
+    defs = ''.join(f'(unless (find-package "{p.upper()}") (make-package "{p.upper()}" :use (list "CL")))\n'
+                   for p in pkgs)
+    script = SBCL_SCRIPT.replace('%KEEP%', ' '.join(f'"{k}"' for k in KEEP)).replace(';%PKGS%', defs)
     with tempfile.TemporaryDirectory(prefix='v02_sbcl_') as td:
-        sf = Path(td) / 'expand.lisp'
+        sf, srcf = Path(td) / 'expand.lisp', Path(td) / 'source.lisp'
         sf.write_text(script, encoding='utf-8')
-        proc = subprocess.run(['sbcl', '--script', str(sf), str(path)], capture_output=True, text=True,
+        srcf.write_text(src, encoding='utf-8')
+        proc = subprocess.run(['sbcl', '--script', str(sf), str(srcf)], capture_output=True, text=True,
                               timeout=timeout, stdin=subprocess.DEVNULL)
     return proc.stdout
 

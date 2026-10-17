@@ -65,6 +65,24 @@ class Ap13Dir:
         with knowledge_store.connect(self.store) as db:
             self.ref_file = {r['label']: r['source_path'] for r in db.execute('SELECT label, source_path FROM pattern')}
 
+    def labels_by_function(self, path: Path) -> dict[str, set[str]]:
+        """{function name: labels of the training files whose exact traced logic it matches}."""
+        import re
+        try:
+            _, facts = self.cli.facts_text(path)
+            result = self.cli.scan(path, self.store, include_unreviewed=True, quiet=True)
+        except ERRORS:
+            return {}
+        names = dict(re.findall(r"^func\('([^']*)','([^']*)'", facts, re.M))
+        out: dict[str, set[str]] = {}
+        for m in result['leaves']:
+            if m['result'] == 'MATCH' and self.ref_file.get(m['label']) in self.labels:
+                label = self.labels[self.ref_file[m['label']]]
+                for fid in m['functions'].split(','):
+                    if label != 'none' and fid in names:
+                        out.setdefault(names[fid], set()).add(label)
+        return out
+
     def labels_for(self, path: Path) -> set[str]:
         try:
             result = self.cli.scan(path, self.store, include_unreviewed=True, quiet=True)
@@ -93,6 +111,21 @@ class IoCatalog:
                 for name, d in funs.items():
                     if d['discriminative']:
                         self.cat[(rel, name)] = d
+
+    def labels_by_function(self, path: Path) -> dict[str, set[str]]:
+        """{function name: labels of the training references with equal behaviour}."""
+        try:
+            me = self.ioc.describe(self.iot.run_functions(path))
+        except ERRORS:
+            return {}
+        out: dict[str, set[str]] = {}
+        for name, d in me.items():
+            if not d['discriminative']:
+                continue
+            for (rel, _), ref in self.cat.items():
+                if self.ioc.compare(d, ref) in ('logic', 'io') and self.labels[rel] != 'none':
+                    out.setdefault(name, set()).add(self.labels[rel])
+        return out
 
     def labels_for(self, path: Path) -> set[str]:
         try:
