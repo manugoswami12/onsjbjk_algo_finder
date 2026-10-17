@@ -3,173 +3,726 @@
 :- discontiguous learned_branch//3, learned_branch/4.
 :- dynamic io_equal/1.
 
-% ackermann r3 under [search>backtracking], branch: learned from [ackermann_loop.py]
+% ackermann r3 under [search>backtracking], branch: learned from [ackermann_loop.py]; excludes the siblings' marks [call($self),call(range),cmp(order),op(and),op(sub)]
 learned_branch([search, backtracking], ackermann, r3) -->
+    \+ any_of([call('$self'), call(range), cmp(order), op(and), op(sub)]),
     pattern([op(eq)]).
-% ackermann r2 under [numeric], branch: learned from [ackermann-function-1.py]
+% ackermann r2 under [numeric], branch: learned from [ackermann-function-1.py]; excludes the siblings' marks [loop,map,call(int),call(str),call(sum),cmp(order),op(mod),op(mul)]
 learned_branch([numeric], ackermann, r2) -->
+    \+ any_of([ loop,
+                map,
+                call(int),
+                call(str),
+                call(sum),
+                cmp(order),
+                op(mod),
+                op(mul)
+              ]),
     pattern([op(eq), op(add), call('$self')]).
-% ackermann r1 under [], branch: learned from [ackermann-function-3.py]
+% ackermann r1 under [], branch: learned from [ackermann-function-3.py]; excludes the siblings' marks [loop,output,call($self),call(len),call(max),call(min),call(range),call(str),cmp(order),op(add),op(eq),op(mod),op(sub)]
 learned_branch([], ackermann, r1) -->
+    \+ any_of([ loop,
+                output,
+                call('$self'),
+                call(len),
+                call(max),
+                call(min),
+                call(range),
+                call(str),
+                cmp(order),
+                op(add),
+                op(eq),
+                op(mod),
+                op(sub)
+              ]),
     pattern([call(setrecursionlimit), call(ack1), call(ack1), call(ack2)]).
-% caesar_cipher r4 under [sequence_query>aggregate>gatherer], branch: learned from [caesar_arith.py]
+% caesar_cipher r4 under [sequence_query>aggregate>gatherer], branch: learned from [caesar_arith.py]; excludes the siblings' marks [map,new_array,rest,call($self),call(enumerate),call(len),call(max),call(sum),op(eq),op(ne),op(not),op(not in)]
 learned_branch([sequence_query, aggregate, gatherer], caesar_cipher, r4) -->
+    \+ any_of([ map,
+                new_array,
+                rest,
+                call('$self'),
+                call(enumerate),
+                call(len),
+                call(max),
+                call(sum),
+                op(eq),
+                op(ne),
+                op(not),
+                op('not in')
+              ]),
     pattern([call(chr)]).
-% caesar_cipher r1 under [], branch: learned from [caesar-cipher-1.py]
+% caesar_cipher r1 under [], branch: learned from [caesar-cipher-1.py]; excludes the siblings' marks [loop,output,call($self),call(len),call(max),call(min),call(range),call(str),op(eq)]
 learned_branch([], caesar_cipher, r1) -->
+    \+ any_of([ loop,
+                output,
+                call('$self'),
+                call(len),
+                call(max),
+                call(min),
+                call(range),
+                call(str),
+                op(eq)
+              ]),
     pattern([op(sub), call(chr), op(add), op(mod)]).
-% caesar_cipher r2 under [], branch: learned from [caesar-cipher-2.py]
+% caesar_cipher r2 under [], branch: learned from [caesar-cipher-2.py]; excludes the siblings' marks [loop,output,call($self),call(len),call(max),call(min),call(range),call(str),cmp(order),op(eq),op(mod)]
 learned_branch([], caesar_cipher, r2) -->
+    \+ any_of([ loop,
+                output,
+                call('$self'),
+                call(len),
+                call(max),
+                call(min),
+                call(range),
+                call(str),
+                cmp(order),
+                op(eq),
+                op(mod)
+              ]),
     pattern([op(sub), call(translate), call(maketrans), op(add)]).
-% caesar_cipher r3 under [], branch: learned from [caesar-cipher-4.py]
+% caesar_cipher r3 under [], branch: learned from [caesar-cipher-4.py]; excludes the siblings' marks [loop,output,call($self),call(len),call(max),call(min),call(range),call(str),cmp(order),op(eq),op(mod),op(sub)]
 learned_branch([], caesar_cipher, r3) -->
+    \+ any_of([ loop,
+                output,
+                call('$self'),
+                call(len),
+                call(max),
+                call(min),
+                call(range),
+                call(str),
+                cmp(order),
+                op(eq),
+                op(mod),
+                op(sub)
+              ]),
     pattern([call(dict), call(zip), op(add), call(upper)]).
-% fibonacci_like r13 under [sequence_transformation], branch: learned from [fibonacci-sequence-11.py]
+% fibonacci_like r13 under [sequence_transformation], branch: learned from [fibonacci-sequence-11.py]; excludes the siblings' marks []
 learned_branch([sequence_transformation], fibonacci_like, r13) -->
     pattern([op('not in')]).
-% fibonacci_like r12 under [sequence_query], branch: learned from [fibonacci-sequence-4.py]
+% fibonacci_like r12 under [sequence_query], branch: learned from [fibonacci-sequence-4.py]; excludes the siblings' marks [output,call($self),call(any),call(append),call(combinations),call(divmod),call(enumerate),call(f),call(from_iterable),call(int),call(isinstance),call(join),call(len),call(list),call(mapAccumL(go)),call(mapAccumL(go)(n)),call(max),call(min),call(range),call(reduce),call(str),call(zip),op(add),op(eq),op(in),op(mod),op(ne),op(not),op(or)]
 learned_branch([sequence_query], fibonacci_like, r12) -->
+    \+ any_of([ output,
+                call('$self'),
+                call(any),
+                call(append),
+                call(combinations),
+                call(divmod),
+                call(enumerate),
+                call(f),
+                call(from_iterable),
+                call(int),
+                call(isinstance),
+                call(join),
+                call(len),
+                call(list),
+                call('mapAccumL(go)'),
+                call('mapAccumL(go)(n)'),
+                call(max),
+                call(min),
+                call(range),
+                call(reduce),
+                call(str),
+                call(zip),
+                op(add),
+                op(eq),
+                op(in),
+                op(mod),
+                op(ne),
+                op(not),
+                op(or)
+              ]),
     pattern([call(pow)]).
 % fibonacci_like r11 under [numeric>recurrence>pair_recurrence], input->output (no logic condition separates it there): learned from [fibonacci-sequence-10.py]
 learned_branch([numeric, recurrence, pair_recurrence], fibonacci_like, r11, io) :-
     io_equal(fibonacci_like).
 % fibonacci_like under [numeric>recurrence>pair_recurrence]: fibonacci-sequence-7.py also only by input->output
 % fibonacci_like under [numeric>recurrence>pair_recurrence]: fibonacci-sequence-8.py also only by input->output
-% fibonacci_like r9 under [numeric>recurrence>double_recursion], branch: learned from [fibonacci-sequence-12.py]
+% fibonacci_like r9 under [numeric>recurrence>double_recursion], branch: learned from [fibonacci-sequence-12.py]; excludes the siblings' marks [output]
 learned_branch([numeric, recurrence, double_recursion], fibonacci_like, r9) -->
+    \+ any_of([output]),
     pattern([op(in)]).
-% fibonacci_like r10 under [numeric>recurrence>double_recursion], branch: learned from [fibonacci-sequence-5.py]
+% fibonacci_like r10 under [numeric>recurrence>double_recursion], branch: learned from [fibonacci-sequence-5.py]; excludes the siblings' marks [output]
 learned_branch([numeric, recurrence, double_recursion], fibonacci_like, r10) -->
+    \+ any_of([output]),
     pattern([cmp(order), call('$self'), op(sub)]).
-% fibonacci_like r7 under [numeric], branch: learned from [fibonacci-sequence-13.py]
+% fibonacci_like r7 under [numeric], branch: learned from [fibonacci-sequence-13.py]; excludes the siblings' marks [map,call(int),call(str),call(sum),cmp(order),op(eq),op(mod),op(mul),op(sub)]
 learned_branch([numeric], fibonacci_like, r7) -->
+    \+ any_of([ map,
+                call(int),
+                call(str),
+                call(sum),
+                cmp(order),
+                op(eq),
+                op(mod),
+                op(mul),
+                op(sub)
+              ]),
     pattern([call('$self'), call(next), call(next), call(next)]).
-% fibonacci_like r8 under [numeric], branch: learned from [fibonacci-sequence-3.py]
+% fibonacci_like r8 under [numeric], branch: learned from [fibonacci-sequence-3.py]; excludes the siblings' marks [map,call($self),call(int),call(str),call(sum),cmp(order),op(eq),op(mod)]
 learned_branch([numeric], fibonacci_like, r8) -->
+    \+ any_of([ map,
+                call('$self'),
+                call(int),
+                call(str),
+                call(sum),
+                cmp(order),
+                op(eq),
+                op(mod)
+              ]),
     pattern([op(div), op(pow)]).
-% fibonacci_like r1 under [], branch: learned from [fibonacci-sequence-1.py]
+% fibonacci_like r1 under [], branch: learned from [fibonacci-sequence-1.py]; excludes the siblings' marks [loop,output,call($self),call(len),call(max),call(min),call(range),call(str),cmp(order),op(eq),op(mod),op(sub)]
 learned_branch([], fibonacci_like, r1) -->
+    \+ any_of([ loop,
+                output,
+                call('$self'),
+                call(len),
+                call(max),
+                call(min),
+                call(range),
+                call(str),
+                cmp(order),
+                op(eq),
+                op(mod),
+                op(sub)
+              ]),
     pattern([call(sqrt), op(fdiv), op(add), op(fdiv)]).
-% fibonacci_like r2 under [], branch: learned from [fibonacci-sequence-15.py]
+% fibonacci_like r2 under [], branch: learned from [fibonacci-sequence-15.py]; excludes the siblings' marks [loop,output,call($self),call(len),call(max),call(min),call(str),cmp(order),op(add),op(eq),op(mod),op(sub)]
 learned_branch([], fibonacci_like, r2) -->
+    \+ any_of([ loop,
+                output,
+                call('$self'),
+                call(len),
+                call(max),
+                call(min),
+                call(str),
+                cmp(order),
+                op(add),
+                op(eq),
+                op(mod),
+                op(sub)
+              ]),
     pattern([call(sum), map, call(accumulate), call(range)]).
 % fibonacci_like r3 under [], input->output (no logic condition separates it there): learned from [fibonacci-sequence-16.py]
 learned_branch([], fibonacci_like, r3, io) :-
     io_equal(fibonacci_like).
 % fibonacci_like under []: fibonacci-sequence-17.py also only by input->output
-% fibonacci_like r4 under [], branch: learned from [fibonacci-sequence-18.py]
+% fibonacci_like r4 under [], branch: learned from [fibonacci-sequence-18.py]; excludes the siblings' marks [call($self),call(len),call(max),call(min),call(range),call(str),cmp(order),op(eq),op(mod)]
 learned_branch([], fibonacci_like, r4) -->
+    \+ any_of([ call('$self'),
+                call(len),
+                call(max),
+                call(min),
+                call(range),
+                call(str),
+                cmp(order),
+                op(eq),
+                op(mod)
+              ]),
     pattern([loop, op(add), op(sub), call(append)]).
-% fibonacci_like r5 under [], branch: learned from [fibonacci-sequence-2.py]
+% fibonacci_like r5 under [], branch: learned from [fibonacci-sequence-2.py]; excludes the siblings' marks [loop,output,call($self),call(len),call(max),call(min),call(range),call(str),op(eq),op(mod)]
 learned_branch([], fibonacci_like, r5) -->
+    \+ any_of([ loop,
+                output,
+                call('$self'),
+                call(len),
+                call(max),
+                call(min),
+                call(range),
+                call(str),
+                op(eq),
+                op(mod)
+              ]),
     pattern([cmp(order), cmp(order), call(longdouble), cmp(order)]).
-% fibonacci_like r6 under [], branch: learned from [fibonacci-sequence-6.py]
+% fibonacci_like r6 under [], branch: learned from [fibonacci-sequence-6.py]; excludes the siblings' marks [loop,output,call(len),call(max),call(min),call(range),call(str),cmp(order),op(eq),op(mod)]
 learned_branch([], fibonacci_like, r6) -->
+    \+ any_of([ loop,
+                output,
+                call(len),
+                call(max),
+                call(min),
+                call(range),
+                call(str),
+                cmp(order),
+                op(eq),
+                op(mod)
+              ]),
     pattern([op(not), op(in), op(add), call('$self')]).
 % fibonacci_like under []: fibonacci-sequence-9.py also only by input->output
 % josephus r3 under [numeric>recurrence>josephus_recurrence], input->output (no logic condition separates it there): learned from [josephus-problem-2.py]
 learned_branch([numeric, recurrence, josephus_recurrence], josephus, r3, io) :-
     io_equal(josephus).
-% josephus r1 under [], branch: learned from [josephus-problem-3.py]
+% josephus r1 under [], branch: learned from [josephus-problem-3.py]; excludes the siblings' marks [output,call($self),call(len),call(max),call(min),call(str),cmp(order),op(eq),op(mod),op(sub)]
 learned_branch([], josephus, r1) -->
+    \+ any_of([ output,
+                call('$self'),
+                call(len),
+                call(max),
+                call(min),
+                call(str),
+                cmp(order),
+                op(eq),
+                op(mod),
+                op(sub)
+              ]),
     pattern([call(list), call(range), op(add), call(append)]).
-% josephus r2 under [], branch: learned from [josephus-problem-4.py]
+% josephus r2 under [], branch: learned from [josephus-problem-4.py]; excludes the siblings' marks [call($self),call(len),call(max),call(min),call(str),cmp(order),op(add),op(eq),op(mod),op(sub)]
 learned_branch([], josephus, r2) -->
+    \+ any_of([ call('$self'),
+                call(len),
+                call(max),
+                call(min),
+                call(str),
+                cmp(order),
+                op(add),
+                op(eq),
+                op(mod),
+                op(sub)
+              ]),
     pattern([call(list), call(range), new_array, call(compress)]).
-% knapsack_01 r4 under [sequence_query>aggregate>gatherer], branch: learned from [knapsack-problem-0-1-3.py]
+% knapsack_01 r4 under [sequence_query>aggregate>gatherer], branch: learned from [knapsack-problem-0-1-3.py]; excludes the siblings' marks [new_array,call(chr),call(enumerate),call(len),call(max),call(ord),op(eq),op(mod),op(ne)]
 learned_branch([sequence_query, aggregate, gatherer], knapsack_01, r4) -->
+    \+ any_of([ new_array,
+                call(chr),
+                call(enumerate),
+                call(len),
+                call(max),
+                call(ord),
+                op(eq),
+                op(mod),
+                op(ne)
+              ]),
     pattern([op('not in')]).
 % knapsack_01 r3 under [sequence_query], input->output (no logic condition separates it there): learned from [knapsack-problem-0-1-1.py]
 learned_branch([sequence_query], knapsack_01, r3, io) :-
     io_equal(knapsack_01).
-% knapsack_01 r2 under [marking>table_fill], branch: learned from [knapsack_table.py]
+% knapsack_01 r2 under [marking>table_fill], branch: learned from [knapsack_table.py]; excludes the siblings' marks [op(mul)]
 learned_branch([marking, table_fill], knapsack_01, r2) -->
+    \+ any_of([op(mul)]),
     pattern([cmp(order)]).
-% knapsack_01 r1 under [], branch: learned from [knapsack-problem-0-1-4.py]
+% knapsack_01 r1 under [], branch: learned from [knapsack-problem-0-1-4.py]; excludes the siblings' marks [call($self),call(max),call(min),call(range),op(eq),op(mod),op(sub)]
 learned_branch([], knapsack_01, r1) -->
+    \+ any_of([ call('$self'),
+                call(max),
+                call(min),
+                call(range),
+                op(eq),
+                op(mod),
+                op(sub)
+              ]),
     pattern([op(add), op(pow), loop, call(randint)]).
-% lcs r2 under [sequence_query>aggregate>gatherer], branch: learned from [longest-common-subsequence-3.py]
+% lcs r2 under [sequence_query>aggregate>gatherer], branch: learned from [longest-common-subsequence-3.py]; excludes the siblings' marks [map,rest,call($self),call(chr),call(ord),call(sum),cmp(order),op(mod),op(not),op(not in)]
 learned_branch([sequence_query, aggregate, gatherer], lcs, r2) -->
+    \+ any_of([ map,
+                rest,
+                call('$self'),
+                call(chr),
+                call(ord),
+                call(sum),
+                cmp(order),
+                op(mod),
+                op(not),
+                op('not in')
+              ]),
     pattern([new_array]).
-% lcs r1 under [sequence_query], branch: learned from [longest-common-subsequence-1.py]
+% lcs r1 under [sequence_query], branch: learned from [longest-common-subsequence-1.py]; excludes the siblings' marks [loop,output,call(abs),call(any),call(append),call(combinations),call(divmod),call(enumerate),call(f),call(from_iterable),call(int),call(isinstance),call(join),call(len),call(list),call(mapAccumL(go)),call(mapAccumL(go)(n)),call(min),call(pow),call(range),call(reduce),call(sum),call(zip),cmp(order),op(in),op(mod),op(mul),op(ne),op(sub)]
 learned_branch([sequence_query], lcs, r1) -->
+    \+ any_of([ loop,
+                output,
+                call(abs),
+                call(any),
+                call(append),
+                call(combinations),
+                call(divmod),
+                call(enumerate),
+                call(f),
+                call(from_iterable),
+                call(int),
+                call(isinstance),
+                call(join),
+                call(len),
+                call(list),
+                call('mapAccumL(go)'),
+                call('mapAccumL(go)(n)'),
+                call(min),
+                call(pow),
+                call(range),
+                call(reduce),
+                call(sum),
+                call(zip),
+                cmp(order),
+                op(in),
+                op(mod),
+                op(mul),
+                op(ne),
+                op(sub)
+              ]),
     pattern([op(or), call(max)]).
 % leap_year r1 under [], input->output (no logic condition separates it there): learned from [leap-year-1.py]
 learned_branch([], leap_year, r1, io) :-
     io_equal(leap_year).
 % leap_year under []: leap-year-2.py also only by input->output
-% levenshtein r1 under [sequence_query], branch: learned from [levenshtein-distance-1.py]
+% levenshtein r1 under [sequence_query], branch: learned from [levenshtein-distance-1.py]; excludes the siblings' marks [output,call($self),call(abs),call(any),call(append),call(combinations),call(divmod),call(enumerate),call(f),call(from_iterable),call(int),call(isinstance),call(join),call(mapAccumL(go)),call(mapAccumL(go)(n)),call(max),call(pow),call(reduce),call(str),call(sum),call(zip),cmp(order),op(in),op(mod),op(mul),op(ne),op(not),op(or)]
 learned_branch([sequence_query], levenshtein, r1) -->
+    \+ any_of([ output,
+                call('$self'),
+                call(abs),
+                call(any),
+                call(append),
+                call(combinations),
+                call(divmod),
+                call(enumerate),
+                call(f),
+                call(from_iterable),
+                call(int),
+                call(isinstance),
+                call(join),
+                call('mapAccumL(go)'),
+                call('mapAccumL(go)(n)'),
+                call(max),
+                call(pow),
+                call(reduce),
+                call(str),
+                call(sum),
+                call(zip),
+                cmp(order),
+                op(in),
+                op(mod),
+                op(mul),
+                op(ne),
+                op(not),
+                op(or)
+              ]),
     pattern([call(insert)]).
-% levenshtein r2 under [sequence_query], branch: learned from [levenshtein-distance-2.py]
+% levenshtein r2 under [sequence_query], branch: learned from [levenshtein-distance-2.py]; excludes the siblings' marks [output,call($self),call(abs),call(any),call(combinations),call(divmod),call(f),call(from_iterable),call(int),call(isinstance),call(join),call(list),call(mapAccumL(go)),call(mapAccumL(go)(n)),call(max),call(pow),call(reduce),call(str),call(sum),call(zip),op(in),op(mod),op(mul),op(ne),op(not),op(or),op(sub)]
 learned_branch([sequence_query], levenshtein, r2) -->
+    \+ any_of([ output,
+                call('$self'),
+                call(abs),
+                call(any),
+                call(combinations),
+                call(divmod),
+                call(f),
+                call(from_iterable),
+                call(int),
+                call(isinstance),
+                call(join),
+                call(list),
+                call('mapAccumL(go)'),
+                call('mapAccumL(go)(n)'),
+                call(max),
+                call(pow),
+                call(reduce),
+                call(str),
+                call(sum),
+                call(zip),
+                op(in),
+                op(mod),
+                op(mul),
+                op(ne),
+                op(not),
+                op(or),
+                op(sub)
+              ]),
     pattern([call(len), call(enumerate)]).
-% levenshtein r3 under [sequence_query], branch: learned from [levenshtein-distance-4.py]
+% levenshtein r3 under [sequence_query], branch: learned from [levenshtein-distance-4.py]; excludes the siblings' marks [loop,output,call(abs),call(any),call(append),call(combinations),call(divmod),call(enumerate),call(f),call(from_iterable),call(int),call(isinstance),call(join),call(list),call(mapAccumL(go)),call(mapAccumL(go)(n)),call(max),call(pow),call(range),call(reduce),call(str),call(sum),call(zip),cmp(order),op(in),op(mod),op(mul),op(ne),op(or),op(sub)]
 learned_branch([sequence_query], levenshtein, r3) -->
+    \+ any_of([ loop,
+                output,
+                call(abs),
+                call(any),
+                call(append),
+                call(combinations),
+                call(divmod),
+                call(enumerate),
+                call(f),
+                call(from_iterable),
+                call(int),
+                call(isinstance),
+                call(join),
+                call(list),
+                call('mapAccumL(go)'),
+                call('mapAccumL(go)(n)'),
+                call(max),
+                call(pow),
+                call(range),
+                call(reduce),
+                call(str),
+                call(sum),
+                call(zip),
+                cmp(order),
+                op(in),
+                op(mod),
+                op(mul),
+                op(ne),
+                op(or),
+                op(sub)
+              ]),
     pattern([call(len), rest]).
-% levenshtein r4 under [sequence_query], branch: learned from [levenshtein-distance-5.py]
+% levenshtein r4 under [sequence_query], branch: learned from [levenshtein-distance-5.py]; excludes the siblings' marks [loop,output,call($self),call(abs),call(any),call(append),call(combinations),call(divmod),call(enumerate),call(int),call(mapAccumL(go)),call(mapAccumL(go)(n)),call(pow),call(str),call(sum),cmp(order),op(eq),op(in),op(mod),op(mul),op(ne),op(or),op(sub)]
 learned_branch([sequence_query], levenshtein, r4) -->
+    \+ any_of([ loop,
+                output,
+                call('$self'),
+                call(abs),
+                call(any),
+                call(append),
+                call(combinations),
+                call(divmod),
+                call(enumerate),
+                call(int),
+                call('mapAccumL(go)'),
+                call('mapAccumL(go)(n)'),
+                call(pow),
+                call(str),
+                call(sum),
+                cmp(order),
+                op(eq),
+                op(in),
+                op(mod),
+                op(mul),
+                op(ne),
+                op(or),
+                op(sub)
+              ]),
     pattern([call('compose(len)')]).
-% luhn r3 under [sequence_query], branch: learned from [luhn-test-of-credit-card-numbers-4.py]
+% luhn r3 under [sequence_query], branch: learned from [luhn-test-of-credit-card-numbers-4.py]; excludes the siblings' marks [call($self),call(abs),call(any),call(append),call(combinations),call(divmod),call(enumerate),call(f),call(from_iterable),call(isinstance),call(join),call(list),call(mapAccumL(go)),call(mapAccumL(go)(n)),call(max),call(min),call(pow),call(range),call(reduce),call(sum),call(zip),op(in),op(not),op(or),op(sub)]
 learned_branch([sequence_query], luhn, r3) -->
+    \+ any_of([ call('$self'),
+                call(abs),
+                call(any),
+                call(append),
+                call(combinations),
+                call(divmod),
+                call(enumerate),
+                call(f),
+                call(from_iterable),
+                call(isinstance),
+                call(join),
+                call(list),
+                call('mapAccumL(go)'),
+                call('mapAccumL(go)(n)'),
+                call(max),
+                call(min),
+                call(pow),
+                call(range),
+                call(reduce),
+                call(sum),
+                call(zip),
+                op(in),
+                op(not),
+                op(or),
+                op(sub)
+              ]),
     pattern([op(mod), call(int)]).
-% luhn r2 under [numeric], branch: learned from [luhn-test-of-credit-card-numbers-1.py]
+% luhn r2 under [numeric], branch: learned from [luhn-test-of-credit-card-numbers-1.py]; excludes the siblings' marks [call($self),cmp(order),op(sub)]
 learned_branch([numeric], luhn, r2) -->
+    \+ any_of([call('$self'), cmp(order), op(sub)]),
     pattern([call(int)]).
-% luhn r1 under [], branch: learned from [luhn-test-of-credit-card-numbers-2.py]
+% luhn r1 under [], branch: learned from [luhn-test-of-credit-card-numbers-2.py]; excludes the siblings' marks [loop,output,call($self),call(len),call(max),call(min),call(range),cmp(order),op(sub)]
 learned_branch([], luhn, r1) -->
+    \+ any_of([ loop,
+                output,
+                call('$self'),
+                call(len),
+                call(max),
+                call(min),
+                call(range),
+                cmp(order),
+                op(sub)
+              ]),
     pattern([op(eq), op(mod), call(reduce), call(map)]).
-% matrix_multiplication r4 under [marking>table_fill], branch: learned from [matrix_loops.py]
+% matrix_multiplication r4 under [marking>table_fill], branch: learned from [matrix_loops.py]; excludes the siblings' marks [call(max),cmp(order),op(sub)]
 learned_branch([marking, table_fill], matrix_multiplication, r4) -->
+    \+ any_of([call(max), cmp(order), op(sub)]),
     pattern([op(mul)]).
-% matrix_multiplication r1 under [], branch: learned from [matrix-multiplication-1.py]
+% matrix_multiplication r1 under [], branch: learned from [matrix-multiplication-1.py]; excludes the siblings' marks [loop,output,call($self),call(len),call(max),call(min),call(range),call(str),cmp(order),op(add),op(eq),op(mod),op(sub)]
 learned_branch([], matrix_multiplication, r1) -->
+    \+ any_of([ loop,
+                output,
+                call('$self'),
+                call(len),
+                call(max),
+                call(min),
+                call(range),
+                call(str),
+                cmp(order),
+                op(add),
+                op(eq),
+                op(mod),
+                op(sub)
+              ]),
     pattern([call(zip), map, map, call(sum)]).
-% matrix_multiplication r2 under [], branch: learned from [matrix-multiplication-2.py]
+% matrix_multiplication r2 under [], branch: learned from [matrix-multiplication-2.py]; excludes the siblings' marks [loop,output,call($self),call(len),call(max),call(min),call(range),call(str),cmp(order),op(add),op(eq),op(mod),op(sub)]
 learned_branch([], matrix_multiplication, r2) -->
+    \+ any_of([ loop,
+                output,
+                call('$self'),
+                call(len),
+                call(max),
+                call(min),
+                call(range),
+                call(str),
+                cmp(order),
+                op(add),
+                op(eq),
+                op(mod),
+                op(sub)
+              ]),
     pattern([call(map), call(sum), call(map), call(map)]).
 % matrix_multiplication r3 under [], input->output (no logic condition separates it there): learned from [matrix-multiplication-4.py]
 learned_branch([], matrix_multiplication, r3, io) :-
     io_equal(matrix_multiplication).
-% n_queens r4 under [sequence_query], branch: learned from [n-queens-problem-3.py]
+% n_queens r4 under [sequence_query], branch: learned from [n-queens-problem-3.py]; excludes the siblings' marks [output,call($self),call(append),call(combinations),call(divmod),call(f),call(from_iterable),call(int),call(isinstance),call(join),call(list),call(mapAccumL(go)),call(mapAccumL(go)(n)),call(max),call(min),call(pow),call(reduce),call(str),call(sum),call(zip),cmp(order),op(mod),op(mul),op(ne),op(not)]
 learned_branch([sequence_query], n_queens, r4) -->
+    \+ any_of([ output,
+                call('$self'),
+                call(append),
+                call(combinations),
+                call(divmod),
+                call(f),
+                call(from_iterable),
+                call(int),
+                call(isinstance),
+                call(join),
+                call(list),
+                call('mapAccumL(go)'),
+                call('mapAccumL(go)(n)'),
+                call(max),
+                call(min),
+                call(pow),
+                call(reduce),
+                call(str),
+                call(sum),
+                call(zip),
+                cmp(order),
+                op(mod),
+                op(mul),
+                op(ne),
+                op(not)
+              ]),
     pattern([op(in)]).
-% n_queens r2 under [search>backtracking], branch: learned from [n-queens-problem-6.py]
+% n_queens r2 under [search>backtracking], branch: learned from [n-queens-problem-6.py]; excludes the siblings' marks [op(eq)]
 learned_branch([search, backtracking], n_queens, r2) -->
+    \+ any_of([op(eq)]),
     pattern([call(list)]).
-% n_queens r3 under [search>backtracking], branch: learned from [n-queens-problem-9.py]
+% n_queens r3 under [search>backtracking], branch: learned from [n-queens-problem-9.py]; excludes the siblings' marks [op(eq)]
 learned_branch([search, backtracking], n_queens, r3) -->
+    \+ any_of([op(eq)]),
     pattern([call(set)]).
 % n_queens r1 under [numeric>predicate], input->output (no logic condition separates it there): learned from [n-queens-problem-8.py]
 learned_branch([numeric, predicate], n_queens, r1, io) :-
     io_equal(n_queens).
-% roman_encode r6 under [sequence_query], branch: learned from [roman-numerals-encode-8.py]
+% roman_encode r6 under [sequence_query], branch: learned from [roman-numerals-encode-8.py]; excludes the siblings' marks [loop,output,call($self),call(abs),call(any),call(append),call(combinations),call(enumerate),call(int),call(len),call(max),call(min),call(pow),call(range),call(str),call(sum),cmp(order),op(add),op(eq),op(in),op(mod),op(mul),op(ne),op(or),op(sub)]
 learned_branch([sequence_query], roman_encode, r6) -->
+    \+ any_of([ loop,
+                output,
+                call('$self'),
+                call(abs),
+                call(any),
+                call(append),
+                call(combinations),
+                call(enumerate),
+                call(int),
+                call(len),
+                call(max),
+                call(min),
+                call(pow),
+                call(range),
+                call(str),
+                call(sum),
+                cmp(order),
+                op(add),
+                op(eq),
+                op(in),
+                op(mod),
+                op(mul),
+                op(ne),
+                op(or),
+                op(sub)
+              ]),
     pattern([call('mapAccumL(go)')]).
-% roman_encode r5 under [numeric>conditional_iteration], branch: learned from [roman-numerals-encode-4.py]
+% roman_encode r5 under [numeric>conditional_iteration], branch: learned from [roman-numerals-encode-4.py]; excludes the siblings' marks []
 learned_branch([numeric, conditional_iteration], roman_encode, r5) -->
     pattern([op(eq)]).
 % roman_encode r3 under [numeric], input->output (no logic condition separates it there): learned from [roman-numerals-encode-2.py]
 learned_branch([numeric], roman_encode, r3, io) :-
     io_equal(roman_encode).
-% roman_encode r4 under [numeric], branch: learned from [roman-numerals-encode-3.py]
+% roman_encode r4 under [numeric], branch: learned from [roman-numerals-encode-3.py]; excludes the siblings' marks [map,call($self),call(int),call(str),call(sum),op(mod)]
 learned_branch([numeric], roman_encode, r4) -->
+    \+ any_of([map, call('$self'), call(int), call(str), call(sum), op(mod)]),
     pattern([call(enumerate), op(eq)]).
-% roman_encode r1 under [], branch: learned from [roman-numerals-encode-5.py]
+% roman_encode r1 under [], branch: learned from [roman-numerals-encode-5.py]; excludes the siblings' marks [output,call($self),call(len),call(max),call(min),call(range),call(str),cmp(order),op(add),op(eq),op(mod),op(sub)]
 learned_branch([], roman_encode, r1) -->
+    \+ any_of([ output,
+                call('$self'),
+                call(len),
+                call(max),
+                call(min),
+                call(range),
+                call(str),
+                cmp(order),
+                op(add),
+                op(eq),
+                op(mod),
+                op(sub)
+              ]),
     pattern([loop, call(zip), call(divmod), call(append)]).
-% roman_encode r2 under [], branch: learned from [roman-numerals-encode-7.py]
+% roman_encode r2 under [], branch: learned from [roman-numerals-encode-7.py]; excludes the siblings' marks [loop,output,call($self),call(len),call(max),call(min),op(add),op(eq),op(mod),op(sub)]
 learned_branch([], roman_encode, r2) -->
+    \+ any_of([ loop,
+                output,
+                call('$self'),
+                call(len),
+                call(max),
+                call(min),
+                op(add),
+                op(eq),
+                op(mod),
+                op(sub)
+              ]),
     pattern([call(join), map, call(zip), call(range)]).
 % run_length_encoding r3 under [sequence_transformation>construction>run_length], input->output (no logic condition separates it there): learned from [run_length_scan.py]
 learned_branch([sequence_transformation, construction, run_length], run_length_encoding, r3, io) :-
     io_equal(run_length_encoding).
-% run_length_encoding r2 under [sequence_query], branch: learned from [run-length-encoding-1.py]
+% run_length_encoding r2 under [sequence_query], branch: learned from [run-length-encoding-1.py]; excludes the siblings' marks [output,call($self),call(abs),call(any),call(combinations),call(divmod),call(enumerate),call(f),call(from_iterable),call(int),call(isinstance),call(len),call(list),call(mapAccumL(go)),call(mapAccumL(go)(n)),call(max),call(min),call(pow),call(range),call(reduce),call(str),call(sum),call(zip),cmp(order),op(add),op(eq),op(in),op(mod),op(not),op(or),op(sub)]
 learned_branch([sequence_query], run_length_encoding, r2) -->
+    \+ any_of([ output,
+                call('$self'),
+                call(abs),
+                call(any),
+                call(combinations),
+                call(divmod),
+                call(enumerate),
+                call(f),
+                call(from_iterable),
+                call(int),
+                call(isinstance),
+                call(len),
+                call(list),
+                call('mapAccumL(go)'),
+                call('mapAccumL(go)(n)'),
+                call(max),
+                call(min),
+                call(pow),
+                call(range),
+                call(reduce),
+                call(str),
+                call(sum),
+                call(zip),
+                cmp(order),
+                op(add),
+                op(eq),
+                op(in),
+                op(mod),
+                op(not),
+                op(or),
+                op(sub)
+              ]),
     pattern([op(ne), call(append)]).
 % run_length_encoding r1 under [], input->output (no logic condition separates it there): learned from [run-length-encoding-2.py]
 learned_branch([], run_length_encoding, r1, io) :-
     io_equal(run_length_encoding).
-% towers_of_hanoi r1 under [numeric>recurrence>double_recursion], branch: learned from [towers-of-hanoi-1.py]
+% towers_of_hanoi r1 under [numeric>recurrence>double_recursion], branch: learned from [towers-of-hanoi-1.py]; excludes the siblings' marks [op(add)]
 learned_branch([numeric, recurrence, double_recursion], towers_of_hanoi, r1) -->
+    \+ any_of([op(add)]),
     pattern([output]).

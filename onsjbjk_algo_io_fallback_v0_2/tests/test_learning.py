@@ -24,6 +24,16 @@ class LearningTests(unittest.TestCase):
         self.assertEqual(out[:2], ['go', 'no'])
         self.assertRegex(out[2], r"^\[a,link\((_\w*)\),c,leave\(\1\),d\]$")
 
+    def test_siblings_stacked_by_exclusion(self):
+        """Two labels at one node: each clause excludes the other's marks, so a file holding both
+        patterns is claimed by at most one, whatever the clause order (no cut)."""
+        goal = ("assertz(train(a, f1, [loop, op(add), output])), assertz(train(b, f2, [loop, op(mul)])), "
+                "assertz(reach(f1, [n])), assertz(reach(f2, [n])), "
+                "sibling_marks([n], a, [f1], Ea), sibling_marks([n], b, [f2], Eb), print(Ea-Eb), nl")
+        out = subprocess.run(['swipl', '-q', '-g', f"consult('{ROOT / 'prolog' / 'learn_dcg.pl'}'), {goal}", '-t', 'halt'],
+                             capture_output=True, text=True, check=True).stdout.strip()
+        self.assertEqual(out, '[op(mul)]-[output,op(add)]')
+
     def test_learn_python_apply_lisp_and_c(self):
         with tempfile.TemporaryDirectory() as td:
             rules = Path(td) / 'rules.pl'

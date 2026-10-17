@@ -237,3 +237,18 @@ Also fixed in the scoring: the ambiguity check now counts every learned label th
 - **towers-of-hanoi-1.c is ambiguous.** It holds `towers_of_hanoi r1 --> pattern([output])` and also `fibonacci_like r10 --> pattern([cmp(order), call('$self'), op(sub)])`, both under `numeric>recurrence>double_recursion`.
 - `fibonacci_like r10` was learned from fibonacci-sequence-5.py (`if n < 2`). It is separated from the Python Hanoi files only because they test `if n:` (a truth test, no comparison); the C Hanoi tests `if (n > 0)`, an order comparison.
 - `if n:` (n is not 0) and `n > 0` are equal only for n >= 0. The conversion keeps them apart, since in general they are not the same component.
+
+## Run 8: the clauses of one node stacked by exclusion (docs/04 section 13)
+
+Each branch clause excludes its sibling labels' marks at its node (`\+ any_of(Marks)`), so a file holding two siblings' patterns is claimed by at most one, whatever the order.
+
+| Stage | Precision | Recall (learnable) | Recall (full key) | Result |
+|---|---|---|---|---|
+| 3 | 2/2 = 100% | 2/2 = 100% | 2/2 | PASS (Hanoi C: Fibonacci r10 now excludes `output`) |
+| 15 | 2/2 = 100% | 2/6 = 33.3% | 2/8 = 25% | FAIL: stopped |
+
+At stage 15 there are no wrong answers (run 6: knapsack-C → matrix, matrix-Lisp → levenshtein). The recall lost:
+- **ackermann-function-4.c** (found in run 6): `ackermann r3` under backtracking now excludes the N-queens marks `[call('$self'), call(range), cmp(order), op(and), op(sub)]`, and the C Ackermann has `call('$self')`, `cmp(order)` and `op(sub)`.
+- **knapsack-problem-0-1.c:** `knapsack_01 r2 --> \+ any_of([op(mul)]), pattern([cmp(order)])`, but the C file multiplies in `calloc(n * m)`.
+
+**Cause.** With one training file per sibling label at a node, a "mark" is every logic token of that one file that the clause's own file lacks, so common tokens (`call('$self')`, `cmp(order)`, `op(sub)`, `op(mul)`) become exclusions. They are as arbitrary as one-example positive patterns. The stacking itself works (Fibonacci vs Hanoi), but the training data has too few files per label at a node to tell a sibling's mark from incidental code.

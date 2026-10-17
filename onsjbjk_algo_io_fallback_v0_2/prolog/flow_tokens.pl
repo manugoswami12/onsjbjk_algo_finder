@@ -20,6 +20,8 @@ pattern([T|Ts]) --> next(T), pattern(Ts).
 % ground symbols); a token with a variable (a helper's name) may bind at any occurrence
 next(T) --> { ground(T) }, !, find(T).
 next(T) --> ..., [T].
+% the stream holds one of the tokens Ts (a learned clause's exclusion: \+ any_of(Ts), learn_dcg.pl)
+any_of(Ts) --> ..., [T], { memberchk(T, Ts) }.
 
 % the root function: its statements in source order (assigned values, calls, returns); a linked
 % function contributes its result values (link//4)

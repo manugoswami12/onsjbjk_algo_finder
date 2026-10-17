@@ -109,8 +109,10 @@ rename(X, X, A, A).
 write_rules(O, L, Rules) :-
     forall(member(Rule, Rules), write_rule(O, L, Rule)).
 write_rule(O, L, branch(C, R, S, Used)) :-
-    atomic_list_concat(C, '>', CA), format(O, '% ~w ~w under [~w], branch: learned from ~w~n', [L, R, CA, Used]),
-    portray_clause(O, (learned_branch(C, L, R) --> pattern(S))).
+    atomic_list_concat(C, '>', CA), sibling_marks(C, L, Used, Ex),
+    format(O, '% ~w ~w under [~w], branch: learned from ~w; excludes the siblings\' marks ~w~n', [L, R, CA, Used, Ex]),
+    ( Ex == [] -> Body = pattern(S) ; Body = (\+ any_of(Ex), pattern(S)) ),
+    portray_clause(O, (learned_branch(C, L, R) --> Body)).
 write_rule(O, L, io(C, R, Used)) :-
     atomic_list_concat(C, '>', CA),
     format(O, '% ~w ~w under [~w], input->output (no logic condition separates it there): learned from ~w~n',
@@ -118,3 +120,15 @@ write_rule(O, L, io(C, R, Used)) :-
     portray_clause(O, (learned_branch(C, L, R, io) :- io_equal(L))).
 write_rule(O, L, io_also(C, F)) :-
     atomic_list_concat(C, '>', CA), format(O, '% ~w under [~w]: ~w also only by input->output~n', [L, CA, F]).
+
+% the clauses of one node are stacked by their own conditions, not by order and not by cut
+% (p :- a, b.  p :- a, \+ b.): a clause excludes the marks of its sibling labels at C, the logic tokens
+% every training file of a sibling has at C and none of the clause's own files has
+sibling_marks(C, L, Used, Ex) :-
+    findall(M, ( train(M, F, _), M \== L, M \== none, node(F, C) ), Ms0), sort(Ms0, Ms),
+    findall(T, ( member(M, Ms), label_mark(M, C, T),
+                 \+ ( member(U, Used), train(L, U, Tu), memberchk(T, Tu) ) ), Ex0), sort(Ex0, Ex).
+label_mark(M, C, T) :-
+    findall(F, ( train(M, F, _), node(F, C) ), Fs0), sort(Fs0, [F1|Fs]),
+    train(M, F1, T1), member(T, T1), logic_token(T), ground(T),
+    forall(member(F, Fs), ( train(M, F, Tf), memberchk(T, Tf) -> true )).

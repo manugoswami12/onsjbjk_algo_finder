@@ -243,3 +243,14 @@ Test: `tests/test_uniform.py`. The same algorithm with the same structure in two
 | new array | `si_make_pure_array` / `[[0]*n for ...]` | one `new_array` token | `flow_tokens.pl` `new_array/1` |
 
 Also corrected: the ambiguity check counts every learned label that holds (known tasks' too), as the design says; it had counted only the 12 new labels.
+
+## 13. Stacking the clauses of one node (user: stack same-arity rules correctly)
+
+The clauses of one node are made mutually exclusive by their own conditions, not by order and not by cut (`p :- a, b.  p :- a, \+ b.`). Each branch clause excludes the marks of its sibling labels at C: the logic tokens that every training file of a sibling has at C and that none of the clause's own files has.
+
+```prolog
+learned_branch([numeric,recurrence,double_recursion], fibonacci_like, r10) --> \+ any_of([output]), pattern([cmp(order), call('$self'), op(sub)]).
+learned_branch([numeric,recurrence,double_recursion], towers_of_hanoi, r1) --> \+ any_of([op(add)]), pattern([output]).
+```
+
+`sibling_marks/4` is in `learn_dcg.pl`; `any_of//1` is in `flow_tokens.pl`.
