@@ -1,0 +1,21 @@
+{
+  "_source": "TheAlgorithms/Python @ 25c712f2692449e91a57748d328ef34fccf25654 (MIT). Labels frozen from task names before the run. Excludes the 6 files used in the 3-file checks.",
+  "_allowed_on_negative": ["recursive_decomposition"],
+  "files": {
+    "sorts/bubble_sort.py": "comparison_driven_reordering",
+    "sorts/insertion_sort.py": "shift_insertion",
+    "sorts/selection_sort.py": "selection_exchange",
+    "searches/linear_search.py": "indexed_lookup",
+    "searches/simple_binary_search.py": "interval_lookup",
+    "maths/fibonacci.py": "fibonacci_like",
+    "maths/sieve_of_eratosthenes.py": "sieve_like",
+    "maths/prime_sieve_eratosthenes.py": "sieve_like",
+    "strings/palindrome.py": "palindrome_check",
+    "maths/find_max.py": "extremum_search",
+    "maths/find_min.py": "extremum_search",
+    "maths/number_of_digits.py": "digit_processing",
+    "sorts/merge_sort.py": null,
+    "strings/reverse_words.py": null,
+    "strings/hamming_distance.py": null
+  }
+}

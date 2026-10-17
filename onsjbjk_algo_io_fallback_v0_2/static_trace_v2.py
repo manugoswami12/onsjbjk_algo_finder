@@ -12,7 +12,8 @@ from __future__ import annotations
 import ast
 import re
 
-from static_trace import Analysis, analyse, same, statements, subscript_on, used_names
+from static_trace import (Analysis, analyse, coherent_interval_search, same, statements,
+                          subscript_on, used_names)
 
 
 # ---------- small shared helpers (base for every witness: critical, see doc table 6) ----------
@@ -171,6 +172,52 @@ def w_aggregate(result, rows, inputs, tainted, returned):
                     result.add('best_so_far_update', stmt.lineno)
 
 
+def w_lookup(result, rows, inputs, returned):
+    """Indexed lookup when the logic is wired through locals (Sajaniemi follower / stored result):
+    x = A[i]; if x == t: ... ; and `return i` or `r = i` with r returned.
+    Emits the v0.1 facts, so the v0.1 lookup rules route it unchanged."""
+    followers = {}                                # x -> (A, i) from x = A[i] inside a loop
+    for stmt, _, loops in rows:
+        if (loops and isinstance(stmt, ast.Assign) and len(stmt.targets) == 1 and is_name(stmt.targets[0])
+                and subscript_on(stmt.value, inputs) and is_name(stmt.value.slice)):
+            followers[stmt.targets[0].id] = (stmt.value.value.id, stmt.value.slice.id)
+    witnesses = []
+    for stmt, guards, loops in rows:
+        if not loops:
+            continue
+        if isinstance(stmt, ast.Return) and is_name(stmt.value):
+            idx = stmt.value.id
+        elif (isinstance(stmt, ast.Assign) and len(stmt.targets) == 1 and is_name(stmt.targets[0])
+              and stmt.targets[0].id in returned and is_name(stmt.value)):
+            idx = stmt.value.id
+        else:
+            continue
+        for if_stmt in true_compares(guards):
+            c = if_stmt.test
+            if not isinstance(c.ops[0], ast.Eq):
+                continue
+            for elem, target in ((c.left, c.comparators[0]), (c.comparators[0], c.left)):
+                if not (is_name(target) and target.id in inputs):
+                    continue
+                if is_name(elem) and elem.id in followers:
+                    arr, i = followers[elem.id]
+                elif subscript_on(elem, inputs) and is_name(elem.slice):
+                    arr, i = elem.value.id, elem.slice.id
+                else:
+                    continue
+                if i == idx and arr != target.id:
+                    result.add('indexed_equality_controls_index_return', if_stmt.lineno)
+                    result.add('indexed_equality_controls_index_return', stmt.lineno)
+                    witnesses += [(arr, i, if_stmt.lineno, loop) for loop in loops]
+    if 'coherent_midpoint_interval_update' not in result.evidence:
+        for witness in witnesses:
+            found = coherent_interval_search(rows, witness)
+            if found:
+                for line in found:
+                    result.add('coherent_midpoint_interval_update', line)
+                break
+
+
 def w_membership(result, rows, inputs):
     """`for x in A: if x == t: return True` with A and t inputs."""
     for stmt, guards, loops in rows:
@@ -213,29 +260,42 @@ def w_recurrence(result, fn, rows, inputs, tainted, returned):
                             and b in used_names(stmt.test) and a in returned and a in tainted):
                         result.add('modulo_recurrence', s1.lineno)
     params = [a.arg for a in fn.args.args]
-    has_base_case = any(isinstance(s, ast.Return) and g and not self_calls(s, fn.name) for s, g, _ in rows)
+
+    def parts(stmt):
+        """Value expressions of a statement; `return b if c else e` contributes both arms."""
+        v = stmt.value
+        if isinstance(stmt, ast.Return) and isinstance(v, ast.IfExp):
+            return [v.body, v.orelse]
+        return [v]
+
+    # Base case: a guarded return without a self-call, or an inline `x if c else ...` arm without one.
+    has_base_case = any(isinstance(s, ast.Return) and s.value is not None and (
+        (g and not self_calls(s, fn.name)) or
+        (isinstance(s.value, ast.IfExp) and any(not self_calls(e, fn.name) for e in parts(s))))
+        for s, g, _ in rows)
     for stmt, _, _ in rows:
         if not isinstance(stmt, (ast.Return, ast.Assign, ast.AugAssign)) or stmt.value is None:
             continue
-        calls = self_calls(stmt.value, fn.name)
-        if (isinstance(stmt, ast.Return) and len(calls) == 1 and len(params) == 2
-                and len(calls[0].args) == 2 and is_name(calls[0].args[0], params[1])
-                and binop(calls[0].args[1], ast.Mod) and is_name(calls[0].args[1].left, params[0])
-                and is_name(calls[0].args[1].right, params[1]) and stmt.value is calls[0]):
-            result.add('modulo_recurrence', stmt.lineno)
-        if not has_base_case or len(params) != 1:
-            continue
-        p = params[0]
-        if (isinstance(stmt, ast.Return) and binop(stmt.value, ast.Mult) and len(calls) == 1
-                and len(calls[0].args) == 1 and minus(calls[0].args[0], p, 1)
-                and any(is_name(s, p) for s in (stmt.value.left, stmt.value.right))):
-            result.add('linear_self_product', stmt.lineno)
-        if len(calls) >= 2:
-            result.add('double_self_call', stmt.lineno)
-            args = [c.args[0] for c in calls if len(c.args) == 1]
-            if (len(calls) == 2 and len(args) == 2 and binop(stmt.value, ast.Add)
-                    and sorted(ast.unparse(a) for a in args) == [f'{p} - 1', f'{p} - 2']):
-                result.add('self_calls_minus_one_minus_two', stmt.lineno)
+        for value in parts(stmt):
+            calls = self_calls(value, fn.name)
+            if (isinstance(stmt, ast.Return) and len(calls) == 1 and len(params) == 2
+                    and len(calls[0].args) == 2 and is_name(calls[0].args[0], params[1])
+                    and binop(calls[0].args[1], ast.Mod) and is_name(calls[0].args[1].left, params[0])
+                    and is_name(calls[0].args[1].right, params[1]) and value is calls[0]):
+                result.add('modulo_recurrence', stmt.lineno)
+            if not has_base_case or len(params) != 1:
+                continue
+            p = params[0]
+            if (isinstance(stmt, ast.Return) and binop(value, ast.Mult) and len(calls) == 1
+                    and len(calls[0].args) == 1 and minus(calls[0].args[0], p, 1)
+                    and any(is_name(x, p) for x in (value.left, value.right))):
+                result.add('linear_self_product', stmt.lineno)
+            if len(calls) >= 2:
+                result.add('double_self_call', stmt.lineno)
+                args = [c.args[0] for c in calls if len(c.args) == 1]
+                if (len(calls) == 2 and len(args) == 2 and binop(value, ast.Add)
+                        and sorted(ast.unparse(a) for a in args) == [f'{p} - 1', f'{p} - 2']):
+                    result.add('self_calls_minus_one_minus_two', stmt.lineno)
 
 
 def w_number(result, rows, tainted):
@@ -354,6 +414,7 @@ def analyse_v2(fn) -> Analysis:
     returned = returned_names(rows)
     w_sorting(result, rows, inputs)
     w_aggregate(result, rows, inputs, tainted, returned)
+    w_lookup(result, rows, inputs, returned)
     w_membership(result, rows, inputs)
     w_recurrence(result, fn, rows, inputs, tainted, returned)
     w_number(result, rows, tainted)

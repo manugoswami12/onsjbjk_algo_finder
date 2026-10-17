@@ -107,7 +107,11 @@ V02_CASES = [
     ('sieve.py', {'marking', 'sieve_like'}, {'stride_marking', 'flag_guards_stride'}),
     ('palindrome.py', {'symmetric_compare', 'palindrome_check'}, {'mirror_compare', 'mirror_compare_decides_result'}),
     ('palindrome_slice.py', {'symmetric_compare', 'palindrome_check'}, {'mirror_compare_decides_result'}),
+    ('binary_follower.py', {'indexed_lookup', 'interval_lookup'},
+     {'indexed_equality_controls_index_return', 'coherent_midpoint_interval_update'}),
+    ('factorial_inline.py', {'recurrence', 'factorial_like'}, {'linear_self_product'}),
     # near misses: UNKNOWN or the broad branch only
+    ('follower_not_returned.py', {'unknown'}, set()),
     ('accum_constant.py', {'unknown'}, set()),
     ('fake_pair.py', {'unknown'}, set()),
     ('mod_once.py', {'unknown'}, set()),
