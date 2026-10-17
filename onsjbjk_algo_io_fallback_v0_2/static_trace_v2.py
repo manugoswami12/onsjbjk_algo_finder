@@ -166,7 +166,7 @@ def w_aggregate(result, rows, inputs, tainted, returned):
     for stmt, guards, loops in rows:
         acc = accumulation(stmt)
         if acc and loops and acc[0] in returned and acc[0] not in text:
-            name, op, value = acc
+            _, op, value = acc
             if element_of_input(value, loops, inputs):
                 result.add('input_element_accumulated', stmt.lineno)
             elif range_loop_var(value, loops, tainted):

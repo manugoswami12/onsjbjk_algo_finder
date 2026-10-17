@@ -278,6 +278,9 @@ class Lower:
         self.globals = {n for n, _ in binds}
         self.funs, self.tmp, self.local = [], itertools.count(), {}
         self.listy = set()
+        self.alias = {}            # let-bound partial applications, inlined (per function scope)
+        self.locfun_arity = {}     # local (lifted) function -> value-parameter count
+        self.params_fn = set()
 
     def fresh(self):
         return f'h${next(self.tmp)}'
@@ -295,7 +298,17 @@ class Lower:
 
     def eta(self, name, body):
         """Point-free definitions (`f = product . enumFromTo 1`): eta-expand by 1 or 2 parameters."""
-        for k in (1, 2):
+        # `f = letrec { f_x = \ a b -> .. } in f_x` (GHC's wrapper for recursive overloaded
+        # functions): the arity is that local function's
+        inner = body
+        while inner[0] == 'let' and inner[3][0] == 'let':
+            inner = inner[3]
+        known = None
+        if inner[0] == 'let' and inner[3][0] == 'v':
+            for n, b in inner[2]:
+                if n == inner[3][1] and b[0] == 'lam':
+                    known = len(strip_lams(b)[0])
+        for k in ([known] if known else (1, 2)):
             xs = [f'eta{i}_x{name[:3]}' for i in range(k)]
             probe = Lower.__new__(Lower)
             probe.__dict__.update(self.__dict__, funs=[], local=dict(self.local), listy=set())
@@ -339,13 +352,13 @@ class Lower:
 
     def function(self, name, params, body, extra=()):
         self.listy = set()
-        saved = dict(self.local)
+        saved, saved_alias = dict(self.local), dict(self.alias)
         try:
             stmts, v = self.compile(body)
             stmts = stmts + [('return', v)]
         except _Unsupported as u:
             stmts = [('unsupported', str(u))]
-        self.local = saved
+        self.local, self.alias = saved, saved_alias
         self.funs.append((name, list(extra) + params, stmts, set(self.listy)))
 
     # free variables of a Core expression
@@ -372,12 +385,6 @@ class Lower:
         if k == 'tuple':
             return set().union(*(self.fv(a, bound) for a in e[1]))
         return set()
-
-    def compile_body_as_fun(self, lname, lam, scope_names):
-        params, body = strip_lams(lam)
-        free = sorted(self.fv(lam) - set(params))
-        self.local[lname] = (lname, free)
-        return params, body, free
 
     # expression -> (statements, PNF value)
     def compile(self, e):
@@ -421,7 +428,7 @@ class Lower:
         if n in self.alias:
             return self.compile(self.alias[n])
         if n in self.local:
-            lname, free = self.local[n]
+            _, free = self.local[n]
             if not free and n not in self.locfun_arity:
                 return [], ('var', n)
             return self.call_local(n, [])
@@ -430,8 +437,6 @@ class Lower:
         if n in RAISE:
             return [('raise',)], ('none',)
         return [], ('var', n)
-
-    locfun_arity = {}
 
     def let(self, e):
         _, is_join, binds, body = e
@@ -460,14 +465,13 @@ class Lower:
             if not is_join and self.alias_ok(b):   # pure: a partial application / name is inlined
                 self.alias[n] = b
                 continue
+            self.alias.pop(n, None)
             if b[0] == 'lam' and not strip_lams(b)[0]:
                 b = strip_lams(b)[1]
             s, v = self.compile(b)
             stmts += s + [('assign', ('var', n), v)]
         s, v = self.compile(body)
         return stmts + s, v
-
-    alias = {}
 
     def alias_ok(self, b):
         if b[0] == 'v':
@@ -704,8 +708,6 @@ class Lower:
             return self.compile(args[0])
         raise _Unsupported('function_' + h)
 
-    params_fn = set()
-
     def iterate_of(self, e):
         """`iterate f x` (dictionaries dropped) -> (f, x), else None."""
         if e[0] == 'app' and e[1] == ('v', 'iterate'):
@@ -724,7 +726,7 @@ class Lower:
         """take n (iterate f x) / takeWhile p (iterate f x) / iterate f x !! n / takeWhile p xs:
         explicit loops (the infinite list is never built)."""
         out, cur, cnt = self.fresh(), self.fresh(), self.fresh()
-        O, C, N = ('var', out), ('var', cur), ('var', cnt)
+        O, C = ('var', out), ('var', cur)
         if it is None:                                          # takeWhile p xs (finite)
             s, q = self.compile(args[1])
             self.mark_list(q)
@@ -740,7 +742,6 @@ class Lower:
         if g is not None:                                       # elements are g(cur)
             gv = self.fresh()
             sg, vg = self.apply(g, [('v', cur)])
-            stepper = stepper
             emit = sg + [('assign', ('var', gv), vg)]
             G = ('var', gv)
         else:

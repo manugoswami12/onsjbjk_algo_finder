@@ -7,7 +7,6 @@ A file's answer is the union of its functions' routes minus `unknown`.
 One SWI-Prolog call for all files; a file Python cannot parse counts as UNKNOWN.
 """
 import json
-import sys
 from pathlib import Path
 
 import argparse

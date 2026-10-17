@@ -154,7 +154,7 @@ def selftest(offline=False):
         'interval_lookup': 'coherent_midpoint_interval_update',
     }
     passed = 0
-    for i, ((case, expected, must), analysis) in enumerate(zip(cases, analyses), 1):
+    for i, ((case, expected, must), analysis) in enumerate(zip(cases, analyses, strict=True), 1):
         facts = set(analysis.evidence)
         display_routes = '(offline: Prolog not run)'
         if offline:

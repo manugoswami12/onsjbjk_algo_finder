@@ -24,7 +24,7 @@ DEFAULT_KB = ROOT / 'kb' / 'learned.json'
 K, WINDOW, TAU, MIN_PRINTS = 5, 4, 0.5, 3
 BUILTINS = {'len', 'range', 'enumerate', 'min', 'max', 'abs', 'pow', 'sum', 'sorted', 'reversed',
             'int', 'zip', 'divmod', 'list', 'str', 'bool', 'all', 'any'}
-KEEP_CONST = {0, 1, 2, 10, -1, True, False, None}
+KEEP_CONST = {0, 1, 2, 10, -1}            # ints kept; True/False/None are kept by type below
 NOISE_FUNCS = re.compile(r'^(main|benchmark.*|test.*|time.*|_.*|print.*)$')
 LABEL = re.compile(r'^[a-z][a-z0-9_]*$')                 # labels become Prolog atoms
 
@@ -63,8 +63,8 @@ def tokens(fn) -> list[str]:
             return
         if isinstance(node, ast.Constant):
             v = node.value
-            out.append(repr(v) if (not isinstance(v, float) and v in KEEP_CONST and type(v) in (int, bool, type(None)))
-                       else ('S' if isinstance(v, str) else 'C'))
+            keep = v is None or type(v) is bool or (type(v) is int and v in KEEP_CONST)
+            out.append(repr(v) if keep else ('S' if isinstance(v, str) else 'C'))
             return
         if isinstance(node, ast.arg):
             out.append(name(node.arg))

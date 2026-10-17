@@ -128,7 +128,7 @@ def _make_class():
             if not toks or not isinstance(toks[0], Sym) or str(toks[0]) not in KW:
                 return super().f_loop(a)            # simple (loop forms...) = infinite loop with return
             k = lambda t: str(t).lower() if isinstance(t, Sym) else None
-            init, step, pre_tests, body, fin = [], [], [], [], []
+            init, step, body, fin = [], [], [], []
             acc, acc_kind, result = None, None, None
             i = 0
 
@@ -393,7 +393,7 @@ def list_probes(funs):
     for name, params, body in funs:
         seq = set()
 
-        def walk(t):
+        def walk(t, seq):
             if isinstance(t, tuple) and t:
                 if t[0] in ('elem', 'slice') and t[1][:1] == ('var',):
                     seq.add(t[1][1])
@@ -404,11 +404,11 @@ def list_probes(funs):
                 if t[0] == 'for_each' and t[2][:1] == ('var',):
                     seq.add(t[2][1])
                 for x in t[1:]:
-                    walk(x)
+                    walk(x, seq)
             elif isinstance(t, list):
                 for x in t:
-                    walk(x)
-        walk(body)
+                    walk(x, seq)
+        walk(body, seq)
         probes = [('expr', ('call', 'len', [('var', p)])) for p in params if p in seq]
         out.append((name, params, ('seq', probes + list(body[1])) if probes and body[0] == 'seq' else body))
     return out
