@@ -29,7 +29,8 @@ learn_label(L, Rules) :-
 cover([], _, _, _, []) :- !.
 cover([F|Fs], L, Negs, K, Rules) :-
     (   longest_stream(L, F, Seed), informative(Seed), specific(Seed, Negs)
-    ->  foldl(generalise(L, Negs), Fs, Seed-[F], Pat-Used),
+    ->  foldl(generalise(L, Negs), Fs, Seed-[F], Pat0-Used),
+        reduce(Pat0, L, Used, Negs, Pat),
         exclude(covered_by(L, Pat), Fs, Rest),
         Rules = [rule(K, Pat, Used)|More], K1 is K + 1, cover(Rest, L, Negs, K1, More)
     ;   cover(Fs, L, Negs, K, Rules)                      % no specific pattern from this file
@@ -44,6 +45,23 @@ generalise(L, Negs, F, Pat0-Used0, Pat-Used) :-
     ;   Pat = Pat0, Used = Used0
     ).
 covered_by(L, Pat, F) :- train(L, F, T), parses(Pat, T), !.
+
+% reduction (ILP negative-based reduction): drop tokens, operands first, while the rule still parses
+% no negative, still parses its training files and stays informative: the minimal pattern that
+% separates the algorithm from every other training task
+reduce(Pat0, L, Used, Negs, Pat) :-
+    reduce_pass(operand, Pat0, L, Used, Negs, Pat1), reduce_pass(logic, Pat1, L, Used, Negs, Pat).
+% one pass over the tokens of one kind, from the last to the first (earlier positions stay valid)
+reduce_pass(Kind, P0, L, Used, Negs, P) :-
+    findall(I, ( nth1(I, P0, T), token_kind(T, Kind) ), Is), reverse(Is, Desc),
+    foldl(try_drop(L, Used, Negs), Desc, P0, P).
+token_kind(T, logic) :- logic_token(T), !.
+token_kind(_, operand).
+try_drop(L, Used, Negs, I, P0, P) :-
+    length(P0, N), ( I =< N -> nth1(I, P0, _, P1) ; P1 = P0 ),
+    (   I =< N, informative_min(P1), specific(P1, Negs), forall(member(F, Used), covered_by(L, P1, F))
+    ->  P = P1 ; P = P0 ).
+informative_min(Pat) :- include(logic_token, Pat, Ls), length(Ls, N), N >= 3.
 
 % a pattern parses a stream: its tokens occur in order (each matched at its first occurrence)
 parses(Pat, Stream) :- copy_term(Pat, P), phrase(finds(P), Stream, _), !.

@@ -92,10 +92,13 @@ fold_init(F, P, D, [call(ecl_keyword, [var(initial_value)]), V|_]) --> !, [init]
 fold_init(_, _, _, _) --> [].
 
 % a link to a function of this file: its result tokens in between, bounded and acyclic
-link(_, P, D, G) --> { func(H, G, _), ( D =< 0 ; memberchk(H, P) ) }, !, [link(G)].
-link(_, P, D, G) --> { func(H, G, _), D1 is D - 1, body_terms(H, Vs) },
+link(_, P, D, G) --> { func_named(G, H), ( D =< 0 ; memberchk(H, P) ) }, !, [link(G)].
+link(_, P, D, G) --> { func_named(G, H), D1 is D - 1, body_terms(H, Vs) },
     [link(G), enter(G)], terms_tokens(H, [H|P], D1, Vs), [leave(G)].
-linked(G) :- atom(G), func(_, G, _), !.
+linked(G) :- atom(G), func_named(G, _), !.
+% a function of the file by its own name or its base name (Python's nested hanoi.go is go)
+func_named(G, H) :- func(H, G, _), !.
+func_named(G, H) :- func(H, N, _), atomic_list_concat(Parts, '.', N), last(Parts, G), !.
 closure_name(C, G) :- atom(C), atom_codes(C, [0'L, 0'C|Cs]), drop_digits(Cs, Ns), atom_codes(G, Ns).
 drop_digits([D|Cs], Ns) :- code_type(D, digit), !, drop_digits(Cs, Ns).
 drop_digits(Ns, Ns).
