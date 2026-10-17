@@ -97,3 +97,9 @@ family_path_v02(F, [numeric, recurrence, range_accumulation]) :-
            forall(guard(S, C, P), continuation_guard(F, S, C, P)) )).
 continuation_guard(F, S, C, P) :- under(S, L), loop(L, F, _), loop_cond(L, LC),
     ( P == true, LC == C ; P == false, LC == op(not, [C]) ), !.
+
+% two recursive calls where the compiler made the second (a tail call) a jump to the function's start
+% (ECL: tail_loop, ecl_norm.pl): a self-call inside that loop is the first call, the jump the second.
+% The same logic as AP13's rec_class(double_recursion) (hanoi: f(n-1); move; f(n-1)), a second clause.
+family_path_v02(F, [numeric, recurrence, double_recursion]) :-
+    tail_loop(L), loop(L, F, _), once(( in_func(S, F), call_at(S, '$self', _), in_loop(S, L) )).

@@ -2,7 +2,7 @@
    node its training files reach, with the files it was learned from. Do not edit; relearn instead. */
 :- discontiguous learned_branch//3.
 
-% ackermann r2 under [numeric]: learned from [ackermann-function-1.py,ackermann-function-2.py,ackermann-function-4.py]
+% ackermann r2 under [numeric]: learned from [ackermann-function-1.py]
 learned_branch([numeric], ackermann, r2) -->
     pattern([op(eq), op(add), call('$self')]).
 % ackermann r1 under []: learned from [ackermann-function-3.py]
@@ -14,41 +14,35 @@ learned_branch([], caesar_cipher, r1) -->
 % caesar_cipher r2 under []: learned from [caesar-cipher-4.py]
 learned_branch([], caesar_cipher, r2) -->
     pattern([call(dict), call(zip), op(add), call(dict)]).
-% fibonacci_like r10 under [sequence_transformation]: learned from [fibonacci-sequence-11.py]
-learned_branch([sequence_transformation], fibonacci_like, r10) -->
+% fibonacci_like r13 under [sequence_transformation]: learned from [fibonacci-sequence-11.py]
+learned_branch([sequence_transformation], fibonacci_like, r13) -->
     pattern([op('not in')]).
-% fibonacci_like r9 under [sequence_query]: learned from [fibonacci-sequence-4.py]
-learned_branch([sequence_query], fibonacci_like, r9) -->
+% fibonacci_like r12 under [sequence_query]: learned from [fibonacci-sequence-4.py]
+learned_branch([sequence_query], fibonacci_like, r12) -->
     pattern([call(pow)]).
-% fibonacci_like r8 under [numeric>recurrence>pair_recurrence]: learned from [fibonacci-sequence-10.py,fibonacci-sequence-7.py]
-learned_branch([numeric, recurrence, pair_recurrence], fibonacci_like, r8) -->
+% fibonacci_like r11 under [numeric>recurrence>pair_recurrence]: learned from [fibonacci-sequence-10.py]
+learned_branch([numeric, recurrence, pair_recurrence], fibonacci_like, r11) -->
     pattern([]).
-% fibonacci_like r7 under [numeric>recurrence>double_recursion]: learned from [fibonacci-sequence-12.py,fibonacci-sequence-5.py]
-learned_branch([numeric, recurrence, double_recursion], fibonacci_like, r7) -->
-    pattern([ test,
-              param,
-              param,
-              test,
-              param,
-              call('$self'),
-              param,
-              int(1),
-              call('$self'),
-              op(sub),
-              param,
-              int(2)
-            ]).
-% fibonacci_like r5 under [numeric]: learned from [fibonacci-sequence-13.py,fibonacci-sequence-14.py]
-learned_branch([numeric], fibonacci_like, r5) -->
+% fibonacci_like r9 under [numeric>recurrence>double_recursion]: learned from [fibonacci-sequence-12.py]
+learned_branch([numeric, recurrence, double_recursion], fibonacci_like, r9) -->
+    pattern([op(in)]).
+% fibonacci_like r10 under [numeric>recurrence>double_recursion]: learned from [fibonacci-sequence-5.py]
+learned_branch([numeric, recurrence, double_recursion], fibonacci_like, r10) -->
+    pattern([cmp(lt), call('$self'), op(sub)]).
+% fibonacci_like r7 under [numeric]: learned from [fibonacci-sequence-13.py]
+learned_branch([numeric], fibonacci_like, r7) -->
     pattern([call('$self'), loop, call(next), call(next), call(next)]).
-% fibonacci_like r6 under [numeric]: learned from [fibonacci-sequence-3.py]
-learned_branch([numeric], fibonacci_like, r6) -->
+% fibonacci_like r8 under [numeric]: learned from [fibonacci-sequence-3.py]
+learned_branch([numeric], fibonacci_like, r8) -->
     pattern([call(int)]).
-% fibonacci_like r1 under []: learned from [fibonacci-sequence-1.py,fibonacci-sequence-2.py]
+% fibonacci_like r1 under []: learned from [fibonacci-sequence-1.py]
 learned_branch([], fibonacci_like, r1) -->
-    pattern([op(fdiv), op(add), op(fdiv), op(fdiv)]).
-% fibonacci_like r2 under []: learned from [fibonacci-sequence-16.py,fibonacci-sequence-17.py]
+    pattern([call(sqrt), call(sqrt), op(fdiv), op(add)]).
+% fibonacci_like r2 under []: learned from [fibonacci-sequence-16.py]
 learned_branch([], fibonacci_like, r2) -->
+    pattern([call(reduce), call(range), call(range), call(sum)]).
+% fibonacci_like r3 under []: learned from [fibonacci-sequence-17.py]
+learned_branch([], fibonacci_like, r3) -->
     pattern([ call(reduce),
               other,
               call(range),
@@ -64,11 +58,14 @@ learned_branch([], fibonacci_like, r2) -->
               other,
               int(0)
             ]).
-% fibonacci_like r3 under []: learned from [fibonacci-sequence-18.py]
-learned_branch([], fibonacci_like, r3) -->
-    pattern([loop, call(range), op(add), call(append)]).
-% fibonacci_like r4 under []: learned from [fibonacci-sequence-6.py]
+% fibonacci_like r4 under []: learned from [fibonacci-sequence-18.py]
 learned_branch([], fibonacci_like, r4) -->
+    pattern([loop, call(range), op(add), call(append)]).
+% fibonacci_like r5 under []: learned from [fibonacci-sequence-2.py]
+learned_branch([], fibonacci_like, r5) -->
+    pattern([cmp(lt), cmp(lt), call(longdouble), call(longdouble)]).
+% fibonacci_like r6 under []: learned from [fibonacci-sequence-6.py]
+learned_branch([], fibonacci_like, r6) -->
     pattern([op(not), op(in), op(add), call('$self')]).
 % josephus r3 under [numeric>recurrence>josephus_recurrence]: learned from [josephus-problem-2.py]
 learned_branch([numeric, recurrence, josephus_recurrence], josephus, r3) -->
@@ -88,11 +85,14 @@ learned_branch([], knapsack_01, r1) -->
 % lcs r1 under [sequence_query]: learned from [longest-common-subsequence-1.py]
 learned_branch([sequence_query], lcs, r1) -->
     pattern([op(or), call(str)]).
-% levenshtein r1 under [sequence_query]: learned from [levenshtein-distance-2.py,levenshtein-distance-4.py]
+% levenshtein r1 under [sequence_query]: learned from [levenshtein-distance-2.py]
 learned_branch([sequence_query], levenshtein, r1) -->
-    pattern([op(eq), call(min)]).
-% levenshtein r2 under [sequence_query]: learned from [levenshtein-distance-5.py]
+    pattern([cmp(gt), call(enumerate)]).
+% levenshtein r2 under [sequence_query]: learned from [levenshtein-distance-4.py]
 learned_branch([sequence_query], levenshtein, r2) -->
+    pattern([op(not), rest]).
+% levenshtein r3 under [sequence_query]: learned from [levenshtein-distance-5.py]
+learned_branch([sequence_query], levenshtein, r3) -->
     pattern([call('scanl(gap)(succ(n))')]).
 % luhn r2 under [sequence_query]: learned from [luhn-test-of-credit-card-numbers-4.py]
 learned_branch([sequence_query], luhn, r2) -->
@@ -103,10 +103,10 @@ learned_branch([], luhn, r1) -->
 % matrix_multiplication r1 under []: learned from [matrix-multiplication-2.py]
 learned_branch([], matrix_multiplication, r1) -->
     pattern([call(map), call(map), call(sum), call(map)]).
-% n_queens r3 under [sequence_query]: learned from [n-queens-problem-3.py,n-queens-problem-4.py]
+% n_queens r3 under [sequence_query]: learned from [n-queens-problem-3.py]
 learned_branch([sequence_query], n_queens, r3) -->
     pattern([call(any)]).
-% n_queens r2 under [search>backtracking]: learned from [n-queens-problem-6.py,n-queens-problem-7.py,n-queens-problem-9.py]
+% n_queens r2 under [search>backtracking]: learned from [n-queens-problem-6.py]
 learned_branch([search, backtracking], n_queens, r2) -->
     pattern([]).
 % n_queens r1 under [numeric>predicate]: learned from [n-queens-problem-8.py]
@@ -413,24 +413,6 @@ learned_branch([sequence_query], run_length_encoding, r2) -->
 % run_length_encoding r1 under []: learned from [run-length-encoding-2.py]
 learned_branch([], run_length_encoding, r1) -->
     pattern([call(join), op(mul), call(join), op(mul)]).
-% towers_of_hanoi r1 under [numeric>recurrence>double_recursion]: learned from [towers-of-hanoi-1.py,towers-of-hanoi-3.py]
+% towers_of_hanoi r1 under [numeric>recurrence>double_recursion]: learned from [towers-of-hanoi-1.py]
 learned_branch([numeric, recurrence, double_recursion], towers_of_hanoi, r1) -->
-    pattern([ test,
-              param,
-              param,
-              int(1),
-              param,
-              param,
-              param,
-              test,
-              param,
-              other,
-              test,
-              param,
-              op(sub),
-              param,
-              op(sub),
-              param,
-              param,
-              param
-            ]).
+    pattern([output]).

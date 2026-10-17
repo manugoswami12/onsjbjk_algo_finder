@@ -57,13 +57,13 @@ learn_node(L, CFs, C, K0-Acc, K-[Rs|Acc]) :-
     findall(F, member(C-F, CFs), Fs),
     findall(T, ( train(L2, F2, T), L2 \== L, reaches(F2, C) ), Negs),
     cover(Fs, C, L, Negs, K0, K, Rs).
-% seed: the file's most specific stream; each further file joins the group while the shared S of the
-% group stays informative and parses no negative (Golem-style covering)
+% one clause per file (Prolog's alternatives: p :- a. p :- b.), never a merge of files: a merge keeps only
+% what the files share and can lose what separates the label at the node; a file that an earlier clause
+% already covers gets none. Seed: the file's most specific stream.
 cover([], _, _, _, K, K, []) :- !.
 cover([F|Fs], C, L, Negs, K0, K, Rules) :-
     (   seed(L, F, C, Negs, Seed)
-    ->  foldl(join(L, C, Negs), Fs, [F]-Seed, Used0-S0),
-        reverse(Used0, Used), general(S0, C, Negs, S),
+    ->  general(Seed, C, Negs, S), Used = [F],
         exclude(covered_by(L, S), Fs, Rest),
         Rules = [rule(C, K0, S, Used)|More], K1 is K0 + 1, cover(Rest, C, L, Negs, K1, K, More)
     ;   cover(Fs, C, L, Negs, K0, K, Rules)
@@ -71,14 +71,6 @@ cover([F|Fs], C, L, Negs, K0, K, Rules) :-
 seed(L, F, C, Negs, S) :-
     findall(N-T, ( train(L, F, T0), named_vars(T0, T), length(T, N) ), Ns), msort(Ns, Sorted),
     reverse(Sorted, Desc), member(_-S, Desc), enough(C, S), specific(S, Negs), !.
-join(L, C, Negs, F, Used-S0, Used1-S) :-
-    (   covered_by(L, S0, F) -> Used1 = [F|Used], S = S0
-    ;   findall(N-G, ( train(L, F, T0), named_vars(T0, T), copy_term(S0, P),
-                       shared([P, T], G), enough(C, G), specific(G, Negs), length(G, N) ), Gs),
-        Gs \== [], msort(Gs, Sorted), last(Sorted, _-S)
-    ->  Used1 = [F|Used]
-    ;   Used1 = Used, S = S0
-    ).
 % the other end (version space): the most general rule below S, the same relation with the rule unbound
 % over S itself: the shortest sub-pattern of S's logic tokens (operands are the language's spelling) that
 % parses no negative under the node; S itself when none is found within the budget. At the root it keeps

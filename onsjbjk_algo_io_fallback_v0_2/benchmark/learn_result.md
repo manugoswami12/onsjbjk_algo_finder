@@ -108,3 +108,33 @@ Same frozen key (`benchmark/learn_staged_truth.json`), learned from Python only 
 - The own Lisp Hanoi `(towers (1- n) from spare to) (format ...) (towers (1- n) spare to from)` reaches `search>backtracking`, while the same logic in Python and C reaches `numeric>recurrence>double_recursion`.
 - Cause: ECL compiles the second, tail-position self-call as a jump to the function start (a loop). AP13's `idiom(backtracking)` then sees "a self-call inside a guarded loop", and `rec_class(double_recursion)` sees only one self-call.
 - The token streams already undo this (the `tail_loop` fact of `ecl_norm.pl`); the tree does not.
+
+## Round 3, run 2: alternatives as Prolog clauses (user: `p(X) :- y(X).  p(X) :- z(X), y(X).`)
+
+**Changes:**
+- **Learner:** one clause per Python file; files are never merged. A file that an earlier clause already covers gets none. Hanoi becomes `learned_branch([numeric,recurrence,double_recursion], towers_of_hanoi, r1) --> pattern([output]).`, which covers both Hanoi files.
+- **Tree:** a second clause for `numeric>recurrence>double_recursion` in `families_v02.pl`: a self-call inside the loop ECL made from the tail self-call (`tail_loop`). The own Lisp Hanoi now reaches `double_recursion`, and `tests/test_learning.py` passes again.
+
+| Stage | Precision | Recall | Result |
+|---|---|---|---|
+| 3 | 2/2 = 100% | 2/2 = 100% | PASS |
+| 15 | 2/4 = 50% | 2/8 = 25% | FAIL: stopped |
+
+**Stage 15:**
+
+| Unit | Expected | Node reached | Answer |
+|---|---|---|---|
+| ackermann-function-4.c | ackermann | search>backtracking | WRONG: n_queens r2 (empty condition under backtracking) |
+| sorting-algorithms-heapsort.lisp | (negative) | …>comparison_sort>heap (a known sort) | WRONG: levenshtein r2 at the ancestor sequence_query |
+| n-queens-problem-3.hs | n_queens | root | UNKNOWN |
+| matrix-multiplication-1.lisp | matrix_multiplication | sequence_query, sequence_transformation | UNKNOWN |
+| caesar-cipher-2.lisp | caesar_cipher | root | UNKNOWN |
+| run-length-encoding.lisp | run_length_encoding | sequence_query, sequence_transformation | UNKNOWN |
+| knapsack-problem-0-1.c | knapsack_01 | marking>table_fill | UNKNOWN |
+
+The other 8 units are right: Josephus (Lisp) and Hanoi (C) found, and 6 negatives correctly given no answer.
+
+**Seen, not fixed (stopped):**
+- **Ancestors are tried too.** The applying step goes up from the deepest node, so a file that reached a known leaf (heapsort's `heap`) was claimed by a learned child of an ancestor. In the tree, a file at a deeper known branch is not a sibling of that branch.
+- **The same algorithm at different nodes across languages.** Ackermann in C reaches `search>backtracking` (a self-call inside a guarded loop); the Python Ackermann files reach only `numeric`. N-queens in Haskell reaches no node, while in Python it reaches backtracking.
+- **Empty conditions are too general.** An empty condition under a node (n_queens under backtracking) names every program at that node, and the Python training set had no other program there.
