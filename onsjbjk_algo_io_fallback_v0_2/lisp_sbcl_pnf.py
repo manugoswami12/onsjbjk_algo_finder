@@ -113,6 +113,167 @@ def _make_class():
             # (map 'list fn seq): like mapcar
             return self.f_mapcar(a[1:3])
 
+        def f_loop(self, a):
+            """ANSI LOOP subset with the standard's order: clauses initialise in sequence (each
+            numeric/list clause tests for termination right after), the body runs, then the clauses
+            step in sequence, each followed by its test."""
+            KW = {'for', 'as', 'with', 'repeat', 'while', 'until', 'do', 'doing', 'collect', 'collecting',
+                  'append', 'appending', 'sum', 'summing', 'count', 'counting', 'maximize', 'maximizing',
+                  'minimize', 'minimizing', 'finally', 'return', 'when', 'if', 'unless', 'always', 'never',
+                  'thereis', 'into', 'and', 'initially'}
+            toks = list(a)
+            if not toks or not isinstance(toks[0], Sym) or str(toks[0]) not in KW:
+                return super().f_loop(a)            # simple (loop forms...) = infinite loop with return
+            k = lambda t: str(t).lower() if isinstance(t, Sym) else None
+            init, step, pre_tests, body, fin = [], [], [], [], []
+            acc, acc_kind, result = None, None, None
+            i = 0
+
+            def take():
+                nonlocal i
+                x = toks[i]
+                i += 1
+                return x
+
+            def accumulate(kind, e, cond=None):
+                nonlocal acc, acc_kind
+                s, v = self.compile(e)
+                if acc is None:
+                    acc = self.fresh()
+                    acc_kind = kind
+                    start = {'collect': ('list', []), 'append': ('list', []), 'sum': ('int', 0), 'count': ('int', 0),
+                             'maximize': ('none',), 'minimize': ('none',)}[kind]
+                    init.insert(0, ('assign', ('var', acc), start))
+                A = ('var', acc)
+                upd = {'collect': ('op', 'add', [A, ('list', [v])]), 'append': ('op', 'add', [A, v]),
+                       'sum': ('op', 'add', [A, v]), 'count': ('cond', v, ('op', 'add', [A, ('int', 1)]), A),
+                       'maximize': ('cond', ('op', 'or', [('op', 'eq', [A, ('none',)]), ('op', 'gt', [v, A])]), v, A),
+                       'minimize': ('cond', ('op', 'or', [('op', 'eq', [A, ('none',)]), ('op', 'lt', [v, A])]), v, A)}[kind]
+                st = s + [('assign', A, upd)]
+                return [('if', cond, ('seq', st), ('skip',))] if cond is not None else st
+
+            def clause(cond=None):
+                """One body clause (after when/if/unless optionally); returns statements."""
+                w = k(take())
+                if w in ('do', 'doing'):
+                    out = []
+                    while i < len(toks) and isinstance(toks[i], list):
+                        sb, _ = self.compile(take())
+                        out += sb
+                    return [('if', cond, ('seq', out), ('skip',))] if cond is not None else out
+                if w in ('collect', 'collecting', 'append', 'appending', 'sum', 'summing', 'count', 'counting',
+                         'maximize', 'maximizing', 'minimize', 'minimizing'):
+                    kind = w.replace('ing', '').replace('collect', 'collect')
+                    kind = {'collect': 'collect', 'append': 'append', 'sum': 'sum', 'summ': 'sum', 'count': 'count',
+                            'maximiz': 'maximize', 'maximize': 'maximize', 'minimiz': 'minimize',
+                            'minimize': 'minimize'}[kind]
+                    e = take()
+                    if i < len(toks) and k(toks[i]) == 'into':
+                        raise ValueError('into')
+                    return accumulate(kind, e, cond)
+                if w == 'return':
+                    s2, v = self.compile(take())
+                    st = s2 + [('return', v)]
+                    return [('if', cond, ('seq', st), ('skip',))] if cond is not None else st
+                raise ValueError('clause ' + str(w))
+            try:
+                while i < len(toks):
+                    w = k(toks[i])
+                    if w in ('for', 'as'):
+                        take()
+                        v = str(take())
+                        how = k(take())
+                        if how == '=':
+                            s1, v0 = self.compile(take())
+                            init += s1 + [('assign', ('var', v), v0)]
+                            if i < len(toks) and k(toks[i]) == 'then':
+                                take()
+                                s2, v1 = self.compile(take())
+                                step += s2 + [('assign', ('var', v), v1)]
+                            else:
+                                step += s1 + [('assign', ('var', v), v0)]
+                        elif how in ('from', 'upfrom', 'downfrom'):
+                            s1, lo = self.compile(take())
+                            init += s1 + [('assign', ('var', v), lo)]
+                            down = how == 'downfrom'
+                            limit, inclusive, by = None, True, ('int', 1)
+                            while i < len(toks) and k(toks[i]) in ('to', 'upto', 'below', 'downto', 'above', 'by'):
+                                kw = k(take())
+                                s3, e3 = self.compile(take())
+                                init += s3
+                                if kw == 'by':
+                                    by = e3
+                                else:
+                                    lim = self.fresh()
+                                    init.append(('assign', ('var', lim), e3))
+                                    limit, inclusive = ('var', lim), kw in ('to', 'upto', 'downto')
+                                    down = down or kw in ('downto', 'above')
+                            V = ('var', v)
+                            step.append(('assign', V, ('op', 'sub' if down else 'add', [V, by])))
+                            if limit is not None:
+                                op = ('lt' if inclusive else 'le') if down else ('gt' if inclusive else 'ge')
+                                test = ('if', ('op', op, [V, limit]), 'break', ('skip',))
+                                init.append(test)
+                                step.append(test)
+                        elif how in ('in', 'across'):
+                            s1, q = self.compile(take())
+                            qv, ix = self.fresh(), self.fresh()
+                            init += s1 + [('assign', ('var', qv), q), ('assign', ('var', ix), ('int', 0))]
+                            if q[0] == 'var':                     # list parameter probe (battery kind)
+                                init.insert(0, ('expr', ('call', 'len', [q])))
+                            test = ('if', ('op', 'ge', [('var', ix), ('call', 'len', [('var', qv)])]), 'break', ('skip',))
+                            get = ('assign', ('var', v), ('elem', ('var', qv), ('var', ix)))
+                            init += [test, get]
+                            step += [('assign', ('var', ix), ('op', 'add', [('var', ix), ('int', 1)])), test, get]
+                        else:
+                            raise ValueError('for ' + str(how))
+                    elif w == 'with':
+                        take()
+                        v = str(take())
+                        if i < len(toks) and k(toks[i]) == '=':
+                            take()
+                            s1, v0 = self.compile(take())
+                        else:
+                            s1, v0 = [], ('bool', 'false')
+                        init += s1 + [('assign', ('var', v), v0)]
+                    elif w == 'repeat':
+                        take()
+                        s1, n = self.compile(take())
+                        c = self.fresh()
+                        init += s1 + [('assign', ('var', c), n),
+                                      ('if', ('op', 'le', [('var', c), ('int', 0)]), 'break', ('skip',))]
+                        step += [('assign', ('var', c), ('op', 'sub', [('var', c), ('int', 1)])),
+                                 ('if', ('op', 'le', [('var', c), ('int', 0)]), 'break', ('skip',))]
+                    elif w in ('while', 'until'):
+                        take()
+                        s1, c = self.compile(take())
+                        body += s1 + [('if', c if w == 'until' else ('op', 'not', [c]), 'break', ('skip',))]
+                    elif w in ('when', 'if', 'unless'):
+                        take()
+                        s1, c = self.compile(take())
+                        body += s1 + clause(('op', 'not', [c]) if w == 'unless' else c)
+                    elif w == 'finally':
+                        take()
+                        while i < len(toks) and isinstance(toks[i], list):
+                            f = take()
+                            if f and k(f[0]) == 'return':
+                                s1, result = self.compile(f[1]) if len(f) > 1 else ([], ('bool', 'false'))
+                                fin += s1
+                            else:
+                                s1, _ = self.compile(f)
+                                fin += s1
+                    else:
+                        body += clause()
+            except (ValueError, IndexError):
+                return [('unsupported', 'loop_clause')], ('none',)
+            first = self.fresh()
+            loop = [('assign', ('var', first), ('bool', 'true')),
+                    ('while', ('bool', 'true'), ('seq', [
+                        ('if', ('var', first), ('seq', init), ('seq', step)),
+                        ('assign', ('var', first), ('bool', 'false'))] + body))]
+            value = result if result is not None else (('var', acc) if acc else ('bool', 'false'))
+            return loop + fin, value
+
         def f_member(self, a):
             s, vs = self.many(a[:2])
             return s, ('op', 'in', vs)

@@ -241,7 +241,7 @@ class Parser:
 # ------------------------------------------------------------------------------- Core -> PNF
 def dictish(e):
     head = e[1] if e[0] == 'app' else e
-    return head[0] == 'v' and (head[1].startswith('$') or head[1] in ('void#', 'realWorld#'))
+    return head[0] == 'v' and (re.match(r'\$[A-Za-z]', head[1]) is not None or head[1] in ('void#', 'realWorld#'))
 
 
 def strip_lams(e):
@@ -281,7 +281,7 @@ class Lower:
         self.listy = set()
 
     def fresh(self):
-        return f'$h{next(self.tmp)}'
+        return f'h${next(self.tmp)}'
 
     def run(self):
         for name, e in self.binds:
@@ -419,6 +419,8 @@ class Lower:
             return [], ('bool', 'false')
         if n in ('()', 'void#'):
             return [], ('none',)
+        if n in self.alias:
+            return self.compile(self.alias[n])
         if n in self.local:
             lname, free = self.local[n]
             if not free and n not in self.locfun_arity:
@@ -456,12 +458,24 @@ class Lower:
         for n, b in binds:
             if n.startswith('$') or n in self.locfun_arity and (n, b) in lifted:
                 continue
+            if not is_join and self.alias_ok(b):   # pure: a partial application / name is inlined
+                self.alias[n] = b
+                continue
             if b[0] == 'lam' and not strip_lams(b)[0]:
                 b = strip_lams(b)[1]
             s, v = self.compile(b)
             stmts += s + [('assign', ('var', n), v)]
         s, v = self.compile(body)
         return stmts + s, v
+
+    alias = {}
+
+    def alias_ok(self, b):
+        if b[0] == 'v':
+            return not re.search(r'_[a-zA-Z0-9]{3,5}$', b[1])           # a global or builtin name
+        return (b[0] == 'app' and b[1][0] == 'v' and
+                (b[1][1] in BIN or b[1][1] in CALL1 or b[1][1] in CALL2 or b[1][1] in ('.', 'flip', 'rem', 'mod', 'div')
+                 or b[1][1] in self.globals) and all(dictish(x) for x in b[2]))
 
     def fresh_fun(self, n):
         return f'{base(n)}${next(self.tmp)}'
@@ -526,11 +540,15 @@ class Lower:
     def app(self, head, args):
         if head[0] == 'app':                       # ((f a) b)
             return self.app(head[1], [a for a in head[2] if not dictish(a)] + args)
+        if head[0] == 'let':
+            return self.compile(('let', head[1], head[2], ('app', head[3], args)))
         if head[0] != 'v':
             if head[0] == 'lam':
                 return self.beta(head, args)
             raise _Unsupported('computed_head')
         h = head[1]
+        if h in self.alias:
+            return self.apply(self.alias[h], args)
         if not args:
             return self.var(h)
         if h in ('$', '$!') and len(args) >= 2:
@@ -633,7 +651,7 @@ class Lower:
             x = self.fresh()
             sb, vb = self.apply(args[0], [('v', x)])
             if sb:
-                raise _Unsupported(h + '_with_statements')
+                return self.loop_over(h, q, x, sb, vb, s)
             if h == 'map':
                 return s, ('comp', x, q, ('bool', 'true'), vb)
             return s, ('comp', x, q, vb, ('var', x))
@@ -647,7 +665,7 @@ class Lower:
             x = self.fresh()
             sb, vb = self.apply(args[0], [('v', x)])
             if sb:
-                raise _Unsupported(h + '_with_statements')
+                return self.loop_over(h, q, x, sb, vb, s)
             return s, ('call', h, [('comp', x, q, ('bool', 'true'), vb)])
         if h in ('fst', 'snd') and len(args) == 1:
             s, (q,) = self.many(args)
@@ -662,6 +680,18 @@ class Lower:
         raise _Unsupported('function_' + h)
 
     params_fn = set()
+
+    def loop_over(self, h, q, x, sb, vb, s):
+        """map/filter/all/any whose element function needs statements: an explicit loop."""
+        acc = self.fresh()
+        A = ('var', acc)
+        start, step = {'map': (('list', []), [('assign', A, ('op', 'add', [A, ('list', [vb])]))]),
+                       'filter': (('list', []), [('if', vb, ('assign', A, ('op', 'add', [A, ('list', [('var', x)])])),
+                                                  ('skip',))]),
+                       'all': (('bool', 'true'), [('if', vb, ('skip',), ('assign', A, ('bool', 'false')))]),
+                       'any': (('bool', 'false'), [('if', vb, ('assign', A, ('bool', 'true')), ('skip',))])}[h]
+        self.mark_list(q)
+        return s + [('assign', A, start), ('for_each', x, q, ('seq', sb + step))], A
 
     def beta(self, lam, args):
         params, body = strip_lams(lam)
@@ -678,6 +708,8 @@ class Lower:
         """Apply a function-valued Core expression (operator section, name, lambda) to args."""
         if f[0] == 'lam':
             return self.beta(f, args)
+        if f[0] == 'let':
+            return self.compile(('let', f[1], f[2], ('app', f[3], args)))
         if f[0] == 'v':
             return self.app(f, args)
         if f[0] == 'app':
