@@ -271,3 +271,14 @@ Fibonacci is chosen, and its label is not one of the 12 new tasks, so the answer
 - The C file lacks Fibonacci's `op(add)`, but a share of matched tokens cannot weigh one decisive missing token.
 
 (Stage 15 ran in the same command and is not counted. For information: precision 3/3, learnable recall 3/6; Ackermann-C and Knapsack-C are found again, with no wrong answers.)
+
+## Run 10: token-based learning removed (docs/04 section 14)
+
+A learned branch is the tree node the Python files reach (relations) and holds by input->output behaviour; nothing is counted or matched as tokens. Learned: one branch per label and node (110 of 166 training files reach a node; the others are at the root).
+
+**Stage 3: precision 1/1 = 100%, learnable recall 1/2 = 50%: FAIL.** Stopped.
+- josephus-problem-1.lisp: ok (behaviour equal to josephus-problem-2.py, at `josephus_recurrence`).
+- hailstone-sequence-1.hs: ok(neg).
+- **towers-of-hanoi-1.c: UNKNOWN.** It reaches the right node, `numeric>recurrence>double_recursion` (the branch towers_of_hanoi is there), but no Python Hanoi file's input->output behaviour equals it, and no logic condition exists any more.
+
+The missing piece is a relation that separates two algorithms at the same node. AP13's relations give Hanoi and Fibonacci the same facts there: `rec_class(double_recursion)`, `role(stepper)`.

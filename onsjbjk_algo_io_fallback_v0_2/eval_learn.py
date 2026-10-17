@@ -44,7 +44,7 @@ def main():
         if a.staged:                              # augmented Python examples (doc 04 section 11)
             train.update({ROOT / f: lab for f, lab in augment().items()})
         count = learn_apply.learn(train)
-        print(f'learned from {len(train)} Python files ({sum(1 for v in count.values() if v)} with streams) '
+        print(f'learned from {len(train)} Python files ({sum(1 for v in count.values() if v)} reach a tree node) '
               f'-> {learn_apply.RULES}')
         return None
     if a.lang == 'hard':
@@ -59,8 +59,8 @@ def main():
 
 def answer(path, labels, io):
     """(labels, tags, learnable): the learned labels holding at the file's deepest node, else the io
-    fallback; learnable: the labels some learned rule could recognise in this file (a branch at its node,
-    or a runnable Python reference while the file itself has a behaviour). None when the file has no
+    fallback; learnable: the labels a learned branch or the fallback could recognise in this file (a
+    runnable Python reference of the label while the file itself has a behaviour). None when the file has no
     algorithm of its own (a Lisp file defining no function: output zero)."""
     if path.suffix == '.lisp' and ecl_logic.NOCODE in ecl_logic.families(path):
         return None
@@ -71,12 +71,12 @@ def answer(path, labels, io):
         by_fn = {}
     io_labels = {lab for v in by_fn.values() for lab in v} & labels
     try:
-        nodes, found, branch_at = learn_apply.apply(path, io_labels=io_labels)
+        nodes, found, _ = learn_apply.apply(path, io_labels=io_labels)
     except ERRORS as exc:
         print(f'  ({path.name}: {type(exc).__name__}: {str(exc)[:100]})')
-        nodes, found, branch_at = [], [], set()
+        nodes, found = [], []
     runnable = {io.labels[rel] for rel, _ in io.cat} if any(d['discriminative'] for d in me.values()) else set()
-    learnable = (branch_at | runnable) & labels
+    learnable = runnable & labels
     held = {lab for _, lab, _ in found}           # every learned label (known tasks' too) that holds
     tags = [f"[{' '.join(nodes) or 'root'}]"] + sorted(f'learned:{lab}:{r}@{c or "root"}' for c, lab, r in found)
     if len(held) > 1:                             # several learned rules hold: no guess

@@ -1,44 +1,17 @@
-/* v0.2 shared logic-flow tokenizer (doc 03 section 9, doc 04): the neutral facts of a function
+/* v0.2 logic-flow tokenizer of the Lisp fallback (doc 03 section 9): the neutral facts of a function
    (any language: AP13 lowerers, or the ECL export) written as a token stream in source order:
    tests (guards), assigned values, calls, loops, returns; a call of a function of the same file is
    a LINK whose statements are spliced in between enter(G) and leave(G) (at most 4 deep, acyclic).
-   Used by fallback_main.pl (fallback rules) and flow_main.pl / learn_dcg.pl (learned rules).
+   Used by fallback_main.pl (the fallback rules, doc 03 section 9) only.
 */
 :- discontiguous stmt_term/3, tokens//4.
 :- dynamic func/3, param/3, stmt/4, loop/3, in_loop/2, loop_var/2, loop_cond/2, loop_iter/2, guard/3, tail_loop/1,
            assign/3, par_assign/3, call_at/3, ret/2, family/3.
 
 ... --> [] | [_], ... .
-% find(T): the next token that T matches (greedy; the tokens of a learned rule are independent, so the
+% find(T): the next token that T matches (greedy; the tokens of a fallback rule are independent, so the
 % first occurrence is as good as any and no backtracking over gaps is needed)
 find(T) --> [X], ( { \+ X \= T } -> { X = T } ; find(T) ).
-% pattern(S): the tokens of S in order, with gaps: the form of every fallback rule. One relation, run
-% both ways (doc 04): S known -> does a stream hold it; S unbound -> the tokens streams share (learn_dcg.pl)
-pattern([]) --> ... .
-pattern([T|Ts]) --> next(T), pattern(Ts).
-% a ground token is matched at its first occurrence (earliest match is complete for a subsequence of
-% ground symbols); a token with a variable (a helper's name) may bind at any occurrence
-next(T) --> { ground(T) }, !, find(T).
-next(T) --> ..., [T].
-% pattern with the skeleton unbound, every stream known (learn: the tokens streams share; apply: how
-% closely a file holds a clause's example): the tokens of the first stream taken in order when
-% every other stream holds them after its previous match (the streams in lockstep, nothing skipped
-% first). The longest S found within a fixed inference budget is the most specific (AP13 generalize's
-% budget, call_with_inference_limit/3).
-shared(Streams, S) :-
-    nb_setval(best, 0-[]),
-    catch(call_with_inference_limit(( lockstep(Streams, S0), length(S0, N), nb_getval(best, B-_), N > B,
-                                      nb_setval(best, N-S0), fail ; true ), 2000000, _), _, true),
-    nb_getval(best, _-S), S \== [].
-lockstep([First|Others], S) :- take(First, Others, S).
-take(_, _, []).
-take([T|Ts], Others, [T|S]) :- maplist(after(T), Others, Rest), take(Ts, Rest, S).
-take([_|Ts], Others, S) :- take(Ts, Others, S).
-after(T, Stream, Rest) :- phrase(next(T), Stream, Rest).
-% at least the tokens that say something about the logic (not only operands and markers)
-logic_token(T) :- nonvar(T), \+ memberchk(T, [param, local, other, unknown, test, empty, elem, single]),
-    \+ T = int(_), \+ T = enter(_), \+ T = leave(_), \+ T = link(_).
-
 % the root function: its statements in source order (assigned values, calls, returns); a linked
 % function contributes its result values (link//4)
 result_tokens(F, Ts) :- body_terms(F, Vs), Vs \== [], b_setval(inlined, []), phrase(terms_tokens(F, [F], 4, Vs), Ts).

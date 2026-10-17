@@ -1,6 +1,6 @@
-"""Learning (doc 04 section 8): learn new algorithms from labelled Python files as new branches of the tree,
-at the node their logic reaches (prolog/learn_dcg.pl), and apply them to unseen files of any language,
-deepest reached node first (prolog/learn_apply.pl). Deterministic; nothing is run."""
+"""Learning (doc 04 section 14): learn new algorithms from labelled Python files as branches of the tree at the
+node their logic reaches (prolog/learn_tree.pl), holding where a file there has their input->output
+behaviour; apply them at a test file's deepest node (prolog/learn_apply.pl). Deterministic; nothing is run."""
 from __future__ import annotations
 
 import tempfile
@@ -18,28 +18,26 @@ def prolog_path(node: str) -> str:
 
 
 def learn(labelled: dict[Path, str | None], rules: Path = RULES) -> dict[Path, int]:
-    """Write learned branches for every label from {file: label or None (negative)}; {file: streams}."""
+    """Write the learned branches from {file: label or None (negative)}; {file: number of tree nodes}."""
     count, lines = {}, []
     for path, label in sorted(labelled.items()):
         try:
-            nodes, found = learn_facts.tree(path)
+            found = learn_facts.nodes(path)
         except ERRORS:
-            nodes, found = [], []
+            found = []
         count[path] = len(found)
-        lab = 'none' if label is None else label
-        lines += [f"train({lab}, '{path.name}', {tokens})." for _, tokens in found]
-        lines += [f"reach('{path.name}', {prolog_path(n)})." for n in nodes]
+        lines.append(f"train({'none' if label is None else label}, '{path.name}').")
+        lines += [f"reach('{path.name}', {prolog_path(n)})." for n in found]
     with tempfile.TemporaryDirectory(prefix='v02_learn_') as td:
-        f = Path(td) / 'streams.pl'
-        f.write_text(':- discontiguous train/3, reach/2.\n' + '\n'.join(lines) + '\n', encoding='utf-8')
-        learn_facts.env_run.swipl('learn_main', [PROLOG / 'learn_dcg.pl'], [str(f), str(rules)], timeout=3600)
+        f = Path(td) / 'reach.pl'
+        f.write_text(':- discontiguous train/2, reach/2.\n' + '\n'.join(lines) + '\n', encoding='utf-8')
+        learn_facts.env_run.swipl('learn_main', [PROLOG / 'learn_tree.pl'], [str(f), str(rules)], timeout=3600)
     return count
 
 
 def apply(path: Path, rules: Path = RULES, io_labels=()):
-    """([tree nodes of the file], [(node, label, rule)] of every learned rule holding at its deepest node,
-    {labels with a learned branch at that node}); io_labels: the training labels whose input->output
-    behaviour the file has (for learned_branch/4)."""
+    """([tree nodes of the file], [(node, label, rule)] of the learned branches holding at its deepest node,
+    {labels with a learned branch there}); io_labels: the training labels whose behaviour the file has."""
     kind, text = learn_facts.tree_facts(path)
     if not text.strip():
         return [], [], set()

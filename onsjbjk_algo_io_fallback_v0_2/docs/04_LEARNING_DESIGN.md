@@ -255,3 +255,21 @@ Also corrected: the ambiguity check counts every learned label that holds (known
 ```prolog
 closeness(C, L, R, Streams, Sc) :- learned_ref(C, L, R, Ref), ..., shared([Ref, Ls], G), length(G, K), Sc is K / |Ref|.
 ```
+
+## 14. Token-based learning removed (user: "clear the token nonsense"; the method is not probabilistic)
+
+Sections 3 (pseudocode of rounds 1-2), 7, 8 (the branch condition), 9 (the branch case), 12 (the token rows) and 13 are superseded. Learned conditions were subsequences of logic-flow tokens, and in run 9 a share of matched tokens. That is not logic tracing, and it was my design, not the method.
+
+Removed:
+- `prolog/learn_dcg.pl`, `prolog/flow_main.pl`, `prolog/learned_rules.pl`, the token parts of `tree_main.pl` and `learn_apply.pl`;
+- the learning predicates of `flow_tokens.pl` (`pattern//1`, `shared/2`, closeness).
+
+Learning is now only the two deterministic parts of the method:
+- **Logic.** The tree node the Python file reaches: the normal process's relations (AP12, AP13 families, `families_v02.pl`), `prolog/tree_main.pl`.
+- **Input->output.** The branch at that node holds where a file there has the label's behaviour: `learned_branch(C, L, io, io) :- io_equal(L).` (`prolog/learn_tree.pl`).
+
+Applying uses the deepest node(s), collects all answers (findall), and gives UNKNOWN for several labels.
+
+Kept from section 12, since they are conversions of facts, not tokens: the AP13 synonyms for ECL names, the collect rewrite through the cursor copy, dead compiler temporaries, and the 2-D write target. `tests/test_uniform.py` now compares tree nodes.
+
+`flow_tokens.pl` remains only for the separate Lisp fallback of doc 03 section 9 (a DCG over the normal output, as asked then).
