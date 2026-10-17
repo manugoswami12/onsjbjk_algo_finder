@@ -31,7 +31,7 @@ ecl_bin(ecl_greater, gt).        ecl_bin(ecl_greatereq, ge).       ecl_bin(ecl_n
 ecl_bin(ecl_eql, eq).            ecl_bin(ecl_equal, eq).           ecl_bin(ecl_eq, eq).
 ecl_box(F) :- memberchk(F, [ecl_make_fixnum, ecl_fixnum, ecl_make_integer, ecl_to_fixnum, ecl_make_bool,
                             ecl_to_bool, ecl_make_int, ecl_to_int, ecl_make_cint]).
-ecl_aref(F) :- memberchk(F, [ecl_aref_unsafe, ecl_aref1, ecl_aref, ecl_elt, ecl_char]).
+ecl_aref(F) :- memberchk(F, [ecl_aref_unsafe, ecl_aref1, ecl_aref, ecl_elt, ecl_char, cl_char, cl_schar, cl_elt, cl_aref]).
 ecl_aset(F) :- memberchk(F, [ecl_aset_unsafe, ecl_aset1, ecl_aset, ecl_elt_set, ecl_char_set]).
 
 ecl_op(call(F, [A, B]), op(O, [A, B])) :- ecl_bin(F, O), !.
@@ -47,10 +47,14 @@ ecl_op(call(ecl_evenp, [X]), op(eq, [op(mod, [X, int(2)]), int(0)])) :- !.
 ecl_op(call(ecl_negate, [X]), op(neg, [X])) :- !.
 ecl_op(call(ecl_length, [X]), call(len, [X])) :- !.
 ecl_op(call(ecl_number_compare, [A, B]), call(compare, [A, B])) :- !.
-ecl_op(call(ecl_car, [X]), elem(X, int(0))) :- !.
-ecl_op(call(ecl_cdr, [X]), tail(X, 1)) :- !.
-ecl_op(call(ecl_cons, [A, B]), cons(A, B)) :- !.
+ecl_op(call(F, [X]), elem(X, int(0))) :- memberchk(F, [ecl_car, '_ecl_car', 'ECL_CONS_CAR', cl_car, cl_first]), !.
+ecl_op(call(F, [X]), tail(X, 1)) :- memberchk(F, [ecl_cdr, '_ecl_cdr', 'ECL_CONS_CDR', cl_cdr, cl_rest]), !.
+ecl_op(call(F, [X]), elem(X, int(1))) :- memberchk(F, [ecl_cadr, cl_cadr, cl_second]), !.
+ecl_op(call(F, [A, B]), cons(A, B)) :- memberchk(F, [ecl_cons, 'CONS', cl_cons]), !.
 ecl_op(call(ecl_list1, [X]), list([X])) :- !.
+ecl_op(call(cl_list, [int(_)|As]), list(As)) :- !.
+ecl_op(call(ecl_endp, [X]), op(not, [X])) :- !.                  % (endp l): l is empty
+ecl_op(call(F, [int(_), Q, I]), elem(Q, I)) :- memberchk(F, [cl_bit, cl_sbit, cl_char, cl_schar]), !.   % (bit v i)
 ecl_op(call('Null', [X]), op(not, [X])) :- !.
 ecl_op(call(ecl_funcall, [_, A, B]), op(lt, [A, B])) :- !.      % comparator: ascending assumed
 % Common Lisp library functions; ECL passes the argument count first to the variadic cl_ ones
@@ -236,6 +240,10 @@ branch_guard(Items, Loops, K, C, Pol) :-
     ;   T1 is T - 1, nth1(T1, Items, it(_, _, goto(_, none, none))), goto_at(Items, T1, _, _, _, T2), T2 > T,
         ( innermost(Loops, I, lp(_, G2)), T2 > G2 -> End2 is G2 + 1 ; End2 = T2 ),
         T < K, K < End2, Pol = P
+    ;   T1 is T - 1, nth1(T1, Items, it(_, _, st(ret, _))),          % then-part returns: after the
+        \+ ( goto_at(Items, I2, N, _, _, _), I2 \== I, nth1(I, Items, it(_, _, goto(N, _, _))) ),   % only jump to T
+        ( innermost(Loops, I, lp(_, G3)) -> End3 is G3 + 1 ; length(Items, Len), End3 is Len + 1 ),
+        T < K, K < End3, Pol = P
     ).
 
 % continuation condition of a loop from its exit: preferably the test just before the back edge
@@ -254,10 +262,14 @@ holds(C, false, op(not, [C])).
 cont_when_not(C, true, op(not, [C])).
 cont_when_not(C, false, C).
 
-% the counter the loop condition tests and the body steps by a constant
+% the counter the loop condition tests, stepped by a loop invariant (a basic induction variable:
+% x = x + c, c a constant or a variable the loop never writes, as in a sieve's stride)
 loop_counter(Facts, Cont, X) :-
-    sub_term(V, Cont), compound(V), V = var(X), member(assign(_, var(X2), op(O, [var(X3), int(_)])), Facts),
-    X2 == X, X3 == X, memberchk(O, [add, sub]), !.
+    sub_term(V, Cont), compound(V), V = var(X), member(assign(_, var(X2), op(O, [var(X3), Step])), Facts),
+    X2 == X, X3 == X, memberchk(O, [add, sub]), invariant_step(Facts, Step), !.
+invariant_step(_, int(_)) :- !.
+invariant_step(Facts, var(C)) :- \+ ( member(assign(_, var(C2), _), Facts), C2 == C ),
+    \+ ( member(par_assign(_, Ts, _), Facts), member(T, Ts), T == var(C) ).
 
 % ----- assembling the new facts of one function ---------------------------------------------
 ecl_function(F) :-

@@ -84,6 +84,7 @@ def identify(lisp_path):
 | `ecl_compile.py` | `ecl_units(path)`: one ECL C unit per defun (reuses `ecl_filter` reader, prelude, shim) |
 | `ecl_facts.py` | tree rewriting with tree-sitter, per unit: labels -> `ecl_label(N);`, gotos -> `ecl_goto(N);`, `(ecl_floor2(a,b), values[1])` -> `ecl_rem(a,b)`, `ecl_function_dispatch(env, VV[k])(n, args) /* NAME */` -> `name(args)`, funcall of a variable -> `ecl_funcall(f, args)`; then the unchanged AP13 lowerer |
 | `prolog/ecl_norm.pl` | 1 operator table; 2 symbolic execution of basic blocks (temporaries -> values, writes -> assign, or one `par_assign` when a later write reads a value replaced earlier in the block); 3 back-edge loops with `loop_cond` from the exit test and `loop_var` = tested counter stepped by a constant; 4 branch guards by control dependence (then / else of a forward conditional goto); 5 self-calls with parameter updates and the recursion loop |
+| `prolog/families_v02.pl` | v0.2 branch rules over the neutral relations (AP13 unchanged): an exchange position decided by a comparison of the sequence's values -> comparison_sort / select_extreme; pair recurrence through an in-loop reaching definition |
 | `prolog/family_to_v02.pl` | family path -> v0.2 branch (range accumulation: product -> factorial_like, sum -> series_sum; double recursion on n-1, n-2 -> fibonacci_like) |
 | `prolog/ecl_main.pl` | loads the frozen AP12 router, AP13 `family_main.pl`, the two files above; `ecl_main`, `ecl_dump` |
 | `ecl_logic.py` | `families(path)`: units -> facts -> swipl (AP13 `env_run.swipl`, stderr = failure) |

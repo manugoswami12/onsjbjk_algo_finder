@@ -77,3 +77,17 @@
 (defun rfact (n) (reduce #'* (loop for i from 1 to n collect i)))
 (defun rsum (n) (reduce #'+ (loop for i from 1 to n collect i)))
 (defun squares (n) (loop for i from 1 to n collect (* i i)))
+(defun fibl (n &aux (f0 0) (f1 1))
+  (if (< n 2) n
+      (loop for n from 2 to n for a = f0 then b and b = f1 then s for s = (+ a b) finally (return s))))
+(defun bsr (x v &optional (lo 0) (hi (1- (length v))))
+  (if (< hi lo) nil
+      (let ((m (floor (+ lo hi) 2)))
+        (cond ((> (aref v m) x) (bsr x v lo (1- m)))
+              ((< (aref v m) x) (bsr x v (1+ m) hi))
+              (t m)))))
+(defun bsieve (n)
+  (let ((s (make-array (1+ n) :element-type 'bit :initial-element 0)) (out nil))
+    (loop for p from 2 to n when (zerop (bit s p))
+          do (push p out) (loop for k from (* p p) to n by p do (setf (bit s k) 1)))
+    out))

@@ -12,6 +12,7 @@ initialiser (local functions LC<k>name are kept); each ECL unit is parsed on its
 from __future__ import annotations
 
 import bisect
+import re
 import tempfile
 from pathlib import Path
 
@@ -110,6 +111,45 @@ def closure_cells(root, src: bytes, comments: dict) -> dict:
     return cells
 
 
+def lisp_aliases(fn, src: bytes) -> dict:
+    """Two Lisp variables of one name (a parameter n and `loop for n ...`: ECL's v1n, v4n) stay two
+    variables: each later one is renamed v4n_1. Closure cells (v0<name>) alias on purpose."""
+    first, out = {}, {}
+
+    def walk(node):
+        if node.type == 'identifier':
+            ident = src[node.start_byte:node.end_byte].decode()
+            m = re.fullmatch(r'v([1-9]\d*)([A-Za-z]\w*)', ident)
+            if m:
+                if m.group(2) not in first:
+                    first[m.group(2)] = ident
+                elif first[m.group(2)] != ident and ident not in out:
+                    out[ident] = f'{ident}_{len(out) + 1}'
+        for child in node.children:
+            walk(child)
+    walk(fn)
+    return out
+
+
+def optional_parameters(fn, src: bytes) -> list[str] | None:
+    """&optional parameters of a variadic ECL function (`cl_narg narg, ..., ...`), in order: the
+    variables set from va_arg; None for an ordinary function."""
+    params = fn.child_by_field_name('declarator').child_by_field_name('parameters')
+    text = src[params.start_byte:params.end_byte].decode()
+    if 'cl_narg' not in text or '...' not in text:
+        return None
+    names, stack = [], [fn]
+    while stack:
+        node = stack.pop()
+        if node.type == 'assignment_expression':
+            right = node.child_by_field_name('right')
+            if src[right.start_byte:right.end_byte].decode().startswith('va_arg('):
+                left = node.child_by_field_name('left')
+                names.append((node.start_byte, src[left.start_byte:left.end_byte].decode()))
+        stack.extend(node.children)
+    return [n for _, n in sorted(names)]
+
+
 # a standard function passed as an object (#'*): its neutral operator name
 FUNCTION_OBJECT = {'*': 'mul', '+': 'add', '-': 'sub', '/': 'div', 'MAX': 'max', 'MIN': 'min', '<': 'lt',
                    '>': 'gt', '<=': 'le', '>=': 'ge', '=': 'eq'}
@@ -144,7 +184,22 @@ def marked_c(c_text: str) -> str:
 
     def render(node) -> str:
         if node.type == 'identifier':
-            return renames.get((node.start_byte, node.end_byte), raw(node))
+            ident = raw(node)
+            return renames.get((node.start_byte, node.end_byte), aliases.get(ident, ident))
+        if optional is not None and (node.start_byte, node.end_byte) != body:   # &optional: no va_arg prologue
+            if node.type == 'parameter_list':
+                kept = [raw(c) for c in node.named_children if c.type == 'parameter_declaration' and 'cl_narg' not in raw(c)]
+                return '(' + ', '.join([*kept, *(f'cl_object {n}' for n in optional)]) + ')'
+            if node.type == 'compound_statement' and 'va_arg(' in raw(node) and 'va_end' not in raw(node):
+                return ''
+            if node.type == 'expression_statement' and raw(node).startswith(('va_start', 'va_end')):
+                return ''
+            if node.type == 'declaration' and (raw(node).startswith('va_list') or any(
+                    raw(node).replace(' ', '') == f'cl_object{n};' for n in optional)):
+                return ''
+        if node.type == 'call_expression' and raw(node.child_by_field_name('function')) in variadic:
+            args = node.child_by_field_name('arguments').named_children[1:]     # the argument count goes
+            return f'{raw(node.child_by_field_name("function"))}({", ".join(render(a) for a in args)})'
         if node.type == 'subscript_expression' and raw(node).replace(' ', '') in cells:
             return cells[raw(node).replace(' ', '')]
         if node.type == 'labeled_statement':
@@ -167,9 +222,9 @@ def marked_c(c_text: str) -> str:
                 if target.type == 'call_expression' and raw(target.child_by_field_name('function')) == 'ECL_CONS_CDR':
                     cell = render(target.child_by_field_name('arguments').named_children[0])
                     return f'ecl_rplacd({cell}, {render(left.child_by_field_name("right"))})'
-            # (ecl_floor2(a,b), cl_env_copy->values[1]): the remainder, ECL's second value of floor
+            # (ecl_floor2(a,b), cl_env_copy->values[1]): the remainder, second value of floor / truncate
             left, right = node.children[0], node.children[2]
-            if (left.type == 'call_expression' and raw(left.child_by_field_name('function')) == 'ecl_floor2'
+            if (left.type == 'call_expression' and raw(left.child_by_field_name('function')) in ('ecl_floor2', 'ecl_truncate2')
                     and raw(right).replace(' ', '') == 'cl_env_copy->values[1]'):
                 return 'ecl_rem' + text(left.child_by_field_name('arguments'))
         if node.type == 'call_expression' and node.child_by_field_name('function').type == 'call_expression':
@@ -183,13 +238,17 @@ def marked_c(c_text: str) -> str:
                 return f'{name}({", ".join(args)})'
         return text(node)
 
-    kept = []
+    kept, aliases, optional, body, variadic = [], {}, None, None, set()
     for node in root.children:
         if node.type == 'function_definition':
             decl = node.child_by_field_name('declarator')
             name = decl.child_by_field_name('declarator') if decl is not None else None
             if name is not None and compiled(raw(name)):
-                renames = scoped_names(node)
+                renames, aliases = scoped_names(node), lisp_aliases(node, src)
+                optional, fbody = optional_parameters(node, src), node.child_by_field_name('body')
+                body = (fbody.start_byte, fbody.end_byte)
+                if optional is not None:
+                    variadic.add(raw(name))
                 kept.append(render(node))
     return '\n\n'.join(kept)
 

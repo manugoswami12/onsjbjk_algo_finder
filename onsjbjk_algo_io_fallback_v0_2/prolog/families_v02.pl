@@ -5,6 +5,8 @@
    best = q[k]; idx = k; swap(q[i], q[idx])) had no branch, so the tree fell to the broad
    [sequence_transformation] instead of stopping at its parent comparison_sort.
 */
+:- discontiguous family_path_v02/2.
+
 % a value of sequence Q: one of its elements, or a variable that only ever holds its elements
 seq_value(_, Q, T) :- T = elem(V, _), V == var(Q), !.
 seq_value(F, Q, var(B)) :- atom(B), once(( in_func(S0, F), value(S0, var(B), _) )),
@@ -25,3 +27,15 @@ family_path_v02(F, [sequence_transformation, comparison_sort, select_extreme]) :
 deepest_families_v02(F, Paths) :-
     findall(P, ( family_path(F, P) ; family_path_v02(F, P) ), Ps0), sort(Ps0, Ps),
     exclude(prefix_of_other(Ps), Ps, Paths).
+
+% x, y := y, t with t := f(x, y) earlier in the same loop body: t's only definition inside the loop
+% reaches the parallel assignment (reaching definitions; an initial t = nil outside the loop is
+% killed every iteration), so y_{n+1} = f(x_n, y_n): the pair recurrence
+loop_value(F, S, T, E) :-
+    under(S, L), loop(L, F, Kind), Kind \== recursion, stmt(S, F, _, LS),
+    findall(S2-E2, ( in_func(S2, F), value(S2, var(T2), E2), T2 == T, under(S2, L) ), [S2-E]),
+    stmt(S2, F, _, L2), L2 < LS.
+family_path_v02(F, [numeric, recurrence, pair_recurrence]) :-
+    numeric(F),
+    once(( in_func(S, F), value(S, var(X), var(Y)), X \== Y, value(S, var(Y), var(T)), loop_value(F, S, T, E),
+           E = op(O, _), memberchk(O, [add, mul, sub]), var_in(E, X), var_in(E, Y) )).
