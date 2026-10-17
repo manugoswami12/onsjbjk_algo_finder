@@ -186,3 +186,18 @@ At stage 15 there are no wrong answers: the run-2 errors (Ackermann taken as N-q
 | caesar-cipher-2.lisp | root | root rules are Python library calls (translate, maketrans) |
 | run-length-encoding.lisp | sequence_query, sequence_transformation | run_length_encoding r2 `[op(ne), call(append)]` does not hold |
 | knapsack-problem-0-1.c | marking>table_fill | nothing learned at this node |
+
+## Round 3, run 5: recall over the learnable positives (docs/04 section 10; user: no examples, no learning)
+
+The learner and the rules are unchanged from run 4. A positive is learnable iff a learned branch of its task exists at its deepest node, or its task has a runnable Python reference and the file itself has a behaviour.
+
+| Stage | Precision | Recall (learnable) | Recall (full key) | Not learnable | Result |
+|---|---|---|---|---|---|
+| 3 | 2/2 = 100% | 2/2 = 100% | 2/2 | 0 | PASS |
+| 15 | 2/2 = 100% | 2/4 = 50% | 2/8 = 25% | 4 | FAIL: stopped |
+
+**Stage 15, not learnable:** ackermann-function-4.c, n-queens-problem-3.hs, matrix-multiplication-1.lisp, knapsack-problem-0-1.c. Each has no branch of its task at its node, and no runnable reference with a runnable file.
+
+**Stage 15, learnable but missed:**
+- **caesar-cipher-2.lisp** (root). The Caesar branches at the root are the Python library calls `[op(sub), call(translate), call(maketrans), op(add)]` and `[call(dict), call(zip), op(add), call(dict)]`. The Lisp file has neither.
+- **run-length-encoding.lisp** (sequence_query, sequence_transformation). The branch `run_length_encoding r2 --> pattern([op(ne), call(append)])` does not hold for its stream.

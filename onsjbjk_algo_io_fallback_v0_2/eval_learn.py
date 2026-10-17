@@ -56,38 +56,47 @@ def main():
 
 
 def answer(path, labels, io):
-    """The learned labels of the file's root functions, else the io fallback; (labels, tags) or None when
-    the file has no algorithm of its own (a Lisp file defining no function: output zero)."""
+    """(labels, tags, learnable): the learned labels holding at the file's deepest node, else the io
+    fallback; learnable: the labels some learned rule could recognise in this file (a branch at its node,
+    or a runnable Python reference while the file itself has a behaviour). None when the file has no
+    algorithm of its own (a Lisp file defining no function: output zero)."""
     if path.suffix == '.lisp' and ecl_logic.NOCODE in ecl_logic.families(path):
         return None
-    try:                                          # the file's input->output behaviour (AP13 io_catalog)
-        by_fn = io.labels_by_function(path)
+    me = io.describe(path)                        # the file's input->output behaviour (AP13 io_catalog)
+    try:
+        by_fn = io.labels_by_function(path, me)
     except ERRORS:
         by_fn = {}
     io_labels = {lab for v in by_fn.values() for lab in v} & labels
     try:
-        nodes, found = learn_apply.apply(path, io_labels=io_labels)
+        nodes, found, branch_at = learn_apply.apply(path, io_labels=io_labels)
     except ERRORS as exc:
         print(f'  ({path.name}: {type(exc).__name__}: {str(exc)[:100]})')
-        nodes, found = [], []
+        nodes, found, branch_at = [], [], set()
+    runnable = {io.labels[rel] for rel, _ in io.cat} if any(d['discriminative'] for d in me.values()) else set()
+    learnable = (branch_at | runnable) & labels
     got = {lab for _, lab, _ in found} & labels
     tags = [f"[{' '.join(nodes) or 'root'}]"] + sorted(f'learned:{lab}:{r}@{c or "root"}' for c, lab, r in found)
     if len(got) > 1:                              # several learned rules hold: no guess
-        return set(), tags + ['ambiguous']
+        return set(), tags + ['ambiguous'], learnable
     if got:
-        return got, tags
-    return io_labels, tags + sorted(f'io:{lab}' for lab in io_labels)   # the input->output fallback
+        return got, tags, learnable
+    return io_labels, tags + sorted(f'io:{lab}' for lab in io_labels), learnable   # the input->output fallback
 
 
 def score(rosetta, units, labels, io, title):
-    correct = answered = positives = wrong_neg = ignored = 0
+    """Precision over every answer; recall over the learnable positives (doc 04 section 10: without a
+    usable Python example nothing can be learned), the full-key recall printed beside it."""
+    correct = answered = positives = wrong_neg = ignored = learnable_pos = learnable_ok = 0
+    not_learnable = []
     for rel, expected in units.items():
         res = answer(rosetta / rel, labels, io)
+        name = rel.split('/')[-1][:44]
         if res is None:
             ignored += 1
-            print(f"{rel.split('/')[-1][:44]:44s} {str(expected)[:22]:22s} ignored(0) no algorithm in the file")
+            print(f"{name:44s} {str(expected)[:22]:22s} ignored(0) no algorithm in the file")
             continue
-        got, tags = res
+        got, tags, learnable = res
         if expected is None:
             bad = bool(got)
             outcome, wrong_neg, answered = ('WRONG' if bad else 'ok(neg)'), wrong_neg + bad, answered + bad
@@ -96,11 +105,19 @@ def score(rosetta, units, labels, io, title):
             answered += bool(got)
             outcome = 'ok' if expected in got else ('WRONG' if got else 'UNKNOWN')
             correct += outcome == 'ok'
-        print(f"{rel.split('/')[-1][:44]:44s} {str(expected)[:22]:22s} {outcome:8s} {' '.join(tags) or '-'}")
-    prec, rec = correct / max(answered, 1), correct / max(positives, 1)
+            if expected in learnable:
+                learnable_pos += 1
+                learnable_ok += outcome == 'ok'
+            else:
+                not_learnable.append(name)
+                tags = tags + ['not-learnable']
+        print(f"{name:44s} {str(expected)[:22]:22s} {outcome:8s} {' '.join(tags) or '-'}")
+    prec, rec = correct / max(answered, 1), learnable_ok / max(learnable_pos, 1)
     print(f'\nlearned from Python, tested on {title}: {len(units)} units, {ignored} ignored (no algorithm)')
     print(f'PRECISION = {correct}/{answered} = {prec:.1%}')
-    print(f'RECALL    = {correct}/{positives} = {rec:.1%}')
+    print(f'RECALL    = {learnable_ok}/{learnable_pos} = {rec:.1%} (learnable positives)')
+    print(f'RECALL (full key) = {correct}/{positives} = {correct / max(positives, 1):.1%}')
+    print(f'NOT LEARNABLE = {len(not_learnable)}: {", ".join(not_learnable) or "-"}')
     print(f'WRONG ON NEGATIVES = {wrong_neg} of {len(units) - positives - ignored}')
     print('STAGE', 'PASS' if prec >= 0.8 and rec >= 0.8 else 'FAIL')
 

@@ -131,12 +131,18 @@ class IoCatalog:
                 continue
         return out
 
-    def labels_by_function(self, path: Path) -> dict[str, set[str]]:
-        """{function name: labels of the training references with equal behaviour}."""
+    def describe(self, path: Path) -> dict:
+        """The file's behaviour description per function ({} when it cannot be run)."""
         try:
-            me = self.ioc.describe(self.run_isolated(path))
+            return self.ioc.describe(self.run_isolated(path))
         except ERRORS:
             return {}
+
+    def labels_by_function(self, path: Path, me: dict | None = None) -> dict[str, set[str]]:
+        """{function name: labels of the training references with equal behaviour}; me: the file's
+        description when the caller already has it."""
+        if me is None:
+            me = self.describe(path)
         out: dict[str, set[str]] = {}
         for name, d in me.items():
             if not d['discriminative']:

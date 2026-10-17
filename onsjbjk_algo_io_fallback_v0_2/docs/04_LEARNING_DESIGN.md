@@ -198,3 +198,17 @@ def apply(file):
     found = {L for C in D for L in branches_holding(C, streams(file)) | io_rules_holding(C, io_equal(file))}
     return found if len(found) == 1 else (UNKNOWN if found else io_fallback(file))
 ```
+
+## 10. Recall over what the Python examples make learnable (user: "if you dont have examples, how can you learn")
+
+**Learnable.** A positive test unit with expected task L is learnable iff at least one holds:
+1. a learned branch of L exists at one of the unit's deepest nodes (`BRANCH_AT` from `learn_apply.pl`: the clause lookup, no matching);
+2. L has a runnable Python reference (`IoCatalog.cat`) and the unit's own file has a discriminative behaviour.
+
+Whether a rule then holds is what the test measures.
+
+**Scoring.**
+- Recall is taken over the learnable positives.
+- Precision is taken over every answer, including those on negatives and on positives that are not learnable.
+- Not-learnable positives are listed, and the full-key recall is printed beside it.
+- The learner is not changed.

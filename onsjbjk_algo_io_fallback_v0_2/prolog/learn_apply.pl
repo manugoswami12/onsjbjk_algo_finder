@@ -1,5 +1,6 @@
 /* v0.2 learning (doc 04 section 9): the learned rules applied to a test file at its deepest node.
-     learn_apply_main -- Facts Kind Rules Io : NODE|Path for the file's tree nodes, then
+     learn_apply_main -- Facts Kind Rules Io : NODE|Path for the file's tree nodes, BRANCH_AT|Node|Label for
+                                              the labels with a learned branch at its deepest node(s), then
                                               LEARNED|Node|Label|Rule for every learned rule that holds
                                               at the deepest node(s) the file reaches
    Io holds io_equal(Label) facts: the training labels whose input->output behaviour the file has.
@@ -17,6 +18,9 @@ learn_apply_main :-
     forall(member(P, Paths), ( atomic_list_concat(P, '>', A), format('NODE|~w~n', [A]) )),
     findall(Ts, ( root_function(F, _), result_tokens(F, Ts), Ts \== [] ), Streams),
     deepest(Paths, Nodes),
+    % the labels with a learned branch at those nodes (whether one holds is the test, below)
+    forall(( member(C, Nodes), setof(L, R^B^clause(learned_branch(C, L, R, _, _), B), Ls), member(L, Ls) ),
+           ( atomic_list_concat(C, '>', CA), format('BRANCH_AT|~w|~w~n', [CA, L]) )),
     findall(C-L-R, ( member(C, Nodes), holds(C, Streams, L, R) ), Found0), sort(Found0, Found),
     forall(member(C-L-R, Found), ( atomic_list_concat(C, '>', CA), format('LEARNED|~w|~w|~w~n', [CA, L, R]) )).
 % the deepest node(s): the paths of the greatest length; a file on no path is at the root
