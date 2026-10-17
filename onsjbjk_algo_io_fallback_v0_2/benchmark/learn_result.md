@@ -72,4 +72,4 @@ Hard cases (known tasks, normal process fails), learned from the Python files of
 - **Some rules are library calls only** (`caesar r1 = [op(sub), call(translate), call(maketrans), op(add)]`). They cannot transfer to languages without those calls.
 - **The streams kept their blow-up until retry 1**: sieve-of-eratosthenes-9.py gave 4,987 tokens. They now stay under 600.
 
-**Regression.** The ECL logic tests and `tests/test_learning.py` (now including the relation in both directions) pass.
+**Regression.** The ECL logic tests and `tests/test_learning.py` (now including the relation in both directions) pass. Lisp staged test, stage 101, with the new tokenizer: precision 50/51 = 98.0%, recall 50/59 = 84.7%, PASS (unchanged).
