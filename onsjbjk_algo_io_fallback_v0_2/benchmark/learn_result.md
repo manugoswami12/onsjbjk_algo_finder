@@ -162,3 +162,27 @@ Learned: 35 branches and 10 input->output rules, for example:
   - The Python training file `josephus-problem-2.py` has no behaviour: it returns `'Survivor: %d' % r`, a formatted string, and its Prolog normal form fails on all inputs (`runs: False`). So `io_equal(josephus)` cannot hold.
 
 (Before this last step, the same run with a one-token condition at nodes with no other program gave stage 3 = 100% / 100%. That condition separated nothing: `[loop]` for Josephus, `[call(list)]` for N-queens. It was replaced by the input->output rule on purpose, so the run was not continued with it.)
+
+## Round 3, run 4: a formatted result is its value (user: the program only has to name the algorithm)
+
+**Change** (`crosslang_frontends.without_formatting`, every language). A string formatted with a value, such as `'Survivor: %d' % r` (Python's printf operator in the normal form), is that value, since presenting a result is not the result.
+- The Python Josephus training file now has a behaviour: `6, 5, 0, 4, 73, 7, 0, 30`, equal to the Lisp `kill`.
+- The learned rules are unchanged (run 3).
+
+| Stage | Precision | Recall | Result |
+|---|---|---|---|
+| 3 | 2/2 = 100% | 2/2 = 100% | PASS |
+| 15 | 2/2 = 100% | 2/8 = 25% | FAIL: stopped |
+
+At stage 15 there are no wrong answers: the run-2 errors (Ackermann taken as N-queens, heapsort taken as Levenshtein) are gone.
+
+**The 6 misses.** None has a runnable behaviour. The test file's Prolog normal form gives no discriminative description, and 6 of the 12 tasks have no Python training file with a behaviour either: Ackermann, Caesar, Knapsack, LCS, Matrix multiplication and Run-length (0 references each). Nor does any logic rule hold for them at their node:
+
+| Unit | Node reached | Learned there |
+|---|---|---|
+| ackermann-function-4.c | search>backtracking | only n_queens (input->output) |
+| n-queens-problem-3.hs | root | root rules are Python library calls |
+| matrix-multiplication-1.lisp | sequence_query, sequence_transformation | other labels' branches only |
+| caesar-cipher-2.lisp | root | root rules are Python library calls (translate, maketrans) |
+| run-length-encoding.lisp | sequence_query, sequence_transformation | run_length_encoding r2 `[op(ne), call(append)]` does not hold |
+| knapsack-problem-0-1.c | marking>table_fill | nothing learned at this node |

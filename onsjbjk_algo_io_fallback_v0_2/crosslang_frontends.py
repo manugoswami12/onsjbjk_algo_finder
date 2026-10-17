@@ -3,6 +3,7 @@ pipeline (polyglot_logic/tools/io_trace.py) at run time; polyglot_logic itself i
 
   .hs    GHC Core (haskell_core_pnf.py)
   .lisp  SBCL macro-expansion of standard macros, then the AP13 Lisp translator (lisp_sbcl_pnf.py)
+  any    a formatted result string is its value (without_formatting)
 """
 from __future__ import annotations
 
@@ -30,9 +31,27 @@ def install(lisp_sbcl: bool = True):
         if lisp_sbcl and suffix in ('.lisp', '.cl', '.lsp'):
             from lisp_sbcl_pnf import lisp_normal_form_sbcl
             return 'commonlisp', with_swapped_search(with_comparator_wrappers(lisp_normal_form_sbcl(Path(path)), '<'))
-        return original(path)
+        lang, funs = original(path)
+        return lang, without_formatting(funs)
     io_trace.normal_form = normal_form
     _installed = True
+
+
+def without_formatting(funs):
+    """The program only has to name its algorithm: presenting a result is not the result. A string
+    formatted with a value ('Survivor: %d' % r, Python's printf operator in the normal form) is that
+    value, as a print is an effect and not the logic."""
+    def strip(t):
+        if isinstance(t, tuple) and t:
+            if t[0] == 'op' and t[1] == 'mod' and len(t) == 3 and len(t[2]) == 2 and t[2][0][:1] == ('str',):
+                return strip(t[2][1])
+            return tuple(strip(x) for x in t)
+        if isinstance(t, list):
+            return [strip(x) for x in t]
+        return t
+    if isinstance(funs, list):
+        return [(name, params, strip(body)) for name, params, body in funs]
+    return funs
 
 
 def function_params(body, params):
