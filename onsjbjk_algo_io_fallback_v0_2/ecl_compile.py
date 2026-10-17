@@ -44,3 +44,12 @@ def with_data(c_text: str, data: Path) -> str:
     if not c_text or include not in c_text or not data.exists():
         return c_text
     return c_text.replace(include, data.read_text(encoding='utf-8', errors='replace'))
+
+
+DEFINITION = re.compile(r'\(\s*(defun|defmethod|defgeneric|defmacro)\s', re.IGNORECASE)
+
+
+def defines_function(path: Path) -> bool:
+    """The source defines a function (even one ECL cannot compile, e.g. under a reader extension)."""
+    text, _ = readable_source(path.read_text(encoding='utf-8', errors='replace'))
+    return any(DEFINITION.match(f) for f in top_forms(text))

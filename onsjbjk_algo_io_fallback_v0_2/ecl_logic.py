@@ -37,8 +37,9 @@ def trace(path: Path) -> tuple[dict[str, list[tuple[str, str]]], str]:
     facts = ecl_facts.facts_of(units)
     export = '\n'.join(run('ecl_export', facts)) + '\n'
     for line in run('ecl_main', facts):
-        if line == 'NOCODE':                      # no algorithm of its own in the file (ecl_main.pl)
-            out[NOCODE] = []
+        if line == 'NOCODE':                      # no algorithm of its own in the file (ecl_main.pl),
+            if not ecl_compile.defines_function(path):   # and none in the source ECL could not compile
+                out[NOCODE] = []
             continue
         tag, _, name, fam, branch = line.split('|')
         if tag == 'FAMILY':
