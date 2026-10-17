@@ -3,9 +3,9 @@
 usage: python eval_learn.py <rosetta checkout> --learn [--staged]   (learn from the Python training files)
        python eval_learn.py <rosetta checkout> --lang Common-Lisp|C|Haskell|hard          (round 1)
        python eval_learn.py <rosetta checkout> --stage 3|15|55|101                       (round 2)
-Frozen keys benchmark/learn_truth.json (round 1), benchmark/learn_staged_truth.json (round 2). A unit is a file; its answer is the learned labels of its root
-functions (tagged learned:Rule), or, when no learned rule parses, the labels of the training functions
-with equal input->output behaviour (tagged io). Success per language: precision and recall >= 80 %.
+Frozen keys benchmark/learn_truth.json (round 1), benchmark/learn_staged_truth.json (round 2). A unit is a file; its answer is the learned branches that hold at
+the deepest tree node it reaches (tagged learned:Label:Rule@Node), or, when none holds, the labels of the
+training functions with equal input->output behaviour (tagged io). Success per language: precision and recall >= 80 %.
 """
 import argparse
 import json
@@ -61,19 +61,20 @@ def answer(path, labels, io):
     if path.suffix == '.lisp' and ecl_logic.NOCODE in ecl_logic.families(path):
         return None
     try:
-        found = learn_apply.apply(path)
+        nodes, found = learn_apply.apply(path)
     except ERRORS as exc:
         print(f'  ({path.name}: {type(exc).__name__}: {str(exc)[:100]})')
-        found = []
+        nodes, found = [], []
     got = {lab for _, lab, _ in found} & labels
+    where = f"[{' '.join(nodes) or 'root'}]"
     if got:
-        return got, sorted({f'learned:{lab}:{r}' for _, lab, r in found if lab in got})
-    try:                                          # no learned logic rule: the input->output fallback
+        return got, [where] + sorted({f'learned:{lab}:{r}@{c or "root"}' for c, lab, r in found if lab in got})
+    try:                                          # no learned branch holds: the input->output fallback
         by_fn = io.labels_by_function(path)
     except ERRORS:
         by_fn = {}
     got = {lab for v in by_fn.values() for lab in v} & labels
-    return got, sorted(f'io:{lab}' for lab in got)
+    return got, [where] + sorted(f'io:{lab}' for lab in got)
 
 
 def score(rosetta, units, labels, io, title):
@@ -167,7 +168,7 @@ def hard_cases(a, key):
         path = a.rosetta / rel
         fams = ecl_logic.families(path)
         normal = {b for v in fams.values() for _, b in v} - {'none'}
-        learned = {lab for _, lab, _ in learn_apply.apply(path)} if not normal else set()
+        learned = {lab for _, lab, _ in learn_apply.apply(path)[1]} if not normal else set()
         print(f"{rel.split('/')[-1]:44s} {expected:16s} normal={sorted(normal) or '-'} learned={sorted(learned) or '-'}")
 
 

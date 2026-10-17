@@ -30,9 +30,9 @@ class LearningTests(unittest.TestCase):
             learn_apply.learn({DATA / 'hanoi_a.py': 'towers_of_hanoi', DATA / 'hanoi_b.py': 'towers_of_hanoi',
                                DATA / 'neg_fib.py': None, DATA / 'neg_sum.py': None, DATA / 'neg_gcd.py': None}, rules)
             for f in ('hanoi_test.lisp', 'hanoi_test.c'):
-                self.assertEqual({lab for _, lab, _ in learn_apply.apply(DATA / f, rules)}, {'towers_of_hanoi'}, f)
+                self.assertEqual({lab for _, lab, _ in learn_apply.apply(DATA / f, rules)[1]}, {'towers_of_hanoi'}, f)
             for f in ('fib_test.lisp', 'sum_test.c'):
-                self.assertEqual(learn_apply.apply(DATA / f, rules), [], f)
+                self.assertEqual(learn_apply.apply(DATA / f, rules)[1], [], f)
 
 
 if __name__ == '__main__':

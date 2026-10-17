@@ -109,6 +109,6 @@ linked(G) :- atom(G), func_named(G, _), !.
 % a function of the file by its own name or its base name (Python's nested hanoi.go is go)
 func_named(G, H) :- func(H, G, _), !.
 func_named(G, H) :- func(H, N, _), atomic_list_concat(Parts, '.', N), last(Parts, G), !.
-closure_name(C, G) :- atom(C), atom_codes(C, [0'L, 0'C|Cs]), drop_digits(Cs, Ns), atom_codes(G, Ns).
-drop_digits([D|Cs], Ns) :- code_type(D, digit), !, drop_digits(Cs, Ns).
-drop_digits(Ns, Ns).
+closure_name(C, G) :- atom(C), atom_codes(C, [0'L, 0'C|Cs]), closure_digits(Cs, Ns), atom_codes(G, Ns).
+closure_digits([D|Cs], Ns) :- code_type(D, digit), !, closure_digits(Cs, Ns).
+closure_digits(Ns, Ns).

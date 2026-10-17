@@ -73,3 +73,38 @@ Hard cases (known tasks, normal process fails), learned from the Python files of
 - **The streams kept their blow-up until retry 1**: sieve-of-eratosthenes-9.py gave 4,987 tokens. They now stay under 600.
 
 **Regression.** The ECL logic tests and `tests/test_learning.py` (now including the relation in both directions) pass. Lisp staged test, stage 101, with the new tokenizer: precision 50/51 = 98.0%, recall 50/59 = 84.7%, PASS (unchanged).
+
+---
+
+# Round 3: a learned algorithm is a new branch of the tree, at the node its Python logic reaches. FAILED at stage 3 (stopped)
+
+**Method** (docs/04 section 8).
+- **Node.** Each Python training file walks the normal tree: AP13 family paths plus `families_v02.pl`, in one process, `prolog/tree_main.pl`. The deepest node it reaches is C.
+- **Learning.** The new algorithm becomes a child F of C: `learned_branch(C, Label, Rule) --> pattern(S)` in `prolog/learned_tree.pl`. F's condition is the round-2 `pattern//1` relation, checked only against the other training files that also reach C.
+  - At the root, the condition needs AP13's 4 logic tokens.
+  - Under a node, it only has to separate the label from the other programs there, so it may be empty.
+- **Applying.** The test file walks the same tree. The learned children are tried from the deepest reached node upward; then the input→output fallback; then UNKNOWN.
+
+Same frozen key (`benchmark/learn_staged_truth.json`), learned from Python only (161 files). 37 branches were learned, for example:
+- `josephus r3` under `numeric>recurrence>josephus_recurrence`: `[]` (nothing else reaches that node);
+- `n_queens r2` under `search>backtracking`: `[]`;
+- `levenshtein r1` under `sequence_query`: `[op(eq), call(min)]`;
+- `towers_of_hanoi r1` under `numeric>recurrence>double_recursion` (files 1 and 3): an 18-token skeleton, mostly operands.
+
+**Stage 3: precision 1/1 = 100%, recall 1/2 = 50%: FAIL.** Stopped, as instructed (stop below 80%).
+
+| Unit | Expected | Node reached | Answer |
+|---|---|---|---|
+| josephus-problem-1.lisp | josephus | numeric>recurrence>josephus_recurrence | **ok**, `josephus r3` (round 2: UNKNOWN) |
+| hailstone-sequence-1.hs | (negative) | root | ok(neg) |
+| towers-of-hanoi-1.c | towers_of_hanoi | numeric>recurrence>double_recursion (correct node) | UNKNOWN |
+
+**Why Hanoi in C failed.**
+- The two Python Hanoi files were joined into one branch. Their shared skeleton lost what separates Hanoi from Fibonacci under `double_recursion` (`output`, no `op(add)`).
+- What is left has only `op(sub), op(sub)` as logic, which Fibonacci's `fib(n-1) + fib(n-2)` also holds. So the condition could not be shortened, stayed an 18-token operand skeleton, and the C file does not hold it.
+- Learned from towers-of-hanoi-1.py alone, the condition at that node would be `[output]`. The own-program test (two own Python Hanoi files) gives exactly that.
+
+**Branching found inconsistent across languages** (tests/test_learning.py now fails on it; left failing, not skipped):
+- The own Lisp Hanoi `(towers (1- n) from spare to) (format ...) (towers (1- n) spare to from)` reaches `search>backtracking`, while the same logic in Python and C reaches `numeric>recurrence>double_recursion`.
+- Cause: ECL compiles the second, tail-position self-call as a jump to the function start (a loop). AP13's `idiom(backtracking)` then sees "a self-call inside a guarded loop", and `rec_class(double_recursion)` sees only one self-call.
+- The token streams already undo this (the `tail_loop` fact of `ecl_norm.pl`); the tree does not.
