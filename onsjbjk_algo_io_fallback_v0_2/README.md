@@ -42,3 +42,19 @@ v0.2 adds these, written as broad family → narrow branches:
 When no family has evidence, the router answers `unknown` and the report prints `IO FALLBACK`, the input→output dependence of the returns.
 
 These are candidate branches, not proofs of algorithm identity. Unknown source is never executed. No packages beyond Python 3 and SWI-Prolog are needed.
+
+## Learning and final results
+
+- `learn_v2.py`: new learner (AST normalisation + winnowing, nearest neighbour).
+- `compare_learners.py`: v0.2 also uses the original AP13 learners from `polyglot_logic` (read-only):
+  `learn-dir` (exact traced logic) and `io_catalog` (behaviour; runs a Prolog translation on fixed inputs).
+- `eval_heldout.py <checkout> <truth.json> [--kb kb/learned.json] [--learner iocat --train T1.json ...]`
+
+| Test (TheAlgorithms/Python, keys frozen first) | Precision | Recall |
+|---|---|---|
+| 15 files (used for fixes, not held-out) | 100% | 100% |
+| 55 files, witnesses only | 81.8% | 47.4% |
+| fresh 55, witnesses + io_catalog | 87.5% | 56.0% |
+| **final 101, witnesses + io_catalog** | **66.7%** | **33.3%** |
+
+See `benchmark/learner_comparison.md` and `benchmark/final101_result.md`.
