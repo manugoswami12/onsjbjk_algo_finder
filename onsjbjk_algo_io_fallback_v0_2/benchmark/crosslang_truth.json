@@ -389,5 +389,96 @@
       ]
     }
   },
-  "_samples_v2_note": "New seeded samples (excluding the 3 files used for diagnosis), frozen before any converter (GHC Core / SBCL) was written. Converter development may use only files outside samples_v2."
+  "_samples_v2_note": "New seeded samples (excluding the 3 files used for diagnosis), frozen before any converter (GHC Core / SBCL) was written. Converter development may use only files outside samples_v2.",
+  "dev_used": {
+    "Haskell": {
+      "15": [
+        "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-12.hs",
+        "Task/Greatest-common-divisor/Haskell/greatest-common-divisor.hs",
+        "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-7.hs",
+        "Task/Sorting-algorithms-Cocktail-sort/Haskell/sorting-algorithms-cocktail-sort.hs",
+        "Task/Towers-of-Hanoi/Haskell/towers-of-hanoi-1.hs",
+        "Task/Dot-product/Haskell/dot-product-1.hs",
+        "Task/Primality-by-trial-division/Haskell/primality-by-trial-division-4.hs",
+        "Task/Caesar-cipher/Haskell/caesar-cipher-3.hs",
+        "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-11.hs",
+        "Task/Run-length-encoding/Haskell/run-length-encoding-1.hs",
+        "Task/Sorting-algorithms-Shell-sort/Haskell/sorting-algorithms-shell-sort.hs",
+        "Task/Longest-common-subsequence/Haskell/longest-common-subsequence-1.hs",
+        "Task/Knapsack-problem-0-1/Haskell/knapsack-problem-0-1-2.hs",
+        "Task/Sum-digits-of-an-integer/Haskell/sum-digits-of-an-integer-3.hs",
+        "Task/Palindrome-detection/Haskell/palindrome-detection-2.hs"
+      ]
+    },
+    "Common-Lisp": {
+      "15": [
+        "Task/Sorting-algorithms-Cocktail-sort/Common-Lisp/sorting-algorithms-cocktail-sort.lisp",
+        "Task/Ackermann-function/Common-Lisp/ackermann-function-2.lisp",
+        "Task/Sorting-algorithms-Shell-sort/Common-Lisp/sorting-algorithms-shell-sort.lisp",
+        "Task/Perfect-numbers/Common-Lisp/perfect-numbers.lisp",
+        "Task/Sorting-algorithms-Stooge-sort/Common-Lisp/sorting-algorithms-stooge-sort.lisp",
+        "Task/Greatest-common-divisor/Common-Lisp/greatest-common-divisor-4.lisp",
+        "Task/Sum-digits-of-an-integer/Common-Lisp/sum-digits-of-an-integer-2.lisp",
+        "Task/Sorting-algorithms-Insertion-sort/Common-Lisp/sorting-algorithms-insertion-sort-1.lisp",
+        "Task/N-queens-problem/Common-Lisp/n-queens-problem-3.lisp",
+        "Task/Sieve-of-Eratosthenes/Common-Lisp/sieve-of-eratosthenes-2.lisp",
+        "Task/Longest-common-subsequence/Common-Lisp/longest-common-subsequence-3.lisp",
+        "Task/Palindrome-detection/Common-Lisp/palindrome-detection-1.lisp",
+        "Task/Hailstone-sequence/Common-Lisp/hailstone-sequence.lisp",
+        "Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-1.lisp",
+        "Task/Sum-digits-of-an-integer/Common-Lisp/sum-digits-of-an-integer-1.lisp"
+      ]
+    }
+  },
+  "samples_v3": {
+    "Haskell": {
+      "3": [
+        "Task/Towers-of-Hanoi/Haskell/towers-of-hanoi-3.hs",
+        "Task/Longest-common-subsequence/Haskell/longest-common-subsequence-2.hs",
+        "Task/Roman-numerals-Encode/Haskell/roman-numerals-encode-1.hs"
+      ],
+      "15": [
+        "Task/Towers-of-Hanoi/Haskell/towers-of-hanoi-3.hs",
+        "Task/Longest-common-subsequence/Haskell/longest-common-subsequence-2.hs",
+        "Task/Roman-numerals-Encode/Haskell/roman-numerals-encode-1.hs",
+        "Task/Factorial/Haskell/factorial-5.hs",
+        "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-18.hs",
+        "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-1.hs",
+        "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-6.hs",
+        "Task/Sorting-algorithms-Pancake-sort/Haskell/sorting-algorithms-pancake-sort-2.hs",
+        "Task/Levenshtein-distance/Haskell/levenshtein-distance-1.hs",
+        "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-17.hs",
+        "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-20.hs",
+        "Task/Towers-of-Hanoi/Haskell/towers-of-hanoi-2.hs",
+        "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-23.hs",
+        "Task/Sorting-algorithms-Bubble-sort/Haskell/sorting-algorithms-bubble-sort-1.hs",
+        "Task/Binary-search/Haskell/binary-search-2.hs"
+      ]
+    },
+    "Common-Lisp": {
+      "3": [
+        "Task/Longest-common-subsequence/Common-Lisp/longest-common-subsequence-1.lisp",
+        "Task/Factorial/Common-Lisp/factorial-3.lisp",
+        "Task/Matrix-multiplication/Common-Lisp/matrix-multiplication-3.lisp"
+      ],
+      "15": [
+        "Task/Longest-common-subsequence/Common-Lisp/longest-common-subsequence-1.lisp",
+        "Task/Factorial/Common-Lisp/factorial-3.lisp",
+        "Task/Matrix-multiplication/Common-Lisp/matrix-multiplication-3.lisp",
+        "Task/Caesar-cipher/Common-Lisp/caesar-cipher-1.lisp",
+        "Task/Palindrome-detection/Common-Lisp/palindrome-detection-2.lisp",
+        "Task/Leap-year/Common-Lisp/leap-year.lisp",
+        "Task/Sorting-algorithms-Selection-sort/Common-Lisp/sorting-algorithms-selection-sort.lisp",
+        "Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-7.lisp",
+        "Task/Luhn-test-of-credit-card-numbers/Common-Lisp/luhn-test-of-credit-card-numbers-1.lisp",
+        "Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-10.lisp",
+        "Task/Sorting-algorithms-Gnome-sort/Common-Lisp/sorting-algorithms-gnome-sort.lisp",
+        "Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-6.lisp",
+        "Task/Josephus-problem/Common-Lisp/josephus-problem-1.lisp",
+        "Task/Greatest-common-divisor/Common-Lisp/greatest-common-divisor-1.lisp",
+        "Task/Sorting-algorithms-Heapsort/Common-Lisp/sorting-algorithms-heapsort.lisp"
+      ]
+    }
+  },
+  "_samples_v3_note": "samples_v2 were inspected after their failed 3-case run; samples_v3 drawn and frozen before further front-end work, excluding samples, samples_v2 and the dev files used."
 }
