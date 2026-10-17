@@ -41,6 +41,8 @@ def main():
         train = {a.rosetta / f: None for f in train_key['negatives']}
         train.update({a.rosetta / f: lab for f, lab in train_key['hard_case_positives'].items()})
         train.update({a.rosetta / f: lab for f, lab in train_key['positives'].items()})
+        if a.staged:                              # augmented Python examples (doc 04 section 11)
+            train.update({ROOT / f: lab for f, lab in augment().items()})
         count = learn_apply.learn(train)
         print(f'learned from {len(train)} Python files ({sum(1 for v in count.values() if v)} with streams) '
               f'-> {learn_apply.RULES}')
@@ -175,10 +177,17 @@ def io_references(rosetta, key):
     Lisp keeps AP13's own translator."""
     crosslang_frontends.install(lisp_sbcl=False)
     labels = {**key['train']['hard_case_positives'], **key['train']['positives']}
+    if key.get('stages'):                         # the staged key: with the augmented examples (absolute paths)
+        labels.update({str(ROOT / f): lab for f, lab in augment().items()})
     with tempfile.TemporaryDirectory(prefix='v02_io_') as td:
         truth = Path(td) / 'train.json'
         truth.write_text(json.dumps({'files': labels}), encoding='utf-8')
         return compare_learners.IoCatalog(rosetta, [truth])
+
+
+def augment():
+    """{repo-relative path: label} of the augmented Python training examples (benchmark/learn_augment.json)."""
+    return json.loads((ROOT / 'benchmark' / 'learn_augment.json').read_text(encoding='utf-8'))['files']
 
 
 def hard_cases(a, key):

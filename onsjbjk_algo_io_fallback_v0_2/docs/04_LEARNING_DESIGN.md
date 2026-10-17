@@ -212,3 +212,17 @@ Whether a rule then holds is what the test measures.
 - Precision is taken over every answer, including those on negatives and on positives that are not learnable.
 - Not-learnable positives are listed, and the full-key recall is printed beside it.
 - The learner is not changed.
+
+## 11. Augmented Python examples (user: augment where the algorithms are not learnable)
+
+Where the Rosetta Python files of a task gave no usable example, I wrote one plain textbook Python version of the algorithm (loops and arithmetic, no library shortcut), in `benchmark/learn_augment/`, labelled in `benchmark/learn_augment.json`. The test files are not read for this.
+
+| Task | Why the Rosetta Python files gave nothing | Augmented example |
+|---|---|---|
+| Ackermann | recursive form only (reaches `numeric`), no runnable reference | the tail call written as a loop |
+| Caesar | `str.translate` / `maketrans`, `dict(zip(...))` | the shift by character arithmetic |
+| Knapsack 0-1 | no runnable reference, no table form | the (items+1) x (capacity+1) DP table |
+| Matrix multiplication | `map` / `zip` / `sum` forms | three nested loops |
+| Run-length | its branch does not hold for loop-based code | scan of runs of equal characters |
+
+They are training files only: learning stays Python only, and the frozen staged key is unchanged.
