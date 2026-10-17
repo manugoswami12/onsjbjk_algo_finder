@@ -252,3 +252,22 @@ At stage 15 there are no wrong answers (run 6: knapsack-C → matrix, matrix-Lis
 - **knapsack-problem-0-1.c:** `knapsack_01 r2 --> \+ any_of([op(mul)]), pattern([cmp(order)])`, but the C file multiplies in `calloc(n * m)`.
 
 **Cause.** With one training file per sibling label at a node, a "mark" is every logic token of that one file that the clause's own file lacks, so common tokens (`call('$self')`, `cmp(order)`, `op(sub)`, `op(mul)`) become exclusions. They are as arbitrary as one-example positive patterns. The stacking itself works (Fibonacci vs Hanoi), but the training data has too few files per label at a node to tell a sibling's mark from incidental code.
+
+## Run 9: siblings at one node, the label computed by closeness (docs/04 section 13; user: sum(2,4,X))
+
+The run-8 exclusions are removed. When several labels hold at the deepest node, each clause's example is compared with the file by `shared/2` (`pattern` with the shared part unbound). The closest label stays; a tie gives UNKNOWN.
+
+**Stage 3: precision 1/1 = 100%, learnable recall 1/2 = 50%: FAIL.** Stopped.
+
+towers-of-hanoi-1.c, at `numeric>recurrence>double_recursion`:
+
+| Clause | Its example (logic tokens) | Held by the C file | Score |
+|---|---|---|---|
+| fibonacci_like r10 (fibonacci-sequence-5.py) | `cmp, cmp, op(add), $self, op(sub), $self, op(sub)` (7) | 5 | 0.714 |
+| towers_of_hanoi r1 (towers-of-hanoi-1.py) | `$self, op(sub), op(sub), op(sub), output, $self, op(sub), op(sub), op(sub)` (9) | 5 | 0.556 |
+
+Fibonacci is chosen, and its label is not one of the 12 new tasks, so the answer counts as UNKNOWN.
+- The Python Hanoi example computes the spare peg as `6 - a - b`: two more `op(sub)` per call, which the C file does not have.
+- The C file lacks Fibonacci's `op(add)`, but a share of matched tokens cannot weigh one decisive missing token.
+
+(Stage 15 ran in the same command and is not counted. For information: precision 3/3, learnable recall 3/6; Ackermann-C and Knapsack-C are found again, with no wrong answers.)

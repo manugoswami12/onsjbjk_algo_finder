@@ -244,13 +244,14 @@ Test: `tests/test_uniform.py`. The same algorithm with the same structure in two
 
 Also corrected: the ambiguity check counts every learned label that holds (known tasks' too), as the design says; it had counted only the 12 new labels.
 
-## 13. Stacking the clauses of one node (user: stack same-arity rules correctly)
+## 13. Siblings at one node: the label is computed, not blocked (user: sum(2,4,X))
 
-The clauses of one node are made mutually exclusive by their own conditions, not by order and not by cut (`p :- a, b.  p :- a, \+ b.`). Each branch clause excludes the marks of its sibling labels at C: the logic tokens that every training file of a sibling has at C and that none of the clause's own files has.
+**Run 8 (replaced).** Each clause excluded its siblings' marks (`\+ any_of(Marks)`). With one training file per sibling, the marks were common tokens, so correct answers were blocked.
+
+**Now.** The label is the computed argument, as X in `sum(2,X,10)`. Every clause stores its example (`learned_ref(C, L, R, LogicTokens)`, the logic tokens of its file's most specific stream).
+- When the clauses that hold at the deepest node give more than one label, each is scored by `shared([Example, FileLogic], G)`. This is the reversible `pattern` relation with the shared part unbound, run on both. The score is `|G| / |Example|`; an input->output rule scores 1.0 (equal behaviour).
+- The closest label stays. A tie stays ambiguous (UNKNOWN).
 
 ```prolog
-learned_branch([numeric,recurrence,double_recursion], fibonacci_like, r10) --> \+ any_of([output]), pattern([cmp(order), call('$self'), op(sub)]).
-learned_branch([numeric,recurrence,double_recursion], towers_of_hanoi, r1) --> \+ any_of([op(add)]), pattern([output]).
+closeness(C, L, R, Streams, Sc) :- learned_ref(C, L, R, Ref), ..., shared([Ref, Ls], G), length(G, K), Sc is K / |Ref|.
 ```
-
-`sibling_marks/4` is in `learn_dcg.pl`; `any_of//1` is in `flow_tokens.pl`.

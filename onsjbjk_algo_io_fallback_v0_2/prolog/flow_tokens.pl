@@ -20,8 +20,24 @@ pattern([T|Ts]) --> next(T), pattern(Ts).
 % ground symbols); a token with a variable (a helper's name) may bind at any occurrence
 next(T) --> { ground(T) }, !, find(T).
 next(T) --> ..., [T].
-% the stream holds one of the tokens Ts (a learned clause's exclusion: \+ any_of(Ts), learn_dcg.pl)
-any_of(Ts) --> ..., [T], { memberchk(T, Ts) }.
+% pattern with the skeleton unbound, every stream known (learn: the tokens streams share; apply: how
+% closely a file holds a clause's example): the tokens of the first stream taken in order when
+% every other stream holds them after its previous match (the streams in lockstep, nothing skipped
+% first). The longest S found within a fixed inference budget is the most specific (AP13 generalize's
+% budget, call_with_inference_limit/3).
+shared(Streams, S) :-
+    nb_setval(best, 0-[]),
+    catch(call_with_inference_limit(( lockstep(Streams, S0), length(S0, N), nb_getval(best, B-_), N > B,
+                                      nb_setval(best, N-S0), fail ; true ), 2000000, _), _, true),
+    nb_getval(best, _-S), S \== [].
+lockstep([First|Others], S) :- take(First, Others, S).
+take(_, _, []).
+take([T|Ts], Others, [T|S]) :- maplist(after(T), Others, Rest), take(Ts, Rest, S).
+take([_|Ts], Others, S) :- take(Ts, Others, S).
+after(T, Stream, Rest) :- phrase(next(T), Stream, Rest).
+% at least the tokens that say something about the logic (not only operands and markers)
+logic_token(T) :- nonvar(T), \+ memberchk(T, [param, local, other, unknown, test, empty, elem, single]),
+    \+ T = int(_), \+ T = enter(_), \+ T = leave(_), \+ T = link(_).
 
 % the root function: its statements in source order (assigned values, calls, returns); a linked
 % function contributes its result values (link//4)

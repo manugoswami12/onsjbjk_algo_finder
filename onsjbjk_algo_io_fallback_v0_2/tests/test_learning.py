@@ -24,15 +24,15 @@ class LearningTests(unittest.TestCase):
         self.assertEqual(out[:2], ['go', 'no'])
         self.assertRegex(out[2], r"^\[a,link\((_\w*)\),c,leave\(\1\),d\]$")
 
-    def test_siblings_stacked_by_exclusion(self):
-        """Two labels at one node: each clause excludes the other's marks, so a file holding both
-        patterns is claimed by at most one, whatever the clause order (no cut)."""
-        goal = ("assertz(train(a, f1, [loop, op(add), output])), assertz(train(b, f2, [loop, op(mul)])), "
-                "assertz(reach(f1, [n])), assertz(reach(f2, [n])), "
-                "sibling_marks([n], a, [f1], Ea), sibling_marks([n], b, [f2], Eb), print(Ea-Eb), nl")
-        out = subprocess.run(['swipl', '-q', '-g', f"consult('{ROOT / 'prolog' / 'learn_dcg.pl'}'), {goal}", '-t', 'halt'],
-                             capture_output=True, text=True, check=True).stdout.strip()
-        self.assertEqual(out, '[op(mul)]-[output,op(add)]')
+    def test_closest_sibling_computed(self):
+        """Two sibling clauses hold on one stream: the label is computed (sum(2,X,10)), the one whose
+        example the stream holds most of; nothing is blocked."""
+        goal = ("Found = [[n]-a-r1, [n]-b-r1], "
+                "assertz(learned_ref([n], a, r1, [loop, op(add), output])), assertz(learned_ref([n], b, r1, [loop, op(mul), op(mul)])), "
+                "closest(Found, [[loop, op(add), local, output]], C), print(C), nl")
+        out = subprocess.run(['swipl', '-q', '-g', f"consult('{ROOT / 'prolog' / 'learn_apply.pl'}'), {goal}", '-t', 'halt'],
+                             capture_output=True, text=True, check=True).stdout.strip().split('\n')
+        self.assertEqual(out[-1], '[[n]-a-r1]')
 
     def test_learn_python_apply_lisp_and_c(self):
         with tempfile.TemporaryDirectory() as td:
