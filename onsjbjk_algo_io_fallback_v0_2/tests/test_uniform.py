@@ -32,11 +32,31 @@ class BuiltBranchTests(unittest.TestCase):
         and an edit distance (its call results are used) stay the broad branch."""
         import learn_apply
         for f, branch in [('hanoi.py', 'towers_of_hanoi'), ('hanoi.c', 'towers_of_hanoi'), ('hanoi.lisp', 'towers_of_hanoi'),
-                          ('fib.py', 'fibonacci_like'), ('inorder.py', 'recursive_decomposition'),
-                          ('ack.lisp', 'recursive_decomposition')]:
+                          ('fib.py', 'fibonacci_like'), ('inorder.py', 'recursive_decomposition')]:
             with self.subTest(file=f):
                 self.assertEqual(learn_apply.apply(DATA / f)[3], {branch})
-        self.assertNotIn('towers_of_hanoi', learn_apply.apply(DATA / 'edit.lisp')[3])
+        for f in ('ack.lisp', 'edit.lisp'):
+            self.assertNotIn('towers_of_hanoi', learn_apply.apply(DATA / f)[3])
+
+
+    def test_built_branches(self):
+        """Built branches (doc 04 section 15): each task's relation holds in every language; close negatives do
+        not get it."""
+        import learn_apply
+        cases = {'ackermann': (['ack.py', 'ack.c', 'ack.lisp'], ['mc91.py', 'fib.py']),
+                 'knapsack_01': (['knap.py', 'knap.c'], ['lcs_table.py', 'matrix_table.py']),
+                 'caesar_cipher': (['caesar_loop.py', 'caesar_loop.lisp'], ['vigenere.py']),
+                 'matrix_multiplication': (['matrix_table.py', 'matrix_table.lisp', 'matrix_collect.py', 'matrix_collect.lisp'],
+                                           ['dot.py', 'knap.py']),
+                 'run_length_encoding': (['rle_group.lisp', 'rle_scan.py'], ['dedup.py']),
+                 'n_queens': (['queens_perm.py', 'queens_perm.hs'], ['perm_sort.py'])}
+        for task, (positives, negatives) in cases.items():
+            for f in positives:
+                with self.subTest(task=task, file=f):
+                    self.assertIn(task, learn_apply.apply(DATA / f)[3])
+            for f in negatives:
+                with self.subTest(task=task, negative=f):
+                    self.assertNotIn(task, learn_apply.apply(DATA / f)[3])
 
 
 if __name__ == '__main__':

@@ -103,3 +103,72 @@ continuation_guard(F, S, C, P) :- under(S, L), loop(L, F, _), loop_cond(L, LC),
 % The same logic as AP13's rec_class(double_recursion) (hanoi: f(n-1); move; f(n-1)), a second clause.
 family_path_v02(F, [numeric, recurrence, double_recursion]) :-
     tail_loop(L), loop(L, F, _), once(( in_func(S, F), call_at(S, '$self', _), in_loop(S, L) )).
+
+% ===== built branches (doc 04 section 15): where the Python examples cannot teach an algorithm in another
+% language, its logic is stated here as relations over the facts, the same in every language. Each names
+% the case it was built from and has a logic test on own programs (tests/test_uniform.py). =================
+
+% Ackermann: nested recursion that counts the first argument down: f(m - 1, f(m, n - 1)). In Lisp ECL makes
+% the outer call a jump to the start (tail_loop) whose update of a parameter is the inner call and another
+% parameter's update is p - 1. Built from ackermann-function-4.c's task (the Rosetta Lisp/Python forms).
+family_path_v02(F, [numeric, recurrence, nested_recursion]) :-
+    once(( param(F, _, M),
+           (   in_func(S, F), ( value(S, _, V) ; ret(S, V) ; call_at(S, '$self', As), V = call('$self', As) ),
+               sub_term(O, V), compound(O), O = call('$self', Os), member(op(sub, [P, int(1)]), Os), P == var(M),
+               member(A, Os), sub_term(I, A), compound(I), I = call('$self', _)
+           ;   tail_loop(L), loop(L, F, _),
+               in_func(S1, F), in_loop(S1, L), assign(S1, var(N), V1), param(F, _, N), N \== M,
+               sub_term(I, V1), compound(I), I = call('$self', _),
+               in_func(S2, F), in_loop(S2, L), assign(S2, var(M2), op(sub, [P2, int(1)])), M2 == M, P2 == var(M)
+           ) )).
+
+% 0-1 knapsack: a table cell T[i][j] taken from the previous row at a capacity reduced by a non-constant
+% amount, T[i-1][j - w] (the item's weight); LCS and edit distance read T[i-1][j-1]. Built from
+% knapsack-problem-0-1.c.
+family_path_v02(F, [marking, table_fill, capacity_reduction]) :-
+    once(( idiom(F, table_fill, T), in_func(S, F), value(S, elem(elem(var(T2), I), J), V), T2 == T,
+           sub_term(R, V), compound(R), R = elem(elem(var(T3), op(sub, [I3, int(1)])), op(sub, [J3, W])),
+           T3 == T, I3 == I, J3 == J, W \= int(_) )).
+
+% Caesar shift: a character made from one input character's code taken modulo 26 around a base,
+% chr((code(c) - b + k) mod 26 + b); a Vigenere shift is itself a character code (two in the mod). Built
+% from caesar-cipher-2.lisp.
+family_path_v02(F, [sequence_transformation, elementwise_map, alphabet_rotation]) :-
+    once(( in_func(S, F), ( value(S, _, V) ; ret(S, V) ; call_at(S, _, V) ), sub_term(C, V), compound(C), C = call(chr, [E]),
+           sub_term(Md, E), compound(Md), Md = op(mod, [X, int(26)]),
+           findall(Q, ( sub_term(Q, X), char_code_of(F, Q) ), [_]) )).
+char_code_of(_, call(ord, [A])) :- A \= other(string), A \= int(_), !.
+char_code_of(F, var(V)) :- atom(V), in_func(S, F), value(S, var(V2), call(ord, [A])), V2 == V, A \= other(string), !.
+
+% matrix product: the accumulated sum of a[r][k] * b[k][c] over k (b's column c: b[k][c], or a helper of
+% the file that gives b's column, col(b, c)[k]), a and b parameters. Built from matrix-multiplication-1.lisp.
+family_path_v02(F, [sequence_transformation, construction, matrix_product]) :-
+    once(( in_func(S, F), value(S, T, op(add, [T2, op(mul, Fs)])), T2 == T,
+           permutation(Fs, [X, Y]), X = elem(elem(var(A), var(R)), var(K)),
+           (   Y = elem(elem(var(B), var(K2)), var(Cc))
+           ;   Y = elem(call(G, [var(B), var(Cc)]), var(K2)), atom(G), func(_, G, _)
+           ), K2 == K, param(F, _, A), param(F, _, B), R \== K, Cc \== K )).
+
+% runs of equal elements: a group is extended by the next element while it equals the group's first,
+% otherwise the group is emitted and a new group starts with the element (the run-length idiom of AP13's
+% node, written by grouping). Built from run-length-encoding.lisp.
+family_path_v02(F, [sequence_transformation, construction, run_length]) :-
+    once(( in_func(S1, F), value(S1, var(G), cons(_, var(G2))), G2 == G,
+           same_as_first(S1, G, true),
+           in_func(S2, F), call_at(S2, append, [_, var(G3)]), G3 == G, same_as_first(S2, G, false),
+           in_func(S3, F), value(S3, var(G4), list([_])), G4 == G, same_as_first(S3, G, false) )).
+% statement S runs when (Pol = true) / unless (false) the element equals the first of group G
+same_as_first(S, G, Pol) :-
+    guard(S, C, P), ( C = op(not, [E]) -> flip(P, P1) ; E = C, P1 = P ),    % flip/2: AP13 canon.pl
+    E = op(eq, Xs), member(elem(var(G2), int(0)), Xs), G2 == G, P1 == Pol, !.
+
+% N-queens by generate and test: among the permutations of 0..n-1 (queen i in column x_i), keep those whose
+% diagonals are distinct: the number of distinct values of x_i + i and x_i - i is n. Python counts them as
+% len(set(x[i] + i ...)), Haskell as length . nub . zipWith f [0..] (a helper of the file). Built from
+% n-queens-problem-3.hs.
+family_path_v02(F, [search, permutation_filter]) :-
+    once(( in_func(S, F), call_at(S, permutations, _), distinct_diagonals )).
+distinct_diagonals :- in_func(S, _), ( value(S, _, V) ; ret(S, V) ; guard(S, V, _) ; cret(S, V) ),
+    sub_term(D, V), compound(D), index_distinct(D), !.
+index_distinct(call(len, [call(set, [op(O, [elem(var(Q), var(I)), var(I2)])|_])])) :- memberchk(O, [add, sub]), I == I2, atom(Q).
+index_distinct(op('.', [var(length), op('.', [var(nub), call(zipWith, [_, call(range, [int(0), _])])])])).

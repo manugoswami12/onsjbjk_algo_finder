@@ -1,0 +1,8 @@
+(defun runs (seq)
+  (let ((groups '()) (group (list (first seq))))
+    (dolist (x (rest seq))
+      (if (eql x (first group))
+          (push x group)
+          (progn (push group groups) (setf group (list x)))))
+    (push group groups)
+    (reverse groups)))

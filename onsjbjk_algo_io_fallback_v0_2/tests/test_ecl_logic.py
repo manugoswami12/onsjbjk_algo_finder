@@ -22,7 +22,7 @@ EXPECTED = {
     'facta': 'factorial_like', 'gsort': 'comparison_driven_reordering', 'm2max': 'extremum_search', 'pass': 'comparison_driven_reordering',   # closure comparator 'bsearch': 'interval_lookup', 'vmax': 'extremum_search', 'vsum': 'element_accumulation',
     # near misses: no v0.2 branch
     'twice': None, 'countdown': None, 'vcopy': None, 'lastel': None, 'addmod': None, 'countup': None, 'lcount': None, 'squares': None,
-    'inrange': None, 'shiftc': None, 'applyf': None,
+    'inrange': None, 'shiftc': 'caesar_cipher', 'applyf': None,
     'vrev': 'sequence_rearrangement',   # a reversal: rearranged, never compared (no comparison sort)
 }
 

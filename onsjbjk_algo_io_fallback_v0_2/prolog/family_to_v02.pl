@@ -30,6 +30,14 @@ family_branch([numeric, decomposition, digits], _, digit_processing).
 family_branch([numeric, divisor_test], _, divisor_search).
 family_branch([numeric, conditional_iteration], _, collatz_like).
 family_branch([marking, stride_marking], _, sieve_like).
+% built branches (doc 04 section 15, families_v02.pl): one task each
+family_branch([numeric, recurrence, nested_recursion], _, ackermann).
+family_branch([marking, table_fill, capacity_reduction], _, knapsack_01).
+family_branch([sequence_transformation, elementwise_map, alphabet_rotation], _, caesar_cipher).
+family_branch([sequence_transformation, construction, matrix_product], _, matrix_multiplication).
+family_branch([sequence_transformation, construction, run_length], _, run_length_encoding).
+family_branch([numeric, recurrence, josephus_recurrence], _, josephus).
+family_branch([search, permutation_filter], _, n_queens).
 
 % range accumulation: a product is factorial-like, a sum a series sum
 range_branch(mul, factorial_like).

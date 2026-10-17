@@ -125,7 +125,8 @@ def score(rosetta, units, labels, io, title):
     print(f'RECALL (full key) = {correct}/{positives} = {correct / max(positives, 1):.1%}')
     print(f'NOT LEARNABLE = {len(not_learnable)}: {", ".join(not_learnable) or "-"}')
     print(f'WRONG ON NEGATIVES = {wrong_neg} of {len(units) - positives - ignored}')
-    print('STAGE', 'PASS' if prec >= 0.8 and rec >= 0.8 else 'FAIL')
+    full = correct / max(positives, 1)            # built branches cover what learning cannot (doc 04 section 15)
+    print('STAGE', 'PASS' if prec >= 0.8 and full >= 0.8 else 'FAIL', '(precision and full-key recall)')
 
 
 def freeze(rosetta, key, seed=20261019):

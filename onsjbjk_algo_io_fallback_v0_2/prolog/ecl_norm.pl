@@ -349,15 +349,20 @@ copy_fact(X, V, F0, F) :- replace_term(var(X), V, F0, F).
 % comparator: an order test op(lt, [a, b]) (the families never depend on its direction); any
 % other call of a function object stays an unknown call.
 % an &key parameter whose default is #'identity (ecl_key_default, from the tree) applied to x is x
+% and one whose default is an equality predicate ('eql, the CLHS default :test) applied to a and b is a = b
 known_calls(Items0, Items) :-
     findall(K, member(it(_, _, st(call, [call_at(_, ecl_key_default, [var(K), call(ecl_symbol, [var(identity)])])])), Items0), Ids),
+    findall(K, ( member(it(_, _, st(call, [call_at(_, ecl_key_default, [var(K), call(ecl_symbol, [var(E)])])])), Items0),
+                 lisp_equality(E) ), Eqs),
     exclude([it(_, _, st(call, [call_at(_, ecl_key_default, _)]))]>>true, Items0, Items1),
-    maplist(known_item(Ids), Items1, Items).
-known_item(Ids, it(S, L, W0), it(S, L, W)) :- known_term(Ids, W0, W).
+    maplist(known_item(Ids-Eqs), Items1, Items).
+lisp_equality(E) :- memberchk(E, [eql, eq, equal, equalp, '=', 'char=', 'string=', 'char-equal', 'string-equal']).
+known_item(Ks, it(S, L, W0), it(S, L, W)) :- known_term(Ks, W0, W).
 known_term(_, T, T) :- \+ compound(T), !.
-known_term(Ids, T0, T) :- T0 =.. [Fn|As], maplist(known_term(Ids), As, Bs), T1 =.. [Fn|Bs],
+known_term(Ids-Eqs, T0, T) :- T0 =.. [Fn|As], maplist(known_term(Ids-Eqs), As, Bs), T1 =.. [Fn|Bs],
     (   T1 = call(ecl_funcall, [fn(Op), A, B]) -> T = op(Op, [A, B])
     ;   T1 = call(ecl_funcall, [var(K), X]), memberchk(K, Ids) -> T = X
+    ;   T1 = call(ecl_funcall, [var(K), A, B]), memberchk(K, Eqs) -> T = op(eq, [A, B])
     ;   T = T1 ).
 
 comparator_calls(F, Items0, Items) :-
