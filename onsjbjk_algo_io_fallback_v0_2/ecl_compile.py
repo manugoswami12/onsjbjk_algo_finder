@@ -33,4 +33,14 @@ def ecl_units(path: Path, timeout=120) -> list[str]:
         elif not DECLARATION.match(f):
             forms.append(f'(defun ecl-toplevel () {f})')
     with tempfile.TemporaryDirectory(prefix='v02_eclu_') as td:
-        return [_compile(prelude + f + '\n', Path(td), f'f{k}', timeout) for k, f in enumerate(forms)]
+        return [with_data(_compile(prelude + f + '\n', Path(td), f'f{k}', timeout), Path(td) / f'f{k}.data')
+                for k, f in enumerate(forms)]
+
+
+def with_data(c_text: str, data: Path) -> str:
+    """ECL's constants table VV (symbols, keywords, numbers) is a separate .data file the C unit
+    #includes; it is put in place of that #include so the unit carries the names of VV[k]."""
+    include = f'#include "{data}"'
+    if not c_text or include not in c_text or not data.exists():
+        return c_text
+    return c_text.replace(include, data.read_text(encoding='utf-8', errors='replace'))

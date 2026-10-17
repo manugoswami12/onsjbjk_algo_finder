@@ -138,16 +138,35 @@ def optional_parameters(fn, src: bytes) -> list[str] | None:
     text = src[params.start_byte:params.end_byte].decode()
     if 'cl_narg' not in text or '...' not in text:
         return None
-    names, stack = [], [fn]
+    names, keys, stack = [], [], [fn]
     while stack:
         node = stack.pop()
         if node.type == 'assignment_expression':
             right = node.child_by_field_name('right')
-            if src[right.start_byte:right.end_byte].decode().startswith('va_arg('):
-                left = node.child_by_field_name('left')
-                names.append((node.start_byte, src[left.start_byte:left.end_byte].decode()))
+            value = src[right.start_byte:right.end_byte].decode().replace(' ', '')
+            left = src[node.child_by_field_name('left').start_byte:node.child_by_field_name('left').end_byte].decode()
+            if value.startswith('va_arg('):                      # &optional: in argument order
+                names.append((node.start_byte, left))
+            elif value.startswith('keyvars[') and value[8:-1].isdigit():   # &key: keyvars[k], k-th key
+                keys.append((int(value[8:-1]), left))
         stack.extend(node.children)
-    return [n for _, n in sorted(names)]
+    return [n for _, n in sorted(names)] + [n for _, n in sorted(set(keys))]
+
+
+def key_defaults(block, src: bytes) -> list[tuple[str, object]]:
+    """(key variable, default node) of an &key prologue: `if (Null(keyvars[j])) { v = DEFAULT; }`."""
+    out, stack = [], [block]
+    while stack:
+        node = stack.pop()
+        if node.type == 'if_statement' and b'keyvars[' in src[node.start_byte:node.end_byte].split(b')')[0] + b')':
+            cons = node.child_by_field_name('consequence')
+            assigns = [n for n in cons.named_children if n.type == 'expression_statement']
+            if assigns and assigns[0].named_children and assigns[0].named_children[0].type == 'assignment_expression':
+                a = assigns[0].named_children[0]
+                left = a.child_by_field_name('left')
+                out.append((node.start_byte, src[left.start_byte:left.end_byte].decode(), a.child_by_field_name('right')))
+        stack.extend(node.children)
+    return [(v, d) for _, v, d in sorted(out, key=lambda t: t[0])]
 
 
 # a standard function passed as an object (#'*): its neutral operator name
@@ -174,6 +193,65 @@ def declared_names(root, src: bytes) -> set:
                     names.add(src[d.start_byte:d.end_byte].decode())
         stack.extend(node.children)
     return names
+
+
+def lisp_atoms(text: str) -> list[str]:
+    """The top-level objects of ECL's constants text, in order (a minimal Lisp reader: atoms,
+    strings and parenthesised forms; a form is kept as one object)."""
+    out, i, n = [], 0, len(text)
+    while i < n:
+        if text[i].isspace():
+            i += 1
+            continue
+        start = i
+        if text[i] == '(':
+            depth = 0
+            while i < n:
+                depth += (text[i] == '(') - (text[i] == ')')
+                i += 1
+                if depth == 0:
+                    break
+        elif text[i] == '"':
+            i += 1
+            while i < n and text[i] != '"':
+                i += 2 if text[i] == '\\' else 1
+            i += 1
+        else:
+            while i < n and not text[i].isspace() and text[i] not in '()':
+                i += 1
+        out.append(text[start:i])
+    return out
+
+
+def constants(root, src: bytes) -> list[str]:
+    """VV[k] of the unit: the objects of ECL's compiler_data_text string (inlined by ecl_compile)."""
+    stack = [root]
+    while stack:
+        node = stack.pop()
+        if node.type == 'init_declarator' and src[node.start_byte:node.end_byte].startswith(b'compiler_data_text1'):
+            strings = []
+            inner = [node]
+            while inner:
+                m = inner.pop()
+                if m.type == 'string_literal':
+                    strings.append((m.start_byte, src[m.start_byte + 1:m.end_byte - 1].decode('utf-8', 'replace')))
+                inner.extend(m.children)
+            text = ''.join(t for _, t in sorted(strings)).replace('\\"', '"')
+            return lisp_atoms(text)
+        stack.extend(node.children)
+    return []
+
+
+def vv_object(objects: list[str], index: str):
+    """('symbol' | 'keyword', name) of VV[index], or None (numbers, forms, strings stay as they are)."""
+    if not index.isdigit() or int(index) >= len(objects):
+        return None
+    obj = objects[int(index)]
+    if obj.startswith(':'):
+        return 'keyword', c_name(obj[1:])
+    if obj[:1].isalpha() or obj[:1] in '*%+-<>=/':
+        return ('symbol', c_name(obj.split(':')[-1])) if not obj.lstrip('+-').isdigit() else None
+    return None
 
 
 def unambiguous(c_text: str) -> str:
@@ -214,6 +292,8 @@ def marked_c(c_text: str) -> str:
     root = tree.root_node
     comments = line_comments(root, src)
     cells = closure_cells(root, src, comments)
+    vv = constants(root, src)
+    mv_count = [1]                                          # values set by the last values[0] producer
 
     def raw(node) -> str:                       # source slice (not node.text: kept off the binding)
         return src[node.start_byte:node.end_byte].decode('utf-8', 'replace')
@@ -237,14 +317,48 @@ def marked_c(c_text: str) -> str:
                 return '(' + ', '.join([*kept, *(f'cl_object {n}' for n in optional)]) + ')'
             if node.type == 'compound_statement' and 'va_arg(' in raw(node) and 'va_end' not in raw(node):
                 return ''
-            if node.type == 'expression_statement' and raw(node).startswith(('va_start', 'va_end')):
+            if node.type == 'compound_statement' and 'cl_parse_key(' in raw(node) and 'return' not in raw(node):
+                # &key: the parse goes, each key's default stays as a fact (ecl_key_default)
+                return ' '.join(f'ecl_key_default({v}, {render(d)});' for v, d in key_defaults(node, src))
+            if node.type == 'expression_statement' and raw(node).startswith(('va_start', 'va_end', 'ecl_va_start', 'ecl_va_end')):
                 return ''
-            if node.type == 'declaration' and (raw(node).startswith('va_list') or any(
+            if node.type == 'declaration' and (raw(node).startswith(('va_list', 'ecl_va_list')) or any(
                     raw(node).replace(' ', '') == f'cl_object{n};' for n in optional)):
                 return ''
         if node.type == 'call_expression' and raw(node.child_by_field_name('function')) in variadic:
             args = node.child_by_field_name('arguments').named_children[1:]     # the argument count goes
             return f'{raw(node.child_by_field_name("function"))}({", ".join(render(a) for a in args)})'
+        if node.type == 'call_expression' and raw(node.child_by_field_name('function')) == 'ECL_SYM':
+            name = raw(node.child_by_field_name('arguments').named_children[0]).strip('"')
+            return f'ecl_symbol({FUNCTION_OBJECT.get(name, c_name(name))})'
+        if node.type == 'subscript_expression' and raw(node).replace(' ', '').startswith('cl_env_copy->values['):
+            k = raw(node.child_by_field_name('index'))          # ECL's value registers: values[k] = ecl_mv<k>
+            return 'ecl_mv' if k == '0' else f'ecl_mv{k}'
+        if node.type == 'assignment_expression' and raw(node.child_by_field_name('left')).replace(' ', '') \
+                == 'cl_env_copy->values[0]':
+            right = node.child_by_field_name('right')
+            fn = raw(right.child_by_field_name('function')) if right.type == 'call_expression' else ''
+            args = right.child_by_field_name('arguments') if right.type == 'call_expression' else None
+            if fn in ('ecl_floor2', 'ecl_truncate2'):           # quotient and remainder (CLHS floor, truncate)
+                mv_count[0] = 2
+                return f'ecl_mv = {render(right)}; ecl_mv1 = ecl_rem{text(args)}'
+            if fn == 'ecl_apply_from_stack_frame':              # fn applied to the values pushed on the frame
+                pushed = ['ecl_mv', *(f'ecl_mv{k}' for k in range(1, mv_count[0]))]
+                return f'ecl_mv = ecl_apply({", ".join([render(args.named_children[1]), *pushed])})'
+            mv_count[0] = 1
+            return f'ecl_mv = {render(right)}'
+        if node.type == 'expression_statement' and raw(node).startswith('ecl_stack_frame_push_values'):
+            return ''
+        if node.type == 'call_expression' and raw(node.child_by_field_name('function')) == 'ecl_fdefinition':
+            arg = node.child_by_field_name('arguments').named_children
+            obj = vv_object(vv, raw(arg[0].child_by_field_name('index'))) if arg and arg[0].type == 'subscript_expression' \
+                and raw(arg[0].child_by_field_name('argument')) == 'VV' else None
+            if obj and obj[0] == 'symbol':                  # #'insert: the function object of insert
+                return f'ecl_function({obj[1]})'
+        if node.type == 'subscript_expression' and raw(node.child_by_field_name('argument')) == 'VV':
+            obj = vv_object(vv, raw(node.child_by_field_name('index')))
+            if obj:                                         # VV[1] = :initial-value, VV[0] = a symbol
+                return f'ecl_{obj[0]}({obj[1]})'
         if node.type == 'subscript_expression' and raw(node).replace(' ', '') in cells:
             return cells[raw(node).replace(' ', '')]
         if node.type == 'labeled_statement':

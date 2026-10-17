@@ -97,3 +97,24 @@ Logic tests (`tests/test_ecl_logic.py`, own programs): 13 positives (gcd loop an
 factorial recursive and iterative, fib, digit sum, insertion sort by rotatef with `<` and with a
 comparator parameter, shift insertion sort, selection sort, binary search, max, sum) and 6 near
 misses (no branch) all pass.
+
+## 9. Fallback (separate from the normal process)
+```
+normal:   lisp -> ecl_compile -> ecl_facts -> ecl_main (ecl_norm, AP13 families, family_to_v02) -> answers
+                                             +- ecl_export: facts after ecl_norm + answers ("earlier output")
+no v0.2 branch for a unit:
+fallback: earlier output -> prolog/fallback_main.pl (token stream per function, links to the file's own
+          functions followed inline, depth <= 4, acyclic) -> prolog/fallback_rules.pl (DCG patterns)
+```
+| Program | Role |
+|---|---|
+| `prolog/fallback_main.pl` | reads only the exported output; `tokens//4` (a DCG) writes each result term in prefix order; `link//4` splices a linked function's tokens between `enter(G)` and `leave(G)` |
+| `prolog/fallback_rules.pl` | the expandable rule base: one `fallback_pattern(Branch, Rule)//0` clause per learned pattern, each naming the case it was learned from (fold_map: dot-product-2; fold_ordered_insert: insertion-sort-1) |
+| `ecl_fallback.py` | runs the fallback on the saved output; `eval_ecl_staged.py` calls it only when the normal answer is missing and tags its answers `[fallback:Rule]` |
+
+Adding a learning: one `fallback_pattern//2` clause with its learning comment, plus a logic test.
+
+## 10. Files without an algorithm
+`ecl_main.pl no_algorithm/0`, decided from the traced facts: no defined function (top-level code only) that
+either calls a function defined elsewhere (a driver) or neither loops nor recurses (a REPL transcript). The
+file's output is zero (`NOCODE`); the evaluator lists it as ignored, outside precision and recall.

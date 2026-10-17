@@ -39,3 +39,49 @@ family_path_v02(F, [numeric, recurrence, pair_recurrence]) :-
     numeric(F),
     once(( in_func(S, F), value(S, var(X), var(Y)), X \== Y, value(S, var(Y), var(T)), loop_value(F, S, T, E),
            E = op(O, _), memberchk(O, [add, mul, sub]), var_in(E, X), var_in(E, Y) )).
+
+% n := n div b (directly, or through t := n div b earlier in the same loop body) with n mod b used as
+% data: positional digits in base b; b a constant > 1 or a variable the function never writes (a
+% loop invariant, as for induction-variable strides). Learned from sum-digits-1 (base a parameter).
+family_path_v02(F, [numeric, decomposition, digits]) :-
+    numeric(F),
+    once(( in_func(S, F), value(S, var(N), V),
+           ( V = op(div, [var(N1), B]) ; V = var(T), loop_value(F, S, T, op(div, [var(N1), B])) ), N1 == N,
+           invariant_base(F, B, N),
+           in_func(S2, F), value(S2, _, R), sub_term(M, R), compound(M), M = op(mod, [V2, B2]), V2 == var(N), B2 == B )).
+invariant_base(_, int(K), _) :- integer(K), K > 1.
+invariant_base(F, var(B), N) :- atom(B), B \== N, \+ ( in_func(S, F), value(S, var(B2), _), B2 == B ).
+
+% two self-calls whose results a function of the same file merges (merge evidence in the callee):
+% merge sort with its merge helper. Learned from the book's merge-sort / merge-lists.
+family_path_v02(F, [sequence_transformation, comparison_sort, merge]) :-
+    self_calls(F, K), K >= 2,
+    once(( in_func(S, F), ret(S, R), sub_term(C, R), compound(C), C = call(Gn, Args), atom(Gn), Gn \== '$self',
+           func(G, N, _), G \== F, base_name(N, Gn), idiom(G, merge, _),
+           member(A, Args), sub_term(Sf, A), compound(Sf), Sf = call('$self', _) )).
+
+% bounded interval halving (AP12's bounded_indexed_interval_lookup with any comparison of the two
+% bounds as the loop test, beg /= end included): mid = midpoint(lo, hi); lo = mid + 1 and hi = mid
+% (or mid - 1) under comparisons of a[mid] with the target. Learned from the book's bin-search.
+family_path_v02(F, [sequence_query, target_search, interval_halving]) :-
+    once(( loop(Lp, F, _), lcond(Lp, op(O, [var(X), var(Y)])), memberchk(O, [gt, ge, ne]),
+           ( Lo = Y, Hi = X ; Lo = X, Hi = Y ),
+           midpoint_in(Lp, M, Lo, Hi, _),
+           ( assign(Sg, var(Lo), op(add, [var(M), int(1)])) ; value(Sg, var(Lo), op(add, [var(M), int(1)])) ),
+           under(Sg, Lp), param(F, _, A), param(F, _, T), A \== T,          % bound before mentions/2 (it tests ==)
+           nguard(Sg, C1, _), mentions(C1, elem(var(A), var(M))), mentions(C1, var(T)),
+           ( assign(Ss, var(Hi), var(M)) ; assign(Ss, var(Hi), op(sub, [var(M), int(1)])) ),   % raw: mid is
+           under(Ss, Lp), nguard(Ss, C2, _), mentions(C2, elem(var(A), var(M))) )).        % copy-propagated
+% recursive halving of the sequence itself: the self-calls take slice(q, m) and slice(q, 0, m) with
+% m = len(q) / 2, under a comparison of q's middle element with the target. Learned from the book's
+% bin-search-v0.
+family_path_v02(F, [sequence_query, target_search, interval_halving]) :-
+    once(( param(F, _, Q), param(F, _, T), Q \== T,
+           in_func(S1, F), call_at(S1, '$self', A1), member(H1, A1), H1 = call(slice, [var(Q1), var(M)]), Q1 == Q,
+           in_func(S2, F), S2 \== S1, call_at(S2, '$self', A2), member(H2, A2),
+           H2 = call(slice, [var(Q2), int(0), var(M2)]), Q2 == Q, M2 == M,
+           in_func(Sm, F), value(Sm, var(M3), op(div, [call(len, [var(Q3)]), int(2)])), M3 == M, Q3 == Q,
+           nguard(S1, C, _), mentions(C, var(T)), compared_element(F, C, Q) )).
+compared_element(_, C, Q) :- sub_term(E, C), compound(E), E = elem(V, _), V == var(Q), !.
+compared_element(F, C, Q) :- sub_term(W, C), compound(W), W = var(V), atom(V),
+    in_func(S, F), value(S, var(V2), elem(var(Q2), _)), V2 == V, Q2 == Q, !.

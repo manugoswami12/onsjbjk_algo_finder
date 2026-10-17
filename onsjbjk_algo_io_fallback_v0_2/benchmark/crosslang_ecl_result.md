@@ -123,3 +123,35 @@ transcript); 7 library or functional idioms ECL does not inline (dot-product-2 `
 `defmethod`, fib-9/10 list growth, insertion-sort-1 `reduce #'insert`, merge-sort built-in `merge`); 2 rule
 coverage (sum-digits-1 parameter base, book merge-sort helper); 2 book bin-search (`&key`, RUTILS `slice`); 1
 regression above.
+
+### After stage 55 (staged test still stopped): fallback, no-algorithm files, four normal-path fixes
+
+Per-unit results on the stage-55 units these touch (`eval_ecl_staged.unit_analysis`; the stage was not re-run):
+
+| Unit | Expected | Now |
+|---|---|---|
+| dot-product-2 | element_accumulation | element_accumulation [fallback:fold_map] |
+| insertion-sort-1 | shift_insertion | shift_insertion [fallback:fold_ordered_insert] |
+| sum-digits-1 | digit_processing | digit_processing (multiple values `(truncate n base)` converted; base a loop invariant) |
+| book merge-sort | sort | comparison_driven_reordering (merge evidence in the helper + two self-calls; merge-lists alone: none) |
+| book bin-search | interval_lookup | interval_lookup (`&key` parameters + defaults from the tree; loop test `beg /= end`) |
+| book bin-search-v0 | interval_lookup | interval_lookup (recursive halving through `rtl:slice`) |
+| bubble-sort-2, sum-digits-2, lcm-1 | (no code) | ignored (0) |
+| cocktail-sort | sort | comparison_driven_reordering |
+| caesar-2 | negative | no answer |
+| Rosetta merge-sort | sort | UNKNOWN (built-in `merge`) |
+
+Normal-path fixes:
+- ECL's constants table (`VV`, the unit's .data) is read from the tree, so `#'insert` and `:initial-value`
+  have their names.
+- ECL's value registers (`values[k]`) are variables, and the multiple-values protocol (`truncate` → quotient
+  and remainder, `apply` over the stack frame) is converted.
+- Composed terms are re-normalised.
+- Copy propagation of single-definition temporaries runs across blocks (kill check; pure values only, never an
+  allocation or a call).
+- `push` + `reverse` is a collection.
+- The comparison chains `cl_L` / `cl_LE` / … are converted.
+- `merge` is a sort only with the splitting recursion.
+
+Regression: logic tests 3/3 files + 54 cases pass, selftest 47/47, stage 3 3/3, stage 15 now 10/10 recall
+(100% precision).

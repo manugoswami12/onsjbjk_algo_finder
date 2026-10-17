@@ -59,6 +59,10 @@ ecl_op(call(ecl_list1, [X]), list([X])) :- !.
 ecl_op(call(cl_list, [int(_)|As]), list(As)) :- !.
 ecl_op(call(ecl_endp, [X]), op(not, [X])) :- !.                  % (endp l): l is empty
 ecl_op(call(coerce_to_list, [X]), X) :- !.                      % si::coerce-to-list: the same sequence
+ecl_op(call(F, [int(_), A, B|Cs]), T) :- chain(F, O), !, chain_term(O, [A, B|Cs], T).   % (< a b c): a<b, b<c
+ecl_op(call(ecl_apply, [call(ecl_symbol, [var(list)])|Vs]), list(Vs)) :- !.   % (multiple-value-list ...)
+ecl_op(elem(list(Xs), int(K)), X) :- nth0(K, Xs, X), !.                % car / cadr of a known list
+ecl_op(tail(list([_|Xs]), 1), list(Xs)) :- !.
 ecl_op(call(cl_mapcar, [int(_), Fn, Q|Qs]), map(Q, Fn, Qs)) :- !.      % (mapcar f q ...): AP13's map term
 ecl_op(call(cl_map, [int(_), _, Fn, Q|Qs]), map(Q, Fn, Qs)) :- !.      % (map type f q ...)
 ecl_op(call(F, [int(_), Q, I]), elem(Q, I)) :- memberchk(F, [cl_bit, cl_sbit, cl_aref]), !.   % (bit v i), (aref v i)
@@ -78,6 +82,9 @@ ecl_op(var('ECL_T'), bool(true)) :- !.
 ecl_op(var(V), var(N)) :- lisp_name(V, N), !.
 
 % ECL names a Lisp variable v<k><name> (v2b, v4lo); temporaries are T<k>, v<k>, value0, env0
+chain(cl_L, lt). chain(cl_LE, le). chain(cl_G, gt). chain(cl_GE, ge). chain(cl_E, eq).
+chain_term(O, [A, B], op(O, [A, B])) :- !.
+chain_term(O, [A, B|Cs], op(and, [op(O, [A, B]), T])) :- chain_term(O, [B|Cs], T).
 compiled_name(F, N) :- atom(F), atom_codes(F, [0'L|Cs0]), ( Cs0 = [0'C|Cs] -> true ; Cs = Cs0 ),
     Cs = [D|_], code_type(D, digit), drop_digits(Cs, Ns), Ns \== [], atom_codes(N, Ns).
 lisp_name(V, N) :- atom(V), \+ ecl_temp(V), atom_codes(V, [0'v|Cs]), Cs = [D|_], code_type(D, digit),
@@ -85,6 +92,7 @@ lisp_name(V, N) :- atom(V), \+ ecl_temp(V), atom_codes(V, [0'v|Cs]), Cs = [D|_],
 drop_digits([D|Cs], Ns) :- code_type(D, digit), !, drop_digits(Cs, Ns).
 drop_digits(Ns, Ns).
 ecl_temp(X) :- memberchk(X, [value0, env0, cl_env_copy]), !.
+ecl_temp(X) :- atom(X), sub_atom(X, 0, _, _, ecl_mv), !.             % ECL's value registers values[k]
 ecl_temp(X) :- atom_codes(X, [C|Ds]), memberchk(C, [0'T, 0'v]), Ds = [D|_], code_type(D, digit),
     drop_digits(Ds, Rest), ( Rest == [] ; Rest = [0'_|Ks], Ks \== [], drop_digits(Ks, []) ).   % v8, v8_1 (scoped)
 lisp_var(F, X) :- ( \+ ecl_temp(X) ; ecl_lispvar(F, X) ), !.
@@ -152,8 +160,9 @@ subst_(F, Env, _, var(X), T) :- !,
     ( get_assoc(X, Env, V) -> T = V
     ; T = var(X), ( F \== none, ecl_temp(X), \+ ecl_lispvar(F, X) -> assertz(ecl_unresolved(F, X)) ; true ) ).
 subst_(F, Env, Elems, elem(Q0, I0), T) :- !, subst_(F, Env, Elems, Q0, Q), subst_(F, Env, Elems, I0, I),
-    ( member(E-V, Elems), E == elem(Q, I) -> T = V ; T = elem(Q, I) ).
-subst_(F, Env, Elems, T0, T) :- T0 =.. [Fn|As], maplist(subst_(F, Env, Elems), As, Bs), T =.. [Fn|Bs].
+    ( member(E-V, Elems), E == elem(Q, I) -> T = V ; ecl_top(elem(Q, I), T) ).
+% a term composed from values of the block is normalised again (car of a list just built)
+subst_(F, Env, Elems, T0, T) :- T0 =.. [Fn|As], maplist(subst_(F, Env, Elems), As, Bs), T1 =.. [Fn|Bs], ecl_top(T1, T).
 
 % symex(F, Evs, Stable, Items): items it(S, Line, What) in source order;
 % What = label(N) | goto(N, C, P) | st(Kind, Facts)
@@ -289,16 +298,52 @@ rename_fact(X, Nu, Nd, par_assign(S, Ts0, Vs0), par_assign(S, Ts, Vs)) :- !,
     maplist([T0, T]>>( T0 == var(X) -> T = var(Nd) ; replace_term(var(X), var(Nu), T0, T) ), Ts0, Ts).
 rename_fact(X, Nu, _, F0, F) :- replace_term(var(X), var(Nu), F0, F).
 
+% ----- 2b'. copy propagation of single-definition temporaries across blocks ---------------------
+% A compiler temporary (ECL drops Lisp names ending in a digit: i1 is v5) with ONE definition
+% t := v replaces its later uses when no item between the definition and the use writes an
+% operand of v (kill check); a use before the definition (next iteration) keeps t.
+copy_temps(F, Items0, Items) :-
+    findall(X, ( ecl_lispvar(F, X0), ( X = X0 ; atom(X0), member(it(_, _, st(_, Fs)), Items0),
+                 member(assign(_, var(X), _), Fs), atom_concat(X0, '_w', P), sub_atom(X, 0, _, _, P) ) ), Xs0),
+    sort(Xs0, Xs), foldl(copy_temp, Xs, Items0, Items).
+copy_temp(X, Items0, Items) :-
+    findall(D-V, ( nth1(D, Items0, It), It = it(_, _, st(_, Fs)), member(assign(_, var(X2), V), Fs), X2 == X ), Defs),
+    (   Defs = [D-V], V \= var(_), pure_value(V),     % no call: nothing allocated, nothing done twice
+        \+ ( sub_term(var(Y), V), Y == X )
+    ->  findall(Y, ( sub_term(var(Y), V), atom(Y) ), Ops),
+        findall(It, ( nth1(U, Items0, It0), copy_use(Items0, X, D, V, Ops, U, It0, It) ), Items)
+    ;   Items = Items0
+    ).
+pure_value(V) :- atomic(V), !.
+pure_value(V) :- V =.. [F|As], memberchk(F, [op, elem, tail, var, int, bool]), !,
+    forall(member(A, As), ( is_list(A) -> forall(member(B, A), pure_value(B)) ; pure_value(A) )).
+copy_use(Items, X, D, V, Ops, U, it(S, L, W0), it(S, L, W)) :-
+    U > D, \+ ( between(D, U, K), K > D, K < U, nth1(K, Items, It), member(Y, Ops), item_defines(It, Y) ), !,
+    rename_what_use(X, V, W0, W).
+copy_use(_, _, _, _, _, _, It, It).
+rename_what_use(X, V, goto(N, C0, P), goto(N, C, P)) :- !, replace_term(var(X), V, C0, C).
+rename_what_use(X, V, st(K, Fs0), st(K, Fs)) :- !, maplist(copy_fact(X, V), Fs0, Fs).
+rename_what_use(_, _, W, W).
+copy_fact(X, V, assign(S, T0, V0), assign(S, T, V1)) :- !, replace_term(var(X), V, V0, V1),
+    ( T0 == var(X) -> T = T0 ; replace_term(var(X), V, T0, T) ).
+copy_fact(X, V, F0, F) :- replace_term(var(X), V, F0, F).
+
 % ----- 2c. function objects: what the tree says, nothing assumed --------------------------------
 % (funcall f a b) with f's value known (#'* through a temporary) is that function (operator table);
 % a parameter p called with two arguments whose result is used ONLY as a branch or loop test is a
 % comparator: an order test op(lt, [a, b]) (the families never depend on its direction); any
 % other call of a function object stays an unknown call.
-known_calls(Items0, Items) :- maplist(known_item, Items0, Items).
-known_item(it(S, L, W0), it(S, L, W)) :- known_term(W0, W).
-known_term(T, T) :- \+ compound(T), !.
-known_term(T0, T) :- T0 =.. [Fn|As], maplist(known_term, As, Bs), T1 =.. [Fn|Bs],
-    ( T1 = call(ecl_funcall, [fn(Op), A, B]) -> T = op(Op, [A, B]) ; T = T1 ).
+% an &key parameter whose default is #'identity (ecl_key_default, from the tree) applied to x is x
+known_calls(Items0, Items) :-
+    findall(K, member(it(_, _, st(call, [call_at(_, ecl_key_default, [var(K), call(ecl_symbol, [var(identity)])])])), Items0), Ids),
+    exclude([it(_, _, st(call, [call_at(_, ecl_key_default, _)]))]>>true, Items0, Items1),
+    maplist(known_item(Ids), Items1, Items).
+known_item(Ids, it(S, L, W0), it(S, L, W)) :- known_term(Ids, W0, W).
+known_term(_, T, T) :- \+ compound(T), !.
+known_term(Ids, T0, T) :- T0 =.. [Fn|As], maplist(known_term(Ids), As, Bs), T1 =.. [Fn|Bs],
+    (   T1 = call(ecl_funcall, [fn(Op), A, B]) -> T = op(Op, [A, B])
+    ;   T1 = call(ecl_funcall, [var(K), X]), memberchk(K, Ids) -> T = X
+    ;   T = T1 ).
 
 comparator_calls(F, Items0, Items) :-
     findall(P, ( scope_param(F, P), comparator_param(Items0, P) ), Ps0), sort(Ps0, Ps),
@@ -380,11 +425,11 @@ ecl_function(F) :-
     stable_env(F, Evs, Stable0), symex(F, Evs, Stable0, _),
     forall(ecl_unresolved(F, X), ( ecl_lispvar(F, X) -> true ; assertz(ecl_lispvar(F, X)) )),
     stable_env(F, Evs, Stable), symex(F, Evs, Stable, Items0), split_webs(F, Items0, Items1),
-    known_calls(Items1, Items2), comparator_calls(F, Items2, Items),
+    copy_temps(F, Items1, Items1b), known_calls(Items1b, Items2), comparator_calls(F, Items2, Items),
     loops(Items, Loops),
     findall(Fact, item_fact(F, Items, Loops, Fact), Facts0),
     recursion_facts(F, Facts0, Facts1), list_loops(Facts1, Facts2), collect_loops(Facts2, Facts3),
-    fold_fusion(Facts3, Facts),
+    fold_fusion(Facts3, Facts4), push_collections(Facts4, Facts),
     retract_function(F), forall(member(Fa, Facts), assertz(Fa)).
 
 item_fact(F, Items, Loops, Fact) :-
@@ -515,6 +560,21 @@ collect_loops(Facts0, Facts) :-
     ;   Facts = Facts0
     ).
 replace_fact(Old, New, F0, F) :- ( F0 == Old -> F = New ; F = F0 ).
+
+% ----- 7b. push + reverse: r := cons(x, r) for a local r that is returned as (reverse r) ----------
+% the standard Lisp accumulation idiom; the output collection receives x (AP13's append)
+push_collections(Facts0, Facts) :-
+    findall(R, ( member(ret(_, call(reverse, [var(R)])), Facts0), atom(R),
+                 \+ ( member(assign(_, var(R2), V), Facts0), R2 == R, \+ pushed_or_empty(V, R) ) ), Rs0),
+    sort(Rs0, Rs), foldl(push_collection, Rs, Facts0, Facts).
+pushed_or_empty(cons(_, var(R2)), R) :- R2 == R.
+pushed_or_empty(bool(false), _).
+pushed_or_empty(list([]), _).
+push_collection(R, Facts0, Facts) :-
+    maplist(push_fact(R), Facts0, Facts1), maplist(replace_term(call(reverse, [var(R)]), var(R)), Facts1, Facts).
+push_fact(R, assign(S, var(R2), cons(X, var(R3))), call_at(S, append, [var(R), X])) :- R2 == R, R3 == R, !.
+push_fact(R, assign(S, var(R2), bool(false)), assign(S, var(R), list([]))) :- R2 == R, !.
+push_fact(_, F, F).
 
 % ----- 8. fold fusion (deforestation): reduce(op, h) of a list h built in loop L is the loop
 % with the accumulator h := h op x, started at op's identity -----------------------------------

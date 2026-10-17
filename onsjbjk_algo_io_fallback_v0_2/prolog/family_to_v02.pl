@@ -3,8 +3,12 @@
 family_branch([sequence_transformation, comparison_sort, shift_insertion], _, shift_insertion).
 family_branch([sequence_transformation, comparison_sort, select_extreme], _, selection_exchange).
 family_branch([sequence_transformation, comparison_sort, Leaf], _, comparison_driven_reordering) :-
-    memberchk(Leaf, [adjacent_exchange, gap_exchange, heap, stooge_recursion, partition_recursive, merge,
+    memberchk(Leaf, [adjacent_exchange, gap_exchange, heap, stooge_recursion, partition_recursive,
                      prefix_reversal]).
+% merging two ordered sequences is a sort only with the recursion that splits the input in two
+% (merge sort); a merge alone (merge-lists) has no v0.2 branch
+family_branch([sequence_transformation, comparison_sort, merge], F, comparison_driven_reordering) :-
+    self_calls(F, K), K >= 2.
 family_branch([sequence_transformation, comparison_sort], _, comparison_driven_reordering).
 family_branch([sequence_transformation, distribution_sort, histogram], _, sequence_rearrangement).
 family_branch([sequence_transformation, uncompared_rearrangement], _, sequence_rearrangement).

@@ -14,6 +14,7 @@ ecl_load(Facts) :- load_data(Facts), ecl_normalise, normalise_accessors, assert_
 
 ecl_main :-
     current_prolog_flag(argv, [Facts|_]), ecl_load(Facts),
+    ( no_algorithm -> format('NOCODE~n') ; true ),
     forall(func(F, Name, _),
            ( deepest_families_v02(F, Paths),
              forall(member(P, Paths),
@@ -41,3 +42,30 @@ ecl_dump :-
         forall(observed(F, X, _), format('  observed ~w~n', [X])),
         forall(( family_path(F, P) ; family_path_v02(F, P) ), format('  family ~w~n', [P]))
     )).
+
+% the normal process's output for the fallback (ecl_fallback.py): the facts after ecl_norm and the
+% FAMILY answers, as Prolog terms (read by prolog/fallback_main.pl only)
+ecl_export :-
+    current_prolog_flag(argv, [Facts|_]), ecl_load(Facts),
+    forall(member(P/N, [func/3, param/3, stmt/4, loop/3, in_loop/2, loop_var/2, loop_cond/2, loop_iter/2,
+                        guard/3, assign/3, par_assign/3, call_at/3, ret/2]),
+           ( functor(H, P, N), forall(H, portray_clause(H)) )),
+    forall(func(F, _, _),
+           ( deepest_families_v02(F, Paths),
+             forall(member(Pa, Paths), ( ( family_branch(Pa, F, B) -> true ; B = none ),
+                                         portray_clause(family(F, Pa, B)) )) )).
+
+% a file without an algorithm of its own: it defines no function (only top-level code) and that code
+% calls a function defined elsewhere (a driver: (bubble-sort (list 5 4 3 2 1))) or neither loops
+% nor recurses (a REPL transcript: (lcm 12 18)); decided from the traced facts, never the text
+no_algorithm :-
+    func(_, _, _), \+ ( func(_, N, _), N \== '<toplevel>' ),
+    ( delegated_call(_) -> true ; \+ loop(_, _, _) ).
+delegated_call(G) :-
+    ( call_at(_, G, _) ; ( assign(_, _, V) ; ret(_, V) ; call_at(_, _, V) ; guard(_, V, _) ),
+      sub_term(C, V), compound(C), C = call(G, _) ),
+    atom(G), \+ runtime_or_defined(G), !.
+runtime_or_defined(G) :- func(_, G, _), !.
+runtime_or_defined(G) :- memberchk(G, ['$self', len, reverse, compare, append, collect, rplacd, slice,
+                                       ecl_function, ecl_symbol, ecl_keyword, ecl_key_default, expr]), !.
+runtime_or_defined(G) :- member(P, [cl_, ecl_, si_, 'ECL_', '_ecl', 'FE', va_]), sub_atom(G, 0, _, _, P), !.
