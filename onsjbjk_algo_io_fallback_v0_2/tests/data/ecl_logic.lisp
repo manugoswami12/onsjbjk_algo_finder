@@ -91,3 +91,8 @@
     (loop for p from 2 to n when (zerop (bit s p))
           do (push p out) (loop for k from (* p p) to n by p do (setf (bit s k) 1)))
     out))
+(defun inrange (c) (if (<= 97 c 122) 1 0))
+(defun shiftc (h k &aux (c (char-code h)) (b (or (when (<= 97 c 122) 97) (when (<= 65 c 90) 65))))
+  (if b (code-char (+ (mod (+ (- c b) k) 26) b)) h))
+(defun dotl (a b) (apply #'+ (mapcar #'* a b)))
+(defun applyf (f a b) (funcall f a b))

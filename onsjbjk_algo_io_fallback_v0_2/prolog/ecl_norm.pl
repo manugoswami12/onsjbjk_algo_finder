@@ -24,14 +24,18 @@
 :- dynamic ecl_unresolved/2, ecl_lispvar/2.
 
 % ----- 1. operator table -----------------------------------------------------------------
+% Every row is checked against its definition in ECL's headers (/usr/include/ecl, ECL 21.2.1;
+% doc 03 section 8): fixed-arity functions take their arguments, cl_ functions declared
+% _ECL_ARGS((cl_narg narg, ...)) take the argument count first. Operator names are AP13's shared
+% vocabulary (polyglot_logic/tools/lang_tables.py OPERATORS; Common Lisp '/' is div there too).
 ecl_bin(ecl_plus, add).          ecl_bin(ecl_minus, sub).          ecl_bin(ecl_times, mul).
 ecl_bin(ecl_divide, div).        ecl_bin(ecl_floor2, div).         ecl_bin(ecl_truncate2, div).
 ecl_bin(ecl_rem, mod).           ecl_bin(ecl_lower, lt).           ecl_bin(ecl_lowereq, le).
 ecl_bin(ecl_greater, gt).        ecl_bin(ecl_greatereq, ge).       ecl_bin(ecl_number_equalp, eq).
-ecl_bin(ecl_eql, eq).            ecl_bin(ecl_equal, eq).           ecl_bin(ecl_eq, eq).
+ecl_bin(ecl_eql, eq).            ecl_bin(ecl_equal, eq).
 ecl_box(F) :- memberchk(F, [ecl_make_fixnum, ecl_fixnum, ecl_make_integer, ecl_to_fixnum, ecl_make_bool,
-                            ecl_to_bool, ecl_make_int, ecl_to_int, ecl_make_cint]).
-ecl_aref(F) :- memberchk(F, [ecl_aref_unsafe, ecl_aref1, ecl_aref, ecl_elt, ecl_char, cl_char, cl_schar, cl_elt, cl_aref]).
+                            ecl_to_bool, ecl_make_int, ecl_to_int]).
+ecl_aref(F) :- memberchk(F, [ecl_aref_unsafe, ecl_aref1, ecl_aref, ecl_elt, ecl_char, cl_char, cl_schar, cl_elt]).
 ecl_aset(F) :- memberchk(F, [ecl_aset_unsafe, ecl_aset1, ecl_aset, ecl_elt_set, ecl_char_set]).
 
 ecl_op(call(F, [A, B]), op(O, [A, B])) :- ecl_bin(F, O), !.
@@ -54,12 +58,15 @@ ecl_op(call(F, [A, B]), cons(A, B)) :- memberchk(F, [ecl_cons, 'CONS', cl_cons])
 ecl_op(call(ecl_list1, [X]), list([X])) :- !.
 ecl_op(call(cl_list, [int(_)|As]), list(As)) :- !.
 ecl_op(call(ecl_endp, [X]), op(not, [X])) :- !.                  % (endp l): l is empty
-ecl_op(call(F, [int(_), Q, I]), elem(Q, I)) :- memberchk(F, [cl_bit, cl_sbit, cl_char, cl_schar]), !.   % (bit v i)
+ecl_op(call(coerce_to_list, [X]), X) :- !.                      % si::coerce-to-list: the same sequence
+ecl_op(call(cl_mapcar, [int(_), Fn, Q|Qs]), map(Q, Fn, Qs)) :- !.      % (mapcar f q ...): AP13's map term
+ecl_op(call(cl_map, [int(_), _, Fn, Q|Qs]), map(Q, Fn, Qs)) :- !.      % (map type f q ...)
+ecl_op(call(F, [int(_), Q, I]), elem(Q, I)) :- memberchk(F, [cl_bit, cl_sbit, cl_aref]), !.   % (bit v i), (aref v i)
 ecl_op(call('Null', [X]), op(not, [X])) :- !.
-ecl_op(call(ecl_funcall, [_, A, B]), op(lt, [A, B])) :- !.      % comparator: ascending assumed
+ecl_op(call(ecl_funcall, [fn(Op), A, B]), op(Op, [A, B])) :- !.  % (funcall #'* a b): the known function
 % Common Lisp library functions; ECL passes the argument count first to the variadic cl_ ones
-ecl_op(call(F, [X]), call(reverse, [X])) :- memberchk(F, [cl_reverse, cl_nreverse, ecl_reverse]), !.
-ecl_op(call(F, [int(_), A, B|_]), op(eq, [A, B])) :- memberchk(F, [cl_stringE, cl_string_equal, cl_equalp]), !.
+ecl_op(call(F, [X]), call(reverse, [X])) :- memberchk(F, [cl_reverse, cl_nreverse]), !.
+ecl_op(call(F, [int(_), A, B|_]), op(eq, [A, B])) :- memberchk(F, [cl_stringE, cl_string_equal]), !.
 ecl_op(call(F, [A, B]), op(eq, [A, B])) :- memberchk(F, [cl_equal, cl_equalp]), !.
 ecl_op(call(F, [int(_)|As]), concat(As)) :- memberchk(F, [cl_nconc, cl_append]), !.
 ecl_op(call(F, [int(_), _, Q|_]), filter(Q, other(predicate))) :-
@@ -176,7 +183,8 @@ step(call(Fn, [A0, B0]), S, L, F, _, st(Env0, El, P), st(Env, [], []), Items, Re
     subst(F, Env0, El, A0, A1), subst(F, Env0, El, B0, B1), uncur(A1, A),
     ( B1 = cur(T), member(w(_, _, T2, VB), P), T2 == T -> B = VB ; uncur(B1, B) ),   % the cell just made
     ( B = list([X]) -> Fact = call_at(S, collect, [A, X]) ; Fact = call_at(S, rplacd, [A, B]) ),
-    flush(F, st(Env0, El, P), Env, Items, [it(S, L, st(call, [Fact]))|Rest]).
+    Items = [it(S, L, st(call, [Fact]))|Items1],          % it reads the values before the block's writes
+    flush(F, st(Env0, El, P), Env, Items1, Rest).
 step(call(Fn, As0), S, L, F, _, St, st(Env, [], []), Items, Rest) :-
     flush(F, St, Env, Items, [it(S, L, st(call, [call_at(S, Fn, As)]))|Rest]), subst(F, Env, [], As0, As).
 same_key(K, E-_) :- E == K.
@@ -214,6 +222,98 @@ first_per_target([], _, []).
 first_per_target([W|Ws], Seen, Out) :- W = w(_, _, T, _),
     ( member(T2, Seen), T2 == T -> Out = Rest ; Out = [W|Rest] ), first_per_target(Ws, [T|Seen], Rest).
 parallel(P) :- nth1(K, P, w(_, _, _, V)), nth1(J, P, w(_, _, T, _)), J < K, old_read(V, T), !.
+
+% ----- 2b. def-use webs of escaping temporaries ------------------------------------------------
+% ECL reuses one temporary (value0, v8) for unrelated values: the value of an (or ...) and later the
+% result. Reaching definitions over the item CFG (successors: the next item unless the item is a
+% jump or a return, and the jump target) give, for every use, the definitions that reach it; the
+% definitions reaching a common use form one web (Chaitin), and each web is its own variable.
+split_webs(F, Items0, Items) :-
+    findall(X, ecl_lispvar(F, X), Xs0), sort(Xs0, Xs),
+    item_succs(Items0, Succ), foldl(split_web(Succ), Xs, Items0, Items).
+
+item_succs(Items, Succ) :-
+    length(Items, Len),
+    findall(I-Ss, ( nth1(I, Items, it(_, _, W)), findall(J, item_succ(Items, Len, I, W, J), Ss) ), Succ).
+item_succ(Items, _, _, goto(N, _, _), J) :- label_pos(Items, N, J).
+item_succ(_, Len, I, W, J) :- \+ W = goto(_, none, none), \+ W = st(ret, _), J is I + 1, J =< Len.
+
+split_web(Succ, X, Items0, Items) :-
+    findall(I, ( nth1(I, Items0, It), item_defines(It, X) ), Defs),
+    (   Defs = [_, _|_]
+    ->  length(Items0, Len), Bound is Len + 1,
+        reaching(Succ, Items0, X, Bound, In),
+        findall(R, ( nth1(I, Items0, It), item_uses(It, X), memberchk(I-R, In), R \== [] ), Rs),
+        findall([D], member(D, Defs), Singles), foldl(merge_web, Rs, Singles, Webs),
+        (   Webs = [_, _|_]
+        ->  findall(It, ( nth1(I, Items0, It0), rename_item(X, Webs, In, I, It0, It) ), Items)
+        ;   Items = Items0 )
+    ;   Items = Items0
+    ).
+% IN[i] = union of OUT[p] over predecessors; OUT[i] = {i} where i defines X, else IN[i];
+% iterated at most Bound times (sets only grow; a path of the CFG has at most Len items)
+reaching(Succ, Items, X, Bound, In) :-
+    findall(I-[], member(I-_, Succ), In0), reaching_(Succ, Items, X, Bound, In0, In).
+reaching_(_, _, _, 0, In, In) :- !.
+reaching_(Succ, Items, X, B, In0, In) :-
+    findall(J-Out, ( member(I-Ss, Succ), member(J, Ss), memberchk(I-InI, In0), nth1(I, Items, It),
+                     ( item_defines(It, X) -> Out = [I] ; Out = InI ) ), Edges),
+    findall(J-R, ( member(J-_, In0), findall(D, ( member(J2-O, Edges), J2 == J, member(D, O) ), Ds), sort(Ds, R) ), In1),
+    ( In1 == In0 -> In = In0 ; B1 is B - 1, reaching_(Succ, Items, X, B1, In1, In) ).
+merge_web(R, Webs0, [Merged|Rest]) :-
+    partition([W]>>( member(D, W), memberchk(D, R) ), Webs0, Hit, Rest),
+    append(Hit, Merged0), sort(Merged0, Merged).
+web_name(X, Webs, Ds, N) :- nth1(K, Webs, W), member(D, Ds), memberchk(D, W), !, atomic_list_concat([X, '_w', K], N).
+
+item_defines(it(_, _, st(_, Fs)), X) :- ( member(assign(_, var(X2), _), Fs), X2 == X
+                                        ; member(par_assign(_, Ts, _), Fs), memberchk(var(X), Ts) ), !.
+item_uses(it(_, _, goto(_, C, _)), X) :- C \== none, sub_term(V, C), V == var(X), !.
+item_uses(it(_, _, st(_, Fs)), X) :- member(Fa, Fs), fact_reads(Fa, R), sub_term(V, R), V == var(X), !.
+fact_reads(assign(_, T, V), R) :- ( T = var(_) -> R = V ; R = T-V ).
+fact_reads(par_assign(_, Ts, Vs), Ts1-Vs) :- exclude([T]>>(T = var(_)), Ts, Ts1).
+fact_reads(ret(_, V), V).
+fact_reads(call_at(_, _, As), As).
+
+% uses read the web reaching the item, the definition (if any) writes the item's own web
+rename_item(X, Webs, In, I, it(S, L, W0), it(S, L, W)) :-
+    memberchk(I-R, In), ( web_name(X, Webs, R, Nu) -> true ; Nu = X ),
+    ( web_name(X, Webs, [I], Nd) -> true ; Nd = X ),
+    rename_what(X, Nu, Nd, W0, W).
+rename_what(X, Nu, _, goto(N, C0, P), goto(N, C, P)) :- !, replace_term(var(X), var(Nu), C0, C).
+rename_what(X, Nu, Nd, st(K, Fs0), st(K, Fs)) :- !, maplist(rename_fact(X, Nu, Nd), Fs0, Fs).
+rename_what(_, _, _, W, W).
+rename_fact(X, Nu, Nd, assign(S, T0, V0), assign(S, T, V)) :- !, replace_term(var(X), var(Nu), V0, V),
+    ( T0 == var(X) -> T = var(Nd) ; replace_term(var(X), var(Nu), T0, T) ).
+rename_fact(X, Nu, Nd, par_assign(S, Ts0, Vs0), par_assign(S, Ts, Vs)) :- !,
+    maplist(replace_term(var(X), var(Nu)), Vs0, Vs),
+    maplist([T0, T]>>( T0 == var(X) -> T = var(Nd) ; replace_term(var(X), var(Nu), T0, T) ), Ts0, Ts).
+rename_fact(X, Nu, _, F0, F) :- replace_term(var(X), var(Nu), F0, F).
+
+% ----- 2c. function objects: what the tree says, nothing assumed --------------------------------
+% (funcall f a b) with f's value known (#'* through a temporary) is that function (operator table);
+% a parameter p called with two arguments whose result is used ONLY as a branch or loop test is a
+% comparator: an order test op(lt, [a, b]) (the families never depend on its direction); any
+% other call of a function object stays an unknown call.
+known_calls(Items0, Items) :- maplist(known_item, Items0, Items).
+known_item(it(S, L, W0), it(S, L, W)) :- known_term(W0, W).
+known_term(T, T) :- \+ compound(T), !.
+known_term(T0, T) :- T0 =.. [Fn|As], maplist(known_term, As, Bs), T1 =.. [Fn|Bs],
+    ( T1 = call(ecl_funcall, [fn(Op), A, B]) -> T = op(Op, [A, B]) ; T = T1 ).
+
+comparator_calls(F, Items0, Items) :-
+    findall(P, ( param(F, _, P0), ecl_term(var(P0), var(P)), comparator_param(Items0, P) ), Ps),
+    foldl(comparator_param_calls, Ps, Items0, Items).
+comparator_param(Items, P) :-
+    once(( member(it(_, _, goto(_, C, _)), Items), funcall_of(C, P, _) )),
+    \+ ( member(it(_, _, st(_, Fs)), Items), funcall_of(Fs, P, _) ).
+funcall_of(T, P, Call) :- sub_term(Call, T), compound(Call), Call = call(ecl_funcall, [V, _, _]), V == var(P).
+comparator_param_calls(P, Items0, Items) :- maplist(comparator_item(P), Items0, Items).
+comparator_item(P, it(S, L, goto(N, C0, Pol)), it(S, L, goto(N, C, Pol))) :- !, comparator_term(P, C0, C).
+comparator_item(_, It, It).
+comparator_term(P, T0, T) :- compound(T0), T0 = call(ecl_funcall, [V, A, B]), V == var(P), !,
+    comparator_term(P, A, A1), comparator_term(P, B, B1), T = op(lt, [A1, B1]).
+comparator_term(_, T, T) :- \+ compound(T), !.
+comparator_term(P, T0, T) :- T0 =.. [Fn|As], maplist(comparator_term(P), As, Bs), T =.. [Fn|Bs].
 
 % ----- 3./4. loops and branches over the item list --------------------------------------------
 % positions are item indices; label N at position B and a goto to N at G >= B: loop [B, G]
@@ -276,7 +376,8 @@ ecl_function(F) :-
     retractall(ecl_unresolved(F, _)), events(F, Evs),
     stable_env(F, Evs, Stable0), symex(F, Evs, Stable0, _),
     forall(ecl_unresolved(F, X), ( ecl_lispvar(F, X) -> true ; assertz(ecl_lispvar(F, X)) )),
-    stable_env(F, Evs, Stable), symex(F, Evs, Stable, Items),
+    stable_env(F, Evs, Stable), symex(F, Evs, Stable, Items0), split_webs(F, Items0, Items1),
+    known_calls(Items1, Items2), comparator_calls(F, Items2, Items),
     loops(Items, Loops),
     findall(Fact, item_fact(F, Items, Loops, Fact), Facts0),
     recursion_facts(F, Facts0, Facts1), list_loops(Facts1, Facts2), collect_loops(Facts2, Facts3),
@@ -336,22 +437,56 @@ fact_stmt(call_at(S, _, _), S).
 self_fact(_, S, Args, call_at(S, '$self', Args)).
 self_fact(F, S, Args, assign(S, var(P), A)) :- nth0(K, Args, A), param(F, K, P0), ecl_term(var(P0), var(P)), A \== var(P).
 
-% ----- 6. list traversal: dolist / loop for x in l --------------------------------------------
-% c := q before loop L, c := cdr(c) in L, x := car(c) in L: the for-each loop of every language,
-% so the same facts as AP13's lowerers emit (loop_var x, loop_iter q, no cursor statements)
+% ----- 6. list traversal: dolist / loop for x in l / mapcar ------------------------------------
+% A cursor c of loop L: c := q before L, c := cdr(c) in L (alone or in a parallel assignment).
+% The loops and their cursors are a finite set computed first; each loop is rewritten once.
+%   one cursor:  the for-each loop of every language (AP13 lowerers: loop_var x, loop_iter q)
+%   k cursors:   lockstep traversal; after j steps cursor i is nthcdr(j, q_i), so car(c_i) is
+%                elem(q_i, j): the index loop `for j: ... q_1[j] ... q_2[j]` (zip keeps no positions)
 list_loops(Facts0, Facts) :-
-    (   member(loop(L, F, cond), Facts0), member(in_loop(Sc, L), Facts0), member(assign(Sc, var(C), tail(var(C2), 1)), Facts0),
-        C2 == C, member(assign(S0, var(C3), Q), Facts0), C3 == C, S0 \== Sc, \+ member(in_loop(S0, L), Facts0)
-    ->  (   member(in_loop(Sx, L), Facts0), member(assign(Sx, var(X), E), Facts0), E == elem(var(C), int(0))
-        ->  Drop = [S0, Sc, Sx]
-        ;   X = C, Drop = [S0, Sc]
-        ),
-        exclude(list_cursor_fact(L, Drop), Facts0, Facts1),
-        maplist(replace_term(elem(var(C), int(0)), var(X)), Facts1, Facts2),
-        append(Facts2, [loop(L, F, count), loop_var(L, X), loop_iter(L, Q)], Facts3),
-        list_loops(Facts3, Facts)
-    ;   Facts = Facts0
+    findall(L, member(loop(L, _, cond), Facts0), Ls0), sort(Ls0, Ls),
+    foldl(list_loop, Ls, Facts0, Facts).
+list_loop(L, Facts0, Facts) :-
+    findall(cur(C, Q, S0, Sc), cursor(Facts0, L, C, Q, S0, Sc), Cs0), sort(Cs0, Cs),
+    (   Cs == []
+    ->  Facts = Facts0
+    ;   member(loop(L2, F, cond), Facts0), L2 == L, !,
+        foldl(drop_cursor(L), Cs, Facts0, Facts1),
+        exclude(list_cursor_fact(L, []), Facts1, Facts2),
+        (   Cs = [cur(C, Q, _, _)]
+        ->  ( item_of(Facts2, L, C, Sx, X) -> exclude(list_cursor_fact(none, [Sx]), Facts2, Facts3) ; X = C, Facts3 = Facts2 ),
+            maplist(replace_term(elem(var(C), int(0)), var(X)), Facts3, Facts4),
+            append(Facts4, [loop(L, F, count), loop_var(L, X), loop_iter(L, Q)], Facts)
+        ;   atomic_list_concat([position_, L], K),
+            foldl(lockstep_cursor(L, K), Cs, Facts2, Facts3),
+            append(Facts3, [loop(L, F, count), loop_var(L, K)], Facts)
+        )
     ).
+cursor(Facts, L, C, Q, S0, Sc) :-
+    member(in_loop(Sc, L0), Facts), L0 == L, cursor_step(Facts, Sc, C), atom(C),
+    member(assign(S0, var(C2), Q), Facts), C2 == C, S0 \== Sc, \+ ( member(in_loop(S0, L1), Facts), L1 == L ).
+cursor_step(Facts, Sc, C) :- member(assign(Sc, var(C), T), Facts), T == tail(var(C), 1).
+cursor_step(Facts, Sc, C) :- member(par_assign(Sc, Ts, Vs), Facts), nth1(K, Ts, var(C)), nth1(K, Vs, V), V == tail(var(C), 1).
+% x := car(c) in L: the loop's element variable for c
+item_of(Facts, L, C, Sx, X) :- member(in_loop(Sx, L0), Facts), L0 == L, member(assign(Sx, var(X), E), Facts),
+    E == elem(var(C), int(0)), !.
+% the cursor's statements go: its initialisation and its step (a parallel assignment keeps the rest)
+drop_cursor(_, cur(C, _, S0, Sc), Facts0, Facts) :-
+    exclude(list_cursor_fact(none, [S0]), Facts0, Facts1),
+    (   member(par_assign(Sc, Ts, Vs), Facts1), memberchk(var(C), Ts)
+    ->  findall(T-V, ( nth1(I, Ts, T), nth1(I, Vs, V), T \== var(C) ), Rest),
+        ( Rest = [T1-V1] -> New = assign(Sc, T1, V1)
+        ; pairs_keys_values(Rest, Ts1, Vs1), New = par_assign(Sc, Ts1, Vs1) ),
+        maplist(replace_fact(par_assign(Sc, Ts, Vs), New), Facts1, Facts)
+    ;   exclude(list_cursor_fact(none, [Sc]), Facts1, Facts)
+    ).
+lockstep_cursor(L, K, cur(C, Q, _, _), Facts0, Facts) :-
+    E = elem(Q, var(K)),
+    (   item_of(Facts0, L, C, Sx, X)
+    ->  exclude(list_cursor_fact(none, [Sx]), Facts0, Facts1), maplist(replace_term(var(X), E), Facts1, Facts2)
+    ;   Facts2 = Facts0
+    ),
+    maplist(replace_term(elem(var(C), int(0)), E), Facts2, Facts).
 list_cursor_fact(L, _, loop(L2, _, cond)) :- L2 == L.
 list_cursor_fact(L, _, loop_cond(L2, _)) :- L2 == L.
 list_cursor_fact(L, _, loop_var(L2, _)) :- L2 == L.
@@ -381,7 +516,7 @@ replace_fact(Old, New, F0, F) :- ( F0 == Old -> F = New ; F = F0 ).
 % ----- 8. fold fusion (deforestation): reduce(op, h) of a list h built in loop L is the loop
 % with the accumulator h := h op x, started at op's identity -----------------------------------
 fold_fusion(Facts0, Facts) :-
-    (   member(Fa, Facts0), sub_term(R, Fa), compound(R), R = call(cl_reduce, [int(_), fn(Op), A]),
+    (   member(Fa, Facts0), sub_term(R, Fa), compound(R), R = call(Fold, [int(_), fn(Op), A]), fold(Fold),
         fold_identity(Op, Id), folded_list(Facts0, A, H),
         member(call_at(Sa, append, [V, X]), Facts0), V == var(H),
         member(assign(Sh, var(H2), list([])), Facts0), H2 == H
@@ -391,6 +526,9 @@ fold_fusion(Facts0, Facts) :-
         fold_fusion(Facts3, Facts)
     ;   Facts = Facts0
     ).
+% (reduce #'op l) and (apply #'op l) = (op x1 x2 ...): the same fold
+fold(cl_reduce).
+fold(cl_apply).
 fold_identity(mul, int(1)).
 fold_identity(add, int(0)).
 folded_list(_, var(H), H).

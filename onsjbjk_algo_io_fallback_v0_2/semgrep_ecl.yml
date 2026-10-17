@@ -1,0 +1,37 @@
+rules:
+  - id: tree-sitter-node-identity
+    languages: [python]
+    severity: ERROR
+    message: tree-sitter makes a new Python Node per access; compare byte ranges, not identity
+    patterns:
+      - pattern-either:
+          - pattern: $A is $NODE.child_by_field_name(...)
+          - pattern: $A is not $NODE.child_by_field_name(...)
+          - pattern: $A is $NODE.root_node
+  - id: tree-sitter-unsafe-accessor
+    languages: [python]
+    severity: ERROR
+    message: in tree-sitter 0.26 these accessors corrupted memory here (segfaults); read byte offsets
+    patterns:
+      - pattern-either:
+          - pattern: $N.parent
+          - pattern: $N.next_sibling
+          - pattern: $N.prev_sibling
+          - pattern: $N.start_point
+          - pattern: $N.end_point
+      - pattern-not: Path(...).resolve().parent
+  - id: broad-except
+    languages: [python]
+    severity: WARNING
+    message: a broad except hides a wrong fact behind an empty answer
+    pattern-either:
+      - pattern: |
+          try:
+            ...
+          except:
+            ...
+      - pattern: |
+          try:
+            ...
+          except Exception:
+            ...

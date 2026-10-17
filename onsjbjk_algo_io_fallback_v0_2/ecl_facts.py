@@ -161,9 +161,54 @@ def compiled(name: str) -> bool:
     return rest[:1].isdigit()
 
 
+def declared_names(root, src: bytes) -> set:
+    """Every variable a function declares or takes (identifiers of declarations and parameters)."""
+    names, stack = set(), [root]
+    while stack:
+        node = stack.pop()
+        if node.type in ('declaration', 'parameter_declaration'):
+            for d in node.children_by_field_name('declarator'):
+                while d.type != 'identifier' and d.child_by_field_name('declarator') is not None:
+                    d = d.child_by_field_name('declarator')
+                if d.type == 'identifier':
+                    names.add(src[d.start_byte:d.end_byte].decode())
+        stack.extend(node.children)
+    return names
+
+
+def unambiguous(c_text: str) -> str:
+    """Pass 1. ECL parenthesises every macro argument: `(97)<=(v3c) && (v3c)<=(122)`. C's grammar
+    cannot tell `(v3c) && x` from a cast of `&&x` (GNU label address) to a type v3c, and tree-sitter
+    reads the cast. A "cast" to a name the function declares as a VARIABLE is the variable, and a
+    lone name or number loses its parentheses; pass 2 parses the result."""
+    src = c_text.encode('utf-8')
+    tree = pack.get_parser('c').parse(src)
+    variables = declared_names(tree.root_node, src)
+
+    def raw(node) -> str:
+        return src[node.start_byte:node.end_byte].decode('utf-8', 'replace')
+
+    def render(node) -> str:
+        if node.type == 'cast_expression':
+            typ = node.child_by_field_name('type')
+            if typ is not None and raw(typ).strip() in variables:
+                return f'{raw(typ).strip()} {render(node.child_by_field_name("value"))}'
+        if node.type == 'parenthesized_expression' and node.named_child_count == 1 and \
+                node.named_children[0].type in ('identifier', 'number_literal'):
+            return raw(node.named_children[0])
+        out, pos = [], node.start_byte
+        for child in node.children:
+            out.append(src[pos:child.start_byte].decode('utf-8', 'replace'))
+            out.append(render(child))
+            pos = child.end_byte
+        out.append(src[pos:node.end_byte].decode('utf-8', 'replace'))
+        return ''.join(out)
+    return render(tree.root_node)
+
+
 def marked_c(c_text: str) -> str:
     """The compiled Lisp functions of one ECL C unit, rewritten bottom-up (tree rewriting)."""
-    src = c_text.encode('utf-8')
+    src = unambiguous(c_text).encode('utf-8')
     renames: dict = {}
     tree = pack.get_parser("c").parse(src)   # a fresh parser per unit; the Tree must outlive its nodes
     root = tree.root_node
