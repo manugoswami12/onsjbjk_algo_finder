@@ -1,0 +1,33 @@
+"""Logic tests: small Lisp functions compiled by ECL, traced by prolog/ecl_main.pl (AP13 rules)."""
+import sys
+import unittest
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+import ecl_logic
+
+EXPECTED = {
+    'gcd2': 'euclid_like', 'gcdr': 'euclid_like', 'fact': 'factorial_like', 'facti': 'factorial_like',
+    'fib': 'fibonacci_like', 'dsum': 'digit_processing', 'isort': 'comparison_driven_reordering',
+    'csort': 'comparison_driven_reordering', 'shsort': 'shift_insertion', 'ssort': 'selection_exchange',
+    'bsearch': 'interval_lookup', 'vmax': 'extremum_search', 'vsum': 'element_accumulation',
+    # near misses: no v0.2 branch
+    'twice': None, 'countdown': None, 'vcopy': None, 'lastel': None, 'addmod': None, 'countup': None,
+}
+
+
+class EclLogicTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        fams = ecl_logic.families(ROOT / 'tests' / 'data' / 'ecl_logic.lisp')
+        cls.branches = {name: {b for _, b in fams.get(name, [])} - {'none'} for name in EXPECTED}
+
+    def test_branches(self):
+        for name, want in EXPECTED.items():
+            with self.subTest(name=name):
+                self.assertEqual(self.branches[name], {want} if want else set())
+
+
+if __name__ == '__main__':
+    unittest.main()
