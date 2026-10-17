@@ -6,12 +6,15 @@ usage: python eval_crosslang_ext.py <dir with the cloned repos> <train root> --l
 """
 import argparse
 import json
+import re
 from pathlib import Path
 
 import compare_learners
 import crosslang_frontends
 from run_v2 import ROOT, route_live
 from static_trace import Analysis
+
+WRAPPER = re.compile(r'(\$asc|\$swap)+$')        # crosslang_frontends specialisation wrappers
 
 
 def main():
@@ -37,6 +40,7 @@ def main():
         path = a.repos / spec['root'] / rel
         for lname, learner in learners.items():
             for fn, labels in learner.labels_by_function(path).items():
+                fn = WRAPPER.sub('', fn)          # a specialisation wrapper's match is its function's
                 for label in labels:
                     found.setdefault(f'{rel}::{fn}', {}).setdefault(label, []).append(lname)
     analyses = []
