@@ -37,14 +37,16 @@ def learn(labelled: dict[Path, str | None], rules: Path = RULES) -> dict[Path, i
 
 def apply(path: Path, rules: Path = RULES, io_labels=()):
     """([tree nodes of the file], [(node, label, rule)] of the learned branches holding at its deepest node,
-    {labels with a learned branch there}); io_labels: the training labels whose behaviour the file has."""
+    {labels with a learned branch there}, {the normal process's branches there}); io_labels: the training
+    labels whose behaviour the file has."""
     kind, text = learn_facts.tree_facts(path)
     if not text.strip():
-        return [], [], set()
+        return [], [], set(), set()
     with tempfile.TemporaryDirectory(prefix='v02_io_') as td:
         io = Path(td) / 'io.pl'
         io.write_text(''.join(f"io_equal('{lab}').\n" for lab in sorted(io_labels)), encoding='utf-8')
         lines = learn_facts.swipl_facts('learn_apply_main', PROLOG / 'learn_apply.pl', kind, text, str(rules), str(io))
     nodes = [line.split('|', 1)[1] for line in lines if line.startswith('NODE|')]
     branch_at = {line.split('|')[2] for line in lines if line.startswith('BRANCH_AT|')}
-    return nodes, [tuple(line.split('|')[1:]) for line in lines if line.startswith('LEARNED|')], branch_at
+    normal = {line.split('|')[2] for line in lines if line.startswith('NORMAL|')}
+    return nodes, [tuple(line.split('|')[1:]) for line in lines if line.startswith('LEARNED|')], branch_at, normal

@@ -19,7 +19,7 @@ class LearningTests(unittest.TestCase):
             learn_apply.learn({DATA / 'cmp_le.py': 'capped_sum', DATA / 'matrix_table.py': None}, rules)
             text = rules.read_text(encoding='utf-8')
             self.assertIn("learned_branch([sequence_query, aggregate, gatherer], capped_sum, io, io)", text)
-            nodes, found, at = learn_apply.apply(DATA / 'cmp_gt.c', rules, io_labels={'capped_sum'})
+            nodes, found, at, _ = learn_apply.apply(DATA / 'cmp_gt.c', rules, io_labels={'capped_sum'})
             self.assertEqual((nodes, at), (['sequence_query>aggregate>gatherer'], {'capped_sum'}))
             self.assertEqual([lab for _, lab, _ in found], ['capped_sum'])
             self.assertEqual(learn_apply.apply(DATA / 'cmp_gt.c', rules)[1], [])          # no equal behaviour

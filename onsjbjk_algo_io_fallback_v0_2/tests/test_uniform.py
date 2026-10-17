@@ -25,5 +25,19 @@ class UniformTests(unittest.TestCase):
                 self.assertEqual(learn_facts.nodes(DATA / a), learn_facts.nodes(DATA / b))
 
 
+class BuiltBranchTests(unittest.TestCase):
+    def test_hanoi_built_branch(self):
+        """Built branch (doc 04 section 15): f(n-1); move; f(n-1) is towers_of_hanoi in every language; the
+        combined fib(n-1) + fib(n-2) stays fibonacci_like; a walk on left/right, Ackermann (its jump sets n to 1)
+        and an edit distance (its call results are used) stay the broad branch."""
+        import learn_apply
+        for f, branch in [('hanoi.py', 'towers_of_hanoi'), ('hanoi.c', 'towers_of_hanoi'), ('hanoi.lisp', 'towers_of_hanoi'),
+                          ('fib.py', 'fibonacci_like'), ('inorder.py', 'recursive_decomposition'),
+                          ('ack.lisp', 'recursive_decomposition')]:
+            with self.subTest(file=f):
+                self.assertEqual(learn_apply.apply(DATA / f)[3], {branch})
+        self.assertNotIn('towers_of_hanoi', learn_apply.apply(DATA / 'edit.lisp')[3])
+
+
 if __name__ == '__main__':
     unittest.main()

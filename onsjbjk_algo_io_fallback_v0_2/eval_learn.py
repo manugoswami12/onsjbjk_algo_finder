@@ -71,12 +71,16 @@ def answer(path, labels, io):
         by_fn = {}
     io_labels = {lab for v in by_fn.values() for lab in v} & labels
     try:
-        nodes, found, _ = learn_apply.apply(path, io_labels=io_labels)
+        nodes, found, _, normal = learn_apply.apply(path, io_labels=io_labels)
     except ERRORS as exc:
         print(f'  ({path.name}: {type(exc).__name__}: {str(exc)[:100]})')
-        nodes, found = [], []
+        nodes, found, normal = [], [], set()
     runnable = {io.labels[rel] for rel, _ in io.cat} if any(d['discriminative'] for d in me.values()) else set()
     learnable = runnable & labels
+    built = normal & labels                       # a built branch of the tree names a new task (doc 04 section 15)
+    if built:
+        tags = [f"[{' '.join(nodes) or 'root'}]"] + sorted(f'built:{b}' for b in built)
+        return (built if len(built) == 1 else set()), tags, learnable | built
     held = {lab for _, lab, _ in found}           # every learned label (known tasks' too) that holds
     tags = [f"[{' '.join(nodes) or 'root'}]"] + sorted(f'learned:{lab}:{r}@{c or "root"}' for c, lab, r in found)
     if len(held) > 1:                             # several learned rules hold: no guess

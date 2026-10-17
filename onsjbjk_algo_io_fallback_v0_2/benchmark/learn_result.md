@@ -282,3 +282,18 @@ A learned branch is the tree node the Python files reach (relations) and holds b
 - **towers-of-hanoi-1.c: UNKNOWN.** It reaches the right node, `numeric>recurrence>double_recursion` (the branch towers_of_hanoi is there), but no Python Hanoi file's input->output behaviour equals it, and no logic condition exists any more.
 
 The missing piece is a relation that separates two algorithms at the same node. AP13's relations give Hanoi and Fibonacci the same facts there: `rec_class(double_recursion)`, `role(stepper)`.
+
+## Run 11: a built branch for what cannot be learned (docs/04 section 15)
+
+`towers_of_hanoi` is built under `numeric>recurrence>double_recursion` (`family_to_v02.pl`).
+- Its first form also caught Ackermann and Levenshtein in Lisp. It was tightened in two ways: the Lisp jump's update must be its own statement, and the call results must be discarded.
+- The tightened form is checked on own programs.
+
+**Lisp staged test, stage 101 (regression):** precision 50/52 = 96.2%, recall 50/59 = 84.7%, PASS. The one change is towers-of-hanoi.lisp, now answered towers_of_hanoi. That is correct, but the earlier frozen key (`ecl_staged_truth.json`) had no Hanoi label, so it counts the file as a negative. The key is not edited.
+
+| Stage | Precision | Recall (learnable) | Recall (full key) | Not learnable | Result |
+|---|---|---|---|---|---|
+| 3 | 2/2 = 100% | 2/2 = 100% | 2/2 | 0 | PASS (Hanoi C: built) |
+| 15 | 2/2 = 100% | 2/2 = 100% | 2/8 = 25% | 6 | PASS on learnable recall |
+
+Since token rules were removed, "learnable" means a runnable Python reference and a runnable file. Stage 15's 6 not-learnable positives are the cases to build, by the rule above: ackermann-function-4.c, n-queens-problem-3.hs, matrix-multiplication-1.lisp, caesar-cipher-2.lisp, run-length-encoding.lisp and knapsack-problem-0-1.c.

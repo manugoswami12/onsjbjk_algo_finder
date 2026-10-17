@@ -273,3 +273,16 @@ Applying uses the deepest node(s), collects all answers (findall), and gives UNK
 Kept from section 12, since they are conversions of facts, not tokens: the AP13 synonyms for ECL names, the collect rewrite through the cursor copy, dead compiler temporaries, and the 2-D write target. `tests/test_uniform.py` now compares tree nodes.
 
 `flow_tokens.pl` remains only for the separate Lisp fallback of doc 03 section 9 (a DCG over the normal output, as asked then).
+
+## 15. Built branches (user: "if C is different and we can't learn it, we build the code")
+
+Where the Python examples cannot teach an algorithm in another language, a branch is written by hand in the normal tree, the way the original repo's branches are (`family_to_v02.pl`, `families_v02.pl`). Each such branch:
+- states the logic as relations over the facts, the same in every language;
+- names the case it was built from;
+- has a logic test on own programs, with negatives.
+
+`eval_learn.py` takes a built branch's answer first (tag `built:`).
+
+| Branch | Logic (relations) | Built from | Logic test (`tests/test_uniform.py`) |
+|---|---|---|---|
+| `towers_of_hanoi` under `numeric>recurrence>double_recursion` | Two recursive calls, each on n - 1, made one after the other for their effect only: their results are discarded (AP13 `rec_class(double_recursion, F)`, the sequential form). For Lisp, ECL's tail jump sets n to n - 1 in its own statement. It extends the existing clause: fibonacci_like first, then towers_of_hanoi, else recursive_decomposition. | towers-of-hanoi-1.c | hanoi .py/.c/.lisp → towers_of_hanoi. Negatives: fib → fibonacci_like; in-order walk → recursive_decomposition; Ackermann (its jump sets n to 1); an edit distance (call results used) |
