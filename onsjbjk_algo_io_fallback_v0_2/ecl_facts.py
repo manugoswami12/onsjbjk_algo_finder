@@ -422,4 +422,11 @@ def facts_of(units: list[str]) -> str:
         f = Path(td) / 'unit.c'
         f.write_text('\n\n'.join(marked_c(u) for u in units if u), encoding='utf-8')
         _, facts = cli.facts_text(f)
-    return facts
+    return facts + lisp_synonyms()
+
+
+def lisp_synonyms() -> str:
+    """AP13's one table of library calls with one meaning across languages (lang_tables.SYNONYMS,
+    ord = char-code = fromEnum ...), as facts for ecl_norm.pl: ECL names a Lisp function cl_<name>."""
+    from lang_tables import SYNONYMS
+    return ''.join(f"lib_synonym('{name}', '{canon}').\n" for name, canon in sorted(SYNONYMS.items()))

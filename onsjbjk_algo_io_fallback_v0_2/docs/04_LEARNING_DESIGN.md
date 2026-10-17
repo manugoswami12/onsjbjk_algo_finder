@@ -226,3 +226,20 @@ Where the Rosetta Python files of a task gave no usable example, I wrote one pla
 | Run-length | its branch does not hold for loop-based code | scan of runs of equal characters |
 
 They are training files only: learning stays Python only, and the frozen staged key is unchanged.
+
+## 12. Uniform conversion: the same component gives the same Prolog term in every language
+
+Test: `tests/test_uniform.py`. The same algorithm with the same structure in two languages must give the same tree node and the same tokens (`tests/data/uniform/`). Fixes, each in the shared conversion and each reusing an existing table or role:
+
+| Component | Was | Now | Where |
+|---|---|---|---|
+| library call (char-code / chr / ...) | ECL kept `cl_char_code` | AP13's `lang_tables.SYNONYMS` applied to ECL names (`lib_synonym/2` facts), last in the ECL table; a variadic argument count is dropped | `ecl_facts.lisp_synonyms`, `ecl_norm.pl` `lisp_library/2` |
+| order comparison | `cmp(lt/le/gt/ge)` | one `cmp(order)` (a > b is b < a; skip-if-greater is take-if-not-greater), as AP13 canon.pl normalises direction and negation | `flow_tokens.pl` |
+| counting loop | C: `i = 0`, `i++` statements; ECL: explicit counter; Python: `range` call | the counter's constant start and step (AP13 `stepper` role) and the `range` it runs over belong to the `loop` token | `flow_tokens.pl` `counter_step/3`, `loop_source/2` |
+| nested call | Python lists `chr(ord(c))` inside `append(...)` again as statements | a call inside another expression of the same statement is not a statement | `flow_tokens.pl` `nested_call/3` |
+| `loop ... collect` | ECL's head cell, tail cursor copy, dead temporary | the existing collect rewrite sees through the cursor copy; dead compiler temporaries are removed | `ecl_norm.pl` `cursor_of/3`, `dead_temporaries/3` |
+| append | Lisp `collect` | `call(append)` | `flow_tokens.pl` |
+| 2-D array write | ECL row-major `c[i*dim+j]` on the write target | normalised like a read: `elem(elem(c,i),j)` (so AP13 `table_fill` sees it) | `ecl_norm.pl` write step |
+| new array | `si_make_pure_array` / `[[0]*n for ...]` | one `new_array` token | `flow_tokens.pl` `new_array/1` |
+
+Also corrected: the ambiguity check counts every learned label that holds (known tasks' too), as the design says; it had counted only the 12 new labels.

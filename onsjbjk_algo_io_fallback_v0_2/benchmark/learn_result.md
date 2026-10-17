@@ -226,3 +226,14 @@ The learner and the rules are unchanged from run 4. A positive is learnable iff 
 - **caesar-cipher-2.lisp** has the arithmetic (`cl_char_code`, `op(add)`, `op(mod)`, `cl_code_char`) but reaches the root, while the example reaches gatherer. The ECL names are not mapped to Python's `ord`/`chr` (AP13's synonym table covers `char-code`, not `cl_char_code`).
 - **run-length-encoding.lisp:** its node is sequence_query; the example's node is run_length.
 - **n-queens-problem-3.hs:** not learnable (root, no branch there).
+
+## Run 7: uniform conversion (docs/04 section 12; user: the same component must be the same Prolog rule)
+
+`tests/test_uniform.py` passes: 4 same-structure pairs give equal nodes and equal tokens (Python/C, Python/Lisp). The ECL logic tests and the learning tests pass. The Lisp staged regression, stage 101, is unchanged: 50/51 = 98.0%, 50/59 = 84.7%, PASS.
+
+Also fixed in the scoring: the ambiguity check now counts every learned label that holds, including the known tasks' labels learned from the Python Fibonacci/Luhn files. Before, it counted only the 12 new labels.
+
+**Stage 3: precision 1/1 = 100%, learnable recall 1/2 = 50%: FAIL.** Stopped.
+- **towers-of-hanoi-1.c is ambiguous.** It holds `towers_of_hanoi r1 --> pattern([output])` and also `fibonacci_like r10 --> pattern([cmp(order), call('$self'), op(sub)])`, both under `numeric>recurrence>double_recursion`.
+- `fibonacci_like r10` was learned from fibonacci-sequence-5.py (`if n < 2`). It is separated from the Python Hanoi files only because they test `if n:` (a truth test, no comparison); the C Hanoi tests `if (n > 0)`, an order comparison.
+- `if n:` (n is not 0) and `n > 0` are equal only for n >= 0. The conversion keeps them apart, since in general they are not the same component.

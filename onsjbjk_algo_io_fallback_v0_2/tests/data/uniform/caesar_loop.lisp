@@ -1,0 +1,5 @@
+(defun caesar (codes key)
+  (let ((out '()))
+    (dolist (c codes)
+      (push (code-char (+ (mod (+ (- (char-code c) 65) key) 26) 65)) out))
+    (reverse out)))

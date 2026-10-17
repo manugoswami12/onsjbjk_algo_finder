@@ -17,59 +17,54 @@ learned_branch([sequence_query, aggregate, gatherer], caesar_cipher, r4) -->
     pattern([call(chr)]).
 % caesar_cipher r1 under [], branch: learned from [caesar-cipher-1.py]
 learned_branch([], caesar_cipher, r1) -->
-    pattern([op(sub), call(join), map, call(chr)]).
+    pattern([op(sub), call(chr), op(add), op(mod)]).
 % caesar_cipher r2 under [], branch: learned from [caesar-cipher-2.py]
 learned_branch([], caesar_cipher, r2) -->
     pattern([op(sub), call(translate), call(maketrans), op(add)]).
 % caesar_cipher r3 under [], branch: learned from [caesar-cipher-4.py]
 learned_branch([], caesar_cipher, r3) -->
-    pattern([call(dict), call(zip), op(add), call(dict)]).
-% fibonacci_like r15 under [sequence_transformation], branch: learned from [fibonacci-sequence-11.py]
-learned_branch([sequence_transformation], fibonacci_like, r15) -->
+    pattern([call(dict), call(zip), op(add), call(upper)]).
+% fibonacci_like r13 under [sequence_transformation], branch: learned from [fibonacci-sequence-11.py]
+learned_branch([sequence_transformation], fibonacci_like, r13) -->
     pattern([op('not in')]).
-% fibonacci_like r14 under [sequence_query], branch: learned from [fibonacci-sequence-4.py]
-learned_branch([sequence_query], fibonacci_like, r14) -->
+% fibonacci_like r12 under [sequence_query], branch: learned from [fibonacci-sequence-4.py]
+learned_branch([sequence_query], fibonacci_like, r12) -->
     pattern([call(pow)]).
-% fibonacci_like r13 under [numeric>recurrence>pair_recurrence], input->output (no logic condition separates it there): learned from [fibonacci-sequence-10.py]
-learned_branch([numeric, recurrence, pair_recurrence], fibonacci_like, r13, io) :-
+% fibonacci_like r11 under [numeric>recurrence>pair_recurrence], input->output (no logic condition separates it there): learned from [fibonacci-sequence-10.py]
+learned_branch([numeric, recurrence, pair_recurrence], fibonacci_like, r11, io) :-
     io_equal(fibonacci_like).
 % fibonacci_like under [numeric>recurrence>pair_recurrence]: fibonacci-sequence-7.py also only by input->output
 % fibonacci_like under [numeric>recurrence>pair_recurrence]: fibonacci-sequence-8.py also only by input->output
-% fibonacci_like r11 under [numeric>recurrence>double_recursion], branch: learned from [fibonacci-sequence-12.py]
-learned_branch([numeric, recurrence, double_recursion], fibonacci_like, r11) -->
+% fibonacci_like r9 under [numeric>recurrence>double_recursion], branch: learned from [fibonacci-sequence-12.py]
+learned_branch([numeric, recurrence, double_recursion], fibonacci_like, r9) -->
     pattern([op(in)]).
-% fibonacci_like r12 under [numeric>recurrence>double_recursion], branch: learned from [fibonacci-sequence-5.py]
-learned_branch([numeric, recurrence, double_recursion], fibonacci_like, r12) -->
-    pattern([cmp(lt), call('$self'), op(sub)]).
-% fibonacci_like r8 under [numeric], input->output (no logic condition separates it there): learned from [fibonacci-sequence-13.py]
-learned_branch([numeric], fibonacci_like, r8, io) :-
-    io_equal(fibonacci_like).
-% fibonacci_like r9 under [numeric], branch: learned from [fibonacci-sequence-14.py]
-learned_branch([numeric], fibonacci_like, r9) -->
-    pattern([call('$self'), loop, call(next), call(next), call(next)]).
-% fibonacci_like r10 under [numeric], branch: learned from [fibonacci-sequence-3.py]
-learned_branch([numeric], fibonacci_like, r10) -->
-    pattern([loop, call(int)]).
+% fibonacci_like r10 under [numeric>recurrence>double_recursion], branch: learned from [fibonacci-sequence-5.py]
+learned_branch([numeric, recurrence, double_recursion], fibonacci_like, r10) -->
+    pattern([cmp(order), call('$self'), op(sub)]).
+% fibonacci_like r7 under [numeric], branch: learned from [fibonacci-sequence-13.py]
+learned_branch([numeric], fibonacci_like, r7) -->
+    pattern([call('$self'), call(next), call(next), call(next)]).
+% fibonacci_like r8 under [numeric], branch: learned from [fibonacci-sequence-3.py]
+learned_branch([numeric], fibonacci_like, r8) -->
+    pattern([op(div), op(pow)]).
 % fibonacci_like r1 under [], branch: learned from [fibonacci-sequence-1.py]
 learned_branch([], fibonacci_like, r1) -->
-    pattern([call(sqrt), call(sqrt), op(fdiv), op(fdiv)]).
+    pattern([call(sqrt), op(fdiv), op(add), op(fdiv)]).
 % fibonacci_like r2 under [], branch: learned from [fibonacci-sequence-15.py]
 learned_branch([], fibonacci_like, r2) -->
-    pattern([call(accumulate), call(range), call(sum), call(range)]).
-% fibonacci_like r3 under [], branch: learned from [fibonacci-sequence-16.py]
-learned_branch([], fibonacci_like, r3) -->
-    pattern([call(reduce), call(range), call(range), call(sum)]).
-% fibonacci_like r4 under [], input->output (no logic condition separates it there): learned from [fibonacci-sequence-17.py]
-learned_branch([], fibonacci_like, r4, io) :-
+    pattern([call(sum), map, call(accumulate), call(range)]).
+% fibonacci_like r3 under [], input->output (no logic condition separates it there): learned from [fibonacci-sequence-16.py]
+learned_branch([], fibonacci_like, r3, io) :-
     io_equal(fibonacci_like).
-% fibonacci_like r5 under [], branch: learned from [fibonacci-sequence-18.py]
+% fibonacci_like under []: fibonacci-sequence-17.py also only by input->output
+% fibonacci_like r4 under [], branch: learned from [fibonacci-sequence-18.py]
+learned_branch([], fibonacci_like, r4) -->
+    pattern([loop, op(add), op(sub), call(append)]).
+% fibonacci_like r5 under [], branch: learned from [fibonacci-sequence-2.py]
 learned_branch([], fibonacci_like, r5) -->
-    pattern([loop, call(range), op(add), call(append)]).
-% fibonacci_like r6 under [], branch: learned from [fibonacci-sequence-2.py]
+    pattern([cmp(order), cmp(order), call(longdouble), cmp(order)]).
+% fibonacci_like r6 under [], branch: learned from [fibonacci-sequence-6.py]
 learned_branch([], fibonacci_like, r6) -->
-    pattern([cmp(lt), cmp(lt), call(longdouble), call(longdouble)]).
-% fibonacci_like r7 under [], branch: learned from [fibonacci-sequence-6.py]
-learned_branch([], fibonacci_like, r7) -->
     pattern([op(not), op(in), op(add), call('$self')]).
 % fibonacci_like under []: fibonacci-sequence-9.py also only by input->output
 % josephus r3 under [numeric>recurrence>josephus_recurrence], input->output (no logic condition separates it there): learned from [josephus-problem-2.py]
@@ -80,7 +75,7 @@ learned_branch([], josephus, r1) -->
     pattern([call(list), call(range), op(add), call(append)]).
 % josephus r2 under [], branch: learned from [josephus-problem-4.py]
 learned_branch([], josephus, r2) -->
-    pattern([call(list), call(range), call(list), call(compress)]).
+    pattern([call(list), call(range), new_array, call(compress)]).
 % knapsack_01 r4 under [sequence_query>aggregate>gatherer], branch: learned from [knapsack-problem-0-1-3.py]
 learned_branch([sequence_query, aggregate, gatherer], knapsack_01, r4) -->
     pattern([op('not in')]).
@@ -89,13 +84,13 @@ learned_branch([sequence_query], knapsack_01, r3, io) :-
     io_equal(knapsack_01).
 % knapsack_01 r2 under [marking>table_fill], branch: learned from [knapsack_table.py]
 learned_branch([marking, table_fill], knapsack_01, r2) -->
-    pattern([cmp(le)]).
+    pattern([cmp(order)]).
 % knapsack_01 r1 under [], branch: learned from [knapsack-problem-0-1-4.py]
 learned_branch([], knapsack_01, r1) -->
     pattern([op(add), op(pow), loop, call(randint)]).
 % lcs r2 under [sequence_query>aggregate>gatherer], branch: learned from [longest-common-subsequence-3.py]
 learned_branch([sequence_query, aggregate, gatherer], lcs, r2) -->
-    pattern([call(enumerate)]).
+    pattern([new_array]).
 % lcs r1 under [sequence_query], branch: learned from [longest-common-subsequence-1.py]
 learned_branch([sequence_query], lcs, r1) -->
     pattern([op(or), call(max)]).
@@ -108,7 +103,7 @@ learned_branch([sequence_query], levenshtein, r1) -->
     pattern([call(insert)]).
 % levenshtein r2 under [sequence_query], branch: learned from [levenshtein-distance-2.py]
 learned_branch([sequence_query], levenshtein, r2) -->
-    pattern([cmp(gt), call(enumerate)]).
+    pattern([call(len), call(enumerate)]).
 % levenshtein r3 under [sequence_query], branch: learned from [levenshtein-distance-4.py]
 learned_branch([sequence_query], levenshtein, r3) -->
     pattern([call(len), rest]).
@@ -120,25 +115,25 @@ learned_branch([sequence_query], luhn, r3) -->
     pattern([op(mod), call(int)]).
 % luhn r2 under [numeric], branch: learned from [luhn-test-of-credit-card-numbers-1.py]
 learned_branch([numeric], luhn, r2) -->
-    pattern([call(str)]).
+    pattern([call(int)]).
 % luhn r1 under [], branch: learned from [luhn-test-of-credit-card-numbers-2.py]
 learned_branch([], luhn, r1) -->
-    pattern([call(reduce), call(map), call(cycle), call(map)]).
+    pattern([op(eq), op(mod), call(reduce), call(map)]).
 % matrix_multiplication r4 under [marking>table_fill], branch: learned from [matrix_loops.py]
 learned_branch([marking, table_fill], matrix_multiplication, r4) -->
-    pattern([op(mul), op(mul)]).
+    pattern([op(mul)]).
 % matrix_multiplication r1 under [], branch: learned from [matrix-multiplication-1.py]
 learned_branch([], matrix_multiplication, r1) -->
-    pattern([call(zip), call(zip), map, map]).
+    pattern([call(zip), map, map, call(sum)]).
 % matrix_multiplication r2 under [], branch: learned from [matrix-multiplication-2.py]
 learned_branch([], matrix_multiplication, r2) -->
-    pattern([call(map), call(map), call(sum), call(map)]).
+    pattern([call(map), call(sum), call(map), call(map)]).
 % matrix_multiplication r3 under [], input->output (no logic condition separates it there): learned from [matrix-multiplication-4.py]
 learned_branch([], matrix_multiplication, r3, io) :-
     io_equal(matrix_multiplication).
 % n_queens r4 under [sequence_query], branch: learned from [n-queens-problem-3.py]
 learned_branch([sequence_query], n_queens, r4) -->
-    pattern([call(any)]).
+    pattern([op(in)]).
 % n_queens r2 under [search>backtracking], branch: learned from [n-queens-problem-6.py]
 learned_branch([search, backtracking], n_queens, r2) -->
     pattern([call(list)]).
@@ -150,7 +145,7 @@ learned_branch([numeric, predicate], n_queens, r1, io) :-
     io_equal(n_queens).
 % roman_encode r6 under [sequence_query], branch: learned from [roman-numerals-encode-8.py]
 learned_branch([sequence_query], roman_encode, r6) -->
-    pattern([call('mapAccumL(go)(n)')]).
+    pattern([call('mapAccumL(go)')]).
 % roman_encode r5 under [numeric>conditional_iteration], branch: learned from [roman-numerals-encode-4.py]
 learned_branch([numeric, conditional_iteration], roman_encode, r5) -->
     pattern([op(eq)]).
@@ -162,7 +157,7 @@ learned_branch([numeric], roman_encode, r4) -->
     pattern([call(enumerate), op(eq)]).
 % roman_encode r1 under [], branch: learned from [roman-numerals-encode-5.py]
 learned_branch([], roman_encode, r1) -->
-    pattern([loop, call(zip), call(divmod), call(divmod)]).
+    pattern([loop, call(zip), call(divmod), call(append)]).
 % roman_encode r2 under [], branch: learned from [roman-numerals-encode-7.py]
 learned_branch([], roman_encode, r2) -->
     pattern([call(join), map, call(zip), call(range)]).
@@ -172,9 +167,9 @@ learned_branch([sequence_transformation, construction, run_length], run_length_e
 % run_length_encoding r2 under [sequence_query], branch: learned from [run-length-encoding-1.py]
 learned_branch([sequence_query], run_length_encoding, r2) -->
     pattern([op(ne), call(append)]).
-% run_length_encoding r1 under [], branch: learned from [run-length-encoding-2.py]
-learned_branch([], run_length_encoding, r1) -->
-    pattern([call(join), op(mul), call(join), op(mul)]).
+% run_length_encoding r1 under [], input->output (no logic condition separates it there): learned from [run-length-encoding-2.py]
+learned_branch([], run_length_encoding, r1, io) :-
+    io_equal(run_length_encoding).
 % towers_of_hanoi r1 under [numeric>recurrence>double_recursion], branch: learned from [towers-of-hanoi-1.py]
 learned_branch([numeric, recurrence, double_recursion], towers_of_hanoi, r1) -->
     pattern([output]).

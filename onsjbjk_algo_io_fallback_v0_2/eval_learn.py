@@ -77,12 +77,12 @@ def answer(path, labels, io):
         nodes, found, branch_at = [], [], set()
     runnable = {io.labels[rel] for rel, _ in io.cat} if any(d['discriminative'] for d in me.values()) else set()
     learnable = (branch_at | runnable) & labels
-    got = {lab for _, lab, _ in found} & labels
+    held = {lab for _, lab, _ in found}           # every learned label (known tasks' too) that holds
     tags = [f"[{' '.join(nodes) or 'root'}]"] + sorted(f'learned:{lab}:{r}@{c or "root"}' for c, lab, r in found)
-    if len(got) > 1:                              # several learned rules hold: no guess
+    if len(held) > 1:                             # several learned rules hold: no guess
         return set(), tags + ['ambiguous'], learnable
-    if got:
-        return got, tags, learnable
+    if held:
+        return held & labels, tags, learnable
     return io_labels, tags + sorted(f'io:{lab}' for lab in io_labels), learnable   # the input->output fallback
 
 

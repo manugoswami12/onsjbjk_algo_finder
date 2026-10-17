@@ -21,7 +21,7 @@
    comparator parameter) is read as a < b; a Lisp variable is ECL's v<k><name>, every other
    variable (T<k>, v<k>, value0, env0) is a compiler temporary.
 */
-:- dynamic ecl_unresolved/2, ecl_lispvar/2, tail_loop/1.
+:- dynamic ecl_unresolved/2, ecl_lispvar/2, tail_loop/1, lib_synonym/2.
 
 % ----- 1. operator table -----------------------------------------------------------------
 % Every row is checked against its definition in ECL's headers (/usr/include/ecl, ECL 21.2.1;
@@ -35,6 +35,10 @@ ecl_bin(ecl_greater, gt).        ecl_bin(ecl_greatereq, ge).       ecl_bin(ecl_n
 ecl_bin(ecl_eql, eq).            ecl_bin(ecl_equal, eq).
 ecl_box(F) :- memberchk(F, [ecl_make_fixnum, ecl_fixnum, ecl_make_integer, ecl_to_fixnum, ecl_make_bool,
                             ecl_to_bool, ecl_make_int, ecl_to_int]).
+% cl_char_code is Lisp's char-code: AP13's synonym table (lang_tables.SYNONYMS, facts lib_synonym/2 from
+% ecl_facts.py) gives the one name every language uses
+lisp_library(F, S) :- atom(F), atom_concat(cl_, U, F), atomic_list_concat(Ps, '_', U), atomic_list_concat(Ps, '-', L),
+    lib_synonym(L, S), !.
 ecl_aref(F) :- memberchk(F, [ecl_aref_unsafe, ecl_aref1, ecl_aref, ecl_elt, ecl_char, cl_char, cl_schar, cl_elt]).
 ecl_aset(F) :- memberchk(F, [ecl_aset_unsafe, ecl_aset1, ecl_aset, ecl_elt_set, ecl_char_set]).
 
@@ -84,6 +88,10 @@ ecl_op(call(ecl_function, [var(N)]), fn(N)) :- !.                % #'* as an obj
 ecl_op(var('ECL_NIL'), bool(false)) :- !.
 ecl_op(var('ECL_T'), bool(true)) :- !.
 ecl_op(var(V), var(N)) :- lisp_name(V, N), !.
+% last: a library call with one meaning in every language (char-code = ord), after every specific rule
+% above (append of several lists is a concat); a variadic ECL function's leading argument count is dropped
+ecl_op(call(F, As0), call(S, As)) :- lisp_library(F, S), !,
+    ( As0 = [int(N)|Rest], length(Rest, N) -> As = Rest ; As = As0 ).
 
 % ECL names a Lisp variable v<k><name> (v2b, v4lo); temporaries are T<k>, v<k>, value0, env0
 chain(cl_L, lt). chain(cl_LE, le). chain(cl_G, gt). chain(cl_GE, ge). chain(cl_E, eq).
@@ -182,7 +190,8 @@ step(write(var(X), V0), S, L, F, _, st(Env0, El, P), st(Env, El, P1), Items, Ite
     put_assoc(X, Env0, Read, Env),
     ( lisp_var(F, X), V \== var(X) -> append(P, [w(S, L, var(X), V)], P1) ; P1 = P ).   % x = x: nothing
 step(write(elem(Q0, I0), V0), S, L, F, _, st(Env, El0, P), st(Env, [elem(Q, I)-V|El1], P1), Items, Items) :- !,
-    subst(F, Env, El0, Q0, Q), subst(F, Env, El0, I0, I), subst(F, Env, El0, V0, V),
+    subst(F, Env, El0, Q0, Q1), subst(F, Env, El0, I0, I1), subst(F, Env, El0, V0, V),
+    ( ecl_top(elem(Q1, I1), elem(Q, I)) -> true ; Q = Q1, I = I1 ),    % the target as a read is: (aref m i j)
     exclude(same_key(elem(Q, I)), El0, El1), append(P, [w(S, L, elem(Q, I), V)], P1).
 step(label(N), S, L, F, Stable, St, st(Stable, [], []), Items, Rest) :- !,
     flush(F, St, _, Items, [it(S, L, label(N))|Rest]).
@@ -439,7 +448,7 @@ ecl_function(F) :-
     loops(Items, Loops),
     findall(Fact, item_fact(F, Items, Loops, Fact), Facts0),
     recursion_facts(F, Facts0, Facts1), list_loops(Facts1, Facts2), collect_loops(Facts2, Facts3),
-    fold_fusion(Facts3, Facts4), push_collections(Facts4, Facts),
+    fold_fusion(Facts3, Facts4), push_collections(Facts4, Facts5), dead_temporaries(F, Facts5, Facts),
     retract_function(F), forall(member(Fa, Facts), assertz(Fa)).
 
 item_fact(F, Items, Loops, Fact) :-
@@ -559,18 +568,31 @@ replace_term(Old, New, T0, T) :- T0 =.. [F|As], maplist(replace_term(Old, New), 
 % ----- 7. loop ... collect: h := list(nil); c := h; in L: c := list(x), rplacd(old c, ...) ---------
 % the list h (its cdr is the result) receives x in loop L: the neutral append(h, x)
 collect_loops(Facts0, Facts) :-
-    (   member(call_at(Sr, collect, [var(C), X]), Facts0), member(in_loop(Sr, L), Facts0),
+    (   member(call_at(Sr, collect, [var(T), X]), Facts0), member(in_loop(Sr, L), Facts0),
+        cursor_of(Facts0, T, C),
         member(assign(S0, var(C2), var(H)), Facts0), C2 == C, \+ member(in_loop(S0, L), Facts0),
         member(assign(Sh, var(H2), list([bool(false)])), Facts0), H2 == H
     ->  findall(S1, ( member(assign(S1, var(C3), _), Facts0), C3 == C ), Cs),
         exclude(list_cursor_fact(none, Cs), Facts0, Facts1),
         maplist(replace_term(tail(var(H), 1), var(H)), Facts1, Facts2),
         maplist(replace_fact(assign(Sh, var(H), list([bool(false)])), assign(Sh, var(H), list([]))), Facts2, Facts3),
-        maplist(replace_fact(call_at(Sr, collect, [var(C), X]), call_at(Sr, append, [var(H), X])), Facts3, Facts4),
-        collect_loops(Facts4, Facts)
+        maplist(replace_fact(call_at(Sr, collect, [var(T), X]), call_at(Sr, append, [var(H), X])), Facts3, Facts4),
+        exclude(cursor_copy(T, C), Facts4, Facts5),
+        collect_loops(Facts5, Facts)
     ;   Facts = Facts0
     ).
 replace_fact(Old, New, F0, F) :- ( F0 == Old -> F = New ; F = F0 ).
+
+% ----- 7c. a compiler temporary that is written and never read is not part of the program (dead
+% assignment elimination, Aho-Sethi-Ullman): the Lisp source has no such variable ----------------------
+dead_temporaries(_, Facts0, Facts) :- exclude(dead_temporary(Facts0), Facts0, Facts).
+dead_temporary(Facts, assign(S, var(T), _)) :- atom(T), ecl_temp(T),
+    \+ ( member(Fa, Facts), Fa \= assign(S, _, _), sub_term(R, Fa), R == var(T) ).
+% the cursor collect extends: the variable itself, or the cursor a temporary copied once (T := c, then
+% rplacd(T, ...): ECL saves the old tail before c moves on)
+cursor_of(Facts, T, C) :- findall(V, ( member(assign(_, var(T2), V), Facts), T2 == T ), [var(C)]), atom(C), C \== T, !.
+cursor_of(_, C, C).
+cursor_copy(T, C, assign(_, var(T2), var(C2))) :- T \== C, T2 == T, C2 == C.
 
 % ----- 7b. push + reverse: r := cons(x, r) for a local r that is returned as (reverse r) ----------
 % the standard Lisp accumulation idiom; the output collection receives x (AP13's append)
