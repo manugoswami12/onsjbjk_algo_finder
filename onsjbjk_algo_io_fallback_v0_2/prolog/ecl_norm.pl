@@ -301,8 +301,11 @@ known_term(T0, T) :- T0 =.. [Fn|As], maplist(known_term, As, Bs), T1 =.. [Fn|Bs]
     ( T1 = call(ecl_funcall, [fn(Op), A, B]) -> T = op(Op, [A, B]) ; T = T1 ).
 
 comparator_calls(F, Items0, Items) :-
-    findall(P, ( param(F, _, P0), ecl_term(var(P0), var(P)), comparator_param(Items0, P) ), Ps),
+    findall(P, ( scope_param(F, P), comparator_param(Items0, P) ), Ps0), sort(Ps0, Ps),
     foldl(comparator_param_calls, Ps, Items0, Items).
+% a parameter of F, or one F's closure captured from its enclosing function (the cell v0<name>)
+scope_param(F, P) :- param(F, _, P0), ecl_term(var(P0), var(P)).
+scope_param(F, P) :- func(F, N, _), atom_codes(N, [0'L, 0'C|_]), param(G, _, P0), G \== F, ecl_term(var(P0), var(P)).
 comparator_param(Items, P) :-
     once(( member(it(_, _, goto(_, C, _)), Items), funcall_of(C, P, _) )),
     \+ ( member(it(_, _, st(_, Fs)), Items), funcall_of(Fs, P, _) ).

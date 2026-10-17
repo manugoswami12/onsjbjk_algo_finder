@@ -52,7 +52,7 @@ correct (exchange of `vec[i]` / `vec[idx]`, organizer, steppers). Fixing it woul
 to fit this test unit, so retry 2 was not spent and testing stopped here as instructed (stages 15/55/101 not
 run).
 
-### Continued (after the branching fix): stage 3 PASS, stage 15 PASS, stage 55 FAILED (1 retry left, paused)
+### Continued (after the branching fix): stage 3 PASS, stage 15 PASS, stage 55 FAILED (testing stopped)
 
 | Stage | Run | Precision | Recall | Wrong on negatives | Result |
 |---|---|---|---|---|---|
@@ -91,3 +91,35 @@ splitting value0 into its def-use webs.
 Recall 80% at stage 55 needs 32/39. Three units are unanswerable from their file. Reaching 32 needs most of the
 functional-idiom group, i.e. new normalisations (`map`/`apply` fusion, `defmethod`, `&key`, `slice`). So the last
 retry was not spent; waiting for a decision.
+
+### Stage 55 retry 2 (last): precision 24/24 = 100%, recall 24/39 = 61.5%, 0/16 wrong on negatives: FAIL, stopped
+
+Fixes of this round (user diagnosis: follow the tree and the code logic, remove assumed rules,
+bound the loop parsing, grow the vocabulary):
+- **Tree misread.** ECL writes `(97)<=(v3c) && (v3c)<=(122)`. C's grammar reads `(v3c) && x` as a cast of the
+  GNU label address `&&x` to a type `v3c`. A pass-1 tree rewrite treats a "cast" to a declared variable as that
+  variable, and pass 2 re-parses.
+- **Code logic.** ECL reuses `value0` for unrelated values. Reaching definitions on the goto CFG (bounded by
+  #items + 1 rounds) split it into def-use webs. This removed the caesar-2 false Euclid; precision is now 100%.
+- **Assumed rule removed.** Every `funcall` was read as `<`. Now: a known function object (`#'*`) gives its
+  operator; a parameter, or a closure-captured parameter, whose call is used only as a branch test is the
+  comparator; anything else stays unknown.
+- **Operator table audited against ECL's headers.** Three non-existent names were removed (`ecl_eq`,
+  `ecl_reverse`, `ecl_make_cint`) and three arity classes corrected (`cl_char`, `cl_equalp`, `cl_aref`).
+  Operator names follow AP13's shared vocabulary (`lang_tables.OPERATORS`).
+- **List loops.** A finite cursor set is computed first and each loop is rewritten once. k lockstep cursors
+  (`mapcar` over k lists) become the index loop `elem(q_i, j)`. dot-product-1 is now found.
+- **Vocabulary.** `apply` is a fold like `reduce`; `mapcar`/`map` are AP13's `map` term; `coerce-to-list`.
+- **Tools.** ruff, pylint 10/10, SWI `check` clean, and semgrep with local rules (`semgrep_ecl.yml`: tree-sitter
+  node identity, the accessors that corrupted memory, broad except; the registry is blocked by the network
+  policy) clean. Logic tests 45/45, selftest 47/47, stages 3 and 15 still PASS.
+
+In this run cocktail-sort was lost. Its comparator is a parameter captured by a local function, and the new
+comparator rule first looked only at the function's own parameters. That was fixed after the run and checked on
+the file and with a logic test; stage 55 was not re-run, because its retries were used up.
+
+Remaining stage-55 misses (15): 3 files hold no algorithm (bubble-sort-2, sum-digits-2: calls only; lcm-1: REPL
+transcript); 7 library or functional idioms ECL does not inline (dot-product-2 `map`, luhn-2 curly syntax, fib-8
+`defmethod`, fib-9/10 list growth, insertion-sort-1 `reduce #'insert`, merge-sort built-in `merge`); 2 rule
+coverage (sum-digits-1 parameter base, book merge-sort helper); 2 book bin-search (`&key`, RUTILS `slice`); 1
+regression above.

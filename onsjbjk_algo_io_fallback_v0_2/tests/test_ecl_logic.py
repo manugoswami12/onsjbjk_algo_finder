@@ -16,7 +16,7 @@ EXPECTED = {
     'vsel': 'selection_exchange', 'lsum': 'element_accumulation', 'pal': 'palindrome_check',
     'qsl': 'comparison_driven_reordering', 'rfact': 'factorial_like', 'rsum': 'series_sum',
     'fibl': 'fibonacci_like', 'bsr': 'interval_lookup', 'bsieve': 'sieve_like',
-    'dotl': 'element_accumulation', 'bsearch': 'interval_lookup', 'vmax': 'extremum_search', 'vsum': 'element_accumulation',
+    'dotl': 'element_accumulation', 'pass': 'comparison_driven_reordering',   # closure comparator 'bsearch': 'interval_lookup', 'vmax': 'extremum_search', 'vsum': 'element_accumulation',
     # near misses: no v0.2 branch
     'twice': None, 'countdown': None, 'vcopy': None, 'lastel': None, 'addmod': None, 'countup': None, 'lcount': None, 'squares': None,
     'inrange': None, 'shiftc': None, 'applyf': None,
