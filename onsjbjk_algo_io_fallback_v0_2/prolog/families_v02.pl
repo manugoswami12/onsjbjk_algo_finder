@@ -103,6 +103,10 @@ continuation_guard(F, S, C, P) :- under(S, L), loop(L, F, _), loop_cond(L, LC),
 % The same logic as AP13's rec_class(double_recursion) (hanoi: f(n-1); move; f(n-1)), a second clause.
 family_path_v02(F, [numeric, recurrence, double_recursion]) :-
     tail_loop(L), loop(L, F, _), once(( in_func(S, F), call_at(S, '$self', _), in_loop(S, L) )).
+% two recursive calls where one is carried in the other's argument (an accumulator: h(n-1, ..., x : h(n-1,
+% ..., acc))): the outer is a tail call, so AP13's computed-result test does not see it; a third clause
+family_path_v02(F, [numeric, recurrence, double_recursion]) :-
+    once(( in_func(S, F), ret(S, call('$self', As)), member(A, As), sub_term(I, A), compound(I), I = call('$self', _) )).
 
 % ===== built branches (doc 04 section 15): where the Python examples cannot teach an algorithm in another
 % language, its logic is stated here as relations over the facts, the same in every language. Each names
@@ -112,15 +116,18 @@ family_path_v02(F, [numeric, recurrence, double_recursion]) :-
 % the outer call a jump to the start (tail_loop) whose update of a parameter is the inner call and another
 % parameter's update is p - 1. Built from ackermann-function-4.c's task (the Rosetta Lisp/Python forms).
 family_path_v02(F, [numeric, recurrence, nested_recursion]) :-
-    once(( param(F, _, M),
-           (   in_func(S, F), ( value(S, _, V) ; ret(S, V) ; call_at(S, '$self', As), V = call('$self', As) ),
-               sub_term(O, V), compound(O), O = call('$self', Os), member(op(sub, [P, int(1)]), Os), P == var(M),
-               member(A, Os), sub_term(I, A), compound(I), I = call('$self', _)
-           ;   tail_loop(L), loop(L, F, _),
-               in_func(S1, F), in_loop(S1, L), assign(S1, var(N), V1), param(F, _, N), N \== M,
-               sub_term(I, V1), compound(I), I = call('$self', _),
-               in_func(S2, F), in_loop(S2, L), assign(S2, var(M2), op(sub, [P2, int(1)])), M2 == M, P2 == var(M)
-           ) )).
+    once((   in_func(S, F), ( value(S, _, V) ; ret(S, V) ; call_at(S, '$self', As), V = call('$self', As) ),
+             sub_term(O, V), compound(O), O = call('$self', Os), param(F, K, M), nth0(K, Os, D), counted(D, M),
+             member(A, Os), sub_term(I, A), compound(I), I = call('$self', Bs), inner_ackermann(F, K, M, Bs)
+         ;   tail_loop(L), loop(L, F, _), param(F, K, M),
+             in_func(S1, F), in_loop(S1, L), assign(S1, var(N), V1), param(F, _, N), N \== M,
+             sub_term(I, V1), compound(I), I = call('$self', Bs), inner_ackermann(F, K, M, Bs),
+             in_func(S2, F), in_loop(S2, L), assign(S2, var(M2), D2), M2 == M, counted(D2, M)
+         )).
+counted(op(sub, [V, int(1)]), M) :- V == var(M).
+% the inner call of A(m - 1, A(m, n - 1)): m unchanged, another parameter counted down (a Hanoi with an
+% accumulator, h(n - 1, ..., h(n - 1, ...)), counts the same parameter down in both)
+inner_ackermann(F, K, M, Bs) :- nth0(K, Bs, B), B == var(M), param(F, J, N), J \== K, nth0(J, Bs, C), counted(C, N), !.
 
 % 0-1 knapsack: a table cell T[i][j] taken from the previous row at a capacity reduced by a non-constant
 % amount, T[i-1][j - w] (the item's weight); LCS and edit distance read T[i-1][j-1]. Built from
@@ -135,8 +142,14 @@ family_path_v02(F, [marking, table_fill, capacity_reduction]) :-
 % from caesar-cipher-2.lisp.
 family_path_v02(F, [sequence_transformation, elementwise_map, alphabet_rotation]) :-
     once(( in_func(S, F), ( value(S, _, V) ; ret(S, V) ; call_at(S, _, V) ), sub_term(C, V), compound(C), C = call(chr, [E]),
-           sub_term(Md, E), compound(Md), Md = op(mod, [X, int(26)]),
-           findall(Q, ( sub_term(Q, X), char_code_of(F, Q) ), [_]) )).
+           sub_term(Md, E), compound(Md), Md = op(mod, [X, int(26)]), shifted_codes(F, E, Md, X, [_]) )).
+% the character codes shifted inside the mod: not the base, which is added back outside it (b + (c - b + k)
+% mod 26); a Vigenere shift is a second code (the key's character) inside the mod only
+shifted_codes(F, E, Md, X, Qs) :- replace_var_term(Md, hole, E, Outside),
+    findall(Q, ( sub_term(Q, X), char_code_of(F, Q), \+ ( sub_term(Q2, Outside), Q2 == Q ) ), Qs).
+replace_var_term(Old, New, T0, T) :- T0 == Old, !, T = New.
+replace_var_term(_, _, T, T) :- \+ compound(T), !.
+replace_var_term(Old, New, T0, T) :- T0 =.. [Fn|As], maplist(replace_var_term(Old, New), As, Bs), T =.. [Fn|Bs].
 char_code_of(_, call(ord, [A])) :- A \= other(string), A \= int(_), !.
 char_code_of(F, var(V)) :- atom(V), in_func(S, F), value(S, var(V2), call(ord, [A])), V2 == V, A \= other(string), !.
 
@@ -196,6 +209,9 @@ family_path_v02(F, [sequence_query, two_sequence_match, longest_common]) :-
 % x : f xs ys, the diagonal self-call with the element written to the output
 matched_plus_one(S) :- ( value(S, _, V) ; ret(S, V) ), sub_term(G, V), compound(G),
     ( G = op(add, [D, int(1)]) ; G = cons(_, D) ; G = op(add, [list([_]), D]) ), diagonal(D), !.
+matched_plus_one(S) :- ( value(S, _, V) ; ret(S, V) ), sub_term(G, V), compound(G), G = op(add, [var(L), int(1)]),
+    stmt(S, F, _, _), in_func(S0, F), under_match(S0, true), value(S0, var(L2), T), L2 == L,   % (seq len) = f(...)
+    sub_term(D, T), compound(D), diagonal(D), !.
 matched_plus_one(S) :- call_at(S, '$self', As), diagonal(call('$self', As)),
     stmt(S, F, _, _), in_func(S2, F), under_match(S2, true), par_assign(S2, _, _), !.
 % the larger of the two one-sided steps: max, a helper returning the longer, or the two steps assigned and
@@ -205,8 +221,9 @@ larger_step(F) :- in_func(S, F), under_match(S, false), ( value(S, _, V) ; ret(S
 larger_step(F) :- in_func(S, F), \+ guard(S, _, _), ( value(S, _, V) ; ret(S, V) ),
     sub_term(M, V), compound(M), M = call(Mx, [X, Y]), larger_of(Mx), one_or_cell(X), one_or_cell(Y), !.
 larger_step(F) :- in_func(Sa, F), value(Sa, var(A), Xa), one_step(Xa), in_func(Sb, F), value(Sb, var(B), Xb), one_step(Xb),
-    A \== B, in_func(S, F), guard(S, C, _), sub_term(L, C), compound(L), L = op(_, [call(len, [La]), call(len, [Lb])]),
-    ( La == var(A), Lb == var(B) ; La == var(B), Lb == var(A) ), !.
+    A \== B, in_func(S, F), guard(S, C, _), sub_term(L, C), compound(L), L = op(O, [X, Y]), memberchk(O, [gt, ge, lt, le]),
+    ( mentions_var(X, A), mentions_var(Y, B) ; mentions_var(X, B), mentions_var(Y, A) ), !.   % len(a) > len(b), a[1] > b[1]
+mentions_var(T, V) :- sub_term(W, T), W == var(V), !.
 larger_of(max) :- !.
 larger_of(G) :- atom(G), func(H, G, _), in_func(S, H), guard(S, C, _), sub_term(L, C), compound(L), L = call(len, _), !.
 one_or_cell(X) :- one_step(X), !.
@@ -219,9 +236,14 @@ family_path_v02(F, [sequence_query, two_sequence_match, edit_distance]) :-
              include([A]>>( A = op(add, [_, int(1)]) ), As, Ones), length(Ones, K), K >= 2,
              in_func(S0, F), ( value(S0, _, V0) ; guard(S0, V0, _) ), sub_term(E, V0), compound(E), E = op(Op, [X, Y]),
              memberchk(Op, [eq, ne]), seq_item(X, A1), seq_item(Y, B1), A1 \== B1
-         ;   in_func(S1, F), under_match(S1, true), value(S1, var(R), D), diagonal(D),
-             in_func(S2, F), under_match(S2, false), value(S2, var(R2), op(add, [var(R3), int(1)])), R2 == R, R3 == R
+         ;   in_func(S1, F), under_match(S1, true), ( value(S1, _, D) ; ret(S1, D) ), diagonal(D),
+             in_func(S2, F), under_match(S2, false), plus_one(S2),
+             \+ ( in_func(S3, F), under_match(S3, true), plus_one(S3) )      % a match costs nothing (LCS adds 1)
          )).
+% the result plus one on the mismatch path: x := x + 1, or return a + 1
+plus_one(S) :- value(S, var(R), op(add, [var(R2), int(1)])), R2 == R,
+    stmt(S, F, _, _), \+ param(F, _, R), !.          % the result, not a recursive call's parameter update
+plus_one(S) :- ret(S, V), ( V = op(add, [_, int(1)]) ; V = op(add, [int(1), _]) ), !.
 
 % --- N-queens: the diagonal conflict of a queen placed at (i, j) --------------------------------------
 % the sum and the difference of the same two positions as the keys tested (j not in cols, i + j not in
@@ -232,9 +254,13 @@ family_path_v02(F, [search, diagonal_conflict]) :-
     once((   in_func(S, F), findall(C0, guard(S, C0, _), C), C \== [],      % the tests of one statement together
              variant(F, C, R1), keyed(R1, Sum), Sum = op(add, [X, Y]), var_pair(X, Y),
              variant(F, C, R2), keyed(R2, Dif), Dif = op(sub, [P, Q]), ( P == X, Q == Y ; P == Y, Q == X )
-         ;   in_func(S, F), ( guard(S, C, _) ; ret(S, C) ; value(S, _, C) ),
+         ;   in_func(S, F), ( guard(S, C, _) ; ret(S, C) ; value(S, _, C) ; loop(Lp, F, _), loop_cond(Lp, C) ),
              sub_term(A, C), compound(A), A = call(abs, [op(sub, [_, _])]),
              sub_term(B, C), compound(B), B = op(Op, [L, Rr]), memberchk(Op, [eq, ne]), ( L == A ; Rr == A )
+         ;   in_func(S, F), ( ret(S, C) ; value(S, _, C) ; guard(S, C, _) ),          % r + s == c + d, r - s == c - d
+             sub_term(E1, C), compound(E1), E1 = op(eq, [op(add, [A1, B1]), op(add, [_, _])]),
+             sub_term(E2, C), compound(E2), E2 = op(eq, [op(sub, [A2, B2]), op(sub, [_, _])]), A2 == A1, B2 == B1
+         ;   in_func(S, F), ( ret(S, C) ; value(S, _, C) ), diagonal_member(C, add), diagonal_member(C, sub)
          ;   in_func(S1, F), ( value(S1, _, V1) ; assign(S1, _, V1) ), V1 = op(shl, [op(or, [M1, Bit]), int(1)]),
              in_func(S2, F), ( value(S2, _, V2) ; assign(S2, _, V2) ), V2 = op(shr, [op(or, [M2, Bit2]), int(1)]),
              Bit2 == Bit, M1 \== M2
@@ -244,6 +270,11 @@ keyed(R, T) :- sub_term(M, R), compound(M), ( M = op(O, [K, _]), memberchk(O, ['
     sub_term(T, K), compound(T).
 % the two positions: non-constant terms (a variable, or an element such as a[j])
 var_pair(X, Y) :- X \= int(_), Y \= int(_), X \== Y, ( X = var(_) ; X = elem(_, _) ), ( Y = var(_) ; Y = elem(_, _) ).
+% r tested for membership in the queens' sequence shifted by the row index (zipWith (+) xs [1..] and (-)),
+% directly or through a helper of the file that returns it
+diagonal_member(C, O) :- sub_term(M, C), compound(M), M = op(elem, [_, Q]), shifted_by_index(Q, O), !.
+shifted_by_index(call(zipWith, [fn(O), _, call(range, _)]), O) :- !.
+shifted_by_index(call(G, _), O) :- atom(G), func(H, G, _), in_func(S, H), ret(S, R), shifted_by_index(R, O), !.
 % the tests as they are, or with one variable that indexes an array replaced by one value it is given
 % (u[p] with p := i - y + n - 1): bounded by the index variables and their values
 variant(_, C, C).
@@ -285,3 +316,50 @@ family_path_v02(F, [numeric, recurrence, capacity_reduction]) :-
 fits(op(le, [W, V]), P, W) :- V == var(P).
 fits(op(ge, [V, W]), P, W) :- V == var(P).
 fits(op(not, [op(gt, [W, V])]), P, W) :- V == var(P).
+
+% runs, by span: the elements equal to the head taken as one run (span (x ==) xs), the recursion on the rest
+% (the run's length emitted); or the library form: group, then each group's length. Built from
+% run-length-encoding-3.hs and run-length-encoding-1.hs.
+family_path_v02(F, [sequence_transformation, construction, run_length]) :-
+    once((   in_func(S, F), value(S, _, V), sub_term(Sp, V), compound(Sp), Sp = call(span, [op(eq, Xs), _]),
+             member(H, Xs), H == var('$hole'), in_func(S2, F), call_at(S2, '$self', _)
+         ;   in_func(S, F), ret(S, R), sub_term(C, R), compound(C), C = op('.', [G, var(group)]),
+             sub_term(L, G), ( L == var(length) ; compound(L), L = call(len, _) )
+         )).
+
+% Josephus by elimination: the position moves on k - 1 places modulo the number of people left, and that
+% person is removed, until none is left. Built from josephus-problem-1.py.
+family_path_v02(F, [sequence_transformation, elimination_cycle]) :-
+    once(( in_func(S, F), value(S, var(I), op(mod, [X, call(len, [var(P)])])), sub_term(I2, X), I2 == var(I),
+           param(F, _, K), sub_term(K2, X), K2 == var(K),
+           in_func(S2, F), call_at(S2, pop, [V1, V2]), V1 == var(P), V2 == var(I) )).
+
+% leap year: divisible by 4, and not by 100 unless by 400 (the tests of 4, 100 and 400 of the year, or the
+% bit masks year & 3 and year & 15 under the test of 100). Built from leap-year.c.
+family_path_v02(F, [numeric, predicate, leap_rule]) :-
+    once(( param(F, _, Y), findall(T, ( in_func(S, F), ( ret(S, T) ; value(S, _, T) ; guard(S, T, _) ) ), Ts),
+           divisor_test(Ts, Y, 100), ( divisor_test(Ts, Y, 4) ; mask_test(Ts, Y, 3) ),
+           ( divisor_test(Ts, Y, 400) ; mask_test(Ts, Y, 15) ) )).
+divisor_test(Ts, Y, K) :- member(T, Ts), sub_term(M, T), compound(M), M = op(mod, [V, int(K)]), V == var(Y), !.
+mask_test(Ts, Y, K) :- member(T, Ts), sub_term(M, T), compound(M), M = op(and, [V, B]), V == var(Y),
+    sub_term(I, B), I == int(K), !.
+
+% Caesar by a translation table: the text translated through a table from the alphabet to the alphabet
+% rotated by k (alphabet[k:] + alphabet[:k]). Built from caesar-cipher-3.py.
+family_path_v02(F, [sequence_transformation, elementwise_map, alphabet_rotation]) :-
+    once(( in_func(S, F), ( ret(S, V) ; value(S, _, V) ), sub_term(Tr, V), compound(Tr), Tr = call(translate, [_, M0]),
+           ( M0 = var(T) -> in_func(S2, F), value(S2, var(T2), M), T2 == T ; M = M0 ),     % the table, or a name of it
+           sub_term(Mk, M), compound(Mk), Mk = call(maketrans, _),
+           sub_term(A, Mk), compound(A), A = call(slice, [X, K, other(none)]), K \= other(none),
+           sub_term(B, Mk), compound(B), B = call(slice, [X2, other(none), K2]), X2 == X, K2 == K )).
+
+% Roman numerals by a table: while the number is at least an entry's value, that value is subtracted and the
+% entry's symbol (another field of the same entry, or the same index of a parallel table) emitted; a coin
+% change emits counts, not the entry's other field. Built from roman-numerals-encode-2.c.
+family_path_v02(F, [numeric, decomposition, symbol_table]) :-
+    once(( in_func(S1, F), value(S1, var(N), op(sub, [N2, X])), N2 == var(N), entry_part(X, E, P1),
+           in_func(S2, F), call_at(S2, _, Args), member(Y, Args), entry_part(Y, E2, P2), E2 == E, P2 \== P1,
+           loop(L, F, _), in_loop(S1, L), in_loop(S2, L) )).
+% a part of a table entry: a field of a record (digit->value), or a table at an index (values[i])
+entry_part(field(R, Name), R, Name).
+entry_part(elem(var(T), I), I, T).

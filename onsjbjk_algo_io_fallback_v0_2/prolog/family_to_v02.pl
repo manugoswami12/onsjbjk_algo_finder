@@ -39,10 +39,13 @@ family_branch([sequence_transformation, construction, matrix_product], _, matrix
 family_branch([sequence_transformation, construction, run_length], _, run_length_encoding).
 family_branch([numeric, recurrence, josephus_recurrence], _, josephus).
 family_branch([search, permutation_filter], _, n_queens).
+family_branch([sequence_transformation, elimination_cycle], _, josephus).
+family_branch([numeric, predicate, leap_rule], _, leap_year).
 family_branch([search, diagonal_conflict], _, n_queens).
 family_branch([sequence_query, two_sequence_match, longest_common], _, lcs).
 family_branch([sequence_query, two_sequence_match, edit_distance], _, levenshtein).
 family_branch([library, roman_numerals], _, roman_encode).
+family_branch([numeric, decomposition, symbol_table], _, roman_encode).
 
 % range accumulation: a product is factorial-like, a sum a series sum
 range_branch(mul, factorial_like).
@@ -77,6 +80,10 @@ counted_down_twice(F) :-
 counted_down_twice(F) :- param(F, _, N), in_func(S, F), ret(S, concat(Parts)),
     append(_, [call('$self', A1), Mid, call('$self', A2)|_], Parts), Mid \= call('$self', _),
     counted_down(N, A1), counted_down(N, A2), !.
+% the accumulator form: h(n-1, ..., (move : h(n-1, ..., acc))), the inner result passed on in the outer call
+counted_down_twice(F) :- param(F, _, N), in_func(S, F), ( ret(S, V) ; call_at(S, '$self', As), V = call('$self', As) ),
+    sub_term(O, V), compound(O), O = call('$self', A1), counted_down(N, A1),
+    member(A, A1), sub_term(C, A), compound(C), C = cons(_, call('$self', A2)), counted_down(N, A2), !.
 counted_down(N, Args) :- member(op(sub, [V, int(1)]), Args), V == var(N), !.
 combined_self_calls(F) :- in_func(S, F), cret(S, V), self_count(V, K), K >= 2, !.
 % the statement's recursive call is made for its effect: no value of the statement holds the call

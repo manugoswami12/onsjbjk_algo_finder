@@ -9,6 +9,9 @@ in the other languages. Only additions; what AP13 lowers stays as it is.
   (name, w, v) in a head or a where bind: each variable is its element of the tuple
   [v | i <- is, j <- js]: nested maps; (a, b) <- xs `zip` ys: the elements of xs and ys in lockstep
   x ! (i, k): elem(elem(x, i), k);  f a $ b: f a b;  if c then a else b: two results under c / not c
+  let binds in e: the binds as a where, then e;  (x ==): x = _ (an operator section);  \a b -> e: e
+  (-) as a value: fn(sub);  a top-level f = e (point-free): a function of no parameters returning e
+  (a, b): tuple([a, b]), as AP13's Python lowerer writes a tuple;  fromIntegral x: x (a numeric conversion)
 """
 from __future__ import annotations
 
@@ -25,6 +28,8 @@ from parse_source import parser_for
 
 # library wrappers whose value is the function they wrap (Data.MemoCombinators, Data.Function.Memoize)
 MEMO_WRAPPERS = {'memoize', 'memo', 'memo2', 'memo3', 'memoFix', 'memoise', 'memoize2'}
+# numeric conversions: the value is kept (as a C cast is)
+CONVERSIONS = {'fromIntegral', 'toInteger', 'fromInteger', 'realToFrac'}
 
 
 def definition_name(d):
@@ -90,6 +95,23 @@ class HaskellLowerer(ap13.Lowerer):
             local = d.child_by_field_name('binds') if d.type == 'bind' else None
             if local is not None:
                 self.scope([c for c in kids(local) if c.type in ('function', 'bind')], captured)
+        if not captured:                          # a top-level f = e (point-free): a function of no parameters
+            for d in decls:
+                if d.type == 'bind' and d.child_by_field_name('name') is not None and \
+                        d.child_by_field_name('binds') is None and not self.wrapped_function(d):
+                    self.point_free(d)
+
+    def point_free(self, d):
+        m = d.child_by_field_name('match')
+        e = m.child_by_field_name('expression') if m is not None else None
+        if e is None:
+            return
+        f = self.facts.new_func(text(d.child_by_field_name('name')), line(d))
+        self.name, self.params, self.loop_id = text(d.child_by_field_name('name')), [], None
+        s = self.facts.new_stmt(ap13.Ctx(f), 'ret', line(d))
+        value = self.expr(e, {})
+        self.facts.add('ret', s, value)
+        self.calls(value, s)
 
     def wrapped_function(self, d):
         """g when the bind is f = g or f = memoize g (a memo wrapper is the function it wraps)."""
@@ -174,6 +196,11 @@ class HaskellLowerer(ap13.Lowerer):
                     self.calls(t, s)
 
     def result(self, body, ctx, env, list_param, node, base_guard=None):
+        if body is not None and body.type == 'let_in':        # let binds in e: the binds as a where, then e
+            binds = body.child_by_field_name('binds')
+            if binds is not None:
+                self.where(binds, ctx, env)
+            return self.result(body.child_by_field_name('expression'), ctx, env, list_param, node, base_guard)
         if body is not None and body.type == 'conditional':   # if c then a else b
             c, a, b = (kids(body) + [None, None, None])[:3]
             g = self.expr(c, env)
@@ -184,7 +211,25 @@ class HaskellLowerer(ap13.Lowerer):
 
     # ----- expressions ---------------------------------------------------------------------------------
     def expr(self, node, env):
+        if node is not None and node.type == 'lambda':           # \a b -> e: e, with a and b as themselves
+            pats = node.child_by_field_name('patterns')
+            names = [text(q) for q in kids(pats)] if pats is not None else []
+            return self.expr(node.child_by_field_name('expression'), dict(env, **{n: var(n) for n in names}))
+        if node is not None and node.type == 'tuple':            # (a, b): tuple([a, b]), as AP13's Python lowerer
+            return ('tuple', [self.expr(c, env) for c in kids(node)])
+        if node is not None and node.type == 'prefix_id':        # (-) as a value: the function object
+            o = text(node).strip('()` ')
+            return ('fn', ap13.LANG_OPERATORS['haskell'].get(o) or ap13.OPERATORS.get(o, o))
+        if node is not None and node.type in ('left_section', 'right_section'):   # (x ==), (== x)
+            parts = kids(node)
+            o = text(parts[-1] if node.type == 'left_section' else parts[0])
+            name = ap13.LANG_OPERATORS['haskell'].get(o) or ap13.OPERATORS.get(o, o)
+            side = self.expr(parts[0] if node.type == 'left_section' else parts[-1], env)
+            hole = var('$hole')
+            return op(name, side, hole) if node.type == 'left_section' else op(name, hole, side)
         t = super().expr(node, env)
+        if isinstance(t, tuple) and t[:1] == ('call',) and t[1] in CONVERSIONS and len(t[2]) == 1:
+            return t[2][0]                            # fromIntegral x: x (a numeric conversion keeps the value)
         if isinstance(t, tuple) and t[:1] == ('call',) and t[1] in self.aliases:
             return call(self.aliases[t[1]], t[2])  # a call of the memo wrapper is a call of the function
         return t

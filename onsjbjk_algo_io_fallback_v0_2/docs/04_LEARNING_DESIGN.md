@@ -308,3 +308,39 @@ Front-end fixes found while building (each the same component as the same term):
 - C: the file's own macros are expanded by `cpp` (without system headers); a row-major index `q[r*d + c]` with a non-constant stride is `q[r][c]`, as ECL's.
 - ECL: a `&key` comparator that defaults to an equality predicate is `=`; the file's own `defmacro` is defined before its uses compile; a call of the function's own name is `$self`; VV string constants keep their text (`str(...)`).
 - No-algorithm files in every language: a source that defines nothing (a REPL transcript) gives zero. For Haskell this is decided from the tree-sitter tree, since AP13's lowerer gives no facts for some definitions too.
+
+## 16. Front ends extended where AP13's lowerers drop a component (user: extend the Haskell lowering)
+
+AP13's lowerers are unchanged. v0.2 subclasses them, as AP13 v4 subclassed its imperative lowerer, and adds only what they leave out. `learn_facts.tree_facts` uses the subclasses for the learning test.
+
+**`haskell_logic.HaskellLowerer`** (subclass of `lower_equations.Lowerer`):
+- Definitions inside a parse `ERROR` (tree-sitter keeps the valid subtree) are lowered.
+- A bind with a where block: its functions are lowered. `f = memoize g` / `f = g` makes `f` an alias of `g` (a memo wrapper is the function it wraps).
+- An infix definition ``q `f` qs = ...`` gets its name and parameters.
+- Tuple patterns in heads, where binds and generators.
+- Several generators are nested maps; `(a, b) <- xs `zip` ys` binds the elements of both sequences in lockstep.
+- `x ! (i, k)` is `elem(elem(x, i), k)`; `f a $ b` is `f a b`.
+- `if/then/else` and `let ... in` in a result.
+- Sections `(x ==)`, lambdas, `(-)` as a value (`fn(sub)`), tuples (`tuple([...])`, as AP13's Python lowerer writes them).
+- A top-level point-free bind is a function of no parameters.
+- `fromIntegral` and the other numeric conversions keep the value.
+- The source is dedented first.
+
+**`imperative_logic.ImperativeLowerer`** (subclass of `lower_imperative.Lowerer`, used for Python and C):
+- An assignment used as a value (`a = b = e`, `(y = f(x)) < x`) is its value.
+- A Python slice is `call(slice, [s, i, j])`.
+- A field is `field(obj, name)` (AP13: `other(field)`).
+
+**Python REPL sessions** (`>>> def j(n, k): ...`): the program is the session with its prompts removed (`learn_facts.session_facts`).
+
+**Built branches added for stage 101** (logic tests in `tests/test_uniform.py`):
+- **Ackermann**, tightened: the inner call keeps `m` and counts another parameter down; Hanoi with an accumulator counts the same one.
+- **Hanoi**, functional and accumulator forms, and the nested form at `double_recursion`.
+- **Edit distance:** the match path adds nothing (LCS adds 1); the returned forms.
+- **LCS:** the pair form `(seq, len)`; the larger result chosen by any comparison.
+- **Run-length:** `span (x ==)` and `group` with the length of each group.
+- **N-queens:** zipWith-shifted membership, the sum and difference equality form, loop conditions.
+- **Caesar:** the base added back is not a shifted code; the `maketrans` rotation table.
+- **Josephus:** elimination modulo the number left.
+- **Leap year:** divisibility by 4, 100 and 400, or the masks 3 and 15.
+- **Roman:** a greedy table walk emitting another part of the same entry.

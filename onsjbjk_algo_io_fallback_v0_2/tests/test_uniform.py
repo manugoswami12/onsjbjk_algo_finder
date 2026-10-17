@@ -44,18 +44,22 @@ class BuiltBranchTests(unittest.TestCase):
         not get it."""
         import learn_apply
         cases = {'ackermann': (['ack.py', 'ack.c', 'ack.lisp'], ['mc91.py', 'fib.py']),
-                 'towers_of_hanoi': (['hanoi.py', 'hanoi.c', 'hanoi.lisp', 'hanoi.hs'], ['fib.hs', 'fib.py', 'count_down.hs']),
+                 'towers_of_hanoi': (['hanoi.py', 'hanoi.c', 'hanoi.lisp', 'hanoi.hs', 'hanoi_acc.hs'],
+                                     ['fib.hs', 'fib.py', 'count_down.hs']),
                  'knapsack_01': (['knap.py', 'knap.c', 'knap_rec.py', 'knap_rec.hs'], ['lcs_table.py', 'matrix_table.py', 'count_down.hs']),
-                 'caesar_cipher': (['caesar_loop.py', 'caesar_loop.lisp', 'caesar_pf.hs'], ['vigenere.py', 'fib.hs']),
+                 'caesar_cipher': (['caesar_loop.py', 'caesar_loop.lisp', 'caesar_pf.hs', 'caesar_base.hs', 'caesar_table.py'],
+                                   ['vigenere.py', 'fib.hs', 'upper_table.py']),
                  'matrix_multiplication': (['matrix_table.py', 'matrix_table.lisp', 'matrix_collect.py', 'matrix_collect.lisp',
                                             'matrix_fn.lisp'],
                                            ['dot.py', 'knap.py']),
-                 'run_length_encoding': (['rle_group.lisp', 'rle_scan.py'], ['dedup.py']),
-                 'n_queens': (['queens_perm.py', 'queens_perm.hs', 'queens_bt.py', 'queens_bt.c', 'queens_fold.hs'],
+                 'run_length_encoding': (['rle_group.lisp', 'rle_scan.py', 'rle_span.hs', 'rle_lib.hs'], ['dedup.py', 'sorted_lib.hs']),
+                 'n_queens': (['queens_perm.py', 'queens_perm.hs', 'queens_bt.py', 'queens_bt.c', 'queens_fold.hs', 'queens_zip.hs'],
                               ['perm_sort.py', 'grid_paths.py']),
-                 'lcs': (['lcs_rec.py', 'lcs_rec.lisp', 'lcs_table.py', 'lcs_memo.hs'], ['lev_table.py', 'knap.py']),
-                 'levenshtein': (['lev_table.py', 'lev_table.c'], ['lcs_table.py', 'lcs_rec.py']),
-                 'roman_encode': (['roman_fmt.lisp'], ['plain_fmt.lisp'])}
+                 'lcs': (['lcs_rec.py', 'lcs_rec.lisp', 'lcs_table.py', 'lcs_memo.hs', 'lcs_pair.lisp'], ['lev_table.py', 'lev_rec.c', 'knap.py']),
+                 'levenshtein': (['lev_table.py', 'lev_table.c', 'lev_rec.c'], ['lcs_table.py', 'lcs_rec.py']),
+                 'leap_year': (['leap.py', 'leap.c'], ['even.py']),
+                 'josephus': (['josephus_sim.py'], ['rotate_pop.py']),
+                 'roman_encode': (['roman_fmt.lisp', 'roman_table.c', 'roman_table.py'], ['plain_fmt.lisp', 'coin_change.c'])}
         for task, (positives, negatives) in cases.items():
             for f in positives:
                 with self.subTest(task=task, file=f):

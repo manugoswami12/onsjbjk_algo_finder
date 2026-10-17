@@ -25,10 +25,34 @@ def tree_facts(path: Path) -> tuple[str, str]:
         return 'lisp', ecl_facts.facts_of(units) if any(units) else ''
     if path.suffix == '.c':
         return 'ap13', c_facts(path)
+    if path.suffix == '.py' and path.read_text(encoding='utf-8', errors='replace').lstrip().startswith('>>>'):
+        return 'ap13', session_facts(path)
     if path.suffix == '.hs':                          # AP13's Haskell lowerer, subclassed (haskell_logic.py)
         import haskell_logic
         return 'ap13', haskell_logic.lower(path)
-    return 'ap13', cli.facts_text(path)[1]
+    return 'ap13', imperative_facts(path)
+
+
+def imperative_facts(path: Path) -> str:
+    """AP13's imperative lowerer, subclassed (imperative_logic.py) for Python and C; AP13's own otherwise."""
+    if path.suffix in ('.py', '.c'):
+        import imperative_logic
+        return imperative_logic.lower(path)
+    return cli.facts_text(path)[1]
+
+
+def session_facts(path: Path) -> str:
+    """A Python file that is an interactive session (>>> def j(n, k): ...): its program is the session with the
+    prompts (>>> and ...) removed. Sessions pasted without continuation prompts put a function's body on
+    plain lines, so those are kept; the printed output left in is not Python and the parser's error recovery
+    skips it."""
+    lines = []
+    for raw in path.read_text(encoding='utf-8', errors='replace').splitlines(keepends=True):
+        lines.append(raw[4:] if raw.startswith(('>>> ', '... ')) else '' if raw.strip() in ('>>>', '...') else raw)
+    with tempfile.TemporaryDirectory(prefix='v02_session_') as td:
+        f = Path(td) / path.name
+        f.write_text(''.join(lines), encoding='utf-8')
+        return imperative_facts(f)
 
 
 def c_facts(path: Path) -> str:
@@ -38,11 +62,11 @@ def c_facts(path: Path) -> str:
                    if not line.lstrip().startswith('#include'))
     done = subprocess.run(['cpp', '-P', '-w', '-undef'], input=text, capture_output=True, text=True, check=False)
     if done.returncode != 0 or not done.stdout.strip():
-        return cli.facts_text(path)[1]               # the preprocessor cannot read it: the file as it is
+        return imperative_facts(path)                # the preprocessor cannot read it: the file as it is
     with tempfile.TemporaryDirectory(prefix='v02_cpp_') as td:
         f = Path(td) / path.name
         f.write_text(done.stdout, encoding='utf-8')
-        return cli.facts_text(f)[1]
+        return imperative_facts(f)
 
 
 def defines_code(path: Path) -> bool:
