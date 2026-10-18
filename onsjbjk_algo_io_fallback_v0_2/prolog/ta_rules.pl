@@ -14,10 +14,9 @@
 hand_at(F, C, H) :- func(F, _, _), deepest_families_v02(F, Ps), member(C, Ps), hand_branch(C, F, H).
 hand_answer(C, H) :- hand_at(F, C, H), func(F, Name, _), base_name(Name, B),
     \+ ( func(G, _, _), G \== F, in_func(S, G), call_at(S, B, _), part_of(G, C) ).
-% the caller has a hand label of its own, sits in the same category of the tree (a sort calling a sort pass), or
-% combines two functions of that category (an introsort: its heap sort, partition and insertion pass)
+% the caller has a hand label of its own, or combines two functions of the same category of the tree (an introsort:
+% its heap sort, partition and insertion pass); a wrapper calling one sort is not a part-of
 part_of(G, _) :- hand_at(G, _, _), !.
-part_of(G, [Cat|_]) :- deepest_families_v02(G, Ps), member([Cat|_], Ps), !.
 part_of(G, [Cat|_]) :- calls_in(G, Cat, H1), calls_in(G, Cat, H2), H1 \== H2, !.
 calls_in(G, Cat, H) :- in_func(S, G), call_at(S, B, _), func(H, N, _), H \== G, base_name(N, B),
     deepest_families_v02(H, Ps), member([Cat|_], Ps).
@@ -118,5 +117,35 @@ stepped_in(L, X, O) :- in_func(S, _), under(S, L), ( assign(S, var(X2), op(O, [v
 % quick: AP13's partition recursion (a split by a pivot, both parts sorted recursively), not the circle walk
 hand_branch([sequence_transformation, comparison_sort, partition_recursive], F, quick_sort) :-
     \+ mirrored_walk(F), \+ repeated_call(F).
+% ... or, however the parts are joined, two self-calls on the sequence filtered against one pivot, on the two sides
+% of it (quicksort by filters: [x | x < p] and [x | x >= p])
+hand_branch([sequence_transformation|_], F, quick_sort) :-
+    in_func(S1, F), call_at(S1, '$self', [filter(Q1, C1)]), in_func(S2, F), call_at(S2, '$self', [filter(Q2, C2)]),
+    Q1 == Q2, C1 = op(O1, [_, P1]), C2 = op(O2, [_, P2]), P1 == P2, sides(O1, O2).
+sides(lt, ge). sides(lt, gt). sides(le, gt). sides(gt, le). sides(ge, lt). sides(gt, lt).
 % heap: AP13's heap leaf (a sift over the children 2i + 1, 2i + 2)
 hand_branch([sequence_transformation, comparison_sort, heap], _, heap_sort).
+
+% ----- sequence_transformation > distribution_sort > histogram ----------------------------------------------------
+% counting: the keys counted (AP13's histogram), then put back in key order, either the key itself written into the
+% output by a loop over the keys that reads the count table at it (out[i] = k; out.append(k); out += [k] * count[k]),
+% or each element placed at the position its key's prefix count gives (out[count[key(a[i])] - 1] = a[i])
+hand_branch([sequence_transformation, distribution_sort, histogram], F, counting_sort) :-
+    count_table(F, Tab), loop(L, F, _), lvar(L, var(K)), in_func(S, F), under(S, L), written_back(S, R, K),
+    R \== Tab, reads_at(F, L, S, Tab, K).
+hand_branch([sequence_transformation, distribution_sort, histogram], F, counting_sort) :-
+    count_table(F, Tab), in_func(S, F), value(S, elem(R, Idx), elem(Q, _)), R \== Tab, Q \== Tab, R \== Q,
+    sub_term(T, Idx), compound(T), T = elem(Tab2, _), Tab2 == Tab.
+count_table(F, Tab) :- in_func(S, F), value(S, elem(Tab, _), op(add, [elem(Tab3, _), int(1)])), Tab3 == Tab.
+% the key k as a value put into the output R
+written_back(S, R, K) :- value(S, elem(R, _), E), key_value(E, K).
+written_back(S, R, K) :- capp(S, R, E), key_value(E, K).
+written_back(S, var(R), K) :- value(S, var(R2), op(add, [var(R3), X])), R2 == R3, R = R2,
+    sub_term(list(Xs), X), member(E, Xs), key_value(E, K).
+key_value(V, K) :- V == var(K).
+key_value(op(add, [V, _]), K) :- V == var(K).
+% the count table read at k in the write-back statement or its loop (count[k] > 0, range(count[k]))
+reads_at(F, L, S, Tab, K) :- in_func(S2, F), ( S2 == S ; under(S2, L) ; S2 == L ), rel_of(S2, R0),
+    sub_term(T, R0), compound(T), T = elem(Tab2, I), Tab2 == Tab, sub_term(V, I), V == var(K), !.
+reads_at(_, L, _, Tab, K) :- ( lcond(L2, C) ; call_at(L2, _, C) ), ( L2 == L ; under(L2, L) ),
+    sub_term(T, C), compound(T), T = elem(Tab2, I), Tab2 == Tab, sub_term(V, I), V == var(K), !.

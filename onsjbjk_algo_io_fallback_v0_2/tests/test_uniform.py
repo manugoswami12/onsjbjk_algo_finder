@@ -69,5 +69,38 @@ class BuiltBranchTests(unittest.TestCase):
                     self.assertNotIn(task, learn_apply.apply(DATA / f)[3])
 
 
+class HandRuleTests(unittest.TestCase):
+    """The hand rules for TheAlgorithms/Python (prolog/ta_rules.pl, doc 04 section 17) on own programs: each positive
+    gets exactly its label, each close negative none."""
+    POSITIVES = {'ta_bubble.py': 'bubble_sort', 'ta_bubble.c': 'bubble_sort', 'ta_cocktail.c': 'cocktail_shaker_sort',
+                 'ta_gnome.py': 'gnome_sort', 'ta_odd_even.c': 'odd_even_sort', 'ta_insertion_shift.py': 'insertion_sort',
+                 'ta_insertion_shift.c': 'insertion_sort', 'ta_selection.c': 'selection_sort', 'ta_shell.py': 'shell_sort',
+                 'ta_comb.py': 'comb_sort', 'ta_stooge.c': 'stooge_sort', 'ta_quick.py': 'quick_sort',
+                 'ta_counting.py': 'counting_sort'}
+    NEGATIVES = ['ta_neg_reverse.c', 'ta_neg_rotate.py', 'ta_neg_wordcount.py', 'dedup.py', 'perm_sort.py']
+
+    def hand(self, f):
+        import learn_apply
+        found = set()
+        learn_apply.apply(DATA / f, hand=found)
+        return found
+
+    def test_rules_load_cleanly(self):
+        import subprocess
+        out = subprocess.run(['swipl', '-g', "consult('prolog/learn_apply.pl'), halt"], cwd=ROOT, capture_output=True,
+                             text=True)
+        self.assertEqual(out.stderr.strip(), '')
+
+    def test_positives(self):
+        for f, label in self.POSITIVES.items():
+            with self.subTest(f=f):
+                self.assertEqual(self.hand(f), {label})
+
+    def test_negatives(self):
+        for f in self.NEGATIVES:
+            with self.subTest(f=f):
+                self.assertEqual(self.hand(f), set())
+
+
 if __name__ == '__main__':
     unittest.main()
