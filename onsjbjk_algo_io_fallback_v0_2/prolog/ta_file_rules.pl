@@ -7,7 +7,8 @@
    problem): the tiers are separate predicates, so no clause order decides. file_has/1 (ta_signature.pl) matches a
    component of the file (a statement's relation or call) with names abstracted away.
 */
-:- prolog_load_context(directory, Dir), directory_file_path(Dir, 'ta_signature.pl', T), load_files(T, []).
+:- prolog_load_context(directory, Dir), directory_file_path(Dir, 'ta_signature.pl', T), load_files(T, []),
+   directory_file_path(Dir, 'ta_file_components.pl', C), load_files(C, []).
 :- discontiguous hand_specific/2.
 :- dynamic hand_specific/2.
 
@@ -16,1079 +17,1087 @@
 % per folder; T1/T2 checked by eval_ta.py --rehand and --status
 % ===== audio_filters
 % butterworth_filter
-hand_specific(_, 'butterworth_filter') :- file_has(var(v)-op(fdiv,[op(mul,[var(v),var(p(0))]),var(p(1))])).
+hand_specific(_, 'butterworth_filter') :- file_has(var(v)-op(fdiv,[op(mul,[var(v),var(p(0))]),var(p(1))])), same_file('butterworth_filter').
 % equal_loudness_filter
-hand_specific(_, 'equal_loudness_filter') :- file_has(call(toeplitz,[var(v),call(unit_impulse,[op(add,[var(p(2)),int(1)])])])).
+hand_specific(_, 'equal_loudness_filter') :- file_has(call(toeplitz,[var(v),call(unit_impulse,[op(add,[var(p(2)),int(1)])])])), same_file('equal_loudness_filter').
 % show_response
-hand_specific(_, 'show_response') :- file_has(call(xlim,[var(v),int(24),op(sub,[op(fdiv,[var(p(1)),int(2)]),int(1)])])).
+hand_specific(_, 'show_response') :- file_has(call(xlim,[var(v),int(24),op(sub,[op(fdiv,[var(p(1)),int(2)]),int(1)])])), same_file('show_response').
 % ===== backtracking
 % all_subsequences
-hand_specific(_, 'all_subsequences') :- file_has(call(append,[var(p(1)),elem(var(p(0)),var(p(2)))])).
+hand_specific(_, 'all_subsequences') :- file_has(call(append,[var(p(1)),elem(var(p(0)),var(p(2)))])), same_file('all_subsequences').
 % rat_in_maze
-hand_specific(_, 'rat_in_maze') :- file_has(var(v)-op(and,[op(gt,[var(v),var(p(1))]),op(gt,[var(v),var(p(2))])])).
+hand_specific(_, 'rat_in_maze') :- file_has(var(v)-op(and,[op(gt,[var(v),var(p(1))]),op(gt,[var(v),var(p(2))])])), same_file('rat_in_maze').
 % word_break
-hand_specific(_, 'word_break') :- file_has(call(range,[op(add,[var(p(2)),int(1)]),op(add,[call(len,[var(p(0))]),int(1)])])).
-hand_specific(_, 'word_break') :- file_has(call(range,[var(p(0)),var(v)])).
+hand_specific(_, 'word_break') :- file_has(call(range,[op(add,[var(p(2)),int(1)]),op(add,[call(len,[var(p(0))]),int(1)])])), same_file('word_break').
+hand_specific(_, 'word_break') :- file_has(call(range,[var(p(0)),var(v)])), same_file('word_break').
 % ===== bit_manipulation
 % binary_and_operator
-hand_specific(_, 'binary_and_operator') :- file_has(fstring([op(and,[var(p(0)),var(p(1))])])).
+hand_specific(_, 'binary_and_operator') :- file_has(fstring([op(and,[var(p(0)),var(p(1))])])), same_file('binary_and_operator').
 % binary_coded_decimal
-hand_specific(_, 'binary_coded_decimal') :- file_has(call(join,[other(string),map(call(str,[call(max,[int(0),var(p(0))])]),call(zfill,[tail(call(str,[call(bin,[call(int,[elem(call(str,[call(max,[int(0),var(p(0))])]),var(v))])])]),2),int(4)]),bool(true))])).
+hand_specific(_, 'binary_coded_decimal') :- file_has(call(join,[other(string),map(call(str,[call(max,[int(0),var(p(0))])]),call(zfill,[tail(call(str,[call(bin,[call(int,[elem(call(str,[call(max,[int(0),var(p(0))])]),var(v))])])]),2),int(4)]),bool(true))])), same_file('binary_coded_decimal').
 % binary_count_setbits
-hand_specific(_, 'binary_count_setbits') :- file_has(call(len,[call(bin,[var(p(0))])])).
+hand_specific(_, 'binary_count_setbits') :- file_has(call(len,[call(bin,[var(p(0))])])), same_file('binary_count_setbits').
 % binary_count_trailing_zeros
-hand_specific(_, 'binary_count_trailing_zeros') :- file_has(call(int,[call(log2,[op(and,[var(p(0)),op(neg,[var(p(0))])])])])).
+hand_specific(_, 'binary_count_trailing_zeros') :- file_has(call(int,[call(log2,[op(and,[var(p(0)),op(neg,[var(p(0))])])])])), same_file('binary_count_trailing_zeros').
 % binary_or_operator
-hand_specific(_, 'binary_or_operator') :- file_has(fstring([op(or,[var(p(0)),var(p(1))])])).
+hand_specific(_, 'binary_or_operator') :- file_has(fstring([op(or,[var(p(0)),var(p(1))])])), same_file('binary_or_operator').
 % binary_shifts
-hand_specific(_, 'binary_shifts') :- file_has(var(v)-call(slice,[var(v),other(none),op(sub,[call(len,[var(v)]),var(p(1))])])).
+hand_specific(_, 'binary_shifts') :- file_has(var(v)-call(slice,[var(v),other(none),op(sub,[call(len,[var(v)]),var(p(1))])])), same_file('binary_shifts').
 % binary_twos_complement
-hand_specific(_, 'binary_twos_complement') :- file_has(call(bin,[op(sub,[call(abs,[var(p(0))]),op(shl,[int(1),var(v)])])])), file_has(op(add,[other(string),var(v)])).
+hand_specific(_, 'binary_twos_complement') :- file_has(call(bin,[op(sub,[call(abs,[var(p(0))]),op(shl,[int(1),var(v)])])])), file_has(op(add,[other(string),var(v)])), same_file('binary_twos_complement').
 % binary_xor_operator
-hand_specific(_, 'binary_xor_operator') :- file_has(fstring([op(xor,[var(p(0)),var(p(1))])])).
+hand_specific(_, 'binary_xor_operator') :- file_has(fstring([op(xor,[var(p(0)),var(p(1))])])), same_file('binary_xor_operator').
 % count_number_of_one_bits
-hand_specific(_, 'count_number_of_one_bits') :- file_has(op(add,[op(add,[op(add,[elem(map(call(range,[int(256)]),call(len,[call(bin,[elem(call(range,[int(256)]),var(v))])]),bool(true)),op(and,[var(p(0)),int(255)])),elem(map(call(range,[int(256)]),call(len,[call(bin,[elem(call(range,[int(256)]),var(v))])]),bool(true)),op(and,[op(shr,[var(p(0)),int(8)]),int(255)]))]),elem(map(call(range,[int(256)]),call(len,[call(bin,[elem(call(range,[int(256)]),var(v))])]),bool(true)),op(and,[op(shr,[var(p(0)),int(16)]),int(255)]))]),elem(map(call(range,[int(256)]),call(len,[call(bin,[elem(call(range,[int(256)]),var(v))])]),bool(true)),op(and,[op(shr,[var(p(0)),int(24)]),int(255)]))])).
+hand_specific(_, 'count_number_of_one_bits') :- file_has(op(add,[op(add,[op(add,[elem(map(call(range,[int(256)]),call(len,[call(bin,[elem(call(range,[int(256)]),var(v))])]),bool(true)),op(and,[var(p(0)),int(255)])),elem(map(call(range,[int(256)]),call(len,[call(bin,[elem(call(range,[int(256)]),var(v))])]),bool(true)),op(and,[op(shr,[var(p(0)),int(8)]),int(255)]))]),elem(map(call(range,[int(256)]),call(len,[call(bin,[elem(call(range,[int(256)]),var(v))])]),bool(true)),op(and,[op(shr,[var(p(0)),int(16)]),int(255)]))]),elem(map(call(range,[int(256)]),call(len,[call(bin,[elem(call(range,[int(256)]),var(v))])]),bool(true)),op(and,[op(shr,[var(p(0)),int(24)]),int(255)]))])), same_file('count_number_of_one_bits').
 % numbers_different_signs
-hand_specific(_, 'numbers_different_signs') :- file_has(op(gt,[int(0),op(xor,[var(p(0)),var(p(1))])])).
+hand_specific(_, 'numbers_different_signs') :- file_has(op(gt,[int(0),op(xor,[var(p(0)),var(p(1))])])), same_file('numbers_different_signs').
 % reverse_bits
-hand_specific(_, 'reverse_bits') :- file_has(var(v)-op(add,[var(v),call(str,[op(mod,[var(p(0)),int(2)])])])).
+hand_specific(_, 'reverse_bits') :- file_has(var(v)-op(add,[var(v),call(str,[op(mod,[var(p(0)),int(2)])])])), same_file('reverse_bits').
 % ===== blockchain
 % diophantine_equation
-hand_specific(_, 'diophantine_equation') :- file_has(op(and,[op(eq,[var(p(0)),int(0)]),op(eq,[var(p(1)),int(0)])])).
+hand_specific(_, 'diophantine_equation') :- file_has(op(and,[op(eq,[var(p(0)),int(0)]),op(eq,[var(p(1)),int(0)])])), same_file('diophantine_equation').
+% merkle_tree
+hand_specific(_, 'merkle_tree') :- file_has(call(hexdigest,[call('$self',[var(v),call(encode,[var(p(0))])])])), same_file('merkle_tree').
 % proof_of_stake
-hand_specific(_, 'proof_of_stake') :- file_has(call(sum,[map(var(p(0)),field(elem(var(p(0)),var(v)),stake),bool(true))])).
+hand_specific(_, 'proof_of_stake') :- file_has(call(sum,[map(var(p(0)),field(elem(var(p(0)),var(v)),stake),bool(true))])), same_file('proof_of_stake').
 % ===== boolean_algebra
 % and_gate
-hand_specific(_, 'and_gate') :- file_has(call(int,[call(all,[var(p(0))])])).
+hand_specific(_, 'and_gate') :- file_has(call(int,[call(all,[var(p(0))])])), same_file('and_gate').
 % multiplexer
-hand_specific(_, 'multiplexer') :- file_has(call(all,[map(tuple([var(p(0)),var(p(1)),var(p(2))]),op(in,[elem(tuple([var(p(0)),var(p(1)),var(p(2))]),var(v)),tuple([int(0),int(1)])]),bool(true))])).
+hand_specific(_, 'multiplexer') :- file_has(call(all,[map(tuple([var(p(0)),var(p(1)),var(p(2))]),op(in,[elem(tuple([var(p(0)),var(p(1)),var(p(2))]),var(v)),tuple([int(0),int(1)])]),bool(true))])), same_file('multiplexer').
 % nand_gate
-hand_specific(_, 'nand_gate') :- file_has(call(int,[op(not,[op(and,[var(p(0)),var(p(1))])])])).
+hand_specific(_, 'nand_gate') :- file_has(call(int,[op(not,[op(and,[var(p(0)),var(p(1))])])])), same_file('nand_gate').
 % nimply_gate
-hand_specific(_, 'nimply_gate') :- file_has(call(int,[op(and,[op(eq,[var(p(0)),int(1)]),op(eq,[var(p(1)),int(0)])])])).
+hand_specific(_, 'nimply_gate') :- file_has(call(int,[op(and,[op(eq,[var(p(0)),int(1)]),op(eq,[var(p(1)),int(0)])])])), same_file('nimply_gate').
 % nor_gate
-hand_specific(_, 'nor_gate') :- file_has(call(join,[other(string),map(var(p(0)),fstring([elem(var(p(0)),var(v))]),bool(true))])).
+hand_specific(_, 'nor_gate') :- file_has(call(join,[other(string),map(var(p(0)),fstring([elem(var(p(0)),var(v))]),bool(true))])), same_file('nor_gate').
 % or_gate
-hand_specific(_, 'or_gate') :- file_has(call(int,[op(ne,[call(len,[tuple([var(p(0)),var(p(1))])]),int(0)])])).
+hand_specific(_, 'or_gate') :- file_has(call(int,[op(ne,[call(len,[tuple([var(p(0)),var(p(1))])]),int(0)])])), same_file('or_gate').
 % quine_mc_cluskey
-hand_specific(_, 'quine_mc_cluskey') :- file_has(var(v)-op(add,[call(str,[op(mod,[elem(var(p(1)),var(v)),int(2)])]),var(v)])).
+hand_specific(_, 'quine_mc_cluskey') :- file_has(var(v)-op(add,[call(str,[op(mod,[elem(var(p(1)),var(v)),int(2)])]),var(v)])), same_file('quine_mc_cluskey').
 % xor_gate
-hand_specific(_, 'xor_gate') :- file_has(op(mod,[call(len,[tuple([var(p(0)),var(p(1))])]),int(2)])).
+hand_specific(_, 'xor_gate') :- file_has(op(mod,[call(len,[tuple([var(p(0)),var(p(1))])]),int(2)])), same_file('xor_gate').
 % ===== cellular_automata
 % conways_game_of_life
-hand_specific(_, 'conways_game_of_life') :- file_has(op(gt,[op(sub,[call(len,[elem(var(p(0)),var(v))]),int(1)]),var(v)])).
+hand_specific(_, 'conways_game_of_life') :- file_has(op(gt,[op(sub,[call(len,[elem(var(p(0)),var(v))]),int(1)]),var(v)])), same_file('conways_game_of_life').
 % langtons_ant
-hand_specific(_, 'langtons_ant') :- file_has(op(is,[elem(elem(field(var(p(0)),board),var(v)),var(v)),bool(true)])).
+hand_specific(_, 'langtons_ant') :- file_has(op(is,[elem(elem(field(var(p(0)),board),var(v)),var(v)),bool(true)])), same_file('langtons_ant').
 % ===== ciphers
 % base16
-hand_specific(_, 'base16') :- file_has(call(int,[op(add,[elem(var(p(0)),var(v)),elem(var(p(0)),op(add,[var(v),int(1)]))]),int(16)])).
+hand_specific(_, 'base16') :- file_has(call(int,[op(add,[elem(var(p(0)),var(v)),elem(var(p(0)),op(add,[var(v),int(1)]))]),int(16)])), same_file('base16').
 % base32
-hand_specific(_, 'base32') :- file_has(call(strip,[call(decode,[var(p(0)),other(string)]),other(string)])).
+hand_specific(_, 'base32') :- file_has(call(strip,[call(decode,[var(p(0)),other(string)]),other(string)])), same_file('base32').
 % base58
 % no component of ciphers/base58.py separates it from another label (identical logic)
 % base64_cipher
 % no component of ciphers/base64_cipher.py separates it from another label (identical logic)
 % bifid
-hand_specific(_, 'bifid') :- file_has(var(v)-call(reshape,[var(v),op(mul,[int(2),call(len,[var(p(1))])])])).
+hand_specific(_, 'bifid') :- file_has(var(v)-call(reshape,[var(v),op(mul,[int(2),call(len,[var(p(1))])])])), same_file('bifid').
 % brute_force_caesar_cipher
-hand_specific(_, 'brute_force_caesar_cipher') :- file_has(var(v)-call(find,[field(var(v),ascii_uppercase),elem(var(p(0)),var(v))])).
+hand_specific(_, 'brute_force_caesar_cipher') :- file_has(var(v)-call(find,[field(var(v),ascii_uppercase),elem(var(p(0)),var(v))])), same_file('brute_force_caesar_cipher').
 % deterministic_miller_rabin
-hand_specific(_, 'deterministic_miller_rabin') :- file_has(call(pow,[var(v),op(mul,[var(v),op(pow,[int(2),var(v)])]),var(p(0))])).
+hand_specific(_, 'deterministic_miller_rabin') :- file_has(call(pow,[var(v),op(mul,[var(v),op(pow,[int(2),var(v)])]),var(p(0))])), same_file('deterministic_miller_rabin').
 % diffie_hellman
-hand_specific(_, 'diffie_hellman') :- file_has(field(var(p(0)),generator)-elem(elem(var(v),var(p(1))),other(string))).
+hand_specific(_, 'diffie_hellman') :- file_has(field(var(p(0)),generator)-elem(elem(var(v),var(p(1))),other(string))), same_file('diffie_hellman').
 % fractionated_morse_cipher
-hand_specific(_, 'fractionated_morse_cipher') :- file_has(var(p(1))-call(join,[other(string),call(sorted,[call(set,[var(p(1))])])])).
+hand_specific(_, 'fractionated_morse_cipher') :- file_has(var(p(1))-call(join,[other(string),call(sorted,[call(set,[var(p(1))])])])), same_file('fractionated_morse_cipher').
 % hill_cipher
-hand_specific(_, 'hill_cipher') :- file_has(op(ne,[op(mod,[call(len,[var(v)]),field(var(p(0)),break_key)]),int(0)])).
+hand_specific(_, 'hill_cipher') :- file_has(op(ne,[op(mod,[call(len,[var(v)]),field(var(p(0)),break_key)]),int(0)])), same_file('hill_cipher').
 % mono_alphabetic_ciphers
-hand_specific(_, 'mono_alphabetic_ciphers') :- file_has(var(v)-call(find,[var(v),call(upper,[elem(var(p(1)),var(v))])])), file_has(call(print,[fstring([var(v),var(v),var(v)])])).
+hand_specific(_, 'mono_alphabetic_ciphers') :- file_has(var(v)-call(find,[var(v),call(upper,[elem(var(p(1)),var(v))])])), file_has(call(print,[fstring([var(v),var(v),var(v)])])), same_file('mono_alphabetic_ciphers').
 % morse_code
-hand_specific(_, 'morse_code') :- file_has(call(join,[other(string),map(call(split,[var(p(0))]),elem(var(v),elem(call(split,[var(p(0))]),var(v))),bool(true))])).
+hand_specific(_, 'morse_code') :- file_has(call(join,[other(string),map(call(split,[var(p(0))]),elem(var(v),elem(call(split,[var(p(0))]),var(v))),bool(true))])), same_file('morse_code').
 % polybius
-hand_specific(_, 'polybius') :- file_has(call(range,[call(int,[op(fdiv,[call(len,[var(p(1))]),int(2)])])])).
+hand_specific(_, 'polybius') :- file_has(call(range,[call(int,[op(fdiv,[call(len,[var(p(1))]),int(2)])])])), same_file('polybius').
 % rot13
-hand_specific(_, 'rot13') :- file_has(call(chr,[op(add,[call(ord,[other(string)]),op(mod,[op(add,[op(sub,[call(ord,[var(v)]),call(ord,[other(string)])]),var(p(1))]),int(26)])])])).
+hand_specific(_, 'rot13') :- file_has(call(chr,[op(add,[call(ord,[other(string)]),op(mod,[op(add,[op(sub,[call(ord,[var(v)]),call(ord,[other(string)])]),var(p(1))]),int(26)])])])), same_file('rot13').
 % rsa_key_generator
-hand_specific(_, 'rsa_key_generator') :- file_has(tuple([tuple([op(mul,[call(generate_large_prime,[var(v),var(p(0))]),call(generate_large_prime,[var(v),var(p(0))])]),call(randrange,[var(v),op(pow,[int(2),op(sub,[var(p(0)),int(1)])]),op(pow,[int(2),var(p(0))])])]),tuple([op(mul,[call(generate_large_prime,[var(v),var(p(0))]),call(generate_large_prime,[var(v),var(p(0))])]),call(find_mod_inverse,[var(v),call(randrange,[var(v),op(pow,[int(2),op(sub,[var(p(0)),int(1)])]),op(pow,[int(2),var(p(0))])]),op(mul,[op(sub,[call(generate_large_prime,[var(v),var(p(0))]),int(1)]),op(sub,[call(generate_large_prime,[var(v),var(p(0))]),int(1)])])])])])).
+hand_specific(_, 'rsa_key_generator') :- file_has(tuple([tuple([op(mul,[call(generate_large_prime,[var(v),var(p(0))]),call(generate_large_prime,[var(v),var(p(0))])]),call(randrange,[var(v),op(pow,[int(2),op(sub,[var(p(0)),int(1)])]),op(pow,[int(2),var(p(0))])])]),tuple([op(mul,[call(generate_large_prime,[var(v),var(p(0))]),call(generate_large_prime,[var(v),var(p(0))])]),call(find_mod_inverse,[var(v),call(randrange,[var(v),op(pow,[int(2),op(sub,[var(p(0)),int(1)])]),op(pow,[int(2),var(p(0))])]),op(mul,[op(sub,[call(generate_large_prime,[var(v),var(p(0))]),int(1)]),op(sub,[call(generate_large_prime,[var(v),var(p(0))]),int(1)])])])])])), same_file('rsa_key_generator').
 % running_key_cipher
-hand_specific(_, 'running_key_cipher') :- file_has(var(v)-op(sub,[call(ord,[elem(call(enumerate,[var(p(1))]),var(v))]),var(v)])).
+hand_specific(_, 'running_key_cipher') :- file_has(var(v)-op(sub,[call(ord,[elem(call(enumerate,[var(p(1))]),var(v))]),var(v)])), same_file('running_key_cipher').
 % simple_substitution_cipher
-hand_specific(_, 'simple_substitution_cipher') :- file_has(call(exit,[var(v),other(string)])).
+hand_specific(_, 'simple_substitution_cipher') :- file_has(call(exit,[var(v),other(string)])), same_file('simple_substitution_cipher').
 % transposition_cipher_encrypt_decrypt_file
-hand_specific(_, 'transposition_cipher_encrypt_decrypt_file') :- file_has(var(v)-call(decrypt_message,[var(v),var(v),var(v)])).
+hand_specific(_, 'transposition_cipher_encrypt_decrypt_file') :- file_has(var(v)-call(decrypt_message,[var(v),var(v),var(v)])), same_file('transposition_cipher_encrypt_decrypt_file').
 % ===== computer_vision
 % gramian
-hand_specific(_, 'gramian') :- file_has(var(v)-call(reshape,[var(p(0)),var(v),op(mul,[var(v),var(v)])])).
+hand_specific(_, 'gramian') :- file_has(var(v)-call(reshape,[var(p(0)),var(v),op(mul,[var(v),var(v)])])), same_file('gramian').
 % intensity_based_segmentation
-hand_specific(_, 'intensity_based_segmentation') :- file_has(elem(var(v),op(gt,[var(p(0)),var(v)]))-op(add,[elem(call(enumerate,[var(p(1))]),var(v)),int(1)])).
+hand_specific(_, 'intensity_based_segmentation') :- file_has(elem(var(v),op(gt,[var(p(0)),var(v)]))-op(add,[elem(call(enumerate,[var(p(1))]),var(v)),int(1)])), same_file('intensity_based_segmentation').
 % otsu_threshold
-hand_specific(_, 'otsu_threshold') :- file_has(var(v)-op(mul,[call(astype,[var(v),field(var(v),uint8)]),int(255)])).
+hand_specific(_, 'otsu_threshold') :- file_has(var(v)-op(mul,[call(astype,[var(v),field(var(v),uint8)]),int(255)])), same_file('otsu_threshold').
 % ===== conversions
 % astronomical_length_scale_conversion
-hand_specific(_, 'astronomical_length_scale_conversion') :- file_has(var(v)-call(strip,[call(lower,[var(p(1))]),other(string)])).
+hand_specific(_, 'astronomical_length_scale_conversion') :- file_has(var(v)-call(strip,[call(lower,[var(p(1))]),other(string)])), same_file('astronomical_length_scale_conversion').
 % base64_to_binary
-hand_specific(_, 'base64_to_binary') :- file_has(var(v)-call(strip,[call(str,[var(p(0))])])).
+hand_specific(_, 'base64_to_binary') :- file_has(var(v)-call(strip,[call(str,[var(p(0))])])), same_file('base64_to_binary').
 % binary_to_excess3
-hand_specific(_, 'binary_to_excess3') :- file_has(call(format,[op(add,[call(int,[var(p(0)),int(2)]),int(3)]),other(string)])).
+hand_specific(_, 'binary_to_excess3') :- file_has(call(format,[op(add,[call(int,[var(p(0)),int(2)]),int(3)]),other(string)])), same_file('binary_to_excess3').
 % binary_to_gray_code
-hand_specific(_, 'binary_to_gray_code') :- file_has(op(xor,[var(p(0)),op(div,[var(p(0)),int(2)])])).
+hand_specific(_, 'binary_to_gray_code') :- file_has(op(xor,[var(p(0)),op(div,[var(p(0)),int(2)])])), same_file('binary_to_gray_code').
 % decimal_to_hexadecimal
-hand_specific(_, 'decimal_to_hexadecimal') :- file_has(tuple([var(p(0)),var(v)])-call(divmod,[var(p(0)),int(16)])).
+hand_specific(_, 'decimal_to_hexadecimal') :- file_has(tuple([var(p(0)),var(v)])-call(divmod,[var(p(0)),int(16)])), same_file('decimal_to_hexadecimal').
 % decimal_to_octal
-hand_specific(_, 'decimal_to_octal') :- file_has(var(p(0))-call(floor,[var(v),op(fdiv,[var(p(0)),int(8)])])).
+hand_specific(_, 'decimal_to_octal') :- file_has(var(p(0))-call(floor,[var(v),op(fdiv,[var(p(0)),int(8)])])), same_file('decimal_to_octal').
 % energy_conversions
-hand_specific(_, 'energy_conversions') :- file_has(op(fdiv,[op(mul,[var(p(2)),elem(var(v),var(p(0)))]),elem(var(v),var(p(1)))])).
+hand_specific(_, 'energy_conversions') :- file_has(op(fdiv,[op(mul,[var(p(2)),elem(var(v),var(p(0)))]),elem(var(v),var(p(1)))])), same_file('energy_conversions').
 % hex_to_bin
-hand_specific(_, 'hex_to_bin') :- file_has(var(v)-call(int,[var(p(0)),int(16)])).
+hand_specific(_, 'hex_to_bin') :- file_has(var(v)-call(int,[var(p(0)),int(16)])), same_file('hex_to_bin').
 % hex_to_rgb
-hand_specific(_, 'hex_to_rgb') :- file_has(var(v)-call(int,[call(slice,[var(p(0)),int(0),int(2)]),int(16)])).
+hand_specific(_, 'hex_to_rgb') :- file_has(var(v)-call(int,[call(slice,[var(p(0)),int(0),int(2)]),int(16)])), same_file('hex_to_rgb').
 % int_to_negative_binary_base
 % no component of conversions/int_to_negative_binary_base.py separates it from another label (identical logic)
 % length_conversion
-hand_specific(_, 'length_conversion') :- file_has(var(v)-call(rstrip,[call(lower,[var(p(1))]),other(string)])).
+hand_specific(_, 'length_conversion') :- file_has(var(v)-call(rstrip,[call(lower,[var(p(1))]),other(string)])), same_file('length_conversion').
 % negative_binary_base_to_int
-hand_specific(_, 'negative_binary_base_to_int') :- file_has(var(v)-map(call(range,[call(len,[var(v)])]),op(mul,[call(int,[elem(var(v),elem(call(range,[call(len,[var(v)])]),var(v)))]),op(pow,[int(-2),elem(call(range,[call(len,[var(v)])]),var(v))])]),bool(true))).
+hand_specific(_, 'negative_binary_base_to_int') :- file_has(var(v)-map(call(range,[call(len,[var(v)])]),op(mul,[call(int,[elem(var(v),elem(call(range,[call(len,[var(v)])]),var(v)))]),op(pow,[int(-2),elem(call(range,[call(len,[var(v)])]),var(v))])]),bool(true))), same_file('negative_binary_base_to_int').
 % octal_to_binary
-hand_specific(_, 'octal_to_binary') :- file_has(var(v)-call(int,[elem(var(p(0)),var(v))])).
+hand_specific(_, 'octal_to_binary') :- file_has(var(v)-call(int,[elem(var(p(0)),var(v))])), same_file('octal_to_binary').
 % prefix_conversions
-hand_specific(_, 'prefix_conversions') :- file_has(op(mul,[var(p(0)),op(pow,[int(10),op(sub,[field(var(p(1)),value),field(var(p(2)),value)])])])).
+hand_specific(_, 'prefix_conversions') :- file_has(op(mul,[var(p(0)),op(pow,[int(10),op(sub,[field(var(p(1)),value),field(var(p(2)),value)])])])), same_file('prefix_conversions').
 % prefix_conversions_string
-hand_specific(_, 'prefix_conversions_string') :- file_has(var(v)-op(fdiv,[var(p(0)),op(pow,[int(10),elem(var(v),var(v))])])).
+hand_specific(_, 'prefix_conversions_string') :- file_has(var(v)-op(fdiv,[var(p(0)),op(pow,[int(10),elem(var(v),var(v))])])), same_file('prefix_conversions_string').
 % pressure_conversions
-hand_specific(_, 'pressure_conversions') :- file_has(call('FromTo',[other(float),int(101325)])).
+hand_specific(_, 'pressure_conversions') :- file_has(call('FromTo',[other(float),int(101325)])), same_file('pressure_conversions').
 % rectangular_to_polar
-hand_specific(_, 'rectangular_to_polar') :- file_has(call(degrees,[var(v),call(atan2,[var(v),var(p(1)),var(p(0))])])).
+hand_specific(_, 'rectangular_to_polar') :- file_has(call(degrees,[var(v),call(atan2,[var(v),var(p(1)),var(p(0))])])), same_file('rectangular_to_polar').
 % rgb_cmyk_conversion
-hand_specific(_, 'rgb_cmyk_conversion') :- file_has(var(v)-fstring([tuple([call(type,[var(p(0))]),call(type,[var(p(1))]),call(type,[var(p(2))])])])).
+hand_specific(_, 'rgb_cmyk_conversion') :- file_has(var(v)-fstring([tuple([call(type,[var(p(0))]),call(type,[var(p(1))]),call(type,[var(p(2))])])])), same_file('rgb_cmyk_conversion').
 % rgb_hsv_conversion
-hand_specific(_, 'rgb_hsv_conversion') :- file_has(call(abs,[op(sub,[elem(var(p(0)),int(2)),elem(var(p(1)),int(2))])])).
+hand_specific(_, 'rgb_hsv_conversion') :- file_has(call(abs,[op(sub,[elem(var(p(0)),int(2)),elem(var(p(1)),int(2))])])), same_file('rgb_hsv_conversion').
 % speed_conversions
-hand_specific(_, 'speed_conversions') :- file_has(op(or,[op('not in',[var(p(2)),var(v)]),op('not in',[var(p(1)),var(v)])])).
+hand_specific(_, 'speed_conversions') :- file_has(op(or,[op('not in',[var(p(2)),var(v)]),op('not in',[var(p(1)),var(v)])])), same_file('speed_conversions').
 % temperature_conversions
-hand_specific(_, 'temperature_conversions') :- file_has(call(round,[op(add,[call(float,[var(p(0))]),other(float)]),var(p(1))])).
+hand_specific(_, 'temperature_conversions') :- file_has(call(round,[op(add,[call(float,[var(p(0))]),other(float)]),var(p(1))])), same_file('temperature_conversions').
 % time_conversions
-hand_specific(_, 'time_conversions') :- file_has(op(or,[op('not in',[var(p(1)),var(v)]),op('not in',[var(p(2)),var(v)])])).
+hand_specific(_, 'time_conversions') :- file_has(op(or,[op('not in',[var(p(1)),var(v)]),op('not in',[var(p(2)),var(v)])])), same_file('time_conversions').
 % volume_conversions
-hand_specific(_, 'volume_conversions') :- file_has(var(v)-dict([pair(other(string),call('FromTo',[int(1),int(1)])),pair(other(string),call('FromTo',[other(float),int(1000)])),pair(other(string),call('FromTo',[int(1),int(1)])),pair(other(string),call('FromTo',[other(float),other(float)])),pair(other(string),call('FromTo',[other(float),other(float)])),pair(other(string),call('FromTo',[other(float),other(float)])),pair(other(string),call('FromTo',[other(float),other(float)]))])).
+hand_specific(_, 'volume_conversions') :- file_has(var(v)-dict([pair(other(string),call('FromTo',[int(1),int(1)])),pair(other(string),call('FromTo',[other(float),int(1000)])),pair(other(string),call('FromTo',[int(1),int(1)])),pair(other(string),call('FromTo',[other(float),other(float)])),pair(other(string),call('FromTo',[other(float),other(float)])),pair(other(string),call('FromTo',[other(float),other(float)])),pair(other(string),call('FromTo',[other(float),other(float)]))])), same_file('volume_conversions').
 % weight_conversion
-hand_specific(_, 'weight_conversion') :- file_has(op(mul,[op(mul,[var(p(2)),elem(var(v),var(p(1)))]),elem(var(v),var(p(0)))])).
+hand_specific(_, 'weight_conversion') :- file_has(op(mul,[op(mul,[var(p(2)),elem(var(v),var(p(1)))]),elem(var(v),var(p(0)))])), same_file('weight_conversion').
 % ===== data_compression
 % lempel_ziv
-hand_specific(_, 'lempel_ziv') :- file_has(elem(var(p(0)),op(add,[var(p(1)),other(string)]))-tail(call(bin,[var(p(2))]),2)).
+hand_specific(_, 'lempel_ziv') :- file_has(elem(var(p(0)),op(add,[var(p(1)),other(string)]))-tail(call(bin,[var(p(2))]),2)), same_file('lempel_ziv').
 % lempel_ziv_decompress
-hand_specific(_, 'lempel_ziv_decompress') :- file_has(elem(var(v),tail(call(bin,[var(v)]),2))-op(add,[var(v),other(string)])).
+hand_specific(_, 'lempel_ziv_decompress') :- file_has(elem(var(v),tail(call(bin,[var(v)]),2))-op(add,[var(v),other(string)])), same_file('lempel_ziv_decompress').
 % peak_signal_to_noise_ratio
-hand_specific(_, 'peak_signal_to_noise_ratio') :- file_has(var(v)-call(mean,[var(v),op(pow,[op(sub,[var(p(0)),var(p(1))]),int(2)])])).
+hand_specific(_, 'peak_signal_to_noise_ratio') :- file_has(var(v)-call(mean,[var(v),op(pow,[op(sub,[var(p(0)),var(p(1))]),int(2)])])), same_file('peak_signal_to_noise_ratio').
 % ===== data_structures
 % basic_binary_tree
-hand_specific(_, 'basic_binary_tree') :- file_has(op(or,[op(not,[var(p(0))]),op(and,[op(not,[field(var(p(0)),left)]),op(not,[field(var(p(0)),right)])])])).
+hand_specific(_, 'basic_binary_tree') :- file_has(op(or,[op(not,[var(p(0))]),op(and,[op(not,[field(var(p(0)),left)]),op(not,[field(var(p(0)),right)])])])), same_file('basic_binary_tree').
 % binary_search_tree
-hand_specific(_, 'binary_search_tree') :- file_has(field(var(p(0)),root)-call('Node',[elem(var(v),var(p(1)))])).
+hand_specific(_, 'binary_search_tree') :- file_has(field(var(p(0)),root)-call('Node',[elem(var(v),var(p(1)))])), same_file('binary_search_tree').
 % binary_search_tree_recursive
-hand_specific(_, 'binary_search_tree_recursive') :- file_has(var(p(1))-call('$self',[var(p(0)),field(var(p(1)),right),var(p(2))])).
+hand_specific(_, 'binary_search_tree_recursive') :- file_has(var(p(1))-call('$self',[var(p(0)),field(var(p(1)),right),var(p(2))])), same_file('binary_search_tree_recursive').
 % binary_tree_node_sum
-hand_specific(_, 'binary_tree_node_sum') :- file_has(op(add,[field(var(p(1)),value),op(add,[call('$self',[]),call('$self',[])])])).
+hand_specific(_, 'binary_tree_node_sum') :- file_has(op(add,[field(var(p(1)),value),op(add,[call('$self',[]),call('$self',[])])])), same_file('binary_tree_node_sum').
 % binary_tree_path_sum
-hand_specific(_, 'binary_tree_path_sum') :- file_has(var(p(2))-op(add,[var(p(2)),field(field(var(p(1)),right),value)])).
+hand_specific(_, 'binary_tree_path_sum') :- file_has(var(p(2))-op(add,[var(p(2)),field(field(var(p(1)),right),value)])), same_file('binary_tree_path_sum').
 % binary_tree_traversals
-hand_specific(_, 'binary_tree_traversals') :- file_has(field(call(popleft,[call(deque,[list([var(p(0))])])]),right)).
+hand_specific(_, 'binary_tree_traversals') :- file_has(field(call(popleft,[call(deque,[list([var(p(0))])])]),right)), same_file('binary_tree_traversals').
 % build_kdtree
-hand_specific(_, 'build_kdtree') :- file_has(var(v)-call(slice,[var(p(0)),op(add,[var(v),int(1)]),other(none)])).
+hand_specific(_, 'build_kdtree') :- file_has(var(v)-call(slice,[var(p(0)),op(add,[var(v),int(1)]),other(none)])), same_file('build_kdtree').
 % circular_linked_list
-hand_specific(_, 'circular_linked_list') :- file_has(field(field(var(p(0)),tail),next_node)-call('Node',[var(p(2))])).
+hand_specific(_, 'circular_linked_list') :- file_has(field(field(var(p(0)),tail),next_node)-call('Node',[var(p(2))])), same_file('circular_linked_list').
 % circular_queue
-hand_specific(_, 'circular_queue') :- file_has(field(var(p(0)),array)-op(mul,[list([other(none)]),field(var(p(0)),n)])).
+hand_specific(_, 'circular_queue') :- file_has(field(var(p(0)),array)-op(mul,[list([other(none)]),field(var(p(0)),n)])), same_file('circular_queue').
 % circular_queue_linked_list
-hand_specific(_, 'circular_queue_linked_list') :- file_has(op(eq,[field(var(p(0)),front),field(var(p(0)),rear)])).
+hand_specific(_, 'circular_queue_linked_list') :- file_has(op(eq,[field(var(p(0)),front),field(var(p(0)),rear)])), same_file('circular_queue_linked_list').
 % deque_doubly
-hand_specific(_, 'deque_doubly') :- file_has(field(var(p(0)),'_size')-op(add,[field(var(p(0)),'_size'),int(1)])).
+hand_specific(_, 'deque_doubly') :- file_has(field(var(p(0)),'_size')-op(add,[field(var(p(0)),'_size'),int(1)])), same_file('deque_doubly').
 % distribute_coins
-hand_specific(_, 'distribute_coins') :- file_has(op(add,[op(add,[call('$self',[]),call('$self',[])]),field(var(p(0)),data)])).
+hand_specific(_, 'distribute_coins') :- file_has(op(add,[op(add,[call('$self',[]),call('$self',[])]),field(var(p(0)),data)])), same_file('distribute_coins').
 % doubly_linked_list
-hand_specific(_, 'doubly_linked_list') :- file_has(field(field(var(p(0)),head),previous)-call('Node',[var(p(2))])).
+hand_specific(_, 'doubly_linked_list') :- file_has(field(field(var(p(0)),head),previous)-call('Node',[var(p(2))])), same_file('doubly_linked_list').
 % example_usage
-hand_specific(_, 'example_usage') :- file_has(tuple([var(v),var(v),var(v)])-call(nearest_neighbour_search,[var(v),var(v)])).
-hand_specific(_, 'example_usage') :- file_has(var(v)-call(search,[var(v),elem(var(v),var(v))])).
+hand_specific(_, 'example_usage') :- file_has(tuple([var(v),var(v),var(v)])-call(nearest_neighbour_search,[var(v),var(v)])), same_file('example_usage').
+hand_specific(_, 'example_usage') :- file_has(var(v)-call(search,[var(v),elem(var(v),var(v))])), same_file('example_usage').
 % fenwick_tree
-hand_specific(_, 'fenwick_tree') :- file_has(op(sub,[call(fn,[var(p(0)),var(p(2))]),call(fn,[var(p(0)),var(p(1))])])).
+hand_specific(_, 'fenwick_tree') :- file_has(op(sub,[call(fn,[var(p(0)),var(p(2))]),call(fn,[var(p(0)),var(p(1))])])), same_file('fenwick_tree').
 % flatten_binarytree_to_linkedlist
-hand_specific(_, 'flatten_binarytree_to_linkedlist') :- file_has(field(field(var(v),right),right)-call('TreeNode',[int(6)])).
+hand_specific(_, 'flatten_binarytree_to_linkedlist') :- file_has(field(field(var(v),right),right)-call('TreeNode',[int(6)])), same_file('flatten_binarytree_to_linkedlist').
 % from_sequence
-hand_specific(_, 'from_sequence') :- file_has(var(v)-call('Node',[elem(var(p(0)),int(0))])).
+hand_specific(_, 'from_sequence') :- file_has(var(v)-call('Node',[elem(var(p(0)),int(0))])), same_file('from_sequence').
 % hypercube_points
-hand_specific(_, 'hypercube_points') :- file_has(op(mul,[var(p(1)),call(random,[call(default_rng,[field(var(v),random)]),tuple([var(p(0)),var(p(2))])])])).
+hand_specific(_, 'hypercube_points') :- file_has(op(mul,[var(p(1)),call(random,[call(default_rng,[field(var(v),random)]),tuple([var(p(0)),var(p(2))])])])), same_file('hypercube_points').
 % index_2d_array_in_1d
-hand_specific(_, 'index_2d_array_in_1d') :- file_has(elem(elem(var(p(0)),op(div,[var(p(1)),call(len,[elem(var(p(0)),int(0))])])),op(mod,[var(p(1)),call(len,[elem(var(p(0)),int(0))])]))).
+hand_specific(_, 'index_2d_array_in_1d') :- file_has(elem(elem(var(p(0)),op(div,[var(p(1)),call(len,[elem(var(p(0)),int(0))])])),op(mod,[var(p(1)),call(len,[elem(var(p(0)),int(0))])]))), same_file('index_2d_array_in_1d').
 % inorder_tree_traversal_2022
-hand_specific(_, 'inorder_tree_traversal_2022') :- file_has(var(v)-op(add,[var(v),call('$self',[field(var(p(0)),right_child)])])).
+hand_specific(_, 'inorder_tree_traversal_2022') :- file_has(var(v)-op(add,[var(v),call('$self',[field(var(p(0)),right_child)])])), same_file('inorder_tree_traversal_2022').
 % is_sorted
-hand_specific(_, 'is_sorted') :- file_has(op(and,[field(var(p(0)),left),op(or,[op(lt,[field(var(p(0)),data),field(field(var(p(0)),left),data)]),op(not,[field(field(var(p(0)),left),is_sorted)])])])).
+hand_specific(_, 'is_sorted') :- file_has(op(and,[field(var(p(0)),left),op(or,[op(lt,[field(var(p(0)),data),field(field(var(p(0)),left),data)]),op(not,[field(field(var(p(0)),left),is_sorted)])])])), same_file('is_sorted').
 % is_sum_tree
-hand_specific(_, 'is_sum_tree') :- file_has(op(and,[op(not,[field(var(p(0)),left)]),op(not,[field(var(p(0)),right)])])).
+hand_specific(_, 'is_sum_tree') :- file_has(op(and,[op(not,[field(var(p(0)),left)]),op(not,[field(var(p(0)),right)])])), same_file('is_sum_tree').
 % kd_node
-hand_specific(_, 'kd_node') :- file_has(field(var(p(0)),point)-var(p(1))).
+hand_specific(_, 'kd_node') :- file_has(field(var(p(0)),point)-var(p(1))), same_file('kd_node').
 % kth_element_from_end
-hand_specific(_, 'kth_element_from_end') :- file_has(op(or,[op(or,[op(is,[field(var(p(0)),head),other(none)]),op(le,[var(p(1)),int(0)])]),op(gt,[var(p(1)),call(len,[var(p(0))])])])).
+hand_specific(_, 'kth_element_from_end') :- file_has(op(or,[op(or,[op(is,[field(var(p(0)),head),other(none)]),op(le,[var(p(1)),int(0)])]),op(gt,[var(p(1)),call(len,[var(p(0))])])])), same_file('kth_element_from_end').
+% lazy_segment_tree
+hand_specific(_, 'lazy_segment_tree') :- file_has(call(fn,[var(p(0)),int(1),int(1),call(len,[var(p(0))]),var(v),var(v)])), same_file('lazy_segment_tree').
 % linked_queue
-hand_specific(_, 'linked_queue') :- file_has(field(field(var(p(0)),rear),next)-call('Node',[var(p(1))])).
+hand_specific(_, 'linked_queue') :- file_has(field(field(var(p(0)),rear),next)-call('Node',[var(p(1))])), same_file('linked_queue').
 % maximum_sum_bst
-hand_specific(_, 'maximum_sum_bst') :- file_has(op(and,[op(and,[var(v),var(v)]),op(lt,[var(v),field(var(p(0)),val)])])).
+hand_specific(_, 'maximum_sum_bst') :- file_has(op(and,[op(and,[var(v),var(v)]),op(lt,[var(v),field(var(p(0)),val)])])), same_file('maximum_sum_bst').
 % median_two_array
-hand_specific(_, 'median_two_array') :- file_has(var(v)-call(sorted,[op(add,[var(p(0)),var(p(1))])])).
+hand_specific(_, 'median_two_array') :- file_has(var(v)-call(sorted,[op(add,[var(p(0)),var(p(1))])])), same_file('median_two_array').
 % merge_two_binary_trees
-hand_specific(_, 'merge_two_binary_trees') :- file_has(field(var(p(0)),value)-op(add,[field(var(p(0)),value),field(var(p(1)),value)])).
+hand_specific(_, 'merge_two_binary_trees') :- file_has(field(var(p(0)),value)-op(add,[field(var(p(0)),value),field(var(p(1)),value)])), same_file('merge_two_binary_trees').
 % merge_two_lists
-hand_specific(_, 'merge_two_lists') :- file_has(call('SortedLinkedList',[op(add,[call(list,[var(p(0))]),call(list,[var(p(1))])])])).
+hand_specific(_, 'merge_two_lists') :- file_has(call('SortedLinkedList',[op(add,[call(list,[var(p(0))]),call(list,[var(p(1))])])])), same_file('merge_two_lists').
 % middle_element_of_linked_list
-hand_specific(_, 'middle_element_of_linked_list') :- file_has(op(and,[var(v),field(var(v),next)])), file_has(field(field(var(p(0)),head),data)).
+hand_specific(_, 'middle_element_of_linked_list') :- file_has(op(and,[var(v),field(var(v),next)])), file_has(field(field(var(p(0)),head),data)), same_file('middle_element_of_linked_list').
 % mirror_binary_tree
-hand_specific(_, 'mirror_binary_tree') :- file_has(field(field(field(var(v),left),right),right)-call('Node',[int(9)])).
+hand_specific(_, 'mirror_binary_tree') :- file_has(field(field(field(var(v),left),right),right)-call('Node',[int(9)])), same_file('mirror_binary_tree').
 % monotonic_array
-hand_specific(_, 'monotonic_array') :- file_has(call(all,[map(call(range,[op(sub,[call(len,[var(p(0))]),int(1)])]),op(ge,[elem(var(p(0)),elem(call(range,[op(sub,[call(len,[var(p(0))]),int(1)])]),var(v))),elem(var(p(0)),op(add,[elem(call(range,[op(sub,[call(len,[var(p(0))]),int(1)])]),var(v)),int(1)]))]),bool(true))])).
+hand_specific(_, 'monotonic_array') :- file_has(call(all,[map(call(range,[op(sub,[call(len,[var(p(0))]),int(1)])]),op(ge,[elem(var(p(0)),elem(call(range,[op(sub,[call(len,[var(p(0))]),int(1)])]),var(v))),elem(var(p(0)),op(add,[elem(call(range,[op(sub,[call(len,[var(p(0))]),int(1)])]),var(v)),int(1)]))]),bool(true))])), same_file('monotonic_array').
 % nearest_neighbour_search
-hand_specific(_, 'nearest_neighbour_search') :- file_has(op(or,[op(is,[var(v),other(none)]),op(lt,[var(v),var(v)])])).
+hand_specific(_, 'nearest_neighbour_search') :- file_has(op(or,[op(is,[var(v),other(none)]),op(lt,[var(v),var(v)])])), same_file('nearest_neighbour_search').
 % number_of_possible_binary_trees
-hand_specific(_, 'number_of_possible_binary_trees') :- file_has(op(div,[call(fn,[op(mul,[int(2),var(p(0))]),var(p(0))]),op(add,[var(p(0)),int(1)])])).
+hand_specific(_, 'number_of_possible_binary_trees') :- file_has(op(div,[call(fn,[op(mul,[int(2),var(p(0))]),var(p(0))]),op(add,[var(p(0)),int(1)])])), same_file('number_of_possible_binary_trees').
 % pairs_with_given_sum
-hand_specific(_, 'pairs_with_given_sum') :- file_has(call(combinations,[var(p(0)),int(2)])).
+hand_specific(_, 'pairs_with_given_sum') :- file_has(call(combinations,[var(p(0)),int(2)])), same_file('pairs_with_given_sum').
 % pairwise_iteration
-hand_specific(_, 'pairwise_iteration') :- file_has(var(v)-map(call(enumerate,[var(p(0))]),var(v),op(eq,[op(mod,[var(v),var(p(1))]),int(0)]))).
+hand_specific(_, 'pairwise_iteration') :- file_has(var(v)-map(call(enumerate,[var(p(0))]),var(v),op(eq,[op(mod,[var(v),var(p(1))]),int(0)]))), same_file('pairwise_iteration').
 % partition_linked_list
-hand_specific(_, 'partition_linked_list') :- file_has(op(eq,[field(var(v),item),var(p(1))])).
+hand_specific(_, 'partition_linked_list') :- file_has(op(eq,[field(var(v),item),var(p(1))])), same_file('partition_linked_list').
 % print_reverse
-hand_specific(_, 'print_reverse') :- file_has(field(field(var(p(0)),tail),next_node)-call('Node',[var(p(1))])).
+hand_specific(_, 'print_reverse') :- file_has(field(field(var(p(0)),tail),next_node)-call('Node',[var(p(1))])), same_file('print_reverse').
 % queue_by_list
-hand_specific(_, 'queue_by_list') :- file_has(field(var(p(0)),entries)-call(list,[op(or,[var(p(1)),list([])])])).
+hand_specific(_, 'queue_by_list') :- file_has(field(var(p(0)),entries)-call(list,[op(or,[var(p(1)),list([])])])), same_file('queue_by_list').
 % queue_by_two_stacks
-hand_specific(_, 'queue_by_two_stacks') :- file_has(field(var(p(0)),'_stack1')-call(list,[op(or,[var(p(1)),list([])])])).
+hand_specific(_, 'queue_by_two_stacks') :- file_has(field(var(p(0)),'_stack1')-call(list,[op(or,[var(p(1)),list([])])])), same_file('queue_by_two_stacks').
 % queue_on_pseudo_stack
-hand_specific(_, 'queue_on_pseudo_stack') :- file_has(elem(field(var(p(0)),stack),op(sub,[call(len,[var(p(0))]),int(1)]))).
+hand_specific(_, 'queue_on_pseudo_stack') :- file_has(elem(field(var(p(0)),stack),op(sub,[call(len,[var(p(0))]),int(1)]))), same_file('queue_on_pseudo_stack').
 % red_black_tree
-hand_specific(_, 'red_black_tree') :- file_has(field(var(p(0)),left)-call('RedBlackTree',[var(p(1)),int(1),var(p(0))])).
+hand_specific(_, 'red_black_tree') :- file_has(field(var(p(0)),left)-call('RedBlackTree',[var(p(1)),int(1),var(p(0))])), same_file('red_black_tree').
 % reverse_k_group
-hand_specific(_, 'reverse_k_group') :- file_has(op(or,[op(is,[field(var(p(0)),head),other(none)]),op(is,[field(field(var(p(0)),head),next_node),other(none)])])).
+hand_specific(_, 'reverse_k_group') :- file_has(op(or,[op(is,[field(var(p(0)),head),other(none)]),op(is,[field(field(var(p(0)),head),next_node),other(none)])])), same_file('reverse_k_group').
 % rotate_to_the_right
-hand_specific(_, 'rotate_to_the_right') :- file_has(op('is not',[field(var(p(0)),next_node),other(none)])).
+hand_specific(_, 'rotate_to_the_right') :- file_has(op('is not',[field(var(p(0)),next_node),other(none)])), same_file('rotate_to_the_right').
 % segment_tree
-hand_specific(_, 'segment_tree') :- file_has(call(fn,[var(p(0)),int(1),int(0),op(sub,[field(var(p(0)),'N'),int(1)])])).
+hand_specific(_, 'segment_tree') :- file_has(call(fn,[var(p(0)),int(1),int(0),op(sub,[field(var(p(0)),'N'),int(1)])])), same_file('segment_tree').
 % serialize_deserialize_binary_tree
-hand_specific(_, 'serialize_deserialize_binary_tree') :- file_has(op(or,[field(var(p(0)),right),tuple([])])).
+hand_specific(_, 'serialize_deserialize_binary_tree') :- file_has(op(or,[field(var(p(0)),right),tuple([])])), same_file('serialize_deserialize_binary_tree').
 % singly_linked_list
-hand_specific(_, 'singly_linked_list') :- file_has(call(fn,[var(v),call('Node',[other(string)])])).
+hand_specific(_, 'singly_linked_list') :- file_has(call(fn,[var(v),call('Node',[other(string)])])), same_file('singly_linked_list').
 % splay_tree
-hand_specific(_, 'splay_tree') :- file_has(field(var(p(1)),right)-call(fn,[var(p(0)),field(var(p(1)),right)])).
+hand_specific(_, 'splay_tree') :- file_has(field(var(p(1)),right)-call(fn,[var(p(0)),field(var(p(1)),right)])), same_file('splay_tree').
 % stack
-hand_specific(_, 'stack') :- file_has(op(eq,[call(len,[var(p(0))]),field(var(p(0)),limit)])).
+hand_specific(_, 'stack') :- file_has(op(eq,[call(len,[var(p(0))]),field(var(p(0)),limit)])), same_file('stack').
 % stack_tracking_min_max
-hand_specific(_, 'stack_tracking_min_max') :- file_has(call(max,[field(elem(field(var(p(0)),stack),int(-1)),max_value),var(p(1))])).
+hand_specific(_, 'stack_tracking_min_max') :- file_has(call(max,[field(elem(field(var(p(0)),stack),int(-1)),max_value),var(p(1))])), same_file('stack_tracking_min_max').
 % stack_with_doubly_linked_list
-hand_specific(_, 'stack_with_doubly_linked_list') :- file_has(field(field(var(p(0)),head),prev)-call('Node',[var(p(1))])).
+hand_specific(_, 'stack_with_doubly_linked_list') :- file_has(field(field(var(p(0)),head),prev)-call('Node',[var(p(1))])), same_file('stack_with_doubly_linked_list').
 % stack_with_singly_linked_list
-hand_specific(_, 'stack_with_singly_linked_list') :- file_has(field(var(p(0)),top)-call('Node',[var(p(1))])).
+hand_specific(_, 'stack_with_singly_linked_list') :- file_has(field(var(p(0)),top)-call('Node',[var(p(1))])), same_file('stack_with_singly_linked_list').
 % suffix_tree_node
-hand_specific(_, 'suffix_tree_node') :- file_has(field(var(p(0)),children)-op(or,[var(p(1)),dict([])])).
+hand_specific(_, 'suffix_tree_node') :- file_has(field(var(p(0)),children)-op(or,[var(p(1)),dict([])])), same_file('suffix_tree_node').
 % swap_nodes
-hand_specific(_, 'swap_nodes') :- file_has(op(and,[var(v),op(ne,[field(var(v),data),var(p(1))])])).
+hand_specific(_, 'swap_nodes') :- file_has(op(and,[var(v),op(ne,[field(var(v),data),var(p(1))])])), same_file('swap_nodes').
 % symmetric_tree
-hand_specific(_, 'symmetric_tree') :- file_has(op(or,[op(is,[var(p(0)),other(none)]),op(is,[var(p(1)),other(none)])])).
+hand_specific(_, 'symmetric_tree') :- file_has(op(or,[op(is,[var(p(0)),other(none)]),op(is,[var(p(1)),other(none)])])), same_file('symmetric_tree').
 % wavelet_tree
-hand_specific(_, 'wavelet_tree') :- file_has(var(p(2))-op(sub,[var(p(2)),elem(field(var(p(0)),map_left),var(p(2)))])).
+hand_specific(_, 'wavelet_tree') :- file_has(var(p(2))-op(sub,[var(p(2)),elem(field(var(p(0)),map_left),var(p(2)))])), same_file('wavelet_tree').
 % ===== digital_image_processing
 % change_brightness
-hand_specific(_, 'change_brightness') :- file_has(op(add,[op(add,[var(v),int(128)]),op(sub,[var(p(0)),int(128)])])).
+hand_specific(_, 'change_brightness') :- file_has(op(add,[op(add,[var(v),int(128)]),op(sub,[var(p(0)),int(128)])])), same_file('change_brightness').
 % change_contrast
-hand_specific(_, 'change_contrast') :- file_has(call(int,[op(add,[op(mul,[var(v),op(sub,[var(p(0)),int(128)])]),int(128)])])).
+hand_specific(_, 'change_contrast') :- file_has(call(int,[op(add,[op(mul,[var(v),op(sub,[var(p(0)),int(128)])]),int(128)])])), same_file('change_contrast').
 % convert_to_negative
-hand_specific(_, 'convert_to_negative') :- file_has(elem(elem(var(p(0)),var(v)),var(v))-op(sub,[list([int(255),int(255),int(255)]),elem(elem(var(p(0)),var(v)),var(v))])).
+hand_specific(_, 'convert_to_negative') :- file_has(elem(elem(var(p(0)),var(v)),var(v))-op(sub,[list([int(255),int(255),int(255)]),elem(elem(var(p(0)),var(v)),var(v))])), same_file('convert_to_negative').
 % index_calculation
-hand_specific(_, 'index_calculation') :- file_has(op(sub,[op(fdiv,[field(var(p(0)),nir),field(var(p(0)),green)]),int(1)])).
+hand_specific(_, 'index_calculation') :- file_has(op(sub,[op(fdiv,[field(var(p(0)),nir),field(var(p(0)),green)]),int(1)])), same_file('index_calculation').
 % laplacian_filter
-hand_specific(_, 'laplacian_filter') :- file_has(call(filter2D,[var(p(0)),var(v),elem(var(v),var(p(1))),int(0)])).
+hand_specific(_, 'laplacian_filter') :- file_has(call(filter2D,[var(p(0)),var(v),elem(var(v),var(p(1))),int(0)])), same_file('laplacian_filter').
 % local_binary_pattern
-hand_specific(_, 'local_binary_pattern') :- file_has(call(int,[op(ge,[elem(elem(var(p(0)),var(p(1))),var(p(2))),var(p(3))])])).
+hand_specific(_, 'local_binary_pattern') :- file_has(call(int,[op(ge,[elem(elem(var(p(0)),var(p(1))),var(p(2))),var(p(3))])])), same_file('local_binary_pattern').
 % rotation
-hand_specific(_, 'rotation') :- file_has(call(warpAffine,[var(v),var(p(0)),var(v),tuple([var(p(3)),var(p(4))])])).
+hand_specific(_, 'rotation') :- file_has(call(warpAffine,[var(v),var(p(0)),var(v),tuple([var(p(3)),var(p(4))])])), same_file('rotation').
 % sobel_filter
-hand_specific(_, 'sobel_filter') :- file_has(var(v)-call(abs,[var(v),call(img_convolve,[var(p(0)),var(v)])])).
+hand_specific(_, 'sobel_filter') :- file_has(var(v)-call(abs,[var(v),call(img_convolve,[var(p(0)),var(v)])])), same_file('sobel_filter').
 % ===== docs
 % conf
-hand_specific(_, 'conf') :- file_has(call(get,[var(v),other(string),list([])])).
+hand_specific(_, 'conf') :- file_has(call(get,[var(v),other(string),list([])])), same_file('conf').
 % ===== dynamic_programming
 % climbing_stairs
-hand_specific(_, 'climbing_stairs') :- file_has(call(range,[op(sub,[var(p(0)),int(1)])])), file_has(int(1)).
+hand_specific(_, 'climbing_stairs') :- file_has(call(range,[op(sub,[var(p(0)),int(1)])])), file_has(int(1)), same_file('climbing_stairs').
 % longest_palindromic_subsequence
-hand_specific(_, 'longest_palindromic_subsequence') :- file_has(var(v)-call(slice,[var(p(0)),other(none),other(none),int(-1)])).
+hand_specific(_, 'longest_palindromic_subsequence') :- file_has(var(v)-call(slice,[var(p(0)),other(none),other(none),int(-1)])), same_file('longest_palindromic_subsequence').
 % min_distance_up_bottom
-hand_specific(_, 'min_distance_up_bottom') :- file_has(var(v)-call(int,[op(ne,[elem(var(v),var(p(0))),elem(var(v),var(p(1)))])])).
+hand_specific(_, 'min_distance_up_bottom') :- file_has(var(v)-call(int,[op(ne,[elem(var(v),var(p(0))),elem(var(v),var(p(1)))])])), same_file('min_distance_up_bottom').
 % ===== electronics
 % apparent_power
-hand_specific(_, 'apparent_power') :- file_has(var(v)-call(rect,[var(v),var(p(0)),var(v)])).
+hand_specific(_, 'apparent_power') :- file_has(var(v)-call(rect,[var(v),var(p(0)),var(v)])), same_file('apparent_power').
 % builtin_voltage
-hand_specific(_, 'builtin_voltage') :- file_has(call(log,[op(fdiv,[op(mul,[var(p(0)),var(p(1))]),op(pow,[var(p(2)),int(2)])])])).
+hand_specific(_, 'builtin_voltage') :- file_has(call(log,[op(fdiv,[op(mul,[var(p(0)),var(p(1))]),op(pow,[var(p(2)),int(2)])])])), same_file('builtin_voltage').
 % capacitor_equivalence
-hand_specific(_, 'capacitor_equivalence') :- file_has(var(v)-op(add,[var(v),op(fdiv,[int(1),elem(call(enumerate,[var(p(0))]),var(v))])])).
+hand_specific(_, 'capacitor_equivalence') :- file_has(var(v)-op(add,[var(v),op(fdiv,[int(1),elem(call(enumerate,[var(p(0))]),var(v))])])), same_file('capacitor_equivalence').
 % carrier_concentration
-hand_specific(_, 'carrier_concentration') :- file_has(tuple([other(string),op(fdiv,[op(pow,[var(p(2)),int(2)]),var(p(0))])])).
+hand_specific(_, 'carrier_concentration') :- file_has(tuple([other(string),op(fdiv,[op(pow,[var(p(2)),int(2)]),var(p(0))])])), same_file('carrier_concentration').
 % charging_capacitor
-hand_specific(_, 'charging_capacitor') :- file_has(call(exp,[op(fdiv,[op(neg,[var(p(3))]),op(mul,[var(p(1)),var(p(2))])])])).
+hand_specific(_, 'charging_capacitor') :- file_has(call(exp,[op(fdiv,[op(neg,[var(p(3))]),op(mul,[var(p(1)),var(p(2))])])])), same_file('charging_capacitor').
 % charging_inductor
-hand_specific(_, 'charging_inductor') :- file_has(call(exp,[op(fdiv,[op(mul,[op(neg,[var(p(3))]),var(p(1))]),var(p(2))])])).
+hand_specific(_, 'charging_inductor') :- file_has(call(exp,[op(fdiv,[op(mul,[op(neg,[var(p(3))]),var(p(1))]),var(p(2))])])), same_file('charging_inductor').
 % coulombs_law
-hand_specific(_, 'coulombs_law') :- file_has(var(p(3))-op(pow,[op(fdiv,[op(mul,[var(v),var(v)]),call(abs,[var(p(0))])]),other(float)])).
-hand_specific(_, 'coulombs_law') :- file_has(call(round,[op(fdiv,[op(mul,[op(mul,[op(mul,[other(float),op(pow,[int(10),int(9)])]),var(p(0))]),var(p(1))]),op(pow,[var(p(2)),int(2)])]),int(2)])).
+hand_specific(_, 'coulombs_law') :- file_has(var(p(3))-op(pow,[op(fdiv,[op(mul,[var(v),var(v)]),call(abs,[var(p(0))])]),other(float)])), same_file('coulombs_law').
+hand_specific(_, 'coulombs_law') :- file_has(call(round,[op(fdiv,[op(mul,[op(mul,[op(mul,[other(float),op(pow,[int(10),int(9)])]),var(p(0))]),var(p(1))]),op(pow,[var(p(2)),int(2)])]),int(2)])), same_file('coulombs_law').
 % electric_conductivity
-hand_specific(_, 'electric_conductivity') :- file_has(tuple([other(string),op(fdiv,[var(p(0)),op(mul,[var(p(1)),var(v)])])])).
+hand_specific(_, 'electric_conductivity') :- file_has(tuple([other(string),op(fdiv,[var(p(0)),op(mul,[var(p(1)),var(v)])])])), same_file('electric_conductivity').
 % electric_power
-hand_specific(_, 'electric_power') :- file_has(call(float,[call(round,[call(abs,[op(mul,[var(p(0)),var(p(1))])]),int(2)])])).
+hand_specific(_, 'electric_power') :- file_has(call(float,[call(round,[call(abs,[op(mul,[var(p(0)),var(p(1))])]),int(2)])])), same_file('electric_power').
 % electrical_impedance
-hand_specific(_, 'electrical_impedance') :- file_has(call(sqrt,[op(add,[call(pow,[var(p(0)),int(2)]),call(pow,[var(p(1)),int(2)])])])).
+hand_specific(_, 'electrical_impedance') :- file_has(call(sqrt,[op(add,[call(pow,[var(p(0)),int(2)]),call(pow,[var(p(1)),int(2)])])])), same_file('electrical_impedance').
 % full_wave_rectifier
-hand_specific(_, 'full_wave_rectifier') :- file_has(call('Result',[other(string),op(mul,[op(mul,[int(2),other(float)]),var(p(0))])])).
+hand_specific(_, 'full_wave_rectifier') :- file_has(call('Result',[other(string),op(mul,[op(mul,[int(2),other(float)]),var(p(0))])])), same_file('full_wave_rectifier').
 % half_wave_rectifier
-hand_specific(_, 'half_wave_rectifier') :- file_has(call('Result',[other(string),op(mul,[other(float),var(p(0))])])).
+hand_specific(_, 'half_wave_rectifier') :- file_has(call('Result',[other(string),op(mul,[other(float),var(p(0))])])), same_file('half_wave_rectifier').
 % ind_reactance
-hand_specific(_, 'ind_reactance') :- file_has(dict([pair(other(string),op(mul,[op(mul,[op(mul,[int(2),var(v)]),var(p(1))]),var(p(0))]))])).
+hand_specific(_, 'ind_reactance') :- file_has(dict([pair(other(string),op(mul,[op(mul,[op(mul,[int(2),var(v)]),var(p(1))]),var(p(0))]))])), same_file('ind_reactance').
 % ohms_law
-hand_specific(_, 'ohms_law') :- file_has(dict([pair(other(string),call(float,[op(mul,[var(p(1)),var(p(2))])]))])).
+hand_specific(_, 'ohms_law') :- file_has(dict([pair(other(string),call(float,[op(mul,[var(p(1)),var(p(2))])]))])), same_file('ohms_law').
 % power_factor_correction
-hand_specific(_, 'power_factor_correction') :- file_has(var(v)-call(fn,[var(p(1)),var(p(0)),var(p(2)),var(p(3)),var(p(4))])).
+hand_specific(_, 'power_factor_correction') :- file_has(var(v)-call(fn,[var(p(1)),var(p(0)),var(p(2)),var(p(3)),var(p(4))])), same_file('power_factor_correction').
 % real_and_reactive_power
-hand_specific(_, 'real_and_reactive_power') :- file_has(call(sqrt,[var(v),op(sub,[int(1),op(pow,[var(p(1)),int(2)])])])).
+hand_specific(_, 'real_and_reactive_power') :- file_has(call(sqrt,[var(v),op(sub,[int(1),op(pow,[var(p(1)),int(2)])])])), same_file('real_and_reactive_power').
 % resistor_equivalence
-hand_specific(_, 'resistor_equivalence') :- file_has(var(v)-op(add,[var(v),op(fdiv,[int(1),call(float,[elem(call(enumerate,[var(p(0))]),var(v))])])])).
+hand_specific(_, 'resistor_equivalence') :- file_has(var(v)-op(add,[var(v),op(fdiv,[int(1),call(float,[elem(call(enumerate,[var(p(0))]),var(v))])])])), same_file('resistor_equivalence').
 % resonant_frequency
-hand_specific(_, 'resonant_frequency') :- file_has(call(sqrt,[op(mul,[var(p(0)),var(p(1))])])).
+hand_specific(_, 'resonant_frequency') :- file_has(call(sqrt,[op(mul,[var(p(0)),var(p(1))])])), same_file('resonant_frequency').
 % star_delta_conversions
-hand_specific(_, 'star_delta_conversions') :- file_has(call(append,[var(v),op(fdiv,[op(mul,[var(p(0)),var(p(1))]),var(v)])])).
+hand_specific(_, 'star_delta_conversions') :- file_has(call(append,[var(v),op(fdiv,[op(mul,[var(p(0)),var(p(1))]),var(v)])])), same_file('star_delta_conversions').
 % wheatstone_bridge
-hand_specific(_, 'wheatstone_bridge') :- file_has(call(float,[op(mul,[op(fdiv,[var(p(1)),var(p(0))]),var(p(2))])])).
+hand_specific(_, 'wheatstone_bridge') :- file_has(call(float,[op(mul,[op(fdiv,[var(p(1)),var(p(0))]),var(p(2))])])), same_file('wheatstone_bridge').
 % ===== file_transfer
 % receive_file
-hand_specific(_, 'receive_file') :- file_has(call(socket,[var(v),field(var(v),'AF_INET'),field(var(v),'SOCK_STREAM')])).
+hand_specific(_, 'receive_file') :- file_has(call(socket,[var(v),field(var(v),'AF_INET'),field(var(v),'SOCK_STREAM')])), same_file('receive_file').
 % send_file
-hand_specific(_, 'send_file') :- file_has(tuple([var(v),var(v)])-call(accept,[var(v)])).
+hand_specific(_, 'send_file') :- file_has(tuple([var(v),var(v)])-call(accept,[var(v)])), same_file('send_file').
 % ===== financial
 % equated_monthly_installments
-hand_specific(_, 'equated_monthly_installments') :- file_has(var(v)-op(fdiv,[var(p(1)),int(12)])).
+hand_specific(_, 'equated_monthly_installments') :- file_has(var(v)-op(fdiv,[var(p(1)),int(12)])), same_file('equated_monthly_installments').
 % interest
-hand_specific(_, 'interest') :- file_has(call(fn,[var(p(0)),op(fdiv,[var(p(1)),int(365)]),op(mul,[var(p(2)),int(365)])])).
+hand_specific(_, 'interest') :- file_has(call(fn,[var(p(0)),op(fdiv,[var(p(1)),int(365)]),op(mul,[var(p(2)),int(365)])])), same_file('interest').
 % kelly_criterion
-hand_specific(_, 'kelly_criterion') :- file_has(var(v)-op(fdiv,[op(sub,[op(mul,[var(p(0)),var(v)]),var(v)]),var(v)])).
+hand_specific(_, 'kelly_criterion') :- file_has(var(v)-op(fdiv,[op(sub,[op(mul,[var(p(0)),var(v)]),var(v)]),var(v)])), same_file('kelly_criterion').
 % present_value
-hand_specific(_, 'present_value') :- file_has(call(sum,[map(call(enumerate,[var(p(1))]),op(fdiv,[var(v),op(pow,[op(add,[var(p(0)),int(1)]),var(v)])]),bool(true))])).
+hand_specific(_, 'present_value') :- file_has(call(sum,[map(call(enumerate,[var(p(1))]),op(fdiv,[var(v),op(pow,[op(add,[var(p(0)),int(1)]),var(v)])]),bool(true))])), same_file('present_value').
 % sharpe_ratio
-hand_specific(_, 'sharpe_ratio') :- file_has(op(mul,[call(fn,[var(p(0)),var(p(1))]),op(pow,[var(p(2)),other(float)])])).
+hand_specific(_, 'sharpe_ratio') :- file_has(op(mul,[call(fn,[var(p(0)),var(p(1))]),op(pow,[var(p(2)),other(float)])])), same_file('sharpe_ratio').
 % streaming_moving_average
-hand_specific(_, 'streaming_moving_average') :- file_has(field(var(p(0)),'_mov_avg')-op(fdiv,[var(v),call(len,[field(var(p(0)),window)])])).
+hand_specific(_, 'streaming_moving_average') :- file_has(field(var(p(0)),'_mov_avg')-op(fdiv,[var(v),call(len,[field(var(p(0)),window)])])), same_file('streaming_moving_average').
 % value_at_risk
-hand_specific(_, 'value_at_risk') :- file_has(op(neg,[call(fn,[call(sorted,[var(p(0))]),op(sub,[int(1),var(p(1))])])])).
+hand_specific(_, 'value_at_risk') :- file_has(op(neg,[call(fn,[call(sorted,[var(p(0))]),op(sub,[int(1),var(p(1))])])])), same_file('value_at_risk').
 % ===== fractals
 % sierpinski_triangle
-hand_specific(_, 'sierpinski_triangle') :- file_has(call(goto,[var(v),elem(var(p(0)),int(0)),elem(var(p(0)),int(1))])).
+hand_specific(_, 'sierpinski_triangle') :- file_has(call(goto,[var(v),elem(var(p(0)),int(0)),elem(var(p(0)),int(1))])), same_file('sierpinski_triangle').
 % vicsek
-hand_specific(_, 'vicsek') :- file_has(var(p(0))-op(add,[var(p(0)),op(fdiv,[var(p(2)),int(3)])])).
+hand_specific(_, 'vicsek') :- file_has(var(p(0))-op(add,[var(p(0)),op(fdiv,[var(p(2)),int(3)])])), same_file('vicsek').
 % ===== fuzzy_logic
 % fuzzy_set_operations
-hand_specific(_, 'fuzzy_set_operations') :- file_has(var(v)-call(where,[var(v),op(gt,[var(p(0)),var(p(2))]),int(0),int(1)])).
+hand_specific(_, 'fuzzy_set_operations') :- file_has(var(v)-call(where,[var(v),op(gt,[var(p(0)),var(p(2))]),int(0),int(1)])), same_file('fuzzy_set_operations').
 % ===== geodesy
 % haversine_distance
-hand_specific(_, 'haversine_distance') :- file_has(var(v)-call(radians,[var(p(1))])).
+hand_specific(_, 'haversine_distance') :- file_has(var(v)-call(radians,[var(p(1))])), same_file('haversine_distance').
 % lamberts_ellipsoidal_distance
-hand_specific(_, 'lamberts_ellipsoidal_distance') :- file_has(call(haversine_distance,[var(p(0)),var(p(1)),var(p(2)),var(p(3))])).
+hand_specific(_, 'lamberts_ellipsoidal_distance') :- file_has(call(haversine_distance,[var(p(0)),var(p(1)),var(p(2)),var(p(3))])), same_file('lamberts_ellipsoidal_distance').
 % radar_target_calculation
-hand_specific(_, 'radar_target_calculation') :- file_has(tuple([var(v),var(v),var(v)])-call(fn,[var(p(0)),var(p(1)),var(p(2))])).
+hand_specific(_, 'radar_target_calculation') :- file_has(tuple([var(v),var(v),var(v)])-call(fn,[var(p(0)),var(p(1)),var(p(2))])), same_file('radar_target_calculation').
 % ===== geometry
 % braik_mac_construction
-hand_specific(_, 'braik_mac_construction') :- file_has(var(v)-field(elem(field(var(p(0)),p_list),int(0)),x)).
+hand_specific(_, 'braik_mac_construction') :- file_has(var(v)-field(elem(field(var(p(0)),p_list),int(0)),x)), same_file('braik_mac_construction').
 % segment_intersection
-hand_specific(_, 'segment_intersection') :- file_has(op(and,[op(eq,[var(v),int(0)]),call(fn,[var(p(0)),var(p(1)),var(p(2))])])).
+hand_specific(_, 'segment_intersection') :- file_has(op(and,[op(eq,[var(v),int(0)]),call(fn,[var(p(0)),var(p(1)),var(p(2))])])), same_file('segment_intersection').
 % shoelace
-hand_specific(_, 'shoelace') :- file_has(call(sum,[map(call(range,[call(len,[var(p(0))])]),op(mul,[op(add,[elem(var(p(1)),elem(call(range,[call(len,[var(p(0))])]),var(v))),elem(var(p(1)),op(mod,[op(add,[elem(call(range,[call(len,[var(p(0))])]),var(v)),int(1)]),call(len,[var(p(1))])]))]),op(sub,[elem(var(p(0)),elem(call(range,[call(len,[var(p(0))])]),var(v))),elem(var(p(0)),op(mod,[op(add,[elem(call(range,[call(len,[var(p(0))])]),var(v)),int(1)]),call(len,[var(p(0))])]))])]),bool(true))])).
+hand_specific(_, 'shoelace') :- file_has(call(sum,[map(call(range,[call(len,[var(p(0))])]),op(mul,[op(add,[elem(var(p(1)),elem(call(range,[call(len,[var(p(0))])]),var(v))),elem(var(p(1)),op(mod,[op(add,[elem(call(range,[call(len,[var(p(0))])]),var(v)),int(1)]),call(len,[var(p(1))])]))]),op(sub,[elem(var(p(0)),elem(call(range,[call(len,[var(p(0))])]),var(v))),elem(var(p(0)),op(mod,[op(add,[elem(call(range,[call(len,[var(p(0))])]),var(v)),int(1)]),call(len,[var(p(0))])]))])]),bool(true))])), same_file('shoelace').
 % triangle
-hand_specific(_, 'triangle') :- file_has(field(field(var(p(0)),ortho),x)-elem(elem(var(v),int(0)),int(0))).
+hand_specific(_, 'triangle') :- file_has(field(field(var(p(0)),ortho),x)-elem(elem(var(v),int(0)),int(0))), same_file('triangle').
 % ===== graphics
 % butterfly_pattern
-hand_specific(_, 'butterfly_pattern') :- file_has(op(mul,[other(string),op(sub,[op(mul,[int(2),var(p(0))]),int(1)])])).
+hand_specific(_, 'butterfly_pattern') :- file_has(op(mul,[other(string),op(sub,[op(mul,[int(2),var(p(0))]),int(1)])])), same_file('butterfly_pattern').
 % vector3_for_2d_rendering
-hand_specific(_, 'vector3_for_2d_rendering') :- file_has(var(v)-op(mul,[op(fdiv,[op(mul,[var(p(0)),var(p(4))]),op(add,[var(p(2)),var(p(4))])]),var(p(3))])).
+hand_specific(_, 'vector3_for_2d_rendering') :- file_has(var(v)-op(mul,[op(fdiv,[op(mul,[var(p(0)),var(p(4))]),op(add,[var(p(2)),var(p(4))])]),var(p(3))])), same_file('vector3_for_2d_rendering').
 % ===== graphs
 % basic_graphs
-hand_specific(_, 'basic_graphs') :- file_has(op('not in',[elem(elem(var(p(0)),elem(var(v),int(-1))),var(v)),var(v)])).
+hand_specific(_, 'basic_graphs') :- file_has(op('not in',[elem(elem(var(p(0)),elem(var(v),int(-1))),var(v)),var(v)])), same_file('basic_graphs').
 % bidirectional_a_star
-hand_specific(_, 'bidirectional_a_star') :- file_has(var(v)-call(pop,[field(field(var(p(0)),bwd_astar),open_nodes),int(0)])).
+hand_specific(_, 'bidirectional_a_star') :- file_has(var(v)-call(pop,[field(field(var(p(0)),bwd_astar),open_nodes),int(0)])), same_file('bidirectional_a_star').
 % bidirectional_breadth_first_search
-hand_specific(_, 'bidirectional_breadth_first_search') :- file_has(var(v)-call(pop,[field(field(var(p(0)),bwd_bfs),node_queue),int(0)])).
+hand_specific(_, 'bidirectional_breadth_first_search') :- file_has(var(v)-call(pop,[field(field(var(p(0)),bwd_bfs),node_queue),int(0)])), same_file('bidirectional_breadth_first_search').
 % breadth_first_search_shortest_path
-hand_specific(_, 'breadth_first_search_shortest_path') :- file_has(op('not in',[elem(elem(field(var(p(0)),graph),var(v)),var(v)),var(v)])).
+hand_specific(_, 'breadth_first_search_shortest_path') :- file_has(op('not in',[elem(elem(field(var(p(0)),graph),var(v)),var(v)),var(v)])), same_file('breadth_first_search_shortest_path').
 % breadth_first_search_shortest_path_2
-hand_specific(_, 'breadth_first_search_shortest_path_2') :- file_has(elem(dict([pair(var(p(1)),int(0)),pair(var(p(2)),int(-1))]),var(p(2)))).
+hand_specific(_, 'breadth_first_search_shortest_path_2') :- file_has(elem(dict([pair(var(p(1)),int(0)),pair(var(p(2)),int(-1))]),var(p(2)))), same_file('breadth_first_search_shortest_path_2').
 % check_cycle
-hand_specific(_, 'check_cycle') :- file_has(op('not in',[elem(elem(var(p(0)),var(p(1))),var(v)),var(p(2))])).
+hand_specific(_, 'check_cycle') :- file_has(op('not in',[elem(elem(var(p(0)),var(p(1))),var(v)),var(p(2))])), same_file('check_cycle').
 % dijkstra_alternate
-hand_specific(_, 'dijkstra_alternate') :- file_has(var(v)-op(mul,[list([call(int,[other(float)])]),field(var(p(0)),vertices)])).
+hand_specific(_, 'dijkstra_alternate') :- file_has(var(v)-op(mul,[list([call(int,[other(float)])]),field(var(p(0)),vertices)])), same_file('dijkstra_alternate').
 % edmonds_blossom_algorithm
-hand_specific(_, 'edmonds_blossom_algorithm') :- file_has(elem(field(field(var(p(0)),aux_data),in_blossom),var(v))-bool(true)).
+hand_specific(_, 'edmonds_blossom_algorithm') :- file_has(elem(field(field(var(p(0)),aux_data),in_blossom),var(v))-bool(true)), same_file('edmonds_blossom_algorithm').
 % even_tree
-hand_specific(_, 'even_tree') :- file_has(var(v)-op(add,[var(v),call('$self',[elem(elem(var(v),var(p(0))),var(v))])])).
+hand_specific(_, 'even_tree') :- file_has(var(v)-op(add,[var(v),call('$self',[elem(elem(var(v),var(p(0))),var(v))])])), same_file('even_tree').
 % frequent_pattern_graph_miner
-hand_specific(_, 'frequent_pattern_graph_miner') :- file_has(var(v)-call(split,[elem(elem(var(p(0)),var(v)),var(v)),other(string)])).
+hand_specific(_, 'frequent_pattern_graph_miner') :- file_has(var(v)-call(split,[elem(elem(var(p(0)),var(v)),var(v)),other(string)])), same_file('frequent_pattern_graph_miner').
 % graph_centrality
-hand_specific(_, 'graph_centrality') :- file_has(var(v)-filter(var(p(0)),op(ne,[elem(elem(var(p(0)),var(v)),int(1)),call(float,[other(string)])]))).
+hand_specific(_, 'graph_centrality') :- file_has(var(v)-filter(var(p(0)),op(ne,[elem(elem(var(p(0)),var(v)),int(1)),call(float,[other(string)])]))), same_file('graph_centrality').
 % graph_list
-hand_specific(_, 'graph_list') :- file_has(elem(field(var(p(0)),adj_list),var(p(1)))-list([var(p(2))])).
+hand_specific(_, 'graph_list') :- file_has(elem(field(var(p(0)),adj_list),var(p(1)))-list([var(p(2))])), same_file('graph_list').
 % graph_peripherality
-hand_specific(_, 'graph_peripherality') :- file_has(var(v)-call(float,[call(sum,[var(v),var(v)])])).
+hand_specific(_, 'graph_peripherality') :- file_has(var(v)-call(float,[call(sum,[var(v),var(v)])])), same_file('graph_peripherality').
 % graphs_floyd_warshall
-hand_specific(_, 'graphs_floyd_warshall') :- file_has(op(ne,[elem(elem(var(p(0)),var(v)),var(v)),call(float,[other(string)])])).
+hand_specific(_, 'graphs_floyd_warshall') :- file_has(op(ne,[elem(elem(var(p(0)),var(v)),var(v)),call(float,[other(string)])])), same_file('graphs_floyd_warshall').
 % johnson
-hand_specific(_, 'johnson') :- file_has(tuple([elem(var(p(0)),var(v)),elem(var(v),var(v)),elem(var(v),var(v))])).
+hand_specific(_, 'johnson') :- file_has(tuple([elem(var(p(0)),var(v)),elem(var(v),var(v)),elem(var(v),var(v))])), same_file('johnson').
 % kahns_algorithm_long
-hand_specific(_, 'kahns_algorithm_long') :- file_has(var(v)-op(mul,[list([int(1)]),call(len,[var(p(0))])])).
+hand_specific(_, 'kahns_algorithm_long') :- file_has(var(v)-op(mul,[list([int(1)]),call(len,[var(p(0))])])), same_file('kahns_algorithm_long').
 % prim
-hand_specific(_, 'prim') :- file_has(elem(field(var(p(0)),edges),field(var(p(1)),id))-var(p(2))).
+hand_specific(_, 'prim') :- file_has(elem(field(var(p(0)),edges),field(var(p(1)),id))-var(p(2))), same_file('prim').
 % ===== greedy_methods
 % activity_selection
-hand_specific(_, 'activity_selection') :- file_has(op(ge,[elem(var(p(0)),var(v)),elem(var(p(1)),var(v))])).
-hand_specific(_, 'activity_selection') :- file_has(list([elem(call(sorted,[var(p(0))]),int(0))])).
+hand_specific(_, 'activity_selection') :- file_has(op(ge,[elem(var(p(0)),var(v)),elem(var(p(1)),var(v))])), same_file('activity_selection').
+hand_specific(_, 'activity_selection') :- file_has(list([elem(call(sorted,[var(p(0))]),int(0))])), same_file('activity_selection').
 % minimum_waiting_time
-hand_specific(_, 'minimum_waiting_time') :- file_has(call(enumerate,[call(sorted,[var(p(0))])])).
+hand_specific(_, 'minimum_waiting_time') :- file_has(call(enumerate,[call(sorted,[var(p(0))])])), same_file('minimum_waiting_time').
 % ===== linear_algebra
 % lib
-hand_specific(_, 'lib') :- file_has(elem(elem(field(var(p(0)),'__matrix'),var(p(1))),var(p(2)))-var(p(3))).
+hand_specific(_, 'lib') :- file_has(elem(elem(field(var(p(0)),'__matrix'),var(p(1))),var(p(2)))-var(p(3))), same_file('lib').
 % matrix_inversion
-hand_specific(_, 'matrix_inversion') :- file_has(call(tolist,[call(inv,[field(var(v),linalg),call(array,[var(v),var(p(0))])])])).
+hand_specific(_, 'matrix_inversion') :- file_has(call(tolist,[call(inv,[field(var(v),linalg),call(array,[var(v),var(p(0))])])])), same_file('matrix_inversion').
 % rayleigh_quotient
-hand_specific(_, 'rayleigh_quotient') :- file_has(call(array_equal,[var(v),var(p(0)),field(call(conjugate,[var(p(0))]),'T')])).
+hand_specific(_, 'rayleigh_quotient') :- file_has(call(array_equal,[var(v),var(p(0)),field(call(conjugate,[var(p(0))]),'T')])), same_file('rayleigh_quotient').
 % schur_complement
-hand_specific(_, 'schur_complement') :- file_has(op(sub,[var(p(2)),op(@,[op(@,[field(var(p(1)),'T'),var(v)]),var(p(1))])])).
+hand_specific(_, 'schur_complement') :- file_has(op(sub,[var(p(2)),op(@,[op(@,[field(var(p(1)),'T'),var(v)]),var(p(1))])])), same_file('schur_complement').
 % transformations_2d
-hand_specific(_, 'transformations_2d') :- file_has(var(v)-call(cos,[var(p(0))])).
+hand_specific(_, 'transformations_2d') :- file_has(var(v)-call(cos,[var(p(0))])), same_file('transformations_2d').
 % ===== machine_learning
 % apriori_algorithm
-hand_specific(_, 'apriori_algorithm') :- file_has(var(v)-map(var(p(0)),call(list,[elem(var(p(0)),var(v))]),bool(true))).
+hand_specific(_, 'apriori_algorithm') :- file_has(var(v)-map(var(p(0)),call(list,[elem(var(p(0)),var(v))]),bool(true))), same_file('apriori_algorithm').
 % astar
-hand_specific(_, 'astar') :- file_has(tuple([var(v),var(v)])-field(elem(call(fn,[var(p(0)),var(v)]),var(v)),position)).
+hand_specific(_, 'astar') :- file_has(tuple([var(v),var(v)])-field(elem(call(fn,[var(p(0)),var(v)]),var(v)),position)), same_file('astar').
 % data_transformations
-hand_specific(_, 'data_transformations') :- file_has(call(round,[op(fdiv,[op(sub,[var(v),var(v)]),var(v)]),var(p(1))])).
+hand_specific(_, 'data_transformations') :- file_has(call(round,[op(fdiv,[op(sub,[var(v),var(v)]),var(v)]),var(p(1))])), same_file('data_transformations').
 % gaussian_naive_bayes
-hand_specific(_, 'gaussian_naive_bayes') :- file_has(var(v)-op(mul,[int(100),call(accuracy_score,[])])).
+hand_specific(_, 'gaussian_naive_bayes') :- file_has(var(v)-op(mul,[int(100),call(accuracy_score,[])])), same_file('gaussian_naive_bayes').
 % gradient_boosting_regressor
-hand_specific(_, 'gradient_boosting_regressor') :- file_has(var(v)-call(slice,[field(var(v),iloc),other(none),other(none)])).
+hand_specific(_, 'gradient_boosting_regressor') :- file_has(var(v)-call(slice,[field(var(v),iloc),other(none),other(none)])), same_file('gradient_boosting_regressor').
 % k_nearest_neighbors
-hand_specific(_, 'k_nearest_neighbors') :- file_has(call(float,[call(norm,[field(var(v),linalg),op(sub,[var(p(0)),var(p(1))])])])).
+hand_specific(_, 'k_nearest_neighbors') :- file_has(call(float,[call(norm,[field(var(v),linalg),op(sub,[var(p(0)),var(p(1))])])])), same_file('k_nearest_neighbors').
+% mab
+hand_specific(_, 'mab') :- file_has(field(var(p(0)),total_counts)-op(add,[field(var(p(0)),total_counts),int(1)])), same_file('mab').
 % ordinary_least_squares_regression
-hand_specific(_, 'ordinary_least_squares_regression') :- file_has(call(sum,[var(v),op(pow,[op(sub,[var(p(0)),var(v)]),int(2)])])).
+hand_specific(_, 'ordinary_least_squares_regression') :- file_has(call(sum,[var(v),op(pow,[op(sub,[var(p(0)),var(v)]),int(2)])])), same_file('ordinary_least_squares_regression').
 % polynomial_regression
-hand_specific(_, 'polynomial_regression') :- file_has(field(var(p(0)),params)-op(@,[call(pinv,[field(var(v),linalg),var(v)]),var(p(2))])).
+hand_specific(_, 'polynomial_regression') :- file_has(field(var(p(0)),params)-op(@,[call(pinv,[field(var(v),linalg),var(v)]),var(p(2))])), same_file('polynomial_regression').
 % principle_component_analysis
-hand_specific(_, 'principle_component_analysis') :- file_has(var(v)-call(fit_transform,[var(v),var(p(0))])).
+hand_specific(_, 'principle_component_analysis') :- file_has(var(v)-call(fit_transform,[var(v),var(p(0))])), same_file('principle_component_analysis').
 % random_forest_classifier
-hand_specific(_, 'random_forest_classifier') :- file_has(var(v)-call('RandomForestClassifier',[])).
+hand_specific(_, 'random_forest_classifier') :- file_has(var(v)-call('RandomForestClassifier',[])), same_file('random_forest_classifier').
 % random_forest_regressor
-hand_specific(_, 'random_forest_regressor') :- file_has(var(v)-call(reshape,[var(v),call(len,[var(v)]),int(1)])).
+hand_specific(_, 'random_forest_regressor') :- file_has(var(v)-call(reshape,[var(v),call(len,[var(v)]),int(1)])), same_file('random_forest_regressor').
 % ridge_regression
-hand_specific(_, 'ridge_regression') :- file_has(call(mean,[var(v),call(abs,[var(v),op(sub,[var(p(1)),var(p(2))])])])).
+hand_specific(_, 'ridge_regression') :- file_has(call(mean,[var(v),call(abs,[var(v),op(sub,[var(p(1)),var(p(2))])])])), same_file('ridge_regression').
 % scoring_functions
-hand_specific(_, 'scoring_functions') :- file_has(var(v)-op(fdiv,[call(sum,[var(v),var(p(1))]),call(len,[var(p(0))])])).
+hand_specific(_, 'scoring_functions') :- file_has(var(v)-op(fdiv,[call(sum,[var(v),var(p(1))]),call(len,[var(p(0))])])), same_file('scoring_functions').
 % self_organizing_map
-hand_specific(_, 'self_organizing_map') :- file_has(call(pow,[var(v),op(sub,[elem(var(p(2)),var(v)),elem(elem(var(p(1)),int(0)),var(v))]),int(2)])).
+hand_specific(_, 'self_organizing_map') :- file_has(call(pow,[var(v),op(sub,[elem(var(p(2)),var(v)),elem(elem(var(p(1)),int(0)),var(v))]),int(2)])), same_file('self_organizing_map').
 % t_stochastic_neighbour_embedding
-hand_specific(_, 't_stochastic_neighbour_embedding') :- file_has(var(v)-op(sub,[op(mul,[var(v),var(v)]),op(mul,[var(p(2)),var(v)])])).
+hand_specific(_, 't_stochastic_neighbour_embedding') :- file_has(var(v)-op(sub,[op(mul,[var(v),var(v)]),op(mul,[var(p(2)),var(v)])])), same_file('t_stochastic_neighbour_embedding').
 % word_frequency_functions
-hand_specific(_, 'word_frequency_functions') :- file_has(call(len,[filter(var(v),op(in,[var(p(0)),elem(var(v),var(v))]))])).
+hand_specific(_, 'word_frequency_functions') :- file_has(call(len,[filter(var(v),op(in,[var(p(0)),elem(var(v),var(v))]))])), same_file('word_frequency_functions').
 % ===== maths
 % abs
-hand_specific(_, 'abs') :- file_has(op(eq,[call(abs,[elem(var(p(0)),var(v))]),call(abs,[var(v)])])).
+hand_specific(_, 'abs') :- file_has(op(eq,[call(abs,[elem(var(p(0)),var(v))]),call(abs,[var(v)])])), same_file('abs').
 % aliquot_sum
-hand_specific(_, 'aliquot_sum') :- file_has(call(range,[int(1),op(add,[op(div,[var(p(0)),int(2)]),int(1)])])), \+ file_has(var(v)-op(add,[var(v),op(div,[var(p(0)),var(v)])])), \+ file_has(op(eq,[var(v),var(p(0))])).
+hand_specific(_, 'aliquot_sum') :- file_has(call(range,[int(1),op(add,[op(div,[var(p(0)),int(2)]),int(1)])])), \+ file_has(var(v)-op(add,[var(v),op(div,[var(p(0)),var(v)])])), \+ file_has(op(eq,[var(v),var(p(0))])), same_file('aliquot_sum').
 % allocation_number
-hand_specific(_, 'allocation_number') :- file_has(fstring([op(add,[op(mul,[var(v),op(div,[var(p(0)),var(p(1))])]),int(1)]),var(v)])).
+hand_specific(_, 'allocation_number') :- file_has(fstring([op(add,[op(mul,[var(v),op(div,[var(p(0)),var(p(1))])]),int(1)]),var(v)])), same_file('allocation_number').
 % alternating_harmonic_series
-hand_specific(_, 'alternating_harmonic_series') :- file_has(op(eq,[call(abs,[op(sub,[elem(call(enumerate,[var(p(0))]),var(v)),var(v)])]),other(float)])).
+hand_specific(_, 'alternating_harmonic_series') :- file_has(op(eq,[call(abs,[op(sub,[elem(call(enumerate,[var(p(0))]),var(v)),var(v)])]),other(float)])), same_file('alternating_harmonic_series').
 % arc_length
-hand_specific(_, 'arc_length') :- file_has(op(mul,[op(mul,[op(mul,[int(2),var(v)]),var(p(1))]),op(fdiv,[var(p(0)),int(360)])])).
+hand_specific(_, 'arc_length') :- file_has(op(mul,[op(mul,[op(mul,[int(2),var(v)]),var(p(1))]),op(fdiv,[var(p(0)),int(360)])])), same_file('arc_length').
 % area
-hand_specific(_, 'area') :- file_has(var(v)-op(fdiv,[op(add,[op(add,[var(p(0)),var(p(1))]),var(p(2))]),int(2)])).
+hand_specific(_, 'area') :- file_has(var(v)-op(fdiv,[op(add,[op(add,[var(p(0)),var(p(1))]),var(p(2))]),int(2)])), same_file('area').
 % area_under_curve
-hand_specific(_, 'area_under_curve') :- file_has(op(add,[op(pow,[var(p(0)),int(3)]),op(pow,[var(p(0)),int(2)])])).
+hand_specific(_, 'area_under_curve') :- file_has(op(add,[op(pow,[var(p(0)),int(3)]),op(pow,[var(p(0)),int(2)])])), same_file('area_under_curve').
 % arithmetic
-hand_specific(_, 'arithmetic') :- file_has(var(v)-op(sub,[elem(var(p(0)),int(1)),elem(var(p(0)),int(0))])).
+hand_specific(_, 'arithmetic') :- file_has(var(v)-op(sub,[elem(var(p(0)),int(1)),elem(var(p(0)),int(0))])), same_file('arithmetic').
 % autocorrelation
-hand_specific(_, 'autocorrelation') :- file_has(op(fdiv,[op(fdiv,[var(v),call(len,[var(p(0))])]),op(fdiv,[var(v),call(len,[var(p(0))])])])).
+hand_specific(_, 'autocorrelation') :- file_has(op(fdiv,[op(fdiv,[var(v),call(len,[var(p(0))])]),op(fdiv,[var(v),call(len,[var(p(0))])])])), same_file('autocorrelation').
 % average_absolute_deviation
-hand_specific(_, 'average_absolute_deviation') :- file_has(call(sum,[map(var(p(0)),call(abs,[op(sub,[elem(var(p(0)),var(v)),var(v)])]),bool(true))])).
+hand_specific(_, 'average_absolute_deviation') :- file_has(call(sum,[map(var(p(0)),call(abs,[op(sub,[elem(var(p(0)),var(v)),var(v)])]),bool(true))])), same_file('average_absolute_deviation').
 % average_mean
-hand_specific(_, 'average_mean') :- file_has(var(v)-op(add,[var(v),elem(var(p(0)),var(v))])), \+ file_has(var(v)-call(ord,[elem(var(p(0)),var(v))])), \+ file_has(var(p(1))-op(add,[var(p(1)),var(p(0))])), \+ file_has(var(v)-call(find,[field(var(v),ascii_uppercase),elem(var(p(0)),var(v))])), \+ file_has(elem(var(v),var(v))-call(fn,[var(p(0)),var(v),var(v)])), \+ file_has(op(eq,[elem(var(p(0)),op(add,[var(v),int(1)])),elem(var(p(0)),var(v))])), \+ file_has(op(ge,[elem(var(p(0)),var(v)),other(string)])), \+ file_has(var(p(0))-call(fn,[call(upper,[var(p(0))])])), \+ file_has(elem(var(p(0)),op(add,[var(p(1)),other(string)]))-tail(call(bin,[var(p(2))]),2)), \+ file_has(var(p(0))-call(slice,[var(p(0)),op(add,[var(v),int(1)]),other(none)])), \+ file_has(tuple([var(v),var(v),var(v)])-call('$self',[var(p(0)),var(p(1)),var(v)])), \+ file_has(tuple([var(v),var(v),var(v)])-call(fn,[var(p(0)),var(v),var(v),var(v)])), \+ file_has(var(v)-call(index,[var(p(0)),call(min,[var(p(0))])])), \+ file_has(call(kernel,[var(p(0)),elem(var(p(1)),var(v)),elem(var(p(1)),var(v))])), \+ file_has(var(v)-op(sub,[elem(var(p(0)),int(1)),elem(var(p(0)),int(0))])), \+ file_has(var(v)-op(fdiv,[op(sub,[var(p(2)),var(p(1))]),op(sub,[var(v),int(1)])])), \+ file_has(tuple([var(v),elem(var(p(0)),var(v))])-call(divmod,[var(v),int(10)])), \+ file_has(map(call(enumerate,[var(p(0))]),op(add,[var(v),elem(var(p(1)),var(v))]),bool(true))), \+ file_has(elem(var(v),var(v))-op(add,[elem(var(p(0)),var(v)),elem(var(p(2)),var(v))])).
+hand_specific(_, 'average_mean') :- file_has(var(v)-op(add,[var(v),elem(var(p(0)),var(v))])), \+ file_has(var(v)-call(ord,[elem(var(p(0)),var(v))])), \+ file_has(var(p(1))-op(add,[var(p(1)),var(p(0))])), \+ file_has(var(v)-call(find,[field(var(v),ascii_uppercase),elem(var(p(0)),var(v))])), \+ file_has(elem(var(v),var(v))-call(fn,[var(p(0)),var(v),var(v)])), \+ file_has(op(eq,[elem(var(p(0)),op(add,[var(v),int(1)])),elem(var(p(0)),var(v))])), \+ file_has(op(ge,[elem(var(p(0)),var(v)),other(string)])), \+ file_has(var(p(0))-call(fn,[call(upper,[var(p(0))])])), \+ file_has(elem(var(p(0)),op(add,[var(p(1)),other(string)]))-tail(call(bin,[var(p(2))]),2)), \+ file_has(var(p(0))-call(slice,[var(p(0)),op(add,[var(v),int(1)]),other(none)])), \+ file_has(tuple([var(v),var(v),var(v)])-call('$self',[var(p(0)),var(p(1)),var(v)])), \+ file_has(tuple([var(v),var(v),var(v)])-call(fn,[var(p(0)),var(v),var(v),var(v)])), \+ file_has(var(v)-call(index,[var(p(0)),call(min,[var(p(0))])])), \+ file_has(call(kernel,[var(p(0)),elem(var(p(1)),var(v)),elem(var(p(1)),var(v))])), \+ file_has(var(v)-op(sub,[elem(var(p(0)),int(1)),elem(var(p(0)),int(0))])), \+ file_has(var(v)-op(fdiv,[op(sub,[var(p(2)),var(p(1))]),op(sub,[var(v),int(1)])])), \+ file_has(tuple([var(v),elem(var(p(0)),var(v))])-call(divmod,[var(v),int(10)])), \+ file_has(map(call(enumerate,[var(p(0))]),op(add,[var(v),elem(var(p(1)),var(v))]),bool(true))), \+ file_has(elem(var(v),var(v))-op(add,[elem(var(p(0)),var(v)),elem(var(p(2)),var(v))])), same_file('average_mean').
 % average_median
-hand_specific(_, 'average_median') :- file_has(elem(call(sorted,[var(p(0))]),op(div,[call(len,[call(sorted,[var(p(0))])]),int(2)]))).
+hand_specific(_, 'average_median') :- file_has(elem(call(sorted,[var(p(0))]),op(div,[call(len,[call(sorted,[var(p(0))])]),int(2)]))), same_file('average_median').
 % bearing
-hand_specific(_, 'bearing') :- file_has(var(v)-call(float,[elem(var(p(0)),int(0))])).
+hand_specific(_, 'bearing') :- file_has(var(v)-call(float,[elem(var(p(0)),int(0))])), same_file('bearing').
 % bell_numbers
-hand_specific(_, 'bell_numbers') :- file_has(op(in,[var(p(1)),other(set)])).
+hand_specific(_, 'bell_numbers') :- file_has(op(in,[var(p(1)),other(set)])), same_file('bell_numbers').
 % binary_multiplication
-hand_specific(_, 'binary_multiplication') :- file_has(var(v)-op(mod,[op(add,[op(mod,[var(v),var(p(2))]),op(mod,[var(p(0)),var(p(2))])]),var(p(2))])).
+hand_specific(_, 'binary_multiplication') :- file_has(var(v)-op(mod,[op(add,[op(mod,[var(v),var(p(2))]),op(mod,[var(p(0)),var(p(2))])]),var(p(2))])), same_file('binary_multiplication').
 % binomial_distribution
-hand_specific(_, 'binomial_distribution') :- file_has(var(v)-call(float,[call(factorial,[var(p(1))])])).
+hand_specific(_, 'binomial_distribution') :- file_has(var(v)-call(float,[call(factorial,[var(p(1))])])), same_file('binomial_distribution').
 % binomial_expansion
-hand_specific(_, 'binomial_expansion') :- file_has(var(v)-call(abs,[var(p(2))])).
+hand_specific(_, 'binomial_expansion') :- file_has(var(v)-call(abs,[var(p(2))])), same_file('binomial_expansion').
 % brent_method
-hand_specific(_, 'brent_method') :- file_has(op(eq,[call(abs,[op(sub,[var(p(2)),var(p(1))])]),var(p(3))])).
+hand_specific(_, 'brent_method') :- file_has(op(eq,[call(abs,[op(sub,[var(p(2)),var(p(1))])]),var(p(3))])), same_file('brent_method').
 % ceil
-hand_specific(_, 'ceil') :- file_has(op(ge,[int(0),op(sub,[var(p(0)),call(int,[var(p(0))])])])).
+hand_specific(_, 'ceil') :- file_has(op(ge,[int(0),op(sub,[var(p(0)),call(int,[var(p(0))])])])), same_file('ceil').
 % chebyshev_distance
-hand_specific(_, 'chebyshev_distance') :- file_has(call(max,[map(call(zip,[var(p(0)),var(p(1))]),call(abs,[op(sub,[var(v),var(v)])]),bool(true))])).
+hand_specific(_, 'chebyshev_distance') :- file_has(call(max,[map(call(zip,[var(p(0)),var(p(1))]),call(abs,[op(sub,[var(v),var(v)])]),bool(true))])), same_file('chebyshev_distance').
 % chinese_remainder_theorem
-hand_specific(_, 'chinese_remainder_theorem') :- file_has(var(v)-call(fn,[var(p(2)),var(p(0))])).
+hand_specific(_, 'chinese_remainder_theorem') :- file_has(var(v)-call(fn,[var(p(2)),var(p(0))])), same_file('chinese_remainder_theorem').
 % decimal_isolate
-hand_specific(_, 'decimal_isolate') :- file_has(call(round,[op(sub,[var(p(0)),call(int,[var(p(0))])]),var(p(1))])).
+hand_specific(_, 'decimal_isolate') :- file_has(call(round,[op(sub,[var(p(0)),call(int,[var(p(0))])]),var(p(1))])), same_file('decimal_isolate').
 % digital_root
-hand_specific(_, 'digital_root') :- file_has(call(sum,[map(call(str,[var(p(0))]),call(int,[elem(call(str,[var(p(0))]),var(v))]),bool(true))])), file_has(var(p(0))-call(abs,[var(p(0))])).
+hand_specific(_, 'digital_root') :- file_has(call(sum,[map(call(str,[var(p(0))]),call(int,[elem(call(str,[var(p(0))]),var(v))]),bool(true))])), file_has(var(p(0))-call(abs,[var(p(0))])), same_file('digital_root').
 % disarum_number
-hand_specific(_, 'disarum_number') :- file_has(call(sum,[map(call(enumerate,[var(v)]),op(pow,[call(int,[var(v)]),op(add,[var(v),int(1)])]),bool(true))])).
+hand_specific(_, 'disarum_number') :- file_has(call(sum,[map(call(enumerate,[var(v)]),op(pow,[call(int,[var(v)]),op(add,[var(v),int(1)])]),bool(true))])), same_file('disarum_number').
 % double_factorial
-hand_specific(_, 'double_factorial') :- file_has(call(range,[var(p(0)),int(0),int(-2)])).
+hand_specific(_, 'double_factorial') :- file_has(call(range,[var(p(0)),int(0),int(-2)])), same_file('double_factorial').
 % euclidean_distance
-hand_specific(_, 'euclidean_distance') :- file_has(call(sum,[var(v),op(pow,[op(sub,[call(asarray,[var(v),var(p(0))]),call(asarray,[var(v),var(p(1))])]),int(2)])])).
+hand_specific(_, 'euclidean_distance') :- file_has(call(sum,[var(v),op(pow,[op(sub,[call(asarray,[var(v),var(p(0))]),call(asarray,[var(v),var(p(1))])]),int(2)])])), same_file('euclidean_distance').
 % fast_inverse_sqrt
-hand_specific(_, 'fast_inverse_sqrt') :- file_has(call(unpack,[var(v),other(string),call(pack,[var(v),other(string),var(p(0))])])).
+hand_specific(_, 'fast_inverse_sqrt') :- file_has(call(unpack,[var(v),other(string),call(pack,[var(v),other(string),var(p(0))])])), same_file('fast_inverse_sqrt').
 % fermat_little_theorem
-hand_specific(_, 'fermat_little_theorem') :- file_has(call(fn,[var(v),op(sub,[var(v),int(2)]),var(v)])).
+hand_specific(_, 'fermat_little_theorem') :- file_has(call(fn,[var(v),op(sub,[var(v),int(2)]),var(v)])), same_file('fermat_little_theorem').
 % find_min
-hand_specific(_, 'find_min') :- file_has(var(v)-call(min,[var(v),elem(var(p(0)),var(v))])).
+hand_specific(_, 'find_min') :- file_has(var(v)-call(min,[var(v),elem(var(p(0)),var(v))])), same_file('find_min').
 % first_fundamental_form
-hand_specific(_, 'first_fundamental_form') :- file_has(var(v)-call(sympify,[var(v),var(p(0))])).
+hand_specific(_, 'first_fundamental_form') :- file_has(var(v)-call(sympify,[var(v),var(p(0))])), same_file('first_fundamental_form').
 % floor
-hand_specific(_, 'floor') :- file_has(op(ge,[op(sub,[var(p(0)),call(int,[var(p(0))])]),int(0)])).
+hand_specific(_, 'floor') :- file_has(op(ge,[op(sub,[var(p(0)),call(int,[var(p(0))])]),int(0)])), same_file('floor').
 % gaussian
-hand_specific(_, 'gaussian') :- file_has(call(sqrt,[op(mul,[op(mul,[int(2),var(v)]),op(pow,[var(p(2)),int(2)])])])).
+hand_specific(_, 'gaussian') :- file_has(call(sqrt,[op(mul,[op(mul,[int(2),var(v)]),op(pow,[var(p(2)),int(2)])])])), same_file('gaussian').
 % gcd_of_n_numbers
-hand_specific(_, 'gcd_of_n_numbers') :- file_has(elem(var(p(1)),var(p(2)))-op(add,[elem(var(p(1)),var(p(2))),int(1)])).
+hand_specific(_, 'gcd_of_n_numbers') :- file_has(elem(var(p(1)),var(p(2)))-op(add,[elem(var(p(1)),var(p(2))),int(1)])), same_file('gcd_of_n_numbers').
 % geometric_mean
-hand_specific(_, 'geometric_mean') :- file_has(var(v)-op(pow,[call(abs,[var(v)]),op(fdiv,[int(1),call(len,[var(v)])])])).
+hand_specific(_, 'geometric_mean') :- file_has(var(v)-op(pow,[call(abs,[var(v)]),op(fdiv,[int(1),call(len,[var(v)])])])), same_file('geometric_mean').
 % germain_primes
-hand_specific(_, 'germain_primes') :- file_has(call(is_prime,[op(add,[op(mul,[int(2),var(p(0))]),int(1)])])).
+hand_specific(_, 'germain_primes') :- file_has(call(is_prime,[op(add,[op(mul,[int(2),var(p(0))]),int(1)])])), same_file('germain_primes').
 % harshad_numbers
-hand_specific(_, 'harshad_numbers') :- file_has(call(sum,[map(var(v),call(int,[elem(var(v),var(v)),var(p(1))]),bool(true))])).
+hand_specific(_, 'harshad_numbers') :- file_has(call(sum,[map(var(v),call(int,[elem(var(v),var(v)),var(p(1))]),bool(true))])), same_file('harshad_numbers').
 % is_ip_v4_address_valid
-hand_specific(_, 'is_ip_v4_address_valid') :- file_has(op(ne,[call(len,[call(str,[var(v)])]),call(len,[elem(var(v),var(v))])])).
+hand_specific(_, 'is_ip_v4_address_valid') :- file_has(op(ne,[call(len,[call(str,[var(v)])]),call(len,[elem(var(v),var(v))])])), same_file('is_ip_v4_address_valid').
 % is_ipv6_address_valid
-hand_specific(_, 'is_ipv6_address_valid') :- file_has(tuple([var(v),var(v)])-call(split,[var(p(0)),other(string),int(1)])).
+hand_specific(_, 'is_ipv6_address_valid') :- file_has(tuple([var(v),var(v)])-call(split,[var(p(0)),other(string),int(1)])), same_file('is_ipv6_address_valid').
 % is_square_free
-hand_specific(_, 'is_square_free') :- file_has(op(eq,[call(len,[call(set,[var(p(0))])]),call(len,[var(p(0))])])).
+hand_specific(_, 'is_square_free') :- file_has(op(eq,[call(len,[call(set,[var(p(0))])]),call(len,[var(p(0))])])), same_file('is_square_free').
 % jaccard_similarity
-hand_specific(_, 'jaccard_similarity') :- file_has(call(len,[call(intersection,[var(p(0)),var(p(1))])])).
+hand_specific(_, 'jaccard_similarity') :- file_has(call(len,[call(intersection,[var(p(0)),var(p(1))])])), same_file('jaccard_similarity').
 % kaprekar_constant
-hand_specific(_, 'kaprekar_constant') :- file_has(op(gt,[call(len,[call(set,[call(zfill,[call(str,[var(p(0))]),int(4)])])]),int(1)])).
+hand_specific(_, 'kaprekar_constant') :- file_has(op(gt,[call(len,[call(set,[call(zfill,[call(str,[var(p(0))]),int(4)])])]),int(1)])), same_file('kaprekar_constant').
 % kaprekar_number
-hand_specific(_, 'kaprekar_number') :- file_has(op(and,[op(gt,[var(v),int(0)]),op(eq,[op(add,[var(v),var(v)]),var(p(0))])])).
+hand_specific(_, 'kaprekar_number') :- file_has(op(and,[op(gt,[var(v),int(0)]),op(eq,[op(add,[var(v),var(v)]),var(p(0))])])), same_file('kaprekar_number').
 % krishnamurthy_number
-hand_specific(_, 'krishnamurthy_number') :- file_has(op(not,[op(in,[var(p(0)),tuple([int(0),int(1)])])])), file_has(op(eq,[var(v),var(p(0))])).
+hand_specific(_, 'krishnamurthy_number') :- file_has(op(not,[op(in,[var(p(0)),tuple([int(0),int(1)])])])), file_has(op(eq,[var(v),var(p(0))])), same_file('krishnamurthy_number').
 % laplace_transformation
-hand_specific(_, 'laplace_transformation') :- file_has(var(v)-op(mul,[var(p(0)),call(exp,[var(v),op(mul,[op(neg,[var(p(1))]),var(v)])])])).
+hand_specific(_, 'laplace_transformation') :- file_has(var(v)-op(mul,[var(p(0)),call(exp,[var(v),op(mul,[op(neg,[var(p(1))]),var(v)])])])), same_file('laplace_transformation').
 % largest_of_very_large_numbers
-hand_specific(_, 'largest_of_very_large_numbers') :- file_has(op('not in',[int(0),tuple([var(p(0)),var(p(1))])])).
+hand_specific(_, 'largest_of_very_large_numbers') :- file_has(op('not in',[int(0),tuple([var(p(0)),var(p(1))])])), same_file('largest_of_very_large_numbers').
 % liouville_lambda
-hand_specific(_, 'liouville_lambda') :- file_has(op(mod,[call(len,[call(prime_factors,[var(p(0))])]),int(2)])).
+hand_specific(_, 'liouville_lambda') :- file_has(op(mod,[call(len,[call(prime_factors,[var(p(0))])]),int(2)])), same_file('liouville_lambda').
 % lucas_series
-hand_specific(_, 'lucas_series') :- file_has(var(p(0))-op(sub,[var(p(0)),int(2)])), file_has(var(v)-int(2)).
+hand_specific(_, 'lucas_series') :- file_has(var(p(0))-op(sub,[var(p(0)),int(2)])), file_has(var(v)-int(2)), same_file('lucas_series').
 % maclaurin_series
-hand_specific(_, 'maclaurin_series') :- file_has(var(p(0))-op(sub,[var(p(0)),op(mul,[op(mul,[int(2),var(v)]),var(v)])])).
+hand_specific(_, 'maclaurin_series') :- file_has(var(p(0))-op(sub,[var(p(0)),op(mul,[op(mul,[int(2),var(v)]),var(v)])])), same_file('maclaurin_series').
 % manhattan_distance
-hand_specific(_, 'manhattan_distance') :- file_has(call(sum,[map(call(zip,[var(p(0)),var(p(1))]),call(abs,[op(sub,[var(v),var(v)])]),bool(true))])).
+hand_specific(_, 'manhattan_distance') :- file_has(call(sum,[map(call(zip,[var(p(0)),var(p(1))]),call(abs,[op(sub,[var(v),var(v)])]),bool(true))])), same_file('manhattan_distance').
 % matrix_exponentiation
-hand_specific(_, 'matrix_exponentiation') :- file_has(var(v)-call(fn,[var(v),op(sub,[var(p(0)),int(2)])])).
+hand_specific(_, 'matrix_exponentiation') :- file_has(var(v)-call(fn,[var(v),op(sub,[var(p(0)),int(2)])])), same_file('matrix_exponentiation').
 % minkowski_distance
-hand_specific(_, 'minkowski_distance') :- file_has(op(pow,[var(v),op(fdiv,[int(1),var(p(2))])])).
+hand_specific(_, 'minkowski_distance') :- file_has(op(pow,[var(v),op(fdiv,[int(1),var(p(2))])])), same_file('minkowski_distance').
 % mobius_function
-hand_specific(_, 'mobius_function') :- file_has(var(v)-call(prime_factors,[var(p(0))])).
+hand_specific(_, 'mobius_function') :- file_has(var(v)-call(prime_factors,[var(p(0))])), same_file('mobius_function').
 % modular_division
-hand_specific(_, 'modular_division') :- file_has(op(mod,[op(mul,[var(p(1)),call(fn,[var(p(0)),var(p(2))])]),var(p(2))])).
+hand_specific(_, 'modular_division') :- file_has(op(mod,[op(mul,[var(p(1)),call(fn,[var(p(0)),var(p(2))])]),var(p(2))])), same_file('modular_division').
 % monte_carlo
-hand_specific(_, 'monte_carlo') :- file_has(call(sqrt,[op(sub,[other(float),op(mul,[var(p(0)),var(p(0))])])])).
+hand_specific(_, 'monte_carlo') :- file_has(call(sqrt,[op(sub,[other(float),op(mul,[var(p(0)),var(p(0))])])])), same_file('monte_carlo').
 % monte_carlo_dice
-hand_specific(_, 'monte_carlo_dice') :- file_has(call(round,[op(fdiv,[op(mul,[var(v),int(100)]),var(p(0))]),int(2)])).
+hand_specific(_, 'monte_carlo_dice') :- file_has(call(round,[op(fdiv,[op(mul,[var(v),int(100)]),var(p(0))]),int(2)])), same_file('monte_carlo_dice').
 % next_prime_number
-hand_specific(_, 'next_prime_number') :- file_has(var(v)-op(add,[var(v),int(6)])).
+hand_specific(_, 'next_prime_number') :- file_has(var(v)-op(add,[var(v),int(6)])), same_file('next_prime_number').
 % numerical_integration
-hand_specific(_, 'numerical_integration') :- file_has(op(pow,[var(p(0)),int(3)])).
+hand_specific(_, 'numerical_integration') :- file_has(op(pow,[var(p(0)),int(3)])), same_file('numerical_integration').
 % perfect_number
-hand_specific(_, 'perfect_number') :- file_has(filter(call(range,[int(1),op(add,[var(p(0)),int(1)])]),call(fn,[elem(call(range,[int(1),op(add,[var(p(0)),int(1)])]),var(v))]))).
-hand_specific(_, 'perfect_number') :- file_has(call(range,[int(1),op(add,[op(div,[var(p(0)),int(2)]),int(1)])])), file_has(op(eq,[var(v),var(p(0))])).
+hand_specific(_, 'perfect_number') :- file_has(filter(call(range,[int(1),op(add,[var(p(0)),int(1)])]),call(fn,[elem(call(range,[int(1),op(add,[var(p(0)),int(1)])]),var(v))]))), same_file('perfect_number').
+hand_specific(_, 'perfect_number') :- file_has(call(range,[int(1),op(add,[op(div,[var(p(0)),int(2)]),int(1)])])), file_has(op(eq,[var(v),var(p(0))])), same_file('perfect_number').
 % perfect_square
-hand_specific(_, 'perfect_square') :- file_has(op(eq,[op(mul,[call(sqrt,[var(v),var(p(0))]),call(sqrt,[var(v),var(p(0))])]),var(p(0))])).
+hand_specific(_, 'perfect_square') :- file_has(op(eq,[op(mul,[call(sqrt,[var(v),var(p(0))]),call(sqrt,[var(v),var(p(0))])]),var(p(0))])), same_file('perfect_square').
 % persistence
-hand_specific(_, 'persistence') :- file_has(var(v)-call(str,[var(p(0))])), file_has(var(v)-map(var(v),call(int,[elem(var(v),var(v))]),bool(true))).
+hand_specific(_, 'persistence') :- file_has(var(v)-call(str,[var(p(0))])), file_has(var(v)-map(var(v),call(int,[elem(var(v),var(v))]),bool(true))), same_file('persistence').
 % points_are_collinear_3d
-hand_specific(_, 'points_are_collinear_3d') :- file_has(var(v)-op(sub,[elem(var(p(1)),int(0)),elem(var(p(0)),int(0))])).
+hand_specific(_, 'points_are_collinear_3d') :- file_has(var(v)-op(sub,[elem(var(p(1)),int(0)),elem(var(p(0)),int(0))])), same_file('points_are_collinear_3d').
 % prime_sieve_eratosthenes
-hand_specific(_, 'prime_sieve_eratosthenes') :- file_has(filter(call(range,[int(2),op(add,[var(p(0)),int(1)])]),elem(op(mul,[list([bool(true)]),op(add,[var(p(0)),int(1)])]),elem(call(range,[int(2),op(add,[var(p(0)),int(1)])]),var(v))))).
+hand_specific(_, 'prime_sieve_eratosthenes') :- file_has(filter(call(range,[int(2),op(add,[var(p(0)),int(1)])]),elem(op(mul,[list([bool(true)]),op(add,[var(p(0)),int(1)])]),elem(call(range,[int(2),op(add,[var(p(0)),int(1)])]),var(v))))), same_file('prime_sieve_eratosthenes').
 % primelib
-hand_specific(_, 'primelib') :- file_has(call(gcd_by_iterative,[call(abs,[var(p(0))]),call(abs,[var(p(1))])])).
+hand_specific(_, 'primelib') :- file_has(call(gcd_by_iterative,[call(abs,[var(p(0))]),call(abs,[var(p(1))])])), same_file('primelib').
 % print_multiplication_table
-hand_specific(_, 'print_multiplication_table') :- file_has(call(join,[other(string),map(call(range,[int(1),op(add,[var(p(1)),int(1)])]),fstring([var(p(0)),elem(call(range,[int(1),op(add,[var(p(1)),int(1)])]),var(v)),op(mul,[var(p(0)),elem(call(range,[int(1),op(add,[var(p(1)),int(1)])]),var(v))])]),bool(true))])).
+hand_specific(_, 'print_multiplication_table') :- file_has(call(join,[other(string),map(call(range,[int(1),op(add,[var(p(1)),int(1)])]),fstring([var(p(0)),elem(call(range,[int(1),op(add,[var(p(1)),int(1)])]),var(v)),op(mul,[var(p(0)),elem(call(range,[int(1),op(add,[var(p(1)),int(1)])]),var(v))])]),bool(true))])), same_file('print_multiplication_table').
 % proper_fractions
-hand_specific(_, 'proper_fractions') :- file_has(call(gcd,[var(v),var(p(0))])).
+hand_specific(_, 'proper_fractions') :- file_has(call(gcd,[var(v),var(p(0))])), same_file('proper_fractions').
 % pythagoras
-hand_specific(_, 'pythagoras') :- file_has(call(abs,[op(add,[op(add,[op(pow,[op(sub,[field(var(p(1)),x),field(var(p(0)),x)]),int(2)]),op(pow,[op(sub,[field(var(p(1)),y),field(var(p(0)),y)]),int(2)])]),op(pow,[op(sub,[field(var(p(1)),z),field(var(p(0)),z)]),int(2)])])])).
+hand_specific(_, 'pythagoras') :- file_has(call(abs,[op(add,[op(add,[op(pow,[op(sub,[field(var(p(1)),x),field(var(p(0)),x)]),int(2)]),op(pow,[op(sub,[field(var(p(1)),y),field(var(p(0)),y)]),int(2)])]),op(pow,[op(sub,[field(var(p(1)),z),field(var(p(0)),z)]),int(2)])])])), same_file('pythagoras').
 % quadratic_equations_complex_numbers
-hand_specific(_, 'quadratic_equations_complex_numbers') :- file_has(var(v)-op(sub,[op(mul,[var(p(1)),var(p(1))]),op(mul,[op(mul,[int(4),var(p(0))]),var(p(2))])])).
+hand_specific(_, 'quadratic_equations_complex_numbers') :- file_has(var(v)-op(sub,[op(mul,[var(p(1)),var(p(1))]),op(mul,[op(mul,[int(4),var(p(0))]),var(p(2))])])), same_file('quadratic_equations_complex_numbers').
 % radians
-hand_specific(_, 'radians') :- file_has(op(fdiv,[var(p(0)),op(fdiv,[int(180),var(v)])])).
+hand_specific(_, 'radians') :- file_has(op(fdiv,[var(p(0)),op(fdiv,[int(180),var(v)])])), same_file('radians').
 % recursive_digit_sum
-hand_specific(_, 'recursive_digit_sum') :- file_has(call(sum,[map(var(p(0)),call(int,[elem(var(p(0)),var(v))]),bool(true))])).
+hand_specific(_, 'recursive_digit_sum') :- file_has(call(sum,[map(var(p(0)),call(int,[elem(var(p(0)),var(v))]),bool(true))])), same_file('recursive_digit_sum').
 % remove_digit
-hand_specific(_, 'remove_digit') :- file_has(var(v)-call(str,[call(abs,[var(p(0))])])).
+hand_specific(_, 'remove_digit') :- file_has(var(v)-call(str,[call(abs,[var(p(0))])])), same_file('remove_digit').
 % secant_method
-hand_specific(_, 'secant_method') :- file_has(op(sub,[op(mul,[int(8),var(p(0))]),op(mul,[int(2),call(exp,[op(neg,[var(p(0))])])])])).
+hand_specific(_, 'secant_method') :- file_has(op(sub,[op(mul,[int(8),var(p(0))]),op(mul,[int(2),call(exp,[op(neg,[var(p(0))])])])])), same_file('secant_method').
 % segmented_sieve
-hand_specific(_, 'segmented_sieve') :- file_has(var(v)-call(min,[op(add,[var(v),var(v)]),var(p(0))])).
+hand_specific(_, 'segmented_sieve') :- file_has(var(v)-call(min,[op(add,[var(v),var(v)]),var(p(0))])), same_file('segmented_sieve').
 % sigmoid
-hand_specific(_, 'sigmoid') :- file_has(op(fdiv,[int(1),op(add,[call(exp,[var(v),op(neg,[var(p(0))])]),int(1)])])), \+ file_has(call(dot,[var(v),field(var(p(1)),'T'),op(sub,[var(v),var(p(2))])])), \+ file_has(op(mul,[var(p(0)),call(fn,[op(mul,[other(float),var(p(0))])])])), \+ file_has(op(mul,[var(p(0)),call(fn,[op(mul,[var(p(1)),var(p(0))])])])), \+ file_has(call(asmatrix,[var(v),call(dot,[var(v),field(var(p(1)),'T'),var(v)])])), \+ file_has(var(v)-op(sub,[op(fdiv,[var(p(0)),int(100)]),var(v)])), \+ file_has(call(fn,[field(var(p(0)),layer_between_input_and_first_hidden_layer)])).
+hand_specific(_, 'sigmoid') :- file_has(op(fdiv,[int(1),op(add,[call(exp,[var(v),op(neg,[var(p(0))])]),int(1)])])), \+ file_has(call(dot,[var(v),field(var(p(1)),'T'),op(sub,[var(v),var(p(2))])])), \+ file_has(op(mul,[var(p(0)),call(fn,[op(mul,[other(float),var(p(0))])])])), \+ file_has(op(mul,[var(p(0)),call(fn,[op(mul,[var(p(1)),var(p(0))])])])), \+ file_has(call(asmatrix,[var(v),call(dot,[var(v),field(var(p(1)),'T'),var(v)])])), \+ file_has(var(v)-op(sub,[op(fdiv,[var(p(0)),int(100)]),var(v)])), \+ file_has(call(fn,[field(var(p(0)),layer_between_input_and_first_hidden_layer)])), same_file('sigmoid').
 % simpson_rule
-hand_specific(_, 'simpson_rule') :- file_has(var(v)-op(mul,[op(sub,[var(p(0)),int(0)]),op(sub,[var(p(0)),int(0)])])).
+hand_specific(_, 'simpson_rule') :- file_has(var(v)-op(mul,[op(sub,[var(p(0)),int(0)]),op(sub,[var(p(0)),int(0)])])), same_file('simpson_rule').
 % single_indeterminate_operations
-hand_specific(_, 'single_indeterminate_operations') :- file_has(call('Polynomial',[op(add,[field(var(p(0)),degree),int(1)]),var(v)])).
+hand_specific(_, 'single_indeterminate_operations') :- file_has(call('Polynomial',[op(add,[field(var(p(0)),degree),int(1)]),var(v)])), same_file('single_indeterminate_operations').
 % sock_merchant
-hand_specific(_, 'sock_merchant') :- file_has(call(values,[call('Counter',[var(p(0))])])).
+hand_specific(_, 'sock_merchant') :- file_has(call(values,[call('Counter',[var(p(0))])])), same_file('sock_merchant').
 % softmax
-hand_specific(_, 'softmax') :- file_has(op(or,[op(ge,[var(p(1)),var(v)]),op(lt,[var(p(1)),op(neg,[var(v)])])])).
+hand_specific(_, 'softmax') :- file_has(op(or,[op(ge,[var(p(1)),var(v)]),op(lt,[var(p(1)),op(neg,[var(v)])])])), same_file('softmax').
 % sumset
-hand_specific(_, 'sumset') :- file_has(other(set_comprehension)), \+ file_has(call(list,[call(set,[op(add,[elem(var(v),var(v)),elem(var(v),var(v))])])])).
+hand_specific(_, 'sumset') :- file_has(other(set_comprehension)), \+ file_has(call(list,[call(set,[op(add,[elem(var(v),var(v)),elem(var(v),var(v))])])])), same_file('sumset').
 % tanh
-hand_specific(_, 'tanh') :- file_has(call(exp,[var(v),op(mul,[int(-2),var(p(0))])])).
+hand_specific(_, 'tanh') :- file_has(call(exp,[var(v),op(mul,[int(-2),var(p(0))])])), same_file('tanh').
 % trapezoidal_rule
-hand_specific(_, 'trapezoidal_rule') :- file_has(op(ge,[op(sub,[var(p(1)),var(p(2))]),var(v)])).
+hand_specific(_, 'trapezoidal_rule') :- file_has(op(ge,[op(sub,[var(p(1)),var(p(2))]),var(v)])), same_file('trapezoidal_rule').
 % trimorphic_number
-hand_specific(_, 'trimorphic_number') :- file_has(call(endswith,[call(str,[op(pow,[var(p(0)),int(3)])]),call(str,[var(p(0))])])).
+hand_specific(_, 'trimorphic_number') :- file_has(call(endswith,[call(str,[op(pow,[var(p(0)),int(3)])]),call(str,[var(p(0))])])), same_file('trimorphic_number').
 % twin_prime
-hand_specific(_, 'twin_prime') :- file_has(op(and,[call(is_prime,[var(p(0))]),call(is_prime,[op(add,[var(p(0)),int(2)])])])).
+hand_specific(_, 'twin_prime') :- file_has(op(and,[call(is_prime,[var(p(0))]),call(is_prime,[op(add,[var(p(0)),int(2)])])])), same_file('twin_prime').
 % weighted_average
-hand_specific(_, 'weighted_average') :- file_has(call(sum,[map(call(zip,[var(p(0)),var(p(1))]),op(mul,[var(v),var(v)]),bool(true))])), file_has(call(sum,[var(p(1))])).
+hand_specific(_, 'weighted_average') :- file_has(call(sum,[map(call(zip,[var(p(0)),var(p(1))]),op(mul,[var(v),var(v)]),bool(true))])), file_has(call(sum,[var(p(1))])), same_file('weighted_average').
 % zellers_congruence
-hand_specific(_, 'zellers_congruence') :- file_has(call(int,[op(add,[elem(var(p(0)),int(0)),elem(var(p(0)),int(1))])])).
+hand_specific(_, 'zellers_congruence') :- file_has(call(int,[op(add,[elem(var(p(0)),int(0)),elem(var(p(0)),int(1))])])), same_file('zellers_congruence').
 % ===== matrix
 % binary_search_matrix
-hand_specific(_, 'binary_search_matrix') :- file_has(var(v)-call(int,[op(div,[op(add,[var(p(1)),var(p(2))]),int(2)])])).
+hand_specific(_, 'binary_search_matrix') :- file_has(var(v)-call(int,[op(div,[op(add,[var(p(1)),var(p(2))]),int(2)])])), same_file('binary_search_matrix').
 % count_negative_numbers_in_sorted_matrix
-hand_specific(_, 'count_negative_numbers_in_sorted_matrix') :- file_has(op(or,[op(not,[var(p(0))]),op(lt,[elem(var(p(0)),int(0)),int(0)])])).
+hand_specific(_, 'count_negative_numbers_in_sorted_matrix') :- file_has(op(or,[op(not,[var(p(0))]),op(lt,[elem(var(p(0)),int(0)),int(0)])])), same_file('count_negative_numbers_in_sorted_matrix').
 % cramers_rule_2x2
-hand_specific(_, 'cramers_rule_2x2') :- file_has(var(v)-op(sub,[op(mul,[var(v),var(v)]),op(mul,[var(v),var(v)])])).
+hand_specific(_, 'cramers_rule_2x2') :- file_has(var(v)-op(sub,[op(mul,[var(v),var(v)]),op(mul,[var(v),var(v)])])), same_file('cramers_rule_2x2').
 % inverse_of_matrix
-hand_specific(_, 'inverse_of_matrix') :- file_has(call(d,[elem(elem(var(p(0)),int(0)),int(0))])).
+hand_specific(_, 'inverse_of_matrix') :- file_has(call(d,[elem(elem(var(p(0)),int(0)),int(0))])), same_file('inverse_of_matrix').
 % matrix_multiplication_recursion
-hand_specific(_, 'matrix_multiplication_recursion') :- file_has(call(fn,[int(0),int(0),int(0),var(p(0)),var(p(1)),var(v)])).
+hand_specific(_, 'matrix_multiplication_recursion') :- file_has(call(fn,[int(0),int(0),int(0),var(p(0)),var(p(1)),var(v)])), same_file('matrix_multiplication_recursion').
 % median_matrix
-hand_specific(_, 'median_matrix') :- file_has(call(sorted,[map(var(p(0)),splat(elem(var(p(0)),var(v))),bool(true))])).
+hand_specific(_, 'median_matrix') :- file_has(call(sorted,[map(var(p(0)),splat(elem(var(p(0)),var(v))),bool(true))])), same_file('median_matrix').
 % nth_fibonacci_using_matrix_exponentiation
-hand_specific(_, 'nth_fibonacci_using_matrix_exponentiation') :- file_has(var(v)-op(add,[var(v),op(mul,[elem(elem(var(p(0)),var(v)),var(v)),elem(elem(var(p(1)),var(v)),var(v))])])).
+hand_specific(_, 'nth_fibonacci_using_matrix_exponentiation') :- file_has(var(v)-op(add,[var(v),op(mul,[elem(elem(var(p(0)),var(v)),var(v)),elem(elem(var(p(1)),var(v)),var(v))])])), same_file('nth_fibonacci_using_matrix_exponentiation').
 % searching_in_sorted_matrix
-hand_specific(_, 'searching_in_sorted_matrix') :- file_has(op(and,[op(ge,[var(v),int(0)]),op(lt,[var(v),var(p(2))])])).
+hand_specific(_, 'searching_in_sorted_matrix') :- file_has(op(and,[op(ge,[var(v),int(0)]),op(lt,[var(v),var(p(2))])])), same_file('searching_in_sorted_matrix').
 % ===== networking_flow
 % ford_fulkerson
-hand_specific(_, 'ford_fulkerson') :- file_has(elem(call(enumerate,[elem(var(p(0)),var(v))]),var(v))).
+hand_specific(_, 'ford_fulkerson') :- file_has(elem(call(enumerate,[elem(var(p(0)),var(v))]),var(v))), same_file('ford_fulkerson').
 % ===== neural_network
 % adagrad
-hand_specific(_, 'adagrad') :- file_has(call(sqrt,[var(v),elem(field(var(p(0)),accumulated_grad),var(p(1)))])).
+hand_specific(_, 'adagrad') :- file_has(call(sqrt,[var(v),elem(field(var(p(0)),accumulated_grad),var(p(1)))])), same_file('adagrad').
 % adam_optimizer
-hand_specific(_, 'adam_optimizer') :- file_has(elem(field(var(p(0)),m),var(p(1)))-call(zeros_like,[var(v),var(p(2))])).
+hand_specific(_, 'adam_optimizer') :- file_has(elem(field(var(p(0)),m),var(p(1)))-call(zeros_like,[var(v),var(p(2))])), same_file('adam_optimizer').
 % binary_step
-hand_specific(_, 'binary_step') :- file_has(call(where,[var(v),op(ge,[var(p(0)),int(0)]),int(1),int(0)])).
+hand_specific(_, 'binary_step') :- file_has(call(where,[var(v),op(ge,[var(p(0)),int(0)]),int(1),int(0)])), same_file('binary_step').
 % convolution_neural_network
-hand_specific(_, 'convolution_neural_network') :- file_has(call(slice,[var(p(1)),var(v),op(add,[var(v),elem(var(p(2)),int(0))])])).
+hand_specific(_, 'convolution_neural_network') :- file_has(call(slice,[var(p(1)),var(v),op(add,[var(v),elem(var(p(2)),int(0))])])), same_file('convolution_neural_network').
 % exponential_linear_unit
-hand_specific(_, 'exponential_linear_unit') :- file_has(call(exp,[var(v),var(p(0))])), \+ file_has(op(mul,[var(p(2)),call(where,[var(v),op(gt,[var(p(0)),int(0)]),var(p(0)),op(mul,[var(p(1)),op(sub,[call(exp,[var(v),var(p(0))]),int(1)])])])])), \+ file_has(call(log,[var(v),op(add,[call(exp,[var(v),var(p(0))]),int(1)])])).
+hand_specific(_, 'exponential_linear_unit') :- file_has(call(exp,[var(v),var(p(0))])), \+ file_has(op(mul,[var(p(2)),call(where,[var(v),op(gt,[var(p(0)),int(0)]),var(p(0)),op(mul,[var(p(1)),op(sub,[call(exp,[var(v),var(p(0))]),int(1)])])])])), \+ file_has(call(log,[var(v),op(add,[call(exp,[var(v),var(p(0))]),int(1)])])), same_file('exponential_linear_unit').
 % gaussian_error_linear_unit
-hand_specific(_, 'gaussian_error_linear_unit') :- file_has(op(mul,[var(p(0)),call(fn,[op(mul,[other(float),var(p(0))])])])).
+hand_specific(_, 'gaussian_error_linear_unit') :- file_has(op(mul,[var(p(0)),call(fn,[op(mul,[other(float),var(p(0))])])])), same_file('gaussian_error_linear_unit').
 % leaky_rectified_linear_unit
-hand_specific(_, 'leaky_rectified_linear_unit') :- file_has(call(where,[var(v),op(gt,[var(p(0)),int(0)]),var(p(0)),op(mul,[var(p(1)),var(p(0))])])).
+hand_specific(_, 'leaky_rectified_linear_unit') :- file_has(call(where,[var(v),op(gt,[var(p(0)),int(0)]),var(p(0)),op(mul,[var(p(1)),var(p(0))])])), same_file('leaky_rectified_linear_unit').
 % mish
-hand_specific(_, 'mish') :- file_has(op(mul,[var(p(0)),call(tanh,[var(v),call(softplus,[var(p(0))])])])).
+hand_specific(_, 'mish') :- file_has(op(mul,[var(p(0)),call(tanh,[var(v),call(softplus,[var(p(0))])])])), same_file('mish').
 % momentum_sgd
-hand_specific(_, 'momentum_sgd') :- file_has(op(add,[var(p(2)),elem(field(var(p(0)),velocity),var(p(1)))])).
+hand_specific(_, 'momentum_sgd') :- file_has(op(add,[var(p(2)),elem(field(var(p(0)),velocity),var(p(1)))])), same_file('momentum_sgd').
 % nesterov_accelerated_sgd
-hand_specific(_, 'nesterov_accelerated_sgd') :- file_has(var(v)-call(copy,[elem(field(var(p(0)),velocity),var(p(1)))])).
+hand_specific(_, 'nesterov_accelerated_sgd') :- file_has(var(v)-call(copy,[elem(field(var(p(0)),velocity),var(p(1)))])), same_file('nesterov_accelerated_sgd').
 % rectified_linear_unit
-hand_specific(_, 'rectified_linear_unit') :- file_has(call(maximum,[var(v),int(0),var(p(0))])).
+hand_specific(_, 'rectified_linear_unit') :- file_has(call(maximum,[var(v),int(0),var(p(0))])), same_file('rectified_linear_unit').
 % scaled_exponential_linear_unit
-hand_specific(_, 'scaled_exponential_linear_unit') :- file_has(op(mul,[var(p(2)),call(where,[var(v),op(gt,[var(p(0)),int(0)]),var(p(0)),op(mul,[var(p(1)),op(sub,[call(exp,[var(v),var(p(0))]),int(1)])])])])).
+hand_specific(_, 'scaled_exponential_linear_unit') :- file_has(op(mul,[var(p(2)),call(where,[var(v),op(gt,[var(p(0)),int(0)]),var(p(0)),op(mul,[var(p(1)),op(sub,[call(exp,[var(v),var(p(0))]),int(1)])])])])), same_file('scaled_exponential_linear_unit').
 % soboleva_modified_hyperbolic_tangent
-hand_specific(_, 'soboleva_modified_hyperbolic_tangent') :- file_has(call(exp,[var(v),op(mul,[op(neg,[var(p(2))]),var(p(0))])])).
+hand_specific(_, 'soboleva_modified_hyperbolic_tangent') :- file_has(call(exp,[var(v),op(mul,[op(neg,[var(p(2))]),var(p(0))])])), same_file('soboleva_modified_hyperbolic_tangent').
 % softplus
-hand_specific(_, 'softplus') :- file_has(call(log,[var(v),op(add,[call(exp,[var(v),var(p(0))]),int(1)])])).
+hand_specific(_, 'softplus') :- file_has(call(log,[var(v),op(add,[call(exp,[var(v),var(p(0))]),int(1)])])), same_file('softplus').
 % swish
-hand_specific(_, 'swish') :- file_has(op(mul,[var(p(0)),call(fn,[op(mul,[var(p(1)),var(p(0))])])])).
+hand_specific(_, 'swish') :- file_has(op(mul,[var(p(0)),call(fn,[op(mul,[var(p(1)),var(p(0))])])])), same_file('swish').
 % ===== other
 % cheap_progress
-hand_specific(_, 'cheap_progress') :- file_has(op(and,[op(not,[var(p(2))]),call(hasattr,[var(p(0)),other(string)])])).
+hand_specific(_, 'cheap_progress') :- file_has(op(and,[op(not,[var(p(2))]),call(hasattr,[var(p(0)),other(string)])])), same_file('cheap_progress').
 % doomsday
-hand_specific(_, 'doomsday') :- file_has(var(v)-op(mod,[op(sub,[op(add,[var(v),var(p(2))]),var(v)]),int(7)])).
+hand_specific(_, 'doomsday') :- file_has(var(v)-op(mod,[op(sub,[op(add,[var(v),var(p(2))]),var(v)]),int(7)])), same_file('doomsday').
 % gauss_easter
-hand_specific(_, 'gauss_easter') :- file_has(var(v)-call(floor,[var(v),op(fdiv,[var(p(0)),int(100)])])).
+hand_specific(_, 'gauss_easter') :- file_has(var(v)-call(floor,[var(v),op(fdiv,[var(p(0)),int(100)])])), same_file('gauss_easter').
 % least_recently_used
-hand_specific(_, 'least_recently_used') :- file_has(op(eq,[call(len,[field(var(p(0)),dq_store)]),field(var(v),'_MAX_CAPACITY')])).
+hand_specific(_, 'least_recently_used') :- file_has(op(eq,[call(len,[field(var(p(0)),dq_store)]),field(var(v),'_MAX_CAPACITY')])), same_file('least_recently_used').
 % lfu_cache
-hand_specific(_, 'lfu_cache') :- file_has(field(var(p(1)),freq)-op(add,[field(var(p(1)),freq),int(1)])).
+hand_specific(_, 'lfu_cache') :- file_has(field(var(p(1)),freq)-op(add,[field(var(p(1)),freq),int(1)])), same_file('lfu_cache').
 % linear_congruential_generator
-hand_specific(_, 'linear_congruential_generator') :- file_has(field(var(p(0)),seed)-op(mod,[op(add,[op(mul,[field(var(p(0)),multiplier),field(var(p(0)),seed)]),field(var(p(0)),increment)]),field(var(p(0)),modulo)])).
+hand_specific(_, 'linear_congruential_generator') :- file_has(field(var(p(0)),seed)-op(mod,[op(add,[op(mul,[field(var(p(0)),multiplier),field(var(p(0)),seed)]),field(var(p(0)),increment)]),field(var(p(0)),modulo)])), same_file('linear_congruential_generator').
 % lru_cache
-hand_specific(_, 'lru_cache') :- file_has(call(bool,[field(var(p(0)),next)])).
+hand_specific(_, 'lru_cache') :- file_has(call(bool,[field(var(p(0)),next)])), same_file('lru_cache').
 % number_container_system
-hand_specific(_, 'number_container_system') :- file_has(call(fn,[var(p(0)),elem(field(var(p(0)),numbermap),var(v)),var(p(1))])).
+hand_specific(_, 'number_container_system') :- file_has(call(fn,[var(p(0)),elem(field(var(p(0)),numbermap),var(v)),var(p(1))])), same_file('number_container_system').
 % password
-hand_specific(_, 'password') :- file_has(call(any,[map(var(p(0)),op(in,[elem(var(p(0)),var(v)),var(v)]),bool(true))])).
+hand_specific(_, 'password') :- file_has(call(any,[map(var(p(0)),op(in,[elem(var(p(0)),var(v)),var(v)]),bool(true))])), same_file('password').
 % pipeline
-hand_specific(_, 'pipeline') :- file_has(field(var(p(0)),'_f_ls')-op(or,[var(p(1)),list([])])).
+hand_specific(_, 'pipeline') :- file_has(field(var(p(0)),'_f_ls')-op(or,[var(p(1)),list([])])), same_file('pipeline').
 % quine
-hand_specific(_, 'quine') :- file_has(call('(lambda quine: quine % quine)',[other(string)])).
+hand_specific(_, 'quine') :- file_has(call('(lambda quine: quine % quine)',[other(string)])), same_file('quine').
 % token_bucket
-hand_specific(_, 'token_bucket') :- file_has(field(var(p(0)),tokens)-op(sub,[field(var(p(0)),tokens),int(1)])).
+hand_specific(_, 'token_bucket') :- file_has(field(var(p(0)),tokens)-op(sub,[field(var(p(0)),tokens),int(1)])), same_file('token_bucket').
 % ===== physics
 % basic_orbital_capture
-hand_specific(_, 'basic_orbital_capture') :- file_has(var(v)-op(fdiv,[op(mul,[op(mul,[int(2),var(v)]),var(p(1))]),var(p(0))])).
+hand_specific(_, 'basic_orbital_capture') :- file_has(var(v)-op(fdiv,[op(mul,[op(mul,[int(2),var(v)]),var(p(1))]),var(p(0))])), same_file('basic_orbital_capture').
 % bragg_angle
-hand_specific(_, 'bragg_angle') :- file_has(var(v)-op(fdiv,[op(mul,[var(p(1)),var(p(2))]),op(mul,[int(2),var(p(0))])])).
+hand_specific(_, 'bragg_angle') :- file_has(var(v)-op(fdiv,[op(mul,[var(p(1)),var(p(2))]),op(mul,[int(2),var(p(0))])])), same_file('bragg_angle').
 % casimir_effect
-hand_specific(_, 'casimir_effect') :- file_has(var(p(0))-op(fdiv,[op(mul,[op(mul,[op(mul,[var(v),var(v)]),op(pow,[var(v),int(2)])]),var(p(1))]),op(mul,[int(240),op(pow,[var(p(2)),int(4)])])])).
+hand_specific(_, 'casimir_effect') :- file_has(var(p(0))-op(fdiv,[op(mul,[op(mul,[op(mul,[var(v),var(v)]),op(pow,[var(v),int(2)])]),var(p(1))]),op(mul,[int(240),op(pow,[var(p(2)),int(4)])])])), same_file('casimir_effect').
 % center_of_mass
-hand_specific(_, 'center_of_mass') :- file_has(call(sum,[map(var(p(0)),field(elem(var(p(0)),var(v)),mass),bool(true))])).
+hand_specific(_, 'center_of_mass') :- file_has(call(sum,[map(var(p(0)),field(elem(var(p(0)),var(v)),mass),bool(true))])), same_file('center_of_mass').
 % doppler_frequency
-hand_specific(_, 'doppler_frequency') :- file_has(op(fdiv,[op(mul,[var(p(0)),op(add,[var(p(1)),var(p(2))])]),op(sub,[var(p(1)),var(p(3))])])).
+hand_specific(_, 'doppler_frequency') :- file_has(op(fdiv,[op(mul,[var(p(0)),op(add,[var(p(1)),var(p(2))])]),op(sub,[var(p(1)),var(p(3))])])), same_file('doppler_frequency').
 % escape_velocity
-hand_specific(_, 'escape_velocity') :- file_has(call(sqrt,[var(v),op(fdiv,[op(mul,[op(mul,[int(2),var(v)]),var(p(0))]),var(p(1))])])).
+hand_specific(_, 'escape_velocity') :- file_has(call(sqrt,[var(v),op(fdiv,[op(mul,[op(mul,[int(2),var(v)]),var(p(0))]),var(p(1))])])), same_file('escape_velocity').
 % faraday_lenz_law
-hand_specific(_, 'faraday_lenz_law') :- file_has(call(round,[op(fdiv,[op(neg,[op(sub,[var(p(0)),var(p(1))])]),var(p(2))]),int(1)])).
+hand_specific(_, 'faraday_lenz_law') :- file_has(call(round,[op(fdiv,[op(neg,[op(sub,[var(p(0)),var(p(1))])]),var(p(2))]),int(1)])), same_file('faraday_lenz_law').
 % first_law_of_thermodynamics
-hand_specific(_, 'first_law_of_thermodynamics') :- file_has(var(v)-call(round,[op(add,[var(p(0)),var(p(1))]),int(1)])).
+hand_specific(_, 'first_law_of_thermodynamics') :- file_has(var(v)-call(round,[op(add,[var(p(0)),var(p(1))]),int(1)])), same_file('first_law_of_thermodynamics').
 % fresnel_diffract
-hand_specific(_, 'fresnel_diffract') :- file_has(call(ifftshift,[call(ifft,[op(mul,[var(v),call(fft,[call(fftshift,[var(p(0))])])])])])).
+hand_specific(_, 'fresnel_diffract') :- file_has(call(ifftshift,[call(ifft,[op(mul,[var(v),call(fft,[call(fftshift,[var(p(0))])])])])])), same_file('fresnel_diffract').
 % grahams_law
-hand_specific(_, 'grahams_law') :- file_has(call(round,[call(sqrt,[op(fdiv,[var(p(1)),var(p(0))])]),int(6)])).
+hand_specific(_, 'grahams_law') :- file_has(call(round,[call(sqrt,[op(fdiv,[var(p(1)),var(p(0))])]),int(6)])), same_file('grahams_law').
 % horizontal_projectile_motion
-hand_specific(_, 'horizontal_projectile_motion') :- file_has(var(v)-call(deg_to_rad,[op(mul,[int(2),var(p(1))])])).
+hand_specific(_, 'horizontal_projectile_motion') :- file_has(var(v)-call(deg_to_rad,[op(mul,[int(2),var(p(1))])])), same_file('horizontal_projectile_motion').
 % hubble_parameter
-hand_specific(_, 'hubble_parameter') :- file_has(var(v)-op(mul,[var(p(0)),op(pow,[var(v),op(fdiv,[int(1),int(2)])])])).
+hand_specific(_, 'hubble_parameter') :- file_has(var(v)-op(mul,[var(p(0)),op(pow,[var(v),op(fdiv,[int(1),int(2)])])])), same_file('hubble_parameter').
 % ideal_gas_law
-hand_specific(_, 'ideal_gas_law') :- file_has(op(fdiv,[op(mul,[op(mul,[var(p(0)),var(p(1))]),var(v)]),var(p(2))])).
+hand_specific(_, 'ideal_gas_law') :- file_has(op(fdiv,[op(mul,[op(mul,[var(p(0)),var(p(1))]),var(v)]),var(p(2))])), same_file('ideal_gas_law').
 % in_static_equilibrium
-hand_specific(_, 'in_static_equilibrium') :- file_has(call(bool,[op(gt,[var(p(2)),call(abs,[var(v)])])])).
+hand_specific(_, 'in_static_equilibrium') :- file_has(call(bool,[op(gt,[var(p(2)),call(abs,[var(v)])])])), same_file('in_static_equilibrium').
 % lens_formulae
-hand_specific(_, 'lens_formulae') :- file_has(op(fdiv,[int(1),op(add,[op(fdiv,[int(1),var(p(1))]),op(fdiv,[int(1),var(p(0))])])])).
+hand_specific(_, 'lens_formulae') :- file_has(op(fdiv,[int(1),op(add,[op(fdiv,[int(1),var(p(1))]),op(fdiv,[int(1),var(p(0))])])])), same_file('lens_formulae').
 % light_aberration
-hand_specific(_, 'light_aberration') :- file_has(call(atan,[op(mul,[var(v),call(tan,[op(fdiv,[var(p(0)),int(2)])])])])).
+hand_specific(_, 'light_aberration') :- file_has(call(atan,[op(mul,[var(v),call(tan,[op(fdiv,[var(p(0)),int(2)])])])])), same_file('light_aberration').
 % lorentz_transformation_four_vector
-hand_specific(_, 'lorentz_transformation_four_vector') :- file_has(call(sqrt,[op(sub,[int(1),op(pow,[call(fn,[var(p(0))]),int(2)])])])).
+hand_specific(_, 'lorentz_transformation_four_vector') :- file_has(call(sqrt,[op(sub,[int(1),op(pow,[call(fn,[var(p(0))]),int(2)])])])), same_file('lorentz_transformation_four_vector').
 % magnetic_flux
-hand_specific(_, 'magnetic_flux') :- file_has(call(round,[op(mul,[op(mul,[var(p(0)),var(p(1))]),call(cos,[var(v)])]),int(1)])).
+hand_specific(_, 'magnetic_flux') :- file_has(call(round,[op(mul,[op(mul,[var(p(0)),var(p(1))]),call(cos,[var(v)])]),int(1)])), same_file('magnetic_flux').
 % malus_law
-hand_specific(_, 'malus_law') :- file_has(op(mul,[var(p(0)),op(pow,[call(cos,[var(v),call(radians,[var(v),var(p(1))])]),int(2)])])).
+hand_specific(_, 'malus_law') :- file_has(op(mul,[var(p(0)),op(pow,[call(cos,[var(v),call(radians,[var(v),var(p(1))])]),int(2)])])), same_file('malus_law').
 % mass_energy_equivalence
-hand_specific(_, 'mass_energy_equivalence') :- file_has(op(fdiv,[var(p(0)),op(pow,[var(v),int(2)])])).
+hand_specific(_, 'mass_energy_equivalence') :- file_has(op(fdiv,[var(p(0)),op(pow,[var(v),int(2)])])), same_file('mass_energy_equivalence').
 % mirror_formulae
-hand_specific(_, 'mirror_formulae') :- file_has(op(fdiv,[int(1),op(add,[op(fdiv,[int(1),var(p(0))]),op(fdiv,[int(1),var(p(1))])])])).
+hand_specific(_, 'mirror_formulae') :- file_has(op(fdiv,[int(1),op(add,[op(fdiv,[int(1),var(p(0))]),op(fdiv,[int(1),var(p(1))])])])), same_file('mirror_formulae').
 % newtons_law_of_gravitation
-hand_specific(_, 'newtons_law_of_gravitation') :- file_has(var(p(3))-op(pow,[op(fdiv,[op(mul,[var(v),var(v)]),var(p(0))]),other(float)])).
+hand_specific(_, 'newtons_law_of_gravitation') :- file_has(var(p(3))-op(pow,[op(fdiv,[op(mul,[var(v),var(v)]),var(p(0))]),other(float)])), same_file('newtons_law_of_gravitation').
 % newtons_second_law_of_motion
-hand_specific(_, 'newtons_second_law_of_motion') :- file_has(var(v)-op(mul,[var(p(0)),var(p(1))])), \+ file_has(var(v)-call(max,[int(0),op(sub,[var(p(0)),var(p(2))])])), \+ file_has(elem(elem(field(var(p(0)),'__matrix'),var(p(1))),var(p(2)))-var(p(3))), \+ file_has(op(fdiv,[other(float),call(sqrt,[var(v),op(mul,[var(p(0)),var(p(1))])])])).
+hand_specific(_, 'newtons_second_law_of_motion') :- file_has(var(v)-op(mul,[var(p(0)),var(p(1))])), \+ file_has(var(v)-call(max,[int(0),op(sub,[var(p(0)),var(p(2))])])), \+ file_has(elem(elem(field(var(p(0)),'__matrix'),var(p(1))),var(p(2)))-var(p(3))), \+ file_has(op(ge,[var(v),call(abs,[op(sub,[var(p(0)),op(neg,[var(p(1))])])])])), same_file('newtons_second_law_of_motion').
 % orbital_transfer_work
-hand_specific(_, 'orbital_transfer_work') :- file_has(var(v)-op(mul,[op(fdiv,[op(mul,[op(mul,[var(v),var(p(0))]),var(p(1))]),int(2)]),op(sub,[op(fdiv,[int(1),var(p(2))]),op(fdiv,[int(1),var(p(3))])])])).
+hand_specific(_, 'orbital_transfer_work') :- file_has(var(v)-op(mul,[op(fdiv,[op(mul,[op(mul,[var(v),var(p(0))]),var(p(1))]),int(2)]),op(sub,[op(fdiv,[int(1),var(p(2))]),op(fdiv,[int(1),var(p(3))])])])), same_file('orbital_transfer_work').
 % period_of_pendulum
-hand_specific(_, 'period_of_pendulum') :- file_has(op(mul,[op(mul,[int(2),var(v)]),op(pow,[op(fdiv,[var(p(0)),var(v)]),other(float)])])).
+hand_specific(_, 'period_of_pendulum') :- file_has(op(mul,[op(mul,[int(2),var(v)]),op(pow,[op(fdiv,[var(p(0)),var(v)]),other(float)])])), same_file('period_of_pendulum').
 % photoelectric_effect
-hand_specific(_, 'photoelectric_effect') :- file_has(call(max,[op(sub,[op(mul,[var(v),var(p(0))]),var(p(1))]),int(0)])).
+hand_specific(_, 'photoelectric_effect') :- file_has(call(max,[op(sub,[op(mul,[var(v),var(p(0))]),var(p(1))]),int(0)])), same_file('photoelectric_effect').
 % potential_energy
-hand_specific(_, 'potential_energy') :- file_has(op(mul,[op(mul,[var(p(0)),var(v)]),var(p(1))])).
+hand_specific(_, 'potential_energy') :- file_has(op(mul,[op(mul,[var(p(0)),var(v)]),var(p(1))])), same_file('potential_energy').
 % rainfall_intensity
-hand_specific(_, 'rainfall_intensity') :- file_has(op(fdiv,[op(mul,[var(p(0)),op(pow,[var(p(4)),var(p(1))])]),op(pow,[op(add,[var(p(5)),var(p(2))]),var(p(3))])])).
+hand_specific(_, 'rainfall_intensity') :- file_has(op(fdiv,[op(mul,[var(p(0)),op(pow,[var(p(4)),var(p(1))])]),op(pow,[op(add,[var(p(5)),var(p(2))]),var(p(3))])])), same_file('rainfall_intensity').
 % relativistic_kinetic_energy
-hand_specific(_, 'relativistic_kinetic_energy') :- file_has(call(sqrt,[op(sub,[int(1),op(fdiv,[op(pow,[var(p(1)),int(2)]),op(pow,[var(v),int(2)])])])])).
+hand_specific(_, 'relativistic_kinetic_energy') :- file_has(call(sqrt,[op(sub,[int(1),op(fdiv,[op(pow,[var(p(1)),int(2)]),op(pow,[var(v),int(2)])])])])), same_file('relativistic_kinetic_energy').
 % relativistic_velocity_summation
-hand_specific(_, 'relativistic_velocity_summation') :- file_has(var(v)-op(add,[op(fdiv,[op(mul,[var(p(0)),var(p(1))]),op(pow,[var(v),int(2)])]),int(1)])).
+hand_specific(_, 'relativistic_velocity_summation') :- file_has(var(v)-op(add,[op(fdiv,[op(mul,[var(p(0)),var(p(1))]),op(pow,[var(v),int(2)])]),int(1)])), same_file('relativistic_velocity_summation').
 % reynolds_number
-hand_specific(_, 'reynolds_number') :- file_has(op(fdiv,[op(mul,[op(mul,[var(p(0)),call(abs,[var(p(1))])]),var(p(2))]),var(p(3))])).
+hand_specific(_, 'reynolds_number') :- file_has(op(fdiv,[op(mul,[op(mul,[var(p(0)),call(abs,[var(p(1))])]),var(p(2))]),var(p(3))])), same_file('reynolds_number').
 % rms_speed_of_molecule
-hand_specific(_, 'rms_speed_of_molecule') :- file_has(op(pow,[op(fdiv,[op(mul,[op(mul,[int(3),var(v)]),var(p(0))]),var(p(1))]),other(float)])).
+hand_specific(_, 'rms_speed_of_molecule') :- file_has(op(pow,[op(fdiv,[op(mul,[op(mul,[int(3),var(v)]),var(p(0))]),var(p(1))]),other(float)])), same_file('rms_speed_of_molecule').
 % shear_stress
-hand_specific(_, 'shear_stress') :- file_has(tuple([other(string),op(fdiv,[var(p(1)),var(p(0))])])).
+hand_specific(_, 'shear_stress') :- file_has(tuple([other(string),op(fdiv,[var(p(1)),var(p(0))])])), same_file('shear_stress').
 % snells_law
-hand_specific(_, 'snells_law') :- file_has(var(v)-op(mul,[op(fdiv,[var(p(0)),var(p(1))]),call(sin,[var(v),var(v)])])).
+hand_specific(_, 'snells_law') :- file_has(var(v)-op(mul,[op(fdiv,[var(p(0)),var(p(1))]),call(sin,[var(v),var(v)])])), same_file('snells_law').
 % speeds_of_gas_molecules
-hand_specific(_, 'speeds_of_gas_molecules') :- file_has(op(pow,[op(fdiv,[op(mul,[op(mul,[int(2),var(v)]),var(p(0))]),var(p(1))]),other(float)])).
+hand_specific(_, 'speeds_of_gas_molecules') :- file_has(op(pow,[op(fdiv,[op(mul,[op(mul,[int(2),var(v)]),var(p(0))]),var(p(1))]),other(float)])), same_file('speeds_of_gas_molecules').
 % terminal_velocity
-hand_specific(_, 'terminal_velocity') :- file_has(op(pow,[op(fdiv,[op(mul,[op(mul,[int(2),var(p(0))]),var(v)]),op(mul,[op(mul,[var(p(1)),var(p(2))]),var(p(3))])]),other(float)])).
+hand_specific(_, 'terminal_velocity') :- file_has(op(pow,[op(fdiv,[op(mul,[op(mul,[int(2),var(p(0))]),var(v)]),op(mul,[op(mul,[var(p(1)),var(p(2))]),var(p(3))])]),other(float)])), same_file('terminal_velocity').
 % ===== project_euler
 % problem_001
-hand_specific(_, 'problem_001') :- file_has(op(or,[op(eq,[op(mod,[var(v),int(3)]),int(0)]),op(eq,[op(mod,[var(v),int(5)]),int(0)])])).
-hand_specific(_, 'problem_001') :- file_has(var(v)-op(div,[op(sub,[var(p(0)),int(1)]),int(15)])).
-hand_specific(_, 'problem_001') :- file_has(call(sum,[filter(call(range,[var(p(0))]),op(or,[op(eq,[op(mod,[elem(call(range,[var(p(0))]),var(v)),int(3)]),int(0)]),op(eq,[op(mod,[elem(call(range,[var(p(0))]),var(v)),int(5)]),int(0)])]))])).
-hand_specific(_, 'problem_001') :- file_has(call(sum,[filter(call(range,[int(3),var(p(0))]),op(or,[op(eq,[op(mod,[elem(call(range,[int(3),var(p(0))]),var(v)),int(3)]),int(0)]),op(eq,[op(mod,[elem(call(range,[int(3),var(p(0))]),var(v)),int(5)]),int(0)])]))])).
-hand_specific(_, 'problem_001') :- file_has(var(v)-call(list,[call(set,[op(add,[var(v),var(v)])])])).
-hand_specific(_, 'problem_001') :- file_has(op(ge,[var(v),var(p(0))])), file_has(var(v)-op(add,[var(v),int(2)])).
+hand_specific(_, 'problem_001') :- file_has(op(or,[op(eq,[op(mod,[var(v),int(3)]),int(0)]),op(eq,[op(mod,[var(v),int(5)]),int(0)])])), same_file('problem_001').
+hand_specific(_, 'problem_001') :- file_has(var(v)-op(div,[op(sub,[var(p(0)),int(1)]),int(15)])), same_file('problem_001').
+hand_specific(_, 'problem_001') :- file_has(call(sum,[filter(call(range,[var(p(0))]),op(or,[op(eq,[op(mod,[elem(call(range,[var(p(0))]),var(v)),int(3)]),int(0)]),op(eq,[op(mod,[elem(call(range,[var(p(0))]),var(v)),int(5)]),int(0)])]))])), same_file('problem_001').
+hand_specific(_, 'problem_001') :- file_has(call(sum,[filter(call(range,[int(3),var(p(0))]),op(or,[op(eq,[op(mod,[elem(call(range,[int(3),var(p(0))]),var(v)),int(3)]),int(0)]),op(eq,[op(mod,[elem(call(range,[int(3),var(p(0))]),var(v)),int(5)]),int(0)])]))])), same_file('problem_001').
+hand_specific(_, 'problem_001') :- file_has(var(v)-call(list,[call(set,[op(add,[var(v),var(v)])])])), same_file('problem_001').
+hand_specific(_, 'problem_001') :- file_has(op(ge,[var(v),var(p(0))])), file_has(var(v)-op(add,[var(v),int(2)])), same_file('problem_001').
 % problem_002
-hand_specific(_, 'problem_002') :- file_has(call(log,[var(v),op(mul,[var(p(0)),op(add,[var(v),int(2)])]),var(v)])).
-hand_specific(_, 'problem_002') :- file_has(op(ge,[var(p(0)),op(add,[op(mul,[int(4),var(v)]),var(v)])])).
-hand_specific(_, 'problem_002') :- file_has(op(gt,[elem(var(v),op(add,[var(v),int(2)])),var(p(0))])).
-hand_specific(_, 'problem_002') :- file_has(op(ge,[var(p(0)),var(v)])), \+ file_has(var(v)-op(shl,[var(v),int(1)])), \+ file_has(var(v)-call(int,[op(ne,[elem(var(v),var(p(0))),elem(var(v),var(p(1)))])])), \+ file_has(var(v)-op(sub,[var(v),op(fdiv,[call(fn,[var(v),var(p(0))]),call(fn,[var(v)])])])), \+ file_has(var(v)-call(min,[op(mul,[int(2),var(v)]),var(p(0))])), \+ file_has(call(range,[int(2),op(add,[op(mul,[int(2),var(v)]),int(1)])])), \+ file_has(var(v)-op(add,[op(mul,[int(2),var(v)]),int(2)])), \+ file_has(var(v)-call(fn,[op(add,[call(int,[call(sqrt,[var(p(0))])]),int(1)])])), \+ file_has(var(p(0))-call(slice,[var(p(0)),op(add,[var(v),int(1)]),other(none)])).
+hand_specific(_, 'problem_002') :- file_has(call(log,[var(v),op(mul,[var(p(0)),op(add,[var(v),int(2)])]),var(v)])), same_file('problem_002').
+hand_specific(_, 'problem_002') :- file_has(op(ge,[var(p(0)),op(add,[op(mul,[int(4),var(v)]),var(v)])])), same_file('problem_002').
+hand_specific(_, 'problem_002') :- file_has(op(gt,[elem(var(v),op(add,[var(v),int(2)])),var(p(0))])), same_file('problem_002').
+hand_specific(_, 'problem_002') :- file_has(op(ge,[var(p(0)),var(v)])), \+ file_has(var(v)-op(shl,[var(v),int(1)])), \+ file_has(var(v)-call(int,[op(ne,[elem(var(v),var(p(0))),elem(var(v),var(p(1)))])])), \+ file_has(var(v)-op(sub,[var(v),op(fdiv,[call(fn,[var(v),var(p(0))]),call(fn,[var(v)])])])), \+ file_has(var(v)-call(min,[op(mul,[int(2),var(v)]),var(p(0))])), \+ file_has(call(range,[int(2),op(add,[op(mul,[int(2),var(v)]),int(1)])])), \+ file_has(var(v)-op(add,[var(v),op(mul,[int(2),var(v)])])), \+ file_has(var(v)-call(fn,[op(add,[call(int,[call(sqrt,[var(p(0))])]),int(1)])])), \+ file_has(var(p(0))-call(slice,[var(p(0)),op(add,[var(v),int(1)]),other(none)])), same_file('problem_002').
 % problem_003
-hand_specific(_, 'problem_003') :- file_has(op(ne,[op(mod,[var(p(0)),var(v)]),int(0)])).
-hand_specific(_, 'problem_003') :- file_has(call(fn,[op(div,[var(p(0)),var(v)])])).
-hand_specific(_, 'problem_003') :- file_has(op(eq,[op(mod,[var(p(0)),var(v)]),int(0)])), file_has(var(p(0))-call(int,[var(p(0))])).
+hand_specific(_, 'problem_003') :- file_has(op(ne,[op(mod,[var(p(0)),var(v)]),int(0)])), same_file('problem_003').
+hand_specific(_, 'problem_003') :- file_has(call(fn,[op(div,[var(p(0)),var(v)])])), same_file('problem_003').
+hand_specific(_, 'problem_003') :- file_has(op(eq,[op(mod,[var(p(0)),var(v)]),int(0)])), file_has(var(p(0))-call(int,[var(p(0))])), same_file('problem_003').
 % problem_004
-hand_specific(_, 'problem_004') :- file_has(call(range,[op(sub,[var(p(0)),int(1)]),int(9999),int(-1)])).
-hand_specific(_, 'problem_004') :- file_has(op(and,[op(eq,[var(v),call(slice,[var(v),other(none),other(none),int(-1)])]),op(lt,[op(mul,[var(v),var(v)]),var(p(0))])])).
+hand_specific(_, 'problem_004') :- file_has(call(range,[op(sub,[var(p(0)),int(1)]),int(9999),int(-1)])), same_file('problem_004').
+hand_specific(_, 'problem_004') :- file_has(op(and,[op(eq,[var(v),call(slice,[var(v),other(none),other(none),int(-1)])]),op(lt,[op(mul,[var(v),var(v)]),var(p(0))])])), same_file('problem_004').
 % problem_006
-hand_specific(_, 'problem_006') :- file_has(call(sum,[call(range,[int(1),op(add,[var(p(0)),int(1)])])])).
-hand_specific(_, 'problem_006') :- file_has(var(v)-op(pow,[op(div,[op(mul,[var(p(0)),op(add,[var(p(0)),int(1)])]),int(2)]),int(2)])).
-hand_specific(_, 'problem_006') :- file_has(var(v)-op(pow,[op(fdiv,[op(mul,[var(p(0)),op(add,[var(p(0)),int(1)])]),int(2)]),int(2)])).
-hand_specific(_, 'problem_006') :- file_has(op(sub,[op(pow,[var(v),int(2)]),var(v)])).
+hand_specific(_, 'problem_006') :- file_has(call(sum,[call(range,[int(1),op(add,[var(p(0)),int(1)])])])), same_file('problem_006').
+hand_specific(_, 'problem_006') :- file_has(var(v)-op(pow,[op(div,[op(mul,[var(p(0)),op(add,[var(p(0)),int(1)])]),int(2)]),int(2)])), same_file('problem_006').
+hand_specific(_, 'problem_006') :- file_has(var(v)-op(pow,[op(fdiv,[op(mul,[var(p(0)),op(add,[var(p(0)),int(1)])]),int(2)]),int(2)])), same_file('problem_006').
+hand_specific(_, 'problem_006') :- file_has(op(sub,[op(pow,[var(v),int(2)]),var(v)])), same_file('problem_006').
 % problem_007
-hand_specific(_, 'problem_007') :- file_has(call(islice,[var(v),call(fn,[]),op(sub,[var(p(0)),int(1)]),var(p(0))])).
-hand_specific(_, 'problem_007') :- file_has(call(range,[int(5),call(int,[op(add,[call(sqrt,[var(p(0))]),int(1)])]),int(6)])).
-hand_specific(_, 'problem_007') :- file_has(elem(list([]),op(sub,[call(len,[list([])]),int(1)]))).
+hand_specific(_, 'problem_007') :- file_has(call(islice,[var(v),call(fn,[]),op(sub,[var(p(0)),int(1)]),var(p(0))])), same_file('problem_007').
+hand_specific(_, 'problem_007') :- file_has(call(range,[int(5),call(int,[op(add,[call(sqrt,[var(p(0))]),int(1)])]),int(6)])), same_file('problem_007').
+hand_specific(_, 'problem_007') :- file_has(elem(list([]),op(sub,[call(len,[list([])]),int(1)]))), same_file('problem_007').
 % problem_008
-hand_specific(_, 'problem_008') :- file_has(call(range,[op(sub,[call(len,[var(p(0))]),int(12)])])).
-hand_specific(_, 'problem_008') :- file_has(op(ge,[call(int,[elem(var(p(0)),var(v))]),call(int,[elem(var(v),int(0))])])).
+hand_specific(_, 'problem_008') :- file_has(call(range,[op(sub,[call(len,[var(p(0))]),int(12)])])), same_file('problem_008').
+hand_specific(_, 'problem_008') :- file_has(op(ge,[call(int,[elem(var(p(0)),var(v))]),call(int,[elem(var(v),int(0))])])), same_file('problem_008').
 % problem_009
-hand_specific(_, 'problem_009') :- file_has(call(range,[int(1),op(div,[var(p(0)),int(3)])])).
-hand_specific(_, 'problem_009') :- file_has(op(mul,[op(mul,[var(v),var(v)]),op(sub,[op(sub,[int(1000),var(v)]),var(v)])])).
-hand_specific(_, 'problem_009') :- file_has(call(next,[call(iter,[other(nested_comprehension)])])).
+hand_specific(_, 'problem_009') :- file_has(call(range,[int(1),op(div,[var(p(0)),int(3)])])), same_file('problem_009').
+hand_specific(_, 'problem_009') :- file_has(op(mul,[op(mul,[var(v),var(v)]),op(sub,[op(sub,[int(1000),var(v)]),var(v)])])), same_file('problem_009').
+hand_specific(_, 'problem_009') :- file_has(call(next,[call(iter,[other(nested_comprehension)])])), same_file('problem_009').
 % problem_010
-hand_specific(_, 'problem_010') :- file_has(var(v)-map(call(range,[op(add,[var(p(0)),int(1)])]),int(0),bool(true))).
-hand_specific(_, 'problem_010') :- file_has(call(sum,[filter(call(range,[int(3),var(p(0)),int(2)]),call(fn,[elem(call(range,[int(3),var(p(0)),int(2)]),var(v))]))])).
-hand_specific(_, 'problem_010') :- file_has(var(v)-op(add,[var(v),elem(call(takewhile,[other(lambda),call(fn,[])]),var(v))])).
+hand_specific(_, 'problem_010') :- file_has(var(v)-map(call(range,[op(add,[var(p(0)),int(1)])]),int(0),bool(true))), same_file('problem_010').
+hand_specific(_, 'problem_010') :- file_has(call(sum,[filter(call(range,[int(3),var(p(0)),int(2)]),call(fn,[elem(call(range,[int(3),var(p(0)),int(2)]),var(v))]))])), same_file('problem_010').
+hand_specific(_, 'problem_010') :- file_has(var(v)-op(add,[var(v),elem(call(takewhile,[other(lambda),call(fn,[])]),var(v))])), same_file('problem_010').
 % problem_013
-hand_specific(_, 'problem_013') :- file_has(call(join,[field(var(v),path),call(dirname,[field(var(v),path),var(v)]),other(string)])).
+hand_specific(_, 'problem_013') :- file_has(call(join,[field(var(v),path),call(dirname,[field(var(v),path),var(v)]),other(string)])), same_file('problem_013').
 % problem_014
-hand_specific(_, 'problem_014') :- file_has(var(v)-dict([pair(int(1),int(1))])).
+hand_specific(_, 'problem_014') :- file_has(var(v)-dict([pair(int(1),int(1))])), same_file('problem_014').
 % problem_015
-hand_specific(_, 'problem_015') :- file_has(call(factorial,[op(sub,[var(p(0)),var(v)])])).
-hand_specific(_, 'problem_015') :- file_has(var(v)-map(call(range,[op(add,[var(p(0)),int(1)])]),map(call(range,[op(add,[var(p(0)),int(1)])]),int(1),bool(true)),bool(true))).
+hand_specific(_, 'problem_015') :- file_has(call(factorial,[op(sub,[var(p(0)),var(v)])])), same_file('problem_015').
+hand_specific(_, 'problem_015') :- file_has(var(v)-map(call(range,[op(add,[var(p(0)),int(1)])]),map(call(range,[op(add,[var(p(0)),int(1)])]),int(1),bool(true)),bool(true))), same_file('problem_015').
 % problem_016
-hand_specific(_, 'problem_016') :- file_has(var(v)-op(pow,[int(2),var(p(0))])).
+hand_specific(_, 'problem_016') :- file_has(var(v)-op(pow,[int(2),var(p(0))])), same_file('problem_016').
 % problem_019
-hand_specific(_, 'problem_019') :- file_has(var(v)-op(sub,[var(v),elem(var(v),op(sub,[var(v),int(2)]))])).
+hand_specific(_, 'problem_019') :- file_has(var(v)-op(sub,[var(v),elem(var(v),op(sub,[var(v),int(2)]))])), same_file('problem_019').
 % problem_020
-hand_specific(_, 'problem_020') :- file_has(call(str,[call(factorial,[var(p(0))])])).
-hand_specific(_, 'problem_020') :- file_has(var(v)-op(add,[var(v),call(int,[elem(call(str,[var(v)]),var(v))])])).
-hand_specific(_, 'problem_020') :- file_has(call(range,[int(1),op(add,[var(p(0)),int(1)])])), file_has(var(p(0))-op(div,[var(p(0)),int(10)])).
+hand_specific(_, 'problem_020') :- file_has(call(str,[call(factorial,[var(p(0))])])), same_file('problem_020').
+hand_specific(_, 'problem_020') :- file_has(var(v)-op(add,[var(v),call(int,[elem(call(str,[var(v)]),var(v))])])), same_file('problem_020').
+hand_specific(_, 'problem_020') :- file_has(call(range,[int(1),op(add,[var(p(0)),int(1)])])), file_has(var(p(0))-op(div,[var(p(0)),int(10)])), same_file('problem_020').
 % problem_024
-hand_specific(_, 'problem_024') :- file_has(call(map,[field(other(string),join),call(permutations,[other(string)])])).
+hand_specific(_, 'problem_024') :- file_has(call(map,[field(other(string),join),call(permutations,[other(string)])])), same_file('problem_024').
 % problem_025
-hand_specific(_, 'problem_025') :- file_has(op(gt,[var(p(0)),call(len,[call(str,[call(next,[var(v)])])])])).
-hand_specific(_, 'problem_025') :- file_has(elem(list([int(0),int(1)]),var(p(0)))).
-hand_specific(_, 'problem_025') :- file_has(var(v)-op(add,[var(v),int(1)])), \+ file_has(var(v)-op(fdiv,[op(mul,[var(v),var(p(0))]),var(p(1))])), \+ file_has(var(p(0))-op(and,[var(p(0)),op(sub,[var(p(0)),int(1)])])), \+ file_has(var(p(0))-op(div,[var(p(0)),int(2)])), \+ file_has(var(v)-op(and,[var(p(0)),op(sub,[var(p(0)),int(1)])])), \+ file_has(call('Block',[int(0),other(string),other(string),field(var(p(0)),difficulty)])), \+ file_has(var(v)-op(mul,[other(string),var(p(3))])), \+ file_has(var(v)-op(add,[call(str,[op(mod,[elem(var(p(1)),var(v)),int(2)])]),var(v)])), \+ file_has(elem(elem(var(p(0)),var(v)),var(v))-call(bool,[call(getrandbits,[var(v),int(1)])])), \+ file_has(var(v)-call(slice,[var(p(0)),op(add,[var(p(1)),int(1)]),other(none)])), \+ file_has(var(v)-op(add,[var(v),elem(var(p(0)),var(v))])), \+ file_has(var(p(1))-op(add,[var(p(1)),elem(var(p(1)),var(v))])), \+ file_has(op(or,[op(not,[op(mod,[var(p(0)),int(2)])]),op(lt,[var(p(0)),int(2)])])), \+ file_has(var(v)-op(add,[call(index,[var(v),elem(var(p(0)),var(v))]),var(v)])), \+ file_has(elem(var(v),elem(var(p(3)),var(v)))-elem(elem(var(v),var(v)),var(v))), \+ file_has(var(v)-call(randrange,[var(v),int(2),op(sub,[var(p(0)),int(1)])])), \+ file_has(var(v)-call(ceil,[var(v),op(fdiv,[call(len,[var(p(1))]),var(p(0))])])), \+ file_has(var(v)-call(find,[var(v),call(upper,[elem(var(p(1)),var(v))])])), \+ file_has(op(gt,[op(add,[var(v),var(p(1))]),elem(field(var(p(0)),shape),int(0))])), \+ file_has(var(p(0))-call(floor,[var(v),op(fdiv,[var(p(0)),int(8)])])), \+ file_has(op(or,[op(not,[var(p(0))]),op(not,[call(isalpha,[var(p(0))])])])), \+ file_has(tuple([var(v),var(p(0))])-call(divmod,[var(p(0)),elem(var(v),var(v))])), \+ file_has(field(var(p(0)),reverse_map)-op(mul,[list([int(-1)]),call(len,[var(p(1))])])), \+ file_has(call(join,[other(string),map(var(p(0)),op(mul,[var(v),var(v)]),bool(true))])), \+ file_has(elem(call(slice,[var(p(0)),op(add,[var(v),int(1)]),other(none)]),var(v))), \+ file_has(elem(var(p(0)),var(p(2)))-elem(var(p(0)),op(add,[var(v),int(1)]))), \+ file_has(call(extend,[var(v),call(slice,[var(p(0)),var(v),other(none)])])), \+ file_has(var(v)-op(sub,[call(len,[var(p(0))]),int(1)])), \+ file_has(call(int,[call(log2,[op(add,[op(sub,[var(p(2)),var(p(1))]),int(1)])])])), \+ file_has(field(var(p(0)),root)-call('$self',[field(var(p(0)),root),var(p(1))])), \+ file_has(op(eq,[int(-1),elem(var(p(0)),elem(elem(var(p(3)),var(v)),var(v)))])), \+ file_has(op(ge,[call(balanced_factor,[var(p(0))]),field(var(p(0)),lim_charge)])), \+ file_has(field(var(p(0)),size_table)-call(next_prime,[field(var(p(0)),size_table)])), \+ file_has(op(not,[op(is,[var(p(0)),other(none)])])), \+ file_has(call(fn,[var(p(0)),field(var(p(0)),tail),var(p(1))])), \+ file_has(op(or,[op(not,[var(p(0))]),op(not,[field(var(p(0)),next_node)])])), \+ file_has(op(or,[op(gt,[var(p(1)),var(v)]),op(le,[var(p(1)),int(0)])])), \+ file_has(op('is not',[field(var(p(0)),next_node),other(none)])), \+ file_has(elem(field(var(v),forward),var(v))-call('Node',[var(p(1)),var(p(2))])), \+ file_has(field(field(var(p(0)),head),prev)-call('Node',[var(p(1))])), \+ file_has(tuple([var(v),var(v),var(v)])-call(fn,[var(v),elem(var(v),var(p(1)))])), \+ file_has(var(v)-op(add,[op(sub,[var(v),elem(var(p(1)),int(0))]),int(1)])), \+ file_has(call(fn,[elem(var(v),int(1)),elem(var(v),int(0)),elem(var(p(0)),var(v))])), \+ file_has(elem(var(p(1)),elem(var(v),var(v)))-elem(var(p(1)),var(v))), \+ file_has(var(v)-op(div,[op(sub,[call(len,[var(p(0))]),int(0)]),int(2)])), \+ file_has(op(eq,[int(2),call(len,[call(slice,[var(p(0)),other(none),var(v)])])])), \+ file_has(var(v)-filter(tail(var(p(0)),1),op(ge,[elem(tail(var(p(0)),1),var(v)),var(v)]))), \+ file_has(op(gt,[elem(var(v),op(sub,[var(v),int(1)])),elem(var(p(0)),var(v))])), \+ file_has(op(and,[op(eq,[var(p(0)),int(0)]),op(in,[var(p(0)),var(p(1))])])), \+ file_has(var(v)-map(var(v),call(fn,[elem(var(v),var(v)),var(p(0))]),bool(true))), \+ file_has(var(v)-field(elem(field(var(p(0)),p_list),int(0)),y)), \+ file_has(var(v)-op(add,[var(v),op(mul,[int(2),op(sub,[var(v),var(v)])])])), \+ file_has(field(var(p(0)),adj)-map(call(range,[var(p(1))]),list([]),bool(true))), \+ file_has(var(v)-elem(elem(elem(field(var(p(0)),graph),var(p(1))),var(v)),int(1))), \+ file_has(call(append,[field(var(p(0)),graph),op(mul,[list([int(0)]),var(v)])])), \+ file_has(op(eq,[int(1),op(mod,[call(len,[elem(var(p(0)),var(v))]),int(2)])])), \+ file_has(var(v)-call(split,[elem(elem(var(p(0)),var(v)),var(v)),other(string)])), \+ file_has(elem(var(p(1)),elem(elem(var(p(2)),var(p(0))),var(v)))), \+ file_has(op(eq,[elem(var(v),elem(elem(var(p(0)),var(v)),var(v))),int(0)])), \+ file_has(tuple([elem(elem(field(var(p(0)),connections),var(v)),var(v)),var(v)])), \+ file_has(op(gt,[call(float,[other(string)]),call(fn,[elem(var(p(6)),int(0))])])), \+ file_has(var(v)-call(float,[op(fdiv,[var(p(0)),elem(call(enumerate,[var(v)]),var(v))])])), \+ file_has(var(v)-call(index,[var(v),var(p(0))])), \+ file_has(call(range,[int(1),op(add,[op(add,[var(p(0)),call(len,[var(v)])]),int(1)])])), \+ file_has(var(v)-op(add,[var(v),op(mul,[int(1),elem(var(p(0)),var(v))])])), \+ file_has(tuple([var(v),var(v)])-call(eigh,[field(var(v),linalg),var(p(0))])), \+ file_has(var(v)-call(dot,[var(v),var(v),call(dot,[var(v),var(p(0)),var(p(1))])])), \+ file_has(var(v)-map(var(p(0)),call(list,[elem(var(p(0)),var(v))]),bool(true))), \+ file_has(var(v)-op(mul,[list([int(-1)]),call(len,[var(p(0))])])), \+ file_has(call(exp,[var(v),op(mul,[op(neg,[elem(var(p(0)),var(v))]),var(v)])])), \+ file_has(call(float,[elem(call(predict,[call('SVR',[]),var(p(1))]),int(0))])), \+ file_has(op(sub,[call(fn,[var(p(0)),var(p(1))]),call(fn,[var(p(0)),var(p(1))])])), \+ file_has(var(v)-op(add,[var(p(3)),op(mul,[var(v),op(sub,[var(p(4)),var(v)])])])), \+ file_has(call(range,[int(3),op(add,[call(int,[call(sqrt,[var(v),var(p(0))])]),int(1)]),int(2)])), \+ file_has(var(v)-op(mod,[op(add,[var(p(1)),int(1)]),call(len,[var(p(0))])])), \+ file_has(op(ge,[call(int,[call(sqrt,[var(v),var(p(0))])]),var(v)])), \+ file_has(var(v)-op(div,[var(p(0)),int(2)])), \+ file_has(op(or,[op(eq,[op(mod,[var(p(0)),int(2)]),int(0)]),op(eq,[op(mod,[var(p(0)),int(3)]),int(0)])])), \+ file_has(call(floor,[var(v),op(add,[call(log10,[var(v),call(abs,[var(p(0))])]),int(1)])])), \+ file_has(var(v)-op(mul,[op(sub,[var(p(0)),int(0)]),op(sub,[var(p(0)),int(0)])])), \+ file_has(op(eq,[var(p(0)),op(mul,[op(mul,[var(v),var(v)]),var(v)])])), \+ file_has(call(range,[int(1),op(add,[op(div,[var(p(0)),int(2)]),int(1)])])), \+ file_has(op(eq,[op(mul,[call(sqrt,[var(v),var(p(0))]),call(sqrt,[var(v),var(p(0))])]),var(p(0))])), \+ file_has(var(v)-call(str,[var(p(0))])), \+ file_has(var(v)-op(mul,[int(10),op(sub,[var(v),op(mul,[var(v),var(v)])])])), \+ file_has(op(fdiv,[op(mul,[int(4),var(v)]),var(p(0))])), \+ file_has(op(ge,[var(p(0)),op(mul,[var(v),var(v)])])), \+ file_has(op(eq,[op(add,[elem(var(v),var(v)),elem(var(v),var(v))]),var(p(0))])), \+ file_has(var(v)-call(min,[op(mul,[int(2),var(v)]),var(p(0))])), \+ file_has(call(append,[var(v),call(float,[op(mul,[var(p(1)),var(v)])])])), \+ file_has(var(v)-op(mul,[var(v),op(sub,[var(p(0)),int(1)])])), \+ file_has(call(range,[op(mul,[var(v),var(v)]),op(add,[var(p(0)),int(1)]),var(v)])), \+ file_has(call(sorted,[map(call(enumerate,[var(p(0))]),tuple([var(v),var(v)]),bool(true))])), \+ file_has(var(v)-call(len,[call(str,[var(p(0))])])), \+ file_has(op(eq,[int(1),op(mod,[var(v),int(2)])])), \+ file_has(var(p(0))-call(int,[var(p(0))])), \+ file_has(call(range,[int(1),var(p(0))])), \+ file_has(call(pow,[var(p(0)),op(div,[op(add,[var(v),int(1)]),int(2)]),var(p(1))])), \+ file_has(op(eq,[int(0),op(mod,[var(p(0)),int(10)])])), \+ file_has(tuple([elem(var(p(0)),var(v)),elem(var(p(0)),var(v)),elem(var(p(0)),var(v))])), \+ file_has(var(v)-call(int,[op(div,[op(add,[var(p(1)),var(p(2))]),int(2)])])), \+ file_has(field(var(p(0)),'COL')-call(len,[elem(var(p(1)),int(0))])), \+ file_has(op(ne,[elem(var(p(0)),var(v)),elem(var(v),var(v))])), \+ file_has(op(and,[op(ge,[var(v),int(0)]),op(lt,[var(v),var(p(2))])])), \+ file_has(call(slice,[var(p(1)),var(v),op(add,[var(v),elem(var(p(2)),int(0))])])), \+ file_has(call(zeros,[var(v),tuple([field(var(p(0)),vocabulary_size),int(1)])])), \+ file_has(call(insert,[field(var(p(0)),weight),int(0),field(var(p(0)),bias)])), \+ file_has(call(next,[call(iter,[call(keys,[field(elem(var(p(0)),var(v)),literals)])])])), \+ file_has(call(fn,[var(p(0)),elem(field(var(p(0)),numbermap),var(v)),var(p(1))])), \+ file_has(op(ge,[var(v),var(p(0))])), \+ file_has(op(eq,[var(v),var(p(0))])), \+ file_has(op(or,[op(eq,[op(mod,[var(v),int(3)]),int(0)]),op(eq,[op(mod,[var(v),int(5)]),int(0)])])), \+ file_has(op(gt,[elem(var(v),op(add,[var(v),int(2)])),var(p(0))])), \+ file_has(call(range,[int(5),call(int,[op(add,[call(sqrt,[var(p(0))]),int(1)])]),int(6)])), \+ file_has(call(islice,[var(v),call(fn,[]),op(sub,[var(p(0)),int(1)]),var(p(0))])), \+ file_has(op(ge,[call(int,[elem(var(p(0)),var(v))]),call(int,[elem(var(v),int(0))])])), \+ file_has(call(int,[op(add,[call(sqrt,[var(v),var(p(0))]),int(1)])])), \+ file_has(call(range,[int(2),var(p(0))])), \+ file_has(var(v)-op(sub,[var(v),elem(var(v),op(sub,[var(v),int(2)]))])), \+ file_has(call(int,[op(add,[other(string),op(mul,[other(string),var(p(0))])])])), \+ file_has(call(range,[int(3),op(add,[var(p(0)),int(1)]),int(2)])), \+ file_has(op(gt,[other(float),call(len,[var(v)])])), \+ file_has(var(v)-op(pow,[op(add,[op(mul,[int(24),var(p(0))]),int(1)]),other(float)])), \+ file_has(op(eq,[call(sorted,[call(str,[var(v)])]),call(sorted,[call(str,[op(mul,[int(2),var(v)])])])])), \+ file_has(call(factorial,[op(sub,[var(p(0)),var(p(1))])])), \+ file_has(var(v)-elem(field(var(v),'_CARD_NAME'),field(var(p(0)),'_first_pair'))), \+ file_has(call(join,[other(string),call(sorted,[call(str,[op(pow,[var(p(0)),int(3)])])])])), \+ file_has(var(v)-op(fdiv,[op(sub,[var(p(0)),op(pow,[var(v),int(2)])]),var(v)])), \+ file_has(call(range,[op(add,[var(p(0)),int(1)])])), \+ file_has(op(ge,[var(p(0)),op(mul,[op(mul,[int(2),var(v)]),op(add,[var(v),int(1)])])])), \+ file_has(op(ge,[var(p(0)),var(v)])), \+ file_has(var(v)-elem(var(v),elem(var(p(0)),op(add,[var(v),int(1)])))), \+ file_has(elem(elem(var(v),var(v)),var(v))-elem(elem(var(p(0)),var(v)),var(v))), \+ file_has(op(eq,[var(p(1)),op(add,[elem(var(p(0)),var(v)),elem(var(p(0)),int(-1))])])), \+ file_has(op(gt,[op(mul,[op(mul,[int(2),var(v)]),var(v)]),var(p(0))])), \+ file_has(var(v)-op(mod,[op(add,[op(mul,[int(10),var(v)]),int(1)]),var(p(0))])), \+ file_has(call(range,[int(2),op(add,[call(sqrt,[var(p(0))]),int(1)])])), \+ file_has(var(v)-op(add,[var(p(1)),op(mul,[var(v),op(sub,[var(v),var(p(0))])])])), \+ file_has(call(ceil,[call(sqrt,[op(sub,[op(pow,[var(v),int(2)]),var(p(0))])])])), \+ file_has(call(difference,[var(p(0)),call(set,[])])), \+ file_has(op(and,[op(gt,[var(v),int(0)]),op(lt,[op(fdiv,[var(v),var(v)]),var(p(0))])])), \+ file_has(var(v)-op(add,[call(floor,[var(v),call(sqrt,[var(v),var(p(0))])]),int(100)])), \+ file_has(var(v)-op(mul,[call(log,[var(v),int(2),int(10)]),var(p(0))])), \+ file_has(var(v)-call(randint,[var(v),int(2),op(sub,[var(p(1)),int(1)])])), \+ file_has(var(v)-call(min,[field(var(p(0)),quantum),elem(var(v),other(string))])), \+ file_has(elem(var(v),var(v))-op(sub,[elem(var(p(1)),var(v)),elem(var(p(2)),var(v))])), \+ file_has(var(v)-op(add,[var(v),elem(elem(var(p(0)),var(v)),int(2))])), \+ file_has(elem(var(v),var(v))-op(add,[elem(var(p(0)),var(v)),elem(var(p(2)),var(v))])), \+ file_has(call(min,[op(add,[var(v),call(fn,[op(sub,[var(v),int(1)])])]),op(sub,[call(len,[var(p(0))]),int(1)])])), \+ file_has(call('SearchProblem',[var(v),var(v),var(v),field(var(p(0)),function)])), \+ file_has(op(gt,[var(p(1)),elem(var(p(0)),op(sub,[call(min,[var(v),var(v)]),int(1)]))])), \+ file_has(op(ne,[elem(var(p(0)),var(v)),var(p(1))])), \+ file_has(op(add,[op(pow,[var(p(0)),int(2)]),op(pow,[var(p(1)),int(2)])])), \+ file_has(elem(var(v),var(v))-elem(call(slice,[var(p(0)),int(1),int(-1)]),var(v))), \+ file_has(var(v)-op(sub,[var(p(1)),op(div,[op(sub,[var(p(1)),var(p(0))]),int(3)])])), \+ file_has(op(gt,[elem(var(p(0)),op(add,[var(v),int(1)])),elem(var(p(0)),var(v))])), \+ file_has(elem(var(p(0)),var(v))-elem(var(p(0)),op(sub,[var(v),int(1)]))), \+ file_has(var(v)-call(fn,[var(p(0)),int(0),op(sub,[call(len,[var(p(0))]),int(1)])])), \+ file_has(op(eq,[elem(var(p(0)),op(add,[var(v),var(v)])),elem(var(p(0)),var(v))])), \+ file_has(op(gt,[var(v),elem(var(p(0)),var(v))])), \+ file_has(op(or,[op(lt,[elem(var(p(0)),var(v)),int(1)]),op(gt,[elem(var(p(0)),var(v)),var(v)])])), \+ file_has(var(v)-op(fdiv,[field(var(p(0)),block_size),op(add,[var(v),int(1)])])), \+ file_has(call(int,[op(mul,[var(v),op(sub,[var(p(0)),var(v)])])])), \+ file_has(op(and,[op(shr,[elem(var(p(0)),var(v)),op(sub,[var(p(1)),int(1)])]),int(1)])), \+ file_has(var(v)-op(sub,[elem(var(p(0)),var(v)),var(v)])), \+ file_has(elem(var(p(0)),var(v))-op(add,[var(v),var(v)])), \+ file_has(call(fn,[var(v),var(v),op(add,[var(v),var(v)]),var(v),var(p(1))])), \+ file_has(var(v)-call(int,[op(mod,[op(fdiv,[elem(var(p(0)),var(v)),var(v)]),var(v)])])), \+ file_has(var(p(0))-call(slice,[var(v),other(none),var(v)])), \+ file_has(op(gt,[elem(var(p(0)),op(sub,[var(v),int(1)])),elem(var(p(0)),var(v))])), \+ file_has(call(list,[call(range,[op(add,[call(len,[var(p(0))]),int(1)])])])), \+ file_has(call(range,[op(sub,[field(var(p(0)),patLen),int(1)]),int(-1),int(-1)])), \+ file_has(elem(field(var(p(0)),merges),var(v))-op(add,[var(v),int(256)])), \+ file_has(call(lower,[call(replace,[var(p(0)),other(string),other(string)])])), \+ file_has(call(isalpha,[elem(var(p(0)),var(v))])), \+ file_has(op(ge,[call(len,[var(p(0))]),int(13)])), \+ file_has(elem(var(v),var(v))-op(add,[elem(var(v),elem(call(upper,[var(p(0))]),var(v))),int(1)])), \+ file_has(op(ne,[elem(call(zip,[var(p(0)),var(p(1))]),var(v)),elem(call(zip,[var(p(0)),var(p(1))]),var(v))])), \+ file_has(call(min,[op(add,[op(add,[var(v),var(v)]),int(1)]),call(len,[var(p(1))])])), \+ file_has(op(eq,[var(v),op(sub,[call(len,[var(p(1))]),int(1)])])), \+ file_has(var(v)-op(add,[var(v),elem(var(p(0)),int(-1))])), \+ file_has(elem(var(v),var(v))-op(add,[elem(var(v),elem(var(p(1)),var(v))),int(1)])), \+ file_has(op(eq,[elem(var(p(0)),var(v)),elem(var(p(0)),var(v))])), \+ file_has(op(eq,[var(p(1)),call(slice,[var(p(0)),var(v),op(add,[var(v),var(v)])])])), \+ file_has(op(and,[op(lt,[var(v),var(v)]),op(in,[elem(var(p(0)),var(v)),var(p(1))])])), \+ file_has(op('not in',[elem(var(p(0)),var(v)),var(v)])).
+hand_specific(_, 'problem_025') :- file_has(op(gt,[var(p(0)),call(len,[call(str,[call(next,[var(v)])])])])), same_file('problem_025').
+hand_specific(_, 'problem_025') :- file_has(elem(list([int(0),int(1)]),var(p(0)))), same_file('problem_025').
+hand_specific(_, 'problem_025') :- file_has(var(v)-op(add,[var(v),int(1)])), \+ file_has(var(v)-op(fdiv,[op(mul,[var(v),var(p(0))]),var(p(1))])), \+ file_has(var(p(0))-op(and,[var(p(0)),op(sub,[var(p(0)),int(1)])])), \+ file_has(var(p(0))-op(div,[var(p(0)),int(2)])), \+ file_has(var(v)-op(and,[var(p(0)),op(sub,[var(p(0)),int(1)])])), \+ file_has(call('Block',[int(0),other(string),other(string),field(var(p(0)),difficulty)])), \+ file_has(var(v)-op(mul,[other(string),var(p(3))])), \+ file_has(var(v)-op(add,[call(str,[op(mod,[elem(var(p(1)),var(v)),int(2)])]),var(v)])), \+ file_has(elem(elem(var(p(0)),var(v)),var(v))-call(bool,[call(getrandbits,[var(v),int(1)])])), \+ file_has(var(v)-call(slice,[var(p(0)),op(add,[var(p(1)),int(1)]),other(none)])), \+ file_has(var(v)-op(add,[var(v),elem(var(p(0)),var(v))])), \+ file_has(var(p(1))-op(add,[var(p(1)),elem(var(p(1)),var(v))])), \+ file_has(op(or,[op(not,[op(mod,[var(p(0)),int(2)])]),op(lt,[var(p(0)),int(2)])])), \+ file_has(var(v)-op(add,[call(index,[var(v),elem(var(p(0)),var(v))]),var(v)])), \+ file_has(elem(var(v),elem(var(p(3)),var(v)))-elem(elem(var(v),var(v)),var(v))), \+ file_has(var(v)-call(randrange,[var(v),int(2),op(sub,[var(p(0)),int(1)])])), \+ file_has(var(v)-call(ceil,[var(v),op(fdiv,[call(len,[var(p(1))]),var(p(0))])])), \+ file_has(var(v)-call(find,[var(v),call(upper,[elem(var(p(1)),var(v))])])), \+ file_has(op(gt,[op(add,[var(v),var(p(1))]),elem(field(var(p(0)),shape),int(0))])), \+ file_has(var(p(0))-call(floor,[var(v),op(fdiv,[var(p(0)),int(8)])])), \+ file_has(op(or,[op(not,[var(p(0))]),op(not,[call(isalpha,[var(p(0))])])])), \+ file_has(tuple([var(v),var(p(0))])-call(divmod,[var(p(0)),elem(var(v),var(v))])), \+ file_has(field(var(p(0)),reverse_map)-op(mul,[list([int(-1)]),call(len,[var(p(1))])])), \+ file_has(call(join,[other(string),map(var(p(0)),op(mul,[var(v),var(v)]),bool(true))])), \+ file_has(elem(call(slice,[var(p(0)),op(add,[var(v),int(1)]),other(none)]),var(v))), \+ file_has(elem(var(p(0)),var(p(2)))-elem(var(p(0)),op(add,[var(v),int(1)]))), \+ file_has(call(extend,[var(v),call(slice,[var(p(1)),var(v),other(none)])])), \+ file_has(elem(var(p(0)),var(v))-elem(var(p(0)),var(v))), \+ file_has(call(int,[call(log2,[op(add,[op(sub,[var(p(2)),var(p(1))]),int(1)])])])), \+ file_has(field(var(p(0)),root)-call('$self',[field(var(p(0)),root),var(p(1))])), \+ file_has(op(eq,[int(-1),elem(var(p(0)),elem(elem(var(p(3)),var(v)),var(v)))])), \+ file_has(op(ge,[call(balanced_factor,[var(p(0))]),field(var(p(0)),lim_charge)])), \+ file_has(field(var(p(0)),size_table)-call(next_prime,[field(var(p(0)),size_table)])), \+ file_has(op(not,[op(is,[var(p(0)),other(none)])])), \+ file_has(call(fn,[var(p(0)),field(var(p(0)),head),var(p(1))])), \+ file_has(op(or,[op(not,[var(p(0))]),op(not,[field(var(p(0)),next_node)])])), \+ file_has(op(or,[op(gt,[var(p(1)),var(v)]),op(le,[var(p(1)),int(0)])])), \+ file_has(op('is not',[field(var(p(0)),next_node),other(none)])), \+ file_has(elem(field(var(v),forward),var(v))-call('Node',[var(p(1)),var(p(2))])), \+ file_has(field(field(var(p(0)),head),prev)-call('Node',[var(p(1))])), \+ file_has(var(v)-call(next,[call(iter,[call(values,[field(var(p(0)),nodes)])])])), \+ file_has(var(v)-op(add,[op(sub,[var(v),elem(var(p(1)),int(0))]),int(1)])), \+ file_has(call(fn,[elem(var(v),int(1)),elem(var(v),int(0)),elem(var(p(0)),var(v))])), \+ file_has(elem(var(p(1)),var(v))-elem(var(p(1)),elem(var(v),var(v)))), \+ file_has(var(v)-op(div,[op(sub,[call(len,[var(p(0))]),int(0)]),int(2)])), \+ file_has(op(eq,[call(len,[call(slice,[var(p(0)),other(none),var(v)])]),int(2)])), \+ file_has(var(v)-filter(tail(var(p(0)),1),op(ge,[elem(tail(var(p(0)),1),var(v)),var(v)]))), \+ file_has(op(eq,[elem(var(v),op(sub,[var(v),int(1)])),elem(var(p(0)),var(v))])), \+ file_has(op(and,[op(eq,[var(p(0)),int(0)]),op(in,[var(p(0)),var(p(1))])])), \+ file_has(var(v)-map(var(v),call(fn,[elem(var(v),var(v)),var(p(0))]),bool(true))), \+ file_has(var(v)-field(elem(field(var(p(0)),p_list),int(1)),x)), \+ file_has(var(v)-op(add,[var(v),op(mul,[int(2),op(sub,[var(v),var(v)])])])), \+ file_has(field(var(p(0)),adj)-map(call(range,[var(p(1))]),list([]),bool(true))), \+ file_has(var(v)-elem(elem(elem(field(var(p(0)),graph),var(p(1))),var(v)),int(1))), \+ file_has(call(append,[field(var(p(0)),graph),op(mul,[list([int(0)]),var(v)])])), \+ file_has(op(eq,[op(mod,[call(len,[elem(var(p(0)),var(v))]),int(2)]),int(1)])), \+ file_has(var(v)-call(split,[elem(elem(var(p(0)),var(v)),var(v)),other(string)])), \+ file_has(elem(var(p(1)),elem(elem(var(p(2)),var(p(0))),var(v)))), \+ file_has(op(eq,[elem(var(v),elem(elem(var(p(0)),var(v)),var(v))),int(0)])), \+ file_has(tuple([elem(elem(field(var(p(0)),connections),var(v)),var(v)),var(v)])), \+ file_has(op(gt,[call(float,[other(string)]),call(fn,[elem(var(p(6)),int(0))])])), \+ file_has(var(v)-call(float,[op(fdiv,[var(p(0)),elem(call(enumerate,[var(v)]),var(v))])])), \+ file_has(var(v)-call(index,[var(v),var(p(0))])), \+ file_has(call(range,[int(1),op(add,[op(add,[var(p(0)),call(len,[var(v)])]),int(1)])])), \+ file_has(var(v)-op(add,[var(v),op(mul,[int(1),elem(var(p(0)),var(v))])])), \+ file_has(tuple([var(v),var(v)])-call(eigh,[field(var(v),linalg),var(p(0))])), \+ file_has(var(v)-call(dot,[var(v),var(v),call(dot,[var(v),var(p(0)),var(p(1))])])), \+ file_has(var(v)-map(var(p(0)),call(list,[elem(var(p(0)),var(v))]),bool(true))), \+ file_has(var(v)-op(mul,[list([int(-1)]),call(len,[var(p(0))])])), \+ file_has(call(exp,[var(v),op(mul,[op(neg,[elem(var(p(0)),var(v))]),var(v)])])), \+ file_has(call(float,[elem(call(predict,[call('SVR',[]),var(p(1))]),int(0))])), \+ file_has(op(sub,[call(fn,[var(p(0)),var(p(1))]),call(fn,[var(p(0)),var(p(1))])])), \+ file_has(var(v)-op(add,[var(p(3)),op(mul,[var(v),op(sub,[var(p(4)),var(v)])])])), \+ file_has(call(range,[int(3),op(add,[call(int,[call(sqrt,[var(v),var(p(0))])]),int(1)]),int(2)])), \+ file_has(var(v)-op(mod,[op(sub,[var(p(1)),int(1)]),call(len,[var(p(0))])])), \+ file_has(op(ge,[call(int,[call(sqrt,[var(v),var(p(0))])]),var(v)])), \+ file_has(var(v)-op(div,[var(p(0)),int(2)])), \+ file_has(op(or,[op(eq,[op(mod,[var(p(0)),int(2)]),int(0)]),op(eq,[op(mod,[var(p(0)),int(3)]),int(0)])])), \+ file_has(call(floor,[var(v),op(add,[call(log10,[var(v),call(abs,[var(p(0))])]),int(1)])])), \+ file_has(var(v)-op(mul,[op(sub,[var(p(0)),int(0)]),op(sub,[var(p(0)),int(0)])])), \+ file_has(op(eq,[var(p(0)),op(mul,[op(mul,[var(v),var(v)]),var(v)])])), \+ file_has(call(range,[int(1),op(add,[op(div,[var(p(0)),int(2)]),int(1)])])), \+ file_has(op(eq,[op(mul,[call(sqrt,[var(v),var(p(0))]),call(sqrt,[var(v),var(p(0))])]),var(p(0))])), \+ file_has(var(v)-call(str,[var(p(0))])), \+ file_has(var(v)-op(mul,[int(10),op(sub,[var(v),op(mul,[var(v),var(v)])])])), \+ file_has(op(fdiv,[op(mul,[int(4),var(v)]),var(p(0))])), \+ file_has(op(ge,[var(p(0)),op(mul,[var(v),var(v)])])), \+ file_has(call(gcd_by_iterative,[call(abs,[var(p(0))]),call(abs,[var(p(1))])])), \+ file_has(var(v)-call(min,[op(mul,[int(2),var(v)]),var(p(0))])), \+ file_has(call(append,[var(v),call(float,[op(mul,[var(p(1)),var(v)])])])), \+ file_has(var(v)-op(mul,[var(v),op(sub,[var(p(0)),int(1)])])), \+ file_has(call(range,[op(mul,[var(v),var(v)]),op(add,[var(p(0)),int(1)]),var(v)])), \+ file_has(call(sorted,[map(call(enumerate,[var(p(0))]),tuple([var(v),var(v)]),bool(true))])), \+ file_has(var(v)-call(len,[call(str,[var(p(0))])])), \+ file_has(op(eq,[op(mod,[var(v),int(2)]),int(0)])), \+ file_has(var(p(0))-call(int,[var(p(0))])), \+ file_has(call(range,[int(1),var(p(0))])), \+ file_has(op(gt,[op(add,[elem(var(p(0)),var(v)),elem(var(p(0)),var(v))]),var(v)])), \+ file_has(op(eq,[op(mod,[var(p(0)),int(10)]),int(0)])), \+ file_has(tuple([elem(var(p(0)),var(v)),elem(var(p(0)),var(v)),elem(var(p(0)),var(v))])), \+ file_has(op(eq,[op(add,[elem(var(p(0)),var(v)),elem(var(p(0)),var(v))]),var(p(1))])), \+ file_has(var(v)-call(int,[op(div,[op(add,[var(p(1)),var(p(2))]),int(2)])])), \+ file_has(field(var(p(0)),'COL')-call(len,[elem(var(p(1)),int(0))])), \+ file_has(op(or,[op(not,[var(p(0))]),op(lt,[elem(var(p(0)),int(0)),int(0)])])), \+ file_has(op(ne,[elem(var(p(0)),var(v)),elem(var(v),var(v))])), \+ file_has(op(and,[op(ge,[var(v),int(0)]),op(lt,[var(v),var(p(2))])])), \+ file_has(call(slice,[var(p(1)),var(v),op(add,[var(v),elem(var(p(2)),int(0))])])), \+ file_has(call(zeros,[var(v),tuple([field(var(p(0)),hidden_layer_size),int(1)])])), \+ file_has(call(insert,[field(var(p(0)),weight),int(0),field(var(p(0)),bias)])), \+ file_has(call(next,[call(iter,[call(keys,[field(elem(var(p(0)),var(v)),literals)])])])), \+ file_has(call(fn,[var(p(0)),elem(field(var(p(0)),numbermap),var(v)),var(p(1))])), \+ file_has(op(ge,[var(v),var(p(0))])), \+ file_has(op(gt,[var(v),var(p(0))])), \+ file_has(op(or,[op(eq,[op(mod,[var(v),int(3)]),int(0)]),op(eq,[op(mod,[var(v),int(5)]),int(0)])])), \+ file_has(op(gt,[elem(var(v),op(add,[var(v),int(2)])),var(p(0))])), \+ file_has(call(range,[int(5),call(int,[op(add,[call(sqrt,[var(p(0))]),int(1)])]),int(6)])), \+ file_has(call(islice,[var(v),call(fn,[]),op(sub,[var(p(0)),int(1)]),var(p(0))])), \+ file_has(op(ge,[call(int,[elem(var(p(0)),var(v))]),call(int,[elem(var(v),int(0))])])), \+ file_has(call(int,[op(add,[call(sqrt,[var(v),var(p(0))]),int(1)])])), \+ file_has(var(v)-op(sub,[var(v),elem(var(v),op(sub,[var(v),int(2)]))])), \+ file_has(call(int,[op(add,[other(string),op(mul,[other(string),var(p(0))])])])), \+ file_has(call(range,[int(3),op(add,[var(p(0)),int(1)]),int(2)])), \+ file_has(op(gt,[other(float),call(len,[var(v)])])), \+ file_has(var(v)-op(pow,[op(add,[op(mul,[int(24),var(p(0))]),int(1)]),other(float)])), \+ file_has(op(eq,[call(sorted,[call(str,[var(v)])]),call(sorted,[call(str,[op(mul,[int(2),var(v)])])])])), \+ file_has(call(factorial,[op(sub,[var(p(0)),var(p(1))])])), \+ file_has(op(gt,[field(var(p(1)),'_first_pair'),field(var(p(0)),'_first_pair')])), \+ file_has(call(join,[other(string),call(sorted,[call(str,[op(pow,[var(p(0)),int(3)])])])])), \+ file_has(var(v)-op(fdiv,[op(sub,[var(p(0)),op(pow,[var(v),int(2)])]),var(v)])), \+ file_has(call(sum,[map(call(str,[var(p(0))]),elem(var(v),elem(call(str,[var(p(0))]),var(v))),bool(true))])), \+ file_has(op(ge,[var(p(0)),op(mul,[op(mul,[int(2),var(v)]),op(add,[var(v),int(1)])])])), \+ file_has(op(ge,[var(p(0)),var(v)])), \+ file_has(var(v)-elem(var(v),elem(var(p(0)),op(add,[var(v),int(1)])))), \+ file_has(elem(elem(var(v),var(v)),var(v))-elem(elem(var(p(1)),var(v)),int(0))), \+ file_has(op(eq,[var(p(1)),op(add,[elem(var(p(0)),var(v)),elem(var(p(0)),int(-1))])])), \+ file_has(op(eq,[op(mul,[op(mul,[int(2),var(v)]),var(v)]),var(p(0))])), \+ file_has(call(range,[int(2),op(add,[call(sqrt,[var(p(0))]),int(1)])])), \+ file_has(var(v)-op(add,[var(p(1)),op(mul,[var(v),op(sub,[var(v),var(p(0))])])])), \+ file_has(call(ceil,[call(sqrt,[op(sub,[op(pow,[var(v),int(2)]),var(p(0))])])])), \+ file_has(op(ge,[op(mul,[elem(var(v),var(v)),elem(var(v),var(v))]),var(p(0))])), \+ file_has(call(difference,[var(p(0)),call(set,[])])), \+ file_has(op(and,[op(gt,[var(v),int(0)]),op(lt,[op(fdiv,[var(v),var(v)]),var(p(0))])])), \+ file_has(var(v)-op(mul,[call(log,[var(v),int(2),int(10)]),var(p(0))])), \+ file_has(call(range,[int(2),op(add,[call(sqrt,[op(sub,[var(p(0)),int(1)])]),int(1)])])), \+ file_has(var(v)-call(randint,[var(v),int(2),op(sub,[var(p(1)),int(1)])])), \+ file_has(call(insert,[field(var(p(0)),result_box),other(string),other(string)])), \+ file_has(elem(var(v),var(v))-op(sub,[elem(var(p(1)),var(v)),elem(var(p(2)),var(v))])), \+ file_has(var(v)-op(add,[var(v),elem(elem(var(p(0)),var(v)),int(2))])), \+ file_has(elem(var(v),var(v))-op(add,[elem(var(p(0)),var(v)),elem(var(p(2)),var(v))])), \+ file_has(var(v)-call(min,[var(v),op(sub,[call(len,[var(p(0))]),int(1)])])), \+ file_has(var(v)-op(sub,[call(len,[var(p(0))]),int(1)])), \+ file_has(call(min,[op(add,[var(v),call(fn,[op(sub,[var(v),int(1)])])]),op(sub,[call(len,[var(p(0))]),int(1)])])), \+ file_has(call('SearchProblem',[var(v),var(v),var(v),field(var(p(0)),function)])), \+ file_has(op(gt,[var(p(1)),elem(var(p(0)),op(sub,[call(min,[var(v),var(v)]),int(1)]))])), \+ file_has(op(ne,[elem(var(p(0)),var(v)),var(p(1))])), \+ file_has(op(add,[op(pow,[var(p(0)),int(2)]),op(pow,[var(p(1)),int(2)])])), \+ file_has(elem(var(v),var(v))-elem(call(slice,[var(p(0)),int(1),int(-1)]),var(v))), \+ file_has(var(v)-op(sub,[var(p(1)),op(div,[op(sub,[var(p(1)),var(p(0))]),int(3)])])), \+ file_has(op(eq,[elem(var(p(0)),op(add,[var(v),int(1)])),elem(var(p(0)),var(v))])), \+ file_has(elem(var(p(0)),var(v))-elem(var(p(0)),op(sub,[var(v),int(1)]))), \+ file_has(op(gt,[elem(var(p(0)),var(v)),elem(var(p(0)),op(add,[var(v),var(v)]))])), \+ file_has(op(eq,[elem(var(p(0)),var(v)),var(v)])), \+ file_has(var(v)-op(fdiv,[field(var(p(0)),block_size),op(add,[var(v),int(1)])])), \+ file_has(call(int,[op(mul,[var(v),op(sub,[var(p(0)),var(v)])])])), \+ file_has(var(v)-op(sub,[elem(var(p(0)),var(v)),var(v)])), \+ file_has(elem(var(p(0)),var(v))-op(add,[var(v),var(v)])), \+ file_has(call(fn,[var(v),var(v),op(add,[var(v),var(v)]),var(v),var(p(1))])), \+ file_has(var(v)-call(int,[op(mod,[op(fdiv,[elem(var(p(0)),var(v)),var(v)]),var(v)])])), \+ file_has(var(p(0))-call(slice,[var(v),var(v),other(none)])), \+ file_has(op(gt,[elem(var(p(0)),op(sub,[var(v),int(1)])),elem(var(p(0)),var(v))])), \+ file_has(call(list,[call(range,[op(add,[call(len,[var(p(0))]),int(1)])])])), \+ file_has(call(range,[op(sub,[field(var(p(0)),patLen),int(1)]),int(-1),int(-1)])), \+ file_has(elem(field(var(p(0)),merges),var(v))-op(add,[var(v),int(256)])), \+ file_has(call(lower,[call(replace,[var(p(0)),other(string),other(string)])])), \+ file_has(call(isalpha,[elem(var(p(0)),var(v))])), \+ file_has(op(ge,[call(len,[var(p(0))]),int(13)])), \+ file_has(elem(var(v),var(v))-op(add,[elem(var(v),elem(call(upper,[var(p(0))]),var(v))),int(1)])), \+ file_has(op(ne,[elem(call(zip,[var(p(0)),var(p(1))]),var(v)),elem(call(zip,[var(p(0)),var(p(1))]),var(v))])), \+ file_has(call(min,[op(add,[op(add,[var(v),var(v)]),int(1)]),call(len,[var(p(1))])])), \+ file_has(op(eq,[elem(var(p(0)),var(v)),elem(var(p(0)),var(v))])), \+ file_has(var(v)-op(add,[var(v),elem(var(p(0)),int(-1))])), \+ file_has(elem(var(v),var(v))-op(add,[elem(var(v),elem(var(p(1)),var(v))),int(1)])), \+ file_has(op(eq,[call(slice,[var(p(0)),var(v),op(add,[var(v),var(v)])]),var(p(1))])), \+ file_has(op(and,[op(lt,[var(v),var(v)]),op(in,[elem(var(p(0)),var(v)),var(p(1))])])), \+ file_has(op('not in',[elem(var(p(0)),var(v)),var(v)])), same_file('problem_025').
 % problem_027
-hand_specific(_, 'problem_027') :- file_has(call(range,[op(add,[op(mul,[var(p(0)),int(-1)]),int(1)]),var(p(0))])).
+hand_specific(_, 'problem_027') :- file_has(call(range,[op(add,[op(mul,[var(p(0)),int(-1)]),int(1)]),var(p(0))])), same_file('problem_027').
 % problem_030
-hand_specific(_, 'problem_030') :- file_has(call(range,[int(1000),int(1000000)])).
+hand_specific(_, 'problem_030') :- file_has(call(range,[int(1000),int(1000000)])), same_file('problem_030').
 % problem_031
-hand_specific(_, 'problem_031') :- file_has(elem(op(mul,[list([int(0)]),op(add,[var(p(0)),int(1)])]),var(p(0)))).
-hand_specific(_, 'problem_031') :- file_has(op(add,[call('$self',[]),call(fn,[var(p(0))])])).
+hand_specific(_, 'problem_031') :- file_has(elem(op(mul,[list([int(0)]),op(add,[var(p(0)),int(1)])]),var(p(0)))), same_file('problem_031').
+hand_specific(_, 'problem_031') :- file_has(op(add,[call('$self',[]),call(fn,[var(p(0))])])), same_file('problem_031').
 % problem_034
-hand_specific(_, 'problem_034') :- file_has(var(v)-op(add,[op(mul,[int(7),call(factorial,[int(9)])]),int(1)])).
+hand_specific(_, 'problem_034') :- file_has(var(v)-op(add,[op(mul,[int(7),call(factorial,[int(9)])]),int(1)])), same_file('problem_034').
 % problem_035
-hand_specific(_, 'problem_035') :- file_has(call(range,[int(3),op(add,[var(p(0)),int(1)]),int(2)])).
+hand_specific(_, 'problem_035') :- file_has(call(range,[int(3),op(add,[var(p(0)),int(1)]),int(2)])), same_file('problem_035').
 % problem_036
-hand_specific(_, 'problem_036') :- file_has(var(p(0))-call(str,[var(p(0))])).
+hand_specific(_, 'problem_036') :- file_has(var(p(0))-call(str,[var(p(0))])), same_file('problem_036').
 % problem_037
-hand_specific(_, 'problem_037') :- file_has(call(int,[call(slice,[call(str,[var(p(0))]),other(none),int(3)])])).
+hand_specific(_, 'problem_037') :- file_has(call(int,[call(slice,[call(str,[var(p(0))]),other(none),int(3)])])), same_file('problem_037').
 % problem_041
-hand_specific(_, 'problem_041') :- file_has(call(permutations,[var(v),var(p(0))])).
+hand_specific(_, 'problem_041') :- file_has(call(permutations,[var(v),var(p(0))])), same_file('problem_041').
 % problem_043
-hand_specific(_, 'problem_043') :- file_has(op(ne,[op(mod,[elem(var(p(0)),int(3)),int(2)]),int(0)])).
+hand_specific(_, 'problem_043') :- file_has(op(ne,[op(mod,[elem(var(p(0)),int(3)),int(2)]),int(0)])), same_file('problem_043').
 % problem_046
-hand_specific(_, 'problem_046') :- file_has(op(ge,[elem(var(v),var(v)),op(mul,[op(mul,[int(2),var(v)]),var(v)])])).
+hand_specific(_, 'problem_046') :- file_has(op(ge,[elem(var(v),var(v)),op(mul,[op(mul,[int(2),var(v)]),var(v)])])), same_file('problem_046').
 % problem_049
-hand_specific(_, 'problem_049') :- file_has(op(eq,[elem(var(p(1)),var(v)),var(p(0))])).
+hand_specific(_, 'problem_049') :- file_has(op(eq,[elem(var(p(1)),var(v)),var(p(0))])), same_file('problem_049').
 % problem_050
-hand_specific(_, 'problem_050') :- file_has(call(range,[op(add,[var(v),var(v)]),call(len,[var(v)])])).
+hand_specific(_, 'problem_050') :- file_has(call(range,[op(add,[var(v),var(v)]),call(len,[var(v)])])), same_file('problem_050').
 % problem_051
-hand_specific(_, 'problem_051') :- file_has(map(list([other(string),other(string),other(string),other(string),other(string),other(string),other(string),other(string),other(string),other(string)]),call(int,[call(replace,[call(str,[var(p(0))]),var(v),elem(list([other(string),other(string),other(string),other(string),other(string),other(string),other(string),other(string),other(string),other(string)]),var(v))])]),bool(true))).
+hand_specific(_, 'problem_051') :- file_has(map(list([other(string),other(string),other(string),other(string),other(string),other(string),other(string),other(string),other(string),other(string)]),call(int,[call(replace,[call(str,[var(p(0))]),var(v),elem(list([other(string),other(string),other(string),other(string),other(string),other(string),other(string),other(string),other(string),other(string)]),var(v))])]),bool(true))), same_file('problem_051').
 % problem_053
-hand_specific(_, 'problem_053') :- file_has(call(factorial,[op(sub,[var(p(0)),var(p(1))])])).
+hand_specific(_, 'problem_053') :- file_has(call(factorial,[op(sub,[var(p(0)),var(p(1))])])), same_file('problem_053').
 % problem_055
-hand_specific(_, 'problem_055') :- file_has(call(int,[call(slice,[call(str,[var(p(0))]),other(none),other(none),int(-1)])])).
+hand_specific(_, 'problem_055') :- file_has(call(int,[call(slice,[call(str,[var(p(0))]),other(none),other(none),int(-1)])])), same_file('problem_055').
 % problem_056
-hand_specific(_, 'problem_056') :- file_has(call(max,[other(nested_comprehension)])).
+hand_specific(_, 'problem_056') :- file_has(call(max,[other(nested_comprehension)])), same_file('problem_056').
 % problem_058
-hand_specific(_, 'problem_058') :- file_has(op(ge,[op(fdiv,[var(v),op(sub,[op(mul,[int(2),var(v)]),int(1)])]),var(p(0))])).
+hand_specific(_, 'problem_058') :- file_has(op(ge,[op(fdiv,[var(v),op(sub,[op(mul,[int(2),var(v)]),int(1)])]),var(p(0))])), same_file('problem_058').
 % problem_060
-hand_specific(_, 'problem_060') :- file_has(var(v)-op(add,[var(v),elem(call(map,[var(v),call(str,[var(p(0))])]),var(v))])).
+hand_specific(_, 'problem_060') :- file_has(var(v)-op(add,[var(v),elem(call(map,[var(v),call(str,[var(p(0))])]),var(v))])), same_file('problem_060').
 % problem_063
-hand_specific(_, 'problem_063') :- file_has(var(v)-call(range,[int(1),var(p(0))])).
+hand_specific(_, 'problem_063') :- file_has(var(v)-call(range,[int(1),var(p(0))])), same_file('problem_063').
 % problem_065
-hand_specific(_, 'problem_065') :- file_has(var(v)-op(add,[op(mul,[var(v),var(v)]),var(v)])).
+hand_specific(_, 'problem_065') :- file_has(var(v)-op(add,[op(mul,[var(v),var(v)]),var(v)])), same_file('problem_065').
 % problem_086
-hand_specific(_, 'problem_086') :- file_has(call(range,[int(2),op(add,[op(mul,[int(2),var(v)]),int(1)])])).
+hand_specific(_, 'problem_086') :- file_has(call(range,[int(2),op(add,[op(mul,[int(2),var(v)]),int(1)])])), same_file('problem_086').
 % problem_091
-hand_specific(_, 'problem_091') :- file_has(op(or,[op(eq,[var(p(0)),var(p(1))]),op(eq,[var(p(2)),var(p(3))])])).
+hand_specific(_, 'problem_091') :- file_has(op(or,[op(eq,[var(p(0)),var(p(1))]),op(eq,[var(p(2)),var(p(3))])])), same_file('problem_091').
 % problem_094
-hand_specific(_, 'problem_094') :- file_has(var(v)-op(add,[op(mul,[int(2),var(v)]),int(2)])).
+hand_specific(_, 'problem_094') :- file_has(var(v)-op(add,[op(mul,[int(2),var(v)]),int(2)])), same_file('problem_094').
 % problem_095
-hand_specific(_, 'problem_095') :- file_has(op(gt,[op(pow,[elem(call(enumerate,[var(v)]),var(v)),int(2)]),var(p(0))])).
+hand_specific(_, 'problem_095') :- file_has(op(gt,[op(pow,[elem(call(enumerate,[var(v)]),var(v)),int(2)]),var(p(0))])), same_file('problem_095').
 % problem_097
-hand_specific(_, 'problem_097') :- file_has(var(v)-op(pow,[int(10),var(p(0))])).
+hand_specific(_, 'problem_097') :- file_has(var(v)-op(pow,[int(10),var(p(0))])), same_file('problem_097').
 % problem_109
-hand_specific(_, 'problem_109') :- file_has(var(v)-op(add,[op(add,[op(add,[var(v),var(v)]),var(v)]),list([int(0)])])).
+hand_specific(_, 'problem_109') :- file_has(var(v)-op(add,[op(add,[op(add,[var(v),var(v)]),var(v)]),list([int(0)])])), same_file('problem_109').
+% problem_111
+hand_specific(_, 'problem_111') :- file_has(var(v)-call(fn,[op(add,[call(int,[call(sqrt,[var(p(0))])]),int(1)])])), same_file('problem_111').
 % problem_120
-hand_specific(_, 'problem_120') :- file_has(call(sum,[map(call(range,[int(3),op(add,[var(p(0)),int(1)])]),op(mul,[op(mul,[int(2),elem(call(range,[int(3),op(add,[var(p(0)),int(1)])]),var(v))]),op(div,[op(sub,[elem(call(range,[int(3),op(add,[var(p(0)),int(1)])]),var(v)),int(1)]),int(2)])]),bool(true))])).
+hand_specific(_, 'problem_120') :- file_has(call(sum,[map(call(range,[int(3),op(add,[var(p(0)),int(1)])]),op(mul,[op(mul,[int(2),elem(call(range,[int(3),op(add,[var(p(0)),int(1)])]),var(v))]),op(div,[op(sub,[elem(call(range,[int(3),op(add,[var(p(0)),int(1)])]),var(v)),int(1)]),int(2)])]),bool(true))])), same_file('problem_120').
 % problem_125
-hand_specific(_, 'problem_125') :- file_has(var(v)-op(add,[op(pow,[var(v),int(2)]),op(pow,[op(add,[var(v),int(1)]),int(2)])])).
+hand_specific(_, 'problem_125') :- file_has(var(v)-op(add,[op(pow,[var(v),int(2)]),op(pow,[op(add,[var(v),int(1)]),int(2)])])), same_file('problem_125').
 % problem_137
-hand_specific(_, 'problem_137') :- file_has(op(mul,[int(1),int(1)])).
+hand_specific(_, 'problem_137') :- file_has(op(mul,[int(1),int(1)])), same_file('problem_137').
 % problem_138
-hand_specific(_, 'problem_138') :- file_has(call(range,[int(2),op(add,[var(p(0)),int(2)])])).
+hand_specific(_, 'problem_138') :- file_has(call(range,[int(2),op(add,[var(p(0)),int(2)])])), same_file('problem_138').
 % problem_145
-hand_specific(_, 'problem_145') :- file_has(var(p(1))-op(div,[op(add,[var(p(1)),op(mul,[int(2),var(v)])]),int(10)])).
+hand_specific(_, 'problem_145') :- file_has(var(p(1))-op(div,[op(add,[var(p(1)),op(mul,[int(2),var(v)])]),int(10)])), same_file('problem_145').
 % problem_180
-hand_specific(_, 'problem_180') :- file_has(var(v)-op(mul,[op(mul,[var(p(1)),var(p(3))]),var(p(5))])).
+hand_specific(_, 'problem_180') :- file_has(var(v)-op(mul,[op(mul,[var(p(1)),var(p(3))]),var(p(5))])), same_file('problem_180').
 % problem_187
-hand_specific(_, 'problem_187') :- file_has(op(ge,[op(mul,[elem(var(v),var(v)),elem(var(v),var(v))]),var(p(0))])).
+hand_specific(_, 'problem_187') :- file_has(op(ge,[op(mul,[elem(var(v),var(v)),elem(var(v),var(v))]),var(p(0))])), same_file('problem_187').
 % problem_203
-hand_specific(_, 'problem_203') :- file_has(call(difference,[var(p(0)),call(set,[])])).
+hand_specific(_, 'problem_203') :- file_has(call(difference,[var(p(0)),call(set,[])])), same_file('problem_203').
 % problem_234
-hand_specific(_, 'problem_234') :- file_has(var(v)-op(add,[call(floor,[var(v),call(sqrt,[var(v),var(p(0))])]),int(100)])).
+hand_specific(_, 'problem_234') :- file_has(var(v)-op(add,[call(floor,[var(v),call(sqrt,[var(v),var(p(0))])]),int(100)])), same_file('problem_234').
 % problem_493
-hand_specific(_, 'problem_493') :- file_has(var(v)-call(comb,[var(v),op(sub,[var(v),var(v)]),var(p(0))])).
+hand_specific(_, 'problem_493') :- file_has(var(v)-call(comb,[var(v),op(sub,[var(v),var(v)]),var(p(0))])), same_file('problem_493').
 % problem_800
-hand_specific(_, 'problem_800') :- file_has(var(v)-op(mul,[var(p(1)),call(log2,[var(p(0))])])).
+hand_specific(_, 'problem_800') :- file_has(var(v)-op(mul,[var(p(1)),call(log2,[var(p(0))])])), same_file('problem_800').
 % solution42
-hand_specific(_, 'solution42') :- file_has(call(int,[op(mul,[op(mul,[other(float),var(v)]),op(add,[var(v),int(1)])])])).
+hand_specific(_, 'solution42') :- file_has(call(int,[op(mul,[op(mul,[other(float),var(v)]),op(add,[var(v),int(1)])])])), same_file('solution42').
 % ===== scheduling
 % first_come_first_served
-hand_specific(_, 'first_come_first_served') :- file_has(map(call(enumerate,[var(p(0))]),op(add,[var(v),elem(var(p(1)),var(v))]),bool(true))).
+hand_specific(_, 'first_come_first_served') :- file_has(map(call(enumerate,[var(p(0))]),op(add,[var(v),elem(var(p(1)),var(v))]),bool(true))), same_file('first_come_first_served').
 % job_sequence_with_deadline
-hand_specific(_, 'job_sequence_with_deadline') :- file_has(call(sorted,[map(call(enumerate,[var(p(0))]),call('Task',[var(v),var(v),var(v)]),bool(true))])).
+hand_specific(_, 'job_sequence_with_deadline') :- file_has(call(sorted,[map(call(enumerate,[var(p(0))]),call('Task',[var(v),var(v),var(v)]),bool(true))])), same_file('job_sequence_with_deadline').
 % ===== searches
 % double_linear_search_recursion
-hand_specific(_, 'double_linear_search_recursion') :- file_has(var(p(3))-op(or,[var(p(3)),op(sub,[call(len,[var(p(0))]),int(1)])])).
+hand_specific(_, 'double_linear_search_recursion') :- file_has(var(p(3))-op(or,[var(p(3)),op(sub,[call(len,[var(p(0))]),int(1)])])), same_file('double_linear_search_recursion').
 % exponential_search
-hand_specific(_, 'exponential_search') :- file_has(op(div,[op(add,[var(p(0)),var(p(1))]),int(2)])).
+hand_specific(_, 'exponential_search') :- file_has(op(div,[op(add,[var(p(0)),var(p(1))]),int(2)])), same_file('exponential_search').
 % ===== sorts
 % benchmark_sorts
-hand_specific(_, 'benchmark_sorts') :- file_has(call(all,[map(call(pairwise,[var(p(0))]),op(le,[var(v),var(v)]),bool(true))])).
+hand_specific(_, 'benchmark_sorts') :- file_has(call(all,[map(call(pairwise,[var(p(0))]),op(le,[var(v),var(v)]),bool(true))])), same_file('benchmark_sorts').
 % natural_sort
-hand_specific(_, 'natural_sort') :- file_has(map(call(split,[var(v),other(string),var(p(0))]),cond(call(isdigit,[elem(call(split,[var(v),other(string),var(p(0))]),var(v))]),call(int,[elem(call(split,[var(v),other(string),var(p(0))]),var(v))]),call(lower,[elem(call(split,[var(v),other(string),var(p(0))]),var(v))])),bool(true))).
+hand_specific(_, 'natural_sort') :- file_has(map(call(split,[var(v),other(string),var(p(0))]),cond(call(isdigit,[elem(call(split,[var(v),other(string),var(p(0))]),var(v))]),call(int,[elem(call(split,[var(v),other(string),var(p(0))]),var(v))]),call(lower,[elem(call(split,[var(v),other(string),var(p(0))]),var(v))])),bool(true))), same_file('natural_sort').
 % odd_even_transposition_parallel
-hand_specific(_, 'odd_even_transposition_parallel') :- file_has(elem(var(p(0)),var(v))-call(recv,[elem(elem(var(v),var(v)),int(0))])).
+hand_specific(_, 'odd_even_transposition_parallel') :- file_has(elem(var(p(0)),var(v))-call(recv,[elem(elem(var(v),var(v)),int(0))])), same_file('odd_even_transposition_parallel').
 % odd_even_transposition_single_threaded
-hand_specific(_, 'odd_even_transposition_single_threaded') :- file_has(call(range,[op(mod,[var(v),int(2)]),op(sub,[var(v),int(1)]),int(2)])).
+hand_specific(_, 'odd_even_transposition_single_threaded') :- file_has(call(range,[op(mod,[var(v),int(2)]),op(sub,[var(v),int(1)]),int(2)])), same_file('odd_even_transposition_single_threaded').
 % pancake_sort
-hand_specific(_, 'pancake_sort') :- file_has(call(reversed,[call(slice,[var(p(0)),other(none),op(add,[var(v),int(1)])])])).
+hand_specific(_, 'pancake_sort') :- file_has(call(reversed,[call(slice,[var(p(0)),other(none),op(add,[var(v),int(1)])])])), same_file('pancake_sort').
 % pigeonhole_sort
-hand_specific(_, 'pigeonhole_sort') :- file_has(elem(var(p(0)),var(v))-op(add,[var(v),var(v)])).
+hand_specific(_, 'pigeonhole_sort') :- file_has(elem(var(p(0)),var(v))-op(add,[var(v),var(v)])), same_file('pigeonhole_sort').
 % recursive_mergesort_array
-hand_specific(_, 'recursive_mergesort_array') :- file_has(var(p(0))-call(slice,[var(v),other(none),var(v)])).
+hand_specific(_, 'recursive_mergesort_array') :- file_has(var(p(0))-call(slice,[var(v),other(none),var(v)])), same_file('recursive_mergesort_array').
 % tim_sort
-hand_specific(_, 'tim_sort') :- file_has(var(v)-call(fn,[var(p(0)),var(v),int(0),op(sub,[var(v),int(1)])])).
+hand_specific(_, 'tim_sort') :- file_has(var(v)-call(fn,[var(p(0)),var(v),int(0),op(sub,[var(v),int(1)])])), same_file('tim_sort').
 % tree_sort
-hand_specific(_, 'tree_sort') :- file_has(call(tuple,[call('Node',[call(next,[call(iter,[var(p(0))])])])])).
+hand_specific(_, 'tree_sort') :- file_has(call(tuple,[call('Node',[call(next,[call(iter,[var(p(0))])])])])), same_file('tree_sort').
 % ===== strings
 % aho_corasick
-hand_specific(_, 'aho_corasick') :- file_has(elem(elem(elem(field(var(p(0)),adlist),int(0)),other(string)),var(v))).
+hand_specific(_, 'aho_corasick') :- file_has(elem(elem(elem(field(var(p(0)),adlist),int(0)),other(string)),var(v))), same_file('aho_corasick').
 % anagrams
-hand_specific(_, 'anagrams') :- file_has(var(v)-call('Counter',[var(v),elem(var(v),var(p(0)))])).
+hand_specific(_, 'anagrams') :- file_has(var(v)-call('Counter',[var(v),elem(var(v),var(p(0)))])), same_file('anagrams').
 % capitalize
-hand_specific(_, 'capitalize') :- file_has(call(upper,[call(slice,[var(p(0)),other(none),int(1)])])).
+hand_specific(_, 'capitalize') :- file_has(call(upper,[call(slice,[var(p(0)),other(none),int(1)])])), same_file('capitalize').
 % count_vowels
-hand_specific(_, 'count_vowels') :- file_has(call(sum,[map(var(p(0)),int(1),op(in,[elem(var(p(0)),var(v)),var(v)]))])).
+hand_specific(_, 'count_vowels') :- file_has(call(sum,[map(var(p(0)),int(1),op(in,[elem(var(p(0)),var(v)),var(v)]))])), same_file('count_vowels').
 % damerau_levenshtein_distance
-hand_specific(_, 'damerau_levenshtein_distance') :- file_has(call(range,[op(add,[call(len,[var(p(0))]),int(1)])])).
+hand_specific(_, 'damerau_levenshtein_distance') :- file_has(call(range,[op(add,[call(len,[var(p(0))]),int(1)])])), same_file('damerau_levenshtein_distance').
 % detecting_english_programmatically
-hand_specific(_, 'detecting_english_programmatically') :- file_has(var(v)-op(ge,[op(mul,[call(fn,[var(p(0))]),int(100)]),var(p(1))])).
+hand_specific(_, 'detecting_english_programmatically') :- file_has(var(v)-op(ge,[op(mul,[call(fn,[var(p(0))]),int(100)]),var(p(1))])), same_file('detecting_english_programmatically').
 % dna
-hand_specific(_, 'dna') :- file_has(call(translate,[var(p(0)),call(maketrans,[var(p(0)),other(string),other(string)])])).
+hand_specific(_, 'dna') :- file_has(call(translate,[var(p(0)),call(maketrans,[var(p(0)),other(string),other(string)])])), same_file('dna').
 % indian_phone_validator
-hand_specific(_, 'indian_phone_validator') :- file_has(op(eq,[field(var(v),string),var(p(0))])).
+hand_specific(_, 'indian_phone_validator') :- file_has(op(eq,[field(var(v),string),var(p(0))])), same_file('indian_phone_validator').
 % is_spain_national_id
-hand_specific(_, 'is_spain_national_id') :- file_has(var(v)-call(upper,[call(replace,[var(p(0)),other(string),other(string)])])).
+hand_specific(_, 'is_spain_national_id') :- file_has(var(v)-call(upper,[call(replace,[var(p(0)),other(string),other(string)])])), same_file('is_spain_national_id').
 % is_srilankan_phone_number
-hand_specific(_, 'is_srilankan_phone_number') :- file_has(call(bool,[call(search,[var(v),call(compile,[var(v),other(string)]),var(p(0))])])).
+hand_specific(_, 'is_srilankan_phone_number') :- file_has(call(bool,[call(search,[var(v),call(compile,[var(v),other(string)]),var(p(0))])])), same_file('is_srilankan_phone_number').
 % is_valid_email_address
-hand_specific(_, 'is_valid_email_address') :- file_has(tuple([var(v),var(v)])-call(split,[var(p(0)),other(string)])).
+hand_specific(_, 'is_valid_email_address') :- file_has(tuple([var(v),var(v)])-call(split,[var(p(0)),other(string)])), same_file('is_valid_email_address').
 % largest_smallest_words
-hand_specific(_, 'largest_smallest_words') :- file_has(var(v)-map(var(v),call(strip,[elem(var(v),var(v)),other(string)]),bool(true))).
+hand_specific(_, 'largest_smallest_words') :- file_has(var(v)-map(var(v),call(strip,[elem(var(v),var(v)),other(string)]),bool(true))), same_file('largest_smallest_words').
 % longest_word_in_sentence
-hand_specific(_, 'longest_word_in_sentence') :- file_has(call(max,[call(split,[var(p(0))])])).
+hand_specific(_, 'longest_word_in_sentence') :- file_has(call(max,[call(split,[var(p(0))])])), same_file('longest_word_in_sentence').
 % lower
-hand_specific(_, 'lower') :- file_has(call(join,[other(string),map(var(p(0)),cond(op(ge,[other(named_expression),var(v)]),call(chr,[op(add,[var(v),var(v)])]),elem(var(p(0)),var(v))),bool(true))])).
+hand_specific(_, 'lower') :- file_has(call(join,[other(string),map(var(p(0)),cond(op(ge,[other(named_expression),var(v)]),call(chr,[op(add,[var(v),var(v)])]),elem(var(p(0)),var(v))),bool(true))])), same_file('lower').
 % pig_latin
-hand_specific(_, 'pig_latin') :- file_has(call(strip,[op(or,[var(p(0)),other(string)])])).
+hand_specific(_, 'pig_latin') :- file_has(call(strip,[op(or,[var(p(0)),other(string)])])), same_file('pig_latin').
 % remove_duplicate
-hand_specific(_, 'remove_duplicate') :- file_has(call(join,[other(string),call(sorted,[call(set,[call(split,[var(p(0))])])])])).
+hand_specific(_, 'remove_duplicate') :- file_has(call(join,[other(string),call(sorted,[call(set,[call(split,[var(p(0))])])])])), same_file('remove_duplicate').
 % reverse_letters
-hand_specific(_, 'reverse_letters') :- file_has(call(join,[other(string),map(call(split,[var(p(0))]),cond(op(gt,[call(len,[elem(call(split,[var(p(0))]),var(v))]),var(p(1))]),call(slice,[elem(call(split,[var(p(0))]),var(v)),other(none),other(none),int(-1)]),elem(call(split,[var(p(0))]),var(v))),bool(true))])).
+hand_specific(_, 'reverse_letters') :- file_has(call(join,[other(string),map(call(split,[var(p(0))]),cond(op(gt,[call(len,[elem(call(split,[var(p(0))]),var(v))]),var(p(1))]),call(slice,[elem(call(split,[var(p(0))]),var(v)),other(none),other(none),int(-1)]),elem(call(split,[var(p(0))]),var(v))),bool(true))])), same_file('reverse_letters').
 % snake_case_to_camel_pascal_case
-hand_specific(_, 'snake_case_to_camel_pascal_case') :- file_has(var(v)-fstring([call(type,[var(p(1))])])).
+hand_specific(_, 'snake_case_to_camel_pascal_case') :- file_has(var(v)-fstring([call(type,[var(p(1))])])), same_file('snake_case_to_camel_pascal_case').
 % split
-hand_specific(_, 'split') :- file_has(op(eq,[call(slice,[var(p(0)),var(v),op(add,[var(v),var(v)])]),var(p(1))])).
+hand_specific(_, 'split') :- file_has(op(eq,[call(slice,[var(p(0)),var(v),op(add,[var(v),var(v)])]),var(p(1))])), same_file('split').
 % string_switch_case
-hand_specific(_, 'string_switch_case') :- file_has(call(join,[var(p(2)),map(var(v),call(lower,[elem(var(v),var(v))]),bool(true))])).
+hand_specific(_, 'string_switch_case') :- file_has(call(join,[var(p(2)),map(var(v),call(lower,[elem(var(v),var(v))]),bool(true))])), same_file('string_switch_case').
 % strip
-hand_specific(_, 'strip') :- file_has(op(and,[op(lt,[var(v),var(v)]),op(in,[elem(var(p(0)),var(v)),var(p(1))])])).
+hand_specific(_, 'strip') :- file_has(op(and,[op(lt,[var(v),var(v)]),op(in,[elem(var(p(0)),var(v)),var(p(1))])])), same_file('strip').
 % top_k_frequent_words
-hand_specific(_, 'top_k_frequent_words') :- file_has(call(range,[call(min,[var(p(1)),call(len,[var(v)])])])).
+hand_specific(_, 'top_k_frequent_words') :- file_has(call(range,[call(min,[var(p(1)),call(len,[var(v)])])])), same_file('top_k_frequent_words').
 % upper
-hand_specific(_, 'upper') :- file_has(call(join,[other(string),map(var(p(0)),cond(op(ge,[elem(var(p(0)),var(v)),other(string)]),call(chr,[op(sub,[call(ord,[elem(var(p(0)),var(v))]),int(32)])]),elem(var(p(0)),var(v))),bool(true))])).
+hand_specific(_, 'upper') :- file_has(call(join,[other(string),map(var(p(0)),cond(op(ge,[elem(var(p(0)),var(v)),other(string)]),call(chr,[op(sub,[call(ord,[elem(var(p(0)),var(v))]),int(32)])]),elem(var(p(0)),var(v))),bool(true))])), same_file('upper').
 % wave_string
-hand_specific(_, 'wave_string') :- file_has(call(upper,[elem(var(p(0)),var(v))])).
+hand_specific(_, 'wave_string') :- file_has(call(upper,[elem(var(p(0)),var(v))])), same_file('wave_string').
 % ===== web_programming
 % co2_emission
-hand_specific(_, 'co2_emission') :- file_has(call(json,[elem(var(v),fstring([var(v),var(p(0)),var(p(1))]))])).
+hand_specific(_, 'co2_emission') :- file_has(call(json,[elem(var(v),fstring([var(v),var(p(0)),var(p(1))]))])), same_file('co2_emission').
 % covid_stats_via_xpath
-hand_specific(_, 'covid_stats_via_xpath') :- file_has(var(v)-call(raise_for_status,[elem(var(v),var(p(0)))])).
+hand_specific(_, 'covid_stats_via_xpath') :- file_has(var(v)-call(raise_for_status,[elem(var(v),var(p(0)))])), same_file('covid_stats_via_xpath').
 % crawl_google_results
 % no component of web_programming/crawl_google_results.py separates it from another label (identical logic)
 % crawl_google_scholar_citation
-hand_specific(_, 'crawl_google_scholar_citation') :- file_has(call('BeautifulSoup',[field(elem(var(v),var(p(0))),content),other(string)])).
+hand_specific(_, 'crawl_google_scholar_citation') :- file_has(call('BeautifulSoup',[field(elem(var(v),var(p(0))),content),other(string)])), same_file('crawl_google_scholar_citation').
 % crypto_price
-hand_specific(_, 'crypto_price') :- file_has(op(mul,[var(p(0)),call(fn,[])])).
+hand_specific(_, 'crypto_price') :- file_has(op(mul,[var(p(0)),call(fn,[])])), same_file('crypto_price').
 % crypto_price_tracker
-hand_specific(_, 'crypto_price_tracker') :- file_has(call(get,[call(get,[var(v),var(p(0)),dict([])]),other(string),other(float)])).
+hand_specific(_, 'crypto_price_tracker') :- file_has(call(get,[call(get,[var(v),var(p(0)),dict([])]),other(string),other(float)])), same_file('crypto_price_tracker').
 % currency_converter
-hand_specific(_, 'currency_converter') :- file_has(call(str,[elem(call(json,[elem(var(v),var(v))]),other(string))])).
+hand_specific(_, 'currency_converter') :- file_has(call(str,[elem(call(json,[elem(var(v),var(v))]),other(string))])), same_file('currency_converter').
 % current_stock_price
-hand_specific(_, 'current_stock_price') :- file_has(var(v)-call('BeautifulSoup',[var(v),other(string)])).
+hand_specific(_, 'current_stock_price') :- file_has(var(v)-call('BeautifulSoup',[var(v),other(string)])), same_file('current_stock_price').
 % current_weather
-hand_specific(_, 'current_weather') :- file_has(call(append,[var(v),dict([pair(other(string),call(json,[var(v)]))])])).
+hand_specific(_, 'current_weather') :- file_has(call(append,[var(v),dict([pair(other(string),call(json,[var(v)]))])])), same_file('current_weather').
 % daily_horoscope
-hand_specific(_, 'daily_horoscope') :- file_has(call('BeautifulSoup',[field(elem(var(v),var(v)),content),other(string)])).
+hand_specific(_, 'daily_horoscope') :- file_has(call('BeautifulSoup',[field(elem(var(v),var(v)),content),other(string)])), same_file('daily_horoscope').
 % download_images_from_google_query
-hand_specific(_, 'download_images_from_google_query') :- file_has(var(v)-fstring([call(replace,[var(p(0)),other(string),other(string)])])).
+hand_specific(_, 'download_images_from_google_query') :- file_has(var(v)-fstring([call(replace,[var(p(0)),other(string),other(string)])])), same_file('download_images_from_google_query').
 % fetch_bbc_news
-hand_specific(_, 'fetch_bbc_news') :- file_has(var(v)-call(json,[elem(var(v),op(add,[var(v),var(p(0))]))])).
+hand_specific(_, 'fetch_bbc_news') :- file_has(var(v)-call(json,[elem(var(v),op(add,[var(v),var(p(0))]))])), same_file('fetch_bbc_news').
 % fetch_github_info
-hand_specific(_, 'fetch_github_info') :- file_has(var(v)-call(get,[field(var(v),environ),other(string),other(string)])).
+hand_specific(_, 'fetch_github_info') :- file_has(var(v)-call(get,[field(var(v),environ),other(string),other(string)])), same_file('fetch_github_info').
 % fetch_jobs
-hand_specific(_, 'fetch_jobs') :- file_has(call('BeautifulSoup',[field(elem(var(v),op(add,[var(v),var(p(0))])),content),other(string)])).
+hand_specific(_, 'fetch_jobs') :- file_has(call('BeautifulSoup',[field(elem(var(v),op(add,[var(v),var(p(0))])),content),other(string)])), same_file('fetch_jobs').
 % fetch_quotes
-hand_specific(_, 'fetch_quotes') :- file_has(call(json,[elem(var(v),op(add,[var(v),other(string)]))])).
+hand_specific(_, 'fetch_quotes') :- file_has(call(json,[elem(var(v),op(add,[var(v),other(string)]))])), same_file('fetch_quotes').
 % get_amazon_product_data
-hand_specific(_, 'get_amazon_product_data') :- file_has(call(split,[field(call(find,[var(v),other(string)]),text),other(string)])).
+hand_specific(_, 'get_amazon_product_data') :- file_has(call(split,[field(call(find,[var(v),other(string)]),text),other(string)])), same_file('get_amazon_product_data').
 % get_imdb_top_250_movies_csv
-hand_specific(_, 'get_imdb_top_250_movies_csv') :- file_has(var(p(0))-op(or,[var(p(0)),other(string)])).
+hand_specific(_, 'get_imdb_top_250_movies_csv') :- file_has(var(p(0))-op(or,[var(p(0)),other(string)])), same_file('get_imdb_top_250_movies_csv').
 % get_ip_geolocation
-hand_specific(_, 'get_ip_geolocation') :- file_has(var(v)-fstring([elem(var(v),other(string)),elem(var(v),other(string)),elem(var(v),other(string))])).
+hand_specific(_, 'get_ip_geolocation') :- file_has(var(v)-fstring([elem(var(v),other(string)),elem(var(v),other(string)),elem(var(v),other(string))])), same_file('get_ip_geolocation').
 % get_top_billionaires
-hand_specific(_, 'get_top_billionaires') :- file_has(var(v)-call(date,[call(fromtimestamp,[var(v),var(p(0))])])).
+hand_specific(_, 'get_top_billionaires') :- file_has(var(v)-call(date,[call(fromtimestamp,[var(v),var(p(0))])])), same_file('get_top_billionaires').
 % get_top_hn_posts
-hand_specific(_, 'get_top_hn_posts') :- file_has(var(v)-call(slice,[call(json,[elem(var(v),var(v))]),other(none),var(p(0))])).
+hand_specific(_, 'get_top_hn_posts') :- file_has(var(v)-call(slice,[call(json,[elem(var(v),var(v))]),other(none),var(p(0))])), same_file('get_top_hn_posts').
 % giphy
-hand_specific(_, 'giphy') :- file_has(var(v)-call(join,[other(string),call(split,[var(p(0))])])).
+hand_specific(_, 'giphy') :- file_has(var(v)-call(join,[other(string),call(split,[var(p(0))])])), same_file('giphy').
 % instagram_crawler
-hand_specific(_, 'instagram_crawler') :- file_has(elem(elem(field(var(p(0)),user_data),other(string)),other(string))).
+hand_specific(_, 'instagram_crawler') :- file_has(elem(elem(field(var(p(0)),user_data),other(string)),other(string))), same_file('instagram_crawler').
 % instagram_pic
-hand_specific(_, 'instagram_pic') :- file_has(fstring([call(find,[call('BeautifulSoup',[field(elem(var(v),var(p(0))),text),other(string)]),other(string),dict([pair(other(string),other(string))])])])).
+hand_specific(_, 'instagram_pic') :- file_has(fstring([call(find,[call('BeautifulSoup',[field(elem(var(v),var(p(0))),text),other(string)]),other(string),dict([pair(other(string),other(string))])])])), same_file('instagram_pic').
 % instagram_video
-hand_specific(_, 'instagram_video') :- file_has(field(elem(var(v),elem(var(v),op(add,[other(string),var(p(0))]))),content)).
+hand_specific(_, 'instagram_video') :- file_has(field(elem(var(v),elem(var(v),op(add,[other(string),var(p(0))]))),content)), same_file('instagram_video').
 % nasa_data
-hand_specific(_, 'nasa_data') :- file_has(var(v)-elem(call(split,[var(v),other(string)]),int(-1))).
+hand_specific(_, 'nasa_data') :- file_has(var(v)-elem(call(split,[var(v),other(string)]),int(-1))), same_file('nasa_data').
 % open_google_results
 % no component of web_programming/open_google_results.py separates it from another label (identical logic)
 % random_anime_character
-hand_specific(_, 'random_anime_character') :- file_has(call('BeautifulSoup',[field(elem(var(v),var(v)),text),other(string)])).
+hand_specific(_, 'random_anime_character') :- file_has(call('BeautifulSoup',[field(elem(var(v),var(v)),text),other(string)])), same_file('random_anime_character').
 % recaptcha_verification
-hand_specific(_, 'recaptcha_verification') :- file_has(var(v)-elem(field(var(p(0)),'POST'),other(string))).
+hand_specific(_, 'recaptcha_verification') :- file_has(var(v)-elem(field(var(p(0)),'POST'),other(string))), same_file('recaptcha_verification').
 % slack_message
-hand_specific(_, 'slack_message') :- file_has(var(v)-call(post,[var(v),var(p(1))])).
+hand_specific(_, 'slack_message') :- file_has(var(v)-call(post,[var(v),var(p(1))])), same_file('slack_message').
 % world_covid19_stats
-hand_specific(_, 'world_covid19_stats') :- file_has(var(v)-op(add,[var(v),call(find_all,[var(v),other(string),dict([pair(other(string),other(string))])])])).
+hand_specific(_, 'world_covid19_stats') :- file_has(var(v)-op(add,[var(v),call(find_all,[var(v),other(string),dict([pair(other(string),other(string))])])])), same_file('world_covid19_stats').

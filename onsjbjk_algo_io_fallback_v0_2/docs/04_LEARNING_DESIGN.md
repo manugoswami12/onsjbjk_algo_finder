@@ -447,3 +447,34 @@ recognisers; the general relations (17.1, `ta_rules.pl`) and the learned branche
 - **What no logic separates:** TheAlgorithms itself holds identical copies, `ciphers/base58.py` = `ciphers/base64_cipher.py`
   and `maths/base_neg2_conversion.py` = `conversions/int_to_negative_binary_base.py`. Two web scripts have all their
   code under `if __name__ == "__main__":`, which AP13 does not lower.
+
+### 17.6 Result (run 9 answers, the hand, built and file-rule evidence re-decided on the final rules)
+
+**Corpus:** 1,283 of 1,288 labels pass T1 (every file answered with its own label) and T2 (no other file is):
+- learned: 709, of which 5 have a held-out test;
+- general hand rules: 56;
+- file rules: 501;
+- labels whose own files pass but whose Rosetta files are not all recognised (T3 only): 17.
+
+These 17 are counted among the 22 not learned in `ta_result.md`. The 5 that fail T1 cannot be separated by logic:
+- two identical copies inside the corpus (base58 = base64_cipher, int_to_negative_binary_base = base_neg2_conversion);
+- two scripts with all their code under `__main__`.
+
+**File rules on other people's code:** they never fire, because `same_file/1` requires every component of the
+label's file. With a 60% overlap, small Euler files had matched Rosetta Fibonacci and sieve programs, and held-out
+precision fell to 69.9%. That version was replaced.
+
+**Held-out Rosetta files (450, unseen code):**
+
+| | correct | wrong | UNKNOWN | precision | recall |
+|---|---|---|---|---|---|
+| all evidence | 158 | 10 | 282 | 94.0% | 35.1% |
+| learning alone | 31 | 16 | 403 | 66.0% | 6.9% |
+
+**Stage 101 (round 2 test):** 40/40 precision, 81.6% full-key recall, unchanged.
+
+**Prompts:**
+- `benchmark/rule_prompts.jsonl` and `docs/RULE_PROMPTS.md`: one prompt per rule written (501 file rules,
+  51 general relations), with the clauses produced;
+- `docs/HAND_RULE_PROMPTS.md` and `benchmark/hand_rule_prompts.jsonl`: one prompt per label still failing;
+- `docs/HAND_RULES_WRITTEN.md`: worked examples.

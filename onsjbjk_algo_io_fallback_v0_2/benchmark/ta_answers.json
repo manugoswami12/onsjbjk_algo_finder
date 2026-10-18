@@ -985,20 +985,18 @@
 "built": [],
 "got": "merkle_tree",
 "held": [],
-"held_trace": [
-"merkle_tree"
-],
+"held_trace": [],
 "io": [],
-"logic": [
-"merkle_tree"
-],
+"logic": [],
 "nodes": [
 "numeric",
 "sequence_query",
 "sequence_transformation"
 ],
-"specific": [],
-"why": "trace"
+"specific": [
+"merkle_tree"
+],
+"why": "file_rule"
 },
 "blockchain/proof_of_stake.py": {
 "built": [],
@@ -1157,7 +1155,9 @@
 "held_trace": [],
 "io": [],
 "logic": [],
-"nodes": [],
+"nodes": [
+"sequence_query"
+],
 "specific": [
 "nor_gate"
 ],
@@ -1565,9 +1565,13 @@
 "built": [],
 "got": "bifid",
 "held": [],
-"held_trace": [],
+"held_trace": [
+"bifid"
+],
 "io": [],
-"logic": [],
+"logic": [
+"bifid"
+],
 "nodes": [],
 "specific": [
 "bifid"
@@ -4123,9 +4127,7 @@
 "lazy_segment_tree",
 "segment_tree"
 ],
-"held_trace": [
-"lazy_segment_tree"
-],
+"held_trace": [],
 "io": [
 "dijkstra_algorithm",
 "heap_generic",
@@ -4133,15 +4135,15 @@
 "min_heap",
 "segment_tree"
 ],
-"logic": [
-"lazy_segment_tree"
-],
+"logic": [],
 "nodes": [
 "numeric>recurrence>double_recursion",
 "sequence_query"
 ],
-"specific": [],
-"why": "trace"
+"specific": [
+"lazy_segment_tree"
+],
+"why": "file_rule"
 },
 "data_structures/binary_tree/lowest_common_ancestor.py": {
 "built": [],
@@ -10728,7 +10730,8 @@
 "nodes": [
 "marking>table_fill",
 "numeric",
-"search>backtracking"
+"search>backtracking",
+"sequence_query"
 ],
 "specific": [],
 "why": "trace"
@@ -10972,16 +10975,14 @@
 "built": [],
 "got": "mab",
 "held": [],
-"held_trace": [
-"mab"
-],
+"held_trace": [],
 "io": [],
-"logic": [
+"logic": [],
+"nodes": [],
+"specific": [
 "mab"
 ],
-"nodes": [],
-"specific": [],
-"why": "trace"
+"why": "file_rule"
 },
 "machine_learning/mean_shift.py": {
 "built": [],
@@ -16061,8 +16062,7 @@
 ],
 "logic": [
 "capacitor_equivalence",
-"resistor_equivalence",
-"simple_neural_network"
+"resistor_equivalence"
 ],
 "nodes": [
 "marking>table_fill",
@@ -20324,19 +20324,16 @@
 "built": [],
 "got": "problem_111",
 "held": [],
-"held_trace": [
-"problem_111"
-],
+"held_trace": [],
 "io": [],
-"logic": [
-"problem_111",
-"problem_124"
-],
+"logic": [],
 "nodes": [
 "sequence_transformation>elementwise_map"
 ],
-"specific": [],
-"why": "trace"
+"specific": [
+"problem_111"
+],
+"why": "file_rule"
 },
 "project_euler/problem_112/sol1.py": {
 "built": [],
@@ -24067,6 +24064,7 @@
 "tim_sort"
 ],
 "held_trace": [
+"binary_search",
 "tim_sort"
 ],
 "io": [
@@ -24106,7 +24104,10 @@
 "stooge_sort",
 "tim_sort"
 ],
-"logic": [],
+"logic": [
+"binary_search",
+"exponential_search"
+],
 "nodes": [
 "sequence_query>target_search>interval_halving",
 "sequence_transformation"

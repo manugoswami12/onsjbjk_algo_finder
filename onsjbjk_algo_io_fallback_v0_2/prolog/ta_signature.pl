@@ -36,3 +36,9 @@ components_built :- forall(distinct(A, ( in_func(S, F), component(S, R), abstrac
     assertz(components_done).
 % has_rel(F, A): a statement of F has the abstracted relation A
 has_rel(F, A) :- in_func(S, F), component(S, R), abstract(F, R, A0), A0 == A, !.
+
+% same_file(L): the file is one of label L's corpus files: it has every component of that file
+% (ta_file_components.pl). A file rule names one component; this keeps it to the file it was written for, so other
+% people's code with the same component is left to the general relations (at 60 % overlap, small Euler files still
+% matched other people's Fibonacci and sieve programs).
+same_file(L) :- distinct(R, label_file_component(L, R, _)), \+ ( label_file_component(L, R, C), \+ file_has(C) ), !.

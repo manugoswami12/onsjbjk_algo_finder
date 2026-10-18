@@ -30,7 +30,7 @@ Two ways to write the rule: a general relation (the prompts per kind below: the 
 
 > Files of other algorithms ({claimed}) are answered as {label}. Tighten the rule that names {label} with a component those files lack; keep {files} recognised. Add an own Python positive, an own program in another language and a close negative to tests/test_uniform.py. Rerun `eval_ta.py CORPUS --run --dir {folder}` and `--status`; keep the rule only if no other label loses (T2) and the staged run (eval_learn.py --stage 101) does not drop.
 
-### heldout (0 labels)
+### heldout (17 labels)
 
 > Rosetta implementations of {group} are not recognised ({t3}). Dump their facts next to {files}; where a front end gives a different term for the same component, fix the front end; else add one relation that holds on both forms. Add an own Python positive, an own program in another language and a close negative to tests/test_uniform.py. Rerun `eval_ta.py CORPUS --run --dir {folder}` and `--status`; keep the rule only if no other label loses (T2) and the staged run (eval_learn.py --stage 101) does not drop.
 
@@ -55,3 +55,25 @@ Two ways to write the rule: a general relation (the prompts per kind below: the 
 | label | file(s) | node | clashes with |
 |---|---|---|---|
 | int_to_negative_binary_base | conversions/int_to_negative_binary_base.py | numeric | base_neg2_conversion, int_to_negative_binary_base |
+
+### heldout
+
+| label | file(s) | node | clashes with |
+|---|---|---|---|
+| binary_insertion_sort | sorts/binary_insertion_sort.py | sequence_transformation |  |
+| cycle_sort | sorts/cycle_sort.py | sequence_query |  |
+| edit_distance | dynamic_programming/edit_distance.py, strings/edit_distance.py | numeric>recurrence>double_recursion, sequence_query, sequence_query>two_sequence_match>edit_distance |  |
+| factorial | dynamic_programming/factorial.py, maths/factorial.py | numeric>recurrence>range_accumulation |  |
+| fast_fibonacci | dynamic_programming/fast_fibonacci.py | numeric |  |
+| fibonacci | dynamic_programming/fibonacci.py, maths/fibonacci.py | numeric, numeric>recurrence>double_recursion, numeric>recurrence>pair_recurrence |  |
+| insertion_sort | sorts/insertion_sort.py | sequence_transformation>comparison_sort>shift_insertion |  |
+| least_common_multiple | maths/least_common_multiple.py | numeric |  |
+| levenshtein_distance | strings/levenshtein_distance.py | sequence_query |  |
+| pancake_sort | sorts/pancake_sort.py | sequence_transformation |  |
+| perfect_number | maths/perfect_number.py, maths/special_numbers/perfect_number.py | numeric, numeric>divisor_test |  |
+| quick_sort | sorts/quick_sort.py | sequence_transformation>comparison_sort>partition_recursive |  |
+| quick_sort_3_partition | sorts/quick_sort_3_partition.py | sequence_query, sequence_transformation, sequence_transformation>comparison_sort>partition_recursive, sequence_transformation>comparison_sort>select_extreme |  |
+| recursive_insertion_sort | sorts/recursive_insertion_sort.py | sequence_query, sequence_transformation>comparison_sort |  |
+| recursive_quick_sort | sorts/recursive_quick_sort.py | sequence_transformation>comparison_sort>partition_recursive |  |
+| roman_numerals | conversions/roman_numerals.py | sequence_query>aggregate>gatherer |  |
+| sum_of_digits | maths/sum_of_digits.py | numeric, numeric>decomposition>digits |  |

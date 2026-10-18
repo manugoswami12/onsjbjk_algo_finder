@@ -153,7 +153,8 @@ def rehand(units: dict[str, Path], labels: dict[str, str], out: Path, workers: i
         except ERRORS:
             normal = set()
         keep = {k: old.get(k, []) for k in ('nodes', 'held', 'held_trace', 'io', 'logic')}
-        return rel, decide(keep, normal | hand, specific, set(labels.values()), gs)
+        res = decide(keep, normal | hand, specific, set(labels.values()), gs)
+        return rel, ({**res, 'task': old['task']} if 'task' in old else res)
     with ThreadPoolExecutor(max_workers=workers) as pool:
         for rel, res in pool.map(one, sorted(units.items())):
             if res is not None:
@@ -412,6 +413,7 @@ def main():
     p.add_argument('--heldout', type=Path, metavar='ROSETTA')
     p.add_argument('--status', action='store_true')
     p.add_argument('--rehand', action='store_true', help='recompute the hand evidence only (kept learned evidence)')
+    p.add_argument('--rehand-heldout', type=Path, metavar='ROSETTA', help='the same for the held-out answers')
     p.add_argument('--workers', type=int, default=4)
     a = p.parse_args()
     labels = ta_corpus.files(a.corpus)
@@ -425,6 +427,9 @@ def main():
     if a.rehand:
         units = {r: a.corpus / r for r in labels if not a.dir or r.split('/')[0] in a.dir}
         rehand(units, labels, ANSWERS, a.workers)
+    if a.rehand_heldout:
+        tasks = heldout_units(a.rehand_heldout)
+        rehand({r: a.rehand_heldout / r for r in tasks}, labels, HELDOUT, a.workers)
     if a.heldout:
         tasks = heldout_units(a.heldout)
         answer_all({r: a.heldout / r for r in tasks}, a.corpus, labels, HELDOUT, a.workers)

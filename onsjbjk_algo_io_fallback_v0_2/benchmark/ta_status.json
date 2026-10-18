@@ -166,7 +166,7 @@
  "adaptive_merge_sort": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "3/9",
   "clash": [],
   "files": [
    "sorts/adaptive_merge_sort.py"
@@ -1675,7 +1675,7 @@
  "binary_insertion_sort": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "2/9",
   "clash": [],
   "files": [
    "sorts/binary_insertion_sort.py"
@@ -1684,12 +1684,14 @@
   "how": [
    "trace"
   ],
-  "kinds": [],
+  "kinds": [
+   "heldout"
+  ],
   "nodes": [
    "sequence_transformation"
   ],
-  "reason": null,
-  "status": "learned_self"
+  "reason": "T3 2/9 held-out, wrong [('Task/Sorting-algorithms-Insertion-sort/Python/sorting-algorithms-insertion-sort-3.py', 'average_mode')]",
+  "status": "not_learned"
  },
  "binary_multiplication": {
   "T1": true,
@@ -1730,7 +1732,7 @@
  "binary_search": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "5/13",
   "clash": [],
   "files": [
    "searches/binary_search.py"
@@ -2664,7 +2666,7 @@
  "bubble_sort": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "3/8",
   "clash": [],
   "files": [
    "sorts/bubble_sort.py"
@@ -2683,7 +2685,7 @@
  "bubble_sort_recursive": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "3/8",
   "clash": [],
   "files": [
    "sorts/bubble_sort_recursive.py"
@@ -2827,7 +2829,7 @@
  "caesar_cipher": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "8/11",
   "clash": [],
   "files": [
    "ciphers/caesar_cipher.py"
@@ -2842,7 +2844,7 @@
    "sequence_query>aggregate>gatherer"
   ],
   "reason": null,
-  "status": "learned_self"
+  "status": "learned_heldout"
  },
  "camel_case_to_snake_case": {
   "T1": true,
@@ -3485,7 +3487,7 @@
  "cocktail_shaker_sort": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "2/8",
   "clash": [],
   "files": [
    "sorts/cocktail_shaker_sort.py"
@@ -3504,7 +3506,7 @@
  "collatz_sequence": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "5/9",
   "clash": [],
   "files": [
    "maths/collatz_sequence.py"
@@ -3563,7 +3565,7 @@
  "comb_sort": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "2/5",
   "clash": [],
   "files": [
    "sorts/comb_sort.py"
@@ -4018,7 +4020,7 @@
  "counting_sort": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "2/6",
   "clash": [],
   "files": [
    "sorts/counting_sort.py"
@@ -4287,7 +4289,7 @@
  "cycle_sort": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "0/2",
   "clash": [],
   "files": [
    "sorts/cycle_sort.py"
@@ -4296,12 +4298,14 @@
   "how": [
    "trace"
   ],
-  "kinds": [],
+  "kinds": [
+   "heldout"
+  ],
   "nodes": [
    "sequence_query"
   ],
-  "reason": null,
-  "status": "learned_self"
+  "reason": "T3 0/2 held-out, wrong []",
+  "status": "not_learned"
  },
  "cyclic_sort": {
   "T1": true,
@@ -5487,7 +5491,7 @@
  "edit_distance": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "4/10",
   "clash": [],
   "files": [
    "dynamic_programming/edit_distance.py",
@@ -5498,14 +5502,16 @@
    "built",
    "trace"
   ],
-  "kinds": [],
+  "kinds": [
+   "heldout"
+  ],
   "nodes": [
    "numeric>recurrence>double_recursion",
    "sequence_query",
    "sequence_query>two_sequence_match>edit_distance"
   ],
-  "reason": null,
-  "status": "hand_rule"
+  "reason": "T3 4/10 held-out, wrong [('Task/Levenshtein-distance/Python/levenshtein-distance-5.py', 'problem_007')]",
+  "status": "not_learned"
  },
  "edmonds_blossom_algorithm": {
   "T1": true,
@@ -6192,7 +6198,7 @@
  "factorial": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "15/31",
   "clash": [],
   "files": [
    "dynamic_programming/factorial.py",
@@ -6202,12 +6208,14 @@
   "how": [
    "built"
   ],
-  "kinds": [],
+  "kinds": [
+   "heldout"
+  ],
   "nodes": [
    "numeric>recurrence>range_accumulation"
   ],
-  "reason": null,
-  "status": "hand_rule"
+  "reason": "T3 15/31 held-out, wrong [('Task/Factorial/C/factorial-2.c', 'problem_020'), ('Task/Factorial/Haskell/factorial-8.hs', 'problem_020'), ('Task/Factorial/Python/factorial-7.py', 'problem_020')]",
+  "status": "not_learned"
  },
  "factors": {
   "T1": true,
@@ -6248,7 +6256,7 @@
  "fast_fibonacci": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "15/59",
   "clash": [],
   "files": [
    "dynamic_programming/fast_fibonacci.py"
@@ -6257,12 +6265,14 @@
   "how": [
    "learned"
   ],
-  "kinds": [],
+  "kinds": [
+   "heldout"
+  ],
   "nodes": [
    "numeric"
   ],
-  "reason": null,
-  "status": "learned_self"
+  "reason": "T3 15/59 held-out, wrong [('Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-9.lisp', 'signum')]",
+  "status": "not_learned"
  },
  "fast_inverse_sqrt": {
   "T1": true,
@@ -6467,7 +6477,7 @@
  "fibonacci": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "15/59",
   "clash": [],
   "files": [
    "dynamic_programming/fibonacci.py",
@@ -6478,14 +6488,16 @@
    "built",
    "trace"
   ],
-  "kinds": [],
+  "kinds": [
+   "heldout"
+  ],
   "nodes": [
    "numeric",
    "numeric>recurrence>double_recursion",
    "numeric>recurrence>pair_recurrence"
   ],
-  "reason": null,
-  "status": "hand_rule"
+  "reason": "T3 15/59 held-out, wrong [('Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-9.lisp', 'signum')]",
+  "status": "not_learned"
  },
  "fibonacci_search": {
   "T1": true,
@@ -7032,7 +7044,8 @@
   "nodes": [
    "marking>table_fill",
    "numeric",
-   "search>backtracking"
+   "search>backtracking",
+   "sequence_query"
   ],
   "reason": null,
   "status": "learned_self"
@@ -7418,7 +7431,7 @@
  "gcd_of_n_numbers": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "6/13",
   "clash": [],
   "files": [
    "maths/gcd_of_n_numbers.py"
@@ -7669,7 +7682,7 @@
  "gnome_sort": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "3/4",
   "clash": [],
   "files": [
    "sorts/gnome_sort.py"
@@ -7927,7 +7940,7 @@
  "greatest_common_divisor": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "6/13",
   "clash": [],
   "files": [
    "maths/greatest_common_divisor.py"
@@ -8440,7 +8453,7 @@
  "heap_sort": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "2/7",
   "clash": [],
   "files": [
    "sorts/heap_sort.py"
@@ -9062,7 +9075,7 @@
  "insertion_sort": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "2/9",
   "clash": [],
   "files": [
    "sorts/insertion_sort.py"
@@ -9071,12 +9084,14 @@
   "how": [
    "built"
   ],
-  "kinds": [],
+  "kinds": [
+   "heldout"
+  ],
   "nodes": [
    "sequence_transformation>comparison_sort>shift_insertion"
   ],
-  "reason": null,
-  "status": "hand_rule"
+  "reason": "T3 2/9 held-out, wrong [('Task/Sorting-algorithms-Insertion-sort/Python/sorting-algorithms-insertion-sort-3.py', 'average_mode')]",
+  "status": "not_learned"
  },
  "instagram_crawler": {
   "T1": true,
@@ -9705,7 +9720,7 @@
  "iterative_merge_sort": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "3/9",
   "clash": [],
   "files": [
    "sorts/iterative_merge_sort.py"
@@ -9720,7 +9735,7 @@
    "sequence_transformation"
   ],
   "reason": null,
-  "status": "learned_self"
+  "status": "learned_heldout"
  },
  "jaccard_similarity": {
   "T1": true,
@@ -9930,7 +9945,7 @@
  "josephus_problem": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "5/9",
   "clash": [],
   "files": [
    "maths/josephus_problem.py"
@@ -10268,7 +10283,7 @@
  "knapsack": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "4/9",
   "clash": [],
   "files": [
    "dynamic_programming/knapsack.py",
@@ -10687,7 +10702,7 @@
   ],
   "group": "lazy_segment_tree",
   "how": [
-   "trace"
+   "file_rule"
   ],
   "kinds": [],
   "nodes": [
@@ -10695,7 +10710,7 @@
    "sequence_query"
   ],
   "reason": null,
-  "status": "learned_self"
+  "status": "file_rule"
  },
  "leaky_rectified_linear_unit": {
   "T1": true,
@@ -10717,7 +10732,7 @@
  "least_common_multiple": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "4/9",
   "clash": [],
   "files": [
    "maths/least_common_multiple.py"
@@ -10726,12 +10741,14 @@
   "how": [
    "built"
   ],
-  "kinds": [],
+  "kinds": [
+   "heldout"
+  ],
   "nodes": [
    "numeric"
   ],
-  "reason": null,
-  "status": "hand_rule"
+  "reason": "T3 4/9 held-out, wrong [('Task/Least-common-multiple/Python/least-common-multiple-2.py', 'Greatest-common-divisor')]",
+  "status": "not_learned"
  },
  "least_recently_used": {
   "T1": true,
@@ -10828,7 +10845,7 @@
  "levenshtein_distance": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "4/10",
   "clash": [],
   "files": [
    "strings/levenshtein_distance.py"
@@ -10837,12 +10854,14 @@
   "how": [
    "trace"
   ],
-  "kinds": [],
+  "kinds": [
+   "heldout"
+  ],
   "nodes": [
    "sequence_query"
   ],
-  "reason": null,
-  "status": "learned_self"
+  "reason": "T3 4/10 held-out, wrong [('Task/Levenshtein-distance/Python/levenshtein-distance-5.py', 'problem_007')]",
+  "status": "not_learned"
  },
  "lexicographical_numbers": {
   "T1": true,
@@ -11164,7 +11183,7 @@
  "longest_common_subsequence": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "4/16",
   "clash": [],
   "files": [
    "dynamic_programming/longest_common_subsequence.py"
@@ -11178,7 +11197,7 @@
    "marking>table_fill"
   ],
   "reason": null,
-  "status": "learned_self"
+  "status": "learned_heldout"
  },
  "longest_common_substring": {
   "T1": true,
@@ -11471,7 +11490,7 @@
  "luhn": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "1/10",
   "clash": [],
   "files": [
    "hashes/luhn.py"
@@ -11538,12 +11557,12 @@
   ],
   "group": "mab",
   "how": [
-   "trace"
+   "file_rule"
   ],
   "kinds": [],
   "nodes": [],
   "reason": null,
-  "status": "learned_self"
+  "status": "file_rule"
  },
  "macaulay_duration": {
   "T1": true,
@@ -12365,7 +12384,7 @@
  "merge_sort": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "3/9",
   "clash": [],
   "files": [
    "sorts/merge_sort.py"
@@ -12490,7 +12509,7 @@
   ],
   "group": "merkle_tree",
   "how": [
-   "trace"
+   "file_rule"
   ],
   "kinds": [],
   "nodes": [
@@ -12499,7 +12518,7 @@
    "sequence_transformation"
   ],
   "reason": null,
-  "status": "learned_self"
+  "status": "file_rule"
  },
  "mfcc": {
   "T1": true,
@@ -13484,7 +13503,7 @@
  "n_queens": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "16/23",
   "clash": [],
   "files": [
    "backtracking/n_queens.py"
@@ -13499,12 +13518,12 @@
    "sequence_query"
   ],
   "reason": null,
-  "status": "learned_self"
+  "status": "learned_heldout"
  },
  "n_queens_math": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "16/23",
   "clash": [],
   "files": [
    "backtracking/n_queens_math.py"
@@ -13989,7 +14008,9 @@
    "file_rule"
   ],
   "kinds": [],
-  "nodes": [],
+  "nodes": [
+   "sequence_query"
+  ],
   "reason": null,
   "status": "file_rule"
  },
@@ -14567,7 +14588,7 @@
  "palindrome": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "8/17",
   "clash": [],
   "files": [
    "strings/palindrome.py"
@@ -14603,7 +14624,7 @@
  "pancake_sort": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "0/9",
   "clash": [],
   "files": [
    "sorts/pancake_sort.py"
@@ -14612,12 +14633,14 @@
   "how": [
    "file_rule"
   ],
-  "kinds": [],
+  "kinds": [
+   "heldout"
+  ],
   "nodes": [
    "sequence_transformation"
   ],
-  "reason": null,
-  "status": "file_rule"
+  "reason": "T3 0/9 held-out, wrong []",
+  "status": "not_learned"
  },
  "parity": {
   "T1": true,
@@ -14811,7 +14834,7 @@
  "perfect_number": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "4/10",
   "clash": [],
   "files": [
    "maths/perfect_number.py",
@@ -14821,13 +14844,15 @@
   "how": [
    "file_rule"
   ],
-  "kinds": [],
+  "kinds": [
+   "heldout"
+  ],
   "nodes": [
    "numeric",
    "numeric>divisor_test"
   ],
-  "reason": null,
-  "status": "file_rule"
+  "reason": "T3 4/10 held-out, wrong [('Task/Perfect-numbers/Haskell/perfect-numbers-1.hs', 'primelib')]",
+  "status": "not_learned"
  },
  "perfect_square": {
   "T1": true,
@@ -15618,7 +15643,7 @@
  "prime_check": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "3/12",
   "clash": [],
   "files": [
    "maths/prime_check.py"
@@ -17628,14 +17653,14 @@
   ],
   "group": "problem_111",
   "how": [
-   "trace"
+   "file_rule"
   ],
   "kinds": [],
   "nodes": [
    "sequence_transformation>elementwise_map"
   ],
   "reason": null,
-  "status": "learned_self"
+  "status": "file_rule"
  },
  "problem_112": {
   "T1": true,
@@ -18722,7 +18747,7 @@
  "quick_sort": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "8/16",
   "clash": [],
   "files": [
    "sorts/quick_sort.py"
@@ -18731,17 +18756,19 @@
   "how": [
    "built"
   ],
-  "kinds": [],
+  "kinds": [
+   "heldout"
+  ],
   "nodes": [
    "sequence_transformation>comparison_sort>partition_recursive"
   ],
-  "reason": null,
-  "status": "hand_rule"
+  "reason": "T3 8/16 held-out, wrong [('Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-1.py', 'Sorting-algorithms-Cycle-sort')]",
+  "status": "not_learned"
  },
  "quick_sort_3_partition": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "8/16",
   "clash": [],
   "files": [
    "sorts/quick_sort_3_partition.py"
@@ -18750,15 +18777,17 @@
   "how": [
    "built"
   ],
-  "kinds": [],
+  "kinds": [
+   "heldout"
+  ],
   "nodes": [
    "sequence_query",
    "sequence_transformation",
    "sequence_transformation>comparison_sort>partition_recursive",
    "sequence_transformation>comparison_sort>select_extreme"
   ],
-  "reason": null,
-  "status": "hand_rule"
+  "reason": "T3 8/16 held-out, wrong [('Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-1.py', 'Sorting-algorithms-Cycle-sort')]",
+  "status": "not_learned"
  },
  "quine": {
   "T1": true,
@@ -19246,7 +19275,7 @@
  "recursive_approach_knapsack": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "4/9",
   "clash": [],
   "files": [
    "knapsack/recursive_approach_knapsack.py"
@@ -19285,7 +19314,7 @@
  "recursive_insertion_sort": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "2/9",
   "clash": [],
   "files": [
    "sorts/recursive_insertion_sort.py"
@@ -19294,13 +19323,15 @@
   "how": [
    "built"
   ],
-  "kinds": [],
+  "kinds": [
+   "heldout"
+  ],
   "nodes": [
    "sequence_query",
    "sequence_transformation>comparison_sort"
   ],
-  "reason": null,
-  "status": "hand_rule"
+  "reason": "T3 2/9 held-out, wrong [('Task/Sorting-algorithms-Insertion-sort/Python/sorting-algorithms-insertion-sort-3.py', 'average_mode')]",
+  "status": "not_learned"
  },
  "recursive_mergesort_array": {
   "T1": true,
@@ -19325,7 +19356,7 @@
  "recursive_quick_sort": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "8/16",
   "clash": [],
   "files": [
    "sorts/recursive_quick_sort.py"
@@ -19334,12 +19365,14 @@
   "how": [
    "built"
   ],
-  "kinds": [],
+  "kinds": [
+   "heldout"
+  ],
   "nodes": [
    "sequence_transformation>comparison_sort>partition_recursive"
   ],
-  "reason": null,
-  "status": "hand_rule"
+  "reason": "T3 8/16 held-out, wrong [('Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-1.py', 'Sorting-algorithms-Cycle-sort')]",
+  "status": "not_learned"
  },
  "red_black_tree": {
   "T1": true,
@@ -19842,7 +19875,7 @@
  "roman_numerals": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "3/14",
   "clash": [],
   "files": [
    "conversions/roman_numerals.py"
@@ -19851,12 +19884,14 @@
   "how": [
    "trace"
   ],
-  "kinds": [],
+  "kinds": [
+   "heldout"
+  ],
   "nodes": [
    "sequence_query>aggregate>gatherer"
   ],
-  "reason": null,
-  "status": "learned_self"
+  "reason": "T3 3/14 held-out, wrong [('Task/Roman-numerals-Encode/Python/roman-numerals-encode-2.py', 'magicdiamondpattern')]",
+  "status": "not_learned"
  },
  "rot13": {
   "T1": true,
@@ -20085,7 +20120,7 @@
  "run_length_encoding": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "4/9",
   "clash": [],
   "files": [
    "data_compression/run_length_encoding.py"
@@ -20436,7 +20471,7 @@
  "selection_sort": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "2/6",
   "clash": [],
   "files": [
    "sorts/selection_sort.py"
@@ -20660,7 +20695,7 @@
  "shell_sort": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "2/4",
   "clash": [],
   "files": [
    "sorts/shell_sort.py"
@@ -20791,7 +20826,7 @@
  "shrink_shell_sort": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "2/4",
   "clash": [],
   "files": [
    "sorts/shrink_shell_sort.py"
@@ -20886,7 +20921,7 @@
  "sieve_of_eratosthenes": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "4/46",
   "clash": [],
   "files": [
    "maths/sieve_of_eratosthenes.py"
@@ -20976,7 +21011,7 @@
  "simple_binary_search": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "5/13",
   "clash": [],
   "files": [
    "searches/simple_binary_search.py"
@@ -20988,7 +21023,7 @@
   "kinds": [],
   "nodes": [],
   "reason": null,
-  "status": "learned_self"
+  "status": "learned_heldout"
  },
  "simple_blockchain": {
   "T1": true,
@@ -22007,7 +22042,7 @@
  "stooge_sort": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "4/6",
   "clash": [],
   "files": [
    "sorts/stooge_sort.py"
@@ -22303,7 +22338,7 @@
  "sum_of_digits": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "0/10",
   "clash": [],
   "files": [
    "maths/sum_of_digits.py"
@@ -22312,13 +22347,15 @@
   "how": [
    "built"
   ],
-  "kinds": [],
+  "kinds": [
+   "heldout"
+  ],
   "nodes": [
    "numeric",
    "numeric>decomposition>digits"
   ],
-  "reason": null,
-  "status": "hand_rule"
+  "reason": "T3 0/10 held-out, wrong []",
+  "status": "not_learned"
  },
  "sum_of_geometric_progression": {
   "T1": true,
@@ -22837,7 +22874,7 @@
  "tower_of_hanoi": {
   "T1": true,
   "T2_false": [],
-  "T3": "-",
+  "T3": "5/11",
   "clash": [],
   "files": [
    "other/tower_of_hanoi.py"
