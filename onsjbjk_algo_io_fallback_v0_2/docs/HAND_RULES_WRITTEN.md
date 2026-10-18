@@ -86,3 +86,38 @@ checks after writing are always the same:
 - **Tuple loop targets:** `for i, x in enumerate(q)` was one variable named `'i, x'`.
 - **Chained assignments:** `a = b = e` (Python and C) lowered only `a = e`.
 - **Still open:** ECL drops `(setf (aref u p) nil ...)` writes. A C comb sort's far index never appears as an assignment.
+
+## File rules (doc 04 section 17.5): prompts that write them
+
+Use this when a file must be identified and a general relation is not worth writing. Run the prompt once per label;
+one clause usually does it, two when the label's files differ.
+
+> **Prompt (file rule).**
+> 1. **The task.** `<label>` (`<files>`) is answered `<what it got>`, not `<label>`.
+> 2. **List.** Run `python ta_distinct.py CORPUS --propose <label>`. It gives the components no file of another label
+>    has; else a pair that only the label's files have together; else a component with exclusions (`\+ file_has(C)`,
+>    one component of each other file that has it).
+> 3. **Choose.** Keep the algorithm's own logic on its inputs. Reject:
+>    - input reading, printing and timing;
+>    - doctest or unittest bodies;
+>    - input checks (`isinstance`, `n < 0`).
+>
+>    If only those are left, look for a front-end gap: the component was lowered as `other(...)`. Fix it in the v0.2
+>    subclass and re-index with `--index`.
+> 4. **Write.** `hand_specific(_, '<label>') :- file_has(<component>).` in `prolog/ta_file_rules.pl`, or add the
+>    label to `benchmark/ta_file_rule_labels.json` and run `--write`.
+> 5. **Check.** Run `eval_ta.py CORPUS --rehand --dir <folder>` and `--status`. T1: every file of the label is
+>    answered `<label>`. T2: no other file is.
+
+Examples of the choice (what the proposal named, and why it is the algorithm):
+
+| label | component kept | why |
+|---|---|---|
+| a1z26 | `map(p0, ord(c) - 96)` | the letter's place in the alphabet (the first proposal, a `main()` input read, was rejected) |
+| aliquot_sum | `range(1, p0 // 2 + 1)` and no `acc + p0 // v` | the divisors up to n/2 summed, not the paired-divisor form of other files |
+| next_prime_number | `v := v + 6` | the 6k ± 1 stepping (the first proposal, `3 >= n`, was an input check) |
+| lens_formulae vs mirror_formulae | `1 / (1/p1 - 1/p0)` vs `1 / (1/p1 + 1/p0)` | which parameter is subtracted: names were abstracted, positions were not |
+| binary_or_operator vs binary_xor_operator | `fstring([p0 or p1])` vs `fstring([p0 xor p1])` | needed the f-string front-end fix |
+| krishnamurthy_number | `n not in (0, 1)` with `sum == n` | the digit-factorial sum compared with n, beside the factorial helper the general rule names |
+| problem_020 | `str(factorial(p0))` | the digits of a factorial (Project Euler 20), beside the factorial |
+| red_black_tree | `left := RedBlackTree(p1, 1, p0)` | a node made red (colour 1) under its parent |

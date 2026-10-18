@@ -28,6 +28,11 @@ own_function(G) :- func(_, N, _), base_name(N, G), !.
 
 % file_has(A): a statement of some function of the file has the abstracted relation A (the components the helper
 % indexes are the file's)
-file_has(A) :- in_func(S, F), component(S, R), abstract(F, R, A0), A0 == A, !.
+file_has(A) :- components_built, file_component(A), !.
+% the file's abstracted components, computed once per run (each run loads one file) and kept as facts
+:- dynamic file_component/1, components_done/0.
+components_built :- components_done, !.
+components_built :- forall(distinct(A, ( in_func(S, F), component(S, R), abstract(F, R, A) )), assertz(file_component(A))),
+    assertz(components_done).
 % has_rel(F, A): a statement of F has the abstracted relation A
 has_rel(F, A) :- in_func(S, F), component(S, R), abstract(F, R, A0), A0 == A, !.

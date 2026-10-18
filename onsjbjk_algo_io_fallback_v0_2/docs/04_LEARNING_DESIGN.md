@@ -415,3 +415,35 @@ for label in labels:
 | no rule loosened to fit one file | every rule has a close negative: bubble/rotate-once, gnome/pass helper, Fibonacci/Lucas and Pell, factorial/double factorial, gcd/extended gcd, primality/factorisation, digit sum/number reversal, counting/word count, binary search/binary insertion sort |
 | same component, same term | e.g. a swap is `exchange/4` whatever its spelling (tuple swap, temp, `rotatef`, swap macro), and a counting loop is `range(...)`, a C `for`, a Lisp `loop for`, or a Haskell `[1..n]` fold |
 | runs never mix rule versions | a run copies the working tree to a snapshot and runs there (an edit during run 2 broke 62 of its files: that run was discarded) |
+
+### 17.5 File rules: every TheAlgorithms/Python file identified (user: "forget generalizing, hand write all the failed rules")
+The aim changed: every corpus file must be answered with its own label. Generalising to other code is no longer the
+aim for this tier. The file rules are deliberately specific. They identify the corpus and are not general
+recognisers; the general relations (17.1, `ta_rules.pl`) and the learned branches stay as they were.
+
+- **Tiers:** `hand_specific(F, Label)` in `prolog/ta_file_rules.pl` is a tier before the general hand rules and the
+  learned branches. `eval_ta.decide` takes the first tier that names anything; several labels in one tier is UNKNOWN.
+  A sieve inside an Euler file is therefore that Euler problem: its file rule wins over the sieve rule.
+- **Component:** a statement's relation (AP13 `rel_of/2`) or a call it makes, with locals renamed `v`, parameters by
+  position `p(K)` and the file's own functions `fn` (`prolog/ta_signature.pl`). The same component in other spellings
+  gives the same term.
+- **Writing a rule:** `ta_distinct.py --propose LABEL` lists, in this order of preference:
+  - a component no file of another label has;
+  - a pair that together occur only in the label's files;
+  - a component with exclusions (`\+ file_has(C)` for a component of each other file that has it).
+
+  The ranking prefers the algorithm's logic on its inputs over reading input, printing, timing, tests and input
+  checks. `--write` regenerates the proposed section for the labels of `benchmark/ta_file_rule_labels.json`. The
+  proposals were reviewed per folder, and the ranking was corrected where they named noise, e.g. a `main()` input
+  read for a1z26 became `ord(c) - 96`.
+- **Checking:** `eval_ta.py --rehand` recomputes the built, hand and file-rule evidence of every file and keeps the
+  run's learned evidence. `--status` then gives T1 and T2. A rule is about 3 s per file: the file's components are
+  abstracted once per run.
+- **Front-end gaps found on the way** (fixed in `imperative_logic.py`; the same component gives the same term):
+  - `f(x for x in s)`: the generator was lowered as its parts;
+  - dict literals;
+  - f-string interpolations (`f"{a | b}"` vs `f"{a ^ b}"`);
+  - chained assignments.
+- **What no logic separates:** TheAlgorithms itself holds identical copies, `ciphers/base58.py` = `ciphers/base64_cipher.py`
+  and `maths/base_neg2_conversion.py` = `conversions/int_to_negative_binary_base.py`. Two web scripts have all their
+  code under `if __name__ == "__main__":`, which AP13 does not lower.
