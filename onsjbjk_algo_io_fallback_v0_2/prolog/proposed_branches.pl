@@ -13,6 +13,7 @@ under_or_at(N, M) :- N == M, !.
 under_or_at(N, M) :- atom_concat(M, '>', P), sub_atom(N, 0, _, _, P).
 class_holds(C) :- holds(C).
 
+proposed_branch('numeric>divisor_test', perfect_number) :- class_holds(perfect_number).   % from maths/special_numbers/perfect_number.py
 proposed_branch('numeric>recurrence>double_recursion', power) :- class_holds(power).   % from divide_and_conquer/power.py
 proposed_branch('numeric>recurrence>modulo_recurrence', gcd) :- class_holds(gcd).   % from maths/greatest_common_divisor.py
 proposed_branch('sequence_query>target_search>interval_halving', sorting) :- class_holds(sorting).   % from sorts/merge_insertion_sort.py, sorts/tim_sort.py

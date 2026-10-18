@@ -1,4 +1,7 @@
 {
+ "numeric>divisor_test|perfect_number": [
+  "maths/special_numbers/perfect_number.py"
+ ],
  "numeric>recurrence>double_recursion|power": [
   "divide_and_conquer/power.py"
  ],

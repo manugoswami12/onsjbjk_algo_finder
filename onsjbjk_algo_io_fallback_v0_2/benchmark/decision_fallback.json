@@ -4,6 +4,7 @@
   "divide_and_conquer/power.py": "power",
   "maths/greatest_common_divisor.py": "gcd",
   "maths/power_using_recursion.py": "power",
+  "maths/special_numbers/perfect_number.py": "perfect_number",
   "searches/double_linear_search.py": "search",
   "searches/jump_search.py": "search",
   "sorts/adaptive_merge_sort.py": "sorting",
@@ -116,10 +117,10 @@
    "task": "Binary-search"
   },
   "Task/Binary-search/Python/binary-search-6.py": {
-   "answer": "variation_root",
-   "correct": null,
-   "family_correct": true,
-   "name": "sequence_query",
+   "answer": "class",
+   "correct": true,
+   "family_correct": null,
+   "name": "search",
    "task": "Binary-search"
   },
   "Task/Binary-search/Python/binary-search-7.py": {
@@ -1838,17 +1839,17 @@
    "task": "Primality-by-trial-division"
   },
   "Task/Primality-by-trial-division/Python/primality-by-trial-division-1.py": {
-   "answer": "variation",
-   "correct": null,
-   "family_correct": true,
-   "name": "numeric>divisor_test",
+   "answer": "class",
+   "correct": true,
+   "family_correct": null,
+   "name": "prime_check",
    "task": "Primality-by-trial-division"
   },
   "Task/Primality-by-trial-division/Python/primality-by-trial-division-2.py": {
-   "answer": "variation",
-   "correct": null,
-   "family_correct": true,
-   "name": "numeric>divisor_test",
+   "answer": "class",
+   "correct": true,
+   "family_correct": null,
+   "name": "prime_check",
    "task": "Primality-by-trial-division"
   },
   "Task/Primality-by-trial-division/Python/primality-by-trial-division-3.py": {
@@ -2923,10 +2924,10 @@
    "task": "Sorting-algorithms-Quicksort"
   },
   "Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-8.py": {
-   "answer": "variation_root",
-   "correct": null,
-   "family_correct": true,
-   "name": "sequence_transformation",
+   "answer": "class",
+   "correct": true,
+   "family_correct": null,
+   "name": "sorting",
    "task": "Sorting-algorithms-Quicksort"
   },
   "Task/Sorting-algorithms-Selection-sort/C/sorting-algorithms-selection-sort.c": {

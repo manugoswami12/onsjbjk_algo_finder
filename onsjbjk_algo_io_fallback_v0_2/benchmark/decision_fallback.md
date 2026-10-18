@@ -9,8 +9,8 @@ Identified = algorithm or class. A family answer is right when TheAlgorithms fil
 | C | 69 | 31 / 1 | 96.9% | 44.9% | 7 / 1 | 7 / 7 | 15 |
 | Common-Lisp | 75 | 44 / 1 | 97.8% | 58.7% | 9 / 2 | 4 / 5 | 10 |
 | Haskell | 144 | 33 / 2 | 94.3% | 22.9% | 3 / 3 | 17 / 29 | 57 |
-| Python | 162 | 61 / 6 | 91.0% | 37.7% | 13 / 4 | 25 / 12 | 41 |
-| all | 450 | 169 / 10 | 94.4% | 37.6% | 32 / 10 | 53 / 53 | 123 |
+| Python | 162 | 65 / 6 | 91.5% | 40.1% | 11 / 4 | 23 / 12 | 41 |
+| all | 450 | 173 / 10 | 94.5% | 38.4% | 30 / 10 | 51 / 53 | 123 |
 
 ## Wrong answers (10)
 
@@ -164,9 +164,10 @@ Identified = algorithm or class. A family answer is right when TheAlgorithms fil
 - Task/Sum-digits-of-an-integer/Haskell/sum-digits-of-an-integer-2.hs (task Sum-digits-of-an-integer)
 - Task/Sum-digits-of-an-integer/Haskell/sum-digits-of-an-integer-3.hs (task Sum-digits-of-an-integer)
 
-## Class decisions on TheAlgorithms/Python files (36), to check by hand
+## Class decisions on TheAlgorithms/Python files (37), to check by hand
 
 - **gcd** (1): maths/greatest_common_divisor.py
+- **perfect_number** (1): maths/special_numbers/perfect_number.py
 - **power** (2): divide_and_conquer/power.py, maths/power_using_recursion.py
 - **search** (2): searches/double_linear_search.py, searches/jump_search.py
 - **sorting** (31): divide_and_conquer/mergesort.py, sorts/adaptive_merge_sort.py, sorts/binary_insertion_sort.py, sorts/bubble_sort.py, sorts/bubble_sort_recursive.py, sorts/circle_sort.py, sorts/cocktail_shaker_sort.py, sorts/comb_sort.py, sorts/cycle_sort.py, sorts/double_sort.py, sorts/exchange_sort.py, sorts/gnome_sort.py, sorts/heap_sort.py, sorts/insertion_sort.py, sorts/iterative_merge_sort.py, sorts/merge_insertion_sort.py, sorts/merge_sort.py, sorts/odd_even_sort.py, sorts/odd_even_transposition_single_threaded.py, sorts/pancake_sort.py, sorts/pigeon_sort.py, sorts/pigeonhole_sort.py, sorts/quick_sort.py, sorts/recursive_insertion_sort.py, sorts/recursive_quick_sort.py, sorts/reverse_selection.py, sorts/selection_sort.py, sorts/shell_sort.py, sorts/shrink_shell_sort.py, sorts/stooge_sort.py, sorts/tim_sort.py
@@ -176,15 +177,20 @@ Identified = algorithm or class. A family answer is right when TheAlgorithms fil
 - maths/average_mode.py: sorting, nodes []
 - maths/special_numbers/triangular_numbers.py: triangular, nodes []
 
-## Notes (the user's rule for unanswered files)
+## Notes (v0.3 runner: lambdas, closures, module constants, generator arguments, more library relations)
 
-- **Variation of a deep family: 32 right, 10 wrong (76 %).** Examples of a wrong family: a Lisp quicksort lands on
-  `numeric>recurrence>double_recursion` (two self-calls, like a Fibonacci), and a C heapsort lands on
-  `sequence_transformation>uncompared_rearrangement`.
-- **Variation of a root family only: 53 right, 53 wrong (50 %).** A root (numeric, sequence_query,
-  sequence_transformation) holds 9 or more tasks, so it names almost nothing.
-- **Error or new class: 123 files reach no tree node.** Every held-out task is a known algorithm, so all 123 are
-  programs the lowering or the interpreter cannot handle, not new classes (57 Haskell, 41 Python, 15 C, 10 Lisp).
-- The identified answers (algorithm or class) are unchanged: 169 correct, 10 wrong, all 10 the pipeline's own.
-  Proposed branches (benchmark/proposed_fallback.md) answered 2 files the pipeline missed, both right, and those 2
-  are among the class answers here.
+- **Held-out class decisions: 39, all correct** (35 with AP13's runner). New ones include:
+  - prime2 and primality-1, which use `any(...)` over a generator and now run on every input;
+  - binary-search-6, which uses `bisect_left` with lo/hi.
+- **Identified: 173 correct, 10 wrong** (94.5 % precision, 38.4 % recall; Python 40.1 %, up from 37.7 %). All 10
+  wrong answers are the main pipeline's own algorithm answers.
+- **TheAlgorithms class claims: 37, checked by hand, all right.** The one new claim is
+  maths/special_numbers/perfect_number.py, which is a perfect-number check. 0 false positives.
+- **What the runner cannot fix, because these are not runnable programs:**
+  - Curried Haskell-style Python, where a function returns a lambda: counted as "returns a function", never as a
+    result.
+  - Strings as character lists: `int(d)` for a digit character gives its code, so luhn-1 is "new or incorrect", not
+    a wrong class.
+  - Haskell: the 52 files that do not run are GHCi transcripts, bare expressions, imports of packages that are not
+    installed (Data.Numbers.Primes, Data.CReal), or code with deferred type errors (`Variable not in scope: merge`).
+    None of them is a program that a wrapper could make.
