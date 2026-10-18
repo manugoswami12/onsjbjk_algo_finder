@@ -11,10 +11,12 @@ roots_main :-
     current_prolog_flag(argv, [Facts, Kind|_]), tree_load(Facts, Kind),
     forall(( func(F, N, _), \+ demo(N) ), ( format('FUNC|~w~n', [N]),
         ( \+ called_by_other(F), \+ operator_method(N) -> format('ROOT|~w~n', [N]) ; true ) )).
-% demo code: top-level statements and a main function (C's main, Python's main()): their calls do not make a function
-% a helper, and they are not the algorithm
+% demo code: top-level statements, a main function (C's main, Python's main()) and test code: their calls do not
+% make a function a helper, and they are not the algorithm
 demo('<toplevel>').
 demo(N) :- base_name(N, main).
+demo(N) :- base_name(N, B), sub_atom(B, 0, _, _, test_).          % a test function or method (test_primes)
+demo(N) :- sub_atom(N, 0, _, _, 'Test'), sub_atom(N, _, _, _, '.').   % a method of a test class (Test.test_primes)
 % an operator method (__lt__, __eq__) is called by an operator, never by name
 operator_method(N) :- sub_atom(N, _, _, 0, '__'), sub_atom(N, B, _, _, '.__'), B > 0, !.
 % called_by_other(G): a statement of another own function (not top-level code) calls G
