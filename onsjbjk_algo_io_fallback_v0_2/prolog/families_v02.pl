@@ -252,11 +252,12 @@ plus_one(S) :- ret(S, V), ( V = op(add, [_, int(1)]) ; V = op(add, [int(1), _]) 
 % n-queens-problem-5.py, n-queens-problem-2.lisp and n-queens-problem-5.c.
 family_path_v02(F, [search, diagonal_conflict]) :-
     once((   in_func(S, F), findall(C0, guard(S, C0, _), C), C \== [],      % the tests of one statement together
-             variant(F, C, R1), keyed(R1, Sum), Sum = op(add, [X, Y]), var_pair(X, Y),
-             variant(F, C, R2), keyed(R2, Dif), Dif = op(sub, [P, Q]), ( P == X, Q == Y ; P == Y, Q == X )
+             variant(F, C, R1), keyed(F, R1, Sum), Sum = op(add, [X, Y]), var_pair(X, Y),
+             variant(F, C, R2), keyed(F, R2, Dif), Dif = op(sub, [P, Q]), ( P == X, Q == Y ; P == Y, Q == X )
          ;   in_func(S, F), ( guard(S, C, _) ; ret(S, C) ; value(S, _, C) ; loop(Lp, F, _), loop_cond(Lp, C) ),
              sub_term(A, C), compound(A), A = call(abs, [op(sub, [_, _])]),
-             sub_term(B, C), compound(B), B = op(Op, [L, Rr]), memberchk(Op, [eq, ne]), ( L == A ; Rr == A )
+             sub_term(B, C), compound(B), B = op(Op, [L, Rr]), memberchk(Op, [eq, ne]), ( L == A ; Rr == A ),
+             ( L == A -> Other = Rr ; Other = L ), row_distance(Other)
          ;   in_func(S, F), ( ret(S, C) ; value(S, _, C) ; guard(S, C, _) ),          % r + s == c + d, r - s == c - d
              sub_term(E1, C), compound(E1), E1 = op(eq, [op(add, [A1, B1]), op(add, [_, _])]),
              sub_term(E2, C), compound(E2), E2 = op(eq, [op(sub, [A2, B2]), op(sub, [_, _])]), A2 == A1, B2 == B1
@@ -265,9 +266,19 @@ family_path_v02(F, [search, diagonal_conflict]) :-
              in_func(S2, F), ( value(S2, _, V2) ; assign(S2, _, V2) ), V2 = op(shr, [op(or, [M2, Bit2]), int(1)]),
              Bit2 == Bit, M1 \== M2
          )).
-% T used as a key of the test: tested for membership (x not in d) or as an index of an occupancy table (d[x])
-keyed(R, T) :- sub_term(M, R), compound(M), ( M = op(O, [K, _]), memberchk(O, ['not in', in]) ; M = elem(_, K) ),
+% T used as a key of the test: tested for membership (x not in d) or as an index of an occupancy table (d[x]: a
+% table the file writes or creates as a fill of one constant; an input string indexed by i + k is not one)
+keyed(_, R, T) :- sub_term(M, R), compound(M), M = op(O, [K, _]), memberchk(O, ['not in', in]),
     sub_term(T, K), compound(T).
+keyed(F, R, T) :- sub_term(M, R), compound(M), M = elem(Tab, K), occupancy(F, Tab), sub_term(T, K), compound(T).
+occupancy(_, Tab) :- ( value(_, elem(Tab2, _), _) ; assign(_, elem(Tab2, _), _) ), Tab2 == Tab, !.
+occupancy(_, var(T)) :- ( value(_, var(T2), V) ; assign(_, var(T2), V) ), T2 == T, filled(V), !.
+% a fresh table of one constant: [True] * n, ECL make-array :initial-element
+filled(op(mul, [list([C]), _])) :- ( C = int(_) ; C = bool(_) ), !.
+filled(call(Fn, _)) :- memberchk(Fn, [si_fill_array_with_elt, si_make_pure_array, make_array]), !.
+% the other side of |x - y| == ...: a row distance (i - j, len(qs) - i, the index in [1..]), not a second
+% difference of two elements (|c[i] - c[j]| == |c[j] - c[k]| is an arithmetic progression)
+row_distance(X) :- \+ ( X = call(abs, [op(sub, [elem(_, _), elem(_, _)])]) ).
 % the two positions: non-constant terms (a variable, or an element such as a[j])
 var_pair(X, Y) :- X \= int(_), Y \= int(_), X \== Y, ( X = var(_) ; X = elem(_, _) ), ( Y = var(_) ; Y = elem(_, _) ).
 % r tested for membership in the queens' sequence shifted by the row index (zipWith (+) xs [1..] and (-)),

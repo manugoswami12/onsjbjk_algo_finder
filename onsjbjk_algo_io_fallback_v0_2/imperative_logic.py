@@ -2,7 +2,8 @@
 lower_imperative.py, unchanged) subclassed for components it leaves opaque, so that the same component gives the
 same facts in every language. Only additions; everything AP13 lowers stays as it is.
 
-  an assignment used as a value (a = b = e in Python, (y = f(x)) < x in C): the value e
+  an assignment used as a value (a = b = e in Python, (y = f(x)) < x in C): the value e; the inner b = e of a
+  chained assignment (Python, C) is a statement too (AP13 lowers a = e only)
   a slice s[i:j] (Python): call(slice, [s, i, j]), s[i:j:k]: call(slice, [s, i, j, k]) (AP13's s[k:] with a constant k
   stays tail(s, k))
   a field p->f, s.f, o.f: field(p, f) (AP13: other(field); a length field stays len(o))
@@ -39,6 +40,10 @@ class StepFacts(FactSet):
 
 class ImperativeLowerer(ap13.Lowerer):
     def stmt(self, node, ctx, implicit=False):
+        if node is not None and node.type in ASSIGNMENT_VALUES:    # a = b = e: b = e is a statement too
+            right = node.child_by_field_name('right')
+            if right is not None and right.type in ASSIGNMENT_VALUES:
+                self.stmt(right, ctx, implicit)
         loop_id = super().stmt(node, ctx, implicit)
         if loop_id is not None and node is not None and isinstance(self.facts, StepFacts):
             kind, roles = self.kind(node)

@@ -421,3 +421,13 @@ hand_branch(_, F, kahns_algorithm_topo) :-
     in_func(S2, F), value(S2, elem(I2, _), op(sub, [elem(I3, _), int(1)])), I2 == I, I3 == I,
     in_func(S3, F), nguard(S3, C, true), sub_term(T, C), compound(T), T = op(eq, Args), member(elem(I4, _), Args),
     I4 == I, member(int(0), Args).
+
+% run-length encoding by neighbours: a count raised while q[i] == q[i + 1], emitted with the element when they differ
+% (AP13's run idiom needs a condition loop over equal elements)
+hand_branch(_, F, run_length_encoding) :-
+    in_func(S, F), value(S, var(C), op(add, [var(C2), int(1)])), C == C2, nguard(S, G, true), neighbours_equal(G, Q, I),
+    in_func(S2, F), ( capp(S2, _, E) ; value(S2, _, E) ), S2 \== S, sub_term(V, E), V == var(C),
+    sub_term(X, E), compound(X), X = elem(Q2, I2), Q2 == Q, I2 == I.
+neighbours_equal(G, Q, I) :- sub_term(O, G), compound(O), O = op(eq, [A, B]),
+    ( A = elem(Q, I), B = elem(Q2, op(add, [I2, int(1)])) ; B = elem(Q, I), A = elem(Q2, op(add, [I2, int(1)])) ),
+    Q2 == Q, I2 == I, !.
