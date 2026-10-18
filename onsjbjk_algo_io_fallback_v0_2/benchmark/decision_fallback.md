@@ -6,9 +6,9 @@ Each file gets one answer: the algorithm (eval_ta.py), else its class (a class r
 |---|---|---|---|---|---|---|---|---|---|
 | C | 69 | 32 | 0 | 31 / 1 | 96.9% | 44.9% | 2 | 35 | 49.3% |
 | Common-Lisp | 75 | 43 | 2 | 44 / 1 | 97.8% | 58.7% | 1 | 29 | 61.3% |
-| Haskell | 144 | 31 | 3 | 32 / 2 | 94.1% | 22.2% | 5 | 105 | 27.1% |
+| Haskell | 144 | 31 | 4 | 33 / 2 | 94.3% | 22.9% | 5 | 104 | 27.8% |
 | Python | 162 | 62 | 5 | 61 / 6 | 91.0% | 37.7% | 7 | 88 | 45.7% |
-| all | 450 | 168 | 10 | 168 / 10 | 94.4% | 37.3% | 15 | 257 | 42.9% |
+| all | 450 | 168 | 11 | 169 / 10 | 94.4% | 37.6% | 15 | 256 | 43.1% |
 
 ## Wrong answers (10)
 
@@ -43,18 +43,26 @@ Each file gets one answer: the algorithm (eval_ta.py), else its class (a class r
 
 ## Class decisions on TheAlgorithms/Python files (36), to check by hand
 
+- **gcd** (1): maths/greatest_common_divisor.py
 - **power** (2): divide_and_conquer/power.py, maths/power_using_recursion.py
 - **search** (2): searches/double_linear_search.py, searches/jump_search.py
-- **sorting** (32): divide_and_conquer/mergesort.py, sorts/adaptive_merge_sort.py, sorts/binary_insertion_sort.py, sorts/bubble_sort.py, sorts/bubble_sort_recursive.py, sorts/circle_sort.py, sorts/cocktail_shaker_sort.py, sorts/comb_sort.py, sorts/cycle_sort.py, sorts/double_sort.py, sorts/exchange_sort.py, sorts/gnome_sort.py, sorts/heap_sort.py, sorts/insertion_sort.py, sorts/iterative_merge_sort.py, sorts/merge_insertion_sort.py, sorts/merge_sort.py, sorts/odd_even_sort.py, sorts/odd_even_transposition_single_threaded.py, sorts/pancake_sort.py, sorts/pigeon_sort.py, sorts/pigeonhole_sort.py, sorts/quick_sort.py, sorts/quick_sort_3_partition.py, sorts/recursive_insertion_sort.py, sorts/recursive_quick_sort.py, sorts/reverse_selection.py, sorts/selection_sort.py, sorts/shell_sort.py, sorts/shrink_shell_sort.py, sorts/stooge_sort.py, sorts/tim_sort.py
+- **sorting** (31): divide_and_conquer/mergesort.py, sorts/adaptive_merge_sort.py, sorts/binary_insertion_sort.py, sorts/bubble_sort.py, sorts/bubble_sort_recursive.py, sorts/circle_sort.py, sorts/cocktail_shaker_sort.py, sorts/comb_sort.py, sorts/cycle_sort.py, sorts/double_sort.py, sorts/exchange_sort.py, sorts/gnome_sort.py, sorts/heap_sort.py, sorts/insertion_sort.py, sorts/iterative_merge_sort.py, sorts/merge_insertion_sort.py, sorts/merge_sort.py, sorts/odd_even_sort.py, sorts/odd_even_transposition_single_threaded.py, sorts/pancake_sort.py, sorts/pigeon_sort.py, sorts/pigeonhole_sort.py, sorts/quick_sort.py, sorts/recursive_insertion_sort.py, sorts/recursive_quick_sort.py, sorts/reverse_selection.py, sorts/selection_sort.py, sorts/shell_sort.py, sorts/shrink_shell_sort.py, sorts/stooge_sort.py, sorts/tim_sort.py
 
-## Class decisions on TheAlgorithms/Python files dropped by node agreement (9)
+## Class decisions on TheAlgorithms/Python files dropped by node agreement (2)
 
-- bit_manipulation/is_even.py: is_even, nodes []
 - maths/average_mode.py: sorting, nodes []
-- maths/greatest_common_divisor.py: gcd, nodes ['numeric>recurrence>modulo_recurrence']
-- maths/least_common_multiple.py: lcm, nodes ['numeric']
-- maths/numerical_analysis/integration_by_simpson_approx.py: square, nodes ['numeric']
-- maths/perfect_number.py: perfect_number, nodes ['numeric', 'numeric>divisor_test']
 - maths/special_numbers/triangular_numbers.py: triangular, nodes []
-- maths/sum_of_digits.py: digit_sum, nodes ['numeric', 'numeric>decomposition>digits']
-- strings/palindrome.py: palindrome_check, nodes ['sequence_query']
+
+## Notes on the corrected run (Haskell local helpers by indentation, strict roots; witness = the file reaches a node)
+
+| second witness | held-out class answers | wrong | held-out recall | TheAlgorithms class claims | false positives |
+|---|---|---|---|---|---|
+| none | 14 | 0 | 38.2 % | 38 | 1 (average_mode) |
+| the file reaches a tree node (this report) | 11 | 0 | 37.6 % | 36 | 0 |
+| node agreement with another TheAlgorithms file of the class | 11 | 0 | 37.6 % | 35 | 0 (also drops gcd, a singleton) |
+
+- The class decision itself (before any witness) fired on 39 held-out files, and the class was right on all 39.
+- **average_mode** is an interpreter error: `mode()` is computed as a full sort. It reaches no tree node, so the node
+  witness drops it. The same witness drops 3 correct held-out prime_check files, which also reach no node. So the
+  safety costs 3 files (0.6 % recall).
+- The 10 wrong answers on the held-out files are the main pipeline's algorithm answers. None comes from this fallback.

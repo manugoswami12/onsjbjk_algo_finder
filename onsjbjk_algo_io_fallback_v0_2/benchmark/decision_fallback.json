@@ -2,6 +2,7 @@
  "corpus_class_claims": {
   "divide_and_conquer/mergesort.py": "sorting",
   "divide_and_conquer/power.py": "power",
+  "maths/greatest_common_divisor.py": "gcd",
   "maths/power_using_recursion.py": "power",
   "searches/double_linear_search.py": "search",
   "searches/jump_search.py": "search",
@@ -27,7 +28,6 @@
   "sorts/pigeon_sort.py": "sorting",
   "sorts/pigeonhole_sort.py": "sorting",
   "sorts/quick_sort.py": "sorting",
-  "sorts/quick_sort_3_partition.py": "sorting",
   "sorts/recursive_insertion_sort.py": "sorting",
   "sorts/recursive_quick_sort.py": "sorting",
   "sorts/reverse_selection.py": "sorting",
@@ -2331,9 +2331,9 @@
    "task": "Sorting-algorithms-Merge-sort"
   },
   "Task/Sorting-algorithms-Merge-sort/Haskell/sorting-algorithms-merge-sort-1.hs": {
-   "answer": "not_identified",
-   "correct": null,
-   "name": null,
+   "answer": "class",
+   "correct": true,
+   "name": "sorting",
    "task": "Sorting-algorithms-Merge-sort"
   },
   "Task/Sorting-algorithms-Merge-sort/Haskell/sorting-algorithms-merge-sort-2.hs": {
