@@ -42,9 +42,9 @@ def runs(path: Path) -> dict[str, tuple[list, list[tuple[list, str]]]]:
     return out
 
 
-def classes(path: Path) -> dict[str, set[str]]:
-    """{function: classes whose relation every run satisfies}."""
-    rs = runs(path)
+def classes(path: Path, rs: dict | None = None) -> dict[str, set[str]]:
+    """{function: classes whose relation every run satisfies}; rs: the file's runs when the caller has them."""
+    rs = runs(path) if rs is None else rs
     if not rs:
         return {}
     lines = [':- discontiguous run/4.']
@@ -70,6 +70,7 @@ def classes(path: Path) -> dict[str, set[str]]:
     return out
 
 
-def runnable(path: Path) -> bool:
+def runnable(path: Path, rs: dict | None = None) -> bool:
     """Some function of the file runs on the battery with an output that depends on its input."""
-    return any(len({o for _, o in ok}) > 1 for _, ok in runs(path).values())
+    rs = runs(path) if rs is None else rs
+    return any(len({o for _, o in ok}) > 1 for _, ok in rs.values())

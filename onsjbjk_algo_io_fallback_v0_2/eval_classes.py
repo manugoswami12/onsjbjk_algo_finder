@@ -46,8 +46,8 @@ def main():
 
     def one(rel):
         try:
-            cs = ta_classes.classes(rosetta / rel)
-            run = ta_classes.runnable(rosetta / rel)
+            rs = ta_classes.runs(rosetta / rel)
+            cs, run = ta_classes.classes(rosetta / rel, rs), ta_classes.runnable(rosetta / rel, rs)
         except ta_classes.ERRORS:
             cs, run = {}, False
         return rel, sorted({c for v in cs.values() for c in v}), run
@@ -67,7 +67,7 @@ def main():
             for rel in label_files.get(g, []):
                 for v in ta_classes.classes(corpus / rel).values():
                     cs |= v
-            answer_class[g] = sorted(cs)[0] if len(cs) == 1 else g
+            answer_class[g] = min(cs) if len(cs) == 1 else g
         return answer_class[g]
     rows, score = {}, defaultdict(lambda: defaultdict(int))
     for rel, res in sorted(held.items()):
@@ -93,8 +93,8 @@ def main():
              ('The algorithm answers of eval_ta.py are kept; an UNKNOWN file is answered by the class relations '
               '(prolog/class_specs.pl) when exactly one holds. Class level: the answer names what the task computes '
               '(a named algorithm counts as its class). Separate from the pipeline (eval_classes.py).'), '',
-             '| language | files | algorithm: correct / wrong / UNKNOWN | precision | recall | class: correct / wrong / '
-             'UNKNOWN | precision | recall | answered by class relation | new class (runs, no relation) |',
+             ('| language | files | algorithm: correct / wrong / UNKNOWN | precision | recall | class: correct / wrong / '
+              'UNKNOWN | precision | recall | answered by class relation | new class (runs, no relation) |'),
              '|---|---|---|---|---|---|---|---|---|---|']
     for key in sorted(score, key=lambda k: (k == 'all', k)):
         s = score[key]
