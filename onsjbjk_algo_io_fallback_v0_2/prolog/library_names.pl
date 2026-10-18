@@ -1,7 +1,9 @@
 /* v0.2 library-name fallback (doc 04 section 18.1), kept separate from the pipeline: a program whose computation IS
    one library call is named by that library's algorithm, from a table of library names (the user: "maintain prolog
    rules which map library name to algorithm name"). The program never runs; the facts are AP13's normal form.
-     library_main -- Facts Kind Lang : prints LIB|Func|Name|Algorithm for every function (or script) that is a call
+     library_main -- Facts Kind Lang : prints LIB|Func|Name|Algorithm for every function (or script) that is a call,
+                                       FUNC|Func for every function of the file, PART|Func for a function passed to
+                                       the call (qsort's comparator)
    A library name inside other code is not the algorithm (gcd inside Pollard's rho, factorial inside nCr, sorted inside a
    median), so the call must be the function's whole result, or the whole of a script that defines no other code.
 */
@@ -9,7 +11,13 @@
 
 library_main :-
     current_prolog_flag(argv, [Facts, Kind, Lang|_]), tree_load(Facts, Kind),
-    forall(distinct(F-N-A, library_answer(Lang, F, N, A)), ( func(F, FN, _), format('LIB|~w|~w|~w~n', [FN, N, A]) )).
+    forall(distinct(F-N-A, library_answer(Lang, F, N, A)), ( func(F, FN, _), format('LIB|~w|~w|~w~n', [FN, N, A]) )),
+    forall(( func(_, FN, _), FN \== '<toplevel>' ), format('FUNC|~w~n', [FN])),
+    forall(distinct(G, part_of_call(Lang, G)), format('PART|~w~n', [G])).
+% part_of_call(Lang, G): own function G is passed to the library call (a comparator, a key function)
+part_of_call(Lang, G) :-
+    library_answer(Lang, F, N, _), in_func(S, F), call_at(S, N, Args), sub_term(var(G0), Args), atom(G0),
+    func(_, G, _), base_name(G, G0).
 
 % library_algorithm(Lang, Name, Shape, Algorithm): the call Name(Args) computes Algorithm. Lang is any or one language
 % (python, haskell, c, lisp); Shape has one entry per argument: in (an input of the function), any (a constant, a

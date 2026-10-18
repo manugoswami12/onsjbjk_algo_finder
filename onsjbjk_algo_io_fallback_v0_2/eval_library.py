@@ -26,10 +26,12 @@ OUT, REPORT = ROOT / 'benchmark' / 'library_fallback.json', ROOT / 'benchmark' /
 
 
 def answer(path: Path) -> dict:
+    """{'functions': {function: [library name, algorithm]}, 'file': the file's algorithm or None}."""
     try:
-        return {fn: list(v) for fn, v in ta_library.answers(path).items()}
+        found, funcs = ta_library.answers(path)
     except ta_library.ERRORS:
-        return {}
+        found, funcs = {}, set()
+    return {'functions': {fn: list(v) for fn, v in found.items()}, 'file': ta_library.file_algorithm(found, funcs)}
 
 
 def main():
@@ -44,8 +46,7 @@ def main():
     for rel, x in sorted(held.items()):
         task, lang = x['task'], rel.split('/')[2]
         want = task_class(task)
-        algs = sorted({a for _, a in lib_held[rel].values()})
-        lib = algs[0] if len(algs) == 1 else None
+        lib = lib_held[rel]['file']
         got_class, how = x['class_answer'], x['how']
         algo = x['algorithm_answer']
         if got_class is None and lib:
@@ -61,9 +62,9 @@ def main():
             s['a_ok' if algo and algo_ok else 'a_wrong' if algo else 'a_unknown'] += 1
             s['c_ok' if got_class == want else 'c_wrong' if got_class else 'c_unknown'] += 1
             s[how] += 1
-            if lib_held[rel] and how != 'library_name':
+            if lib and how != 'library_name':
                 s['lib_not_needed'] += 1
-    corpus_claims = {rel: {'label': labels[rel], 'library': v} for rel, v in lib_corpus.items() if v}
+    corpus_claims = {rel: {'label': labels[rel], 'library': v} for rel, v in lib_corpus.items() if v['functions']}
     OUT.write_text(json.dumps({'heldout': rows, 'corpus_claims': corpus_claims}, indent=1, sort_keys=True) + '\n',
                    encoding='utf-8')
     lines = ['# Library-name fallback test (doc 04 section 18.1)', '',
@@ -83,11 +84,12 @@ def main():
     lines += ['', f'## Held-out files answered by a library name ({len(lib_rows)})', '']
     lines += [f"- {r}: {x['class_answer']} via {x['library']} ({'correct' if x['class_answer'] == task_class(x['task']) else 'WRONG'})"
               for r, x in lib_rows]
-    other = [(r, x) for r, x in rows.items() if x['library'] and x['how'] != 'library_name']
+    other = [(r, x) for r, x in rows.items() if x['library']['file'] and x['how'] != 'library_name']
     lines += ['', f'## Held-out files with a library answer that was not needed (already answered) ({len(other)})', '']
     lines += [f"- {r}: {x['library']}, answered {x['class_answer']} ({x['how']}), task {x['task']}" for r, x in other]
-    lines += ['', f'## TheAlgorithms/Python files with a library answer ({len(corpus_claims)})', '']
-    lines += [f"- {r} (label {c['label']}): {c['library']}" for r, c in sorted(corpus_claims.items())]
+    lines += ['', f"## TheAlgorithms/Python files with a library call as a function's whole result ({len(corpus_claims)})", '']
+    lines += [f"- {r} (label {c['label']}): file answer {c['library']['file']}, functions {c['library']['functions']}"
+              for r, c in sorted(corpus_claims.items())]
     REPORT.write_text('\n'.join(lines) + '\n', encoding='utf-8')
     print('\n'.join(lines))
 
