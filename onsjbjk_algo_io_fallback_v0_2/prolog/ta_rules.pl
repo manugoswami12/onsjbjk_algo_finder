@@ -289,3 +289,80 @@ merges(F) :- in_func(S, F), call_at(S, B, _), func(G, N, _), G \== F, base_name(
 head_merge(G) :- in_func(S, G), call_at(S, append, [_, call(pop, [var(A), _])]), nguard(S, C, _),
     sub_term(O, C), compound(O), O = op(Op, [P, Q]), memberchk(Op, [gt, ge, lt, le]),
     P = elem(var(A1), _), Q = elem(var(B1), _), A1 \== B1, ( A == A1 ; A == B1 ), !.
+
+% ----- batch 2: other algorithms of TheAlgorithms/Python ---------------------------------------------------------
+% linear search: inside the loop, the index returned where the element equals the target; no midpoint, one index
+hand_branch(_, F, linear_search) :-
+    param(F, _, T), in_func(S, F), ret(S, var(I)), nguard(S, C, true), sub_term(E, C), compound(E),
+    E = op(eq, [X, Y]), ( Y == var(T), current_element(F, S, X, I) ; X == var(T), current_element(F, S, Y, I) ),
+    \+ ( in_func(Sm, F), value(Sm, _, Mid), halved(Mid) ),
+    innermost(S, L), whole_scan(F, L), \+ ( loop(L2, F, K), K \== recursion, L2 \== L ).
+% the loop runs over the whole parameter sequence from its start (range(len(q)), enumerate(q), for x in q, i < n from 0)
+whole_scan(F, L) :- param(F, _, Q), ( call_at(L, range, [call(len, [V])]) ; call_at(L, range, [int(0), call(len, [V])])
+    ; loop_iter(L, V) ; loop_iter(L, call(enumerate, [V])) ), V == var(Q), !.
+whole_scan(F, L) :- lvar(L, var(I)), lcond(L, C), sub_term(V, C), V == var(I), in_func(S0, F), \+ under(S0, L),
+    ( assign(S0, var(I2), int(0)) ; value(S0, var(I2), int(0)) ), I2 == I, !.
+current_element(_, _, elem(_, V), I) :- V == var(I), !.
+% for i, x in enumerate(q): x (AP13's canonical elem(enumerate(q), x)) is the element at i
+current_element(_, S, elem(call(enumerate, _), var(X)), I) :- under(S, L), lvar(L, var(I2)), I2 == I,
+    lvar(L, var(X2)), X2 == X, X \== I, !.
+current_element(F, S, var(X), I) :- under(S, L), loop(L, F, _), lvar(L, var(X2)), X2 == X, lvar(L, var(I2)), I2 == I,
+    X \== I, !.
+% Hamming distance: a counter raised where the two sequences differ at the same position
+hand_branch(_, F, hamming_distance) :-
+    in_func(S, F), value(S, var(Cn), op(add, [var(Cn2), int(1)])), Cn == Cn2, nguard(S, C, true),
+    sub_term(E, C), compound(E), E = op(ne, [A, B]), same_position(F, S, A, B).
+same_position(_, _, elem(Q1, I1), elem(Q2, I2)) :- Q1 \== Q2, I1 == I2, !.
+% for a, b in zip(s, t): the two elements of one zip
+same_position(_, _, elem(call(zip, Qs1), var(A)), elem(call(zip, Qs2), var(B))) :- Qs1 == Qs2, A \== B, !.
+same_position(F, S, var(A), var(B)) :- A \== B, under(S, L), loop(L, F, _), lvar(L, var(A2)), A2 == A,
+    lvar(L, var(B2)), B2 == B, !.
+% Atbash: a letter's code reflected: chr(K - code) (155 = 'A' + 'Z', 219 = 'a' + 'z')
+hand_branch(_, F, atbash) :-
+    in_func(S, F), rel_of(S, R), sub_term(E, R), compound(E), E = call(chr, [op(sub, [int(K), V])]),
+    memberchk(K, [155, 219]), ( V = call(ord, _) ; V = var(X), in_func(S2, F), value(S2, var(X2), call(ord, _)), X2 == X ).
+% XOR cipher: chr(ord(c) xor key)
+hand_branch(_, F, xor_cipher) :-
+    in_func(S, F), rel_of(S, R), sub_term(E, R), compound(E), E = call(chr, [op(xor, [A, B])]),
+    ( A = call(ord, _) ; B = call(ord, _) ).
+% Brian Kernighan's bit count: n = n & (n - 1) while a counter rises
+hand_branch(_, F, count_1s_brian_kernighan_method) :-
+    in_func(S, F), value(S, var(N), op(and, [V1, op(sub, [V2, int(1)])])), V1 == var(N), V2 == var(N),
+    in_func(S2, F), value(S2, var(Cn), op(add, [var(Cn2), int(1)])), Cn == Cn2, Cn \== N.
+% positional value to integer: acc = acc * b + digit of the input (Horner): b 2, 8, 16 name the conversion
+hand_branch(_, F, Label) :-
+    in_func(S, F), value(S, var(A), op(add, [M, Dg])), ( M = op(mul, [int(B), V]) ; M = op(mul, [V, int(B)]) ),
+    V == var(A), base_label(B, to_decimal, Label), digit_of_input(F, Dg).
+% the added digit comes from an element of the input (int(s[i]), a digit table lookup, ord(c) - ord('0'))
+digit_of_input(F, Dg) :- sub_term(E, Dg), compound(E), E = elem(Q, _), sub_term(V, Q), V = var(P), param(F, _, P), !.
+digit_of_input(F, Dg) :- sub_term(V, Dg), V = var(X), atom(X), in_func(S, F), under(S, L), lvar(L, var(X2)), X2 == X, !.
+% integer to positional digits: n mod b written as text (or a digit table entry) while n = n div b
+hand_branch(_, F, Label) :-
+    in_func(S, F), rel_of(S, R), sub_term(D, R), compound(D), D = op(mod, [var(N), int(B)]), as_digit(R, D),
+    in_func(S2, F), value(S2, var(N2), op(div, [var(N3), int(B2)])), N2 == N, N3 == N, B2 == B,
+    base_label(B, from_decimal, Label).
+as_digit(R, D) :- sub_term(T, R), compound(T), T = call(str, [D2]), D2 == D, !.
+as_digit(R, D) :- sub_term(T, R), compound(T), T = elem(_, D2), D2 == D, !.
+base_label(2, to_decimal, binary_to_decimal).
+base_label(8, to_decimal, octal_to_decimal).
+base_label(16, to_decimal, hexadecimal_to_decimal).
+base_label(2, from_decimal, decimal_to_binary).
+base_label(8, from_decimal, decimal_to_octal).
+base_label(16, from_decimal, decimal_to_hexadecimal).
+% Kadane: the best sum ending here max(x, cur + x), and the best so far max(best, cur)
+hand_branch(_, F, max_subarray) :-
+    in_func(S, F), value(S, var(Cu), call(max, Args)), member(op(add, [V, X]), Args), V == var(Cu), member(X2, Args),
+    X2 == X, in_func(S2, F), value(S2, var(Be), call(max, Args2)), Be \== Cu, msort(Args2, Sorted),
+    msort([var(Be), var(Cu)], Want), Sorted == Want.
+% Floyd-Warshall: d[i][j] relaxed through k: min(d[i][j], d[i][k] + d[k][j]) (or the guarded assignment)
+hand_branch(_, F, floyd_warshall) :-
+    in_func(S, F), value(S, elem(elem(D, I), J), E), relaxed_through(E, D, I, J).
+relaxed_through(call(min, Args), D, I, J) :- member(op(add, [elem(elem(D1, I1), K), elem(elem(D2, K2), J2)]), Args),
+    D1 == D, D2 == D, I1 == I, J2 == J, K2 == K, K \== I, K \== J.
+relaxed_through(op(add, [elem(elem(D1, I1), K), elem(elem(D2, K2), J2)]), D, I, J) :-
+    D1 == D, D2 == D, I1 == I, J2 == J, K2 == K, K \== I, K \== J.
+% binary exponentiation: result *= base when the exponent is odd, base squared, exponent halved
+hand_branch(_, F, binary_exponentiation) :-
+    in_func(S1, F), value(S1, var(B), op(mul, [V1, V2])), V1 == var(B), V2 == var(B),
+    in_func(S2, F), value(S2, var(E), op(Op, [V3, int(K)])), V3 == var(E), ( Op == div, K == 2 ; Op == shr, K == 1 ),
+    in_func(S3, F), value(S3, var(R), op(mul, [X, Y])), R \== B, ( X == var(R), Y == var(B) ; Y == var(R), X == var(B) ).

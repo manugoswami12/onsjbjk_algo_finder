@@ -81,10 +81,15 @@ class HandRuleTests(unittest.TestCase):
                  'ta_gcd.c': 'greatest_common_divisor', 'ta_lcm.py': 'least_common_multiple',
                  'ta_sieve.c': 'sieve_of_eratosthenes', 'ta_prime.py': 'prime_check', 'ta_perfect.py': 'perfect_number',
                  'ta_digits.c': 'sum_of_digits', 'ta_collatz.py': 'collatz_sequence', 'ta_luhn.py': 'luhn',
-                 'ta_bsearch.c': 'binary_search', 'ta_palindrome.py': 'palindrome'}
+                 'ta_bsearch.c': 'binary_search', 'ta_palindrome.py': 'palindrome', 'ta_linear.c': 'linear_search',
+                 'ta_hamming.py': 'hamming_distance', 'ta_atbash.py': 'atbash', 'ta_xor.py': 'xor_cipher',
+                 'ta_kernighan.c': 'count_1s_brian_kernighan_method', 'ta_bin2dec.py': 'binary_to_decimal',
+                 'ta_dec2bin.py': 'decimal_to_binary', 'ta_kadane.py': 'max_subarray', 'ta_floyd.py': 'floyd_warshall',
+                 'ta_powsq.py': 'binary_exponentiation'}
     NEGATIVES = ['ta_neg_reverse.c', 'ta_neg_rotate.py', 'ta_neg_wordcount.py', 'dedup.py', 'perm_sort.py',
                  'ta_neg_double_fact.py', 'ta_neg_lucas.py', 'ta_neg_pell.py', 'ta_neg_ext_gcd.py', 'ta_neg_factorize.py',
-                 'ta_neg_reverse_num.py']
+                 'ta_neg_reverse_num.py', 'ta_neg_jump.py', 'ta_neg_matches.py', 'ta_neg_shift_count.c',
+                 'ta_neg_heap_index.py', 'ta_neg_power_loop.py']
 
     def hand(self, f):
         import learn_apply

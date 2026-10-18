@@ -6,6 +6,7 @@ same facts in every language. Only additions; everything AP13 lowers stays as it
   a slice s[i:j] (Python): call(slice, [s, i, j]), s[i:j:k]: call(slice, [s, i, j, k]) (AP13's s[k:] with a constant k
   stays tail(s, k))
   a field p->f, s.f, o.f: field(p, f) (AP13: other(field); a length field stays len(o))
+  a tuple loop target for i, x in ...: loop_var(L, i), loop_var(L, x) (AP13: one variable named 'i, x')
   a counted loop's step: loop_step(L, K) for a constant K, loop_step(L, var(P)) for a variable stride, from Python
   range(a, b, K) and C for (...; i += K) / i = i + K / i++ / i-- (AP13 keeps neither; doc 04 section 17)
 """
@@ -41,11 +42,24 @@ class ImperativeLowerer(ap13.Lowerer):
         loop_id = super().stmt(node, ctx, implicit)
         if loop_id is not None and node is not None and isinstance(self.facts, StepFacts):
             kind, roles = self.kind(node)
+            if kind == 'for_range':
+                self.split_targets(loop_id, self.role(node, roles, 'var'))
             k = (self.range_step(self.role(node, roles, 'iter')) if kind == 'for_range'
                  else self.update_step(self.role(node, roles, 'update')) if kind == 'c_for' else None)
             if k is not None:
                 self.facts.steps.append((loop_id, k))
         return loop_id
+
+    def split_targets(self, loop_id, v):
+        """for i, x in ...: loop_var(L, i) and loop_var(L, x), not one variable named 'i, x' (AP13)."""
+        if v is None or v.type not in ('pattern_list', 'tuple_pattern', 'tuple'):
+            return
+        names = [text(c) for c in v.named_children if c.type == 'identifier']
+        if not names:
+            return
+        joined = text(v)
+        self.facts.facts['loop_var'] = [a for a in self.facts.facts['loop_var'] if a != (loop_id, joined)]
+        self.facts.facts['loop_var'] += [(loop_id, n) for n in names]
 
     def range_step(self, it):
         """K of range(a, b, K): a constant, or a variable stride var(p)."""
