@@ -69,20 +69,21 @@ spec(is_even, [int], [N], O) :- truth(O, T), ( N mod 2 =:= 0 -> T = true ; T = f
 % ----- helpers ----------------------------------------------------------------------------------------------------
 truth(O, true) :- memberchk(O, [true, 1, 'True', t]), !.
 truth(O, false) :- memberchk(O, [false, 0, 'False', nil, []]).
-fact(0, 1) :- !.
+fact(0, F) :- !, F = 1.                       % output compared after the cut: a bound wrong output
+fact(N, _) :- N < 0, !, fail.                 % must fail, not recurse below 0
 fact(N, F) :- N1 is N - 1, fact(N1, F1), F is N * F1.
-fib(N, F) :- fib(N, 0, 1, F).
-fib(0, A, _, A) :- !.
+fib(N, F) :- N >= 0, fib(N, 0, 1, F).
+fib(0, A, _, F) :- !, F = A.
 fib(N, A, B, F) :- N1 is N - 1, C is A + B, fib(N1, B, C, F).
 fib_prefix(N, L) :- findall(F, ( between(0, N, K), K < N, fib(K, F) ), L0), ( L = L0 ; N1 is N + 1,
     findall(F, ( between(1, N1, K), K =< N, fib(K, F) ), L1), L = L1 ), !.
 prime(N) :- N >= 2, \+ ( between(2, N, D), D * D =< N, N mod D =:= 0 ).
 divisor_sum(N, S) :- M is N - 1, aggregate_all(sum(D), ( between(1, M, D), N mod D =:= 0 ), S).
-digits(0, [0]) :- !.
+digits(0, Ds) :- !, Ds = [0].
 digits(N, Ds) :- digits_(N, [], Ds).
-digits_(0, Ds, Ds) :- !.
+digits_(0, Acc, Ds) :- !, Ds = Acc.
 digits_(N, Acc, Ds) :- D is N mod 10, N1 is N // 10, digits_(N1, [D|Acc], Ds).
-collatz(1, [1]) :- !.
+collatz(1, L) :- !, L = [1].
 collatz(N, [N|T]) :- ( N mod 2 =:= 0 -> M is N // 2 ; M is 3 * N + 1 ), collatz(M, T).
 luhn_sum([], S, S).
 luhn_sum([D], A, S) :- S is A + D.

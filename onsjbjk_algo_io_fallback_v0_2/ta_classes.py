@@ -42,8 +42,9 @@ def runs(path: Path) -> dict[str, tuple[list, list[tuple[list, str]]]]:
     return out
 
 
-def classes(path: Path, rs: dict | None = None) -> dict[str, set[str]]:
-    """{function: classes whose relation every run satisfies}; rs: the file's runs when the caller has them."""
+def classes(path: Path, rs: dict | None = None) -> dict[str, set[str]] | None:
+    """{function: classes whose relation every run satisfies}; rs: the file's runs when the caller has them. None when
+    the check did not finish (a timeout): that is undecided, never a new class."""
     rs = runs(path) if rs is None else rs
     if not rs:
         return {}
@@ -60,8 +61,8 @@ def classes(path: Path, rs: dict | None = None) -> dict[str, set[str]]:
         f.write_text('\n'.join(lines) + '\n', encoding='utf-8')
         try:
             res = learn_facts.env_run.swipl('class_main', [PROGRAM], [str(f)], timeout=120)
-        except ERRORS:
-            return {}
+        except ERRORS:                              # the check did not finish: undecided, not "no class"
+            return None
     out: dict[str, set[str]] = {}
     for line in res:
         if line.startswith('CLASS|'):

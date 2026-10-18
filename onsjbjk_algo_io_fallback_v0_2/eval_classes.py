@@ -50,6 +50,8 @@ def main():
             cs, run = ta_classes.classes(rosetta / rel, rs), ta_classes.runnable(rosetta / rel, rs)
         except ta_classes.ERRORS:
             cs, run = {}, False
+        if cs is None:                              # the check timed out: undecided
+            return rel, [], 'timeout'
         return rel, sorted({c for v in cs.values() for c in v}), run
     with ThreadPoolExecutor(max_workers=4) as pool:
         found = {rel: (cs, run) for rel, cs, run in pool.map(one, sorted(held))}
@@ -65,7 +67,7 @@ def main():
         if g not in answer_class:
             cs = set()
             for rel in label_files.get(g, []):
-                for v in ta_classes.classes(corpus / rel).values():
+                for v in (ta_classes.classes(corpus / rel) or {}).values():
                     cs |= v
             answer_class[g] = min(cs) if len(cs) == 1 else g
         return answer_class[g]
@@ -80,7 +82,8 @@ def main():
         elif len(cs) == 1:
             got_class, how = cs[0], 'class_relation'
         else:
-            got_class, how = None, ('ambiguous_class' if cs else 'new_class' if run else 'not_run')
+            got_class, how = None, ('ambiguous_class' if cs else 'check_timeout' if run == 'timeout'
+                                    else 'new_class' if run else 'not_run')
         rows[rel] = {'task': task, 'algorithm_answer': algo, 'classes': cs, 'class_answer': got_class, 'how': how}
         for key in (lang, 'all'):
             s = score[key]
