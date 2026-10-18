@@ -88,12 +88,14 @@ class HandRuleTests(unittest.TestCase):
                  'ta_powsq.py': 'binary_exponentiation', 'ta_dijkstra.py': 'dijkstra', 'ta_bellman.py': 'bellman_ford',
                  'ta_bfs.py': 'breadth_first_search', 'ta_dfs.py': 'depth_first_search', 'ta_kahn.py': 'kahns_algorithm_topo',
                  'ta_fizz.py': 'fizz_buzz', 'ta_coins.py': 'minimum_coin_change', 'ta_reverse_words.py': 'reverse_words',
-                 'ta_rabin.py': 'rabin_karp', 'ta_activities.py': 'activity_selection', 'ta_hindex.py': 'h_index'}
+                 'ta_rabin.py': 'rabin_karp', 'ta_activities.py': 'activity_selection', 'ta_hindex.py': 'h_index',
+                 'ta_affine.py': 'affine_cipher', 'ta_a1z26.py': 'a1z26', 'ta_gray.c': 'binary_to_gray',
+                 'ta_isogram.py': 'is_isogram'}
     NEGATIVES = ['ta_neg_reverse.c', 'ta_neg_rotate.py', 'ta_neg_wordcount.py', 'dedup.py', 'perm_sort.py',
                  'ta_neg_double_fact.py', 'ta_neg_lucas.py', 'ta_neg_pell.py', 'ta_neg_ext_gcd.py', 'ta_neg_factorize.py',
                  'ta_neg_reverse_num.py', 'ta_neg_jump.py', 'ta_neg_matches.py', 'ta_neg_shift_count.c',
                  'ta_neg_heap_index.py', 'ta_neg_power_loop.py', 'ta_neg_rpn.py', 'ta_neg_grid_dp.py',
-                 'ta_neg_multiples.py', 'ta_neg_comb_iv.py']
+                 'ta_neg_multiples.py', 'ta_neg_comb_iv.py', 'ta_neg_caesar_shift.py']
 
     def hand(self, f):
         import learn_apply

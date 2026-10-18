@@ -16,10 +16,10 @@ hand_at(F, C, H) :- func(F, _, _), deepest_families_v02(F, Ps), ( Ps == [] -> C 
 hand_answer(C, H) :- hand_at(F, C, H), func(F, Name, _), base_name(Name, B),
     \+ ( func(G, _, _), G \== F, in_func(S, G), call_at(S, B, _), part_of(G, C) ).
 % the caller has a hand label of its own, or combines two functions of the same category of the tree that are not the
-% same algorithm (an introsort: its heap sort, partition and insertion pass); a wrapper calling one sort, or a main
-% calling two versions of one algorithm, is not
+% same algorithm, and has a tree node itself (an introsort: its heap sort, partition and insertion pass); a wrapper
+% calling one sort, a main calling two versions of one algorithm, or a driver without a node (encrypt and decrypt) is not
 part_of(G, _) :- hand_at(G, _, _), !.
-part_of(G, [Cat|_]) :- calls_in(G, Cat, H1), calls_in(G, Cat, H2), H1 \== H2,
+part_of(G, [Cat|_]) :- deepest_families_v02(G, [_|_]), calls_in(G, Cat, H1), calls_in(G, Cat, H2), H1 \== H2,
     \+ ( hand_at(H1, _, L), hand_at(H2, _, L) ), !.
 calls_in(G, Cat, H) :- in_func(S, G), call_at(S, B, _), func(H, N, _), H \== G, base_name(N, B),
     deepest_families_v02(H, Ps), member([Cat|_], Ps).
@@ -466,3 +466,22 @@ divisible_test(F, N, K) :- in_func(S, F), ( nguard(S, C, _) ; cret(S, C) ), sub_
 hand_branch(_, F, h_index) :-
     in_func(S, F), ret(S, var(I)), nguard(S, C, true), sub_term(O, C), compound(O),
     O = op(ge, [V, elem(_, op(sub, [op(sub, [_, int(1)]), V2]))]), V == var(I), V2 == var(I).
+
+% ----- batch 5 ----------------------------------------------------------------------------------------------------
+% affine cipher: a letter's index i taken to (a * i + b) mod m, an index of the alphabet or a code
+hand_branch(_, F, affine_cipher) :-
+    in_func(S, F), rel_of(S, R), sub_term(E, R), compound(E),
+    E = op(mod, [op(add, [op(mul, [var(A), var(I)]), var(B)]), _]), A \== I, A \== B, I \== B,
+    ( sub_term(X, R), compound(X), X = elem(_, E2), E2 == E ; sub_term(X, R), compound(X), X = call(chr, _) ).
+% A1Z26: a letter as its place in the alphabet, ord(c) - 96 (or back, chr(n + 96))
+hand_branch(_, F, a1z26) :-
+    in_func(S, F), rel_of(S, R), sub_term(E, R), compound(E),
+    ( E = op(sub, [call(ord, _), int(96)]) ; E = call(chr, [op(add, [_, int(96)])]) ).
+% binary to Gray code: n xor (n div 2), n ^ (n >> 1)
+hand_branch(_, F, binary_to_gray) :-
+    in_func(S, F), rel_of(S, R), sub_term(E, R), compound(E), E = op(xor, [X, H]),
+    ( H = op(div, [X2, int(2)]) ; H = op(shr, [X2, int(1)]) ), X2 == X.
+% isogram: no letter repeats: len(set(s)) == len(s)
+hand_branch(_, F, is_isogram) :-
+    in_func(S, F), ( cret(S, E) ; nguard(S, E, _) ), sub_term(O, E), compound(O), O = op(Eq, Args), memberchk(Eq, [eq, ne]),
+    member(call(len, [call(set, [X])]), Args), member(call(len, [Y]), Args), X == Y.
