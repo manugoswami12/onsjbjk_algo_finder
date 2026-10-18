@@ -9,8 +9,8 @@
   not_identified        it does not run on every input (or the check did not finish)
 The class decision is also listed on every TheAlgorithms/Python file, to check it by hand for false positives.
 
-usage: python eval_decision.py HELD_DECIDED.json CORPUS_DECIDED.json [agree|node]
-       -> benchmark/decision_fallback.json, .md (agree: node agreement, the default; node: the file reaches a node)
+usage: python eval_decision.py HELD_DECIDED.json CORPUS_DECIDED.json [agree|node|none]
+       -> benchmark/decision_fallback.json, .md (agree: node agreement, the default; node: the file reaches a node; none: no second witness)
 """
 from __future__ import annotations
 
@@ -39,6 +39,8 @@ def node_agrees(dec: dict, class_nodes: dict[str, list[tuple[str, list[str]]]], 
     another TheAlgorithms file of the same class reaches (own: the corpus file itself, left out). With WITNESS = 'node'
     the file need only reach some tree node (a class relation that held on a program with no structure at all, such as
     average_mode computed wrongly, is dropped; a class with no clean TheAlgorithms file keeps its answers)."""
+    if WITNESS == 'none':
+        return True
     if WITNESS == 'node':
         return bool(dec.get('nodes'))
     return any(same_path(n, m) for f, ms in class_nodes.get(dec['class'], []) if f != own

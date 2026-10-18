@@ -1,7 +1,7 @@
 /* v0.2 call roots (doc 04 section 18.2), for the separate four-way answer test only: which of the file's own
    functions no other own function calls. A class decided on a helper (an is_prime inside next_prime, f(x) = x*x inside
    Simpson's rule) is not the file's algorithm; the file's algorithm is what its roots compute.
-     roots_main -- Facts Kind : prints FUNC|Name for every function and ROOT|Name for every root
+     roots_main -- Facts Kind : prints FUNC|Name for every function and ROOT|Name|Line for every root
    Calls from top-level code or main (a demo, a print) do not make a function a helper; operator methods
    (__lt__) are not roots.
 */
@@ -10,7 +10,8 @@
 roots_main :-
     current_prolog_flag(argv, [Facts, Kind|_]), tree_load(Facts, Kind),
     forall(( func(F, N, _), \+ demo(N) ), ( format('FUNC|~w~n', [N]),
-        ( \+ called_by_other(F), \+ operator_method(N) -> format('ROOT|~w~n', [N]) ; true ) )).
+        ( \+ called_by_other(F), \+ operator_method(N) -> func(F, _, Line), format('ROOT|~w|~w~n', [N, Line])
+        ; true ) )).
 % demo code: top-level statements, a main function (C's main, Python's main()) and test code: their calls do not
 % make a function a helper, and they are not the algorithm
 demo('<toplevel>').
