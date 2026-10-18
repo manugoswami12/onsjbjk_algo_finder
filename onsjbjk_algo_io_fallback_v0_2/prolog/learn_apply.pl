@@ -3,11 +3,12 @@
                                               normal process's branch there, BRANCH_AT|Node|Label for the
                                               labels with a learned branch there, LEARNED|Node|Label|Rule for
                                               every branch that holds
-   Io holds io_equal(Label) facts: the training labels whose input->output behaviour the file has. All
+   Io holds io_equal(Label) facts: the training labels whose input->output behaviour the file has, and
+   io_trace_equal(Label) facts: those whose write trace it has too. All
    answers are collected (findall): no cut, no first match, so the order of the clauses decides nothing.
 */
 :- prolog_load_context(directory, Dir), directory_file_path(Dir, 'tree_main.pl', T), load_files(T, []).
-:- dynamic learned_branch/4, io_equal/1.
+:- dynamic learned_branch/4, io_equal/1, io_trace_equal/1.
 
 learn_apply_main :-
     current_prolog_flag(argv, [Facts, Kind, Rules, Io|_]), tree_load(Facts, Kind),

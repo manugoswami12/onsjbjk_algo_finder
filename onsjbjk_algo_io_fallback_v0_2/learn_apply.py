@@ -4,6 +4,7 @@ behaviour; apply them at a test file's deepest node (prolog/learn_apply.pl). Det
 from __future__ import annotations
 
 import tempfile
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 import learn_facts
@@ -17,17 +18,23 @@ def prolog_path(node: str) -> str:
     return '[' + ','.join(f"'{p}'" for p in node.split('>') if p) + ']'
 
 
-def learn(labelled: dict[Path, str | None], rules: Path = RULES) -> dict[Path, int]:
-    """Write the learned branches from {file: label or None (negative)}; {file: number of tree nodes}."""
-    count, lines = {}, []
-    for path, label in sorted(labelled.items()):
+def learn(labelled: dict[Path, str | None], rules: Path = RULES, workers: int = 1,
+          name=lambda path: path.name) -> dict[Path, int]:
+    """Write the learned branches from {file: label or None (negative)}; {file: number of tree nodes};
+    name: the file's name in the facts (a corpus with equal file names in several folders names them apart)."""
+    def reached(path):
         try:
-            found = learn_facts.nodes(path)
+            return learn_facts.nodes(path)
         except ERRORS:
-            found = []
+            return []
+    items = sorted(labelled.items())
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        found_all = list(pool.map(reached, [path for path, _ in items]))
+    count, lines = {}, []
+    for (path, label), found in zip(items, found_all):
         count[path] = len(found)
-        lines.append(f"train({'none' if label is None else label}, '{path.name}').")
-        lines += [f"reach('{path.name}', {prolog_path(n)})." for n in found]
+        lines.append(f"train('{'none' if label is None else label}', '{name(path)}').")
+        lines += [f"reach('{name(path)}', {prolog_path(n)})." for n in found]
     with tempfile.TemporaryDirectory(prefix='v02_learn_') as td:
         f = Path(td) / 'reach.pl'
         f.write_text(':- discontiguous train/2, reach/2.\n' + '\n'.join(lines) + '\n', encoding='utf-8')
@@ -35,16 +42,17 @@ def learn(labelled: dict[Path, str | None], rules: Path = RULES) -> dict[Path, i
     return count
 
 
-def apply(path: Path, rules: Path = RULES, io_labels=()):
+def apply(path: Path, rules: Path = RULES, io_labels=(), trace_labels=()):
     """([tree nodes of the file], [(node, label, rule)] of the learned branches holding at its deepest node,
     {labels with a learned branch there}, {the normal process's branches there}); io_labels: the training
-    labels whose behaviour the file has."""
+    labels whose behaviour the file has; trace_labels: those whose write trace it has too."""
     kind, text = learn_facts.tree_facts(path)
     if not text.strip():
         return [], [], set(), set()
     with tempfile.TemporaryDirectory(prefix='v02_io_') as td:
         io = Path(td) / 'io.pl'
-        io.write_text(''.join(f"io_equal('{lab}').\n" for lab in sorted(io_labels)), encoding='utf-8')
+        io.write_text(''.join(f"io_equal('{lab}').\n" for lab in sorted(io_labels))
+                      + ''.join(f"io_trace_equal('{lab}').\n" for lab in sorted(trace_labels)), encoding='utf-8')
         lines = learn_facts.swipl_facts('learn_apply_main', PROLOG / 'learn_apply.pl', kind, text, str(rules), str(io))
     nodes = [line.split('|', 1)[1] for line in lines if line.startswith('NODE|')]
     branch_at = {line.split('|')[2] for line in lines if line.startswith('BRANCH_AT|')}
