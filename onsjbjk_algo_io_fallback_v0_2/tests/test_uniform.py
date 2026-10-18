@@ -76,8 +76,15 @@ class HandRuleTests(unittest.TestCase):
                  'ta_gnome.py': 'gnome_sort', 'ta_odd_even.c': 'odd_even_sort', 'ta_insertion_shift.py': 'insertion_sort',
                  'ta_insertion_shift.c': 'insertion_sort', 'ta_selection.c': 'selection_sort', 'ta_shell.py': 'shell_sort',
                  'ta_comb.py': 'comb_sort', 'ta_stooge.c': 'stooge_sort', 'ta_quick.py': 'quick_sort',
-                 'ta_counting.py': 'counting_sort'}
-    NEGATIVES = ['ta_neg_reverse.c', 'ta_neg_rotate.py', 'ta_neg_wordcount.py', 'dedup.py', 'perm_sort.py']
+                 'ta_counting.py': 'counting_sort', 'ta_merge.py': 'merge_sort', 'ta_fact.c': 'factorial',
+                 'ta_fact_rec.py': 'factorial', 'ta_fib.c': 'fibonacci', 'ta_fib_rec.lisp': 'fibonacci',
+                 'ta_gcd.c': 'greatest_common_divisor', 'ta_lcm.py': 'least_common_multiple',
+                 'ta_sieve.c': 'sieve_of_eratosthenes', 'ta_prime.py': 'prime_check', 'ta_perfect.py': 'perfect_number',
+                 'ta_digits.c': 'sum_of_digits', 'ta_collatz.py': 'collatz_sequence', 'ta_luhn.py': 'luhn',
+                 'ta_bsearch.c': 'binary_search', 'ta_palindrome.py': 'palindrome'}
+    NEGATIVES = ['ta_neg_reverse.c', 'ta_neg_rotate.py', 'ta_neg_wordcount.py', 'dedup.py', 'perm_sort.py',
+                 'ta_neg_double_fact.py', 'ta_neg_lucas.py', 'ta_neg_pell.py', 'ta_neg_ext_gcd.py', 'ta_neg_factorize.py',
+                 'ta_neg_reverse_num.py']
 
     def hand(self, f):
         import learn_apply

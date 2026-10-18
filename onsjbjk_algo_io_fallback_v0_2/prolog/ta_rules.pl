@@ -8,16 +8,19 @@
 :- dynamic loop_step/2.
 :- discontiguous hand_branch/3.
 
-% the hand rules holding for a function at a node of it; a file's answer is the hand labels of its functions that no
+% the hand rules holding for a function at a node of it (the root [] for a function on no path); a file's answer is the hand labels of its functions that no
 % function with a hand label of its own calls (a partition helper belongs to its quicksort; a helper called by a
 % function the rules do not name answers for it)
-hand_at(F, C, H) :- func(F, _, _), deepest_families_v02(F, Ps), member(C, Ps), hand_branch(C, F, H).
+hand_at(F, C, H) :- func(F, _, _), deepest_families_v02(F, Ps), ( Ps == [] -> C = [] ; member(C, Ps) ),
+    hand_branch(C, F, H).
 hand_answer(C, H) :- hand_at(F, C, H), func(F, Name, _), base_name(Name, B),
     \+ ( func(G, _, _), G \== F, in_func(S, G), call_at(S, B, _), part_of(G, C) ).
-% the caller has a hand label of its own, or combines two functions of the same category of the tree (an introsort:
-% its heap sort, partition and insertion pass); a wrapper calling one sort is not a part-of
+% the caller has a hand label of its own, or combines two functions of the same category of the tree that are not the
+% same algorithm (an introsort: its heap sort, partition and insertion pass); a wrapper calling one sort, or a main
+% calling two versions of one algorithm, is not
 part_of(G, _) :- hand_at(G, _, _), !.
-part_of(G, [Cat|_]) :- calls_in(G, Cat, H1), calls_in(G, Cat, H2), H1 \== H2, !.
+part_of(G, [Cat|_]) :- calls_in(G, Cat, H1), calls_in(G, Cat, H2), H1 \== H2,
+    \+ ( hand_at(H1, _, L), hand_at(H2, _, L) ), !.
 calls_in(G, Cat, H) :- in_func(S, G), call_at(S, B, _), func(H, N, _), H \== G, base_name(N, B),
     deepest_families_v02(H, Ps), member([Cat|_], Ps).
 
@@ -149,3 +152,140 @@ reads_at(F, L, S, Tab, K) :- in_func(S2, F), ( S2 == S ; under(S2, L) ; S2 == L 
     sub_term(T, R0), compound(T), T = elem(Tab2, I), Tab2 == Tab, sub_term(V, I), V == var(K), !.
 reads_at(_, L, _, Tab, K) :- ( lcond(L2, C) ; call_at(L2, _, C) ), ( L2 == L ; under(L2, L) ),
     sub_term(T, C), compound(T), T = elem(Tab2, I), Tab2 == Tab, sub_term(V, I), V == var(K), !.
+
+% ----- numeric > recurrence ----------------------------------------------------------------------------------------
+% factorial: the product of the counter itself, 1..n by ones (acc = acc * i), or n * f(n - 1); a double factorial
+% steps by two
+hand_branch([numeric, recurrence, range_accumulation], F, factorial) :-
+    in_func(S, F), value(S, var(A), op(mul, [X, Y])), ( X == var(A), Y = var(I) ; Y == var(A), X = var(I) ),
+    under(S, L), lvar(L, var(I2)), I2 == I, counts_numbers(L), \+ stepping_two(L).
+% a counting loop: over range(...), over a range of numbers (Haskell [1..n], a fold over it), or a loop whose condition
+% bounds its own variable (C for, Lisp loop for i from 2 to n)
+counts_numbers(L) :- call_at(L, range, _), \+ loop_iter(L, _).
+counts_numbers(L) :- loop_iter(L, call(range, _)).
+counts_numbers(L) :- lvar(L, var(I)), lcond(L, C), sub_term(V, C), V == var(I), \+ loop_iter(L, _), !.
+hand_branch([numeric, recurrence, range_accumulation], F, factorial) :-
+    param(F, _, N), in_func(S, F), ( cret(S, op(mul, [X, Y])) ; ret(S, op(mul, [X, Y])) ),
+    ( X == var(N), Y = call('$self', [op(sub, [V, int(1)])]) ; Y == var(N), X = call('$self', [op(sub, [V, int(1)])]) ),
+    V == var(N).
+% fibonacci: the pair (a, b) stepped to (b, a + b) from a start among 0 and 1 (Lucas starts at 2, 1; Pell and
+% Jacobsthal double one term), or f(n - 1) + f(n - 2) with base values among 0, 1 and n
+hand_branch([numeric, recurrence, pair_recurrence], F, fibonacci) :-
+    in_func(S1, F), value(S1, var(A), var(B)), under(S1, L), in_func(S2, F), value(S2, var(B2), op(add, [X, Y])),
+    B2 == B, under(S2, L2), L2 == L, msort([X, Y], XY), msort([var(A), var(B)], AB), XY == AB,
+    \+ ( in_func(S0, F), \+ under(S0, _), value(S0, var(V0), int(K)), memberchk(V0, [A, B]), \+ memberchk(K, [0, 1]) ).
+hand_branch([numeric, recurrence, double_recursion], F, fibonacci) :-
+    self_minus_one_minus_two(F), \+ ( self_calls(F, K), K > 2 ), param(F, _, N),
+    in_func(S, F), ( cret(S, op(add, [X, Y])) ; ret(S, op(add, [X, Y])) ), msort([X, Y], XY),
+    msort([call('$self', [op(sub, [var(N), int(1)])]), call('$self', [op(sub, [var(N), int(2)])])], Want), XY == Want,
+    \+ ( in_func(S2, F), ret(S2, int(K2)), \+ memberchk(K2, [0, 1]) ).
+% gcd: Euclid's pair step {p := q, q := p mod q} (or the recursive gcd(q, p mod q)), no Bezout coefficients tracked
+% (the extended algorithm also updates c := c' - quotient * c)
+hand_branch([numeric|_], F, greatest_common_divisor) :-
+    euclid_step(F), \+ coefficients(F).
+euclid_step(F) :- in_func(S1, F), copied(F, S1, P, Q), P \== Q, in_func(S2, F), value(S2, var(V), op(mod, [A, B])),
+    ( V == Q, A == var(P), B == var(Q) ; V == P, A == var(Q), B == var(P) ), !.
+% p := q, directly or through one temporary (t = b; b = a % b; a = t)
+copied(_, S, P, Q) :- value(S, var(P), var(Q)).
+copied(F, S, P, Q) :- value(S, var(P), var(T)), in_func(S0, F), value(S0, var(T2), var(Q)), T2 == T, S0 \== S, Q \== P.
+coefficients(F) :- in_func(S, F), value(S, _, op(sub, [_, op(mul, [var(_), var(_)])])), !.
+% lcm: a * b over their gcd (a function of the file with the gcd rule, or the library gcd), or a multiple of the larger
+% stepped by itself until the other divides it
+hand_branch(_, F, least_common_multiple) :-
+    param(F, _, A), param(F, _, B), A @< B, in_func(S, F), cret(S, E), sub_term(D, E), compound(D),
+    D = op(div, _), sub_term(G, E), compound(G), G = call(Gn, [_, _]), gcd_name(Gn),
+    sub_term(VA, E), VA == var(A), sub_term(VB, E), VB == var(B).
+hand_branch(_, F, least_common_multiple) :-
+    in_func(S, F), value(S, var(M), op(add, [var(M2), var(K)])), M2 == M, K \== M, under(S, L), lcond(L, C),
+    sub_term(T, C), compound(T), T = op(mod, [V, _]), V == var(M).
+gcd_name(gcd).
+gcd_name(G) :- func(H, N, _), base_name(N, G), euclid_step(H), \+ coefficients(H).
+
+% ----- primes --------------------------------------------------------------------------------------------------
+% sieve of Eratosthenes: a constant mark written at m[j] while j steps by a stride (AP13's stride marking, also with
+% the v0.2 loop_step of a C for) that is the variable (or AP13 stepper) of an enclosing loop reading the mark at it (if mark[p]: for j in range(p * p, n, p): mark[j] = False)
+hand_branch(_, F, sieve_of_eratosthenes) :-
+    in_func(S, F), value(S, elem(var(M), var(J)), V), V \= op(_, _), innermost(S, L),
+    lvar(L, var(J2)), J2 == J, stride_of(L, P), around(L, L0), ( lvar(L0, var(P2)) ; role(F, stepper, P2) ), P2 == P,
+    reads_mark(F, L0, M, P).
+stride_of(L, P) :- call_at(L, R, [_, _, var(P)]), memberchk(R, [range, xrange, seq]).
+stride_of(L, P) :- loop_step(L, var(P)).
+stride_of(L, P) :- lvar(L, var(J)), in_func(S, _), under(S, L), value(S, var(J1), op(add, [var(J2), var(P)])),
+    J1 == J, J2 == J, atom(P).
+reads_mark(F, L0, M, P) :- in_func(S, F), ( under(S, L0) ; S == L0 ), ( nguard(S, C, _) ; lcond(S, C) ),
+    sub_term(T, C), compound(T), T = elem(var(M2), var(P2)), M2 == M, P2 == P, !.
+% trial division: n mod d == 0 for a stepping d guards a return of false; nothing divided out, nothing summed
+hand_branch([numeric|_], F, prime_check) :-
+    param(F, _, N), in_func(S, F), ret(S, R), falsy(R), nguard(S, C, _), sub_term(T, C), compound(T),
+    T = op(mod, [var(N2), var(D)]), N2 == N, D \== N, role(F, stepper, D2), D2 == D,
+    \+ ( in_func(S2, F), value(S2, var(N3), op(div, [var(N4), _])), N3 == N, N4 == N ),
+    \+ ( in_func(S3, F), value(S3, var(A), op(add, [var(A2), var(D3)])), A == A2, D3 == D ).
+falsy(bool(false)).
+falsy(int(0)).
+% perfect number: the divisors d of n (n mod d == 0) summed, the sum compared with n
+hand_branch(_, F, perfect_number) :-
+    param(F, _, N), in_func(S, F), value(S, var(A), op(add, [var(A2), X])), A == A2, nguard(S, C, _),
+    sub_term(T, C), compound(T), T = op(mod, [var(N2), var(D)]), N2 == N, sub_term(VD, X), VD == var(D),
+    in_func(S2, F), ( cret(S2, E) ; nguard(S2, E, _) ), sub_term(Q, E), compound(Q), Q = op(eq, Args),
+    msort(Args, Sorted), msort([var(A), var(N)], Want), Sorted == Want.
+
+% ----- digits --------------------------------------------------------------------------------------------------
+% digit sum: acc += n mod b while n //= b (or the recursion n mod b + f(n // b))
+hand_branch(_, F, sum_of_digits) :-
+    in_func(S1, F), value(S1, var(A), op(add, [var(A2), op(mod, [var(N), B])])), A == A2,
+    in_func(S2, F), value(S2, var(N2), op(div, [var(N3), B2])), N2 == N, N3 == N, B2 == B, A \== N.
+hand_branch(_, F, sum_of_digits) :-
+    in_func(S, F), cret(S, op(add, [X, Y])), ( X = op(mod, [var(N), B]), Y = call('$self', _)
+                                             ; Y = op(mod, [var(N), B]), X = call('$self', _) ),
+    in_func(S2, F), value(S2, var(N2), op(div, [var(N3), B2])), N2 == N, N3 == N, B2 == B.
+% hailstone (Collatz): n halved when even, 3n + 1 when odd
+hand_branch(_, F, collatz_sequence) :-
+    in_func(S1, F), value(S1, var(N), E1), three_n_plus_one(E1, N),
+    in_func(S2, F), value(S2, var(N2), op(div, [var(N3), int(2)])), N2 == N, N3 == N.
+three_n_plus_one(op(add, [op(mul, [int(3), V]), int(1)]), N) :- V == var(N).
+three_n_plus_one(op(add, [op(mul, [V, int(3)]), int(1)]), N) :- V == var(N).
+% Luhn: every second digit doubled (and 9 taken off a two-digit double), the total divisible by 10
+hand_branch(_, F, luhn) :-
+    in_func(S1, F), value(S1, var(D2), op(mul, [_, int(2)])), in_func(S2, F), value(S2, var(D3), op(sub, [var(D4), int(9)])),
+    D3 == D2, D4 == D2, in_func(S3, F), ( cret(S3, E) ; nguard(S3, E, _) ), sub_term(T, E), compound(T),
+    T = op(eq, [op(mod, [_, int(10)]), int(0)]).
+
+% ----- searching -----------------------------------------------------------------------------------------------
+% binary search: the midpoint of lo and hi, the element there compared, lo moved past it or hi moved before it
+hand_branch(_, F, binary_search) :-
+    in_func(S, F), value(S, var(M), E), midpoint_of(E, Lo, Hi), Lo \== Hi,
+    in_func(S1, F), value(S1, var(Lo2), op(add, [var(M2), int(1)])), Lo2 == Lo, M2 == M,
+    in_func(S2, F), value(S2, var(Hi2), H), Hi2 == Hi, ( H = op(sub, [var(M3), int(1)]) ; H = var(M3) ), M3 == M,
+    in_func(S3, F), ( nguard(S3, C, _) ; lcond(S3, C) ), at_mid(F, C, M),
+    \+ ( in_func(Sw, F), value(Sw, elem(_, _), _) ).    % a search writes no element (binary insertion sort does)
+% the element at the midpoint, directly or through a local (item = seq[mid])
+at_mid(_, C, M) :- sub_term(T, C), compound(T), T = elem(_, var(M2)), M2 == M, !.
+at_mid(F, C, M) :- in_func(S, F), value(S, var(X), elem(_, var(M2))), M2 == M, sub_term(V, C), V == var(X), !.
+midpoint_of(E, Lo, Hi) :- halved(E), sub_term(A, E), A = var(Lo), sub_term(B, E), B = var(Hi), Lo @< Hi.
+midpoint_of(E, Lo, Hi) :- halved(E), sub_term(A, E), A = var(Hi), sub_term(B, E), B = var(Lo), Hi @< Lo.
+
+% ----- sequence predicates and merge sort ------------------------------------------------------------------------
+% palindrome: the sequence compared with its mirror (AP13 mirror_compare: s[i] with s[n - 1 - i]) or with its reverse
+% (s == s[::-1], s == reversed(s))
+hand_branch(_, F, palindrome) :- idiom(F, mirror_compare, _).
+hand_branch(_, F, palindrome) :-
+    in_func(S, F), ( cret(S, E) ; nguard(S, E, _) ), sub_term(T, E), compound(T), T = op(Eq, [A, B]),
+    memberchk(Eq, [eq, ne]), ( reversed_of(B, X), X == A ; reversed_of(A, X), X == B ).
+reversed_of(call(slice, [X, other(none), other(none), int(-1)]), X).
+reversed_of(call(R, [X]), X) :- memberchk(R, [reverse, reversed]).
+reversed_of(call(join, [_, call(reversed, [X])]), X).
+% merge sort: the two halves sorted by self-calls (split at a midpoint, by indexes or slices) and merged (AP13's merge:
+% the smaller of two heads taken), in the function or in a merge function it calls
+hand_branch(_, F, merge_sort) :-
+    self_calls(F, 2), ( split_at_midpoint(F) ; sliced_halves(F) ), merges(F).
+sliced_halves(F) :- in_func(S1, F), call_at(S1, '$self', A1), member(call(slice, [Q, other(none), var(M)]), A1),
+    in_func(S2, F), call_at(S2, '$self', A2), member(call(slice, [Q2, var(M2), other(none)]), A2), Q2 == Q, M2 == M, !.
+merges(F) :- idiom(F, merge, _), !.
+merges(F) :- head_merge(F), !.
+merges(F) :- in_func(S, F), call_at(S, B, _), func(G, N, _), G \== F, base_name(N, B), idiom(G, merge, _), !.
+merges(F) :- in_func(S, F), call_at(S, merge, _), !.
+merges(F) :- in_func(S, F), call_at(S, B, _), func(G, N, _), G \== F, base_name(N, B), head_merge(G), !.
+% the head of one of two sequences moved to the result under a comparison of their heads (out.append(a.pop(0)))
+head_merge(G) :- in_func(S, G), call_at(S, append, [_, call(pop, [var(A), _])]), nguard(S, C, _),
+    sub_term(O, C), compound(O), O = op(Op, [P, Q]), memberchk(Op, [gt, ge, lt, le]),
+    P = elem(var(A1), _), Q = elem(var(B1), _), A1 \== B1, ( A == A1 ; A == B1 ), !.

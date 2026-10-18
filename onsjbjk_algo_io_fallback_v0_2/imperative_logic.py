@@ -3,10 +3,11 @@ lower_imperative.py, unchanged) subclassed for components it leaves opaque, so t
 same facts in every language. Only additions; everything AP13 lowers stays as it is.
 
   an assignment used as a value (a = b = e in Python, (y = f(x)) < x in C): the value e
-  a slice s[i:j] (Python): call(slice, [s, i, j]) (AP13's s[k:] with a constant k stays tail(s, k))
+  a slice s[i:j] (Python): call(slice, [s, i, j]), s[i:j:k]: call(slice, [s, i, j, k]) (AP13's s[k:] with a constant k
+  stays tail(s, k))
   a field p->f, s.f, o.f: field(p, f) (AP13: other(field); a length field stays len(o))
-  a counted loop's constant step: loop_step(L, K), from Python range(a, b, K) and C for (...; i += K) / i = i + K /
-  i++ / i-- (AP13 keeps neither; doc 04 section 17)
+  a counted loop's step: loop_step(L, K) for a constant K, loop_step(L, var(P)) for a variable stride, from Python
+  range(a, b, K) and C for (...; i += K) / i = i + K / i++ / i-- (AP13 keeps neither; doc 04 section 17)
 """
 from __future__ import annotations
 
@@ -17,7 +18,7 @@ import compare_learners
 
 compare_learners._ap13()
 import lower_imperative as ap13  # AP13 tools on the path
-from fact_io import FactSet, call, other
+from fact_io import FactSet, call, other, term
 from lang_tables import LENGTH_CALLS
 from lower_imperative import text
 from parse_source import parse
@@ -31,7 +32,8 @@ class StepFacts(FactSet):
     steps: list = field(default_factory=list)
 
     def text(self) -> str:
-        return super().text() + ''.join(f"loop_step('{lp}',{k}).\n" for lp, k in self.steps)
+        return super().text() + ''.join(f"loop_step('{lp}',{k if isinstance(k, int) else term(k)}).\n"
+                                        for lp, k in self.steps)
 
 
 class ImperativeLowerer(ap13.Lowerer):
@@ -46,10 +48,11 @@ class ImperativeLowerer(ap13.Lowerer):
         return loop_id
 
     def range_step(self, it):
-        """K of range(a, b, K) with a constant K."""
+        """K of range(a, b, K): a constant, or a variable stride var(p)."""
         t = self.expr(it) if it is not None else None
         if t and t[0] == 'call' and t[1] == 'range' and len(t[2]) == 3:
-            return constant(t[2][2])
+            k = constant(t[2][2])
+            return t[2][2] if k is None and t[2][2][0] == 'var' else k
         return None
 
     def update_step(self, upd):
@@ -65,10 +68,14 @@ class ImperativeLowerer(ap13.Lowerer):
         v = self.expr(self.role(upd, roles, 'right'))
         if '+=' in text(upd) or '-=' in text(upd):
             k = constant(v)
-            return None if k is None else (-k if '-=' in text(upd) else k)
+            if k is None:                         # i += p: a variable stride (only upwards: i -= p is not named)
+                return v if '+=' in text(upd) and v and v[0] == 'var' else None
+            return -k if '-=' in text(upd) else k
         if v and v[0] == 'op' and v[1] in ('add', 'sub') and v[2][0] == ('var', name):
             k = constant(v[2][1])
-            return None if k is None else (k if v[1] == 'add' else -k)
+            if k is None:
+                return v[2][1] if v[1] == 'add' and v[2][1][0] == 'var' else None
+            return k if v[1] == 'add' else -k
         return None
 
     def expr(self, node):
@@ -92,7 +99,8 @@ class ImperativeLowerer(ap13.Lowerer):
         return super().expr(node)
 
     def slice_bounds(self, idx):
-        """[start, stop] of a slice (none where absent): a[k:] is [k, none], a[:k] is [none, k]."""
+        """[start, stop] of a slice (none where absent): a[k:] is [k, none], a[:k] is [none, k]; with a step,
+        [start, stop, step]: a[::-1] is [none, none, -1]."""
         bounds, current = [], None
         for c in idx.children:
             if c.type == ':':
@@ -101,7 +109,9 @@ class ImperativeLowerer(ap13.Lowerer):
             elif c.is_named:
                 current = c
         bounds.append(current)
-        return [self.expr(b) if b is not None else other('none') for b in bounds[:2]]
+        if len(bounds) < 3 or bounds[2] is None:
+            bounds = bounds[:2]
+        return [self.expr(b) if b is not None else other('none') for b in bounds]
 
 
 def constant(t):
