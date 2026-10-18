@@ -41,2701 +41,3151 @@
   "Task/Binary-search/C/binary-search.c": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Binary-search",
    "task": "Binary-search"
   },
   "Task/Binary-search/Common-Lisp/binary-search-1.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Binary-search",
    "task": "Binary-search"
   },
   "Task/Binary-search/Common-Lisp/binary-search-2.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Binary-search",
    "task": "Binary-search"
   },
   "Task/Binary-search/Haskell/binary-search-1.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "sequence_query",
    "task": "Binary-search"
   },
   "Task/Binary-search/Haskell/binary-search-2.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Binary-search"
   },
   "Task/Binary-search/Haskell/binary-search-3.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Binary-search"
   },
   "Task/Binary-search/Python/binary-search-1.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Binary-search",
    "task": "Binary-search"
   },
   "Task/Binary-search/Python/binary-search-2.py": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric",
    "task": "Binary-search"
   },
   "Task/Binary-search/Python/binary-search-3.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Binary-search",
    "task": "Binary-search"
   },
   "Task/Binary-search/Python/binary-search-4.py": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric",
    "task": "Binary-search"
   },
   "Task/Binary-search/Python/binary-search-5.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Binary-search"
   },
   "Task/Binary-search/Python/binary-search-6.py": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "sequence_query",
    "task": "Binary-search"
   },
   "Task/Binary-search/Python/binary-search-7.py": {
-   "answer": "new_or_incorrect",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "sequence_query>target_search>interval_halving",
    "task": "Binary-search"
   },
   "Task/Caesar-cipher/C/caesar-cipher.c": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "sequence_transformation",
    "task": "Caesar-cipher"
   },
   "Task/Caesar-cipher/Common-Lisp/caesar-cipher-1.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Caesar-cipher",
    "task": "Caesar-cipher"
   },
   "Task/Caesar-cipher/Common-Lisp/caesar-cipher-2.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Caesar-cipher",
    "task": "Caesar-cipher"
   },
   "Task/Caesar-cipher/Common-Lisp/caesar-cipher-3.lisp": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "numeric",
    "task": "Caesar-cipher"
   },
   "Task/Caesar-cipher/Haskell/caesar-cipher-1.hs": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Caesar-cipher",
    "task": "Caesar-cipher"
   },
   "Task/Caesar-cipher/Haskell/caesar-cipher-2.hs": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Caesar-cipher",
    "task": "Caesar-cipher"
   },
   "Task/Caesar-cipher/Haskell/caesar-cipher-3.hs": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Caesar-cipher",
    "task": "Caesar-cipher"
   },
   "Task/Caesar-cipher/Python/caesar-cipher-1.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Caesar-cipher",
    "task": "Caesar-cipher"
   },
   "Task/Caesar-cipher/Python/caesar-cipher-2.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Caesar-cipher",
    "task": "Caesar-cipher"
   },
   "Task/Caesar-cipher/Python/caesar-cipher-3.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Caesar-cipher",
    "task": "Caesar-cipher"
   },
   "Task/Caesar-cipher/Python/caesar-cipher-4.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Caesar-cipher"
   },
   "Task/Factorial/C/factorial-1.c": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Factorial",
    "task": "Factorial"
   },
   "Task/Factorial/C/factorial-2.c": {
    "answer": "algorithm",
    "correct": false,
+   "family_correct": null,
    "name": "problem_020",
    "task": "Factorial"
   },
   "Task/Factorial/C/factorial-3.c": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Factorial",
    "task": "Factorial"
   },
   "Task/Factorial/C/factorial-4.c": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Factorial",
    "task": "Factorial"
   },
   "Task/Factorial/C/factorial-5.c": {
-   "answer": "new_or_incorrect",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric>recurrence>range_accumulation",
    "task": "Factorial"
   },
   "Task/Factorial/C/factorial-6.c": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Factorial"
   },
   "Task/Factorial/Common-Lisp/factorial-1.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Factorial",
    "task": "Factorial"
   },
   "Task/Factorial/Common-Lisp/factorial-2.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Factorial",
    "task": "Factorial"
   },
   "Task/Factorial/Common-Lisp/factorial-3.lisp": {
-   "answer": "not_identified",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric>recurrence>range_accumulation",
    "task": "Factorial"
   },
   "Task/Factorial/Common-Lisp/factorial-4.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Factorial",
    "task": "Factorial"
   },
   "Task/Factorial/Common-Lisp/factorial-5.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Factorial",
    "task": "Factorial"
   },
   "Task/Factorial/Common-Lisp/factorial-6.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Factorial",
    "task": "Factorial"
   },
   "Task/Factorial/Haskell/factorial-1.hs": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Factorial",
    "task": "Factorial"
   },
   "Task/Factorial/Haskell/factorial-10.hs": {
-   "answer": "new_or_incorrect",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "numeric>recurrence>double_recursion",
    "task": "Factorial"
   },
   "Task/Factorial/Haskell/factorial-2.hs": {
-   "answer": "new_or_incorrect",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Factorial"
   },
   "Task/Factorial/Haskell/factorial-3.hs": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Factorial",
    "task": "Factorial"
   },
   "Task/Factorial/Haskell/factorial-4.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Factorial"
   },
   "Task/Factorial/Haskell/factorial-5.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Factorial"
   },
   "Task/Factorial/Haskell/factorial-6.hs": {
-   "answer": "not_identified",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric>recurrence>range_accumulation",
    "task": "Factorial"
   },
   "Task/Factorial/Haskell/factorial-7.hs": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Factorial",
    "task": "Factorial"
   },
   "Task/Factorial/Haskell/factorial-8.hs": {
    "answer": "algorithm",
    "correct": false,
+   "family_correct": null,
    "name": "problem_020",
    "task": "Factorial"
   },
   "Task/Factorial/Haskell/factorial-9.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Factorial"
   },
   "Task/Factorial/Python/factorial-1.py": {
    "answer": "class",
    "correct": true,
+   "family_correct": null,
    "name": "factorial",
    "task": "Factorial"
   },
   "Task/Factorial/Python/factorial-2.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Factorial",
    "task": "Factorial"
   },
   "Task/Factorial/Python/factorial-3.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Factorial",
    "task": "Factorial"
   },
   "Task/Factorial/Python/factorial-4.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Factorial"
   },
   "Task/Factorial/Python/factorial-5.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Factorial"
   },
   "Task/Factorial/Python/factorial-6.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Factorial",
    "task": "Factorial"
   },
   "Task/Factorial/Python/factorial-7.py": {
    "answer": "algorithm",
    "correct": false,
+   "family_correct": null,
    "name": "problem_020",
    "task": "Factorial"
   },
   "Task/Factorial/Python/factorial-8.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Factorial",
    "task": "Factorial"
   },
   "Task/Factorial/Python/factorial-9.py": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric",
    "task": "Factorial"
   },
   "Task/Fibonacci-sequence/C/fibonacci-sequence-1.c": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Fibonacci-sequence",
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/C/fibonacci-sequence-2.c": {
-   "answer": "not_identified",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric>recurrence>pair_recurrence",
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/C/fibonacci-sequence-3.c": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/C/fibonacci-sequence-4.c": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/C/fibonacci-sequence-5.c": {
-   "answer": "not_identified",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric>recurrence>double_recursion",
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-1.lisp": {
-   "answer": "not_identified",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric>recurrence>pair_recurrence",
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-10.lisp": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "sequence_transformation",
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-2.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Fibonacci-sequence",
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-3.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Fibonacci-sequence",
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-4.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Fibonacci-sequence",
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-5.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Fibonacci-sequence",
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-6.lisp": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric",
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-7.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Fibonacci-sequence",
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-8.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Fibonacci-sequence",
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-9.lisp": {
    "answer": "algorithm",
    "correct": false,
+   "family_correct": null,
    "name": "signum",
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-1.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-10.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-11.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-12.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-13.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-14.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-15.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-16.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-17.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-18.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-19.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-2.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-20.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "sequence_query",
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-21.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "sequence_query",
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-22.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-23.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric",
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-24.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-25.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "sequence_query",
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-26.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "sequence_query",
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-3.hs": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Fibonacci-sequence",
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-4.hs": {
-   "answer": "not_identified",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric>recurrence>double_recursion",
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-5.hs": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Fibonacci-sequence",
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-6.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-7.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-8.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-9.hs": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Fibonacci-sequence",
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Python/fibonacci-sequence-1.py": {
-   "answer": "new_or_incorrect",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Python/fibonacci-sequence-10.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Fibonacci-sequence",
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Python/fibonacci-sequence-11.py": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "sequence_transformation",
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Python/fibonacci-sequence-12.py": {
-   "answer": "not_identified",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric>recurrence>double_recursion",
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Python/fibonacci-sequence-13.py": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric",
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Python/fibonacci-sequence-14.py": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric",
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Python/fibonacci-sequence-15.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Python/fibonacci-sequence-16.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Python/fibonacci-sequence-17.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Python/fibonacci-sequence-18.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Python/fibonacci-sequence-2.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Python/fibonacci-sequence-3.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Fibonacci-sequence",
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Python/fibonacci-sequence-4.py": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "sequence_query",
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Python/fibonacci-sequence-5.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Fibonacci-sequence",
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Python/fibonacci-sequence-6.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Python/fibonacci-sequence-7.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Fibonacci-sequence",
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Python/fibonacci-sequence-8.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Fibonacci-sequence",
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Python/fibonacci-sequence-9.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Fibonacci-sequence"
   },
   "Task/Greatest-common-divisor/C/greatest-common-divisor-1.c": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric",
    "task": "Greatest-common-divisor"
   },
   "Task/Greatest-common-divisor/C/greatest-common-divisor-2.c": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Greatest-common-divisor",
    "task": "Greatest-common-divisor"
   },
   "Task/Greatest-common-divisor/C/greatest-common-divisor-3.c": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric",
    "task": "Greatest-common-divisor"
   },
   "Task/Greatest-common-divisor/Common-Lisp/greatest-common-divisor-1.lisp": {
    "answer": "class",
    "correct": true,
+   "family_correct": null,
    "name": "gcd",
    "task": "Greatest-common-divisor"
   },
   "Task/Greatest-common-divisor/Common-Lisp/greatest-common-divisor-2.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Greatest-common-divisor",
    "task": "Greatest-common-divisor"
   },
   "Task/Greatest-common-divisor/Common-Lisp/greatest-common-divisor-3.lisp": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Greatest-common-divisor"
   },
   "Task/Greatest-common-divisor/Common-Lisp/greatest-common-divisor-4.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Greatest-common-divisor",
    "task": "Greatest-common-divisor"
   },
   "Task/Greatest-common-divisor/Haskell/greatest-common-divisor.hs": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Greatest-common-divisor",
    "task": "Greatest-common-divisor"
   },
   "Task/Greatest-common-divisor/Python/greatest-common-divisor-1.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Greatest-common-divisor"
   },
   "Task/Greatest-common-divisor/Python/greatest-common-divisor-2.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Greatest-common-divisor"
   },
   "Task/Greatest-common-divisor/Python/greatest-common-divisor-3.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Greatest-common-divisor",
    "task": "Greatest-common-divisor"
   },
   "Task/Greatest-common-divisor/Python/greatest-common-divisor-4.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Greatest-common-divisor",
    "task": "Greatest-common-divisor"
   },
   "Task/Greatest-common-divisor/Python/greatest-common-divisor-5.py": {
    "answer": "class",
    "correct": true,
+   "family_correct": null,
    "name": "gcd",
    "task": "Greatest-common-divisor"
   },
   "Task/Hailstone-sequence/C/hailstone-sequence-1.c": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Hailstone-sequence",
    "task": "Hailstone-sequence"
   },
   "Task/Hailstone-sequence/C/hailstone-sequence-2.c": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Hailstone-sequence"
   },
   "Task/Hailstone-sequence/Common-Lisp/hailstone-sequence.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Hailstone-sequence",
    "task": "Hailstone-sequence"
   },
   "Task/Hailstone-sequence/Haskell/hailstone-sequence-1.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Hailstone-sequence"
   },
   "Task/Hailstone-sequence/Haskell/hailstone-sequence-2.hs": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Hailstone-sequence",
    "task": "Hailstone-sequence"
   },
   "Task/Hailstone-sequence/Haskell/hailstone-sequence-3.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "sequence_query",
    "task": "Hailstone-sequence"
   },
   "Task/Hailstone-sequence/Python/hailstone-sequence-1.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Hailstone-sequence",
    "task": "Hailstone-sequence"
   },
   "Task/Hailstone-sequence/Python/hailstone-sequence-2.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Hailstone-sequence",
    "task": "Hailstone-sequence"
   },
   "Task/Hailstone-sequence/Python/hailstone-sequence-3.py": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric",
    "task": "Hailstone-sequence"
   },
   "Task/Josephus-problem/C/josephus-problem.c": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Josephus-problem",
    "task": "Josephus-problem"
   },
   "Task/Josephus-problem/Common-Lisp/josephus-problem-1.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Josephus-problem",
    "task": "Josephus-problem"
   },
   "Task/Josephus-problem/Common-Lisp/josephus-problem-2.lisp": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric",
    "task": "Josephus-problem"
   },
   "Task/Josephus-problem/Haskell/josephus-problem-1.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "sequence_query",
    "task": "Josephus-problem"
   },
   "Task/Josephus-problem/Haskell/josephus-problem-2.hs": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Josephus-problem",
    "task": "Josephus-problem"
   },
   "Task/Josephus-problem/Python/josephus-problem-1.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Josephus-problem",
    "task": "Josephus-problem"
   },
   "Task/Josephus-problem/Python/josephus-problem-2.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Josephus-problem",
    "task": "Josephus-problem"
   },
   "Task/Josephus-problem/Python/josephus-problem-3.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Josephus-problem"
   },
   "Task/Josephus-problem/Python/josephus-problem-4.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Josephus-problem"
   },
   "Task/Knapsack-problem-0-1/C/knapsack-problem-0-1.c": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Knapsack-problem-0-1",
    "task": "Knapsack-problem-0-1"
   },
   "Task/Knapsack-problem-0-1/Common-Lisp/knapsack-problem-0-1.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Knapsack-problem-0-1",
    "task": "Knapsack-problem-0-1"
   },
   "Task/Knapsack-problem-0-1/Haskell/knapsack-problem-0-1-1.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "sequence_query",
    "task": "Knapsack-problem-0-1"
   },
   "Task/Knapsack-problem-0-1/Haskell/knapsack-problem-0-1-2.hs": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Knapsack-problem-0-1",
    "task": "Knapsack-problem-0-1"
   },
   "Task/Knapsack-problem-0-1/Haskell/knapsack-problem-0-1-3.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Knapsack-problem-0-1"
   },
   "Task/Knapsack-problem-0-1/Python/knapsack-problem-0-1-1.py": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "sequence_query",
    "task": "Knapsack-problem-0-1"
   },
   "Task/Knapsack-problem-0-1/Python/knapsack-problem-0-1-2.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Knapsack-problem-0-1",
    "task": "Knapsack-problem-0-1"
   },
   "Task/Knapsack-problem-0-1/Python/knapsack-problem-0-1-3.py": {
-   "answer": "not_identified",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "sequence_query>aggregate>gatherer",
    "task": "Knapsack-problem-0-1"
   },
   "Task/Knapsack-problem-0-1/Python/knapsack-problem-0-1-4.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Knapsack-problem-0-1"
   },
   "Task/Least-common-multiple/C/least-common-multiple.c": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Least-common-multiple",
    "task": "Least-common-multiple"
   },
   "Task/Least-common-multiple/Common-Lisp/least-common-multiple-1.lisp": {
    "answer": "class",
    "correct": true,
+   "family_correct": null,
    "name": "lcm",
    "task": "Least-common-multiple"
   },
   "Task/Least-common-multiple/Common-Lisp/least-common-multiple-2.lisp": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Least-common-multiple"
   },
   "Task/Least-common-multiple/Haskell/least-common-multiple.hs": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Least-common-multiple",
    "task": "Least-common-multiple"
   },
   "Task/Least-common-multiple/Python/least-common-multiple-1.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Least-common-multiple"
   },
   "Task/Least-common-multiple/Python/least-common-multiple-2.py": {
    "answer": "algorithm",
    "correct": false,
+   "family_correct": null,
    "name": "Greatest-common-divisor",
    "task": "Least-common-multiple"
   },
   "Task/Least-common-multiple/Python/least-common-multiple-3.py": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric",
    "task": "Least-common-multiple"
   },
   "Task/Least-common-multiple/Python/least-common-multiple-4.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Least-common-multiple",
    "task": "Least-common-multiple"
   },
   "Task/Least-common-multiple/Python/least-common-multiple-5.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Least-common-multiple",
    "task": "Least-common-multiple"
   },
   "Task/Levenshtein-distance/C/levenshtein-distance-1.c": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Levenshtein-distance",
    "task": "Levenshtein-distance"
   },
   "Task/Levenshtein-distance/C/levenshtein-distance-2.c": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Levenshtein-distance",
    "task": "Levenshtein-distance"
   },
   "Task/Levenshtein-distance/Common-Lisp/levenshtein-distance.lisp": {
-   "answer": "not_identified",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric>recurrence>double_recursion",
    "task": "Levenshtein-distance"
   },
   "Task/Levenshtein-distance/Haskell/levenshtein-distance-1.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "sequence_query",
    "task": "Levenshtein-distance"
   },
   "Task/Levenshtein-distance/Haskell/levenshtein-distance-2.hs": {
-   "answer": "new_or_incorrect",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "sequence_query",
    "task": "Levenshtein-distance"
   },
   "Task/Levenshtein-distance/Python/levenshtein-distance-1.py": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "sequence_query",
    "task": "Levenshtein-distance"
   },
   "Task/Levenshtein-distance/Python/levenshtein-distance-2.py": {
-   "answer": "new_or_incorrect",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "sequence_query",
    "task": "Levenshtein-distance"
   },
   "Task/Levenshtein-distance/Python/levenshtein-distance-3.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Levenshtein-distance",
    "task": "Levenshtein-distance"
   },
   "Task/Levenshtein-distance/Python/levenshtein-distance-4.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Levenshtein-distance",
    "task": "Levenshtein-distance"
   },
   "Task/Levenshtein-distance/Python/levenshtein-distance-5.py": {
    "answer": "algorithm",
    "correct": false,
+   "family_correct": null,
    "name": "problem_007",
    "task": "Levenshtein-distance"
   },
   "Task/Longest-common-subsequence/C/longest-common-subsequence-1.c": {
-   "answer": "not_identified",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "marking>table_fill",
    "task": "Longest-common-subsequence"
   },
   "Task/Longest-common-subsequence/C/longest-common-subsequence-2.c": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Longest-common-subsequence"
   },
   "Task/Longest-common-subsequence/Common-Lisp/longest-common-subsequence-1.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Longest-common-subsequence",
    "task": "Longest-common-subsequence"
   },
   "Task/Longest-common-subsequence/Common-Lisp/longest-common-subsequence-2.lisp": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Longest-common-subsequence"
   },
   "Task/Longest-common-subsequence/Common-Lisp/longest-common-subsequence-3.lisp": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Longest-common-subsequence"
   },
   "Task/Longest-common-subsequence/Common-Lisp/longest-common-subsequence-4.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Longest-common-subsequence",
    "task": "Longest-common-subsequence"
   },
   "Task/Longest-common-subsequence/Common-Lisp/longest-common-subsequence-5.lisp": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Longest-common-subsequence"
   },
   "Task/Longest-common-subsequence/Haskell/longest-common-subsequence-1.hs": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Longest-common-subsequence",
    "task": "Longest-common-subsequence"
   },
   "Task/Longest-common-subsequence/Haskell/longest-common-subsequence-2.hs": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Longest-common-subsequence",
    "task": "Longest-common-subsequence"
   },
   "Task/Longest-common-subsequence/Haskell/longest-common-subsequence-3.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "sequence_query",
    "task": "Longest-common-subsequence"
   },
   "Task/Longest-common-subsequence/Haskell/longest-common-subsequence-4.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Longest-common-subsequence"
   },
   "Task/Longest-common-subsequence/Haskell/longest-common-subsequence-5.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "sequence_query",
    "task": "Longest-common-subsequence"
   },
   "Task/Longest-common-subsequence/Haskell/longest-common-subsequence-6.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Longest-common-subsequence"
   },
   "Task/Longest-common-subsequence/Python/longest-common-subsequence-1.py": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "sequence_query",
    "task": "Longest-common-subsequence"
   },
   "Task/Longest-common-subsequence/Python/longest-common-subsequence-2.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Longest-common-subsequence"
   },
   "Task/Longest-common-subsequence/Python/longest-common-subsequence-3.py": {
-   "answer": "not_identified",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "sequence_query>aggregate>gatherer",
    "task": "Longest-common-subsequence"
   },
   "Task/Luhn-test-of-credit-card-numbers/C/luhn-test-of-credit-card-numbers.c": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "sequence_query",
    "task": "Luhn-test-of-credit-card-numbers"
   },
   "Task/Luhn-test-of-credit-card-numbers/Common-Lisp/luhn-test-of-credit-card-numbers-1.lisp": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "sequence_query",
    "task": "Luhn-test-of-credit-card-numbers"
   },
   "Task/Luhn-test-of-credit-card-numbers/Common-Lisp/luhn-test-of-credit-card-numbers-2.lisp": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Luhn-test-of-credit-card-numbers"
   },
   "Task/Luhn-test-of-credit-card-numbers/Haskell/luhn-test-of-credit-card-numbers-1.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Luhn-test-of-credit-card-numbers"
   },
   "Task/Luhn-test-of-credit-card-numbers/Haskell/luhn-test-of-credit-card-numbers-2.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Luhn-test-of-credit-card-numbers"
   },
   "Task/Luhn-test-of-credit-card-numbers/Haskell/luhn-test-of-credit-card-numbers-3.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric",
    "task": "Luhn-test-of-credit-card-numbers"
   },
   "Task/Luhn-test-of-credit-card-numbers/Python/luhn-test-of-credit-card-numbers-1.py": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric",
    "task": "Luhn-test-of-credit-card-numbers"
   },
   "Task/Luhn-test-of-credit-card-numbers/Python/luhn-test-of-credit-card-numbers-2.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Luhn-test-of-credit-card-numbers"
   },
   "Task/Luhn-test-of-credit-card-numbers/Python/luhn-test-of-credit-card-numbers-3.py": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric",
    "task": "Luhn-test-of-credit-card-numbers"
   },
   "Task/Luhn-test-of-credit-card-numbers/Python/luhn-test-of-credit-card-numbers-4.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Luhn-test-of-credit-card-numbers",
    "task": "Luhn-test-of-credit-card-numbers"
   },
   "Task/N-queens-problem/C/n-queens-problem-1.c": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "N-queens-problem"
   },
   "Task/N-queens-problem/C/n-queens-problem-2.c": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "N-queens-problem",
    "task": "N-queens-problem"
   },
   "Task/N-queens-problem/C/n-queens-problem-3.c": {
-   "answer": "not_identified",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "search>backtracking",
    "task": "N-queens-problem"
   },
   "Task/N-queens-problem/C/n-queens-problem-4.c": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "N-queens-problem",
    "task": "N-queens-problem"
   },
   "Task/N-queens-problem/C/n-queens-problem-5.c": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "N-queens-problem",
    "task": "N-queens-problem"
   },
   "Task/N-queens-problem/Common-Lisp/n-queens-problem-1.lisp": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "numeric",
    "task": "N-queens-problem"
   },
   "Task/N-queens-problem/Common-Lisp/n-queens-problem-2.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "N-queens-problem",
    "task": "N-queens-problem"
   },
   "Task/N-queens-problem/Common-Lisp/n-queens-problem-3.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "N-queens-problem",
    "task": "N-queens-problem"
   },
   "Task/N-queens-problem/Haskell/n-queens-problem-1.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "N-queens-problem"
   },
   "Task/N-queens-problem/Haskell/n-queens-problem-2.hs": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "N-queens-problem",
    "task": "N-queens-problem"
   },
   "Task/N-queens-problem/Haskell/n-queens-problem-3.hs": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "N-queens-problem",
    "task": "N-queens-problem"
   },
   "Task/N-queens-problem/Haskell/n-queens-problem-4.hs": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "N-queens-problem",
    "task": "N-queens-problem"
   },
   "Task/N-queens-problem/Haskell/n-queens-problem-5.hs": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "N-queens-problem",
    "task": "N-queens-problem"
   },
   "Task/N-queens-problem/Python/n-queens-problem-1.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "N-queens-problem",
    "task": "N-queens-problem"
   },
   "Task/N-queens-problem/Python/n-queens-problem-10.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "N-queens-problem"
   },
   "Task/N-queens-problem/Python/n-queens-problem-2.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "N-queens-problem"
   },
   "Task/N-queens-problem/Python/n-queens-problem-3.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "N-queens-problem",
    "task": "N-queens-problem"
   },
   "Task/N-queens-problem/Python/n-queens-problem-4.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "N-queens-problem",
    "task": "N-queens-problem"
   },
   "Task/N-queens-problem/Python/n-queens-problem-5.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "N-queens-problem",
    "task": "N-queens-problem"
   },
   "Task/N-queens-problem/Python/n-queens-problem-6.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "N-queens-problem",
    "task": "N-queens-problem"
   },
   "Task/N-queens-problem/Python/n-queens-problem-7.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "N-queens-problem",
    "task": "N-queens-problem"
   },
   "Task/N-queens-problem/Python/n-queens-problem-8.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "N-queens-problem",
    "task": "N-queens-problem"
   },
   "Task/N-queens-problem/Python/n-queens-problem-9.py": {
-   "answer": "not_identified",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "search>backtracking",
    "task": "N-queens-problem"
   },
   "Task/Palindrome-detection/C/palindrome-detection-1.c": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Palindrome-detection"
   },
   "Task/Palindrome-detection/C/palindrome-detection-2.c": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Palindrome-detection"
   },
   "Task/Palindrome-detection/C/palindrome-detection-3.c": {
-   "answer": "new_or_incorrect",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Palindrome-detection"
   },
   "Task/Palindrome-detection/C/palindrome-detection-4.c": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Palindrome-detection"
   },
   "Task/Palindrome-detection/Common-Lisp/palindrome-detection-1.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Palindrome-detection",
    "task": "Palindrome-detection"
   },
   "Task/Palindrome-detection/Common-Lisp/palindrome-detection-2.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Palindrome-detection",
    "task": "Palindrome-detection"
   },
   "Task/Palindrome-detection/Haskell/palindrome-detection-1.hs": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Palindrome-detection",
    "task": "Palindrome-detection"
   },
   "Task/Palindrome-detection/Haskell/palindrome-detection-2.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "sequence_query",
    "task": "Palindrome-detection"
   },
   "Task/Palindrome-detection/Haskell/palindrome-detection-3.hs": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Palindrome-detection",
    "task": "Palindrome-detection"
   },
   "Task/Palindrome-detection/Python/palindrome-detection-1.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Palindrome-detection",
    "task": "Palindrome-detection"
   },
   "Task/Palindrome-detection/Python/palindrome-detection-2.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Palindrome-detection"
   },
   "Task/Palindrome-detection/Python/palindrome-detection-3.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Palindrome-detection",
    "task": "Palindrome-detection"
   },
   "Task/Palindrome-detection/Python/palindrome-detection-4.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Palindrome-detection",
    "task": "Palindrome-detection"
   },
   "Task/Palindrome-detection/Python/palindrome-detection-5.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Palindrome-detection"
   },
   "Task/Palindrome-detection/Python/palindrome-detection-6.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Palindrome-detection"
   },
   "Task/Palindrome-detection/Python/palindrome-detection-7.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Palindrome-detection",
    "task": "Palindrome-detection"
   },
   "Task/Palindrome-detection/Python/palindrome-detection-8.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Palindrome-detection"
   },
   "Task/Perfect-numbers/C/perfect-numbers-1.c": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Perfect-numbers",
    "task": "Perfect-numbers"
   },
   "Task/Perfect-numbers/C/perfect-numbers-2.c": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Perfect-numbers"
   },
   "Task/Perfect-numbers/Common-Lisp/perfect-numbers.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Perfect-numbers",
    "task": "Perfect-numbers"
   },
   "Task/Perfect-numbers/Haskell/perfect-numbers-1.hs": {
    "answer": "algorithm",
    "correct": false,
+   "family_correct": null,
    "name": "primelib",
    "task": "Perfect-numbers"
   },
   "Task/Perfect-numbers/Haskell/perfect-numbers-2.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric",
    "task": "Perfect-numbers"
   },
   "Task/Perfect-numbers/Haskell/perfect-numbers-3.hs": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Perfect-numbers",
    "task": "Perfect-numbers"
   },
   "Task/Perfect-numbers/Python/perfect-numbers-1.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Perfect-numbers",
    "task": "Perfect-numbers"
   },
   "Task/Perfect-numbers/Python/perfect-numbers-2.py": {
-   "answer": "not_identified",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric>divisor_test",
    "task": "Perfect-numbers"
   },
   "Task/Perfect-numbers/Python/perfect-numbers-3.py": {
-   "answer": "not_identified",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric>divisor_test",
    "task": "Perfect-numbers"
   },
   "Task/Perfect-numbers/Python/perfect-numbers-4.py": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric",
    "task": "Perfect-numbers"
   },
   "Task/Primality-by-trial-division/C/primality-by-trial-division-1.c": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Primality-by-trial-division",
    "task": "Primality-by-trial-division"
   },
   "Task/Primality-by-trial-division/C/primality-by-trial-division-2.c": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Primality-by-trial-division",
    "task": "Primality-by-trial-division"
   },
   "Task/Primality-by-trial-division/Common-Lisp/primality-by-trial-division-1.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Primality-by-trial-division",
    "task": "Primality-by-trial-division"
   },
   "Task/Primality-by-trial-division/Common-Lisp/primality-by-trial-division-2.lisp": {
-   "answer": "new_or_incorrect",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric>divisor_test",
    "task": "Primality-by-trial-division"
   },
   "Task/Primality-by-trial-division/Haskell/primality-by-trial-division-1.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Primality-by-trial-division"
   },
   "Task/Primality-by-trial-division/Haskell/primality-by-trial-division-2.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "sequence_query",
    "task": "Primality-by-trial-division"
   },
   "Task/Primality-by-trial-division/Haskell/primality-by-trial-division-3.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Primality-by-trial-division"
   },
   "Task/Primality-by-trial-division/Haskell/primality-by-trial-division-4.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric",
    "task": "Primality-by-trial-division"
   },
   "Task/Primality-by-trial-division/Python/primality-by-trial-division-1.py": {
-   "answer": "not_identified",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric>divisor_test",
    "task": "Primality-by-trial-division"
   },
   "Task/Primality-by-trial-division/Python/primality-by-trial-division-2.py": {
-   "answer": "not_identified",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric>divisor_test",
    "task": "Primality-by-trial-division"
   },
   "Task/Primality-by-trial-division/Python/primality-by-trial-division-3.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Primality-by-trial-division"
   },
   "Task/Primality-by-trial-division/Python/primality-by-trial-division-4.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Primality-by-trial-division"
   },
   "Task/Roman-numerals-Encode/C/roman-numerals-encode-1.c": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Roman-numerals-Encode",
    "task": "Roman-numerals-Encode"
   },
   "Task/Roman-numerals-Encode/C/roman-numerals-encode-2.c": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Roman-numerals-Encode",
    "task": "Roman-numerals-Encode"
   },
   "Task/Roman-numerals-Encode/Common-Lisp/roman-numerals-encode.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Roman-numerals-Encode",
    "task": "Roman-numerals-Encode"
   },
   "Task/Roman-numerals-Encode/Haskell/roman-numerals-encode-1.hs": {
-   "answer": "new_or_incorrect",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Roman-numerals-Encode"
   },
   "Task/Roman-numerals-Encode/Haskell/roman-numerals-encode-2.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "sequence_query",
    "task": "Roman-numerals-Encode"
   },
   "Task/Roman-numerals-Encode/Haskell/roman-numerals-encode-3.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Roman-numerals-Encode"
   },
   "Task/Roman-numerals-Encode/Python/roman-numerals-encode-1.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Roman-numerals-Encode"
   },
   "Task/Roman-numerals-Encode/Python/roman-numerals-encode-2.py": {
    "answer": "algorithm",
    "correct": false,
+   "family_correct": null,
    "name": "magicdiamondpattern",
    "task": "Roman-numerals-Encode"
   },
   "Task/Roman-numerals-Encode/Python/roman-numerals-encode-3.py": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "numeric",
    "task": "Roman-numerals-Encode"
   },
   "Task/Roman-numerals-Encode/Python/roman-numerals-encode-4.py": {
-   "answer": "not_identified",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "numeric>conditional_iteration",
    "task": "Roman-numerals-Encode"
   },
   "Task/Roman-numerals-Encode/Python/roman-numerals-encode-5.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Roman-numerals-Encode"
   },
   "Task/Roman-numerals-Encode/Python/roman-numerals-encode-6.py": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "numeric",
    "task": "Roman-numerals-Encode"
   },
   "Task/Roman-numerals-Encode/Python/roman-numerals-encode-7.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Roman-numerals-Encode"
   },
   "Task/Roman-numerals-Encode/Python/roman-numerals-encode-8.py": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "sequence_query",
    "task": "Roman-numerals-Encode"
   },
   "Task/Run-length-encoding/C/run-length-encoding.c": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "sequence_query",
    "task": "Run-length-encoding"
   },
   "Task/Run-length-encoding/Common-Lisp/run-length-encoding.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Run-length-encoding",
    "task": "Run-length-encoding"
   },
   "Task/Run-length-encoding/Haskell/run-length-encoding-1.hs": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Run-length-encoding",
    "task": "Run-length-encoding"
   },
   "Task/Run-length-encoding/Haskell/run-length-encoding-2.hs": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Run-length-encoding",
    "task": "Run-length-encoding"
   },
   "Task/Run-length-encoding/Haskell/run-length-encoding-3.hs": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Run-length-encoding",
    "task": "Run-length-encoding"
   },
   "Task/Run-length-encoding/Haskell/run-length-encoding-4.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "sequence_query",
    "task": "Run-length-encoding"
   },
   "Task/Run-length-encoding/Python/run-length-encoding-1.py": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "sequence_query",
    "task": "Run-length-encoding"
   },
   "Task/Run-length-encoding/Python/run-length-encoding-2.py": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "sequence_query",
    "task": "Run-length-encoding"
   },
   "Task/Run-length-encoding/Python/run-length-encoding-3.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Run-length-encoding"
   },
   "Task/Sieve-of-Eratosthenes/C/sieve-of-eratosthenes-1.c": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Sieve-of-Eratosthenes",
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/C/sieve-of-eratosthenes-2.c": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "sequence_transformation",
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/C/sieve-of-eratosthenes-3.c": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Common-Lisp/sieve-of-eratosthenes-1.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Sieve-of-Eratosthenes",
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Common-Lisp/sieve-of-eratosthenes-2.lisp": {
-   "answer": "not_identified",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "marking>stride_marking",
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-1.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-10.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "sequence_transformation",
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-11.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "numeric",
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-12.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "numeric",
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-13.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-14.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "numeric",
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-15.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "numeric",
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-16.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "numeric",
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-17.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "numeric",
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-18.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "numeric",
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-19.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "numeric",
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-2.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-20.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "numeric",
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-21.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-22.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-23.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-24.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-25.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-3.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-4.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-5.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "numeric",
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-6.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-7.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "numeric",
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-8.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-9.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-1.py": {
-   "answer": "not_identified",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "marking>stride_marking",
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-10.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-11.py": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "numeric",
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-12.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-13.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-14.py": {
-   "answer": "not_identified",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "numeric>recurrence>range_accumulation",
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-15.py": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "numeric",
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-16.py": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "numeric",
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-2.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Sieve-of-Eratosthenes",
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-3.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Sieve-of-Eratosthenes",
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-4.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-5.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-6.py": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "numeric",
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-7.py": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "numeric",
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-8.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-9.py": {
-   "answer": "not_identified",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "numeric>conditional_iteration",
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sorting-algorithms-Bubble-sort/C/sorting-algorithms-bubble-sort.c": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Sorting-algorithms-Bubble-sort",
    "task": "Sorting-algorithms-Bubble-sort"
   },
   "Task/Sorting-algorithms-Bubble-sort/Common-Lisp/sorting-algorithms-bubble-sort-1.lisp": {
-   "answer": "not_identified",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "sequence_transformation>comparison_sort",
    "task": "Sorting-algorithms-Bubble-sort"
   },
   "Task/Sorting-algorithms-Bubble-sort/Common-Lisp/sorting-algorithms-bubble-sort-2.lisp": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sorting-algorithms-Bubble-sort"
   },
   "Task/Sorting-algorithms-Bubble-sort/Common-Lisp/sorting-algorithms-bubble-sort-3.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Sorting-algorithms-Bubble-sort",
    "task": "Sorting-algorithms-Bubble-sort"
   },
   "Task/Sorting-algorithms-Bubble-sort/Haskell/sorting-algorithms-bubble-sort-1.hs": {
    "answer": "class",
    "correct": true,
+   "family_correct": null,
    "name": "sorting",
    "task": "Sorting-algorithms-Bubble-sort"
   },
   "Task/Sorting-algorithms-Bubble-sort/Haskell/sorting-algorithms-bubble-sort-2.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "sequence_query",
    "task": "Sorting-algorithms-Bubble-sort"
   },
   "Task/Sorting-algorithms-Bubble-sort/Haskell/sorting-algorithms-bubble-sort-3.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "numeric",
    "task": "Sorting-algorithms-Bubble-sort"
   },
   "Task/Sorting-algorithms-Bubble-sort/Python/sorting-algorithms-bubble-sort.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Sorting-algorithms-Bubble-sort",
    "task": "Sorting-algorithms-Bubble-sort"
   },
   "Task/Sorting-algorithms-Cocktail-sort/C/sorting-algorithms-cocktail-sort-1.c": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "sequence_query",
    "task": "Sorting-algorithms-Cocktail-sort"
   },
   "Task/Sorting-algorithms-Cocktail-sort/C/sorting-algorithms-cocktail-sort-2.c": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sorting-algorithms-Cocktail-sort"
   },
   "Task/Sorting-algorithms-Cocktail-sort/C/sorting-algorithms-cocktail-sort-3.c": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "numeric",
    "task": "Sorting-algorithms-Cocktail-sort"
   },
   "Task/Sorting-algorithms-Cocktail-sort/Common-Lisp/sorting-algorithms-cocktail-sort.lisp": {
-   "answer": "not_identified",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "sequence_transformation>comparison_sort",
    "task": "Sorting-algorithms-Cocktail-sort"
   },
   "Task/Sorting-algorithms-Cocktail-sort/Haskell/sorting-algorithms-cocktail-sort.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "sequence_query",
    "task": "Sorting-algorithms-Cocktail-sort"
   },
   "Task/Sorting-algorithms-Cocktail-sort/Python/sorting-algorithms-cocktail-sort-1.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Sorting-algorithms-Cocktail-sort",
    "task": "Sorting-algorithms-Cocktail-sort"
   },
   "Task/Sorting-algorithms-Cocktail-sort/Python/sorting-algorithms-cocktail-sort-2.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sorting-algorithms-Cocktail-sort"
   },
   "Task/Sorting-algorithms-Cocktail-sort/Python/sorting-algorithms-cocktail-sort-3.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Sorting-algorithms-Cocktail-sort",
    "task": "Sorting-algorithms-Cocktail-sort"
   },
   "Task/Sorting-algorithms-Comb-sort/C/sorting-algorithms-comb-sort.c": {
-   "answer": "not_identified",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "sequence_transformation>comparison_sort",
    "task": "Sorting-algorithms-Comb-sort"
   },
   "Task/Sorting-algorithms-Comb-sort/Common-Lisp/sorting-algorithms-comb-sort.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Sorting-algorithms-Comb-sort",
    "task": "Sorting-algorithms-Comb-sort"
   },
   "Task/Sorting-algorithms-Comb-sort/Haskell/sorting-algorithms-comb-sort-1.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "sequence_query",
    "task": "Sorting-algorithms-Comb-sort"
   },
   "Task/Sorting-algorithms-Comb-sort/Haskell/sorting-algorithms-comb-sort-2.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sorting-algorithms-Comb-sort"
   },
   "Task/Sorting-algorithms-Comb-sort/Python/sorting-algorithms-comb-sort.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Sorting-algorithms-Comb-sort",
    "task": "Sorting-algorithms-Comb-sort"
   },
   "Task/Sorting-algorithms-Counting-sort/C/sorting-algorithms-counting-sort-1.c": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Sorting-algorithms-Counting-sort",
    "task": "Sorting-algorithms-Counting-sort"
   },
   "Task/Sorting-algorithms-Counting-sort/C/sorting-algorithms-counting-sort-2.c": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sorting-algorithms-Counting-sort"
   },
   "Task/Sorting-algorithms-Counting-sort/Common-Lisp/sorting-algorithms-counting-sort.lisp": {
-   "answer": "not_identified",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "sequence_transformation>comparison_sort",
    "task": "Sorting-algorithms-Counting-sort"
   },
   "Task/Sorting-algorithms-Counting-sort/Haskell/sorting-algorithms-counting-sort.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sorting-algorithms-Counting-sort"
   },
   "Task/Sorting-algorithms-Counting-sort/Python/sorting-algorithms-counting-sort-1.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Sorting-algorithms-Counting-sort",
    "task": "Sorting-algorithms-Counting-sort"
   },
   "Task/Sorting-algorithms-Counting-sort/Python/sorting-algorithms-counting-sort-2.py": {
-   "answer": "not_identified",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "sequence_transformation>distribution_sort>histogram",
    "task": "Sorting-algorithms-Counting-sort"
   },
   "Task/Sorting-algorithms-Cycle-sort/C/sorting-algorithms-cycle-sort.c": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "numeric",
    "task": "Sorting-algorithms-Cycle-sort"
   },
   "Task/Sorting-algorithms-Cycle-sort/Python/sorting-algorithms-cycle-sort.py": {
-   "answer": "new_or_incorrect",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "sequence_query",
    "task": "Sorting-algorithms-Cycle-sort"
   },
   "Task/Sorting-algorithms-Gnome-sort/C/sorting-algorithms-gnome-sort.c": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Sorting-algorithms-Gnome-sort",
    "task": "Sorting-algorithms-Gnome-sort"
   },
   "Task/Sorting-algorithms-Gnome-sort/Common-Lisp/sorting-algorithms-gnome-sort.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Sorting-algorithms-Gnome-sort",
    "task": "Sorting-algorithms-Gnome-sort"
   },
   "Task/Sorting-algorithms-Gnome-sort/Haskell/sorting-algorithms-gnome-sort.hs": {
    "answer": "class",
    "correct": true,
+   "family_correct": null,
    "name": "sorting",
    "task": "Sorting-algorithms-Gnome-sort"
   },
   "Task/Sorting-algorithms-Gnome-sort/Python/sorting-algorithms-gnome-sort.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Sorting-algorithms-Gnome-sort",
    "task": "Sorting-algorithms-Gnome-sort"
   },
   "Task/Sorting-algorithms-Heapsort/C/sorting-algorithms-heapsort.c": {
-   "answer": "not_identified",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "sequence_transformation>uncompared_rearrangement",
    "task": "Sorting-algorithms-Heapsort"
   },
   "Task/Sorting-algorithms-Heapsort/Common-Lisp/sorting-algorithms-heapsort.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Sorting-algorithms-Heapsort",
    "task": "Sorting-algorithms-Heapsort"
   },
   "Task/Sorting-algorithms-Heapsort/Haskell/sorting-algorithms-heapsort-1.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "numeric",
    "task": "Sorting-algorithms-Heapsort"
   },
   "Task/Sorting-algorithms-Heapsort/Haskell/sorting-algorithms-heapsort-2.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sorting-algorithms-Heapsort"
   },
   "Task/Sorting-algorithms-Heapsort/Haskell/sorting-algorithms-heapsort-3.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sorting-algorithms-Heapsort"
   },
   "Task/Sorting-algorithms-Heapsort/Haskell/sorting-algorithms-heapsort-4.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sorting-algorithms-Heapsort"
   },
   "Task/Sorting-algorithms-Heapsort/Python/sorting-algorithms-heapsort.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Sorting-algorithms-Heapsort",
    "task": "Sorting-algorithms-Heapsort"
   },
   "Task/Sorting-algorithms-Insertion-sort/C/sorting-algorithms-insertion-sort.c": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Sorting-algorithms-Insertion-sort",
    "task": "Sorting-algorithms-Insertion-sort"
   },
   "Task/Sorting-algorithms-Insertion-sort/Common-Lisp/sorting-algorithms-insertion-sort-1.lisp": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sorting-algorithms-Insertion-sort"
   },
   "Task/Sorting-algorithms-Insertion-sort/Common-Lisp/sorting-algorithms-insertion-sort-2.lisp": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "sequence_transformation",
    "task": "Sorting-algorithms-Insertion-sort"
   },
   "Task/Sorting-algorithms-Insertion-sort/Common-Lisp/sorting-algorithms-insertion-sort-3.lisp": {
-   "answer": "not_identified",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "sequence_transformation>comparison_sort",
    "task": "Sorting-algorithms-Insertion-sort"
   },
   "Task/Sorting-algorithms-Insertion-sort/Haskell/sorting-algorithms-insertion-sort.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sorting-algorithms-Insertion-sort"
   },
   "Task/Sorting-algorithms-Insertion-sort/Python/sorting-algorithms-insertion-sort-1.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Sorting-algorithms-Insertion-sort",
    "task": "Sorting-algorithms-Insertion-sort"
   },
   "Task/Sorting-algorithms-Insertion-sort/Python/sorting-algorithms-insertion-sort-2.py": {
    "answer": "class",
    "correct": true,
+   "family_correct": null,
    "name": "sorting",
    "task": "Sorting-algorithms-Insertion-sort"
   },
   "Task/Sorting-algorithms-Insertion-sort/Python/sorting-algorithms-insertion-sort-3.py": {
    "answer": "algorithm",
    "correct": false,
+   "family_correct": null,
    "name": "average_mode",
    "task": "Sorting-algorithms-Insertion-sort"
   },
   "Task/Sorting-algorithms-Insertion-sort/Python/sorting-algorithms-insertion-sort-4.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sorting-algorithms-Insertion-sort"
   },
   "Task/Sorting-algorithms-Merge-sort/C/sorting-algorithms-merge-sort-1.c": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Sorting-algorithms-Merge-sort",
    "task": "Sorting-algorithms-Merge-sort"
   },
   "Task/Sorting-algorithms-Merge-sort/C/sorting-algorithms-merge-sort-2.c": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "sequence_transformation",
    "task": "Sorting-algorithms-Merge-sort"
   },
   "Task/Sorting-algorithms-Merge-sort/Common-Lisp/sorting-algorithms-merge-sort.lisp": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "sequence_query",
    "task": "Sorting-algorithms-Merge-sort"
   },
   "Task/Sorting-algorithms-Merge-sort/Haskell/sorting-algorithms-merge-sort-1.hs": {
    "answer": "class",
    "correct": true,
+   "family_correct": null,
    "name": "sorting",
    "task": "Sorting-algorithms-Merge-sort"
   },
   "Task/Sorting-algorithms-Merge-sort/Haskell/sorting-algorithms-merge-sort-2.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "sequence_query",
    "task": "Sorting-algorithms-Merge-sort"
   },
   "Task/Sorting-algorithms-Merge-sort/Haskell/sorting-algorithms-merge-sort-3.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "sequence_query",
    "task": "Sorting-algorithms-Merge-sort"
   },
   "Task/Sorting-algorithms-Merge-sort/Python/sorting-algorithms-merge-sort-1.py": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "sequence_transformation",
    "task": "Sorting-algorithms-Merge-sort"
   },
   "Task/Sorting-algorithms-Merge-sort/Python/sorting-algorithms-merge-sort-2.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Sorting-algorithms-Merge-sort",
    "task": "Sorting-algorithms-Merge-sort"
   },
   "Task/Sorting-algorithms-Merge-sort/Python/sorting-algorithms-merge-sort-3.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Sorting-algorithms-Merge-sort",
    "task": "Sorting-algorithms-Merge-sort"
   },
   "Task/Sorting-algorithms-Pancake-sort/C/sorting-algorithms-pancake-sort-1.c": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "sequence_query",
    "task": "Sorting-algorithms-Pancake-sort"
   },
   "Task/Sorting-algorithms-Pancake-sort/C/sorting-algorithms-pancake-sort-2.c": {
-   "answer": "not_identified",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "sequence_transformation>uncompared_rearrangement",
    "task": "Sorting-algorithms-Pancake-sort"
   },
   "Task/Sorting-algorithms-Pancake-sort/C/sorting-algorithms-pancake-sort-3.c": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sorting-algorithms-Pancake-sort"
   },
   "Task/Sorting-algorithms-Pancake-sort/Common-Lisp/sorting-algorithms-pancake-sort-1.lisp": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "sequence_query",
    "task": "Sorting-algorithms-Pancake-sort"
   },
   "Task/Sorting-algorithms-Pancake-sort/Common-Lisp/sorting-algorithms-pancake-sort-2.lisp": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sorting-algorithms-Pancake-sort"
   },
   "Task/Sorting-algorithms-Pancake-sort/Haskell/sorting-algorithms-pancake-sort-1.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "sequence_query",
    "task": "Sorting-algorithms-Pancake-sort"
   },
   "Task/Sorting-algorithms-Pancake-sort/Haskell/sorting-algorithms-pancake-sort-2.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sorting-algorithms-Pancake-sort"
   },
   "Task/Sorting-algorithms-Pancake-sort/Python/sorting-algorithms-pancake-sort-1.py": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "sequence_query",
    "task": "Sorting-algorithms-Pancake-sort"
   },
   "Task/Sorting-algorithms-Pancake-sort/Python/sorting-algorithms-pancake-sort-2.py": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sorting-algorithms-Pancake-sort"
   },
   "Task/Sorting-algorithms-Quicksort/C/sorting-algorithms-quicksort-1.c": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "sequence_transformation",
    "task": "Sorting-algorithms-Quicksort"
   },
   "Task/Sorting-algorithms-Quicksort/C/sorting-algorithms-quicksort-2.c": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "sequence_query",
    "task": "Sorting-algorithms-Quicksort"
   },
   "Task/Sorting-algorithms-Quicksort/Common-Lisp/sorting-algorithms-quicksort-1.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Sorting-algorithms-Quicksort",
    "task": "Sorting-algorithms-Quicksort"
   },
   "Task/Sorting-algorithms-Quicksort/Common-Lisp/sorting-algorithms-quicksort-2.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Sorting-algorithms-Quicksort",
    "task": "Sorting-algorithms-Quicksort"
   },
   "Task/Sorting-algorithms-Quicksort/Common-Lisp/sorting-algorithms-quicksort-3.lisp": {
-   "answer": "not_identified",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "numeric>recurrence>double_recursion",
    "task": "Sorting-algorithms-Quicksort"
   },
   "Task/Sorting-algorithms-Quicksort/Common-Lisp/sorting-algorithms-quicksort-4.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Sorting-algorithms-Quicksort",
    "task": "Sorting-algorithms-Quicksort"
   },
   "Task/Sorting-algorithms-Quicksort/Haskell/sorting-algorithms-quicksort-1.hs": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Sorting-algorithms-Quicksort",
    "task": "Sorting-algorithms-Quicksort"
   },
   "Task/Sorting-algorithms-Quicksort/Haskell/sorting-algorithms-quicksort-2.hs": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Sorting-algorithms-Quicksort",
    "task": "Sorting-algorithms-Quicksort"
   },
   "Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-1.py": {
    "answer": "algorithm",
    "correct": false,
+   "family_correct": null,
    "name": "Sorting-algorithms-Cycle-sort",
    "task": "Sorting-algorithms-Quicksort"
   },
   "Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-2.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Sorting-algorithms-Quicksort",
    "task": "Sorting-algorithms-Quicksort"
   },
   "Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-3.py": {
    "answer": "class",
    "correct": true,
+   "family_correct": null,
    "name": "sorting",
    "task": "Sorting-algorithms-Quicksort"
   },
   "Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-4.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Sorting-algorithms-Quicksort",
    "task": "Sorting-algorithms-Quicksort"
   },
   "Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-5.py": {
-   "answer": "new_or_incorrect",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "sequence_query",
    "task": "Sorting-algorithms-Quicksort"
   },
   "Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-6.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Sorting-algorithms-Quicksort",
    "task": "Sorting-algorithms-Quicksort"
   },
   "Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-7.py": {
    "answer": "class",
    "correct": true,
+   "family_correct": null,
    "name": "sorting",
    "task": "Sorting-algorithms-Quicksort"
   },
   "Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-8.py": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "sequence_transformation",
    "task": "Sorting-algorithms-Quicksort"
   },
   "Task/Sorting-algorithms-Selection-sort/C/sorting-algorithms-selection-sort.c": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Sorting-algorithms-Selection-sort",
    "task": "Sorting-algorithms-Selection-sort"
   },
   "Task/Sorting-algorithms-Selection-sort/Common-Lisp/sorting-algorithms-selection-sort.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Sorting-algorithms-Selection-sort",
    "task": "Sorting-algorithms-Selection-sort"
   },
   "Task/Sorting-algorithms-Selection-sort/Haskell/sorting-algorithms-selection-sort-1.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "sequence_transformation",
    "task": "Sorting-algorithms-Selection-sort"
   },
   "Task/Sorting-algorithms-Selection-sort/Haskell/sorting-algorithms-selection-sort-2.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "sequence_transformation",
    "task": "Sorting-algorithms-Selection-sort"
   },
   "Task/Sorting-algorithms-Selection-sort/Haskell/sorting-algorithms-selection-sort-3.hs": {
    "answer": "class",
    "correct": true,
+   "family_correct": null,
    "name": "sorting",
    "task": "Sorting-algorithms-Selection-sort"
   },
   "Task/Sorting-algorithms-Selection-sort/Python/sorting-algorithms-selection-sort.py": {
-   "answer": "new_or_incorrect",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "sequence_query",
    "task": "Sorting-algorithms-Selection-sort"
   },
   "Task/Sorting-algorithms-Shell-sort/C/sorting-algorithms-shell-sort.c": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Sorting-algorithms-Shell-sort",
    "task": "Sorting-algorithms-Shell-sort"
   },
   "Task/Sorting-algorithms-Shell-sort/Common-Lisp/sorting-algorithms-shell-sort.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Sorting-algorithms-Shell-sort",
    "task": "Sorting-algorithms-Shell-sort"
   },
   "Task/Sorting-algorithms-Shell-sort/Haskell/sorting-algorithms-shell-sort.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "sequence_query",
    "task": "Sorting-algorithms-Shell-sort"
   },
   "Task/Sorting-algorithms-Shell-sort/Python/sorting-algorithms-shell-sort.py": {
-   "answer": "not_identified",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "sequence_transformation>comparison_sort",
    "task": "Sorting-algorithms-Shell-sort"
   },
   "Task/Sorting-algorithms-Stooge-sort/C/sorting-algorithms-stooge-sort.c": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Sorting-algorithms-Stooge-sort",
    "task": "Sorting-algorithms-Stooge-sort"
   },
   "Task/Sorting-algorithms-Stooge-sort/Common-Lisp/sorting-algorithms-stooge-sort.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Sorting-algorithms-Stooge-sort",
    "task": "Sorting-algorithms-Stooge-sort"
   },
   "Task/Sorting-algorithms-Stooge-sort/Haskell/sorting-algorithms-stooge-sort-1.hs": {
-   "answer": "not_identified",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "numeric>recurrence>double_recursion",
    "task": "Sorting-algorithms-Stooge-sort"
   },
   "Task/Sorting-algorithms-Stooge-sort/Haskell/sorting-algorithms-stooge-sort-2.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sorting-algorithms-Stooge-sort"
   },
   "Task/Sorting-algorithms-Stooge-sort/Python/sorting-algorithms-stooge-sort-1.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Sorting-algorithms-Stooge-sort",
    "task": "Sorting-algorithms-Stooge-sort"
   },
   "Task/Sorting-algorithms-Stooge-sort/Python/sorting-algorithms-stooge-sort-2.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Sorting-algorithms-Stooge-sort",
    "task": "Sorting-algorithms-Stooge-sort"
   },
   "Task/Sum-digits-of-an-integer/C/sum-digits-of-an-integer.c": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric",
    "task": "Sum-digits-of-an-integer"
   },
   "Task/Sum-digits-of-an-integer/Common-Lisp/sum-digits-of-an-integer-1.lisp": {
-   "answer": "not_identified",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric>decomposition>digits",
    "task": "Sum-digits-of-an-integer"
   },
   "Task/Sum-digits-of-an-integer/Common-Lisp/sum-digits-of-an-integer-2.lisp": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sum-digits-of-an-integer"
   },
   "Task/Sum-digits-of-an-integer/Haskell/sum-digits-of-an-integer-1.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric",
    "task": "Sum-digits-of-an-integer"
   },
   "Task/Sum-digits-of-an-integer/Haskell/sum-digits-of-an-integer-2.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sum-digits-of-an-integer"
   },
   "Task/Sum-digits-of-an-integer/Haskell/sum-digits-of-an-integer-3.hs": {
-   "answer": "not_identified",
+   "answer": "error_or_new",
    "correct": null,
+   "family_correct": null,
    "name": null,
    "task": "Sum-digits-of-an-integer"
   },
   "Task/Sum-digits-of-an-integer/Python/sum-digits-of-an-integer-1.py": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric",
    "task": "Sum-digits-of-an-integer"
   },
   "Task/Sum-digits-of-an-integer/Python/sum-digits-of-an-integer-2.py": {
-   "answer": "new_or_incorrect",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric",
    "task": "Sum-digits-of-an-integer"
   },
   "Task/Sum-digits-of-an-integer/Python/sum-digits-of-an-integer-3.py": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric",
    "task": "Sum-digits-of-an-integer"
   },
   "Task/Sum-digits-of-an-integer/Python/sum-digits-of-an-integer-4.py": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric",
    "task": "Sum-digits-of-an-integer"
   },
   "Task/Towers-of-Hanoi/C/towers-of-hanoi-1.c": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Towers-of-Hanoi",
    "task": "Towers-of-Hanoi"
   },
   "Task/Towers-of-Hanoi/C/towers-of-hanoi-2.c": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Towers-of-Hanoi",
    "task": "Towers-of-Hanoi"
   },
   "Task/Towers-of-Hanoi/Common-Lisp/towers-of-hanoi.lisp": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Towers-of-Hanoi",
    "task": "Towers-of-Hanoi"
   },
   "Task/Towers-of-Hanoi/Haskell/towers-of-hanoi-1.hs": {
-   "answer": "new_or_incorrect",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "sequence_transformation>comparison_sort>partition_recursive",
    "task": "Towers-of-Hanoi"
   },
   "Task/Towers-of-Hanoi/Haskell/towers-of-hanoi-2.hs": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Towers-of-Hanoi",
    "task": "Towers-of-Hanoi"
   },
   "Task/Towers-of-Hanoi/Haskell/towers-of-hanoi-3.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": false,
+   "name": "sequence_query",
    "task": "Towers-of-Hanoi"
   },
   "Task/Towers-of-Hanoi/Haskell/towers-of-hanoi-4.hs": {
-   "answer": "not_identified",
+   "answer": "variation_root",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric",
    "task": "Towers-of-Hanoi"
   },
   "Task/Towers-of-Hanoi/Haskell/towers-of-hanoi-5.hs": {
-   "answer": "not_identified",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric>recurrence>double_recursion",
    "task": "Towers-of-Hanoi"
   },
   "Task/Towers-of-Hanoi/Python/towers-of-hanoi-1.py": {
    "answer": "algorithm",
    "correct": true,
+   "family_correct": null,
    "name": "Towers-of-Hanoi",
    "task": "Towers-of-Hanoi"
   },
   "Task/Towers-of-Hanoi/Python/towers-of-hanoi-2.py": {
-   "answer": "not_identified",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric>recurrence>double_recursion",
    "task": "Towers-of-Hanoi"
   },
   "Task/Towers-of-Hanoi/Python/towers-of-hanoi-3.py": {
-   "answer": "not_identified",
+   "answer": "variation",
    "correct": null,
-   "name": null,
+   "family_correct": true,
+   "name": "numeric>recurrence>double_recursion",
    "task": "Towers-of-Hanoi"
   }
  }

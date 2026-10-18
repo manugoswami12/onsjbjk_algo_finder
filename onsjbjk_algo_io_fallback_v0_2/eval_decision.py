@@ -19,12 +19,14 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
-import ta_corpus  # noqa: F401  (ROOT)
+import ta_corpus
 from eval_classes import task_class
 from ta_corpus import ROOT
 
 HELDOUT = ROOT / 'benchmark' / 'ta_heldout.json'
 LIBRARY = ROOT / 'benchmark' / 'library_fallback.json'
+PROPOSED = ROOT / 'benchmark' / 'proposed_fallback.json'
+ANSWERS = ROOT / 'benchmark' / 'ta_answers.json'
 OUT, REPORT = ROOT / 'benchmark' / 'decision_fallback.json', ROOT / 'benchmark' / 'decision_fallback.md'
 WITNESS = sys.argv[3] if len(sys.argv) > 3 else 'agree'
 
@@ -47,17 +49,26 @@ def node_agrees(dec: dict, class_nodes: dict[str, list[tuple[str, list[str]]]], 
                for m in ms for n in dec.get('nodes', []))
 
 
-def answer(res: dict, dec: dict, lib: str | None, class_nodes: dict) -> tuple[str, str | None]:
-    """(kind, name) of the file's one answer, in order: algorithm, class, new_or_incorrect, not_identified."""
+def answer(res: dict, dec: dict, lib: str | None, class_nodes: dict, branch: str | None = None) -> tuple[str, str | None]:
+    """(kind, name) of the file's one answer, in order: algorithm, class (a class relation with its witness, a proposed
+    branch, a library name), then the user's rule: a file that reaches a tree node where no rule matched is a variation
+    of the family at that node (variation, or variation_root when it reaches only a root node); a file that reaches no
+    tree node is an error or a new class (error_or_new)."""
     if res.get('got'):
         return 'algorithm', res['got']
     if dec.get('decision') == 'new_version' and node_agrees(dec, class_nodes):
         return 'class', dec['class']
+    if branch:
+        return 'class', branch
     if lib:
         return 'class', lib
-    if dec.get('decision') == 'new_algorithm':
-        return 'new_or_incorrect', None
-    return 'not_identified', None
+    nodes = res.get('nodes') or []
+    deep = [n for n in nodes if '>' in n]
+    if deep:
+        return 'variation', max(deep, key=lambda n: (n.count('>'), n))
+    if nodes:
+        return 'variation_root', min(nodes)
+    return 'error_or_new', None
 
 
 def main():
@@ -65,6 +76,11 @@ def main():
     corpus_dec = json.loads(Path(sys.argv[2]).read_text(encoding='utf-8'))
     held = json.loads(HELDOUT.read_text(encoding='utf-8'))
     lib = {r: x['library']['file'] for r, x in json.loads(LIBRARY.read_text(encoding='utf-8'))['heldout'].items()}
+    branch = ({r: x['branch'] for r, x in json.loads(PROPOSED.read_text(encoding='utf-8'))['heldout'].items()}
+              if PROPOSED.exists() else {})
+    corpus_nodes = json.loads(ANSWERS.read_text(encoding='utf-8'))
+    task_nodes = {t: [n for rel in rels for n in corpus_nodes.get(rel, {}).get('nodes', [])]
+                  for t, rels in ta_corpus.tasks().items()}
     class_nodes = defaultdict(list)
     for rel, d in corpus_dec.items():
         if d.get('decision') == 'new_version':
@@ -72,45 +88,56 @@ def main():
     rows, score = {}, defaultdict(lambda: defaultdict(int))
     for rel, res in sorted(held.items()):
         task, lang = res['task'], rel.split('/')[2]
-        kind, name = answer(res, held_dec.get(rel, {}), lib.get(rel), class_nodes)
+        kind, name = answer(res, held_dec.get(rel, {}), lib.get(rel), class_nodes, branch.get(rel))
         if kind == 'algorithm':
             ok = name == task
         elif kind == 'class':
             ok = name == task_class(task)
+        elif kind in ('variation', 'variation_root'):     # the family is right when TheAlgorithms files of the task
+            ok = any(same_path(name, m) for m in task_nodes.get(task, []))   # reach a node on its path
         else:
             ok = None
-        rows[rel] = {'task': task, 'answer': kind, 'name': name, 'correct': ok}
+        rows[rel] = {'task': task, 'answer': kind, 'name': name, 'correct': ok if kind in ('algorithm', 'class') else None,
+                     'family_correct': ok if kind.startswith('variation') else None}
         for key in (lang, 'all'):
             s = score[key]
             s['n'] += 1
             s[kind] += 1
             if ok is not None:
-                s['ok' if ok else 'wrong'] += 1
+                level = 'fam_' if kind.startswith('variation') else ''
+                s[level + kind + ('_ok' if ok else '_wrong') if level else ('ok' if ok else 'wrong')] += 1
     claims = {rel: d['class'] for rel, d in corpus_dec.items()
               if d.get('decision') == 'new_version' and node_agrees(d, class_nodes, own=rel)}
     dropped = sorted(rel for rel, d in corpus_dec.items()
                      if d.get('decision') == 'new_version' and rel not in claims)
     OUT.write_text(json.dumps({'heldout': rows, 'corpus_class_claims': claims}, indent=1, sort_keys=True) + '\n',
                    encoding='utf-8')
-    lines = ['# Four-way answer test (doc 04 section 18.2): held-out Rosetta files', '',
-             ('Each file gets one answer: the algorithm (eval_ta.py), else its class (a class relation on runs over every '
-              'battery input, or a library name), else "new or incorrect implementation" (runs fully, no relation), '
-              'else "not identified". Separate from the pipeline (eval_decision.py).'), '',
-             ('| language | files | algorithm | class | correct / wrong (algorithm + class) | precision | identified '
-              '(recall) | new or incorrect | not identified | answered (any of the four but not identified) |'),
-             '|---|---|---|---|---|---|---|---|---|---|']
+    lines = ['# Answer for every held-out file (doc 04 section 18.2): held-out Rosetta files', '',
+             ('Each file gets one answer, in order: the algorithm (eval_ta.py); its class (a class relation on runs over '
+              'every battery input with a node witness, a proposed branch, or a library name); else the user\'s rule: a '
+              'file that reaches a tree node where no rule matched is a variation of the family at that node, and a file '
+              'that reaches no tree node is an error or a new class. Separate from the pipeline (eval_decision.py).'), '',
+             ('Identified = algorithm or class. A family answer is right when TheAlgorithms files of the task reach a node '
+              'on its path; it is reported apart and never counted as identified. A root family (numeric, '
+              'sequence_query, sequence_transformation) holds 9+ tasks.'), '',
+             ('| language | files | identified: correct / wrong | precision | recall | variation, deep node: right / wrong '
+              '| variation, root node only: right / wrong | error or new class (no node) |'),
+             '|---|---|---|---|---|---|---|---|']
     for key in sorted(score, key=lambda k: (k == 'all', k)):
         s = score[key]
         prec = s['ok'] / max(s['ok'] + s['wrong'], 1)
-        lines.append(f"| {key} | {s['n']} | {s['algorithm']} | {s['class']} | {s['ok']} / {s['wrong']} | {prec:.1%} | "
-                     f"{s['ok'] / s['n']:.1%} | {s['new_or_incorrect']} | {s['not_identified']} | "
-                     f"{(s['n'] - s['not_identified']) / s['n']:.1%} |")
+        lines.append(f"| {key} | {s['n']} | {s['ok']} / {s['wrong']} | {prec:.1%} | {s['ok'] / s['n']:.1%} | "
+                     f"{s['fam_variation_ok']} / {s['fam_variation_wrong']} | "
+                     f"{s['fam_variation_root_ok']} / {s['fam_variation_root_wrong']} | {s['error_or_new']} |")
     wrong = [(r, x) for r, x in rows.items() if x['correct'] is False]
     lines += ['', f'## Wrong answers ({len(wrong)})', '']
     lines += [f"- {r}: {x['answer']} {x['name']}, task {x['task']}" for r, x in wrong]
-    news = [(r, x) for r, x in rows.items() if x['answer'] == 'new_or_incorrect']
-    lines += ['', (f'## "New or incorrect implementation" ({len(news)}; every held-out task is known, so each is an '
-                   'implementation we cannot check)'), '']
+    fam_wrong = [(r, x) for r, x in rows.items() if x['answer'] == 'variation' and x['family_correct'] is False]
+    lines += ['', f'## Variation of a deep family, family wrong ({len(fam_wrong)})', '']
+    lines += [f"- {r}: {x['name']}, task {x['task']}" for r, x in fam_wrong]
+    news = [(r, x) for r, x in rows.items() if x['answer'] == 'error_or_new']
+    lines += ['', (f'## Error or new class: reaches no tree node ({len(news)}; every held-out task is known, so each is a '
+                   'program the lowering or interpreter cannot handle)'), '']
     lines += [f"- {r} (task {x['task']})" for r, x in news]
     by_class = defaultdict(list)
     for rel, c in claims.items():
