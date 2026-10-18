@@ -80,8 +80,8 @@ def main():
     lines += ['', f'## Wrong answers ({len(wrong)})', '']
     lines += [f"- {r}: {x['answer']} {x['name']}, task {x['task']}" for r, x in wrong]
     news = [(r, x) for r, x in rows.items() if x['answer'] == 'new_or_incorrect']
-    lines += ['', f'## "New or incorrect implementation" ({len(news)}; every held-out task is known, so each is an '
-              'implementation we cannot check)', '']
+    lines += ['', (f'## "New or incorrect implementation" ({len(news)}; every held-out task is known, so each is an '
+                   'implementation we cannot check)'), '']
     lines += [f"- {r} (task {x['task']})" for r, x in news]
     by_class = defaultdict(list)
     for rel, c in claims.items():
