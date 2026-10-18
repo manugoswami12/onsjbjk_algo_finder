@@ -26,5 +26,8 @@ abstract(_, T, T) :- \+ compound(T), !.
 abstract(F, T0, T) :- T0 =.. [Fn|As], maplist(abstract(F), As, Bs), T =.. [Fn|Bs].
 own_function(G) :- func(_, N, _), base_name(N, G), !.
 
+% file_has(A): a statement of some function of the file has the abstracted relation A (the components the helper
+% indexes are the file's)
+file_has(A) :- in_func(S, F), component(S, R), abstract(F, R, A0), A0 == A, !.
 % has_rel(F, A): a statement of F has the abstracted relation A
 has_rel(F, A) :- in_func(S, F), component(S, R), abstract(F, R, A0), A0 == A, !.
