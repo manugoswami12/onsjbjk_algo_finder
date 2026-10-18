@@ -215,7 +215,7 @@ def status(labels: dict[str, str]):
                      'T1': not failed, 'T2_false': t2, 'T3': f'{t3_ok}/{len(t3)}' if t3 else '-', 'reason': reason}
     STATUS.write_text(json.dumps(rows, indent=1, sort_keys=True) + '\n', encoding='utf-8')
     write_prompts(rows)
-    write_result(rows)
+    write_result(rows, held, gs)
 
 
 def failure_kind(x: dict) -> str:
@@ -290,7 +290,38 @@ def write_prompts(rows):
     (ROOT / 'docs' / 'HAND_RULE_PROMPTS.md').write_text('\n'.join(out), encoding='utf-8')
 
 
-def write_result(rows):
+def learning_only(res: dict, gs: dict) -> str | None:
+    """The answer without the built and hand branches: the learned evidence of answer() in the same order."""
+    for cands in ({ta_corpus.group(h, gs) for h in res.get('held_trace', [])},
+                  {ta_corpus.group(h, gs) for h in res.get('held', [])}, {ta_corpus.group(i, gs) for i in res.get('io', [])}):
+        if cands:
+            return next(iter(cands)) if len(cands) == 1 else None
+    return None
+
+
+def heldout_table(held: dict, gs: dict) -> list[str]:
+    """Precision and recall on the held-out Rosetta files, per language, with and without the hand/built branches."""
+    by = defaultdict(lambda: defaultdict(int))
+    for rel, res in held.items():
+        lang, task = rel.split('/')[2], res['task']
+        for mode, got in (('all', res.get('got')), ('learning', learning_only(res, gs))):
+            for key in (lang, 'all'):
+                by[(mode, key)]['n'] += 1
+                by[(mode, key)]['ok' if got == task else 'wrong' if got else 'unknown'] += 1
+    out = ['## Held-out Rosetta files (T3 data): precision and recall', '',
+           ('Recall = correct / files; precision = correct / answered. "learning only" drops the built and hand '
+            'branches (the answer from the learned trace/logic, io branches and the io fallback alone).'), '',
+           '| language | files | correct | wrong | UNKNOWN | precision | recall | learning only: correct / wrong |',
+           '|---|---|---|---|---|---|---|---|']
+    for key in sorted({k for _, k in by}, key=lambda k: (k == 'all', k)):
+        a, lo = by[('all', key)], by[('learning', key)]
+        prec = a['ok'] / max(a['ok'] + a['wrong'], 1)
+        out.append(f"| {key} | {a['n']} | {a['ok']} | {a['wrong']} | {a['unknown']} | {prec:.1%} | "
+                   f"{a['ok'] / max(a['n'], 1):.1%} | {lo['ok']} / {lo['wrong']} |")
+    return out + ['']
+
+
+def write_result(rows, held=None, gs=None):
     per_dir = defaultdict(lambda: defaultdict(int))
     for r in rows.values():
         per_dir[r['files'][0].split('/')[0]][r['status']] += 1
@@ -306,6 +337,12 @@ def write_result(rows):
            '| folder | ' + ' | '.join(kinds) + ' |', '|---|' + '---|' * len(kinds)]
     out += [f"| {d} | " + ' | '.join(str(per_dir[d][k]) for k in kinds) + ' |' for d in sorted(per_dir)]
     out += ['| **all** | ' + ' | '.join(f'**{total[k]}**' for k in kinds) + ' |', '']
+    claimed = [r for r in rows.values() if 'claimed' in r.get('kinds', [])]
+    euler = [r for r in claimed if all(f.startswith('project_euler/') for f in r['T2_false'])]
+    out += [(f'T2 fails for {len(claimed)} labels; for {len(euler)} of them every claiming file is a Project Euler '
+             'solution (a problem file built on the algorithm, e.g. a sieve inside problem 10).'), '']
+    if held is not None:
+        out += heldout_table(held, gs)
     out += ['## Labels with a held-out test (T3)', '', '| label | status | T3 | reason |', '|---|---|---|---|']
     out += [f"| {lab} | {r['status']} | {r['T3']} | {r.get('reason') or ''} |" for lab, r in sorted(rows.items())
             if r.get('T3', '-') != '-']
