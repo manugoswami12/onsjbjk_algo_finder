@@ -8,13 +8,14 @@ Identified = algorithm or class. A family answer is right when TheAlgorithms fil
 |---|---|---|---|---|---|---|---|
 | C | 69 | 31 / 1 | 96.9% | 44.9% | 7 / 1 | 7 / 7 | 15 |
 | Common-Lisp | 75 | 44 / 1 | 97.8% | 58.7% | 9 / 2 | 4 / 5 | 10 |
-| Haskell | 144 | 33 / 2 | 94.3% | 22.9% | 3 / 3 | 17 / 29 | 57 |
+| Haskell | 144 | 33 / 3 | 91.7% | 22.9% | 3 / 3 | 17 / 29 | 56 |
 | Python | 162 | 65 / 6 | 91.5% | 40.1% | 11 / 4 | 23 / 12 | 41 |
-| all | 450 | 173 / 10 | 94.5% | 38.4% | 30 / 10 | 51 / 53 | 123 |
+| all | 450 | 173 / 11 | 94.0% | 38.4% | 30 / 10 | 51 / 53 | 122 |
 
-## Wrong answers (10)
+## Wrong answers (11)
 
 - Task/Factorial/C/factorial-2.c: algorithm problem_020, task Factorial
+- Task/Factorial/Haskell/factorial-2.hs: algorithm problem_020, task Factorial
 - Task/Factorial/Haskell/factorial-8.hs: algorithm problem_020, task Factorial
 - Task/Factorial/Python/factorial-7.py: algorithm problem_020, task Factorial
 - Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-9.lisp: algorithm signum, task Fibonacci-sequence
@@ -38,14 +39,13 @@ Identified = algorithm or class. A family answer is right when TheAlgorithms fil
 - Task/Sorting-algorithms-Stooge-sort/Haskell/sorting-algorithms-stooge-sort-1.hs: numeric>recurrence>double_recursion, task Sorting-algorithms-Stooge-sort
 - Task/Towers-of-Hanoi/Haskell/towers-of-hanoi-1.hs: sequence_transformation>comparison_sort>partition_recursive, task Towers-of-Hanoi
 
-## Error or new class: reaches no tree node (123; every held-out task is known, so each is a program the lowering or interpreter cannot handle)
+## Error or new class: reaches no tree node (122; every held-out task is known, so each is a program the lowering or interpreter cannot handle)
 
 - Task/Binary-search/Haskell/binary-search-2.hs (task Binary-search)
 - Task/Binary-search/Haskell/binary-search-3.hs (task Binary-search)
 - Task/Binary-search/Python/binary-search-5.py (task Binary-search)
 - Task/Caesar-cipher/Python/caesar-cipher-4.py (task Caesar-cipher)
 - Task/Factorial/C/factorial-6.c (task Factorial)
-- Task/Factorial/Haskell/factorial-2.hs (task Factorial)
 - Task/Factorial/Haskell/factorial-4.hs (task Factorial)
 - Task/Factorial/Haskell/factorial-5.hs (task Factorial)
 - Task/Factorial/Haskell/factorial-9.hs (task Factorial)
@@ -176,21 +176,3 @@ Identified = algorithm or class. A family answer is right when TheAlgorithms fil
 
 - maths/average_mode.py: sorting, nodes []
 - maths/special_numbers/triangular_numbers.py: triangular, nodes []
-
-## Notes (v0.3 runner: lambdas, closures, module constants, generator arguments, more library relations)
-
-- **Held-out class decisions: 39, all correct** (35 with AP13's runner). New ones include:
-  - prime2 and primality-1, which use `any(...)` over a generator and now run on every input;
-  - binary-search-6, which uses `bisect_left` with lo/hi.
-- **Identified: 173 correct, 10 wrong** (94.5 % precision, 38.4 % recall; Python 40.1 %, up from 37.7 %). All 10
-  wrong answers are the main pipeline's own algorithm answers.
-- **TheAlgorithms class claims: 37, checked by hand, all right.** The one new claim is
-  maths/special_numbers/perfect_number.py, which is a perfect-number check. 0 false positives.
-- **What the runner cannot fix, because these are not runnable programs:**
-  - Curried Haskell-style Python, where a function returns a lambda: counted as "returns a function", never as a
-    result.
-  - Strings as character lists: `int(d)` for a digit character gives its code, so luhn-1 is "new or incorrect", not
-    a wrong class.
-  - Haskell: the 52 files that do not run are GHCi transcripts, bare expressions, imports of packages that are not
-    installed (Data.Numbers.Primes, Data.CReal), or code with deferred type errors (`Variable not in scope: merge`).
-    None of them is a program that a wrapper could make.

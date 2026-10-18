@@ -12,7 +12,7 @@ other people's code from [Rosetta Code](https://rosettacode.org) in four languag
 | | correct | wrong | precision | recall |
 |---|---|---|---|---|
 | Code it learned from (1344 TheAlgorithms files) | 1344 | 0 | 100% | 100% |
-| New code it never saw (205 analysable Rosetta files) | 173 | 10 | 94.5% | 84.4% (38.4% of all 450 files) |
+| New code it never saw (205 analysable Rosetta files) | 173 | 11 | 94.0% | 84.4% (38.4% of all 450 files) |
 
 The full report is in [benchmark/FINAL_REPORT.md](benchmark/FINAL_REPORT.md). "Analysable" is explained in
 [Reading the answers](#reading-the-answers).
@@ -26,6 +26,7 @@ The full report is in [benchmark/FINAL_REPORT.md](benchmark/FINAL_REPORT.md). "A
 | `*.py`, `prolog/`, `tools_manual/` | The program. |
 | `polyglot_logic/` | The part that reads source code in many languages and turns it into Prolog. The main program uses it. |
 | `data/` | The two code collections used, **already included**, so you do not need to download anything. See `data/README.md`. |
+| `vendor/tree-sitter/` | tree-sitter (the code reader) kept exactly as tested: the pip packages, the prebuilt grammars, all source code and checksums. Install it with `python vendor/tree-sitter/install_offline.py`. |
 | `benchmark/` | The results. Start with `FINAL_REPORT.md`. |
 | `tests/` | Automatic tests. |
 | `docs/` | Design documents. Technical details are in `docs/04_LEARNING_DESIGN.md` and `docs/README_v02_details.md`. |
@@ -37,6 +38,9 @@ The full report is in [benchmark/FINAL_REPORT.md](benchmark/FINAL_REPORT.md). "A
 
 You need **Python** and **SWI-Prolog**. **ECL** and **GHC** are optional: they are only needed to read Common Lisp
 and Haskell files.
+
+Tested with Python 3.13, SWI-Prolog 9.0.4, ECL 21.2.1 and GHC 9.4.7. tree-sitter 0.26.0 is installed from this
+repository.
 
 ### Windows
 
@@ -89,11 +93,24 @@ Each command should print a version number. On Linux or macOS, type `python3` wh
 ```
 git clone https://github.com/manugoswami12/onsjbjk_algo_finder.git
 cd onsjbjk_algo_finder
+python vendor/tree-sitter/install_offline.py
+```
+
+The last command installs **tree-sitter**, the code reader, exactly as it was tested. It needs no internet, because
+everything is in `vendor/tree-sitter/`:
+- the exact pip packages;
+- the 8 language grammars, prebuilt for Windows, macOS and Linux;
+- all of their source code;
+- a sha256 checksum for every file.
+
+It ends with `done: tree-sitter is installed exactly as tested`.
+
+If your computer is not Windows x86-64, macOS or Linux x86-64, use the online install instead. It gets the same pinned
+versions:
+```
 python -m pip install -r polyglot_logic/requirements.txt
 python polyglot_logic/tools/cli.py prefetch
 ```
-
-The last command downloads the grammars used to read each language, once.
 
 From here on, **every command is typed in the `onsjbjk_algo_finder` folder.**
 
@@ -215,7 +232,7 @@ How the results are counted:
 |---|---|
 | `swipl` is not recognised | SWI-Prolog is not on PATH. See step 1 (Windows: add `C:\Program Files\swipl\bin`). |
 | `ModuleNotFoundError` | Run commands from the `onsjbjk_algo_finder` folder, after `set PYTHONPATH=.` or `export PYTHONPATH=.`. |
-| Errors about tree-sitter or a grammar | Run `python polyglot_logic/tools/cli.py prefetch` again. |
+| Errors about tree-sitter or a grammar | Run `python vendor/tree-sitter/install_offline.py` again. |
 | Every Lisp or Haskell file is "not analysable" | ECL or GHC is not installed, or not on PATH. |
 | A step is slow | That is normal for the full collections. You can try one folder first with `python eval_ta.py data/TheAlgorithms-Python --run --dir sorts`. |
 

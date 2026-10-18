@@ -761,17 +761,11 @@
 "why": "ambiguous"
 },
 "Task/Factorial/Haskell/factorial-2.hs": {
-"at": "io",
 "built": [],
-"clash": [
-"Factorial",
-"krishnamurthy_number",
-"number_of_possible_binary_trees",
-"primelib",
+"got": "problem_020",
+"held": [
 "problem_020"
 ],
-"got": null,
-"held": [],
 "held_trace": [],
 "io": [
 "factorial",
@@ -784,7 +778,7 @@
 "nodes": [],
 "specific": [],
 "task": "Factorial",
-"why": "ambiguous"
+"why": "learned"
 },
 "Task/Factorial/Haskell/factorial-3.hs": {
 "built": [

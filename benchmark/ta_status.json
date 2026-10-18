@@ -6214,7 +6214,7 @@
   "nodes": [
    "numeric>recurrence>range_accumulation"
   ],
-  "reason": "T3 15/31 held-out, wrong [('Task/Factorial/C/factorial-2.c', 'problem_020'), ('Task/Factorial/Haskell/factorial-8.hs', 'problem_020'), ('Task/Factorial/Python/factorial-7.py', 'problem_020')]",
+  "reason": "T3 15/31 held-out, wrong [('Task/Factorial/C/factorial-2.c', 'problem_020'), ('Task/Factorial/Haskell/factorial-2.hs', 'problem_020'), ('Task/Factorial/Haskell/factorial-8.hs', 'problem_020')]",
   "status": "not_learned"
  },
  "factors": {

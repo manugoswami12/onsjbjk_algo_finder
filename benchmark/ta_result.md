@@ -62,9 +62,9 @@ Recall = correct / files; precision = correct / answered. "learning only" drops 
 |---|---|---|---|---|---|---|---|
 | C | 69 | 31 | 1 | 37 | 96.9% | 44.9% | 6 / 2 |
 | Common-Lisp | 75 | 42 | 1 | 32 | 97.7% | 56.0% | 4 / 2 |
-| Haskell | 144 | 29 | 2 | 113 | 93.5% | 20.1% | 7 / 3 |
+| Haskell | 144 | 29 | 3 | 112 | 90.6% | 20.1% | 7 / 4 |
 | Python | 162 | 56 | 6 | 100 | 90.3% | 34.6% | 14 / 9 |
-| all | 450 | 158 | 10 | 282 | 94.0% | 35.1% | 31 / 16 |
+| all | 450 | 158 | 11 | 281 | 93.5% | 35.1% | 31 / 17 |
 
 ## Labels with a held-out test (T3)
 
@@ -82,7 +82,7 @@ Recall = correct / files; precision = correct / answered. "learning only" drops 
 | counting_sort | hand_rule | 2/6 |  |
 | cycle_sort | not_learned | 0/2 | T3 0/2 held-out, wrong [] |
 | edit_distance | not_learned | 4/10 | T3 4/10 held-out, wrong [('Task/Levenshtein-distance/Python/levenshtein-distance-5.py', 'problem_007')] |
-| factorial | not_learned | 15/31 | T3 15/31 held-out, wrong [('Task/Factorial/C/factorial-2.c', 'problem_020'), ('Task/Factorial/Haskell/factorial-8.hs', 'problem_020'), ('Task/Factorial/Python/factorial-7.py', 'problem_020')] |
+| factorial | not_learned | 15/31 | T3 15/31 held-out, wrong [('Task/Factorial/C/factorial-2.c', 'problem_020'), ('Task/Factorial/Haskell/factorial-2.hs', 'problem_020'), ('Task/Factorial/Haskell/factorial-8.hs', 'problem_020')] |
 | fast_fibonacci | not_learned | 15/59 | T3 15/59 held-out, wrong [('Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-9.lisp', 'signum')] |
 | fibonacci | not_learned | 15/59 | T3 15/59 held-out, wrong [('Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-9.lisp', 'signum')] |
 | gcd_of_n_numbers | file_rule | 6/13 |  |

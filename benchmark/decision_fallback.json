@@ -306,10 +306,10 @@
    "task": "Factorial"
   },
   "Task/Factorial/Haskell/factorial-2.hs": {
-   "answer": "error_or_new",
-   "correct": null,
+   "answer": "algorithm",
+   "correct": false,
    "family_correct": null,
-   "name": null,
+   "name": "problem_020",
    "task": "Factorial"
   },
   "Task/Factorial/Haskell/factorial-3.hs": {
