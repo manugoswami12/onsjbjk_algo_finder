@@ -23,12 +23,17 @@ def quote(text: str) -> str:
     return "'" + text.replace('\\', '\\\\').replace("'", "\\'") + "'"
 
 
-def runs(path: Path) -> dict[str, tuple[list, list[tuple[list, str]]]]:
-    """{function: (logical signature, [(inputs, output text)])} of the runs that succeeded."""
+def runs(path: Path, v03: bool = False) -> dict[str, tuple[list, list[tuple[list, str]]]]:
+    """{function: (logical signature, [(inputs, output text)])} of the runs that succeeded. v03: run the normal form
+    with the separate v0.3 runner (pnf_v03.py: lambdas, module constants, more library relations)."""
     compare_learners._ap13()
     import io_trace
     try:
-        info = io_trace.run_functions(path)
+        if v03:
+            import pnf_v03
+            info = pnf_v03.run_functions(path)
+        else:
+            info = io_trace.run_functions(path)
     except ERRORS:
         return {}
     out = {}

@@ -6,7 +6,7 @@ functions no other own function calls, so a helper's class is never the file's),
   new_algorithm  every root ran on every input, its output varies, and no class relation holds
   undecided      anything else (a root that does not run fully, roots of no or different classes, a timeout)
 
-usage: PYTHONPATH=. python tools_manual/decide_new_or_known.py ROOT FILES.json OUT.json
+usage: PYTHONPATH=. python tools_manual/decide_new_or_known.py ROOT FILES.json OUT.json [--v03]
 """
 import json
 import sys
@@ -24,6 +24,9 @@ compare_learners._ap13()
 import io_trace
 
 ROOTS = ROOT / 'prolog' / 'call_roots.pl'
+V03 = '--v03' in sys.argv          # run the normal form with the separate v0.3 runner (pnf_v03.py)
+if V03:
+    import pnf_v03
 
 
 def roots(p: Path) -> set[str]:
@@ -52,7 +55,7 @@ def base(name: str) -> str:
 def decide(p: Path) -> dict:
     try:
         rts = roots(p)
-        info = io_trace.run_functions(p)
+        info = (pnf_v03.run_functions(p) if V03 else io_trace.run_functions(p))
     except Exception as e:                          # noqa: BLE001  (any failure is undecided)
         return {'decision': 'undecided', 'why': 'no run: ' + type(e).__name__}
     if not rts:
@@ -63,7 +66,7 @@ def decide(p: Path) -> dict:
                 'not_full': sorted(rts - full)}     # algorithm itself: simpson_integration beside f(x) = x*x)
     ran = rts
     try:
-        rs = ta_classes.runs(p)
+        rs = ta_classes.runs(p, v03=V03)
         cs = ta_classes.classes(p, rs)
     except Exception as e:                          # noqa: BLE001
         return {'decision': 'undecided', 'why': 'check error ' + type(e).__name__}
