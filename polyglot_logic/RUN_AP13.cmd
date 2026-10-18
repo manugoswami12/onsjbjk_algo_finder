@@ -6,7 +6,7 @@ rem   RUN_AP13.cmd scan examples\bubble\bubble.hs
 rem   RUN_AP13.cmd learn-dir  path\to\TheAlgorithms_Python
 rem   RUN_AP13.cmd validate   path\to\TheAlgorithms_Python
 rem   RUN_AP13.cmd generalize path\to\TheAlgorithms_Python
-rem   RUN_AP13.cmd learn-corpus ..\algo_reference_corpus\TheAlgorithms_Python ..\algo_reference_corpus\store
+rem   RUN_AP13.cmd learn-corpus ..\older_code\algo_reference_corpus\TheAlgorithms_Python ..\older_code\algo_reference_corpus\store
 setlocal
 cd /d "%~dp0"
 where swipl >nul 2>&1 || (echo AP13_ERROR: swipl not on PATH. set "PATH=A:\swipl\bin;%%PATH%%" & exit /b 2)

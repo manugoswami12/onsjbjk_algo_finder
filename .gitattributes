@@ -1,0 +1,2 @@
+# data/ is stored byte for byte as it was analysed (no line-ending conversion)
+data/** -text

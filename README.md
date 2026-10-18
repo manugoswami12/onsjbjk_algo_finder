@@ -1,72 +1,239 @@
 # ONSJBJK Algorithm Finder
 
-Experimental deterministic Python algorithm-structure recognition using Semgrep's OCaml generic AST, Python, SWI-Prolog and SQLite.
+**What it does:** you give it a program (Python, C, Common Lisp or Haskell), and it tells you which algorithm the
+program is, or at least what it computes ("this is a sort", "this is a gcd").
+- It does not use machine learning.
+- It does not run your program. It turns the program into Prolog, and SWI-Prolog checks that.
+- When it is not sure, it says UNKNOWN instead of guessing.
 
-The repository contains five related components:
+It learned every algorithm in [TheAlgorithms/Python](https://github.com/TheAlgorithms/Python). It was then tested on
+other people's code from [Rosetta Code](https://rosettacode.org) in four languages:
 
-| Directory | Responsibility |
-| --- | --- |
-| `semgrep_prolog_poc/` | AP2–AP10: existing structural AST-to-Prolog extraction, exact reference matching, and compositional recognition. |
-| `onsjbjk_algo_io_fallback_poc_v0_1/` | Independent input/output relationship experiment and SWI-Prolog candidate-family routing. |
-| `algo_reference_corpus/` | AP11 immutable reference ingestion and AP12 separate automatic-fallback/full-corpus orchestration. |
-| `polyglot_logic/` | AP13 multi-language logic tracing: learn from Python, recognise the same traced logic in Rust, Java, C, R, Haskell, Common Lisp and Prolog (tree-sitter + SWI-Prolog; reuses the AP12 router unchanged). |
-| `onsjbjk_algo_io_fallback_v0_2/` | Learns every algorithm of TheAlgorithms/Python (by extending AP13, which it does not edit). It is tested on held-out Rosetta Code in Python, C, Common Lisp and Haskell. A separate fallback decides an algorithm's class from its input→output relation and writes it as a Prolog branch. |
+| | correct | wrong | precision | recall |
+|---|---|---|---|---|
+| Code it learned from (1344 TheAlgorithms files) | 1344 | 0 | 100% | 100% |
+| New code it never saw (205 analysable Rosetta files) | 173 | 10 | 94.5% | 84.4% (38.4% of all 450 files) |
 
-## Results (v0.2, `onsjbjk_algo_io_fallback_v0_2/benchmark/FINAL_REPORT.md`)
+The full report is in [benchmark/FINAL_REPORT.md](benchmark/FINAL_REPORT.md). "Analysable" is explained in
+[Reading the answers](#reading-the-answers).
 
-| | files scored | correct | false positives | false negatives | precision | recall |
-| --- | --- | --- | --- | --- | --- | --- |
-| Learnt code: TheAlgorithms/Python | 1344 of 1346 | 1344 | 0 | 0 | 100% | 100% |
-| New code: held-out Rosetta (4 languages) | 205 of 450 | 173 | 10 | 32 | 94.5% | 84.4% (38.4% on all 450) |
+---
 
-Reporting criteria:
-- **Code the system cannot analyse is not scored.** A held-out file is not analysable when the pipeline gave no answer
-  and none of its functions runs on every test input. A TheAlgorithms file is not analysable when it has no algorithm
-  code at all.
-- **Files with identical logic count once.** Naming either of their labels is right.
-- **Wrong answers are never excluded.**
-- The all-files figure is always given beside the analysable one. Per-language numbers are in the report.
+## Contents of this repository
+
+| Folder or file | What it is |
+|---|---|
+| `*.py`, `prolog/`, `tools_manual/` | The program. |
+| `polyglot_logic/` | The part that reads source code in many languages and turns it into Prolog. The main program uses it. |
+| `data/` | The two code collections used, **already included**, so you do not need to download anything. See `data/README.md`. |
+| `benchmark/` | The results. Start with `FINAL_REPORT.md`. |
+| `tests/` | Automatic tests. |
+| `docs/` | Design documents. Technical details are in `docs/04_LEARNING_DESIGN.md` and `docs/README_v02_details.md`. |
+| `older_code/` | Earlier versions of the project, kept for history. Two small pieces of it are still loaded by `polyglot_logic/`, so do not delete it. |
+
+---
+
+## 1. Install what it needs (once)
+
+You need **Python** and **SWI-Prolog**. **ECL** and **GHC** are optional: they are only needed to read Common Lisp
+and Haskell files.
+
+### Windows
+
+1. **Python.** Download Python 3.12 or newer from https://www.python.org/downloads/ and run the installer. On its first
+   screen, tick **"Add python.exe to PATH"**.
+2. **SWI-Prolog.** Download the Windows 64-bit installer from https://www.swi-prolog.org/download/stable and run it.
+   During setup, choose **"Add swipl to the system PATH"**.
+
+   If you missed that option, add it to PATH yourself:
+   - Press the Windows key, type *environment variables*, and open **"Edit the system environment variables"**.
+   - Click **Environment Variables…**, select **Path** under *User variables*, then **Edit → New**.
+   - Type `C:\Program Files\swipl\bin` (the folder that contains `swipl.exe`), then click OK three times.
+   - Close and reopen the Command Prompt.
+
+   To add it for the current window only:
+   ```
+   set "PATH=C:\Program Files\swipl\bin;%PATH%"
+   ```
+3. **Optional, for Haskell files.** Install GHC with GHCup from https://www.haskell.org/ghcup/. Common Lisp needs ECL,
+   which is easiest to get on Linux or macOS.
+
+### Linux (Debian or Ubuntu)
+
+```
+sudo apt update
+sudo apt install python3 python3-pip swi-prolog-nox
+sudo apt install ecl ghc          # optional: Common Lisp and Haskell
+```
+
+### macOS (with Homebrew from https://brew.sh)
+
+```
+brew install python swi-prolog
+brew install ecl ghc              # optional: Common Lisp and Haskell
+```
+
+### Check the installation
+
+Open a terminal (on Windows, the Command Prompt) and type:
+
+```
+python --version
+swipl --version
+```
+
+Each command should print a version number. On Linux or macOS, type `python3` wherever this guide says `python`.
+
+### Get the project and its Python package
+
+```
+git clone https://github.com/manugoswami12/onsjbjk_algo_finder.git
+cd onsjbjk_algo_finder
+python -m pip install -r polyglot_logic/requirements.txt
+python polyglot_logic/tools/cli.py prefetch
+```
+
+The last command downloads the grammars used to read each language, once.
+
+From here on, **every command is typed in the `onsjbjk_algo_finder` folder.**
+
+---
+
+## 2. Check that it works (about 2 minutes)
+
+```
+python -m unittest tests.test_library_names tests.test_uniform
+```
+
+It ends with `OK`.
+
+---
+
+## 3. Try it on a program of your own
+
+First set one helper variable. Do this once per terminal window:
+
+| Windows | Linux / macOS |
+|---|---|
+| `set PYTHONPATH=.` | `export PYTHONPATH=.` |
+
+Then run this, putting your file's path at the end:
+
+```
+python -c "import sys; sys.argv.append('--v03'); sys.path[:0] = ['.', 'tools_manual']; from pathlib import Path; from decide_new_or_known import decide; d = decide(Path(sys.argv[1])); print(d['decision'], d.get('class', ''), d.get('why', ''))" data/rosetta/Task/Sorting-algorithms-Gnome-sort/Haskell/sorting-algorithms-gnome-sort.hs
+```
+
+| It prints | It means |
+|---|---|
+| `new_version sorting` (or `gcd`, `search`, `factorial`, `prime_check`, …) | Your program computes this. It was checked on many test inputs. |
+| `new_algorithm` | Your program runs, but it matches nothing known. It is either a **new algorithm or an incorrect implementation**, and the two cannot be told apart. |
+| `undecided` and a reason | It could not be checked. For example, `a root does not run on every input`. |
+
+The example file above prints `new_version sorting`. A binary gcd written in Python, such as
+`data/rosetta/Task/Greatest-common-divisor/Python/greatest-common-divisor-5.py`, prints `new_version gcd`.
+
+---
+
+## 4. Reproduce all the results
+
+Everything uses the included `data/` folder. Run the steps in order. Do step 3's `set PYTHONPATH=.` (Windows) or
+`export PYTHONPATH=.` (Linux/macOS) first.
+
+**a) Learn TheAlgorithms and name every file.** This is the main pipeline, and steps a1–a3 together can take an hour
+or more:
+
+| Step | Command | Writes |
+|---|---|---|
+| a1 | `python eval_ta.py data/TheAlgorithms-Python --learn` | `prolog/learned_ta.pl` (what was learned) |
+| a2 | `python eval_ta.py data/TheAlgorithms-Python --run` | `benchmark/ta_answers.json` |
+| a3 | `python eval_ta.py data/TheAlgorithms-Python --heldout data/rosetta` | `benchmark/ta_heldout.json` (the test files) |
+| a4 | `python eval_ta.py data/TheAlgorithms-Python --status` | `benchmark/ta_status.json`, `benchmark/ta_result.md` |
+
+**b) Decide the class of every file.** This is the separate fallback; it never changes the pipeline's answers. It
+takes about 15 minutes for the test files and longer for TheAlgorithms:
+
+```
+python -c "import json; json.dump(sorted(json.load(open('benchmark/ta_heldout.json'))), open('held_files.json', 'w'))"
+python -c "import json, ta_corpus; from pathlib import Path; json.dump(sorted(ta_corpus.files(Path('data/TheAlgorithms-Python'))), open('corpus_files.json', 'w'))"
+python tools_manual/decide_new_or_known.py data/rosetta held_files.json benchmark/held_decided.json --v03
+python tools_manual/decide_new_or_known.py data/TheAlgorithms-Python corpus_files.json benchmark/corpus_decided.json --v03
+```
+
+**c) Turn the classes into Prolog branches, and give every test file an answer:**
+
+```
+python tools_manual/write_branches.py benchmark/corpus_decided.json
+python eval_proposed.py benchmark/held_decided.json benchmark/corpus_decided.json
+python eval_decision.py benchmark/held_decided.json benchmark/corpus_decided.json node
+```
+
+**d) Write the final report (a few seconds):**
+
+```
+python final_report.py data/TheAlgorithms-Python benchmark/held_decided.json
+```
+
+The results of steps a–c are already included in `benchmark/`. So if you only want the report, step d alone is
+enough.
+
+---
+
+## 5. Read the results
+
+Open these in order:
+1. **`benchmark/FINAL_REPORT.md`**: precision, recall, false positives and false negatives per language, and why some
+   files were not analysable.
+2. `benchmark/decision_fallback.md`: the answer for every test file.
+3. `benchmark/proposed_fallback.md`: the Prolog branches that were learned, and where they fired.
+
+### Reading the answers
+
+| Answer | Meaning |
+|---|---|
+| an algorithm name (`bubble_sort`, `Binary-search`) | The specific algorithm was recognised. |
+| a class (`sorting`, `gcd`) | The program computes this, checked on its outputs. Which sort it is, is not claimed. |
+| new or incorrect implementation | It runs, but no known class fits. |
+| variation of family F | Its logic structure is in family F, but no rule there matched. |
+| not analysable | It could not be checked at all: a GHCi transcript, a code fragment, a missing library, a type error, or code the interpreter cannot run yet. It is not scored. |
+| UNKNOWN | It will not guess. |
+
+How the results are counted:
+- Wrong answers are **never** removed from the score.
+- Files with identical logic (two copies of the same code under different names) count as one.
+
+### Limits
+
+- A class names *what* is computed ("sorting"), not *which* algorithm.
+- A new algorithm cannot be told apart from an incorrect implementation.
+- Code that cannot run on the test inputs is not analysed.
+
+---
+
+## Troubleshooting
+
+| Problem | Fix |
+|---|---|
+| `swipl` is not recognised | SWI-Prolog is not on PATH. See step 1 (Windows: add `C:\Program Files\swipl\bin`). |
+| `ModuleNotFoundError` | Run commands from the `onsjbjk_algo_finder` folder, after `set PYTHONPATH=.` or `export PYTHONPATH=.`. |
+| Errors about tree-sitter or a grammar | Run `python polyglot_logic/tools/cli.py prefetch` again. |
+| Every Lisp or Haskell file is "not analysable" | ECL or GHC is not installed, or not on PATH. |
+| A step is slow | That is normal for the full collections. You can try one folder first with `python eval_ta.py data/TheAlgorithms-Python --run --dir sorts`. |
+
+---
 
 ## Why this matters
 
-A single person built it, with only Python and SWI-Prolog. Every program is turned into the same language-neutral
-Prolog normal form, including Common Lisp (through ECL) and Haskell (through GHC Core). The same algorithm then
-becomes the same Prolog term, whatever language it was written in. Algorithms are known by their logic structure (a
-tree of families and branches). Their behaviour is known by class relations, used in either direction like
-`sum(2, 3, X)`: compute the output from the input, or check a given output.
+Every program is turned into the same language-neutral Prolog form, including Common Lisp (through ECL) and Haskell
+(through GHC Core). The same algorithm then becomes the same Prolog term, whatever language it was written in.
+Algorithms are known by their logic structure. Their behaviour is known by relations that can be used in either
+direction, like `sum(2, 3, X)`.
 
-This is meant to grow into a uniform, checkable **knowledge base of algorithm logic**. People and AI coding agents
-would use it to *design* code from known, verified parts, for example composing A* search with gcd, instead of
-starting every program from nothing. Recognition and the class relations exist today. Composing components into new
-designs is the intended next use and is not built yet.
+The aim is a uniform, checkable **knowledge base of algorithm logic**. People and AI coding agents would use it to
+*design* code from known, verified parts, for example A* search combined with gcd, instead of starting from nothing.
+Recognition works today; composing parts into new designs is the next step.
 
-## Why publish this?
+## Licences
 
-To provide a small, inspectable example of *combining* AST structure, dependency observations and relational matching without machine-learning inference. It may be useful for program-analysis experiments, teaching, or further work on distinguishing interleaved computation threads.
-
-## Prerequisites
-
-- Windows CMD and Python (tested in the developer's Conda environment).
-- Semgrep CLI, SWI-Prolog (`swipl`) and Git.
-- A locally cloned TheAlgorithms/Python checkout **only for the ingestion features**. It is intentionally **not included** in this repository.
-
-From `algo_reference_corpus/`, see `RUN_AP11_DOWNLOAD.cmd`, `RUN_AP12_SELFTEST.cmd`, `RUN_AP12_FULL.cmd`, `RUN_AP12_VERIFY.cmd`, and `RUN_AP12_SCAN.cmd`.
-From `semgrep_prolog_poc/`, see `RUN_AP10_ACCEPTANCE.cmd`.
-From `onsjbjk_algo_io_fallback_poc_v0_1/`, see `RUN_FALLBACK_POC.cmd`.
-For `onsjbjk_algo_io_fallback_v0_2/`, follow **"How to run (step by step)"** at the top of
-[its README](onsjbjk_algo_io_fallback_v0_2/README.md). It covers installing the tools, getting the two data sets,
-checking a file of your own, the full run, and reading the final report.
-
-## Cautions
-
-- Output labels are structural *candidates*, not proof of program correctness, mathematical invariants, or semantic equivalence.
-- `UNKNOWN` and parser failures are not silently converted to successful algorithm recognition.
-- The v0.2 class fallback is kept separate from the recognition pipeline and never changes its answers. It names a
-  class ("sorting"), not a specific algorithm. A program that runs but satisfies no known relation is reported as "new
-  or incorrect implementation": the two cannot be told apart.
-- Pilot evidence includes 11/11 live fallback tests and a five-source AP12 ingestion run; this does **not** demonstrate full-repository acceptance or generalization accuracy.
-- Keep generated databases and `.pl` output artifacts outside version control. The reference checkout must stay independently reproducible.
-- Review any files for credentials, personal details and intellectual-property obligations before making a public commit.
-- No project-wide redistribution license is claimed by this template. The repository owner must choose a license after checking rights and attributions.
-
-External project: [TheAlgorithms/Python](https://github.com/TheAlgorithms/Python). This repository does not bundle that third-party checkout.
+- The code in `data/` keeps its own licences: TheAlgorithms is MIT, and Rosetta Code is GFDL 1.2 (see
+  `data/README.md`).
+- No licence is yet chosen for the project's own code. The owner chooses one.

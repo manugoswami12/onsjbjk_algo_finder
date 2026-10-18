@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 REPO = ROOT.parent
 PROLOG_DIR = ROOT / 'prolog'
 # Frozen AP12 router, loaded unchanged.
-AP12_ROUTER = REPO / 'algo_reference_corpus' / 'ap12' / 'prolog' / 'route_extended.pl'
+AP12_ROUTER = REPO / 'older_code' / 'algo_reference_corpus' / 'ap12' / 'prolog' / 'route_extended.pl'
 
 
 class ToolError(RuntimeError):

@@ -11,7 +11,7 @@ from pathlib import Path
 
 from env_run import REPO
 
-sys.path.insert(0, str(REPO / 'semgrep_prolog_poc' / 'tools'))
+sys.path.insert(0, str(REPO / 'older_code' / 'semgrep_prolog_poc' / 'tools'))
 from export_ast_facts import atom  # noqa: E402  (frozen, reused unchanged)
 
 PREDICATES = ('lang', 'func', 'param', 'stmt', 'loop', 'in_loop', 'loop_var', 'loop_cond',

@@ -19,7 +19,7 @@ REPO = ROOT.parent
 TOOLS = ROOT / 'tools'
 CLI = TOOLS / 'cli.py'
 EX = ROOT / 'examples'
-POC = REPO / 'onsjbjk_algo_io_fallback_poc_v0_1' / 'examples'
+POC = REPO / 'older_code' / 'onsjbjk_algo_io_fallback_poc_v0_1' / 'examples'
 sys.path.insert(0, str(TOOLS))
 
 import fact_io  # noqa: E402
@@ -104,7 +104,7 @@ class OfflineTests(unittest.TestCase):
         self.assertIn('unsupported source extension', r.stderr)
 
     def test_frozen_router_is_present_and_unmodified_by_ap13(self):
-        router = REPO / 'algo_reference_corpus' / 'ap12' / 'prolog' / 'route_extended.pl'
+        router = REPO / 'older_code' / 'algo_reference_corpus' / 'ap12' / 'prolog' / 'route_extended.pl'
         self.assertTrue(router.is_file())
         self.assertIn('route(F, interval_lookup)', router.read_text(encoding='utf-8'))
 
@@ -196,11 +196,11 @@ class LiveAcceptance(unittest.TestCase):
         self.assertEqual(self.leaf_matches(result), set())
 
     def test_A5b_independent_candidate_that_ap11_missed(self):
-        result = self.scan(REPO / 'semgrep_prolog_poc' / 'examples' / 'candidate.py')
+        result = self.scan(REPO / 'older_code' / 'semgrep_prolog_poc' / 'examples' / 'candidate.py')
         self.assertEqual(self.leaf_matches(result), {'ref_binary_py'})
 
     def test_A6_learn_corpus_from_ap11_store_read_only_with_qualified_identity(self):
-        sys.path.insert(0, str(REPO / 'algo_reference_corpus'))
+        sys.path.insert(0, str(REPO / 'older_code' / 'algo_reference_corpus'))
         from ap11.database import add, connect
         from ap11.ingest import record
         with tempfile.TemporaryDirectory(prefix='ap13_corpus_') as td:

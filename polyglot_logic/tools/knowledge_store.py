@@ -170,7 +170,7 @@ def ap11_rows(ap11_store: Path, categories: tuple[str, ...], limit: int):
 
 def ap11_source_path(corpus: Path, relative: str) -> Path:
     """Reuse AP11's traversal/symlink-safe path check, unchanged."""
-    root = str(REPO / 'algo_reference_corpus')
+    root = str(REPO / 'older_code' / 'algo_reference_corpus')
     if root not in sys.path:
         sys.path.insert(0, root)
     from ap11.source import source_path
