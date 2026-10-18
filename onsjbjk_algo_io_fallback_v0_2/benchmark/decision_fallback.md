@@ -41,30 +41,20 @@ Each file gets one answer: the algorithm (eval_ta.py), else its class (a class r
 - Task/Sum-digits-of-an-integer/Python/sum-digits-of-an-integer-2.py (task Sum-digits-of-an-integer)
 - Task/Towers-of-Hanoi/Haskell/towers-of-hanoi-1.hs (task Towers-of-Hanoi)
 
-## Class decisions on TheAlgorithms/Python files (35), to check by hand
+## Class decisions on TheAlgorithms/Python files (36), to check by hand
 
 - **power** (2): divide_and_conquer/power.py, maths/power_using_recursion.py
 - **search** (2): searches/double_linear_search.py, searches/jump_search.py
-- **sorting** (31): divide_and_conquer/mergesort.py, sorts/adaptive_merge_sort.py, sorts/binary_insertion_sort.py, sorts/bubble_sort.py, sorts/bubble_sort_recursive.py, sorts/circle_sort.py, sorts/cocktail_shaker_sort.py, sorts/comb_sort.py, sorts/cycle_sort.py, sorts/double_sort.py, sorts/exchange_sort.py, sorts/gnome_sort.py, sorts/heap_sort.py, sorts/insertion_sort.py, sorts/iterative_merge_sort.py, sorts/merge_insertion_sort.py, sorts/merge_sort.py, sorts/odd_even_sort.py, sorts/odd_even_transposition_single_threaded.py, sorts/pancake_sort.py, sorts/pigeon_sort.py, sorts/pigeonhole_sort.py, sorts/quick_sort.py, sorts/recursive_insertion_sort.py, sorts/recursive_quick_sort.py, sorts/reverse_selection.py, sorts/selection_sort.py, sorts/shell_sort.py, sorts/shrink_shell_sort.py, sorts/stooge_sort.py, sorts/tim_sort.py
+- **sorting** (32): divide_and_conquer/mergesort.py, sorts/adaptive_merge_sort.py, sorts/binary_insertion_sort.py, sorts/bubble_sort.py, sorts/bubble_sort_recursive.py, sorts/circle_sort.py, sorts/cocktail_shaker_sort.py, sorts/comb_sort.py, sorts/cycle_sort.py, sorts/double_sort.py, sorts/exchange_sort.py, sorts/gnome_sort.py, sorts/heap_sort.py, sorts/insertion_sort.py, sorts/iterative_merge_sort.py, sorts/merge_insertion_sort.py, sorts/merge_sort.py, sorts/odd_even_sort.py, sorts/odd_even_transposition_single_threaded.py, sorts/pancake_sort.py, sorts/pigeon_sort.py, sorts/pigeonhole_sort.py, sorts/quick_sort.py, sorts/quick_sort_3_partition.py, sorts/recursive_insertion_sort.py, sorts/recursive_quick_sort.py, sorts/reverse_selection.py, sorts/selection_sort.py, sorts/shell_sort.py, sorts/shrink_shell_sort.py, sorts/stooge_sort.py, sorts/tim_sort.py
 
-## Class decisions on TheAlgorithms/Python files dropped by node agreement (3)
+## Class decisions on TheAlgorithms/Python files dropped by node agreement (9)
 
+- bit_manipulation/is_even.py: is_even, nodes []
 - maths/average_mode.py: sorting, nodes []
 - maths/greatest_common_divisor.py: gcd, nodes ['numeric>recurrence>modulo_recurrence']
+- maths/least_common_multiple.py: lcm, nodes ['numeric']
+- maths/numerical_analysis/integration_by_simpson_approx.py: square, nodes ['numeric']
+- maths/perfect_number.py: perfect_number, nodes ['numeric', 'numeric>divisor_test']
 - maths/special_numbers/triangular_numbers.py: triangular, nodes []
-
-## Notes on this run (root functions and node agreement)
-
-- **TheAlgorithms class claims: 35, checked by hand, all right** (2 power, 2 search, 31 sorts): 0 false positives,
-  where the first run had 10 of 57 wrong. Node agreement dropped 3 claims:
-  - average_mode, an interpreter error: a right drop;
-  - greatest_common_divisor and triangular_numbers: both true, dropped because each is the only TheAlgorithms file of
-    its class, so leave-one-out has no other file to agree with.
-- **Held-out: 10 class answers, 0 wrong** (the first run had 14, 0 wrong). The 4 lost were correct:
-  - three prime_check files, because no TheAlgorithms file keeps a clean prime_check claim to agree with by node;
-  - bubble-sort-1.hs, because its helper `_bsort` was taken for a root that satisfies no class.
-- **"New or incorrect implementation" fell from 27 to 15.** Twelve files now have a root that does not run on every
-  input, so they are "not identified". The first run counted a helper that ran fully.
-- **The 10 wrong answers are all the pipeline's own algorithm answers.** None comes from this fallback.
-- Separate from the pipeline: no pipeline file changed, and no pipeline file loads call_roots.pl, class_specs.pl,
-  library_names.pl or the decision tool.
+- maths/sum_of_digits.py: digit_sum, nodes ['numeric', 'numeric>decomposition>digits']
+- strings/palindrome.py: palindrome_check, nodes ['sequence_query']

@@ -27,6 +27,7 @@
   "sorts/pigeon_sort.py": "sorting",
   "sorts/pigeonhole_sort.py": "sorting",
   "sorts/quick_sort.py": "sorting",
+  "sorts/quick_sort_3_partition.py": "sorting",
   "sorts/recursive_insertion_sort.py": "sorting",
   "sorts/recursive_quick_sort.py": "sorting",
   "sorts/reverse_selection.py": "sorting",
@@ -2042,9 +2043,9 @@
    "task": "Sorting-algorithms-Bubble-sort"
   },
   "Task/Sorting-algorithms-Bubble-sort/Haskell/sorting-algorithms-bubble-sort-1.hs": {
-   "answer": "not_identified",
-   "correct": null,
-   "name": null,
+   "answer": "class",
+   "correct": true,
+   "name": "sorting",
    "task": "Sorting-algorithms-Bubble-sort"
   },
   "Task/Sorting-algorithms-Bubble-sort/Haskell/sorting-algorithms-bubble-sort-2.hs": {
@@ -2330,9 +2331,9 @@
    "task": "Sorting-algorithms-Merge-sort"
   },
   "Task/Sorting-algorithms-Merge-sort/Haskell/sorting-algorithms-merge-sort-1.hs": {
-   "answer": "class",
-   "correct": true,
-   "name": "sorting",
+   "answer": "not_identified",
+   "correct": null,
+   "name": null,
    "task": "Sorting-algorithms-Merge-sort"
   },
   "Task/Sorting-algorithms-Merge-sort/Haskell/sorting-algorithms-merge-sort-2.hs": {
