@@ -344,3 +344,74 @@ AP13's lowerers are unchanged. v0.2 subclasses them, as AP13 v4 subclassed its i
 - **Josephus:** elimination modulo the number left.
 - **Leap year:** divisibility by 4, 100 and 400, or the masks 3 and 15.
 - **Roman:** a greedy table walk emitting another part of the same entry.
+
+## 17. All of TheAlgorithms/Python: learn each algorithm, test it, write a rule by hand where learning fails
+
+User: "complete all thealgorithms/python and first try to learn each algorithm, test it if learnt correctly, if not
+write rule by hand, also maintain a text prompt style data ... one or two rules will work". And: "dont be overconfident".
+
+### 17.1 Design
+- Corpus: TheAlgorithms/Python at AP13's pinned commit `e1a2a8b0` (1,608 files). It is cloned outside the repo and never
+  edited.
+- Labels: one label per file stem; `project_euler/problem_NNN/solK.py` takes the label `problem_NNN`. Package and test
+  files carry none. This gives 1,346 labelled files and 1,288 labels.
+- Groups: the files that AP13's frozen key (`polyglot_logic/benchmark/rosetta_truth.json`) maps to one Rosetta task share
+  that task as their group, e.g. bubble_sort and bubble_sort_recursive. The key is not changed: pigeonhole_sort is not
+  in the Counting-sort group, so a pigeonhole file answered `counting_sort` counts against it.
+- Learning (Python only, the learner of section 14):
+  - `learned_branch(Node, L, io, io) :- io_equal(L)`;
+  - two more specific branches at the same node, from the original repo's own machinery:
+    - `trace`: the same writes to input positions in the same order (AP13 io_trace);
+    - `logic`: an AP13 learn-dir reference of the label's training file matches (exact traced logic, subsumption).
+- Answer: the most specific evidence that names anything decides. The order is a built or hand branch, then
+  trace/logic, then io at the node, then io alone. Several groups give UNKNOWN; there is no cut, and clause order
+  decides nothing.
+- Tests per label (`eval_ta.py --status`):
+  - T1 self: its own file is answered with its group. This is weak, because the file's own behaviour is in the catalog.
+  - T2 confusion: no file of another group is answered with its group.
+  - T3 held-out: the Rosetta files (Python, C, Common Lisp, Haskell) of its task are answered with its group. Only the
+    labels mapped to a Rosetta task have this test.
+- Statuses:
+  - learned_heldout: T1, T2 and T3 pass;
+  - learned_self: T1 and T2 pass, with no held-out file;
+  - hand_rule: the tests pass with a hand rule answering;
+  - not_learned, with its failure kinds.
+- Hand rules: `prolog/ta_rules.pl`, `hand_branch(Node, F, Label)`.
+  - They are relations over the language-neutral facts, the same in every language.
+  - The family tree and its branches are unchanged, so the earlier keys keep their answers.
+  - A file's hand answer is the labels of its functions that no function with a label of its own calls. A partition
+    helper belongs to its quicksort, and a caller combining two different sorts (an introsort) makes its helpers parts.
+- Prompts: `docs/HAND_RULE_PROMPTS.md` holds one reusable prompt per failure kind. `benchmark/hand_rule_prompts.jsonl`
+  holds the filled-in prompt of every label that was not learned.
+
+### 17.2 Pseudocode
+```python
+labels = {rel: stem(rel) for rel in corpus if labelled(rel)}
+learn(labels)                                   # learned_branch/4 at each file's deepest node: io, trace, logic
+for f in corpus + rosetta_files_of_mapped_tasks:
+    nodes, learned, normal, hand = apply(f, io_equal, io_trace_equal, logic_equal)
+    answer[f] = first non-empty of (built | hand, learned trace/logic, learned io, io) -> one group, else UNKNOWN
+for label in labels:
+    T1 = all(answer[f] == group(label) for f in files(label))
+    T2 = [f for f in corpus if answer[f] == group(label) and group(labels[f]) != group(label)]
+    T3 = [(f, answer[f]) for f in rosetta_files(task(label))]
+    status[label] = ...; prompt[label] = KIND_PROMPTS[kind].format(...) for the failures
+```
+
+### 17.3 Activity types
+| Activity | Program |
+|---|---|
+| corpus labels, groups | `ta_corpus.py` |
+| learn, answer, test, status, prompts | `eval_ta.py` (`--learn`, `--run`, `--heldout`, `--status`) |
+| learned branches | `prolog/learn_tree.pl` (io, trace, logic), `prolog/learn_apply.pl` |
+| hand rules | `prolog/ta_rules.pl` |
+| facts the rules need | `imperative_logic.py`: `loop_step/2` (Python range step, C for update; a constant or a variable stride), slice steps (`s[::-1]`) |
+| logic tests | `tests/test_uniform.py` `HandRuleTests`: own programs (Python, C, Lisp), positives and close negatives, and a clean load of the rules |
+
+### 17.4 Critical logic
+| Point | How it is kept |
+|---|---|
+| a label counts as learned only when tested | T1 is reported as weak; T2 runs over the whole corpus; T3 uses held-out files written by other people, in four languages |
+| no rule loosened to fit one file | every rule has a close negative: bubble/rotate-once, gnome/pass helper, Fibonacci/Lucas and Pell, factorial/double factorial, gcd/extended gcd, primality/factorisation, digit sum/number reversal, counting/word count, binary search/binary insertion sort |
+| same component, same term | e.g. a swap is `exchange/4` whatever its spelling (tuple swap, temp, `rotatef`, swap macro), and a counting loop is `range(...)`, a C `for`, a Lisp `loop for`, or a Haskell `[1..n]` fold |
+| runs never mix rule versions | a run copies the working tree to a snapshot and runs there (an edit during run 2 broke 62 of its files: that run was discarded) |
