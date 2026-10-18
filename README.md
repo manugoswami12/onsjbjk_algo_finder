@@ -53,7 +53,9 @@ To provide a small, inspectable example of *combining* AST structure, dependency
 From `algo_reference_corpus/`, see `RUN_AP11_DOWNLOAD.cmd`, `RUN_AP12_SELFTEST.cmd`, `RUN_AP12_FULL.cmd`, `RUN_AP12_VERIFY.cmd`, and `RUN_AP12_SCAN.cmd`.
 From `semgrep_prolog_poc/`, see `RUN_AP10_ACCEPTANCE.cmd`.
 From `onsjbjk_algo_io_fallback_poc_v0_1/`, see `RUN_FALLBACK_POC.cmd`.
-For `onsjbjk_algo_io_fallback_v0_2/`, see its README: it lists the learning, the fallback and the final-report commands.
+For `onsjbjk_algo_io_fallback_v0_2/`, follow **"How to run (step by step)"** at the top of
+[its README](onsjbjk_algo_io_fallback_v0_2/README.md). It covers installing the tools, getting the two data sets,
+checking a file of your own, the full run, and reading the final report.
 
 ## Cautions
 
