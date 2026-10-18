@@ -58,3 +58,66 @@ These are candidate branches, not proofs of algorithm identity. Unknown source i
 | **final 101, witnesses + io_catalog** | **66.7%** | **33.3%** |
 
 See `benchmark/learner_comparison.md` and `benchmark/final101_result.md`.
+
+## All of TheAlgorithms/Python (doc 04 section 17)
+
+Every algorithm of TheAlgorithms/Python (commit e1a2a8b0) is learned from Python and then tested. A label that
+learning gets wrong gets a hand-written rule, the same in every language:
+- general relations in `prolog/ta_rules.pl`;
+- file rules in `prolog/ta_file_rules.pl`.
+
+The scripts:
+- `ta_corpus.py`, `eval_ta.py` and `learn_apply.py` do the learning and testing;
+- `ta_distinct.py` writes the file rules;
+- `ta_prompts.py` writes one prompt per rule (`docs/RULE_PROMPTS.md`) for writing the same kind of rule in future.
+
+Result: 1344 of the 1344 analysable files are identified (0 false positives, 0 false negatives). Two files with no
+algorithm code are not scored, and files with identical logic count as one.
+
+## Separate fallback for new code (doc 04 section 18; never loaded by the pipeline)
+
+| File | Role |
+|---|---|
+| `prolog/class_specs.pl`, `ta_classes.py` | Class relations (sorting, search, gcd, lcm, factorial, Fibonacci, prime check, ...), checked on the program's runs on fixed inputs (`sum(2,3,X)` style). |
+| `prolog/call_roots.pl`, `tools_manual/decide_new_or_known.py` | Decide on the file's root functions only. "New version of a known class" needs every root to run on every input, one relation to hold and a tree node. Otherwise the answer is "new or incorrect implementation", or undecided. |
+| `tools_manual/write_branches.py`, `prolog/proposed_branches.pl`, `eval_proposed.py` | Each class decision on a TheAlgorithms file becomes a Prolog branch at its tree node: `proposed_branch(Node, Class) :- class_holds(Class).` |
+| `prolog/library_names.pl`, `ta_library.py`, `eval_library.py` | A program whose whole computation is one library call is named by that library's algorithm. |
+| `pnf_v03.py`, `prolog/interp_v03.pl`, `prolog/run_main_v03.pl` | v0.3 runner: AP13's lowerer and interpreter extended, not edited. It adds lambdas and closures, module-level constants, generator arguments, and `str`/`set`/`chain`/`zip`/`bisect`. |
+| `eval_decision.py`, `final_report.py` | Give every held-out file an answer, and write `benchmark/FINAL_REPORT.md` under the reporting criteria. |
+
+Results: 39 of 39 held-out class decisions are right, 14 of 14 branch firings are right, and all 37 class claims on
+TheAlgorithms are right.
+
+| New code (held-out Rosetta) | analysable files | precision | recall (analysable) | recall (all files) |
+|---|---|---|---|---|
+| C | 34 of 69 | 96.9% | 91.2% | 44.9% |
+| Common Lisp | 46 of 75 | 97.8% | 95.7% | 58.7% |
+| Haskell | 42 of 144 | 94.3% | 78.6% | 22.9% |
+| Python | 83 of 162 | 91.5% | 78.3% | 40.1% |
+| **all** | **205 of 450** | **94.5%** | **84.4%** | **38.4%** |
+
+All 10 wrong answers on new code come from the main pipeline. The separate fallback made none.
+
+Reproduce (CORPUS = a TheAlgorithms/Python checkout, ROSETTA = the Rosetta files):
+
+```
+python eval_ta.py CORPUS --learn
+python eval_ta.py CORPUS --run
+python eval_ta.py CORPUS --heldout ROSETTA
+python eval_ta.py CORPUS --status
+PYTHONPATH=. python tools_manual/decide_new_or_known.py ROSETTA held_files.json held_decided.json --v03
+PYTHONPATH=. python tools_manual/decide_new_or_known.py CORPUS corpus_files.json corpus_decided.json --v03
+python tools_manual/write_branches.py corpus_decided.json
+python eval_proposed.py held_decided.json corpus_decided.json
+python eval_decision.py held_decided.json corpus_decided.json node
+python final_report.py CORPUS held_decided.json
+python -m unittest tests.test_library_names tests.test_uniform
+```
+
+Limits:
+- **A class, not which algorithm.** A class relation says "sorting", not which sort.
+- **A new algorithm cannot be told from an incorrect implementation.** Both are reported as "new or incorrect
+  implementation".
+- **Code that does not run on every input is not analysed.** This covers GHCi transcripts, fragments, missing
+  packages, type errors, curried Python, and strings as character codes.
+- **One implementation per algorithm to learn from.** New styles often land on broad tree nodes.
