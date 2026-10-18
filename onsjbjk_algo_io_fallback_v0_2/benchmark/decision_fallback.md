@@ -61,7 +61,7 @@ Each file gets one answer: the algorithm (eval_ta.py), else its class (a class r
 | the file reaches a tree node (this report) | 11 | 0 | 37.6 % | 36 | 0 |
 | node agreement with another TheAlgorithms file of the class | 11 | 0 | 37.6 % | 35 | 0 (also drops gcd, a singleton) |
 
-- The class decision itself (before any witness) fired on 39 held-out files, and the class was right on all 39.
+- The class decision itself (before any witness) fired on 35 held-out files, and the class was right on all 35.
 - **average_mode** is an interpreter error: `mode()` is computed as a full sort. It reaches no tree node, so the node
   witness drops it. The same witness drops 3 correct held-out prime_check files, which also reach no node. So the
   safety costs 3 files (0.6 % recall).
