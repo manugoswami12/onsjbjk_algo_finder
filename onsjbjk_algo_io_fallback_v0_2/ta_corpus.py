@@ -4,7 +4,7 @@
                test files carry no label
   group(lab)   the labels that name one algorithm: the files AP13's frozen key (polyglot_logic/benchmark/
                rosetta_truth.json) maps to one Rosetta task share a group (bubble_sort, bubble_sort_recursive);
-               any other label is its own group
+               a numbered variant X_2 / X2 of a label X is in X's group; any other label is its own group
   BUILT        the built branches of the tree that name one algorithm, with the Rosetta task they are; the other
                normal branches (comparison_driven_reordering, euclid_like, ...) name a family, not an algorithm
 The corpus is read only, never edited; the pinned commit is AP13's (e1a2a8b0).
@@ -53,10 +53,16 @@ def tasks() -> dict[str, list[str]]:
     return json.loads(ROSETTA_TRUTH.read_text(encoding='utf-8'))['tasks']
 
 
-def groups() -> dict[str, str]:
-    """{label: its group name}: the Rosetta task for the mapped files' labels; built branch names too."""
+def groups(labels=()) -> dict[str, str]:
+    """{label: its group name}: the Rosetta task for the mapped files' labels; built branch names too; a numbered
+    variant X_2 / X2 of a label X (TheAlgorithms numbers the variants of one algorithm: dijkstra_2, prims2) is X's."""
     out = {label(rel): task for task, rels in tasks().items() for rel in rels if label(rel)}
     out.update(BUILT)
+    names = set(labels)
+    for lab in sorted(names):
+        m = re.fullmatch(r'(.+?)_?\d+', lab)
+        if m and m.group(1) in names and lab not in out:
+            out[lab] = out.get(m.group(1), m.group(1))
     return out
 
 

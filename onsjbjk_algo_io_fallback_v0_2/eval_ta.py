@@ -134,7 +134,7 @@ def load(path: Path) -> dict:
 
 
 def answer_all(units: dict[str, Path], corpus: Path, labels: dict[str, str], out: Path, workers: int):
-    gs = ta_corpus.groups()
+    gs = ta_corpus.groups(labels.values())
     crosslang_frontends.install(lisp_sbcl=False)
     io = TaIo(corpus, labels, workers)
     with tempfile.TemporaryDirectory(prefix='v02_ta_') as td:
@@ -168,7 +168,7 @@ def heldout_units(rosetta: Path) -> dict[str, str]:
 
 def status(labels: dict[str, str]):
     """T1/T2/T3 per label, the status table, and one hand-rule prompt per label not learned."""
-    gs = ta_corpus.groups()
+    gs = ta_corpus.groups(labels.values())
     answers, held = load(ANSWERS), load(HELDOUT)
     by_label = defaultdict(list)
     for rel, lab in labels.items():

@@ -366,3 +366,58 @@ hand_branch(_, F, binary_exponentiation) :-
     in_func(S1, F), value(S1, var(B), op(mul, [V1, V2])), V1 == var(B), V2 == var(B),
     in_func(S2, F), value(S2, var(E), op(Op, [V3, int(K)])), V3 == var(E), ( Op == div, K == 2 ; Op == shr, K == 1 ),
     in_func(S3, F), value(S3, var(R), op(mul, [X, Y])), R \== B, ( X == var(R), Y == var(B) ; Y == var(R), X == var(B) ).
+
+% ----- graphs --------------------------------------------------------------------------------------------------
+% a distance relaxation: d[v] = d[u] + w (a weight, not a constant) under a comparison that reads d (d[v] > d[u] + w)
+relaxation(F, D) :- in_func(S, F), value(S, elem(D, _), op(add, [_, Wt])), D = var(_), Wt \= int(_),
+    nguard(S, C, true), sub_term(T, C), compound(T),
+    T = op(Cmp, [X, Y]), memberchk(Cmp, [gt, lt, ge, le]), ( reads_table(X, D) ; reads_table(Y, D) ), !.
+reads_table(X, D) :- sub_term(E, X), compound(E), ( E = elem(D2, _) ; E = call(get, [D2|_]) ), D2 == D, !.
+% the closest open vertex taken next: a heap pop or a priority-queue get
+pops_min(F) :- in_func(S, F), ( call_at(S, heappop, _) ; call_at(S, get, [var(Q)]), in_func(S0, F),
+    value(S0, var(Q2), call('PriorityQueue', _)), Q2 == Q ), !.
+% Dijkstra: relaxation of the vertex taken from a priority queue
+hand_branch(_, F, dijkstra) :- relaxation(F, _), pops_min(F).
+% Bellman-Ford: the relaxation repeated vertex-count - 1 times (an outer range(V - 1)), no priority queue
+hand_branch(_, F, bellman_ford) :-
+    relaxation(F, D), in_func(S, F), value(S, elem(D2, _), op(add, [_, _])), D2 == D, around(S, L0),
+    call_at(L0, range, [op(sub, [_, int(1)])]), \+ pops_min(F), \+ scans_min(F).
+% a minimum chosen by a scan (AP13's most_wanted role) in F or in a function of the file it calls (Dijkstra's
+% min-distance vertex, Boruvka's cheapest edge): Bellman-Ford relaxes every edge without choosing
+scans_min(F) :- min_scan(F, _), !.
+scans_min(F) :- in_func(S, F), call_at(S, B, _), func(G, N, _), G \== F, base_name(N, B), min_scan(G, _), !.
+% m = t[i] where t[i] < m: the smallest entry of table t found by a scan
+min_scan(F, T) :- in_func(S, F), value(S, var(M), elem(T, var(I))), nguard(S, C, true), sub_term(O, C), compound(O),
+    ( O = op(lt, [elem(T2, var(I2)), var(M2)]) ; O = op(gt, [var(M2), elem(T2, var(I2))]) ), T2 == T, I2 == I, M2 == M.
+% Dijkstra without a heap: the unvisited vertex of least distance found by a scan of the distance table it relaxes
+hand_branch(_, F, dijkstra) :-
+    relaxation(F, D), in_func(S, F), call_at(S, B, Args), func(G, N, _), G \== F, base_name(N, B), min_scan(G, T),
+    member(D2, Args), D2 == D, param(G, K, Tp), T == var(Tp), nth0(K, Args, A), A == D.
+% breadth-first search: a vertex taken from the front of a queue, its unvisited neighbours put at the back
+hand_branch(_, F, breadth_first_search) :-
+    in_func(S, F), front_taken(S, Q, V), in_func(S2, F), enqueued(S2, Q), unvisited_guard(S2), neighbour_of(S2, V).
+front_taken(S, Q, V) :- value(S, V, call(popleft, [var(Q)])).
+front_taken(S, Q, V) :- value(S, V, call(get, [var(Q)])).
+front_taken(S, Q, V) :- value(S, V, call(pop, [var(Q), int(0)])).
+% the queued vertex is a neighbour of the vertex taken: its guard reads graph[v] (or reversed(graph[v]), ...)
+neighbour_of(S, var(V)) :- nguard(S, C, true), sub_term(T, C), compound(T), T = elem(_, V2), V2 == var(V), !.
+neighbour_of(S, var(V)) :- ( call_at(S, _, [_, W]) ), sub_term(T, W), compound(T), T = elem(elem(_, V2), _),
+    V2 == var(V), !.
+enqueued(S, Q) :- ( call_at(S, append, [var(Q2), _]) ; call_at(S, put, [var(Q2), _]) ), Q2 == Q.
+unvisited_guard(S) :- nguard(S, C, true), sub_term(T, C), compound(T), T = op('not in', _), !.
+unvisited_guard(S) :- nguard(S, C, true), sub_term(T, C), compound(T), T = op(not, [E]), compound(E),
+    ( E = elem(_, _) ; E = op(in, _) ), !.
+% depth-first search: the last vertex taken from a stack, or a self-call on each unvisited neighbour
+hand_branch(_, F, depth_first_search) :-
+    in_func(S, F), value(S, V, call(pop, [var(Q)])), in_func(S2, F), enqueued(S2, Q), unvisited_guard(S2),
+    neighbour_of(S2, V).
+hand_branch(_, F, depth_first_search) :-
+    in_func(S, F), call_at(S, '$self', _), unvisited_guard(S), around(S, L), loop(L, F, K), K \== recursion,
+    nguard(S, C, true), sub_term(T, C), compound(T), T = elem(elem(_, _), _),
+    \+ ( in_func(S2, F), front_taken(S2, _, _) ).
+% Kahn's topological sort: in-degrees counted, lowered as edges are removed, a vertex queued at in-degree zero
+hand_branch(_, F, kahns_algorithm_topo) :-
+    in_func(S1, F), value(S1, elem(I, _), op(add, [elem(I1, _), int(1)])), I1 == I,
+    in_func(S2, F), value(S2, elem(I2, _), op(sub, [elem(I3, _), int(1)])), I2 == I, I3 == I,
+    in_func(S3, F), nguard(S3, C, true), sub_term(T, C), compound(T), T = op(eq, Args), member(elem(I4, _), Args),
+    I4 == I, member(int(0), Args).
