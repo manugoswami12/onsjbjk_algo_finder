@@ -431,3 +431,38 @@ hand_branch(_, F, run_length_encoding) :-
 neighbours_equal(G, Q, I) :- sub_term(O, G), compound(O), O = op(eq, [A, B]),
     ( A = elem(Q, I), B = elem(Q2, op(add, [I2, int(1)])) ; B = elem(Q, I), A = elem(Q2, op(add, [I2, int(1)])) ),
     Q2 == Q, I2 == I, !.
+
+% ----- batch 4 ----------------------------------------------------------------------------------------------------
+% words reversed: the words of a split joined in reverse order
+hand_branch(_, F, reverse_words) :-
+    in_func(S, F), ( cret(S, E) ; value(S, _, E) ), sub_term(J, E), compound(J), J = call(join, [_, R]),
+    ( R = call(slice, [call(split, _), other(none), other(none), int(-1)]) ; R = call(reversed, [call(split, _)]) ).
+% Rabin-Karp: a rolling hash h = (code + h * b) mod m, the leading code taken off as the window moves
+hand_branch(_, F, rabin_karp) :-
+    in_func(S1, F), value(S1, var(H), op(mod, [op(add, [A, op(mul, [V, _])]), _])), V == var(H), A = call(ord, _),
+    in_func(S2, F), value(S2, var(H2), E), H2 == H, sub_term(D, E), compound(D),
+    D = op(sub, [V2, op(mul, [call(ord, _), _])]), V2 == var(H).
+% activity selection: the activities sorted, one taken when it starts no earlier than the last taken one finishes
+hand_branch(_, F, activity_selection) :-
+    in_func(S0, F), rel_of(S0, R0), sub_term(Sd, R0), compound(Sd), Sd = call(sorted, _),
+    in_func(S, F), nguard(S, C, true), sub_term(O, C), compound(O), O = op(ge, [elem(elem(_, var(_)), int(0)), Fin]),
+    sub_term(E1, Fin), compound(E1), E1 = elem(_, int(1)), ( capp(S, _, _) ; call_at(S, append, _) ).
+% coin change (ways): table[j] += table[j - coin] over the coins
+hand_branch(_, F, minimum_coin_change) :-
+    in_func(S, F), value(S, elem(T, J), op(add, [elem(T2, J2), elem(T3, op(sub, [J3, X]))])), T2 == T, T3 == T,
+    J2 == J, J3 == J, X \= int(_), innermost(S, Lj), lvar(Lj, Vj), Vj == J, around(Lj, Lc), coin_of(Lc, X).
+% the coin is the outer loop's (for coin in coins: for j in ...): the other order counts orderings (combination sum IV)
+coin_of(Lc, var(X)) :- lvar(Lc, var(X2)), X2 == X, !.
+coin_of(Lc, elem(_, var(X))) :- lvar(Lc, var(X2)), X2 == X, !.
+% fizz buzz: divisibility by 3 and by 5 of the same number tested
+hand_branch(_, F, fizz_buzz) :-
+    divisible_test(F, N, 3), divisible_test(F, N2, 5), N2 == N,
+    in_func(S, F), nguard(S, C, true), sub_term(T, C), compound(T), T = op(mod, [V, int(_)]), V == var(N),
+    ( value(S, _, E) ; capp(S, _, E) ; cret(S, E) ; call_at(S, _, E) ), sub_term(Str, E), Str == other(string).
+% (the words written under the tests: Euler 1 sums the same multiples)
+divisible_test(F, N, K) :- in_func(S, F), ( nguard(S, C, _) ; cret(S, C) ), sub_term(T, C), compound(T),
+    T = op(mod, [var(N), int(K)]), !.
+% h-index: the citations sorted, the count i returned where i >= c[n - 1 - i]
+hand_branch(_, F, h_index) :-
+    in_func(S, F), ret(S, var(I)), nguard(S, C, true), sub_term(O, C), compound(O),
+    O = op(ge, [V, elem(_, op(sub, [op(sub, [_, int(1)]), V2]))]), V == var(I), V2 == var(I).
