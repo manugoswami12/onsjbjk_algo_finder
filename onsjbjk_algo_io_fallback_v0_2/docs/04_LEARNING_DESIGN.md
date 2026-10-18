@@ -478,3 +478,32 @@ precision fell to 69.9%. That version was replaced.
   51 general relations), with the clauses produced;
 - `docs/HAND_RULE_PROMPTS.md` and `benchmark/hand_rule_prompts.jsonl`: one prompt per label still failing;
 - `docs/HAND_RULES_WRITTEN.md`: worked examples.
+
+## 18. Separate fallback for new code, and the final report (kept out of the pipeline)
+
+Everything in this section is separate from the pipeline. No pipeline file loads it, and no pipeline answer changes.
+
+- **Class relations** (prolog/class_specs.pl, sum(2,3,X) style). A file is a *new version of a known class* when every
+  root function (prolog/call_roots.pl) runs on every battery input and satisfies one class relation. A second witness
+  is required: the file reaches a tree node. Result: 39/39 held-out decisions right, 37/37 TheAlgorithms claims
+  right.
+- **New algorithm.** It cannot be told from an incorrect implementation, so it is answered "new or incorrect
+  implementation", and no rule is created from it.
+- **Proposed branches** (tools_manual/write_branches.py -> prolog/proposed_branches.pl). Each TheAlgorithms class
+  decision becomes `proposed_branch(Node, Class) :- class_holds(Class).` at the nodes its file reaches below a root.
+  On the held-out files they fired 14 times, right 14 times. On TheAlgorithms (leave-one-out) they fired 25 times,
+  right 25 times.
+- **Library names** (prolog/library_names.pl). A file whose whole computation is one library call is named by that
+  call: 3 held-out files, 0 wrong.
+- **v0.3 runner** (pnf_v03.py, prolog/interp_v03.pl). It extends AP13's lowerer and interpreter without editing
+  them: lambdas and closures, module-level constants, generator arguments, more library relations.
+- **The user's rule for the rest.** A file that reaches a node but matches no rule is a variation of the family at
+  that node; a file that reaches no node is an error or a new class.
+- **Reporting criteria (final_report.py -> benchmark/FINAL_REPORT.md).** Bad code is ignored:
+  - a held-out file is *not analysable* when the pipeline gave it no answer and no root function runs on every
+    input;
+  - a TheAlgorithms file is not analysable when it has no algorithm code;
+  - files with identical logic are one alias group;
+  - wrong answers are never excluded, and the all-files numbers are reported beside the analysable ones.
+- **Measured and not built:** a class veto of the pipeline's wrong answers. It fixes none, and its looser form would
+  turn 15 correct specific answers into a class name.
