@@ -9,6 +9,7 @@ same facts in every language. Only additions; everything AP13 lowers stays as it
   a field p->f, s.f, o.f: field(p, f) (AP13: other(field); a length field stays len(o))
   a generator argument f(x for x in s if c): one argument, the comprehension map/filter (AP13: its parts)
   a dict literal {k: v}: dict([pair(k, v)]) (AP13: other(dictionary))
+  an f-string f"..{e}..": fstring([e, ...]) (AP13: other(string))
   a tuple loop target for i, x in ...: loop_var(L, i), loop_var(L, x) (AP13: one variable named 'i, x')
   a counted loop's step: loop_step(L, K) for a constant K, loop_step(L, var(P)) for a variable stride, from Python
   range(a, b, K) and C for (...; i += K) / i = i + K / i++ / i-- (AP13 keeps neither; doc 04 section 17)
@@ -106,6 +107,9 @@ class ImperativeLowerer(ap13.Lowerer):
         return super().args(node)
 
     def expr(self, node):
+        if node is not None and node.type == 'string' and any(c.type == 'interpolation' for c in node.children):
+            parts = [c.named_children[0] for c in node.children if c.type == 'interpolation' and c.named_children]
+            return ('fstring', [self.expr(x) for x in parts])           # f"..{e}..": fstring([e, ...])
         if node is not None and node.type == 'dictionary':               # {k: v, ...}: dict([pair(k, v), ...])
             pairs = [c for c in node.named_children if c.type == 'pair']
             return ('dict', [('pair', self.expr(c.child_by_field_name('key')), self.expr(c.child_by_field_name('value')))

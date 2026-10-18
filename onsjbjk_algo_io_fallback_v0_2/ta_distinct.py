@@ -67,14 +67,26 @@ def distinct(corpus: Path, label: str, top: int = 12) -> list[tuple[str, list[st
 TRIVIAL = ('var(v)', 'var(v)-other(string)', 'var(v)-var(v)', 'var(v)-int(0)', 'var(v)-int(1)', 'var(v)-list([])')
 
 
+NOISE = ('call(input', 'call(print', 'call(format', 'call(strip,[call(input', 'call(time', 'call(perf_counter',
+         'call(timeit', 'call(urlopen', 'call(get,[var(requests)', 'call(open,', 'call(write', 'call(read')
+
+
 def structural(s: str) -> bool:
     """A component worth naming: an operation, a call or an element, not a bare constant assignment."""
     return s not in TRIVIAL and any(k in s for k in ('op(', 'call(', 'elem(', 'map(', 'filter(', 'concat(', 'cons('))
 
 
+def rank(s: str) -> tuple:
+    """Preference among a label's own components: the logic on its inputs (a parameter in it), not reading input,
+    printing or timing; an operation, call or element; a mid-size term."""
+    return (not any(n in s for n in NOISE), structural(s), 'var(p(' in s, -abs(len(s) - 70))
+
+
 def cover(corpus: Path, label: str):
     """[(component, ...)] whose union covers every file of the label: single components owned by the label first
-    (structural ones preferred), else a pair of components that together occur only in the label's files."""
+    (structural ones preferred), else a pair of components that together occur only in the label's files, else a
+    component with, for each other file having it, a component that file has and the label never has
+    (('not', c): \\+ has_rel(_, c), anywhere in the file)."""
     labels = ta_corpus.files(corpus)
     sigs = json.loads(INDEX.read_text(encoding='utf-8'))
     owners = defaultdict(set)
@@ -92,21 +104,36 @@ def cover(corpus: Path, label: str):
         for rel in sorted(left):
             for s in sigs.get(rel, []):
                 if owners[s] == {label}:
-                    key = (len(files_of[s] & left), structural(s), -abs(len(s) - 60))
+                    key = (len(files_of[s] & left),) + rank(s)
                     if best is None or key > best[0]:
                         best = (key, (s,), files_of[s] & left)
         if best is None:                              # no single component: a pair present only in the label's files
-            rel = sorted(left)[0]
-            ss = [s for s in sigs.get(rel, []) if structural(s)] or sigs.get(rel, [])
+            rel = min(left)
+            ss = sorted(sigs.get(rel, []), key=rank, reverse=True)[:40]
             for i, a in enumerate(ss):
                 for b in ss[i + 1:]:
                     both = files_of[a] & files_of[b]
                     if {labels[r] for r in both} == {label}:
-                        key = (len(both & left), -abs(len(a) + len(b) - 120))
+                        key = (len(both & left), min(rank(a), rank(b)))
                         if best is None or key > best[0]:
                             best = (key, (a, b), both & left)
+        if best is None:                              # a component and, for each other file having it, one it lacks
+            rel = min(left)
+            ours = set().union(*(set(sigs.get(r, [])) for r in mine))
+            for a in sorted(sigs.get(rel, []), key=rank, reverse=True)[:40]:
+                nots = []
+                for other in sorted(files_of[a] - set(mine)):
+                    extra = sorted((set(sigs[other]) - ours), key=rank, reverse=True)
+                    if not extra:
+                        break
+                    if not any(n in sigs[other] for n in nots):
+                        nots.append(extra[0])
+                else:
+                    if nots:
+                        best = (None, (a,) + tuple(('not', n) for n in nots), files_of[a] & left)
+                        break
         if best is None:
-            return chosen, sorted(left)                # identical to another label's file in every component pair
+            return chosen, sorted(left)                # identical to another label's file in every component
         chosen.append(best[1])
         left -= best[2]
     return chosen, []
@@ -117,7 +144,7 @@ def propose(corpus: Path, label: str) -> str:
     chosen, left = cover(corpus, label)
     out = [f"% {label}"]
     for comps in chosen:
-        body = ', '.join(f'has_rel(F, {c})' for c in comps)
+        body = ', '.join(f'\\+ has_rel(_, {c[1]})' if isinstance(c, tuple) else f'has_rel(F, {c})' for c in comps)
         out.append(f"hand_specific(F, '{label}') :- {body}.")
     if left:
         out.append(f"% no component of {', '.join(left)} separates it from another label (identical logic)")
