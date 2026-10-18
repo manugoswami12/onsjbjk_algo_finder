@@ -4,11 +4,11 @@ Each file gets one answer: the algorithm (eval_ta.py), else its class (a class r
 
 | language | files | algorithm | class | correct / wrong (algorithm + class) | precision | identified (recall) | new or incorrect | not identified | answered (any of the four but not identified) |
 |---|---|---|---|---|---|---|---|---|---|
-| C | 69 | 32 | 0 | 31 / 1 | 96.9% | 44.9% | 4 | 33 | 52.2% |
+| C | 69 | 32 | 0 | 31 / 1 | 96.9% | 44.9% | 2 | 35 | 49.3% |
 | Common-Lisp | 75 | 43 | 2 | 44 / 1 | 97.8% | 58.7% | 1 | 29 | 61.3% |
-| Haskell | 144 | 31 | 6 | 35 / 2 | 94.6% | 24.3% | 9 | 98 | 31.9% |
-| Python | 162 | 62 | 6 | 62 / 6 | 91.2% | 38.3% | 13 | 81 | 50.0% |
-| all | 450 | 168 | 14 | 172 / 10 | 94.5% | 38.2% | 27 | 241 | 46.4% |
+| Haskell | 144 | 31 | 3 | 32 / 2 | 94.1% | 22.2% | 5 | 105 | 27.1% |
+| Python | 162 | 62 | 5 | 61 / 6 | 91.0% | 37.7% | 7 | 88 | 45.7% |
+| all | 450 | 168 | 10 | 168 / 10 | 94.4% | 37.3% | 15 | 257 | 42.9% |
 
 ## Wrong answers (10)
 
@@ -23,47 +23,48 @@ Each file gets one answer: the algorithm (eval_ta.py), else its class (a class r
 - Task/Sorting-algorithms-Insertion-sort/Python/sorting-algorithms-insertion-sort-3.py: algorithm average_mode, task Sorting-algorithms-Insertion-sort
 - Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-1.py: algorithm Sorting-algorithms-Cycle-sort, task Sorting-algorithms-Quicksort
 
-## "New or incorrect implementation" (27; every held-out task is known, so each is an implementation we cannot check)
+## "New or incorrect implementation" (15; every held-out task is known, so each is an implementation we cannot check)
 
 - Task/Binary-search/Python/binary-search-7.py (task Binary-search)
 - Task/Factorial/C/factorial-5.c (task Factorial)
 - Task/Factorial/Haskell/factorial-10.hs (task Factorial)
 - Task/Factorial/Haskell/factorial-2.hs (task Factorial)
 - Task/Fibonacci-sequence/Python/fibonacci-sequence-1.py (task Fibonacci-sequence)
-- Task/Hailstone-sequence/Haskell/hailstone-sequence-1.hs (task Hailstone-sequence)
-- Task/Hailstone-sequence/Python/hailstone-sequence-3.py (task Hailstone-sequence)
 - Task/Levenshtein-distance/Haskell/levenshtein-distance-2.hs (task Levenshtein-distance)
 - Task/Levenshtein-distance/Python/levenshtein-distance-2.py (task Levenshtein-distance)
-- Task/Longest-common-subsequence/Haskell/longest-common-subsequence-5.hs (task Longest-common-subsequence)
 - Task/Palindrome-detection/C/palindrome-detection-3.c (task Palindrome-detection)
 - Task/Primality-by-trial-division/Common-Lisp/primality-by-trial-division-2.lisp (task Primality-by-trial-division)
 - Task/Roman-numerals-Encode/Haskell/roman-numerals-encode-1.hs (task Roman-numerals-Encode)
-- Task/Run-length-encoding/Haskell/run-length-encoding-4.hs (task Run-length-encoding)
-- Task/Run-length-encoding/Python/run-length-encoding-1.py (task Run-length-encoding)
-- Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-7.hs (task Sieve-of-Eratosthenes)
-- Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-9.py (task Sieve-of-Eratosthenes)
-- Task/Sorting-algorithms-Cocktail-sort/C/sorting-algorithms-cocktail-sort-3.c (task Sorting-algorithms-Cocktail-sort)
 - Task/Sorting-algorithms-Cycle-sort/Python/sorting-algorithms-cycle-sort.py (task Sorting-algorithms-Cycle-sort)
-- Task/Sorting-algorithms-Heapsort/C/sorting-algorithms-heapsort.c (task Sorting-algorithms-Heapsort)
 - Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-5.py (task Sorting-algorithms-Quicksort)
 - Task/Sorting-algorithms-Selection-sort/Python/sorting-algorithms-selection-sort.py (task Sorting-algorithms-Selection-sort)
 - Task/Sum-digits-of-an-integer/Python/sum-digits-of-an-integer-2.py (task Sum-digits-of-an-integer)
-- Task/Sum-digits-of-an-integer/Python/sum-digits-of-an-integer-4.py (task Sum-digits-of-an-integer)
 - Task/Towers-of-Hanoi/Haskell/towers-of-hanoi-1.hs (task Towers-of-Hanoi)
-- Task/Towers-of-Hanoi/Python/towers-of-hanoi-2.py (task Towers-of-Hanoi)
-- Task/Towers-of-Hanoi/Python/towers-of-hanoi-3.py (task Towers-of-Hanoi)
 
-## Class decisions on TheAlgorithms/Python files (57), to check by hand
+## Class decisions on TheAlgorithms/Python files (35), to check by hand
 
-- **digit_sum** (3): maths/sum_of_digits.py, project_euler/problem_020/sol1.py, project_euler/problem_065/sol1.py
-- **gcd** (1): maths/greatest_common_divisor.py
-- **is_even** (1): bit_manipulation/is_even.py
-- **lcm** (1): maths/least_common_multiple.py
-- **palindrome_check** (1): strings/palindrome.py
-- **perfect_number** (1): maths/perfect_number.py
-- **power** (3): divide_and_conquer/power.py, maths/binary_exponentiation.py, maths/power_using_recursion.py
-- **prime_check** (3): ciphers/rabin_miller.py, maths/next_prime_number.py, project_euler/problem_060/sol1.py
+- **power** (2): divide_and_conquer/power.py, maths/power_using_recursion.py
 - **search** (2): searches/double_linear_search.py, searches/jump_search.py
-- **sorting** (35): divide_and_conquer/mergesort.py, maths/average_mode.py, sorts/adaptive_merge_sort.py, sorts/binary_insertion_sort.py, sorts/bubble_sort.py, sorts/bubble_sort_recursive.py, sorts/circle_sort.py, sorts/cocktail_shaker_sort.py, sorts/comb_sort.py, sorts/counting_sort.py, sorts/cycle_sort.py, sorts/double_sort.py, sorts/exchange_sort.py, sorts/gnome_sort.py, sorts/heap_sort.py, sorts/insertion_sort.py, sorts/intro_sort.py, sorts/iterative_merge_sort.py, sorts/merge_insertion_sort.py, sorts/merge_sort.py, sorts/odd_even_sort.py, sorts/odd_even_transposition_single_threaded.py, sorts/pancake_sort.py, sorts/pigeon_sort.py, sorts/pigeonhole_sort.py, sorts/quick_sort.py, sorts/quick_sort_3_partition.py, sorts/recursive_insertion_sort.py, sorts/recursive_quick_sort.py, sorts/reverse_selection.py, sorts/selection_sort.py, sorts/shell_sort.py, sorts/shrink_shell_sort.py, sorts/stooge_sort.py, sorts/tim_sort.py
-- **square** (4): maths/area.py, maths/numerical_analysis/integration_by_simpson_approx.py, maths/numerical_analysis/simpson_rule.py, maths/trapezoidal_rule.py
-- **triangular** (2): maths/special_numbers/triangular_numbers.py, matrix/matrix_based_game.py
+- **sorting** (31): divide_and_conquer/mergesort.py, sorts/adaptive_merge_sort.py, sorts/binary_insertion_sort.py, sorts/bubble_sort.py, sorts/bubble_sort_recursive.py, sorts/circle_sort.py, sorts/cocktail_shaker_sort.py, sorts/comb_sort.py, sorts/cycle_sort.py, sorts/double_sort.py, sorts/exchange_sort.py, sorts/gnome_sort.py, sorts/heap_sort.py, sorts/insertion_sort.py, sorts/iterative_merge_sort.py, sorts/merge_insertion_sort.py, sorts/merge_sort.py, sorts/odd_even_sort.py, sorts/odd_even_transposition_single_threaded.py, sorts/pancake_sort.py, sorts/pigeon_sort.py, sorts/pigeonhole_sort.py, sorts/quick_sort.py, sorts/recursive_insertion_sort.py, sorts/recursive_quick_sort.py, sorts/reverse_selection.py, sorts/selection_sort.py, sorts/shell_sort.py, sorts/shrink_shell_sort.py, sorts/stooge_sort.py, sorts/tim_sort.py
+
+## Class decisions on TheAlgorithms/Python files dropped by node agreement (3)
+
+- maths/average_mode.py: sorting, nodes []
+- maths/greatest_common_divisor.py: gcd, nodes ['numeric>recurrence>modulo_recurrence']
+- maths/special_numbers/triangular_numbers.py: triangular, nodes []
+
+## Notes on this run (root functions and node agreement)
+
+- **TheAlgorithms class claims: 35, checked by hand, all right** (2 power, 2 search, 31 sorts): 0 false positives,
+  where the first run had 10 of 57 wrong. Node agreement dropped 3 claims:
+  - average_mode, an interpreter error: a right drop;
+  - greatest_common_divisor and triangular_numbers: both true, dropped because each is the only TheAlgorithms file of
+    its class, so leave-one-out has no other file to agree with.
+- **Held-out: 10 class answers, 0 wrong** (the first run had 14, 0 wrong). The 4 lost were correct:
+  - three prime_check files, because no TheAlgorithms file keeps a clean prime_check claim to agree with by node;
+  - bubble-sort-1.hs, because its helper `_bsort` was taken for a root that satisfies no class.
+- **"New or incorrect implementation" fell from 27 to 15.** Twelve files now have a root that does not run on every
+  input, so they are "not identified". The first run counted a helper that ran fully.
+- **The 10 wrong answers are all the pipeline's own algorithm answers.** None comes from this fallback.
+- Separate from the pipeline: no pipeline file changed, and no pipeline file loads call_roots.pl, class_specs.pl,
+  library_names.pl or the decision tool.

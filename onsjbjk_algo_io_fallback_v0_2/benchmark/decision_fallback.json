@@ -1,26 +1,8 @@
 {
  "corpus_class_claims": {
-  "bit_manipulation/is_even.py": "is_even",
-  "ciphers/rabin_miller.py": "prime_check",
   "divide_and_conquer/mergesort.py": "sorting",
   "divide_and_conquer/power.py": "power",
-  "maths/area.py": "square",
-  "maths/average_mode.py": "sorting",
-  "maths/binary_exponentiation.py": "power",
-  "maths/greatest_common_divisor.py": "gcd",
-  "maths/least_common_multiple.py": "lcm",
-  "maths/next_prime_number.py": "prime_check",
-  "maths/numerical_analysis/integration_by_simpson_approx.py": "square",
-  "maths/numerical_analysis/simpson_rule.py": "square",
-  "maths/perfect_number.py": "perfect_number",
   "maths/power_using_recursion.py": "power",
-  "maths/special_numbers/triangular_numbers.py": "triangular",
-  "maths/sum_of_digits.py": "digit_sum",
-  "maths/trapezoidal_rule.py": "square",
-  "matrix/matrix_based_game.py": "triangular",
-  "project_euler/problem_020/sol1.py": "digit_sum",
-  "project_euler/problem_060/sol1.py": "prime_check",
-  "project_euler/problem_065/sol1.py": "digit_sum",
   "searches/double_linear_search.py": "search",
   "searches/jump_search.py": "search",
   "sorts/adaptive_merge_sort.py": "sorting",
@@ -30,14 +12,12 @@
   "sorts/circle_sort.py": "sorting",
   "sorts/cocktail_shaker_sort.py": "sorting",
   "sorts/comb_sort.py": "sorting",
-  "sorts/counting_sort.py": "sorting",
   "sorts/cycle_sort.py": "sorting",
   "sorts/double_sort.py": "sorting",
   "sorts/exchange_sort.py": "sorting",
   "sorts/gnome_sort.py": "sorting",
   "sorts/heap_sort.py": "sorting",
   "sorts/insertion_sort.py": "sorting",
-  "sorts/intro_sort.py": "sorting",
   "sorts/iterative_merge_sort.py": "sorting",
   "sorts/merge_insertion_sort.py": "sorting",
   "sorts/merge_sort.py": "sorting",
@@ -47,7 +27,6 @@
   "sorts/pigeon_sort.py": "sorting",
   "sorts/pigeonhole_sort.py": "sorting",
   "sorts/quick_sort.py": "sorting",
-  "sorts/quick_sort_3_partition.py": "sorting",
   "sorts/recursive_insertion_sort.py": "sorting",
   "sorts/recursive_quick_sort.py": "sorting",
   "sorts/reverse_selection.py": "sorting",
@@ -55,8 +34,7 @@
   "sorts/shell_sort.py": "sorting",
   "sorts/shrink_shell_sort.py": "sorting",
   "sorts/stooge_sort.py": "sorting",
-  "sorts/tim_sort.py": "sorting",
-  "strings/palindrome.py": "palindrome_check"
+  "sorts/tim_sort.py": "sorting"
  },
  "heldout": {
   "Task/Binary-search/C/binary-search.c": {
@@ -840,7 +818,7 @@
    "task": "Hailstone-sequence"
   },
   "Task/Hailstone-sequence/Haskell/hailstone-sequence-1.hs": {
-   "answer": "new_or_incorrect",
+   "answer": "not_identified",
    "correct": null,
    "name": null,
    "task": "Hailstone-sequence"
@@ -870,7 +848,7 @@
    "task": "Hailstone-sequence"
   },
   "Task/Hailstone-sequence/Python/hailstone-sequence-3.py": {
-   "answer": "new_or_incorrect",
+   "answer": "not_identified",
    "correct": null,
    "name": null,
    "task": "Hailstone-sequence"
@@ -1164,7 +1142,7 @@
    "task": "Longest-common-subsequence"
   },
   "Task/Longest-common-subsequence/Haskell/longest-common-subsequence-5.hs": {
-   "answer": "new_or_incorrect",
+   "answer": "not_identified",
    "correct": null,
    "name": null,
    "task": "Longest-common-subsequence"
@@ -1578,9 +1556,9 @@
    "task": "Primality-by-trial-division"
   },
   "Task/Primality-by-trial-division/Haskell/primality-by-trial-division-1.hs": {
-   "answer": "class",
-   "correct": true,
-   "name": "prime_check",
+   "answer": "not_identified",
+   "correct": null,
+   "name": null,
    "task": "Primality-by-trial-division"
   },
   "Task/Primality-by-trial-division/Haskell/primality-by-trial-division-2.hs": {
@@ -1590,9 +1568,9 @@
    "task": "Primality-by-trial-division"
   },
   "Task/Primality-by-trial-division/Haskell/primality-by-trial-division-3.hs": {
-   "answer": "class",
-   "correct": true,
-   "name": "prime_check",
+   "answer": "not_identified",
+   "correct": null,
+   "name": null,
    "task": "Primality-by-trial-division"
   },
   "Task/Primality-by-trial-division/Haskell/primality-by-trial-division-4.hs": {
@@ -1614,9 +1592,9 @@
    "task": "Primality-by-trial-division"
   },
   "Task/Primality-by-trial-division/Python/primality-by-trial-division-3.py": {
-   "answer": "class",
-   "correct": true,
-   "name": "prime_check",
+   "answer": "not_identified",
+   "correct": null,
+   "name": null,
    "task": "Primality-by-trial-division"
   },
   "Task/Primality-by-trial-division/Python/primality-by-trial-division-4.py": {
@@ -1740,13 +1718,13 @@
    "task": "Run-length-encoding"
   },
   "Task/Run-length-encoding/Haskell/run-length-encoding-4.hs": {
-   "answer": "new_or_incorrect",
+   "answer": "not_identified",
    "correct": null,
    "name": null,
    "task": "Run-length-encoding"
   },
   "Task/Run-length-encoding/Python/run-length-encoding-1.py": {
-   "answer": "new_or_incorrect",
+   "answer": "not_identified",
    "correct": null,
    "name": null,
    "task": "Run-length-encoding"
@@ -1926,7 +1904,7 @@
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-7.hs": {
-   "answer": "new_or_incorrect",
+   "answer": "not_identified",
    "correct": null,
    "name": null,
    "task": "Sieve-of-Eratosthenes"
@@ -2034,7 +2012,7 @@
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-9.py": {
-   "answer": "new_or_incorrect",
+   "answer": "not_identified",
    "correct": null,
    "name": null,
    "task": "Sieve-of-Eratosthenes"
@@ -2064,9 +2042,9 @@
    "task": "Sorting-algorithms-Bubble-sort"
   },
   "Task/Sorting-algorithms-Bubble-sort/Haskell/sorting-algorithms-bubble-sort-1.hs": {
-   "answer": "class",
-   "correct": true,
-   "name": "sorting",
+   "answer": "not_identified",
+   "correct": null,
+   "name": null,
    "task": "Sorting-algorithms-Bubble-sort"
   },
   "Task/Sorting-algorithms-Bubble-sort/Haskell/sorting-algorithms-bubble-sort-2.hs": {
@@ -2100,7 +2078,7 @@
    "task": "Sorting-algorithms-Cocktail-sort"
   },
   "Task/Sorting-algorithms-Cocktail-sort/C/sorting-algorithms-cocktail-sort-3.c": {
-   "answer": "new_or_incorrect",
+   "answer": "not_identified",
    "correct": null,
    "name": null,
    "task": "Sorting-algorithms-Cocktail-sort"
@@ -2238,7 +2216,7 @@
    "task": "Sorting-algorithms-Gnome-sort"
   },
   "Task/Sorting-algorithms-Heapsort/C/sorting-algorithms-heapsort.c": {
-   "answer": "new_or_incorrect",
+   "answer": "not_identified",
    "correct": null,
    "name": null,
    "task": "Sorting-algorithms-Heapsort"
@@ -2688,7 +2666,7 @@
    "task": "Sum-digits-of-an-integer"
   },
   "Task/Sum-digits-of-an-integer/Python/sum-digits-of-an-integer-4.py": {
-   "answer": "new_or_incorrect",
+   "answer": "not_identified",
    "correct": null,
    "name": null,
    "task": "Sum-digits-of-an-integer"
@@ -2748,13 +2726,13 @@
    "task": "Towers-of-Hanoi"
   },
   "Task/Towers-of-Hanoi/Python/towers-of-hanoi-2.py": {
-   "answer": "new_or_incorrect",
+   "answer": "not_identified",
    "correct": null,
    "name": null,
    "task": "Towers-of-Hanoi"
   },
   "Task/Towers-of-Hanoi/Python/towers-of-hanoi-3.py": {
-   "answer": "new_or_incorrect",
+   "answer": "not_identified",
    "correct": null,
    "name": null,
    "task": "Towers-of-Hanoi"
