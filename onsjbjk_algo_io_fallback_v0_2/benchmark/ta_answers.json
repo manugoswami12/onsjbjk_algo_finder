@@ -1,0 +1,12137 @@
+{
+"audio_filters/butterworth_filter.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"audio_filters/equal_loudness_filter.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric>recurrence>double_recursion",
+"sequence_query"
+],
+"why": "none"
+},
+"audio_filters/iir_filter.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"audio_filters/show_response.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"backtracking/all_combinations.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"search>backtracking"
+],
+"why": "none"
+},
+"backtracking/all_permutations.py": {
+"built": [],
+"got": "all_permutations",
+"held": [
+"all_permutations"
+],
+"held_trace": [
+"all_permutations"
+],
+"io": [
+"all_permutations"
+],
+"nodes": [
+"search>backtracking"
+],
+"why": "trace"
+},
+"backtracking/all_subsequences.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"backtracking/coloring.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query",
+"sequence_transformation"
+],
+"why": "none"
+},
+"backtracking/combination_sum.py": {
+"built": [
+"Knapsack-problem-0-1"
+],
+"got": "Knapsack-problem-0-1",
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric>recurrence>capacity_reduction",
+"search>backtracking"
+],
+"why": "built"
+},
+"backtracking/crossword_puzzle_solver.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"backtracking/generate_parentheses.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"backtracking/generate_parentheses_iterative.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"backtracking/hamiltonian_cycle.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query",
+"sequence_transformation"
+],
+"why": "none"
+},
+"backtracking/knight_tour.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"backtracking/m_coloring_problem.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query",
+"sequence_transformation"
+],
+"why": "none"
+},
+"backtracking/match_word_pattern.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"backtracking/minimax.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"backtracking/n_queens.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"search>backtracking",
+"sequence_query"
+],
+"why": "none"
+},
+"backtracking/n_queens_math.py": {
+"built": [
+"N-queens-problem"
+],
+"got": "N-queens-problem",
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"search>backtracking",
+"search>diagonal_conflict"
+],
+"why": "built"
+},
+"backtracking/power_sum.py": {
+"built": [],
+"got": "power_sum",
+"held": [
+"power_sum"
+],
+"held_trace": [],
+"io": [
+"power_sum"
+],
+"nodes": [
+"numeric"
+],
+"why": "learned"
+},
+"backtracking/rat_in_maze.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"backtracking/sudoku.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"backtracking/sum_of_subsets.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"search>backtracking",
+"sequence_transformation"
+],
+"why": "none"
+},
+"backtracking/word_break.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"backtracking/word_ladder.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"search>backtracking"
+],
+"why": "none"
+},
+"backtracking/word_search.py": {
+"built": [],
+"got": "word_search",
+"held": [
+"word_search"
+],
+"held_trace": [],
+"io": [
+"word_search"
+],
+"nodes": [
+"search>backtracking",
+"sequence_query"
+],
+"why": "learned"
+},
+"bit_manipulation/binary_and_operator.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"bit_manipulation/binary_coded_decimal.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"bit_manipulation/binary_count_setbits.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"bit_manipulation/binary_count_trailing_zeros.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"bit_manipulation/binary_or_operator.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"bit_manipulation/binary_shifts.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"bit_manipulation/binary_twos_complement.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"bit_manipulation/binary_xor_operator.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"bit_manipulation/bitwise_addition_recursive.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"bit_manipulation/count_1s_brian_kernighan_method.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"bit_manipulation/count_number_of_one_bits.py": {
+"built": [],
+"got": "count_number_of_one_bits",
+"held": [
+"count_number_of_one_bits"
+],
+"held_trace": [],
+"io": [
+"count_number_of_one_bits"
+],
+"nodes": [
+"numeric"
+],
+"why": "learned"
+},
+"bit_manipulation/excess_3_code.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"bit_manipulation/fast_walsh_hadamard_transform.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"bit_manipulation/find_previous_power_of_two.py": {
+"built": [],
+"got": "find_previous_power_of_two",
+"held": [
+"find_previous_power_of_two"
+],
+"held_trace": [],
+"io": [
+"find_previous_power_of_two"
+],
+"nodes": [
+"numeric"
+],
+"why": "learned"
+},
+"bit_manipulation/find_unique_number.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query>aggregate>gatherer"
+],
+"why": "none"
+},
+"bit_manipulation/gray_code_sequence.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"bit_manipulation/highest_set_bit.py": {
+"built": [],
+"got": "highest_set_bit",
+"held": [
+"highest_set_bit"
+],
+"held_trace": [],
+"io": [
+"highest_set_bit"
+],
+"nodes": [
+"numeric"
+],
+"why": "learned"
+},
+"bit_manipulation/index_of_rightmost_set_bit.py": {
+"built": [],
+"got": "index_of_rightmost_set_bit",
+"held": [
+"index_of_rightmost_set_bit"
+],
+"held_trace": [],
+"io": [
+"index_of_rightmost_set_bit"
+],
+"nodes": [
+"numeric"
+],
+"why": "learned"
+},
+"bit_manipulation/is_even.py": {
+"built": [],
+"got": "is_even",
+"held": [
+"is_even"
+],
+"held_trace": [],
+"io": [
+"is_even",
+"primelib"
+],
+"nodes": [],
+"why": "learned"
+},
+"bit_manipulation/is_power_of_two.py": {
+"built": [],
+"got": "is_power_of_two",
+"held": [
+"is_power_of_two"
+],
+"held_trace": [],
+"io": [
+"is_power_of_two",
+"power_of_4"
+],
+"nodes": [],
+"why": "learned"
+},
+"bit_manipulation/largest_pow_of_two_le_num.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"bit_manipulation/missing_number.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query>aggregate>gatherer"
+],
+"why": "none"
+},
+"bit_manipulation/next_power_of_two.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"bit_manipulation/numbers_different_signs.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"bit_manipulation/parity.py": {
+"built": [],
+"got": "parity",
+"held": [
+"parity"
+],
+"held_trace": [],
+"io": [
+"parity"
+],
+"nodes": [
+"numeric"
+],
+"why": "learned"
+},
+"bit_manipulation/power_of_4.py": {
+"built": [],
+"got": "power_of_4",
+"held": [
+"power_of_4"
+],
+"held_trace": [],
+"io": [
+"is_power_of_two",
+"power_of_4"
+],
+"nodes": [
+"numeric"
+],
+"why": "learned"
+},
+"bit_manipulation/reverse_bits.py": {
+"built": [],
+"got": "reverse_bits",
+"held": [
+"reverse_bits"
+],
+"held_trace": [],
+"io": [
+"reverse_bits"
+],
+"nodes": [
+"numeric",
+"numeric>decomposition>digits"
+],
+"why": "learned"
+},
+"bit_manipulation/rotate_bits.py": {
+"built": [],
+"got": "rotate_bits",
+"held": [
+"rotate_bits"
+],
+"held_trace": [],
+"io": [
+"rotate_bits",
+"sha1"
+],
+"nodes": [],
+"why": "learned"
+},
+"bit_manipulation/single_bit_manipulation_operations.py": {
+"built": [],
+"got": "single_bit_manipulation_operations",
+"held": [
+"single_bit_manipulation_operations"
+],
+"held_trace": [],
+"io": [
+"single_bit_manipulation_operations"
+],
+"nodes": [],
+"why": "learned"
+},
+"bit_manipulation/swap_all_odd_and_even_bits.py": {
+"built": [],
+"got": "swap_all_odd_and_even_bits",
+"held": [
+"swap_all_odd_and_even_bits"
+],
+"held_trace": [],
+"io": [
+"swap_all_odd_and_even_bits"
+],
+"nodes": [],
+"why": "learned"
+},
+"bit_manipulation/xor_swap_two_integers.py": {
+"built": [],
+"got": "xor_swap_two_integers",
+"held": [
+"xor_swap_two_integers"
+],
+"held_trace": [],
+"io": [
+"lowest_common_ancestor",
+"xor_swap_two_integers"
+],
+"nodes": [],
+"why": "learned"
+},
+"blockchain/diophantine_equation.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"diophantine_equation",
+"modular_division"
+],
+"got": null,
+"held": [
+"diophantine_equation",
+"modular_division"
+],
+"held_trace": [],
+"io": [
+"diophantine_equation",
+"modular_division"
+],
+"nodes": [
+"numeric>recurrence>modulo_recurrence"
+],
+"why": "ambiguous"
+},
+"blockchain/merkle_tree.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric",
+"sequence_query",
+"sequence_transformation"
+],
+"why": "none"
+},
+"blockchain/proof_of_stake.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"blockchain/proof_of_work.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"blockchain/simple_blockchain.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"blockchain/simple_proof_of_work.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"boolean_algebra/and_gate.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"boolean_algebra/imply_gate.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"boolean_algebra/karnaugh_map_simplification.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"boolean_algebra/multiplexer.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"boolean_algebra/nand_gate.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"boolean_algebra/nimply_gate.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"boolean_algebra/nor_gate.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"boolean_algebra/not_gate.py": {
+"built": [],
+"got": "not_gate",
+"held": [
+"not_gate"
+],
+"held_trace": [],
+"io": [
+"not_gate"
+],
+"nodes": [],
+"why": "learned"
+},
+"boolean_algebra/or_gate.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"boolean_algebra/quine_mc_cluskey.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation"
+],
+"why": "none"
+},
+"boolean_algebra/xnor_gate.py": {
+"built": [],
+"got": "xnor_gate",
+"held": [
+"xnor_gate"
+],
+"held_trace": [],
+"io": [
+"xnor_gate"
+],
+"nodes": [],
+"why": "learned"
+},
+"boolean_algebra/xor_gate.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"cellular_automata/conways_game_of_life.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation"
+],
+"why": "none"
+},
+"cellular_automata/elementary_cellular_automaton.py": {
+"built": [],
+"got": "elementary_cellular_automaton",
+"held": [
+"elementary_cellular_automaton"
+],
+"held_trace": [
+"elementary_cellular_automaton"
+],
+"io": [
+"elementary_cellular_automaton"
+],
+"nodes": [
+"sequence_transformation"
+],
+"why": "trace"
+},
+"cellular_automata/game_of_life.py": {
+"built": [],
+"got": "game_of_life",
+"held": [
+"game_of_life"
+],
+"held_trace": [],
+"io": [
+"game_of_life"
+],
+"nodes": [
+"numeric",
+"sequence_query"
+],
+"why": "learned"
+},
+"cellular_automata/langtons_ant.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"cellular_automata/nagel_schrekenberg.py": {
+"built": [],
+"got": "nagel_schrekenberg",
+"held": [
+"nagel_schrekenberg"
+],
+"held_trace": [],
+"io": [
+"nagel_schrekenberg"
+],
+"nodes": [
+"numeric"
+],
+"why": "learned"
+},
+"cellular_automata/one_dimensional.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation"
+],
+"why": "none"
+},
+"cellular_automata/wa_tor.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric",
+"sequence_query"
+],
+"why": "none"
+},
+"ciphers/a1z26.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation>elementwise_map"
+],
+"why": "none"
+},
+"ciphers/affine_cipher.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric",
+"sequence_query>aggregate>gatherer"
+],
+"why": "none"
+},
+"ciphers/atbash.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query>aggregate>gatherer"
+],
+"why": "none"
+},
+"ciphers/autokey.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query>aggregate>gatherer"
+],
+"why": "none"
+},
+"ciphers/baconian_cipher.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"ciphers/base16.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"ciphers/base32.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"ciphers/base58.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"ciphers/base64_cipher.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"ciphers/base85.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric",
+"sequence_transformation>elementwise_map"
+],
+"why": "none"
+},
+"ciphers/beaufort_cipher.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query",
+"sequence_query>aggregate>gatherer"
+],
+"why": "none"
+},
+"ciphers/bifid.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"ciphers/brute_force_caesar_cipher.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"ciphers/caesar_cipher.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query",
+"sequence_query>aggregate>gatherer"
+],
+"why": "none"
+},
+"ciphers/columnar_transposition.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query",
+"sequence_transformation>comparison_sort"
+],
+"why": "none"
+},
+"ciphers/cryptomath_module.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric>recurrence>pair_recurrence"
+],
+"why": "none"
+},
+"ciphers/decrypt_caesar_with_chi_squared.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"ciphers/des_ecb.py": {
+"built": [],
+"got": "des_ecb",
+"held": [
+"des_ecb"
+],
+"held_trace": [],
+"io": [
+"des_ecb"
+],
+"nodes": [
+"sequence_query",
+"sequence_transformation"
+],
+"why": "learned"
+},
+"ciphers/deterministic_miller_rabin.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"ciphers/diffie.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"ciphers/diffie_hellman.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"ciphers/elgamal_key_generator.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"ciphers/enigma_machine2.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"ciphers/fractionated_morse_cipher.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"ciphers/gronsfeld_cipher.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"ciphers/hill_cipher.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"ciphers/mixed_keyword_cypher.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"ciphers/mono_alphabetic_ciphers.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query",
+"sequence_query>aggregate>gatherer"
+],
+"why": "none"
+},
+"ciphers/morse_code.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"ciphers/onepad_cipher.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query",
+"sequence_transformation>elementwise_map"
+],
+"why": "none"
+},
+"ciphers/permutation_cipher.py": {
+"built": [],
+"got": "permutation_cipher",
+"held": [
+"permutation_cipher"
+],
+"held_trace": [],
+"io": [
+"permutation_cipher"
+],
+"nodes": [
+"numeric>divisor_test",
+"sequence_query"
+],
+"why": "learned"
+},
+"ciphers/playfair_cipher.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric",
+"numeric>conditional_iteration",
+"sequence_query",
+"sequence_query>aggregate>gatherer"
+],
+"why": "none"
+},
+"ciphers/polybius.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"ciphers/porta_cipher.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric",
+"sequence_query"
+],
+"why": "none"
+},
+"ciphers/rabin_miller.py": {
+"built": [],
+"got": "rabin_miller",
+"held": [
+"rabin_miller"
+],
+"held_trace": [],
+"io": [
+"next_prime_number",
+"primelib",
+"problem_060",
+"rabin_miller"
+],
+"nodes": [
+"numeric"
+],
+"why": "learned"
+},
+"ciphers/rail_fence_cipher.py": {
+"built": [],
+"got": "rail_fence_cipher",
+"held": [
+"rail_fence_cipher"
+],
+"held_trace": [],
+"io": [
+"msd_radix_sort",
+"rail_fence_cipher",
+"recursive_insertion_sort",
+"skytale_cipher",
+"viterbi"
+],
+"nodes": [
+"sequence_query"
+],
+"why": "learned"
+},
+"ciphers/rc4.py": {
+"built": [],
+"got": "rc4",
+"held": [
+"rc4"
+],
+"held_trace": [
+"rc4"
+],
+"io": [
+"rc4"
+],
+"nodes": [
+"numeric",
+"sequence_query",
+"sequence_transformation"
+],
+"why": "trace"
+},
+"ciphers/rot13.py": {
+"built": [
+"Caesar-cipher"
+],
+"got": "Caesar-cipher",
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query>aggregate>gatherer",
+"sequence_transformation>elementwise_map>alphabet_rotation"
+],
+"why": "built"
+},
+"ciphers/rsa_cipher.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"ciphers/rsa_factorization.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"ciphers/rsa_key_generator.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"ciphers/running_key_cipher.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"ciphers/shuffled_shift_cipher.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric",
+"sequence_query",
+"sequence_transformation"
+],
+"why": "none"
+},
+"ciphers/simple_keyword_cypher.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query>aggregate>gatherer"
+],
+"why": "none"
+},
+"ciphers/simple_substitution_cipher.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query",
+"sequence_query>aggregate>gatherer"
+],
+"why": "none"
+},
+"ciphers/skytale_cipher.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"Sorting-algorithms-Insertion-sort",
+"skytale_cipher"
+],
+"got": null,
+"held": [
+"recursive_insertion_sort",
+"skytale_cipher"
+],
+"held_trace": [],
+"io": [
+"msd_radix_sort",
+"rail_fence_cipher",
+"recursive_insertion_sort",
+"skytale_cipher",
+"viterbi"
+],
+"nodes": [
+"sequence_query",
+"sequence_transformation>comparison_sort"
+],
+"why": "ambiguous"
+},
+"ciphers/transposition_cipher.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"ciphers/transposition_cipher_encrypt_decrypt_file.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"ciphers/trifid_cipher.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric",
+"sequence_query"
+],
+"why": "none"
+},
+"ciphers/vernam_cipher.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"ciphers/vigenere_cipher.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"ciphers/xor_cipher.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query>aggregate>gatherer",
+"sequence_transformation>elementwise_map"
+],
+"why": "none"
+},
+"ciphers/xtea.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"computer_vision/flip_augmentation.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"computer_vision/gramian.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"computer_vision/haralick_descriptors.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query",
+"sequence_transformation"
+],
+"why": "none"
+},
+"computer_vision/harris_corner.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"computer_vision/horn_schunck.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"computer_vision/intensity_based_segmentation.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"computer_vision/mean_threshold.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation>comparison_sort"
+],
+"why": "none"
+},
+"computer_vision/mosaic_augmentation.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"computer_vision/otsu_threshold.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"computer_vision/pooling_functions.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"computer_vision/vision_transformer.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"conversions/astronomical_length_scale_conversion.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"conversions/base64_to_binary.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"conversions/binary_to_base64.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"conversions/binary_to_decimal.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"conversions/binary_to_excess3.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"conversions/binary_to_gray.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"conversions/binary_to_gray_code.py": {
+"built": [],
+"got": "binary_to_gray_code",
+"held": [
+"binary_to_gray_code"
+],
+"held_trace": [],
+"io": [
+"binary_to_gray_code"
+],
+"nodes": [
+"numeric"
+],
+"why": "learned"
+},
+"conversions/binary_to_hexadecimal.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"conversions/binary_to_octal.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"conversions/convert_number_to_words.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"search>backtracking"
+],
+"why": "none"
+},
+"conversions/decimal_to_any.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"conversions/decimal_to_binary.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"conversions/decimal_to_hexadecimal.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"conversions/decimal_to_octal.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"conversions/endianness.py": {
+"built": [],
+"got": "endianness",
+"held": [
+"endianness"
+],
+"held_trace": [],
+"io": [
+"endianness"
+],
+"nodes": [
+"sequence_query"
+],
+"why": "learned"
+},
+"conversions/energy_conversions.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"conversions/excel_title_to_column.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"conversions/hex_to_bin.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"conversions/hex_to_rgb.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"conversions/hexadecimal_to_decimal.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"conversions/int_to_negative_binary_base.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"conversions/ipv4_conversion.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"conversions/length_conversion.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"conversions/molecular_chemistry.py": {
+"built": [],
+"got": "molecular_chemistry",
+"held": [
+"molecular_chemistry"
+],
+"held_trace": [],
+"io": [
+"molecular_chemistry"
+],
+"nodes": [],
+"why": "learned"
+},
+"conversions/negative_binary_base_to_int.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"conversions/octal_to_binary.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"conversions/octal_to_decimal.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"conversions/octal_to_hexadecimal.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"conversions/prefix_conversions.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"conversions/prefix_conversions_string.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"conversions/pressure_conversions.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"conversions/rectangular_to_polar.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"conversions/rgb_cmyk_conversion.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"conversions/rgb_hsv_conversion.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"conversions/roman_numerals.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query>aggregate>gatherer"
+],
+"why": "none"
+},
+"conversions/speed_conversions.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"conversions/temperature_conversions.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"conversions/time_conversions.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"conversions/volume_conversions.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"conversions/weight_conversion.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"data_compression/burrows_wheeler.py": {
+"built": [],
+"got": "burrows_wheeler",
+"held": [
+"burrows_wheeler"
+],
+"held_trace": [],
+"io": [
+"burrows_wheeler"
+],
+"nodes": [
+"sequence_query"
+],
+"why": "learned"
+},
+"data_compression/coordinate_compression.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"data_compression/huffman.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric>recurrence>double_recursion"
+],
+"why": "none"
+},
+"data_compression/lempel_ziv.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric",
+"sequence_query",
+"sequence_transformation"
+],
+"why": "none"
+},
+"data_compression/lempel_ziv_decompress.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric",
+"sequence_query"
+],
+"why": "none"
+},
+"data_compression/lz77.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query",
+"sequence_query>aggregate>gatherer",
+"sequence_transformation"
+],
+"why": "none"
+},
+"data_compression/move_to_front.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query",
+"sequence_transformation"
+],
+"why": "none"
+},
+"data_compression/peak_signal_to_noise_ratio.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"data_compression/run_length_encoding.py": {
+"built": [],
+"got": "Run-length-encoding",
+"held": [
+"run_length_encoding"
+],
+"held_trace": [
+"run_length_encoding"
+],
+"io": [
+"run_length_encoding"
+],
+"nodes": [
+"sequence_transformation"
+],
+"why": "trace"
+},
+"data_structures/arrays/dynamic_array.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"circular_queue",
+"dynamic_array",
+"kth_element_from_end",
+"partition_linked_list",
+"queue_on_pseudo_stack"
+],
+"got": null,
+"held": [
+"circular_queue",
+"dynamic_array",
+"kth_element_from_end",
+"partition_linked_list",
+"queue_on_pseudo_stack"
+],
+"held_trace": [],
+"io": [
+"circular_queue",
+"count_negative_numbers_in_sorted_matrix",
+"dynamic_array",
+"kth_element_from_end",
+"partition_linked_list",
+"queue_on_pseudo_stack"
+],
+"nodes": [
+"sequence_query"
+],
+"why": "ambiguous"
+},
+"data_structures/arrays/equilibrium_index_in_array.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"data_structures/arrays/find_triplets_with_0_sum.py": {
+"built": [
+"Run-length-encoding"
+],
+"got": "Run-length-encoding",
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation>construction>run_length"
+],
+"why": "built"
+},
+"data_structures/arrays/gas_station.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"data_structures/arrays/index_2d_array_in_1d.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric",
+"sequence_query"
+],
+"why": "none"
+},
+"data_structures/arrays/kth_largest_element.py": {
+"built": [],
+"got": "kth_largest_element",
+"held": [
+"kth_largest_element"
+],
+"held_trace": [
+"kth_largest_element"
+],
+"io": [
+"kth_largest_element"
+],
+"nodes": [
+"sequence_query",
+"sequence_transformation>comparison_sort"
+],
+"why": "trace"
+},
+"data_structures/arrays/median_two_array.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"data_structures/arrays/merge_intervals.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation>comparison_sort"
+],
+"why": "none"
+},
+"data_structures/arrays/merge_sorted.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation>comparison_sort>merge"
+],
+"why": "none"
+},
+"data_structures/arrays/monotonic_array.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"data_structures/arrays/pairs_with_given_sum.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"data_structures/arrays/pairwise_iteration.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"data_structures/arrays/permutations.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"search>backtracking"
+],
+"why": "none"
+},
+"data_structures/arrays/prefix_sum.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"data_structures/arrays/product_sum.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"data_structures/arrays/reverse_array.py": {
+"built": [],
+"got": "reverse_array",
+"held": [
+"reverse_array"
+],
+"held_trace": [
+"reverse_array"
+],
+"io": [
+"reverse_array"
+],
+"nodes": [
+"sequence_transformation>uncompared_rearrangement"
+],
+"why": "trace"
+},
+"data_structures/arrays/rotate_array.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"data_structures/arrays/set_matrix_zeroes.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"data_structures/arrays/sparse_table.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"marking>table_fill",
+"sequence_query"
+],
+"why": "none"
+},
+"data_structures/arrays/sudoku_solver.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"frequency_finder",
+"sudoku_solver"
+],
+"got": null,
+"held": [
+"frequency_finder",
+"sudoku_solver"
+],
+"held_trace": [],
+"io": [
+"frequency_finder",
+"sudoku_solver"
+],
+"nodes": [
+"numeric",
+"sequence_query",
+"sequence_transformation"
+],
+"why": "ambiguous"
+},
+"data_structures/binary_tree/avl_tree.py": {
+"built": [],
+"got": "avl_tree",
+"held": [
+"avl_tree"
+],
+"held_trace": [],
+"io": [
+"avl_tree"
+],
+"nodes": [
+"numeric"
+],
+"why": "learned"
+},
+"data_structures/binary_tree/basic_binary_tree.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric>recurrence>double_recursion"
+],
+"why": "none"
+},
+"data_structures/binary_tree/binary_search_tree.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"binary_search_tree",
+"binary_search_tree_recursive"
+],
+"got": null,
+"held": [
+"binary_search_tree",
+"binary_search_tree_recursive"
+],
+"held_trace": [],
+"io": [
+"binary_search_tree",
+"binary_search_tree_recursive",
+"multilayer_perceptron_classifier"
+],
+"nodes": [
+"numeric",
+"numeric>recurrence>double_recursion",
+"sequence_query"
+],
+"why": "ambiguous"
+},
+"data_structures/binary_tree/binary_search_tree_recursive.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"binary_search_tree",
+"binary_search_tree_recursive"
+],
+"got": null,
+"held": [
+"binary_search_tree",
+"binary_search_tree_recursive"
+],
+"held_trace": [],
+"io": [
+"binary_search_tree",
+"binary_search_tree_recursive",
+"multilayer_perceptron_classifier"
+],
+"nodes": [
+"numeric",
+"numeric>recurrence>double_recursion"
+],
+"why": "ambiguous"
+},
+"data_structures/binary_tree/binary_tree_maximum_path_sum.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric>recurrence>double_recursion"
+],
+"why": "none"
+},
+"data_structures/binary_tree/binary_tree_mirror.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation"
+],
+"why": "none"
+},
+"data_structures/binary_tree/binary_tree_node_sum.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric>recurrence>double_recursion"
+],
+"why": "none"
+},
+"data_structures/binary_tree/binary_tree_path_sum.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric",
+"numeric>recurrence>double_recursion"
+],
+"why": "none"
+},
+"data_structures/binary_tree/binary_tree_traversals.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric",
+"numeric>recurrence>double_recursion"
+],
+"why": "none"
+},
+"data_structures/binary_tree/diameter_of_binary_tree.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"data_structures/binary_tree/diff_views_of_binary_tree.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"data_structures/binary_tree/distribute_coins.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric>recurrence>double_recursion"
+],
+"why": "none"
+},
+"data_structures/binary_tree/fenwick_tree.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"fenwick_tree",
+"square_root"
+],
+"got": null,
+"held": [
+"fenwick_tree",
+"square_root"
+],
+"held_trace": [],
+"io": [
+"fenwick_tree",
+"square_root"
+],
+"nodes": [
+"numeric",
+"sequence_query"
+],
+"why": "ambiguous"
+},
+"data_structures/binary_tree/flatten_binarytree_to_linkedlist.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric>recurrence>double_recursion"
+],
+"why": "none"
+},
+"data_structures/binary_tree/floor_and_ceiling.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"data_structures/binary_tree/inorder_tree_traversal_2022.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric",
+"numeric>recurrence>double_recursion"
+],
+"why": "none"
+},
+"data_structures/binary_tree/is_sorted.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"data_structures/binary_tree/is_sum_tree.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"data_structures/binary_tree/lazy_segment_tree.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"lazy_segment_tree",
+"segment_tree"
+],
+"got": null,
+"held": [
+"lazy_segment_tree",
+"segment_tree"
+],
+"held_trace": [],
+"io": [
+"dijkstra_algorithm",
+"heap_generic",
+"lazy_segment_tree",
+"min_heap",
+"segment_tree"
+],
+"nodes": [
+"numeric>recurrence>double_recursion",
+"sequence_query"
+],
+"why": "ambiguous"
+},
+"data_structures/binary_tree/lowest_common_ancestor.py": {
+"built": [],
+"got": "lowest_common_ancestor",
+"held": [
+"lowest_common_ancestor"
+],
+"held_trace": [],
+"io": [
+"lowest_common_ancestor",
+"xor_swap_two_integers"
+],
+"nodes": [
+"marking>table_fill",
+"sequence_query",
+"sequence_transformation"
+],
+"why": "learned"
+},
+"data_structures/binary_tree/maximum_fenwick_tree.py": {
+"built": [],
+"got": "maximum_fenwick_tree",
+"held": [
+"maximum_fenwick_tree"
+],
+"held_trace": [],
+"io": [
+"maximum_fenwick_tree"
+],
+"nodes": [
+"numeric",
+"sequence_query"
+],
+"why": "learned"
+},
+"data_structures/binary_tree/maximum_sum_bst.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric>recurrence>double_recursion"
+],
+"why": "none"
+},
+"data_structures/binary_tree/merge_two_binary_trees.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric>recurrence>double_recursion"
+],
+"why": "none"
+},
+"data_structures/binary_tree/mirror_binary_tree.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"data_structures/binary_tree/non_recursive_segment_tree.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"data_structures/binary_tree/number_of_possible_binary_trees.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"Factorial",
+"krishnamurthy_number",
+"number_of_possible_binary_trees",
+"primelib",
+"problem_020"
+],
+"got": null,
+"held": [
+"factorial",
+"krishnamurthy_number",
+"number_of_possible_binary_trees",
+"primelib",
+"problem_020"
+],
+"held_trace": [],
+"io": [
+"catalan_number",
+"factorial",
+"krishnamurthy_number",
+"number_of_possible_binary_trees",
+"primelib",
+"problem_020"
+],
+"nodes": [
+"numeric",
+"numeric>recurrence>range_accumulation"
+],
+"why": "ambiguous"
+},
+"data_structures/binary_tree/persistent_segment_tree.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric",
+"numeric>recurrence>double_recursion",
+"sequence_query"
+],
+"why": "none"
+},
+"data_structures/binary_tree/red_black_tree.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric",
+"numeric>recurrence>double_recursion"
+],
+"why": "none"
+},
+"data_structures/binary_tree/segment_tree.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"lazy_segment_tree",
+"segment_tree"
+],
+"got": null,
+"held": [
+"lazy_segment_tree",
+"segment_tree"
+],
+"held_trace": [],
+"io": [
+"dijkstra_algorithm",
+"heap_generic",
+"lazy_segment_tree",
+"min_heap",
+"segment_tree"
+],
+"nodes": [
+"numeric>recurrence>double_recursion"
+],
+"why": "ambiguous"
+},
+"data_structures/binary_tree/segment_tree_other.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric",
+"numeric>recurrence>double_recursion"
+],
+"why": "none"
+},
+"data_structures/binary_tree/serialize_deserialize_binary_tree.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric>recurrence>double_recursion"
+],
+"why": "none"
+},
+"data_structures/binary_tree/splay_tree.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric",
+"numeric>recurrence>double_recursion"
+],
+"why": "none"
+},
+"data_structures/binary_tree/symmetric_tree.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric>recurrence>double_recursion"
+],
+"why": "none"
+},
+"data_structures/binary_tree/treap.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric",
+"numeric>recurrence>double_recursion"
+],
+"why": "none"
+},
+"data_structures/binary_tree/wavelet_tree.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric",
+"numeric>recurrence>double_recursion",
+"sequence_query"
+],
+"why": "none"
+},
+"data_structures/disjoint_set/alternate_disjoint_set.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"data_structures/disjoint_set/disjoint_set.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"data_structures/hashing/bloom_filter.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"data_structures/hashing/double_hash.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"data_structures/hashing/hash_map.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric",
+"sequence_query"
+],
+"why": "none"
+},
+"data_structures/hashing/hash_table.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"data_structures/hashing/hash_table_with_linked_list.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"data_structures/hashing/number_theory/prime_numbers.py": {
+"built": [],
+"got": "prime_numbers",
+"held": [
+"prime_numbers"
+],
+"held_trace": [],
+"io": [
+"prime_check",
+"prime_numbers",
+"problem_003",
+"problem_007",
+"problem_010",
+"problem_027",
+"problem_037",
+"problem_041",
+"problem_046",
+"problem_049",
+"problem_058"
+],
+"nodes": [
+"sequence_query>aggregate>gatherer"
+],
+"why": "learned"
+},
+"data_structures/hashing/quadratic_probing.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"data_structures/heap/binomial_heap.py": {
+"built": [],
+"got": "binomial_heap",
+"held": [
+"binomial_heap"
+],
+"held_trace": [],
+"io": [
+"binomial_heap",
+"circular_linked_list",
+"circular_queue",
+"doubly_linked_list",
+"linked_queue"
+],
+"nodes": [
+"numeric>recurrence>double_recursion",
+"sequence_query"
+],
+"why": "learned"
+},
+"data_structures/heap/heap.py": {
+"built": [],
+"got": "heap",
+"held": [
+"heap"
+],
+"held_trace": [],
+"io": [
+"heap",
+"heap_generic",
+"min_heap"
+],
+"nodes": [],
+"why": "learned"
+},
+"data_structures/heap/heap_generic.py": {
+"built": [],
+"got": "heap_generic",
+"held": [
+"heap_generic"
+],
+"held_trace": [],
+"io": [
+"dijkstra_algorithm",
+"heap",
+"heap_generic",
+"lazy_segment_tree",
+"min_heap",
+"segment_tree"
+],
+"nodes": [
+"sequence_query"
+],
+"why": "learned"
+},
+"data_structures/heap/max_heap.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"data_structures/heap/min_heap.py": {
+"built": [],
+"got": "min_heap",
+"held": [
+"min_heap"
+],
+"held_trace": [],
+"io": [
+"dijkstra_algorithm",
+"heap",
+"heap_generic",
+"lazy_segment_tree",
+"min_heap",
+"segment_tree"
+],
+"nodes": [
+"sequence_query",
+"sequence_transformation>comparison_sort"
+],
+"why": "learned"
+},
+"data_structures/heap/randomized_heap.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"data_structures/heap/skew_heap.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"data_structures/kd_tree/build_kdtree.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"data_structures/kd_tree/example/example_usage.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"data_structures/kd_tree/example/hypercube_points.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"data_structures/kd_tree/kd_node.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"data_structures/kd_tree/nearest_neighbour_search.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"data_structures/linked_list/circular_linked_list.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"circular_linked_list",
+"circular_queue",
+"doubly_linked_list",
+"linked_queue"
+],
+"got": null,
+"held": [
+"circular_linked_list",
+"circular_queue",
+"doubly_linked_list",
+"linked_queue"
+],
+"held_trace": [],
+"io": [
+"binomial_heap",
+"circular_linked_list",
+"circular_queue",
+"doubly_linked_list",
+"linked_queue"
+],
+"nodes": [
+"numeric",
+"sequence_query"
+],
+"why": "ambiguous"
+},
+"data_structures/linked_list/deque_doubly.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"data_structures/linked_list/doubly_linked_list.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"circular_linked_list",
+"circular_queue",
+"doubly_linked_list",
+"linked_queue"
+],
+"got": null,
+"held": [
+"circular_linked_list",
+"circular_queue",
+"doubly_linked_list",
+"linked_queue"
+],
+"held_trace": [],
+"io": [
+"binomial_heap",
+"circular_linked_list",
+"circular_queue",
+"doubly_linked_list",
+"linked_queue"
+],
+"nodes": [
+"numeric",
+"sequence_query"
+],
+"why": "ambiguous"
+},
+"data_structures/linked_list/doubly_linked_list_two.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"data_structures/linked_list/floyds_cycle_detection.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"data_structures/linked_list/from_sequence.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric",
+"sequence_query"
+],
+"why": "none"
+},
+"data_structures/linked_list/has_loop.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"data_structures/linked_list/is_palindrome.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"data_structures/linked_list/kth_element_from_end.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"circular_queue",
+"dynamic_array",
+"kth_element_from_end",
+"partition_linked_list",
+"queue_on_pseudo_stack"
+],
+"got": null,
+"held": [
+"circular_queue",
+"dynamic_array",
+"kth_element_from_end",
+"partition_linked_list",
+"queue_on_pseudo_stack"
+],
+"held_trace": [],
+"io": [
+"circular_queue",
+"count_negative_numbers_in_sorted_matrix",
+"dynamic_array",
+"kth_element_from_end",
+"partition_linked_list",
+"queue_on_pseudo_stack"
+],
+"nodes": [
+"sequence_query"
+],
+"why": "ambiguous"
+},
+"data_structures/linked_list/merge_sort_linked_list.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric",
+"numeric>recurrence>double_recursion"
+],
+"why": "none"
+},
+"data_structures/linked_list/merge_two_lists.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric",
+"sequence_query"
+],
+"why": "none"
+},
+"data_structures/linked_list/middle_element_of_linked_list.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"data_structures/linked_list/partition_linked_list.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"circular_queue",
+"dynamic_array",
+"kth_element_from_end",
+"partition_linked_list",
+"queue_on_pseudo_stack"
+],
+"got": null,
+"held": [
+"circular_queue",
+"dynamic_array",
+"kth_element_from_end",
+"partition_linked_list",
+"queue_on_pseudo_stack"
+],
+"held_trace": [],
+"io": [
+"circular_queue",
+"count_negative_numbers_in_sorted_matrix",
+"dynamic_array",
+"kth_element_from_end",
+"partition_linked_list",
+"queue_on_pseudo_stack"
+],
+"nodes": [
+"numeric",
+"sequence_query"
+],
+"why": "ambiguous"
+},
+"data_structures/linked_list/print_reverse.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric",
+"sequence_query"
+],
+"why": "none"
+},
+"data_structures/linked_list/remove_nth_node_from_end_of_list.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"data_structures/linked_list/reverse_k_group.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric",
+"sequence_query"
+],
+"why": "none"
+},
+"data_structures/linked_list/rotate_to_the_right.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric",
+"numeric>divisor_test"
+],
+"why": "none"
+},
+"data_structures/linked_list/singly_linked_list.py": {
+"built": [],
+"got": "singly_linked_list",
+"held": [
+"singly_linked_list"
+],
+"held_trace": [],
+"io": [
+"singly_linked_list"
+],
+"nodes": [
+"numeric",
+"sequence_query"
+],
+"why": "learned"
+},
+"data_structures/linked_list/skip_list.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"data_structures/linked_list/sorted_linked_list.py": {
+"built": [],
+"got": "sorted_linked_list",
+"held": [
+"sorted_linked_list"
+],
+"held_trace": [],
+"io": [
+"sorted_linked_list"
+],
+"nodes": [
+"numeric"
+],
+"why": "learned"
+},
+"data_structures/linked_list/swap_nodes.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"data_structures/linked_list/xor_linked_list.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"data_structures/queues/circular_queue.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"circular_linked_list",
+"circular_queue",
+"doubly_linked_list",
+"dynamic_array",
+"kth_element_from_end",
+"linked_queue",
+"partition_linked_list",
+"queue_on_pseudo_stack"
+],
+"got": null,
+"held": [
+"circular_linked_list",
+"circular_queue",
+"doubly_linked_list",
+"dynamic_array",
+"kth_element_from_end",
+"linked_queue",
+"partition_linked_list",
+"queue_on_pseudo_stack"
+],
+"held_trace": [],
+"io": [
+"binomial_heap",
+"circular_linked_list",
+"circular_queue",
+"count_negative_numbers_in_sorted_matrix",
+"doubly_linked_list",
+"dynamic_array",
+"kth_element_from_end",
+"linked_queue",
+"partition_linked_list",
+"queue_on_pseudo_stack"
+],
+"nodes": [
+"sequence_query"
+],
+"why": "ambiguous"
+},
+"data_structures/queues/circular_queue_linked_list.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"data_structures/queues/double_ended_queue.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"data_structures/queues/linked_queue.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"circular_linked_list",
+"circular_queue",
+"doubly_linked_list",
+"linked_queue"
+],
+"got": null,
+"held": [
+"circular_linked_list",
+"circular_queue",
+"doubly_linked_list",
+"linked_queue"
+],
+"held_trace": [],
+"io": [
+"binomial_heap",
+"circular_linked_list",
+"circular_queue",
+"doubly_linked_list",
+"linked_queue"
+],
+"nodes": [
+"numeric",
+"sequence_query"
+],
+"why": "ambiguous"
+},
+"data_structures/queues/monotonic_queue.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation"
+],
+"why": "none"
+},
+"data_structures/queues/priority_queue_using_list.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"data_structures/queues/queue_by_list.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"data_structures/queues/queue_by_two_stacks.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"data_structures/queues/queue_on_pseudo_stack.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"circular_queue",
+"dynamic_array",
+"kth_element_from_end",
+"partition_linked_list",
+"queue_on_pseudo_stack"
+],
+"got": null,
+"held": [
+"circular_queue",
+"dynamic_array",
+"kth_element_from_end",
+"partition_linked_list",
+"queue_on_pseudo_stack"
+],
+"held_trace": [],
+"io": [
+"circular_queue",
+"count_negative_numbers_in_sorted_matrix",
+"dynamic_array",
+"kth_element_from_end",
+"partition_linked_list",
+"queue_on_pseudo_stack"
+],
+"nodes": [
+"sequence_query"
+],
+"why": "ambiguous"
+},
+"data_structures/stacks/balanced_parentheses.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"data_structures/stacks/dijkstras_two_stack_algorithm.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"data_structures/stacks/infix_to_postfix_conversion.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"data_structures/stacks/infix_to_prefix_conversion.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric",
+"sequence_query"
+],
+"why": "none"
+},
+"data_structures/stacks/kth_next_greater_element.py": {
+"built": [],
+"got": "kth_next_greater_element",
+"held": [
+"kth_next_greater_element"
+],
+"held_trace": [],
+"io": [
+"kth_next_greater_element"
+],
+"nodes": [],
+"why": "learned"
+},
+"data_structures/stacks/largest_rectangle_histogram.py": {
+"built": [],
+"got": "largest_rectangle_histogram",
+"held": [
+"largest_rectangle_histogram"
+],
+"held_trace": [],
+"io": [
+"largest_rectangle_histogram"
+],
+"nodes": [
+"sequence_query"
+],
+"why": "learned"
+},
+"data_structures/stacks/lexicographical_numbers.py": {
+"built": [],
+"got": "lexicographical_numbers",
+"held": [
+"lexicographical_numbers"
+],
+"held_trace": [],
+"io": [
+"lexicographical_numbers"
+],
+"nodes": [],
+"why": "learned"
+},
+"data_structures/stacks/next_greater_element.py": {
+"built": [],
+"got": "next_greater_element",
+"held": [
+"next_greater_element"
+],
+"held_trace": [
+"next_greater_element"
+],
+"io": [
+"next_greater_element"
+],
+"nodes": [
+"sequence_transformation"
+],
+"why": "trace"
+},
+"data_structures/stacks/postfix_evaluation.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"data_structures/stacks/postfix_to_infix_conversion.py": {
+"built": [],
+"got": "postfix_to_infix_conversion",
+"held": [
+"postfix_to_infix_conversion"
+],
+"held_trace": [],
+"io": [
+"postfix_to_infix_conversion"
+],
+"nodes": [
+"sequence_query"
+],
+"why": "learned"
+},
+"data_structures/stacks/prefix_evaluation.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric>recurrence>double_recursion"
+],
+"why": "none"
+},
+"data_structures/stacks/stack.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"data_structures/stacks/stack_tracking_min_max.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"data_structures/stacks/stack_using_two_queues.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"data_structures/stacks/stack_with_doubly_linked_list.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"data_structures/stacks/stack_with_singly_linked_list.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric",
+"sequence_query"
+],
+"why": "none"
+},
+"data_structures/stacks/stock_span_problem.py": {
+"built": [],
+"got": "stock_span_problem",
+"held": [
+"stock_span_problem"
+],
+"held_trace": [
+"stock_span_problem"
+],
+"io": [
+"stock_span_problem"
+],
+"nodes": [],
+"why": "trace"
+},
+"data_structures/suffix_tree/example/example_usage.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"data_structures/suffix_tree/suffix_tree.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"data_structures/suffix_tree/suffix_tree_node.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"data_structures/trie/radix_tree.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric",
+"sequence_query"
+],
+"why": "none"
+},
+"data_structures/trie/trie.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"digital_image_processing/change_brightness.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"digital_image_processing/change_contrast.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"digital_image_processing/convert_to_negative.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"marking>table_fill"
+],
+"why": "none"
+},
+"digital_image_processing/dithering/burkes.py": {
+"built": [],
+"got": "burkes",
+"held": [
+"burkes"
+],
+"held_trace": [],
+"io": [
+"burkes"
+],
+"nodes": [],
+"why": "learned"
+},
+"digital_image_processing/edge_detection/canny.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation",
+"sequence_transformation>comparison_sort"
+],
+"why": "none"
+},
+"digital_image_processing/filters/bilateral_filter.py": {
+"built": [],
+"got": "bilateral_filter",
+"held": [
+"bilateral_filter"
+],
+"held_trace": [
+"bilateral_filter"
+],
+"io": [
+"bilateral_filter"
+],
+"nodes": [
+"sequence_query"
+],
+"why": "trace"
+},
+"digital_image_processing/filters/convolve.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"digital_image_processing/filters/gabor_filter.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"digital_image_processing/filters/gaussian_filter.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"digital_image_processing/filters/laplacian_filter.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"digital_image_processing/filters/local_binary_pattern.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"digital_image_processing/filters/median_filter.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"digital_image_processing/filters/sobel_filter.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"digital_image_processing/histogram_equalization/histogram_stretch.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"digital_image_processing/index_calculation.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"digital_image_processing/morphological_operations/dilation_operation.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"dilation_operation",
+"erosion_operation"
+],
+"got": null,
+"held": [
+"dilation_operation",
+"erosion_operation"
+],
+"held_trace": [],
+"io": [
+"dilation_operation",
+"erosion_operation"
+],
+"nodes": [],
+"why": "ambiguous"
+},
+"digital_image_processing/morphological_operations/erosion_operation.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"dilation_operation",
+"erosion_operation"
+],
+"got": null,
+"held": [
+"dilation_operation",
+"erosion_operation"
+],
+"held_trace": [],
+"io": [
+"dilation_operation",
+"erosion_operation"
+],
+"nodes": [],
+"why": "ambiguous"
+},
+"digital_image_processing/resize/resize.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"digital_image_processing/rotation/rotation.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"digital_image_processing/sepia.py": {
+"built": [],
+"got": "sepia",
+"held": [
+"sepia"
+],
+"held_trace": [],
+"io": [
+"sepia"
+],
+"nodes": [
+"sequence_query"
+],
+"why": "learned"
+},
+"divide_and_conquer/closest_pair_of_points.py": {
+"built": [],
+"got": "closest_pair_of_points",
+"held": [
+"closest_pair_of_points"
+],
+"held_trace": [],
+"io": [
+"closest_pair_of_points"
+],
+"nodes": [
+"sequence_query"
+],
+"why": "learned"
+},
+"divide_and_conquer/convex_hull.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"convex_hull",
+"matrix_class"
+],
+"got": null,
+"held": [
+"convex_hull",
+"matrix_class"
+],
+"held_trace": [],
+"io": [
+"convex_hull",
+"matrix_class"
+],
+"nodes": [
+"sequence_query",
+"sequence_transformation"
+],
+"why": "ambiguous"
+},
+"divide_and_conquer/heaps_algorithm.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"search>backtracking",
+"sequence_transformation>uncompared_rearrangement"
+],
+"why": "none"
+},
+"divide_and_conquer/heaps_algorithm_iterative.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation>comparison_sort"
+],
+"why": "none"
+},
+"divide_and_conquer/inversions.py": {
+"built": [],
+"got": "inversions",
+"held": [
+"inversions"
+],
+"held_trace": [
+"inversions"
+],
+"io": [
+"inversions"
+],
+"nodes": [
+"sequence_query",
+"sequence_transformation>comparison_sort>merge"
+],
+"why": "trace"
+},
+"divide_and_conquer/kth_order_statistic.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"divide_and_conquer/max_difference_pair.py": {
+"built": [],
+"got": "max_difference_pair",
+"held": [
+"max_difference_pair"
+],
+"held_trace": [],
+"io": [
+"max_difference_pair"
+],
+"nodes": [
+"sequence_query"
+],
+"why": "learned"
+},
+"divide_and_conquer/max_subarray.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"divide_and_conquer/mergesort.py": {
+"built": [],
+"got": "mergesort",
+"held": [
+"mergesort"
+],
+"held_trace": [
+"mergesort"
+],
+"io": [
+"adaptive_merge_sort",
+"average_mode",
+"binary_insertion_sort",
+"bubble_sort",
+"bubble_sort_recursive",
+"circle_sort",
+"cocktail_shaker_sort",
+"comb_sort",
+"counting_sort",
+"cycle_sort",
+"double_sort",
+"exchange_sort",
+"gnome_sort",
+"heap_sort",
+"insertion_sort",
+"intro_sort",
+"iterative_merge_sort",
+"merge_insertion_sort",
+"merge_sort",
+"mergesort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded",
+"pancake_sort",
+"pigeon_sort",
+"pigeonhole_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"recursive_insertion_sort",
+"recursive_quick_sort",
+"reverse_selection",
+"selection_sort",
+"shell_sort",
+"shrink_shell_sort",
+"stooge_sort",
+"tim_sort"
+],
+"nodes": [
+"sequence_query",
+"sequence_transformation>comparison_sort>merge"
+],
+"why": "trace"
+},
+"divide_and_conquer/minimum_element_of_array.py": {
+"built": [],
+"got": "minimum_element_of_array",
+"held": [
+"minimum_element_of_array"
+],
+"held_trace": [
+"minimum_element_of_array"
+],
+"io": [
+"minimum_element_of_array"
+],
+"nodes": [
+"sequence_query",
+"sequence_transformation>comparison_sort",
+"sequence_transformation>uncompared_rearrangement"
+],
+"why": "trace"
+},
+"divide_and_conquer/peak.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"divide_and_conquer/power.py": {
+"built": [],
+"got": "power",
+"held": [
+"power"
+],
+"held_trace": [],
+"io": [
+"binary_exponentiation",
+"power",
+"power_using_recursion"
+],
+"nodes": [
+"numeric>recurrence>double_recursion"
+],
+"why": "learned"
+},
+"divide_and_conquer/strassen_matrix_multiplication.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query",
+"sequence_transformation"
+],
+"why": "none"
+},
+"docs/conf.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"dynamic_programming/abbreviation.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"dynamic_programming/all_construct.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"dynamic_programming/bitmask.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"search>backtracking"
+],
+"why": "none"
+},
+"dynamic_programming/catalan_numbers.py": {
+"built": [],
+"got": "catalan_numbers",
+"held": [
+"catalan_numbers"
+],
+"held_trace": [],
+"io": [
+"catalan_numbers"
+],
+"nodes": [],
+"why": "learned"
+},
+"dynamic_programming/climbing_stairs.py": {
+"built": [],
+"got": "climbing_stairs",
+"held": [
+"climbing_stairs"
+],
+"held_trace": [],
+"io": [
+"climbing_stairs",
+"fast_fibonacci",
+"nth_fibonacci_using_matrix_exponentiation",
+"primelib"
+],
+"nodes": [
+"numeric>recurrence>pair_recurrence"
+],
+"why": "learned"
+},
+"dynamic_programming/combination_sum_iv.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric",
+"sequence_transformation"
+],
+"why": "none"
+},
+"dynamic_programming/edit_distance.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric>recurrence>double_recursion",
+"sequence_query"
+],
+"why": "none"
+},
+"dynamic_programming/egg_dropping.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"marking>table_fill"
+],
+"why": "none"
+},
+"dynamic_programming/factorial.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"Factorial",
+"krishnamurthy_number",
+"number_of_possible_binary_trees",
+"primelib",
+"problem_020"
+],
+"got": null,
+"held": [
+"factorial",
+"krishnamurthy_number",
+"number_of_possible_binary_trees",
+"primelib",
+"problem_020"
+],
+"held_trace": [],
+"io": [
+"factorial",
+"krishnamurthy_number",
+"number_of_possible_binary_trees",
+"primelib",
+"problem_020"
+],
+"nodes": [
+"numeric>recurrence>range_accumulation"
+],
+"why": "ambiguous"
+},
+"dynamic_programming/fast_fibonacci.py": {
+"built": [],
+"got": "Fibonacci-sequence",
+"held": [
+"fast_fibonacci"
+],
+"held_trace": [],
+"io": [
+"climbing_stairs",
+"fast_fibonacci",
+"nth_fibonacci_using_matrix_exponentiation",
+"primelib"
+],
+"nodes": [
+"numeric"
+],
+"why": "learned"
+},
+"dynamic_programming/fibonacci.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"dynamic_programming/fizz_buzz.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"dynamic_programming/floyd_warshall.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"dynamic_programming/integer_partition.py": {
+"built": [],
+"got": "integer_partition",
+"held": [
+"integer_partition"
+],
+"held_trace": [],
+"io": [
+"integer_partition"
+],
+"nodes": [
+"marking>table_fill"
+],
+"why": "learned"
+},
+"dynamic_programming/iterating_through_submasks.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"dynamic_programming/knapsack.py": {
+"built": [
+"Knapsack-problem-0-1"
+],
+"got": "Knapsack-problem-0-1",
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"marking>table_fill>capacity_reduction",
+"sequence_query"
+],
+"why": "built"
+},
+"dynamic_programming/largest_divisible_subset.py": {
+"built": [],
+"got": "largest_divisible_subset",
+"held": [
+"largest_divisible_subset"
+],
+"held_trace": [],
+"io": [
+"largest_divisible_subset"
+],
+"nodes": [
+"sequence_transformation>comparison_sort"
+],
+"why": "learned"
+},
+"dynamic_programming/longest_common_subsequence.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"marking>table_fill"
+],
+"why": "none"
+},
+"dynamic_programming/longest_common_substring.py": {
+"built": [],
+"got": "longest_common_substring",
+"held": [
+"longest_common_substring"
+],
+"held_trace": [],
+"io": [
+"longest_common_substring"
+],
+"nodes": [
+"marking>table_fill"
+],
+"why": "learned"
+},
+"dynamic_programming/longest_increasing_subsequence.py": {
+"built": [],
+"got": "longest_increasing_subsequence",
+"held": [
+"longest_increasing_subsequence"
+],
+"held_trace": [
+"longest_increasing_subsequence"
+],
+"io": [
+"longest_increasing_subsequence"
+],
+"nodes": [
+"search>backtracking"
+],
+"why": "trace"
+},
+"dynamic_programming/longest_increasing_subsequence_iterative.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation>comparison_sort"
+],
+"why": "none"
+},
+"dynamic_programming/longest_increasing_subsequence_o_nlogn.py": {
+"built": [],
+"got": "longest_increasing_subsequence_o_nlogn",
+"held": [
+"longest_increasing_subsequence_o_nlogn"
+],
+"held_trace": [
+"longest_increasing_subsequence_o_nlogn"
+],
+"io": [
+"longest_increasing_subsequence_o_nlogn"
+],
+"nodes": [
+"sequence_query",
+"sequence_transformation>comparison_sort>merge"
+],
+"why": "trace"
+},
+"dynamic_programming/longest_palindromic_subsequence.py": {
+"built": [
+"Longest-common-subsequence"
+],
+"got": "Longest-common-subsequence",
+"held": [
+"longest_palindromic_subsequence"
+],
+"held_trace": [
+"longest_palindromic_subsequence"
+],
+"io": [
+"longest_palindromic_subsequence"
+],
+"nodes": [
+"marking>table_fill",
+"sequence_query>two_sequence_match>longest_common"
+],
+"why": "built"
+},
+"dynamic_programming/longest_repeating_subsequence.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"marking>table_fill"
+],
+"why": "none"
+},
+"dynamic_programming/matrix_chain_multiplication.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"marking>table_fill",
+"numeric>recurrence>double_recursion",
+"sequence_query"
+],
+"why": "none"
+},
+"dynamic_programming/matrix_chain_order.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"marking>table_fill"
+],
+"why": "none"
+},
+"dynamic_programming/max_non_adjacent_sum.py": {
+"built": [],
+"got": "max_non_adjacent_sum",
+"held": [
+"max_non_adjacent_sum"
+],
+"held_trace": [
+"max_non_adjacent_sum"
+],
+"io": [
+"max_non_adjacent_sum"
+],
+"nodes": [
+"sequence_query"
+],
+"why": "trace"
+},
+"dynamic_programming/max_product_subarray.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"dynamic_programming/max_subarray_sum.py": {
+"built": [],
+"got": "max_subarray_sum",
+"held": [
+"max_subarray_sum"
+],
+"held_trace": [],
+"io": [
+"max_subarray_sum"
+],
+"nodes": [
+"sequence_query"
+],
+"why": "learned"
+},
+"dynamic_programming/min_distance_up_bottom.py": {
+"built": [
+"Levenshtein-distance"
+],
+"got": "Levenshtein-distance",
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric>recurrence>double_recursion",
+"sequence_query",
+"sequence_query>two_sequence_match>edit_distance"
+],
+"why": "built"
+},
+"dynamic_programming/minimum_coin_change.py": {
+"built": [],
+"got": "minimum_coin_change",
+"held": [
+"minimum_coin_change"
+],
+"held_trace": [],
+"io": [
+"minimum_coin_change"
+],
+"nodes": [],
+"why": "learned"
+},
+"dynamic_programming/minimum_cost_path.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"marking>table_fill"
+],
+"why": "none"
+},
+"dynamic_programming/minimum_partition.py": {
+"built": [
+"Knapsack-problem-0-1"
+],
+"got": "Knapsack-problem-0-1",
+"held": [
+"minimum_partition"
+],
+"held_trace": [
+"minimum_partition"
+],
+"io": [
+"minimum_partition"
+],
+"nodes": [
+"marking>table_fill>capacity_reduction"
+],
+"why": "built"
+},
+"dynamic_programming/minimum_size_subarray_sum.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"dynamic_programming/minimum_squares_to_represent_a_number.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"dynamic_programming/minimum_steps_to_one.py": {
+"built": [],
+"got": "minimum_steps_to_one",
+"held": [
+"minimum_steps_to_one"
+],
+"held_trace": [],
+"io": [
+"minimum_steps_to_one"
+],
+"nodes": [],
+"why": "learned"
+},
+"dynamic_programming/minimum_tickets_cost.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric>recurrence>double_recursion",
+"sequence_query"
+],
+"why": "none"
+},
+"dynamic_programming/narcissistic_number.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric>decomposition>digits"
+],
+"why": "none"
+},
+"dynamic_programming/needleman_wunsch.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"dynamic_programming/optimal_binary_search_tree.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"marking>table_fill",
+"sequence_query"
+],
+"why": "none"
+},
+"dynamic_programming/palindrome_partitioning.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"dynamic_programming/range_sum_query.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"dynamic_programming/regex_match.py": {
+"built": [],
+"got": "regex_match",
+"held": [
+"regex_match"
+],
+"held_trace": [],
+"io": [
+"regex_match"
+],
+"nodes": [
+"marking>table_fill",
+"sequence_query"
+],
+"why": "learned"
+},
+"dynamic_programming/rod_cutting.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"search>backtracking",
+"sequence_query",
+"sequence_transformation>comparison_sort"
+],
+"why": "none"
+},
+"dynamic_programming/smith_waterman.py": {
+"built": [],
+"got": "smith_waterman",
+"held": [
+"smith_waterman"
+],
+"held_trace": [],
+"io": [
+"smith_waterman"
+],
+"nodes": [
+"sequence_query",
+"sequence_transformation"
+],
+"why": "learned"
+},
+"dynamic_programming/subset_generation.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation"
+],
+"why": "none"
+},
+"dynamic_programming/sum_of_subset.py": {
+"built": [
+"Knapsack-problem-0-1"
+],
+"got": "Knapsack-problem-0-1",
+"held": [
+"sum_of_subset"
+],
+"held_trace": [
+"sum_of_subset"
+],
+"io": [
+"sum_of_subset"
+],
+"nodes": [
+"marking>table_fill>capacity_reduction"
+],
+"why": "built"
+},
+"dynamic_programming/trapped_water.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"dynamic_programming/tribonacci.py": {
+"built": [],
+"got": "tribonacci",
+"held": [
+"tribonacci"
+],
+"held_trace": [],
+"io": [
+"tribonacci"
+],
+"nodes": [],
+"why": "learned"
+},
+"dynamic_programming/viterbi.py": {
+"built": [],
+"got": "viterbi",
+"held": [
+"viterbi"
+],
+"held_trace": [],
+"io": [
+"msd_radix_sort",
+"rail_fence_cipher",
+"skytale_cipher",
+"viterbi"
+],
+"nodes": [],
+"why": "learned"
+},
+"dynamic_programming/wildcard_matching.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"marking>table_fill"
+],
+"why": "none"
+},
+"dynamic_programming/word_break.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"electronics/apparent_power.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"electronics/builtin_voltage.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"electronics/capacitor_equivalence.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"electronics/carrier_concentration.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"electronics/charging_capacitor.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"electronics/charging_inductor.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"electronics/circular_convolution.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"marking>table_fill"
+],
+"why": "none"
+},
+"electronics/coulombs_law.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"electronics/electric_conductivity.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"electronics/electric_power.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"electronics/electrical_impedance.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"electronics/full_wave_rectifier.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"electronics/half_wave_rectifier.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"electronics/ic_555_timer.py": {
+"built": [],
+"got": "ic_555_timer",
+"held": [
+"ic_555_timer"
+],
+"held_trace": [],
+"io": [
+"ic_555_timer"
+],
+"nodes": [],
+"why": "learned"
+},
+"electronics/ind_reactance.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"electronics/ohms_law.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"electronics/power_factor_correction.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"electronics/real_and_reactive_power.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"electronics/resistor_color_code.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"electronics/resistor_equivalence.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"electronics/resonant_frequency.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"electronics/star_delta_conversions.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"electronics/wheatstone_bridge.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"file_transfer/receive_file.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"file_transfer/send_file.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"financial/annuity_due_future_value.py": {
+"built": [],
+"got": "annuity_due_future_value",
+"held": [
+"annuity_due_future_value"
+],
+"held_trace": [],
+"io": [
+"annuity_due_future_value"
+],
+"nodes": [],
+"why": "learned"
+},
+"financial/equated_monthly_installments.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"financial/expected_shortfall.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric",
+"sequence_query"
+],
+"why": "none"
+},
+"financial/exponential_moving_average.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric>conditional_iteration"
+],
+"why": "none"
+},
+"financial/fractional_differentiation.py": {
+"built": [],
+"got": "fractional_differentiation",
+"held": [
+"fractional_differentiation"
+],
+"held_trace": [],
+"io": [
+"fractional_differentiation"
+],
+"nodes": [
+"sequence_query"
+],
+"why": "learned"
+},
+"financial/interest.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"financial/kelly_criterion.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"financial/macaulay_duration.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"financial/ordinary_annuity_future_value.py": {
+"built": [],
+"got": "ordinary_annuity_future_value",
+"held": [
+"ordinary_annuity_future_value"
+],
+"held_trace": [],
+"io": [
+"ordinary_annuity_future_value"
+],
+"nodes": [],
+"why": "learned"
+},
+"financial/present_value.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"financial/price_plus_tax.py": {
+"built": [],
+"got": "price_plus_tax",
+"held": [
+"price_plus_tax"
+],
+"held_trace": [],
+"io": [
+"price_plus_tax"
+],
+"nodes": [],
+"why": "learned"
+},
+"financial/sharpe_ratio.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"financial/simple_moving_average.py": {
+"built": [],
+"got": "simple_moving_average",
+"held": [
+"simple_moving_average"
+],
+"held_trace": [],
+"io": [
+"simple_moving_average"
+],
+"nodes": [],
+"why": "learned"
+},
+"financial/straight_line_depreciation.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"financial/streaming_moving_average.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"financial/time_and_half_pay.py": {
+"built": [],
+"got": "time_and_half_pay",
+"held": [
+"time_and_half_pay"
+],
+"held_trace": [],
+"io": [
+"time_and_half_pay"
+],
+"nodes": [],
+"why": "learned"
+},
+"financial/value_at_risk.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"fractals/barnsley_fern.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"fractals/hilbert_curve.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric>recurrence>double_recursion"
+],
+"why": "none"
+},
+"fractals/julia_sets.py": {
+"built": [],
+"got": "julia_sets",
+"held": [
+"julia_sets"
+],
+"held_trace": [],
+"io": [
+"julia_sets"
+],
+"nodes": [],
+"why": "learned"
+},
+"fractals/koch_snowflake.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric",
+"sequence_transformation"
+],
+"why": "none"
+},
+"fractals/mandelbrot.py": {
+"built": [],
+"got": "mandelbrot",
+"held": [
+"mandelbrot"
+],
+"held_trace": [],
+"io": [
+"mandelbrot"
+],
+"nodes": [
+"numeric"
+],
+"why": "learned"
+},
+"fractals/sierpinski_carpet.py": {
+"built": [],
+"got": "sierpinski_carpet",
+"held": [
+"sierpinski_carpet"
+],
+"held_trace": [],
+"io": [
+"sierpinski_carpet"
+],
+"nodes": [],
+"why": "learned"
+},
+"fractals/sierpinski_triangle.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"fractals/vicsek.py": {
+"built": [
+"Towers-of-Hanoi"
+],
+"got": "Towers-of-Hanoi",
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric>recurrence>double_recursion"
+],
+"why": "built"
+},
+"fuzzy_logic/fuzzy_operations.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"fuzzy_logic/fuzzy_set_operations.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"area",
+"fuzzy_set_operations",
+"newtons_second_law_of_motion"
+],
+"got": null,
+"held": [
+"area",
+"fuzzy_set_operations",
+"newtons_second_law_of_motion"
+],
+"held_trace": [],
+"io": [
+"area",
+"fuzzy_set_operations",
+"newtons_second_law_of_motion"
+],
+"nodes": [],
+"why": "ambiguous"
+},
+"genetic_algorithm/basic_string.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query",
+"sequence_transformation"
+],
+"why": "none"
+},
+"genetic_algorithm/travelling_salesman_problem.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query",
+"sequence_transformation"
+],
+"why": "none"
+},
+"geodesy/haversine_distance.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"geodesy/lamberts_ellipsoidal_distance.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"geodesy/radar_target_calculation.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"geometry/braik_mac_construction.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"geometry/geometry.py": {
+"built": [],
+"got": "geometry",
+"held": [
+"geometry"
+],
+"held_trace": [],
+"io": [
+"geometry"
+],
+"nodes": [
+"numeric"
+],
+"why": "learned"
+},
+"geometry/graham_scan.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation"
+],
+"why": "none"
+},
+"geometry/jarvis_march.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query",
+"sequence_transformation"
+],
+"why": "none"
+},
+"geometry/monotone_chain.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"geometry/ramer_douglas_peucker.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"geometry/rotating_calipers.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"geometry/segment_intersection.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"geometry/shoelace.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"geometry/triangle.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"graphics/bezier_curve.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"graphics/bresenham_line_basic.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric>conditional_iteration"
+],
+"why": "none"
+},
+"graphics/bresenham_line_generalized.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"graphics/butterfly_pattern.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"graphics/digital_differential_analyzer_line.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"graphics/vector3_for_2d_rendering.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"graphs/a_star.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"graphs/ant_colony_optimization_algorithms.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"marking>table_fill",
+"sequence_query"
+],
+"why": "none"
+},
+"graphs/articulation_points.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"search>backtracking"
+],
+"why": "none"
+},
+"graphs/basic_graphs.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"marking>table_fill",
+"sequence_transformation",
+"sequence_transformation>comparison_sort",
+"sequence_transformation>distribution_sort>histogram"
+],
+"why": "none"
+},
+"graphs/bellman_ford.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation>comparison_sort"
+],
+"why": "none"
+},
+"graphs/bi_directional_dijkstra.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation"
+],
+"why": "none"
+},
+"graphs/bidirectional_a_star.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"graphs/bidirectional_breadth_first_search.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"graphs/bidirectional_search.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query",
+"sequence_transformation"
+],
+"why": "none"
+},
+"graphs/boruvka.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric",
+"sequence_transformation>comparison_sort"
+],
+"why": "none"
+},
+"graphs/breadth_first_search.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"graphs/breadth_first_search_2.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation"
+],
+"why": "none"
+},
+"graphs/breadth_first_search_shortest_path.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"graphs/breadth_first_search_shortest_path_2.py": {
+"built": [],
+"got": "breadth_first_search_shortest_path_2",
+"held": [
+"breadth_first_search_shortest_path_2"
+],
+"held_trace": [],
+"io": [
+"breadth_first_search_shortest_path_2"
+],
+"nodes": [
+"sequence_transformation"
+],
+"why": "learned"
+},
+"graphs/breadth_first_search_zero_one_shortest_path.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"graphs/check_bipatrite.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"graphs/check_cycle.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"graphs/connected_components.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"search>backtracking",
+"sequence_transformation"
+],
+"why": "none"
+},
+"graphs/deep_clone_graph.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"graphs/depth_first_search.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation"
+],
+"why": "none"
+},
+"graphs/depth_first_search_2.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"search>backtracking"
+],
+"why": "none"
+},
+"graphs/dijkstra.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"graphs/dijkstra_2.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query",
+"sequence_transformation>comparison_sort"
+],
+"why": "none"
+},
+"graphs/dijkstra_algorithm.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"dijkstra_algorithm",
+"heap_generic"
+],
+"got": null,
+"held": [
+"dijkstra_algorithm",
+"heap_generic"
+],
+"held_trace": [],
+"io": [
+"dijkstra_algorithm",
+"heap_generic",
+"lazy_segment_tree",
+"min_heap",
+"segment_tree"
+],
+"nodes": [
+"sequence_query",
+"sequence_transformation"
+],
+"why": "ambiguous"
+},
+"graphs/dijkstra_alternate.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query",
+"sequence_transformation>comparison_sort"
+],
+"why": "none"
+},
+"graphs/dijkstra_binary_grid.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation>comparison_sort"
+],
+"why": "none"
+},
+"graphs/dinic.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric",
+"search>backtracking"
+],
+"why": "none"
+},
+"graphs/directed_and_undirected_weighted_graph.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"graphs/edmonds_blossom_algorithm.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation"
+],
+"why": "none"
+},
+"graphs/edmonds_karp_multiple_source_and_sink.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"graphs/eulerian_path_and_circuit_for_undirected_graph.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"search>backtracking",
+"sequence_query"
+],
+"why": "none"
+},
+"graphs/even_tree.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"search>backtracking"
+],
+"why": "none"
+},
+"graphs/finding_bridges.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"search>backtracking",
+"sequence_transformation"
+],
+"why": "none"
+},
+"graphs/frequent_pattern_graph_miner.py": {
+"built": [],
+"got": "frequent_pattern_graph_miner",
+"held": [
+"frequent_pattern_graph_miner"
+],
+"held_trace": [],
+"io": [
+"frequent_pattern_graph_miner"
+],
+"nodes": [
+"marking>table_fill",
+"search>backtracking",
+"sequence_query",
+"sequence_transformation"
+],
+"why": "learned"
+},
+"graphs/g_topological_sort.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"search>backtracking"
+],
+"why": "none"
+},
+"graphs/gale_shapley_bigraph.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"graphs/graph_adjacency_list.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation"
+],
+"why": "none"
+},
+"graphs/graph_adjacency_matrix.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation"
+],
+"why": "none"
+},
+"graphs/graph_centrality.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"graphs/graph_list.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"graphs/graph_peripherality.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"graphs/graphs_floyd_warshall.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"marking>table_fill"
+],
+"why": "none"
+},
+"graphs/greedy_best_first.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"graphs/greedy_min_vertex_cover.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"graphs/hopcroft_karp.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"graphs/johnson.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query",
+"sequence_transformation>comparison_sort"
+],
+"why": "none"
+},
+"graphs/kahns_algorithm_long.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"graphs/kahns_algorithm_topo.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"graphs/karger.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"graphs/lanczos_eigenvectors.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"graphs/markov_chain.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"graphs/matching_min_vertex_cover.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation"
+],
+"why": "none"
+},
+"graphs/minimum_path_sum.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"marking>table_fill",
+"sequence_transformation"
+],
+"why": "none"
+},
+"graphs/minimum_spanning_tree_boruvka.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"marking>table_fill",
+"numeric",
+"sequence_query",
+"sequence_transformation>comparison_sort"
+],
+"why": "none"
+},
+"graphs/minimum_spanning_tree_kruskal.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"graphs/minimum_spanning_tree_kruskal2.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"graphs/minimum_spanning_tree_prims.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query",
+"sequence_transformation",
+"sequence_transformation>comparison_sort"
+],
+"why": "none"
+},
+"graphs/minimum_spanning_tree_prims2.py": {
+"built": [],
+"got": "minimum_spanning_tree_prims2",
+"held": [
+"minimum_spanning_tree_prims2"
+],
+"held_trace": [],
+"io": [
+"minimum_spanning_tree_prims2"
+],
+"nodes": [
+"numeric",
+"sequence_transformation>comparison_sort"
+],
+"why": "learned"
+},
+"graphs/multi_heuristic_astar.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query",
+"sequence_transformation>comparison_sort"
+],
+"why": "none"
+},
+"graphs/page_rank.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"graphs/prim.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query",
+"sequence_transformation"
+],
+"why": "none"
+},
+"graphs/random_graph_generator.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"graphs/scc_kosaraju.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"search>backtracking"
+],
+"why": "none"
+},
+"graphs/strongly_connected_components.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"search>backtracking",
+"sequence_query>aggregate>gatherer",
+"sequence_transformation"
+],
+"why": "none"
+},
+"graphs/tarjans_scc.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"search>backtracking",
+"sequence_transformation",
+"sequence_transformation>comparison_sort"
+],
+"why": "none"
+},
+"graphs/travelling_salesman_problem.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"marking>table_fill",
+"sequence_query"
+],
+"why": "none"
+},
+"greedy_methods/activity_selection.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"greedy_methods/best_time_to_buy_and_sell_stock.py": {
+"built": [],
+"got": "best_time_to_buy_and_sell_stock",
+"held": [
+"best_time_to_buy_and_sell_stock"
+],
+"held_trace": [
+"best_time_to_buy_and_sell_stock"
+],
+"io": [
+"best_time_to_buy_and_sell_stock"
+],
+"nodes": [
+"sequence_query"
+],
+"why": "trace"
+},
+"greedy_methods/fractional_cover_problem.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"greedy_methods/fractional_knapsack.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"greedy_methods/fractional_knapsack_2.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"greedy_methods/gas_station.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"greedy_methods/minimize_deviation_in_array.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation>elementwise_map"
+],
+"why": "none"
+},
+"greedy_methods/minimum_coin_change.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"greedy_methods/minimum_waiting_time.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"greedy_methods/optimal_merge_pattern.py": {
+"built": [],
+"got": "optimal_merge_pattern",
+"held": [
+"optimal_merge_pattern"
+],
+"held_trace": [
+"optimal_merge_pattern"
+],
+"io": [
+"optimal_merge_pattern"
+],
+"nodes": [
+"sequence_query"
+],
+"why": "trace"
+},
+"greedy_methods/sliding_window.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"greedy_methods/smallest_range.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation"
+],
+"why": "none"
+},
+"hashes/adler32.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"hashes/chaos_machine.py": {
+"built": [],
+"got": "chaos_machine",
+"held": [
+"chaos_machine"
+],
+"held_trace": [],
+"io": [
+"chaos_machine"
+],
+"nodes": [],
+"why": "learned"
+},
+"hashes/crc32.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric>conditional_iteration",
+"sequence_query"
+],
+"why": "none"
+},
+"hashes/djb2.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"hashes/elf.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query>aggregate>gatherer"
+],
+"why": "none"
+},
+"hashes/enigma_machine.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"hashes/fletcher16.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"hashes/hamming_code.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation"
+],
+"why": "none"
+},
+"hashes/jenkins_one_at_a_time.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"hashes/luhn.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"hashes/md5.py": {
+"built": [],
+"got": "md5",
+"held": [
+"md5"
+],
+"held_trace": [],
+"io": [
+"md5"
+],
+"nodes": [
+"numeric",
+"sequence_query",
+"sequence_query>aggregate>gatherer"
+],
+"why": "learned"
+},
+"hashes/sdbm.py": {
+"built": [],
+"got": "sdbm",
+"held": [
+"sdbm"
+],
+"held_trace": [],
+"io": [
+"sdbm"
+],
+"nodes": [
+"sequence_query>aggregate>gatherer"
+],
+"why": "learned"
+},
+"hashes/sha1.py": {
+"built": [],
+"got": "sha1",
+"held": [
+"sha1"
+],
+"held_trace": [],
+"io": [
+"rotate_bits",
+"sha1"
+],
+"nodes": [
+"numeric"
+],
+"why": "learned"
+},
+"hashes/sha256.py": {
+"built": [],
+"got": "sha256",
+"held": [
+"sha256"
+],
+"held_trace": [],
+"io": [
+"sha256"
+],
+"nodes": [
+"sequence_query"
+],
+"why": "learned"
+},
+"knapsack/greedy_knapsack.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query>aggregate>gatherer"
+],
+"why": "none"
+},
+"knapsack/knapsack.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric>recurrence>double_recursion"
+],
+"why": "none"
+},
+"knapsack/recursive_approach_knapsack.py": {
+"built": [
+"Knapsack-problem-0-1"
+],
+"got": "Knapsack-problem-0-1",
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric>recurrence>capacity_reduction",
+"sequence_query"
+],
+"why": "built"
+},
+"linear_algebra/gauss_jordan.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation"
+],
+"why": "none"
+},
+"linear_algebra/gaussian_elimination.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"linear_algebra/jacobi_iteration_method.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"linear_algebra/lu_decomposition.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"linear_algebra/matrix_inversion.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"linear_algebra/src/conjugate_gradient.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"linear_algebra/src/gaussian_elimination_pivoting.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation>comparison_sort"
+],
+"why": "none"
+},
+"linear_algebra/src/lib.py": {
+"built": [],
+"got": "lib",
+"held": [
+"lib"
+],
+"held_trace": [],
+"io": [
+"lib"
+],
+"nodes": [
+"numeric",
+"sequence_query"
+],
+"why": "learned"
+},
+"linear_algebra/src/polynom_for_points.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"marking>table_fill"
+],
+"why": "none"
+},
+"linear_algebra/src/power_iteration.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"linear_algebra/src/rank_of_matrix.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"marking>table_fill",
+"sequence_transformation>uncompared_rearrangement"
+],
+"why": "none"
+},
+"linear_algebra/src/rayleigh_quotient.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"linear_algebra/src/schur_complement.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"linear_algebra/src/transformations_2d.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"linear_programming/simplex.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"machine_learning/apriori_algorithm.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation"
+],
+"why": "none"
+},
+"machine_learning/astar.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"machine_learning/automatic_differentiation.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"machine_learning/data_transformations.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"machine_learning/dbscan.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"machine_learning/decision_tree.py": {
+"built": [],
+"got": "decision_tree",
+"held": [
+"decision_tree"
+],
+"held_trace": [],
+"io": [
+"decision_tree"
+],
+"nodes": [
+"numeric",
+"sequence_query"
+],
+"why": "learned"
+},
+"machine_learning/dimensionality_reduction.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric",
+"sequence_query"
+],
+"why": "none"
+},
+"machine_learning/federated_averaging.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query",
+"sequence_transformation"
+],
+"why": "none"
+},
+"machine_learning/forecasting/run.py": {
+"built": [],
+"got": "run",
+"held": [
+"run"
+],
+"held_trace": [],
+"io": [
+"run"
+],
+"nodes": [
+"sequence_query"
+],
+"why": "learned"
+},
+"machine_learning/frequent_pattern_growth.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"marking>table_fill",
+"numeric",
+"search>backtracking"
+],
+"why": "none"
+},
+"machine_learning/gaussian_mixture_model.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"machine_learning/gaussian_naive_bayes.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"machine_learning/gradient_boosting_classifier.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"machine_learning/gradient_boosting_regressor.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"machine_learning/gradient_descent.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric>conditional_iteration",
+"sequence_query>aggregate>gatherer"
+],
+"why": "none"
+},
+"machine_learning/k_means_clust.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query",
+"sequence_transformation"
+],
+"why": "none"
+},
+"machine_learning/k_medoids.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"machine_learning/k_nearest_neighbors.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"machine_learning/linear_discriminant_analysis.py": {
+"built": [],
+"got": "linear_discriminant_analysis",
+"held": [
+"linear_discriminant_analysis"
+],
+"held_trace": [],
+"io": [
+"linear_discriminant_analysis"
+],
+"nodes": [
+"numeric",
+"sequence_query",
+"sequence_transformation"
+],
+"why": "learned"
+},
+"machine_learning/linear_regression.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric",
+"sequence_query"
+],
+"why": "none"
+},
+"machine_learning/linear_regression_vectorized.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"machine_learning/local_weighted_learning/local_weighted_learning.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"machine_learning/logistic_regression.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"machine_learning/loss_functions.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"machine_learning/mab.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"machine_learning/mean_shift.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query",
+"sequence_transformation"
+],
+"why": "none"
+},
+"machine_learning/mfcc.py": {
+"built": [],
+"got": "mfcc",
+"held": [
+"mfcc"
+],
+"held_trace": [],
+"io": [
+"mfcc"
+],
+"nodes": [
+"numeric"
+],
+"why": "learned"
+},
+"machine_learning/mini_batch_gradient_descent.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"machine_learning/multilayer_perceptron_classifier.py": {
+"built": [],
+"got": "multilayer_perceptron_classifier",
+"held": [
+"multilayer_perceptron_classifier"
+],
+"held_trace": [],
+"io": [
+"binary_search_tree",
+"binary_search_tree_recursive",
+"multilayer_perceptron_classifier"
+],
+"nodes": [
+"numeric"
+],
+"why": "learned"
+},
+"machine_learning/naive_bayes_text_classification.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"machine_learning/ordinary_least_squares_regression.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"machine_learning/polynomial_regression.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"machine_learning/principle_component_analysis.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"machine_learning/q_learning.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"machine_learning/random_forest_classifier.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"machine_learning/random_forest_regressor.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"machine_learning/ridge_regression.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"machine_learning/rmsprop.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation"
+],
+"why": "none"
+},
+"machine_learning/scoring_functions.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"machine_learning/self_organizing_map.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"marking>table_fill"
+],
+"why": "none"
+},
+"machine_learning/sequential_minimum_optimization.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric",
+"sequence_query"
+],
+"why": "none"
+},
+"machine_learning/similarity_search.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation"
+],
+"why": "none"
+},
+"machine_learning/support_vector_machines.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"machine_learning/t_stochastic_neighbour_embedding.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"machine_learning/word_frequency_functions.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/abs.py": {
+"at": "trace",
+"built": [],
+"clash": [
+"abs",
+"find_min"
+],
+"got": null,
+"held": [
+"abs",
+"find_min"
+],
+"held_trace": [
+"abs",
+"find_min"
+],
+"io": [
+"abs",
+"find_max",
+"find_min"
+],
+"nodes": [
+"sequence_query"
+],
+"why": "ambiguous"
+},
+"maths/addition_without_arithmetic.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"maths/aliquot_sum.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/allocation_number.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/arc_length.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/area.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"area",
+"fuzzy_set_operations",
+"newtons_second_law_of_motion"
+],
+"got": null,
+"held": [
+"area",
+"fuzzy_set_operations",
+"newtons_second_law_of_motion"
+],
+"held_trace": [],
+"io": [
+"area",
+"fuzzy_set_operations",
+"integration_by_simpson_approx",
+"newtons_second_law_of_motion",
+"simpson_rule",
+"trapezoidal_rule"
+],
+"nodes": [],
+"why": "ambiguous"
+},
+"maths/area_under_curve.py": {
+"built": [],
+"got": "area_under_curve",
+"held": [
+"area_under_curve"
+],
+"held_trace": [],
+"io": [
+"area_under_curve"
+],
+"nodes": [
+"numeric"
+],
+"why": "learned"
+},
+"maths/autocorrelation.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"maths/average_absolute_deviation.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"maths/average_mean.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"arithmetic",
+"average_mean",
+"first_come_first_served"
+],
+"got": null,
+"held": [
+"arithmetic",
+"average_mean",
+"first_come_first_served"
+],
+"held_trace": [],
+"io": [
+"arithmetic",
+"average_mean",
+"first_come_first_served"
+],
+"nodes": [
+"sequence_query"
+],
+"why": "ambiguous"
+},
+"maths/average_median.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/average_mode.py": {
+"built": [],
+"got": "average_mode",
+"held": [
+"average_mode"
+],
+"held_trace": [
+"average_mode"
+],
+"io": [
+"adaptive_merge_sort",
+"average_mode",
+"binary_insertion_sort",
+"bubble_sort",
+"bubble_sort_recursive",
+"circle_sort",
+"cocktail_shaker_sort",
+"comb_sort",
+"counting_sort",
+"cycle_sort",
+"double_sort",
+"exchange_sort",
+"gnome_sort",
+"heap_sort",
+"insertion_sort",
+"intro_sort",
+"iterative_merge_sort",
+"merge_insertion_sort",
+"merge_sort",
+"mergesort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded",
+"pancake_sort",
+"pigeon_sort",
+"pigeonhole_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"recursive_insertion_sort",
+"recursive_quick_sort",
+"reverse_selection",
+"selection_sort",
+"shell_sort",
+"shrink_shell_sort",
+"stooge_sort",
+"tim_sort"
+],
+"nodes": [],
+"why": "trace"
+},
+"maths/bailey_borwein_plouffe.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"maths/base_neg2_conversion.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"maths/basic_maths.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"basic_maths",
+"problem_012"
+],
+"got": null,
+"held": [
+"basic_maths",
+"problem_012"
+],
+"held_trace": [],
+"io": [
+"basic_maths",
+"prime_factors",
+"problem_012"
+],
+"nodes": [
+"numeric",
+"numeric>divisor_test",
+"numeric>recurrence>range_accumulation"
+],
+"why": "ambiguous"
+},
+"maths/bearing.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"maths/binary_exponentiation.py": {
+"built": [
+"Josephus-problem"
+],
+"got": "Josephus-problem",
+"held": [
+"binary_exponentiation",
+"fermat_little_theorem",
+"power",
+"problem_188"
+],
+"held_trace": [],
+"io": [
+"binary_exponentiation",
+"carmichael_number",
+"fermat_little_theorem",
+"modular_exponential",
+"power",
+"power_using_recursion",
+"problem_188"
+],
+"nodes": [
+"numeric",
+"numeric>recurrence>double_recursion",
+"numeric>recurrence>josephus_recurrence"
+],
+"why": "built"
+},
+"maths/binary_multiplication.py": {
+"built": [],
+"got": "binary_multiplication",
+"held": [
+"binary_multiplication"
+],
+"held_trace": [],
+"io": [
+"binary_multiplication"
+],
+"nodes": [
+"numeric"
+],
+"why": "learned"
+},
+"maths/binomial_coefficient.py": {
+"built": [],
+"got": "binomial_coefficient",
+"held": [
+"binomial_coefficient"
+],
+"held_trace": [],
+"io": [
+"binomial_coefficient"
+],
+"nodes": [],
+"why": "learned"
+},
+"maths/binomial_distribution.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/binomial_expansion.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/ceil.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/chebyshev_distance.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/check_polygon.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"maths/chinese_remainder_theorem.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"chinese_remainder_theorem",
+"modular_division"
+],
+"got": null,
+"held": [
+"chinese_remainder_theorem",
+"modular_division"
+],
+"held_trace": [],
+"io": [
+"chinese_remainder_theorem",
+"extended_euclidean_algorithm",
+"modular_division"
+],
+"nodes": [
+"numeric>recurrence>modulo_recurrence"
+],
+"why": "ambiguous"
+},
+"maths/cholesky_decomposition.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/chudnovsky_algorithm.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"maths/collatz_sequence.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric>conditional_iteration"
+],
+"why": "none"
+},
+"maths/combinations.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"maths/continued_fraction.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric>recurrence>pair_recurrence"
+],
+"why": "none"
+},
+"maths/convolve_1d.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/decimal_isolate.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/decimal_to_fraction.py": {
+"built": [],
+"got": "decimal_to_fraction",
+"held": [
+"decimal_to_fraction"
+],
+"held_trace": [],
+"io": [
+"decimal_to_fraction"
+],
+"nodes": [
+"numeric>recurrence>modulo_recurrence"
+],
+"why": "learned"
+},
+"maths/derangement.py": {
+"built": [],
+"got": "derangement",
+"held": [
+"derangement"
+],
+"held_trace": [],
+"io": [
+"derangement"
+],
+"nodes": [
+"numeric"
+],
+"why": "learned"
+},
+"maths/digital_root.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"maths/disarium.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"maths/dodecahedron.py": {
+"built": [],
+"got": "dodecahedron",
+"held": [
+"dodecahedron"
+],
+"held_trace": [],
+"io": [
+"dodecahedron"
+],
+"nodes": [],
+"why": "learned"
+},
+"maths/double_factorial.py": {
+"built": [],
+"got": "double_factorial",
+"held": [
+"double_factorial"
+],
+"held_trace": [],
+"io": [
+"double_factorial"
+],
+"nodes": [
+"numeric>recurrence>range_accumulation"
+],
+"why": "learned"
+},
+"maths/dual_number_automatic_differentiation.py": {
+"built": [],
+"got": "dual_number_automatic_differentiation",
+"held": [
+"dual_number_automatic_differentiation"
+],
+"held_trace": [],
+"io": [
+"dual_number_automatic_differentiation",
+"sherman_morrison"
+],
+"nodes": [
+"numeric"
+],
+"why": "learned"
+},
+"maths/ear_clipping_polygon_triangulation.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"maths/entropy.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation>distribution_sort>histogram"
+],
+"why": "none"
+},
+"maths/euclidean_distance.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/euler_method.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/euler_modified.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/eulers_totient.py": {
+"built": [],
+"got": "eulers_totient",
+"held": [
+"eulers_totient"
+],
+"held_trace": [],
+"io": [
+"eulers_totient"
+],
+"nodes": [],
+"why": "learned"
+},
+"maths/extended_euclidean_algorithm.py": {
+"built": [],
+"got": "extended_euclidean_algorithm",
+"held": [
+"extended_euclidean_algorithm"
+],
+"held_trace": [],
+"io": [
+"chinese_remainder_theorem",
+"extended_euclidean_algorithm",
+"modular_division"
+],
+"nodes": [
+"numeric>recurrence>pair_recurrence"
+],
+"why": "learned"
+},
+"maths/factorial.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"Factorial",
+"krishnamurthy_number",
+"number_of_possible_binary_trees",
+"primelib",
+"problem_020"
+],
+"got": null,
+"held": [
+"factorial",
+"krishnamurthy_number",
+"number_of_possible_binary_trees",
+"primelib",
+"problem_020"
+],
+"held_trace": [],
+"io": [
+"factorial",
+"krishnamurthy_number",
+"number_of_possible_binary_trees",
+"primelib",
+"problem_020"
+],
+"nodes": [
+"numeric>recurrence>range_accumulation"
+],
+"why": "ambiguous"
+},
+"maths/factors.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric>divisor_test"
+],
+"why": "none"
+},
+"maths/fast_inverse_sqrt.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/fermat_little_theorem.py": {
+"built": [
+"Josephus-problem"
+],
+"got": "Josephus-problem",
+"held": [
+"binary_exponentiation",
+"fermat_little_theorem",
+"problem_188"
+],
+"held_trace": [],
+"io": [
+"binary_exponentiation",
+"carmichael_number",
+"fermat_little_theorem",
+"problem_188"
+],
+"nodes": [
+"numeric>recurrence>double_recursion",
+"numeric>recurrence>josephus_recurrence"
+],
+"why": "built"
+},
+"maths/fibonacci.py": {
+"built": [],
+"got": "Fibonacci-sequence",
+"held": [
+"fibonacci"
+],
+"held_trace": [],
+"io": [
+"fibonacci"
+],
+"nodes": [
+"numeric",
+"numeric>recurrence>double_recursion",
+"numeric>recurrence>pair_recurrence"
+],
+"why": "learned"
+},
+"maths/find_max.py": {
+"built": [],
+"got": "find_max",
+"held": [
+"find_max"
+],
+"held_trace": [
+"find_max"
+],
+"io": [
+"abs",
+"find_max"
+],
+"nodes": [
+"sequence_query",
+"sequence_query>aggregate>most_wanted"
+],
+"why": "trace"
+},
+"maths/find_min.py": {
+"at": "trace",
+"built": [],
+"clash": [
+"abs",
+"find_min"
+],
+"got": null,
+"held": [
+"abs",
+"find_min"
+],
+"held_trace": [
+"abs",
+"find_min"
+],
+"io": [
+"abs",
+"find_min"
+],
+"nodes": [
+"sequence_query"
+],
+"why": "ambiguous"
+},
+"maths/first_fundamental_form.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/floor.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/gamma.py": {
+"built": [],
+"got": "gamma",
+"held": [
+"gamma"
+],
+"held_trace": [],
+"io": [
+"gamma"
+],
+"nodes": [
+"numeric"
+],
+"why": "learned"
+},
+"maths/gaussian.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/gcd_of_n_numbers.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric>recurrence>range_accumulation",
+"sequence_transformation"
+],
+"why": "none"
+},
+"maths/geometric_mean.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"maths/germain_primes.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/greatest_common_divisor.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"Greatest-common-divisor",
+"modular_division"
+],
+"got": null,
+"held": [
+"greatest_common_divisor",
+"modular_division"
+],
+"held_trace": [],
+"io": [
+"greatest_common_divisor",
+"modular_division"
+],
+"nodes": [
+"numeric>recurrence>modulo_recurrence"
+],
+"why": "ambiguous"
+},
+"maths/hardy_ramanujanalgo.py": {
+"built": [],
+"got": "hardy_ramanujanalgo",
+"held": [
+"hardy_ramanujanalgo"
+],
+"held_trace": [],
+"io": [
+"hardy_ramanujanalgo"
+],
+"nodes": [
+"numeric>divisor_test"
+],
+"why": "learned"
+},
+"maths/integer_square_root.py": {
+"built": [],
+"got": "integer_square_root",
+"held": [
+"integer_square_root"
+],
+"held_trace": [],
+"io": [
+"integer_square_root"
+],
+"nodes": [
+"numeric"
+],
+"why": "learned"
+},
+"maths/interquartile_range.py": {
+"built": [],
+"got": "interquartile_range",
+"held": [
+"interquartile_range"
+],
+"held_trace": [
+"interquartile_range"
+],
+"io": [
+"interquartile_range"
+],
+"nodes": [
+"sequence_query"
+],
+"why": "trace"
+},
+"maths/is_int_palindrome.py": {
+"built": [],
+"got": "is_int_palindrome",
+"held": [
+"is_int_palindrome"
+],
+"held_trace": [],
+"io": [
+"is_int_palindrome"
+],
+"nodes": [
+"numeric>decomposition>digits"
+],
+"why": "learned"
+},
+"maths/is_ip_v4_address_valid.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/is_ipv6_address_valid.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"maths/is_square_free.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"maths/jaccard_similarity.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/joint_probability_distribution.py": {
+"built": [],
+"got": "joint_probability_distribution",
+"held": [
+"joint_probability_distribution"
+],
+"held_trace": [],
+"io": [
+"joint_probability_distribution"
+],
+"nodes": [],
+"why": "learned"
+},
+"maths/josephus_problem.py": {
+"built": [
+"Josephus-problem"
+],
+"got": "Josephus-problem",
+"held": [
+"josephus_problem"
+],
+"held_trace": [],
+"io": [
+"josephus_problem"
+],
+"nodes": [
+"numeric",
+"numeric>recurrence>josephus_recurrence",
+"sequence_transformation>elimination_cycle"
+],
+"why": "built"
+},
+"maths/juggler_sequence.py": {
+"built": [],
+"got": "juggler_sequence",
+"held": [
+"juggler_sequence"
+],
+"held_trace": [],
+"io": [
+"juggler_sequence"
+],
+"nodes": [],
+"why": "learned"
+},
+"maths/karatsuba.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric>recurrence>double_recursion"
+],
+"why": "none"
+},
+"maths/keith_number.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/kth_lexicographic_permutation.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/laplace_transformation.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"maths/largest_of_very_large_numbers.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/least_common_multiple.py": {
+"built": [],
+"got": "Least-common-multiple",
+"held": [
+"least_common_multiple"
+],
+"held_trace": [],
+"io": [
+"least_common_multiple"
+],
+"nodes": [
+"numeric"
+],
+"why": "learned"
+},
+"maths/line_intersection.py": {
+"built": [],
+"got": "line_intersection",
+"held": [
+"line_intersection"
+],
+"held_trace": [],
+"io": [
+"line_intersection"
+],
+"nodes": [
+"sequence_query"
+],
+"why": "learned"
+},
+"maths/line_length.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"maths/liouville_lambda.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/lucas_series.py": {
+"built": [],
+"got": "lucas_series",
+"held": [
+"lucas_series"
+],
+"held_trace": [],
+"io": [
+"lucas_series"
+],
+"nodes": [
+"numeric>recurrence>double_recursion",
+"numeric>recurrence>pair_recurrence"
+],
+"why": "learned"
+},
+"maths/maclaurin_series.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/manhattan_distance.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"maths/matrix_exponentiation.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric",
+"numeric>recurrence>pair_recurrence"
+],
+"why": "none"
+},
+"maths/max_sum_sliding_window.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"maths/minkowski_distance.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/mobius_function.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/modular_division.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"Greatest-common-divisor",
+"chinese_remainder_theorem",
+"diophantine_equation",
+"modular_division"
+],
+"got": null,
+"held": [
+"chinese_remainder_theorem",
+"diophantine_equation",
+"greatest_common_divisor",
+"modular_division"
+],
+"held_trace": [],
+"io": [
+"chinese_remainder_theorem",
+"diophantine_equation",
+"extended_euclidean_algorithm",
+"greatest_common_divisor",
+"modular_division"
+],
+"nodes": [
+"numeric>recurrence>modulo_recurrence"
+],
+"why": "ambiguous"
+},
+"maths/modular_exponential.py": {
+"built": [],
+"got": "modular_exponential",
+"held": [
+"modular_exponential"
+],
+"held_trace": [],
+"io": [
+"binary_exponentiation",
+"modular_exponential"
+],
+"nodes": [
+"numeric"
+],
+"why": "learned"
+},
+"maths/monte_carlo.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/monte_carlo_dice.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/ncr_combinations.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"maths/next_prime_number.py": {
+"built": [],
+"got": "next_prime_number",
+"held": [
+"next_prime_number"
+],
+"held_trace": [],
+"io": [
+"next_prime_number",
+"primelib",
+"problem_060",
+"rabin_miller"
+],
+"nodes": [
+"numeric",
+"numeric>divisor_test"
+],
+"why": "learned"
+},
+"maths/number_of_digits.py": {
+"built": [],
+"got": "number_of_digits",
+"held": [
+"number_of_digits"
+],
+"held_trace": [],
+"io": [
+"number_of_digits"
+],
+"nodes": [
+"numeric"
+],
+"why": "learned"
+},
+"maths/numerical_analysis/adams_bashforth.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/numerical_analysis/bisection.py": {
+"built": [],
+"got": "bisection",
+"held": [
+"bisection"
+],
+"held_trace": [],
+"io": [
+"bisection",
+"intersection"
+],
+"nodes": [
+"numeric"
+],
+"why": "learned"
+},
+"maths/numerical_analysis/bisection_2.py": {
+"built": [],
+"got": "bisection_2",
+"held": [
+"bisection_2"
+],
+"held_trace": [],
+"io": [
+"bisection_2"
+],
+"nodes": [
+"numeric"
+],
+"why": "learned"
+},
+"maths/numerical_analysis/brent_method.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric>recurrence>pair_recurrence"
+],
+"why": "none"
+},
+"maths/numerical_analysis/gauss_seidel_method.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/numerical_analysis/integration_by_simpson_approx.py": {
+"built": [],
+"got": "integration_by_simpson_approx",
+"held": [
+"integration_by_simpson_approx"
+],
+"held_trace": [],
+"io": [
+"area",
+"integration_by_simpson_approx",
+"simpson_rule",
+"trapezoidal_rule"
+],
+"nodes": [
+"numeric"
+],
+"why": "learned"
+},
+"maths/numerical_analysis/intersection.py": {
+"built": [],
+"got": "intersection",
+"held": [
+"intersection"
+],
+"held_trace": [],
+"io": [
+"bisection",
+"intersection"
+],
+"nodes": [
+"numeric>recurrence>pair_recurrence"
+],
+"why": "learned"
+},
+"maths/numerical_analysis/nevilles_method.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"marking>table_fill"
+],
+"why": "none"
+},
+"maths/numerical_analysis/newton_forward_interpolation.py": {
+"built": [],
+"got": "newton_forward_interpolation",
+"held": [
+"newton_forward_interpolation"
+],
+"held_trace": [],
+"io": [
+"newton_forward_interpolation"
+],
+"nodes": [
+"marking>table_fill",
+"numeric"
+],
+"why": "learned"
+},
+"maths/numerical_analysis/newton_raphson.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/numerical_analysis/nth_root.py": {
+"built": [],
+"got": "nth_root",
+"held": [
+"nth_root"
+],
+"held_trace": [],
+"io": [
+"nth_root"
+],
+"nodes": [
+"numeric"
+],
+"why": "learned"
+},
+"maths/numerical_analysis/numerical_integration.py": {
+"built": [],
+"got": "numerical_integration",
+"held": [
+"numerical_integration"
+],
+"held_trace": [],
+"io": [
+"numerical_integration",
+"volume"
+],
+"nodes": [
+"numeric"
+],
+"why": "learned"
+},
+"maths/numerical_analysis/proper_fractions.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/numerical_analysis/runge_kutta.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/numerical_analysis/runge_kutta_fehlberg_45.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/numerical_analysis/runge_kutta_gills.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/numerical_analysis/secant_method.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric>recurrence>pair_recurrence"
+],
+"why": "none"
+},
+"maths/numerical_analysis/simpson_rule.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"integration_by_simpson_approx",
+"simpson_rule",
+"trapezoidal_rule"
+],
+"got": null,
+"held": [
+"integration_by_simpson_approx",
+"simpson_rule",
+"trapezoidal_rule"
+],
+"held_trace": [],
+"io": [
+"area",
+"integration_by_simpson_approx",
+"simpson_rule",
+"trapezoidal_rule"
+],
+"nodes": [
+"numeric",
+"sequence_query"
+],
+"why": "ambiguous"
+},
+"maths/numerical_analysis/square_root.py": {
+"built": [],
+"got": "square_root",
+"held": [
+"square_root"
+],
+"held_trace": [],
+"io": [
+"fenwick_tree",
+"square_root"
+],
+"nodes": [
+"numeric"
+],
+"why": "learned"
+},
+"maths/numerical_analysis/weierstrass_method.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"maths/odd_sieve.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/padovan_sequence.py": {
+"built": [],
+"got": "padovan_sequence",
+"held": [
+"padovan_sequence"
+],
+"held_trace": [],
+"io": [
+"padovan_sequence"
+],
+"nodes": [
+"numeric"
+],
+"why": "learned"
+},
+"maths/pell_number.py": {
+"built": [],
+"got": "pell_number",
+"held": [
+"pell_number"
+],
+"held_trace": [],
+"io": [
+"pell_number"
+],
+"nodes": [
+"numeric>recurrence>double_recursion",
+"numeric>recurrence>pair_recurrence"
+],
+"why": "learned"
+},
+"maths/perfect_cube.py": {
+"built": [],
+"got": "perfect_cube",
+"held": [
+"perfect_cube"
+],
+"held_trace": [],
+"io": [
+"perfect_cube"
+],
+"nodes": [],
+"why": "learned"
+},
+"maths/perfect_number.py": {
+"built": [],
+"got": "Perfect-numbers",
+"held": [
+"perfect_number"
+],
+"held_trace": [],
+"io": [
+"perfect_number"
+],
+"nodes": [
+"numeric>divisor_test"
+],
+"why": "learned"
+},
+"maths/perfect_square.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"perfect_square",
+"problem_180"
+],
+"got": null,
+"held": [
+"perfect_square",
+"problem_180"
+],
+"held_trace": [],
+"io": [
+"perfect_square",
+"problem_180"
+],
+"nodes": [],
+"why": "ambiguous"
+},
+"maths/persistence.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"maths/pi_generator.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric>conditional_iteration"
+],
+"why": "none"
+},
+"maths/pi_monte_carlo_estimation.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"maths/points_are_collinear_3d.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"maths/pollard_rho.py": {
+"built": [],
+"got": "pollard_rho",
+"held": [
+"pollard_rho"
+],
+"held_trace": [],
+"io": [
+"pollard_rho"
+],
+"nodes": [
+"numeric"
+],
+"why": "learned"
+},
+"maths/polynomial_evaluation.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"maths/polynomials/single_indeterminate_operations.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"maths/power_using_recursion.py": {
+"built": [],
+"got": "power_using_recursion",
+"held": [
+"power_using_recursion"
+],
+"held_trace": [],
+"io": [
+"binary_exponentiation",
+"power",
+"power_using_recursion"
+],
+"nodes": [
+"numeric"
+],
+"why": "learned"
+},
+"maths/prime_check.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"Primality-by-trial-division",
+"problem_003",
+"problem_007",
+"problem_010",
+"problem_027",
+"problem_037",
+"problem_041",
+"problem_046",
+"problem_058"
+],
+"got": null,
+"held": [
+"prime_check",
+"problem_003",
+"problem_007",
+"problem_010",
+"problem_027",
+"problem_037",
+"problem_041",
+"problem_046",
+"problem_058"
+],
+"held_trace": [],
+"io": [
+"prime_check",
+"prime_numbers",
+"problem_003",
+"problem_007",
+"problem_010",
+"problem_027",
+"problem_037",
+"problem_041",
+"problem_046",
+"problem_049",
+"problem_058"
+],
+"nodes": [
+"numeric>divisor_test"
+],
+"why": "ambiguous"
+},
+"maths/prime_factors.py": {
+"built": [],
+"got": "prime_factors",
+"held": [
+"prime_factors"
+],
+"held_trace": [],
+"io": [
+"basic_maths",
+"prime_factors"
+],
+"nodes": [
+"numeric>divisor_test"
+],
+"why": "learned"
+},
+"maths/prime_numbers.py": {
+"built": [],
+"got": "prime_numbers",
+"held": [
+"prime_numbers"
+],
+"held_trace": [],
+"io": [
+"prime_numbers"
+],
+"nodes": [],
+"why": "learned"
+},
+"maths/prime_sieve_eratosthenes.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"Sieve-of-Eratosthenes",
+"prime_sieve_eratosthenes",
+"problem_187",
+"problem_800",
+"sieve_of_atkin"
+],
+"got": null,
+"held": [
+"prime_sieve_eratosthenes",
+"problem_187",
+"problem_800",
+"sieve_of_atkin",
+"sieve_of_eratosthenes"
+],
+"held_trace": [],
+"io": [
+"prime_sieve_eratosthenes",
+"primelib",
+"problem_050",
+"problem_051",
+"problem_187",
+"problem_234",
+"problem_800",
+"sieve_of_atkin",
+"sieve_of_eratosthenes"
+],
+"nodes": [
+"marking>stride_marking"
+],
+"why": "ambiguous"
+},
+"maths/primelib.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"Factorial",
+"krishnamurthy_number",
+"number_of_possible_binary_trees",
+"primelib",
+"problem_020",
+"problem_050",
+"problem_051",
+"problem_234"
+],
+"got": null,
+"held": [
+"factorial",
+"krishnamurthy_number",
+"number_of_possible_binary_trees",
+"primelib",
+"problem_020",
+"problem_050",
+"problem_051",
+"problem_234"
+],
+"held_trace": [],
+"io": [
+"climbing_stairs",
+"factorial",
+"fast_fibonacci",
+"is_even",
+"krishnamurthy_number",
+"next_prime_number",
+"nth_fibonacci_using_matrix_exponentiation",
+"number_of_possible_binary_trees",
+"prime_sieve_eratosthenes",
+"primelib",
+"problem_020",
+"problem_050",
+"problem_051",
+"problem_060",
+"problem_187",
+"problem_234",
+"problem_800",
+"rabin_miller",
+"sieve_of_atkin",
+"sieve_of_eratosthenes"
+],
+"nodes": [
+"numeric",
+"numeric>divisor_test",
+"numeric>recurrence>range_accumulation"
+],
+"why": "ambiguous"
+},
+"maths/print_multiplication_table.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/pythagoras.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/qr_decomposition.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/quadratic_equations_complex_numbers.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/radians.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/radix2_fft.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/recursive_digit_sum.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"maths/remove_digit.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"maths/reverse_factorial_recursive.py": {
+"built": [],
+"got": "reverse_factorial_recursive",
+"held": [
+"reverse_factorial_recursive"
+],
+"held_trace": [],
+"io": [
+"reverse_factorial_recursive"
+],
+"nodes": [
+"numeric>divisor_test"
+],
+"why": "learned"
+},
+"maths/segmented_sieve.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"marking>stride_marking"
+],
+"why": "none"
+},
+"maths/series/alternate_harmonic_series.py": {
+"built": [],
+"got": "alternate_harmonic_series",
+"held": [
+"alternate_harmonic_series"
+],
+"held_trace": [
+"alternate_harmonic_series"
+],
+"io": [
+"alternate_harmonic_series"
+],
+"nodes": [],
+"why": "trace"
+},
+"maths/series/alternating_harmonic_series.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/series/arithmetic.py": {
+"built": [],
+"got": "arithmetic",
+"held": [
+"arithmetic",
+"average_mean",
+"first_come_first_served"
+],
+"held_trace": [
+"arithmetic"
+],
+"io": [
+"arithmetic",
+"average_mean",
+"first_come_first_served"
+],
+"nodes": [
+"sequence_query"
+],
+"why": "trace"
+},
+"maths/series/geometric.py": {
+"built": [],
+"got": "geometric",
+"held": [
+"geometric",
+"harmonic"
+],
+"held_trace": [
+"geometric"
+],
+"io": [
+"geometric",
+"harmonic"
+],
+"nodes": [
+"sequence_query"
+],
+"why": "trace"
+},
+"maths/series/geometric_series.py": {
+"built": [],
+"got": "geometric_series",
+"held": [
+"geometric_series"
+],
+"held_trace": [],
+"io": [
+"geometric_series"
+],
+"nodes": [],
+"why": "learned"
+},
+"maths/series/harmonic.py": {
+"built": [],
+"got": "harmonic",
+"held": [
+"geometric",
+"harmonic"
+],
+"held_trace": [
+"harmonic"
+],
+"io": [
+"geometric",
+"harmonic"
+],
+"nodes": [
+"sequence_query"
+],
+"why": "trace"
+},
+"maths/series/harmonic_series.py": {
+"built": [],
+"got": "harmonic_series",
+"held": [
+"harmonic_series"
+],
+"held_trace": [],
+"io": [
+"harmonic_series"
+],
+"nodes": [],
+"why": "learned"
+},
+"maths/series/hexagonal_numbers.py": {
+"built": [],
+"got": "hexagonal_numbers",
+"held": [
+"hexagonal_numbers"
+],
+"held_trace": [],
+"io": [
+"hexagonal_numbers"
+],
+"nodes": [],
+"why": "learned"
+},
+"maths/series/logarithmic_series.py": {
+"built": [],
+"got": "logarithmic_series",
+"held": [
+"logarithmic_series"
+],
+"held_trace": [],
+"io": [
+"logarithmic_series"
+],
+"nodes": [],
+"why": "learned"
+},
+"maths/series/p_series.py": {
+"built": [],
+"got": "p_series",
+"held": [
+"p_series"
+],
+"held_trace": [],
+"io": [
+"p_series"
+],
+"nodes": [],
+"why": "learned"
+},
+"maths/shoelace_area.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"maths/sieve_of_atkin.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"Sieve-of-Eratosthenes",
+"prime_sieve_eratosthenes",
+"problem_187",
+"problem_800",
+"sieve_of_atkin"
+],
+"got": null,
+"held": [
+"prime_sieve_eratosthenes",
+"problem_187",
+"problem_800",
+"sieve_of_atkin",
+"sieve_of_eratosthenes"
+],
+"held_trace": [],
+"io": [
+"prime_sieve_eratosthenes",
+"primelib",
+"problem_050",
+"problem_051",
+"problem_187",
+"problem_234",
+"problem_800",
+"sieve_of_atkin",
+"sieve_of_eratosthenes"
+],
+"nodes": [
+"marking>stride_marking"
+],
+"why": "ambiguous"
+},
+"maths/sieve_of_eratosthenes.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"Sieve-of-Eratosthenes",
+"prime_sieve_eratosthenes",
+"problem_187",
+"problem_800",
+"sieve_of_atkin"
+],
+"got": null,
+"held": [
+"prime_sieve_eratosthenes",
+"problem_187",
+"problem_800",
+"sieve_of_atkin",
+"sieve_of_eratosthenes"
+],
+"held_trace": [],
+"io": [
+"prime_sieve_eratosthenes",
+"primelib",
+"problem_050",
+"problem_051",
+"problem_187",
+"problem_234",
+"problem_800",
+"sieve_of_atkin",
+"sieve_of_eratosthenes"
+],
+"nodes": [
+"marking>stride_marking"
+],
+"why": "ambiguous"
+},
+"maths/sigmoid.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"maths/signum.py": {
+"built": [],
+"got": "signum",
+"held": [
+"signum"
+],
+"held_trace": [],
+"io": [
+"signum"
+],
+"nodes": [],
+"why": "learned"
+},
+"maths/simultaneous_linear_equation_solver.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation"
+],
+"why": "none"
+},
+"maths/sin.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"maths/sock_merchant.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"sorts/adaptive_merge_sort.py": {
+"built": [],
+"got": "Sorting-algorithms-Merge-sort",
+"held": [
+"adaptive_merge_sort",
+"exchange_sort",
+"pigeon_sort",
+"recursive_insertion_sort",
+"shell_sort"
+],
+"held_trace": [
+"adaptive_merge_sort"
+],
+"io": [
+"adaptive_merge_sort",
+"average_mode",
+"binary_insertion_sort",
+"bubble_sort",
+"bubble_sort_recursive",
+"circle_sort",
+"cocktail_shaker_sort",
+"comb_sort",
+"counting_sort",
+"cycle_sort",
+"double_sort",
+"exchange_sort",
+"gnome_sort",
+"heap_sort",
+"insertion_sort",
+"intro_sort",
+"iterative_merge_sort",
+"merge_insertion_sort",
+"merge_sort",
+"mergesort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded",
+"pancake_sort",
+"pigeon_sort",
+"pigeonhole_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"recursive_insertion_sort",
+"recursive_quick_sort",
+"reverse_selection",
+"selection_sort",
+"shell_sort",
+"shrink_shell_sort",
+"stooge_sort",
+"tim_sort"
+],
+"nodes": [
+"sequence_query",
+"sequence_transformation>comparison_sort"
+],
+"why": "trace"
+},
+"sorts/bead_sort.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation"
+],
+"why": "none"
+},
+"sorts/benchmark_sorts.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"sorts/binary_insertion_sort.py": {
+"built": [],
+"got": "Sorting-algorithms-Insertion-sort",
+"held": [
+"binary_insertion_sort",
+"iterative_merge_sort",
+"merge_sort",
+"pancake_sort"
+],
+"held_trace": [
+"binary_insertion_sort"
+],
+"io": [
+"adaptive_merge_sort",
+"average_mode",
+"binary_insertion_sort",
+"bubble_sort",
+"bubble_sort_recursive",
+"circle_sort",
+"cocktail_shaker_sort",
+"comb_sort",
+"counting_sort",
+"cycle_sort",
+"double_sort",
+"exchange_sort",
+"gnome_sort",
+"heap_sort",
+"insertion_sort",
+"intro_sort",
+"iterative_merge_sort",
+"merge_insertion_sort",
+"merge_sort",
+"mergesort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded",
+"pancake_sort",
+"pigeon_sort",
+"pigeonhole_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"recursive_insertion_sort",
+"recursive_quick_sort",
+"reverse_selection",
+"selection_sort",
+"shell_sort",
+"shrink_shell_sort",
+"stooge_sort",
+"tim_sort"
+],
+"nodes": [
+"sequence_transformation"
+],
+"why": "trace"
+},
+"sorts/bitonic_sort.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric>recurrence>double_recursion",
+"sequence_transformation>comparison_sort"
+],
+"why": "none"
+},
+"sorts/bogo_sort.py": {
+"built": [],
+"got": "bogo_sort",
+"held": [
+"bogo_sort"
+],
+"held_trace": [
+"bogo_sort"
+],
+"io": [
+"bogo_sort"
+],
+"nodes": [
+"numeric"
+],
+"why": "trace"
+},
+"sorts/bubble_sort.py": {
+"built": [],
+"got": "Sorting-algorithms-Bubble-sort",
+"held": [
+"bubble_sort",
+"bubble_sort_recursive",
+"cocktail_shaker_sort",
+"double_sort",
+"gnome_sort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded"
+],
+"held_trace": [
+"bubble_sort"
+],
+"io": [
+"adaptive_merge_sort",
+"average_mode",
+"binary_insertion_sort",
+"bubble_sort",
+"bubble_sort_recursive",
+"circle_sort",
+"cocktail_shaker_sort",
+"comb_sort",
+"counting_sort",
+"cycle_sort",
+"double_sort",
+"exchange_sort",
+"gnome_sort",
+"heap_sort",
+"insertion_sort",
+"intro_sort",
+"iterative_merge_sort",
+"merge_insertion_sort",
+"merge_sort",
+"mergesort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded",
+"pancake_sort",
+"pigeon_sort",
+"pigeonhole_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"recursive_insertion_sort",
+"recursive_quick_sort",
+"reverse_selection",
+"selection_sort",
+"shell_sort",
+"shrink_shell_sort",
+"stooge_sort",
+"tim_sort"
+],
+"nodes": [
+"sequence_transformation>comparison_sort>adjacent_exchange"
+],
+"why": "trace"
+},
+"sorts/bubble_sort_recursive.py": {
+"built": [],
+"got": "Sorting-algorithms-Bubble-sort",
+"held": [
+"bubble_sort",
+"bubble_sort_recursive",
+"cocktail_shaker_sort",
+"double_sort",
+"gnome_sort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded"
+],
+"held_trace": [
+"bubble_sort_recursive"
+],
+"io": [
+"adaptive_merge_sort",
+"average_mode",
+"binary_insertion_sort",
+"bubble_sort",
+"bubble_sort_recursive",
+"circle_sort",
+"cocktail_shaker_sort",
+"comb_sort",
+"counting_sort",
+"cycle_sort",
+"double_sort",
+"exchange_sort",
+"gnome_sort",
+"heap_sort",
+"insertion_sort",
+"intro_sort",
+"iterative_merge_sort",
+"merge_insertion_sort",
+"merge_sort",
+"mergesort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded",
+"pancake_sort",
+"pigeon_sort",
+"pigeonhole_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"recursive_insertion_sort",
+"recursive_quick_sort",
+"reverse_selection",
+"selection_sort",
+"shell_sort",
+"shrink_shell_sort",
+"stooge_sort",
+"tim_sort"
+],
+"nodes": [
+"sequence_transformation>comparison_sort>adjacent_exchange"
+],
+"why": "trace"
+},
+"sorts/bucket_sort.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation"
+],
+"why": "none"
+},
+"sorts/circle_sort.py": {
+"built": [],
+"got": "circle_sort",
+"held": [
+"circle_sort",
+"quick_sort",
+"recursive_quick_sort"
+],
+"held_trace": [
+"circle_sort"
+],
+"io": [
+"adaptive_merge_sort",
+"average_mode",
+"binary_insertion_sort",
+"bubble_sort",
+"bubble_sort_recursive",
+"circle_sort",
+"cocktail_shaker_sort",
+"comb_sort",
+"counting_sort",
+"cycle_sort",
+"double_sort",
+"exchange_sort",
+"gnome_sort",
+"heap_sort",
+"insertion_sort",
+"intro_sort",
+"iterative_merge_sort",
+"merge_insertion_sort",
+"merge_sort",
+"mergesort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded",
+"pancake_sort",
+"pigeon_sort",
+"pigeonhole_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"recursive_insertion_sort",
+"recursive_quick_sort",
+"reverse_selection",
+"selection_sort",
+"shell_sort",
+"shrink_shell_sort",
+"stooge_sort",
+"tim_sort"
+],
+"nodes": [
+"sequence_query",
+"sequence_transformation>comparison_sort>partition_recursive"
+],
+"why": "trace"
+},
+"sorts/cocktail_shaker_sort.py": {
+"built": [],
+"got": "Sorting-algorithms-Cocktail-sort",
+"held": [
+"bubble_sort",
+"bubble_sort_recursive",
+"cocktail_shaker_sort",
+"double_sort",
+"gnome_sort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded"
+],
+"held_trace": [
+"cocktail_shaker_sort"
+],
+"io": [
+"adaptive_merge_sort",
+"average_mode",
+"binary_insertion_sort",
+"bubble_sort",
+"bubble_sort_recursive",
+"circle_sort",
+"cocktail_shaker_sort",
+"comb_sort",
+"counting_sort",
+"cycle_sort",
+"double_sort",
+"exchange_sort",
+"gnome_sort",
+"heap_sort",
+"insertion_sort",
+"intro_sort",
+"iterative_merge_sort",
+"merge_insertion_sort",
+"merge_sort",
+"mergesort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded",
+"pancake_sort",
+"pigeon_sort",
+"pigeonhole_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"recursive_insertion_sort",
+"recursive_quick_sort",
+"reverse_selection",
+"selection_sort",
+"shell_sort",
+"shrink_shell_sort",
+"stooge_sort",
+"tim_sort"
+],
+"nodes": [
+"sequence_transformation>comparison_sort>adjacent_exchange"
+],
+"why": "trace"
+},
+"sorts/comb_sort.py": {
+"built": [],
+"got": "Sorting-algorithms-Comb-sort",
+"held": [
+"comb_sort",
+"shrink_shell_sort"
+],
+"held_trace": [
+"comb_sort"
+],
+"io": [
+"adaptive_merge_sort",
+"average_mode",
+"binary_insertion_sort",
+"bubble_sort",
+"bubble_sort_recursive",
+"circle_sort",
+"cocktail_shaker_sort",
+"comb_sort",
+"counting_sort",
+"cycle_sort",
+"double_sort",
+"exchange_sort",
+"gnome_sort",
+"heap_sort",
+"insertion_sort",
+"intro_sort",
+"iterative_merge_sort",
+"merge_insertion_sort",
+"merge_sort",
+"mergesort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded",
+"pancake_sort",
+"pigeon_sort",
+"pigeonhole_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"recursive_insertion_sort",
+"recursive_quick_sort",
+"reverse_selection",
+"selection_sort",
+"shell_sort",
+"shrink_shell_sort",
+"stooge_sort",
+"tim_sort"
+],
+"nodes": [
+"sequence_transformation>comparison_sort>gap_exchange"
+],
+"why": "trace"
+},
+"sorts/counting_sort.py": {
+"built": [],
+"got": "Sorting-algorithms-Counting-sort",
+"held": [
+"counting_sort",
+"pigeonhole_sort"
+],
+"held_trace": [
+"counting_sort"
+],
+"io": [
+"adaptive_merge_sort",
+"average_mode",
+"binary_insertion_sort",
+"bubble_sort",
+"bubble_sort_recursive",
+"circle_sort",
+"cocktail_shaker_sort",
+"comb_sort",
+"counting_sort",
+"cycle_sort",
+"double_sort",
+"exchange_sort",
+"gnome_sort",
+"heap_sort",
+"insertion_sort",
+"intro_sort",
+"iterative_merge_sort",
+"merge_insertion_sort",
+"merge_sort",
+"mergesort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded",
+"pancake_sort",
+"pigeon_sort",
+"pigeonhole_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"recursive_insertion_sort",
+"recursive_quick_sort",
+"reverse_selection",
+"selection_sort",
+"shell_sort",
+"shrink_shell_sort",
+"stooge_sort",
+"tim_sort"
+],
+"nodes": [
+"sequence_transformation>distribution_sort>histogram",
+"sequence_transformation>elementwise_map"
+],
+"why": "trace"
+},
+"sorts/cycle_sort.py": {
+"built": [],
+"got": "Sorting-algorithms-Cycle-sort",
+"held": [
+"cycle_sort"
+],
+"held_trace": [
+"cycle_sort"
+],
+"io": [
+"adaptive_merge_sort",
+"average_mode",
+"binary_insertion_sort",
+"bubble_sort",
+"bubble_sort_recursive",
+"circle_sort",
+"cocktail_shaker_sort",
+"comb_sort",
+"counting_sort",
+"cycle_sort",
+"double_sort",
+"exchange_sort",
+"gnome_sort",
+"heap_sort",
+"insertion_sort",
+"intro_sort",
+"iterative_merge_sort",
+"merge_insertion_sort",
+"merge_sort",
+"mergesort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded",
+"pancake_sort",
+"pigeon_sort",
+"pigeonhole_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"recursive_insertion_sort",
+"recursive_quick_sort",
+"reverse_selection",
+"selection_sort",
+"shell_sort",
+"shrink_shell_sort",
+"stooge_sort",
+"tim_sort"
+],
+"nodes": [
+"sequence_query"
+],
+"why": "trace"
+},
+"sorts/cyclic_sort.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation"
+],
+"why": "none"
+},
+"sorts/double_sort.py": {
+"built": [],
+"got": "double_sort",
+"held": [
+"bubble_sort",
+"bubble_sort_recursive",
+"cocktail_shaker_sort",
+"double_sort",
+"gnome_sort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded"
+],
+"held_trace": [
+"double_sort"
+],
+"io": [
+"adaptive_merge_sort",
+"average_mode",
+"binary_insertion_sort",
+"bubble_sort",
+"bubble_sort_recursive",
+"circle_sort",
+"cocktail_shaker_sort",
+"comb_sort",
+"counting_sort",
+"cycle_sort",
+"double_sort",
+"exchange_sort",
+"gnome_sort",
+"heap_sort",
+"insertion_sort",
+"intro_sort",
+"iterative_merge_sort",
+"merge_insertion_sort",
+"merge_sort",
+"mergesort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded",
+"pancake_sort",
+"pigeon_sort",
+"pigeonhole_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"recursive_insertion_sort",
+"recursive_quick_sort",
+"reverse_selection",
+"selection_sort",
+"shell_sort",
+"shrink_shell_sort",
+"stooge_sort",
+"tim_sort"
+],
+"nodes": [
+"sequence_transformation>comparison_sort>adjacent_exchange"
+],
+"why": "trace"
+},
+"sorts/dutch_national_flag_sort.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation>uncompared_rearrangement"
+],
+"why": "none"
+},
+"sorts/exchange_sort.py": {
+"built": [],
+"got": "exchange_sort",
+"held": [
+"adaptive_merge_sort",
+"exchange_sort",
+"pigeon_sort",
+"recursive_insertion_sort",
+"shell_sort"
+],
+"held_trace": [
+"exchange_sort"
+],
+"io": [
+"adaptive_merge_sort",
+"average_mode",
+"binary_insertion_sort",
+"bubble_sort",
+"bubble_sort_recursive",
+"circle_sort",
+"cocktail_shaker_sort",
+"comb_sort",
+"counting_sort",
+"cycle_sort",
+"double_sort",
+"exchange_sort",
+"gnome_sort",
+"heap_sort",
+"insertion_sort",
+"intro_sort",
+"iterative_merge_sort",
+"merge_insertion_sort",
+"merge_sort",
+"mergesort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded",
+"pancake_sort",
+"pigeon_sort",
+"pigeonhole_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"recursive_insertion_sort",
+"recursive_quick_sort",
+"reverse_selection",
+"selection_sort",
+"shell_sort",
+"shrink_shell_sort",
+"stooge_sort",
+"tim_sort"
+],
+"nodes": [
+"sequence_transformation>comparison_sort"
+],
+"why": "trace"
+},
+"sorts/external_sort.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"sorts/flash_sort.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation>comparison_sort>shift_insertion"
+],
+"why": "none"
+},
+"sorts/gnome_sort.py": {
+"built": [],
+"got": "Sorting-algorithms-Gnome-sort",
+"held": [
+"bubble_sort",
+"bubble_sort_recursive",
+"cocktail_shaker_sort",
+"double_sort",
+"gnome_sort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded"
+],
+"held_trace": [
+"gnome_sort"
+],
+"io": [
+"adaptive_merge_sort",
+"average_mode",
+"binary_insertion_sort",
+"bubble_sort",
+"bubble_sort_recursive",
+"circle_sort",
+"cocktail_shaker_sort",
+"comb_sort",
+"counting_sort",
+"cycle_sort",
+"double_sort",
+"exchange_sort",
+"gnome_sort",
+"heap_sort",
+"insertion_sort",
+"intro_sort",
+"iterative_merge_sort",
+"merge_insertion_sort",
+"merge_sort",
+"mergesort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded",
+"pancake_sort",
+"pigeon_sort",
+"pigeonhole_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"recursive_insertion_sort",
+"recursive_quick_sort",
+"reverse_selection",
+"selection_sort",
+"shell_sort",
+"shrink_shell_sort",
+"stooge_sort",
+"tim_sort"
+],
+"nodes": [
+"sequence_transformation>comparison_sort>adjacent_exchange"
+],
+"why": "trace"
+},
+"sorts/heap_sort.py": {
+"built": [],
+"got": "Sorting-algorithms-Heapsort",
+"held": [
+"heap_sort"
+],
+"held_trace": [
+"heap_sort"
+],
+"io": [
+"adaptive_merge_sort",
+"average_mode",
+"binary_insertion_sort",
+"bubble_sort",
+"bubble_sort_recursive",
+"circle_sort",
+"cocktail_shaker_sort",
+"comb_sort",
+"counting_sort",
+"cycle_sort",
+"double_sort",
+"exchange_sort",
+"gnome_sort",
+"heap_sort",
+"insertion_sort",
+"intro_sort",
+"iterative_merge_sort",
+"merge_insertion_sort",
+"merge_sort",
+"mergesort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded",
+"pancake_sort",
+"pigeon_sort",
+"pigeonhole_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"recursive_insertion_sort",
+"recursive_quick_sort",
+"reverse_selection",
+"selection_sort",
+"shell_sort",
+"shrink_shell_sort",
+"stooge_sort",
+"tim_sort"
+],
+"nodes": [
+"sequence_transformation>comparison_sort>heap"
+],
+"why": "trace"
+},
+"sorts/insertion_sort.py": {
+"built": [],
+"got": "Sorting-algorithms-Insertion-sort",
+"held": [
+"insertion_sort",
+"intro_sort"
+],
+"held_trace": [
+"insertion_sort"
+],
+"io": [
+"adaptive_merge_sort",
+"average_mode",
+"binary_insertion_sort",
+"bubble_sort",
+"bubble_sort_recursive",
+"circle_sort",
+"cocktail_shaker_sort",
+"comb_sort",
+"counting_sort",
+"cycle_sort",
+"double_sort",
+"exchange_sort",
+"gnome_sort",
+"heap_sort",
+"insertion_sort",
+"intro_sort",
+"iterative_merge_sort",
+"merge_insertion_sort",
+"merge_sort",
+"mergesort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded",
+"pancake_sort",
+"pigeon_sort",
+"pigeonhole_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"recursive_insertion_sort",
+"recursive_quick_sort",
+"reverse_selection",
+"selection_sort",
+"shell_sort",
+"shrink_shell_sort",
+"stooge_sort",
+"tim_sort"
+],
+"nodes": [
+"sequence_transformation>comparison_sort>shift_insertion"
+],
+"why": "trace"
+},
+"sorts/intro_sort.py": {
+"built": [],
+"got": "intro_sort",
+"held": [
+"insertion_sort",
+"intro_sort"
+],
+"held_trace": [
+"intro_sort"
+],
+"io": [
+"adaptive_merge_sort",
+"average_mode",
+"binary_insertion_sort",
+"bubble_sort",
+"bubble_sort_recursive",
+"circle_sort",
+"cocktail_shaker_sort",
+"comb_sort",
+"counting_sort",
+"cycle_sort",
+"double_sort",
+"exchange_sort",
+"gnome_sort",
+"heap_sort",
+"insertion_sort",
+"intro_sort",
+"iterative_merge_sort",
+"merge_insertion_sort",
+"merge_sort",
+"mergesort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded",
+"pancake_sort",
+"pigeon_sort",
+"pigeonhole_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"recursive_insertion_sort",
+"recursive_quick_sort",
+"reverse_selection",
+"selection_sort",
+"shell_sort",
+"shrink_shell_sort",
+"stooge_sort",
+"tim_sort"
+],
+"nodes": [
+"search>backtracking",
+"sequence_query",
+"sequence_transformation",
+"sequence_transformation>comparison_sort>shift_insertion"
+],
+"why": "trace"
+},
+"sorts/iterative_merge_sort.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"Sorting-algorithms-Cycle-sort",
+"Sorting-algorithms-Insertion-sort",
+"Sorting-algorithms-Merge-sort",
+"Sorting-algorithms-Pancake-sort"
+],
+"got": null,
+"held": [
+"binary_insertion_sort",
+"cycle_sort",
+"iterative_merge_sort",
+"merge_sort",
+"pancake_sort"
+],
+"held_trace": [],
+"io": [
+"adaptive_merge_sort",
+"average_mode",
+"binary_insertion_sort",
+"bubble_sort",
+"bubble_sort_recursive",
+"circle_sort",
+"cocktail_shaker_sort",
+"comb_sort",
+"counting_sort",
+"cycle_sort",
+"double_sort",
+"exchange_sort",
+"gnome_sort",
+"heap_sort",
+"insertion_sort",
+"intro_sort",
+"iterative_merge_sort",
+"merge_insertion_sort",
+"merge_sort",
+"mergesort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded",
+"pancake_sort",
+"pigeon_sort",
+"pigeonhole_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"recursive_insertion_sort",
+"recursive_quick_sort",
+"reverse_selection",
+"selection_sort",
+"shell_sort",
+"shrink_shell_sort",
+"stooge_sort",
+"tim_sort"
+],
+"nodes": [
+"sequence_query",
+"sequence_transformation"
+],
+"why": "ambiguous"
+},
+"sorts/kirkpatrick_reisch_sort.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation"
+],
+"why": "none"
+},
+"sorts/merge_insertion_sort.py": {
+"built": [],
+"got": "merge_insertion_sort",
+"held": [
+"merge_insertion_sort",
+"tim_sort"
+],
+"held_trace": [
+"merge_insertion_sort"
+],
+"io": [
+"adaptive_merge_sort",
+"average_mode",
+"binary_insertion_sort",
+"bubble_sort",
+"bubble_sort_recursive",
+"circle_sort",
+"cocktail_shaker_sort",
+"comb_sort",
+"counting_sort",
+"cycle_sort",
+"double_sort",
+"exchange_sort",
+"gnome_sort",
+"heap_sort",
+"insertion_sort",
+"intro_sort",
+"iterative_merge_sort",
+"merge_insertion_sort",
+"merge_sort",
+"mergesort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded",
+"pancake_sort",
+"pigeon_sort",
+"pigeonhole_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"recursive_insertion_sort",
+"recursive_quick_sort",
+"reverse_selection",
+"selection_sort",
+"shell_sort",
+"shrink_shell_sort",
+"stooge_sort",
+"tim_sort"
+],
+"nodes": [
+"sequence_query",
+"sequence_query>target_search>interval_halving",
+"sequence_transformation"
+],
+"why": "trace"
+},
+"sorts/merge_sort.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"Sorting-algorithms-Cycle-sort",
+"Sorting-algorithms-Insertion-sort",
+"Sorting-algorithms-Merge-sort",
+"Sorting-algorithms-Pancake-sort"
+],
+"got": null,
+"held": [
+"binary_insertion_sort",
+"cycle_sort",
+"iterative_merge_sort",
+"merge_sort",
+"pancake_sort"
+],
+"held_trace": [],
+"io": [
+"adaptive_merge_sort",
+"average_mode",
+"binary_insertion_sort",
+"bubble_sort",
+"bubble_sort_recursive",
+"circle_sort",
+"cocktail_shaker_sort",
+"comb_sort",
+"counting_sort",
+"cycle_sort",
+"double_sort",
+"exchange_sort",
+"gnome_sort",
+"heap_sort",
+"insertion_sort",
+"intro_sort",
+"iterative_merge_sort",
+"merge_insertion_sort",
+"merge_sort",
+"mergesort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded",
+"pancake_sort",
+"pigeon_sort",
+"pigeonhole_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"recursive_insertion_sort",
+"recursive_quick_sort",
+"reverse_selection",
+"selection_sort",
+"shell_sort",
+"shrink_shell_sort",
+"stooge_sort",
+"tim_sort"
+],
+"nodes": [
+"sequence_query",
+"sequence_transformation"
+],
+"why": "ambiguous"
+},
+"sorts/msd_radix_sort.py": {
+"built": [],
+"got": "msd_radix_sort",
+"held": [
+"msd_radix_sort"
+],
+"held_trace": [],
+"io": [
+"msd_radix_sort",
+"rail_fence_cipher",
+"skytale_cipher",
+"viterbi"
+],
+"nodes": [
+"sequence_query",
+"sequence_transformation",
+"sequence_transformation>uncompared_rearrangement"
+],
+"why": "learned"
+},
+"sorts/natural_sort.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"sorts/odd_even_sort.py": {
+"built": [],
+"got": "odd_even_sort",
+"held": [
+"bubble_sort",
+"bubble_sort_recursive",
+"cocktail_shaker_sort",
+"double_sort",
+"gnome_sort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded"
+],
+"held_trace": [
+"odd_even_sort"
+],
+"io": [
+"adaptive_merge_sort",
+"average_mode",
+"binary_insertion_sort",
+"bubble_sort",
+"bubble_sort_recursive",
+"circle_sort",
+"cocktail_shaker_sort",
+"comb_sort",
+"counting_sort",
+"cycle_sort",
+"double_sort",
+"exchange_sort",
+"gnome_sort",
+"heap_sort",
+"insertion_sort",
+"intro_sort",
+"iterative_merge_sort",
+"merge_insertion_sort",
+"merge_sort",
+"mergesort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded",
+"pancake_sort",
+"pigeon_sort",
+"pigeonhole_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"recursive_insertion_sort",
+"recursive_quick_sort",
+"reverse_selection",
+"selection_sort",
+"shell_sort",
+"shrink_shell_sort",
+"stooge_sort",
+"tim_sort"
+],
+"nodes": [
+"sequence_transformation>comparison_sort>adjacent_exchange"
+],
+"why": "trace"
+},
+"sorts/odd_even_transposition_parallel.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation"
+],
+"why": "none"
+},
+"sorts/odd_even_transposition_single_threaded.py": {
+"built": [],
+"got": "odd_even_transposition_single_threaded",
+"held": [
+"bubble_sort",
+"bubble_sort_recursive",
+"cocktail_shaker_sort",
+"double_sort",
+"gnome_sort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded"
+],
+"held_trace": [
+"odd_even_transposition_single_threaded"
+],
+"io": [
+"adaptive_merge_sort",
+"average_mode",
+"binary_insertion_sort",
+"bubble_sort",
+"bubble_sort_recursive",
+"circle_sort",
+"cocktail_shaker_sort",
+"comb_sort",
+"counting_sort",
+"cycle_sort",
+"double_sort",
+"exchange_sort",
+"gnome_sort",
+"heap_sort",
+"insertion_sort",
+"intro_sort",
+"iterative_merge_sort",
+"merge_insertion_sort",
+"merge_sort",
+"mergesort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded",
+"pancake_sort",
+"pigeon_sort",
+"pigeonhole_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"recursive_insertion_sort",
+"recursive_quick_sort",
+"reverse_selection",
+"selection_sort",
+"shell_sort",
+"shrink_shell_sort",
+"stooge_sort",
+"tim_sort"
+],
+"nodes": [
+"sequence_transformation>comparison_sort>adjacent_exchange"
+],
+"why": "trace"
+},
+"sorts/pancake_sort.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"Sorting-algorithms-Insertion-sort",
+"Sorting-algorithms-Merge-sort",
+"Sorting-algorithms-Pancake-sort"
+],
+"got": null,
+"held": [
+"binary_insertion_sort",
+"iterative_merge_sort",
+"merge_sort",
+"pancake_sort"
+],
+"held_trace": [],
+"io": [
+"adaptive_merge_sort",
+"average_mode",
+"binary_insertion_sort",
+"bubble_sort",
+"bubble_sort_recursive",
+"circle_sort",
+"cocktail_shaker_sort",
+"comb_sort",
+"counting_sort",
+"cycle_sort",
+"double_sort",
+"exchange_sort",
+"gnome_sort",
+"heap_sort",
+"insertion_sort",
+"intro_sort",
+"iterative_merge_sort",
+"merge_insertion_sort",
+"merge_sort",
+"mergesort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded",
+"pancake_sort",
+"pigeon_sort",
+"pigeonhole_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"recursive_insertion_sort",
+"recursive_quick_sort",
+"reverse_selection",
+"selection_sort",
+"shell_sort",
+"shrink_shell_sort",
+"stooge_sort",
+"tim_sort"
+],
+"nodes": [
+"sequence_transformation"
+],
+"why": "ambiguous"
+},
+"sorts/patience_sort.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"sorts/pigeon_sort.py": {
+"built": [],
+"got": "pigeon_sort",
+"held": [
+"adaptive_merge_sort",
+"exchange_sort",
+"pigeon_sort",
+"recursive_insertion_sort",
+"shell_sort"
+],
+"held_trace": [
+"pigeon_sort"
+],
+"io": [
+"adaptive_merge_sort",
+"average_mode",
+"binary_insertion_sort",
+"bubble_sort",
+"bubble_sort_recursive",
+"circle_sort",
+"cocktail_shaker_sort",
+"comb_sort",
+"counting_sort",
+"cycle_sort",
+"double_sort",
+"exchange_sort",
+"gnome_sort",
+"heap_sort",
+"insertion_sort",
+"intro_sort",
+"iterative_merge_sort",
+"merge_insertion_sort",
+"merge_sort",
+"mergesort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded",
+"pancake_sort",
+"pigeon_sort",
+"pigeonhole_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"recursive_insertion_sort",
+"recursive_quick_sort",
+"reverse_selection",
+"selection_sort",
+"shell_sort",
+"shrink_shell_sort",
+"stooge_sort",
+"tim_sort"
+],
+"nodes": [
+"sequence_transformation>comparison_sort"
+],
+"why": "trace"
+},
+"sorts/pigeonhole_sort.py": {
+"built": [],
+"got": "pigeonhole_sort",
+"held": [
+"counting_sort",
+"pigeonhole_sort"
+],
+"held_trace": [
+"pigeonhole_sort"
+],
+"io": [
+"adaptive_merge_sort",
+"average_mode",
+"binary_insertion_sort",
+"bubble_sort",
+"bubble_sort_recursive",
+"circle_sort",
+"cocktail_shaker_sort",
+"comb_sort",
+"counting_sort",
+"cycle_sort",
+"double_sort",
+"exchange_sort",
+"gnome_sort",
+"heap_sort",
+"insertion_sort",
+"intro_sort",
+"iterative_merge_sort",
+"merge_insertion_sort",
+"merge_sort",
+"mergesort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded",
+"pancake_sort",
+"pigeon_sort",
+"pigeonhole_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"recursive_insertion_sort",
+"recursive_quick_sort",
+"reverse_selection",
+"selection_sort",
+"shell_sort",
+"shrink_shell_sort",
+"stooge_sort",
+"tim_sort"
+],
+"nodes": [
+"sequence_transformation>distribution_sort>histogram"
+],
+"why": "trace"
+},
+"sorts/power_sort.py": {
+"at": "learned",
+"built": [],
+"clash": [
+"matrix_class",
+"power_sort"
+],
+"got": null,
+"held": [
+"matrix_class",
+"power_sort"
+],
+"held_trace": [],
+"io": [
+"matrix_class",
+"power_sort"
+],
+"nodes": [
+"numeric",
+"sequence_query",
+"sequence_transformation"
+],
+"why": "ambiguous"
+},
+"sorts/quick_sort.py": {
+"built": [],
+"got": "Sorting-algorithms-Quicksort",
+"held": [
+"circle_sort",
+"quick_sort",
+"recursive_quick_sort"
+],
+"held_trace": [
+"quick_sort"
+],
+"io": [
+"adaptive_merge_sort",
+"average_mode",
+"binary_insertion_sort",
+"bubble_sort",
+"bubble_sort_recursive",
+"circle_sort",
+"cocktail_shaker_sort",
+"comb_sort",
+"counting_sort",
+"cycle_sort",
+"double_sort",
+"exchange_sort",
+"gnome_sort",
+"heap_sort",
+"insertion_sort",
+"intro_sort",
+"iterative_merge_sort",
+"merge_insertion_sort",
+"merge_sort",
+"mergesort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded",
+"pancake_sort",
+"pigeon_sort",
+"pigeonhole_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"recursive_insertion_sort",
+"recursive_quick_sort",
+"reverse_selection",
+"selection_sort",
+"shell_sort",
+"shrink_shell_sort",
+"stooge_sort",
+"tim_sort"
+],
+"nodes": [
+"sequence_transformation>comparison_sort>partition_recursive"
+],
+"why": "trace"
+},
+"sorts/quick_sort_3_partition.py": {
+"built": [],
+"got": "Sorting-algorithms-Quicksort",
+"held": [
+"circle_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"recursive_quick_sort",
+"selection_sort"
+],
+"held_trace": [
+"quick_sort_3_partition"
+],
+"io": [
+"adaptive_merge_sort",
+"average_mode",
+"binary_insertion_sort",
+"bubble_sort",
+"bubble_sort_recursive",
+"circle_sort",
+"cocktail_shaker_sort",
+"comb_sort",
+"counting_sort",
+"cycle_sort",
+"double_sort",
+"exchange_sort",
+"gnome_sort",
+"heap_sort",
+"insertion_sort",
+"intro_sort",
+"iterative_merge_sort",
+"merge_insertion_sort",
+"merge_sort",
+"mergesort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded",
+"pancake_sort",
+"pigeon_sort",
+"pigeonhole_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"recursive_insertion_sort",
+"recursive_quick_sort",
+"reverse_selection",
+"selection_sort",
+"shell_sort",
+"shrink_shell_sort",
+"stooge_sort",
+"tim_sort"
+],
+"nodes": [
+"sequence_query",
+"sequence_transformation",
+"sequence_transformation>comparison_sort>partition_recursive",
+"sequence_transformation>comparison_sort>select_extreme"
+],
+"why": "trace"
+},
+"sorts/radix_sort.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation"
+],
+"why": "none"
+},
+"sorts/recursive_insertion_sort.py": {
+"built": [],
+"got": "Sorting-algorithms-Insertion-sort",
+"held": [
+"adaptive_merge_sort",
+"exchange_sort",
+"pigeon_sort",
+"recursive_insertion_sort",
+"shell_sort",
+"skytale_cipher"
+],
+"held_trace": [
+"recursive_insertion_sort"
+],
+"io": [
+"adaptive_merge_sort",
+"average_mode",
+"binary_insertion_sort",
+"bubble_sort",
+"bubble_sort_recursive",
+"circle_sort",
+"cocktail_shaker_sort",
+"comb_sort",
+"counting_sort",
+"cycle_sort",
+"double_sort",
+"exchange_sort",
+"gnome_sort",
+"heap_sort",
+"insertion_sort",
+"intro_sort",
+"iterative_merge_sort",
+"merge_insertion_sort",
+"merge_sort",
+"mergesort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded",
+"pancake_sort",
+"pigeon_sort",
+"pigeonhole_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"rail_fence_cipher",
+"recursive_insertion_sort",
+"recursive_quick_sort",
+"reverse_selection",
+"selection_sort",
+"shell_sort",
+"shrink_shell_sort",
+"skytale_cipher",
+"stooge_sort",
+"tim_sort"
+],
+"nodes": [
+"sequence_query",
+"sequence_transformation>comparison_sort"
+],
+"why": "trace"
+},
+"sorts/recursive_mergesort_array.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric>recurrence>double_recursion",
+"sequence_transformation>comparison_sort>merge"
+],
+"why": "none"
+},
+"sorts/recursive_quick_sort.py": {
+"built": [],
+"got": "Sorting-algorithms-Quicksort",
+"held": [
+"circle_sort",
+"quick_sort",
+"recursive_quick_sort"
+],
+"held_trace": [
+"recursive_quick_sort"
+],
+"io": [
+"adaptive_merge_sort",
+"average_mode",
+"binary_insertion_sort",
+"bubble_sort",
+"bubble_sort_recursive",
+"circle_sort",
+"cocktail_shaker_sort",
+"comb_sort",
+"counting_sort",
+"cycle_sort",
+"double_sort",
+"exchange_sort",
+"gnome_sort",
+"heap_sort",
+"insertion_sort",
+"intro_sort",
+"iterative_merge_sort",
+"merge_insertion_sort",
+"merge_sort",
+"mergesort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded",
+"pancake_sort",
+"pigeon_sort",
+"pigeonhole_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"recursive_insertion_sort",
+"recursive_quick_sort",
+"reverse_selection",
+"selection_sort",
+"shell_sort",
+"shrink_shell_sort",
+"stooge_sort",
+"tim_sort"
+],
+"nodes": [
+"sequence_transformation>comparison_sort>partition_recursive"
+],
+"why": "trace"
+},
+"sorts/reverse_selection.py": {
+"built": [],
+"got": "reverse_selection",
+"held": [
+"reverse_selection"
+],
+"held_trace": [
+"reverse_selection"
+],
+"io": [
+"adaptive_merge_sort",
+"average_mode",
+"binary_insertion_sort",
+"bubble_sort",
+"bubble_sort_recursive",
+"circle_sort",
+"cocktail_shaker_sort",
+"comb_sort",
+"counting_sort",
+"cycle_sort",
+"double_sort",
+"exchange_sort",
+"gnome_sort",
+"heap_sort",
+"insertion_sort",
+"intro_sort",
+"iterative_merge_sort",
+"merge_insertion_sort",
+"merge_sort",
+"mergesort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded",
+"pancake_sort",
+"pigeon_sort",
+"pigeonhole_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"recursive_insertion_sort",
+"recursive_quick_sort",
+"reverse_selection",
+"selection_sort",
+"shell_sort",
+"shrink_shell_sort",
+"stooge_sort",
+"tim_sort"
+],
+"nodes": [
+"sequence_transformation>comparison_sort>prefix_reversal",
+"sequence_transformation>uncompared_rearrangement"
+],
+"why": "trace"
+},
+"sorts/reversort.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"sorts/selection_sort.py": {
+"built": [],
+"got": "Sorting-algorithms-Selection-sort",
+"held": [
+"quick_sort_3_partition",
+"selection_sort"
+],
+"held_trace": [
+"selection_sort"
+],
+"io": [
+"adaptive_merge_sort",
+"average_mode",
+"binary_insertion_sort",
+"bubble_sort",
+"bubble_sort_recursive",
+"circle_sort",
+"cocktail_shaker_sort",
+"comb_sort",
+"counting_sort",
+"cycle_sort",
+"double_sort",
+"exchange_sort",
+"gnome_sort",
+"heap_sort",
+"insertion_sort",
+"intro_sort",
+"iterative_merge_sort",
+"merge_insertion_sort",
+"merge_sort",
+"mergesort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded",
+"pancake_sort",
+"pigeon_sort",
+"pigeonhole_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"recursive_insertion_sort",
+"recursive_quick_sort",
+"reverse_selection",
+"selection_sort",
+"shell_sort",
+"shrink_shell_sort",
+"stooge_sort",
+"tim_sort"
+],
+"nodes": [
+"sequence_transformation>comparison_sort>select_extreme"
+],
+"why": "trace"
+},
+"sorts/shell_sort.py": {
+"built": [],
+"got": "Sorting-algorithms-Shell-sort",
+"held": [
+"adaptive_merge_sort",
+"exchange_sort",
+"pigeon_sort",
+"recursive_insertion_sort",
+"shell_sort"
+],
+"held_trace": [
+"shell_sort"
+],
+"io": [
+"adaptive_merge_sort",
+"average_mode",
+"binary_insertion_sort",
+"bubble_sort",
+"bubble_sort_recursive",
+"circle_sort",
+"cocktail_shaker_sort",
+"comb_sort",
+"counting_sort",
+"cycle_sort",
+"double_sort",
+"exchange_sort",
+"gnome_sort",
+"heap_sort",
+"insertion_sort",
+"intro_sort",
+"iterative_merge_sort",
+"merge_insertion_sort",
+"merge_sort",
+"mergesort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded",
+"pancake_sort",
+"pigeon_sort",
+"pigeonhole_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"recursive_insertion_sort",
+"recursive_quick_sort",
+"reverse_selection",
+"selection_sort",
+"shell_sort",
+"shrink_shell_sort",
+"stooge_sort",
+"tim_sort"
+],
+"nodes": [
+"sequence_transformation>comparison_sort"
+],
+"why": "trace"
+},
+"sorts/shrink_shell_sort.py": {
+"built": [],
+"got": "Sorting-algorithms-Shell-sort",
+"held": [
+"comb_sort",
+"shrink_shell_sort"
+],
+"held_trace": [
+"shrink_shell_sort"
+],
+"io": [
+"adaptive_merge_sort",
+"average_mode",
+"binary_insertion_sort",
+"bubble_sort",
+"bubble_sort_recursive",
+"circle_sort",
+"cocktail_shaker_sort",
+"comb_sort",
+"counting_sort",
+"cycle_sort",
+"double_sort",
+"exchange_sort",
+"gnome_sort",
+"heap_sort",
+"insertion_sort",
+"intro_sort",
+"iterative_merge_sort",
+"merge_insertion_sort",
+"merge_sort",
+"mergesort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded",
+"pancake_sort",
+"pigeon_sort",
+"pigeonhole_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"recursive_insertion_sort",
+"recursive_quick_sort",
+"reverse_selection",
+"selection_sort",
+"shell_sort",
+"shrink_shell_sort",
+"stooge_sort",
+"tim_sort"
+],
+"nodes": [
+"sequence_transformation>comparison_sort>gap_exchange"
+],
+"why": "trace"
+},
+"sorts/slowsort.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation>comparison_sort>stooge_recursion"
+],
+"why": "none"
+},
+"sorts/smoothsort.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_transformation>comparison_sort",
+"sequence_transformation>comparison_sort>prefix_reversal"
+],
+"why": "none"
+},
+"sorts/stalin_sort.py": {
+"built": [],
+"got": "stalin_sort",
+"held": [
+"stalin_sort"
+],
+"held_trace": [
+"stalin_sort"
+],
+"io": [
+"stalin_sort"
+],
+"nodes": [
+"sequence_transformation"
+],
+"why": "trace"
+},
+"sorts/stooge_sort.py": {
+"built": [],
+"got": "Sorting-algorithms-Stooge-sort",
+"held": [
+"stooge_sort"
+],
+"held_trace": [
+"stooge_sort"
+],
+"io": [
+"adaptive_merge_sort",
+"average_mode",
+"binary_insertion_sort",
+"bubble_sort",
+"bubble_sort_recursive",
+"circle_sort",
+"cocktail_shaker_sort",
+"comb_sort",
+"counting_sort",
+"cycle_sort",
+"double_sort",
+"exchange_sort",
+"gnome_sort",
+"heap_sort",
+"insertion_sort",
+"intro_sort",
+"iterative_merge_sort",
+"merge_insertion_sort",
+"merge_sort",
+"mergesort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded",
+"pancake_sort",
+"pigeon_sort",
+"pigeonhole_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"recursive_insertion_sort",
+"recursive_quick_sort",
+"reverse_selection",
+"selection_sort",
+"shell_sort",
+"shrink_shell_sort",
+"stooge_sort",
+"tim_sort"
+],
+"nodes": [
+"sequence_query",
+"sequence_transformation>comparison_sort>stooge_recursion"
+],
+"why": "trace"
+},
+"sorts/strand_sort.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [],
+"why": "none"
+},
+"sorts/tim_sort.py": {
+"built": [],
+"got": "tim_sort",
+"held": [
+"merge_insertion_sort",
+"tim_sort"
+],
+"held_trace": [
+"tim_sort"
+],
+"io": [
+"adaptive_merge_sort",
+"average_mode",
+"binary_insertion_sort",
+"bubble_sort",
+"bubble_sort_recursive",
+"circle_sort",
+"cocktail_shaker_sort",
+"comb_sort",
+"counting_sort",
+"cycle_sort",
+"double_sort",
+"exchange_sort",
+"gnome_sort",
+"heap_sort",
+"insertion_sort",
+"intro_sort",
+"iterative_merge_sort",
+"merge_insertion_sort",
+"merge_sort",
+"mergesort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded",
+"pancake_sort",
+"pigeon_sort",
+"pigeonhole_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"recursive_insertion_sort",
+"recursive_quick_sort",
+"reverse_selection",
+"selection_sort",
+"shell_sort",
+"shrink_shell_sort",
+"stooge_sort",
+"tim_sort"
+],
+"nodes": [
+"sequence_query>target_search>interval_halving",
+"sequence_transformation"
+],
+"why": "trace"
+},
+"sorts/topological_sort.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"search>backtracking"
+],
+"why": "none"
+},
+"sorts/tree_sort.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"numeric"
+],
+"why": "none"
+},
+"sorts/unknown_sort.py": {
+"built": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"nodes": [
+"sequence_query"
+],
+"why": "none"
+},
+"sorts/wiggle_sort.py": {
+"built": [],
+"got": "wiggle_sort",
+"held": [
+"wiggle_sort"
+],
+"held_trace": [
+"wiggle_sort"
+],
+"io": [
+"wiggle_sort"
+],
+"nodes": [
+"sequence_transformation>comparison_sort"
+],
+"why": "trace"
+}
+}
