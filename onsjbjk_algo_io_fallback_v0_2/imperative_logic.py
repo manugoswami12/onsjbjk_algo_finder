@@ -7,6 +7,8 @@ same facts in every language. Only additions; everything AP13 lowers stays as it
   a slice s[i:j] (Python): call(slice, [s, i, j]), s[i:j:k]: call(slice, [s, i, j, k]) (AP13's s[k:] with a constant k
   stays tail(s, k))
   a field p->f, s.f, o.f: field(p, f) (AP13: other(field); a length field stays len(o))
+  a generator argument f(x for x in s if c): one argument, the comprehension map/filter (AP13: its parts)
+  a dict literal {k: v}: dict([pair(k, v)]) (AP13: other(dictionary))
   a tuple loop target for i, x in ...: loop_var(L, i), loop_var(L, x) (AP13: one variable named 'i, x')
   a counted loop's step: loop_step(L, K) for a constant K, loop_step(L, var(P)) for a variable stride, from Python
   range(a, b, K) and C for (...; i += K) / i = i + K / i++ / i-- (AP13 keeps neither; doc 04 section 17)
@@ -97,7 +99,17 @@ class ImperativeLowerer(ap13.Lowerer):
             return k if v[1] == 'add' else -k
         return None
 
+    def args(self, node):
+        """f(x for x in s): the one argument is the comprehension (AP13 lowers the generator's parts as arguments)."""
+        if node is not None and node.type == 'generator_expression':
+            return [self.comprehension(node)]
+        return super().args(node)
+
     def expr(self, node):
+        if node is not None and node.type == 'dictionary':               # {k: v, ...}: dict([pair(k, v), ...])
+            pairs = [c for c in node.named_children if c.type == 'pair']
+            return ('dict', [('pair', self.expr(c.child_by_field_name('key')), self.expr(c.child_by_field_name('value')))
+                             for c in pairs])
         if node is not None and node.type in ASSIGNMENT_VALUES:          # a = b = e: the value e
             right = node.child_by_field_name('right')
             if right is not None:

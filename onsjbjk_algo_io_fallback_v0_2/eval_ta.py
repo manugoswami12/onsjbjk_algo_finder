@@ -106,27 +106,60 @@ def answer(path: Path, io: TaIo, labels: set[str], gs: dict[str, str], logic: Ta
     trace_labels = {lab for v in traced.values() for lab in v} & labels
     logic_labels = logic.labels_matched(path) & labels if logic else set()
     try:
-        hand = set()
-        nodes, found, _, normal = learn_apply.apply(path, RULES, io_labels, trace_labels, logic_labels, hand)
+        hand, specific = set(), set()
+        nodes, found, _, normal = learn_apply.apply(path, RULES, io_labels, trace_labels, logic_labels, hand, specific)
     except ERRORS as exc:
-        nodes, found, normal, hand = [], [], set(), set()
+        nodes, found, normal, hand, specific = [], [], set(), set(), set()
         print(f'  ({path.name}: {type(exc).__name__}: {str(exc)[:100]})', flush=True)
-    built = {ta_corpus.group(b, gs) for b in normal | hand if b in ta_corpus.BUILT or b in labels}
-    held = sorted({lab for _, lab, r in found if r == 'io'})
-    held_trace = sorted({lab for _, lab, r in found if r in ('trace', 'logic')})
-    out = {'nodes': nodes, 'built': sorted(built), 'held': held, 'held_trace': held_trace, 'io': sorted(io_labels),
+    out = {'nodes': nodes, 'held': sorted({lab for _, lab, r in found if r == 'io'}),
+           'held_trace': sorted({lab for _, lab, r in found if r in ('trace', 'logic')}), 'io': sorted(io_labels),
            'logic': sorted(logic_labels)}
-    # the most specific evidence that holds decides: a built branch; a learned branch with an exact trace (the write
-    # trace of the training files' behaviour, or their exact traced logic: AP13 learn-dir); a learned branch with the
-    # behaviour; the behaviour alone
-    for why, cands in (('built', built), ('trace', {ta_corpus.group(h, gs) for h in held_trace}),
-                       ('learned', {ta_corpus.group(h, gs) for h in held}),
-                       ('io', {ta_corpus.group(i, gs) for i in io_labels})):
+    return decide(out, normal | hand, specific, labels, gs)
+
+
+def decide(out: dict, built_names, specific, labels: set[str], gs: dict[str, str]) -> dict:
+    """The answer from the evidence: the most specific that names anything decides. A file rule (ta_file_rules.pl);
+    a built or hand branch; a learned branch with an exact trace (the write trace of the training files' behaviour,
+    or their exact traced logic: AP13 learn-dir); a learned branch with the behaviour; the behaviour alone. Several
+    groups at the deciding level: UNKNOWN."""
+    built = {ta_corpus.group(b, gs) for b in built_names if b in ta_corpus.BUILT or b in labels}
+    spec = {ta_corpus.group(b, gs) for b in specific if b in labels}
+    out = {**out, 'built': sorted(built), 'specific': sorted(spec)}
+    for why, cands in (('file_rule', spec), ('built', built),
+                       ('trace', {ta_corpus.group(h, gs) for h in out['held_trace']}),
+                       ('learned', {ta_corpus.group(h, gs) for h in out['held']}),
+                       ('io', {ta_corpus.group(i, gs) for i in out['io']})):
         if len(cands) == 1:
             return {**out, 'got': next(iter(cands)), 'why': why}
         if cands:
             return {**out, 'got': None, 'why': 'ambiguous', 'clash': sorted(cands), 'at': why}
     return {**out, 'got': None, 'why': 'none'}
+
+
+def rehand(units: dict[str, Path], labels: dict[str, str], out: Path, workers: int):
+    """Recompute only the built, hand and file-rule evidence of answered files (their learned evidence, which the
+    hand rules do not change, is kept) and decide again: minutes instead of the full run."""
+    gs = ta_corpus.groups(labels.values())
+    done = load(out)
+
+    def one(kv):
+        rel, path = kv
+        old = done.get(rel)
+        if old is None or old.get('why') == 'no_algorithm':
+            return rel, old
+        hand, specific = set(), set()
+        try:
+            _, _, _, normal = learn_apply.apply(path, RULES, (), (), (), hand, specific)
+        except ERRORS:
+            normal = set()
+        keep = {k: old.get(k, []) for k in ('nodes', 'held', 'held_trace', 'io', 'logic')}
+        return rel, decide(keep, normal | hand, specific, set(labels.values()), gs)
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        for rel, res in pool.map(one, sorted(units.items())):
+            if res is not None:
+                done[rel] = res
+    out.write_text(json.dumps(done, indent=0, sort_keys=True) + '\n', encoding='utf-8')
+    print(f'{len(units)} re-decided -> {out}')
 
 
 def load(path: Path) -> dict:
@@ -200,6 +233,8 @@ def status(labels: dict[str, str]):
                        | ({'claimed'} if t2 else set()) | ({'heldout'} if t3 and (t3_wrong or not t3_ok) else set()))
         if kinds:
             kind = 'not_learned'
+        elif 'file_rule' in why:
+            kind = 'file_rule'
         elif 'built' in why:
             kind = 'hand_rule'
         else:
@@ -325,7 +360,7 @@ def write_result(rows, held=None, gs=None):
     per_dir = defaultdict(lambda: defaultdict(int))
     for r in rows.values():
         per_dir[r['files'][0].split('/')[0]][r['status']] += 1
-    kinds = ('learned_heldout', 'learned_self', 'hand_rule', 'not_learned', 'ignored', 'not_run')
+    kinds = ('learned_heldout', 'learned_self', 'hand_rule', 'file_rule', 'not_learned', 'ignored', 'not_run')
     total = {k: sum(d[k] for d in per_dir.values()) for k in kinds}
     out = ['# TheAlgorithms/Python: learned, hand rule, not learned (doc 04 section 17)', '',
            (f'Corpus TheAlgorithms/Python at {ta_corpus.COMMIT[:8]}; one label per file stem; '
@@ -333,7 +368,8 @@ def write_result(rows, held=None, gs=None):
            ('T1 (its own file is answered with its label) is a weak test: the file\'s own behaviour is in the catalog. '
            'T2 (no other file is answered with it) and T3 (held-out Rosetta files, mapped tasks only) are the real '
            'tests. learned_heldout: T1, T2 and T3 pass; learned_self: T1 and T2 pass, no held-out file exists, so '
-           'it is not shown to generalise; hand_rule: a built relation answers it and the tests pass.'), '',
+           'it is not shown to generalise; hand_rule: a built relation answers it and the tests pass; file_rule: a '
+           'file rule written for it (prolog/ta_file_rules.pl) answers it and T1 and T2 pass.'), '',
            '| folder | ' + ' | '.join(kinds) + ' |', '|---|' + '---|' * len(kinds)]
     out += [f"| {d} | " + ' | '.join(str(per_dir[d][k]) for k in kinds) + ' |' for d in sorted(per_dir)]
     out += ['| **all** | ' + ' | '.join(f'**{total[k]}**' for k in kinds) + ' |', '']
@@ -358,6 +394,7 @@ def main():
     p.add_argument('--dir', nargs='*', help='folders to (re)answer; all when absent')
     p.add_argument('--heldout', type=Path, metavar='ROSETTA')
     p.add_argument('--status', action='store_true')
+    p.add_argument('--rehand', action='store_true', help='recompute the hand evidence only (kept learned evidence)')
     p.add_argument('--workers', type=int, default=4)
     a = p.parse_args()
     labels = ta_corpus.files(a.corpus)
@@ -368,6 +405,9 @@ def main():
     if a.run:
         units = {r: a.corpus / r for r in labels if not a.dir or r.split('/')[0] in a.dir}
         answer_all(units, a.corpus, labels, ANSWERS, a.workers)
+    if a.rehand:
+        units = {r: a.corpus / r for r in labels if not a.dir or r.split('/')[0] in a.dir}
+        rehand(units, labels, ANSWERS, a.workers)
     if a.heldout:
         tasks = heldout_units(a.heldout)
         answer_all({r: a.heldout / r for r in tasks}, a.corpus, labels, HELDOUT, a.workers)

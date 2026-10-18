@@ -185,6 +185,9 @@ distinct_diagonals :- in_func(S, _), ( value(S, _, V) ; ret(S, V) ; guard(S, V, 
     sub_term(D, V), compound(D), index_distinct(D), !.
 index_distinct(call(len, [call(set, [op(O, [elem(var(Q), var(I)), var(I2)])|_])])) :- memberchk(O, [add, sub]), I == I2, atom(Q).
 index_distinct(op('.', [var(length), op('.', [var(nub), call(zipWith, [_, call(range, [int(0), _])])])])).
+% the generator lowered as a comprehension (imperative_logic.args): set(map(range(n), x[i] + i))
+index_distinct(call(len, [call(set, [map(_, op(O, [elem(var(Q), I1), I2]), _)])])) :- memberchk(O, [add, sub]),
+    I1 == I2, atom(Q).
 
 % --- two sequences compared element by element: LCS and edit distance --------------------------------
 % a statement under (Pol = true) or not under (false) the equality of the current elements of two

@@ -1,7 +1,8 @@
 /* v0.2 learning (doc 04 section 14): the learned branches applied to a test file at its deepest node(s).
      learn_apply_main -- Facts Kind Rules Io : NODE|Path for the file's tree nodes, NORMAL|Node|Branch for the
                                               normal process's branch there, HAND|Node|Label for a hand rule
-                                              (ta_rules.pl hand_answer/2) holding for the file, BRANCH_AT|Node|Label for the
+                                              (ta_rules.pl hand_answer/2) holding for the file, SPECIFIC|Label for a file rule
+                                              (ta_file_rules.pl), BRANCH_AT|Node|Label for the
                                               labels with a learned branch there, LEARNED|Node|Label|Rule for
                                               every branch that holds
    Io holds io_equal(Label) facts: the training labels whose input->output behaviour the file has, and
@@ -10,7 +11,8 @@
    answers are collected (findall): no cut, no first match, so the order of the clauses decides nothing.
 */
 :- prolog_load_context(directory, Dir), directory_file_path(Dir, 'tree_main.pl', T), load_files(T, []),
-   directory_file_path(Dir, 'ta_rules.pl', H), load_files(H, []).
+   directory_file_path(Dir, 'ta_rules.pl', H), load_files(H, []),
+   directory_file_path(Dir, 'ta_file_rules.pl', R), load_files(R, []).
 :- dynamic learned_branch/4, io_equal/1, io_trace_equal/1, logic_equal/1.
 
 learn_apply_main :-
@@ -24,6 +26,8 @@ learn_apply_main :-
              family_branch(C, F, B), B \== none ),
            ( atomic_list_concat(C, '>', CA), format('NORMAL|~w|~w~n', [CA, B]) )),
     % the hand rules (ta_rules.pl) at any node of the file's functions
+    % the file rules (ta_file_rules.pl), a tier before the general hand rules
+    forall(distinct(L, ( func(F, _, _), hand_specific(F, L) )), format('SPECIFIC|~w~n', [L])),
     forall(hand_answer(C, H),
            ( atomic_list_concat(C, '>', CA), format('HAND|~w|~w~n', [CA, H]) )),
     forall(( member(C, Nodes), setof(L, R^B^clause(learned_branch(C, L, R, io), B), Ls), member(L, Ls) ),

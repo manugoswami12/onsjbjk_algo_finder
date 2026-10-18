@@ -42,11 +42,11 @@ def learn(labelled: dict[Path, str | None], rules: Path = RULES, workers: int = 
     return count
 
 
-def apply(path: Path, rules: Path = RULES, io_labels=(), trace_labels=(), logic_labels=(), hand=None):
+def apply(path: Path, rules: Path = RULES, io_labels=(), trace_labels=(), logic_labels=(), hand=None, specific=None):
     """([tree nodes of the file], [(node, label, rule)] of the learned branches holding at its deepest node,
     {labels with a learned branch there}, {the normal process's branches there}); io_labels: the training
     labels whose behaviour the file has; trace_labels: those whose write trace it has too; logic_labels: those whose exact traced logic (AP13 learn-dir) it has; hand: a set that receives the labels of the
-    hand rules holding (prolog/ta_rules.pl)."""
+    hand rules holding (prolog/ta_rules.pl); specific: one that receives the file rules' labels (ta_file_rules.pl)."""
     kind, text = learn_facts.tree_facts(path)
     if not text.strip():
         return [], [], set(), set()
@@ -61,4 +61,6 @@ def apply(path: Path, rules: Path = RULES, io_labels=(), trace_labels=(), logic_
     normal = {line.split('|')[2] for line in lines if line.startswith('NORMAL|')}
     if hand is not None:                          # the hand rules' labels (prolog/ta_rules.pl), for the caller
         hand.update(line.split('|')[2] for line in lines if line.startswith('HAND|'))
+    if specific is not None:                      # the file rules' labels (prolog/ta_file_rules.pl)
+        specific.update(line.split('|')[1] for line in lines if line.startswith('SPECIFIC|'))
     return nodes, [tuple(line.split('|')[1:]) for line in lines if line.startswith('LEARNED|')], branch_at, normal
