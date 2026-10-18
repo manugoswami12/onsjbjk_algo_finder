@@ -1,0 +1,64 @@
+{
+ "numeric>recurrence>double_recursion|power": [
+  "divide_and_conquer/power.py"
+ ],
+ "numeric>recurrence>modulo_recurrence|gcd": [
+  "maths/greatest_common_divisor.py"
+ ],
+ "sequence_query>target_search>interval_halving|sorting": [
+  "sorts/merge_insertion_sort.py",
+  "sorts/tim_sort.py"
+ ],
+ "sequence_query>target_search>linear_scan|search": [
+  "searches/double_linear_search.py"
+ ],
+ "sequence_transformation>comparison_sort|sorting": [
+  "sorts/adaptive_merge_sort.py",
+  "sorts/exchange_sort.py",
+  "sorts/pigeon_sort.py",
+  "sorts/recursive_insertion_sort.py",
+  "sorts/shell_sort.py"
+ ],
+ "sequence_transformation>comparison_sort>adjacent_exchange|sorting": [
+  "sorts/bubble_sort.py",
+  "sorts/bubble_sort_recursive.py",
+  "sorts/cocktail_shaker_sort.py",
+  "sorts/double_sort.py",
+  "sorts/gnome_sort.py",
+  "sorts/odd_even_sort.py",
+  "sorts/odd_even_transposition_single_threaded.py"
+ ],
+ "sequence_transformation>comparison_sort>gap_exchange|sorting": [
+  "sorts/comb_sort.py",
+  "sorts/shrink_shell_sort.py"
+ ],
+ "sequence_transformation>comparison_sort>heap|sorting": [
+  "sorts/heap_sort.py"
+ ],
+ "sequence_transformation>comparison_sort>merge|sorting": [
+  "divide_and_conquer/mergesort.py"
+ ],
+ "sequence_transformation>comparison_sort>partition_recursive|sorting": [
+  "sorts/circle_sort.py",
+  "sorts/quick_sort.py",
+  "sorts/recursive_quick_sort.py"
+ ],
+ "sequence_transformation>comparison_sort>prefix_reversal|sorting": [
+  "sorts/reverse_selection.py"
+ ],
+ "sequence_transformation>comparison_sort>select_extreme|sorting": [
+  "sorts/selection_sort.py"
+ ],
+ "sequence_transformation>comparison_sort>shift_insertion|sorting": [
+  "sorts/insertion_sort.py"
+ ],
+ "sequence_transformation>comparison_sort>stooge_recursion|sorting": [
+  "sorts/stooge_sort.py"
+ ],
+ "sequence_transformation>distribution_sort>histogram|sorting": [
+  "sorts/pigeonhole_sort.py"
+ ],
+ "sequence_transformation>uncompared_rearrangement|sorting": [
+  "sorts/reverse_selection.py"
+ ]
+}
