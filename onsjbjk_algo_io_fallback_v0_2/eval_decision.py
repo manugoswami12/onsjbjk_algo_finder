@@ -1,7 +1,9 @@
 """Four-way answer test (doc 04 section 18.2), kept separate from the pipeline. Each held-out file gets one answer:
   algorithm             eval_ta.py names the specific algorithm (benchmark/ta_heldout.json), kept as it is
-  class                 a new version of a known class: one class relation holds on runs over every battery input
-                        (tools_manual/decide_new_or_known.py), or one library name (benchmark/library_fallback.json)
+  class                 a new version of a known class: on the file's root functions, run over every battery input,
+                        one class relation holds (tools_manual/decide_new_or_known.py), and the file's tree node is on
+                        the path of a node another TheAlgorithms file of that class reaches; or one library name
+                        (benchmark/library_fallback.json)
   new_or_incorrect      the program runs on every battery input and no class relation holds: a new algorithm, or an
                         implementation the interpreter computes wrongly; we cannot tell which, and say so
   not_identified        it does not run on every input (or the check did not finish)
@@ -25,11 +27,23 @@ LIBRARY = ROOT / 'benchmark' / 'library_fallback.json'
 OUT, REPORT = ROOT / 'benchmark' / 'decision_fallback.json', ROOT / 'benchmark' / 'decision_fallback.md'
 
 
-def answer(res: dict, dec: dict, lib: str | None) -> tuple[str, str | None]:
+def same_path(a: str, b: str) -> bool:
+    """Two tree nodes on one path: equal, or one is an ancestor of the other."""
+    return a == b or a.startswith(b + '>') or b.startswith(a + '>')
+
+
+def node_agrees(dec: dict, class_nodes: dict[str, list[tuple[str, list[str]]]], own: str | None = None) -> bool:
+    """The file's structure is a second witness for its class: one of its tree nodes is on the path of a node that
+    another TheAlgorithms file of the same class reaches (own: the corpus file itself, left out)."""
+    return any(same_path(n, m) for f, ms in class_nodes.get(dec['class'], []) if f != own
+               for m in ms for n in dec.get('nodes', []))
+
+
+def answer(res: dict, dec: dict, lib: str | None, class_nodes: dict) -> tuple[str, str | None]:
     """(kind, name) of the file's one answer, in order: algorithm, class, new_or_incorrect, not_identified."""
     if res.get('got'):
         return 'algorithm', res['got']
-    if dec.get('decision') == 'new_version':
+    if dec.get('decision') == 'new_version' and node_agrees(dec, class_nodes):
         return 'class', dec['class']
     if lib:
         return 'class', lib
@@ -43,10 +57,14 @@ def main():
     corpus_dec = json.loads(Path(sys.argv[2]).read_text(encoding='utf-8'))
     held = json.loads(HELDOUT.read_text(encoding='utf-8'))
     lib = {r: x['library']['file'] for r, x in json.loads(LIBRARY.read_text(encoding='utf-8'))['heldout'].items()}
+    class_nodes = defaultdict(list)
+    for rel, d in corpus_dec.items():
+        if d.get('decision') == 'new_version':
+            class_nodes[d['class']].append((rel, d.get('nodes', [])))
     rows, score = {}, defaultdict(lambda: defaultdict(int))
     for rel, res in sorted(held.items()):
         task, lang = res['task'], rel.split('/')[2]
-        kind, name = answer(res, held_dec.get(rel, {}), lib.get(rel))
+        kind, name = answer(res, held_dec.get(rel, {}), lib.get(rel), class_nodes)
         if kind == 'algorithm':
             ok = name == task
         elif kind == 'class':
@@ -60,7 +78,10 @@ def main():
             s[kind] += 1
             if ok is not None:
                 s['ok' if ok else 'wrong'] += 1
-    claims = {rel: d['class'] for rel, d in corpus_dec.items() if d.get('decision') == 'new_version'}
+    claims = {rel: d['class'] for rel, d in corpus_dec.items()
+              if d.get('decision') == 'new_version' and node_agrees(d, class_nodes, own=rel)}
+    dropped = sorted(rel for rel, d in corpus_dec.items()
+                     if d.get('decision') == 'new_version' and rel not in claims)
     OUT.write_text(json.dumps({'heldout': rows, 'corpus_class_claims': claims}, indent=1, sort_keys=True) + '\n',
                    encoding='utf-8')
     lines = ['# Four-way answer test (doc 04 section 18.2): held-out Rosetta files', '',
@@ -89,6 +110,8 @@ def main():
     lines += ['', f'## Class decisions on TheAlgorithms/Python files ({len(claims)}), to check by hand', '']
     for c in sorted(by_class):
         lines.append(f"- **{c}** ({len(by_class[c])}): " + ', '.join(sorted(by_class[c])))
+    lines += ['', f'## Class decisions on TheAlgorithms/Python files dropped by node agreement ({len(dropped)})', '']
+    lines += [f"- {r}: {corpus_dec[r]['class']}, nodes {corpus_dec[r].get('nodes')}" for r in dropped]
     REPORT.write_text('\n'.join(lines) + '\n', encoding='utf-8')
     print('\n'.join(lines))
 

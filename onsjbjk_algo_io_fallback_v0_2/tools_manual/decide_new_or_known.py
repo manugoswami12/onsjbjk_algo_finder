@@ -1,37 +1,70 @@
-"""Manual test (scratch): decide new version / new algorithm / undecided for a file, from full-coverage runs."""
-import json, sys
+"""Separate test tool (doc 04 section 18.2): is a file a new version of a known class, a new algorithm (or an
+implementation we cannot check), or undecided? Decided only on the file's root functions (prolog/call_roots.pl: own
+functions no other own function calls, so a helper's class is never the file's), each run on every battery input.
+  new_version    every root ran on every input and satisfies one and the same class relation
+  new_algorithm  every root ran on every input, its output varies, and no class relation holds
+  undecided      anything else (a root that does not run fully, roots of different classes, a check that timed out)
+
+usage: PYTHONPATH=. python tools_manual/decide_new_or_known.py ROOT FILES.json OUT.json
+"""
+import json
+import sys
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
-import crosslang_frontends, compare_learners, ta_classes
+
+import compare_learners
+import crosslang_frontends
+import learn_facts
+import ta_classes
+from ta_corpus import ROOT
+
 crosslang_frontends.install(lisp_sbcl=False)
 compare_learners._ap13()
 import io_trace
 
+ROOTS = ROOT / 'prolog' / 'call_roots.pl'
 
-def decide(p):
+
+def roots(p: Path) -> set[str]:
+    kind, text = learn_facts.tree_facts(p)
+    if not text.strip():
+        return set()
+    return {line[5:] for line in learn_facts.swipl_facts('roots_main', ROOTS, kind, text) if line.startswith('ROOT|')}
+
+
+def base(name: str) -> str:
+    return name.split('$')[0]                       # io_trace names a where-function gs$1
+
+
+def decide(p: Path) -> dict:
     try:
+        rts = roots(p)
         info = io_trace.run_functions(p)
-    except Exception as e:
+    except Exception as e:                          # noqa: BLE001  (any failure is undecided)
         return {'decision': 'undecided', 'why': 'no run: ' + type(e).__name__}
-    full = {n for n, d in info.items() if d.get('runs') and not d.get('unsupported') and all(r[0] for r in d['runs'])}
-    part = {n: f"{sum(1 for r in d['runs'] if r[0])}/{len(d['runs'])}" for n, d in info.items()
-            if d.get('runs') and n not in full}
+    if not rts:
+        return {'decision': 'undecided', 'why': 'no root function'}
+    full = {base(n) for n, d in info.items() if d.get('runs') and not d.get('unsupported') and all(r[0] for r in d['runs'])}
+    if not rts <= full:
+        return {'decision': 'undecided', 'why': 'a root does not run on every input', 'roots': sorted(rts),
+                'not_full': sorted(rts - full)}
     try:
         rs = ta_classes.runs(p)
         cs = ta_classes.classes(p, rs)
-    except Exception as e:
+    except Exception as e:                          # noqa: BLE001
         return {'decision': 'undecided', 'why': 'check error ' + type(e).__name__}
     if cs is None:
         return {'decision': 'undecided', 'why': 'check timeout'}
-    full_cs = {c for n, v in cs.items() if n in full for c in v}
-    varied = {n for n in full if n in rs and len({o for _, o in rs[n][1]}) > 1}
-    if len(full_cs) == 1:
-        return {'decision': 'new_version', 'class': min(full_cs), 'partial': part}
-    if len(full_cs) > 1:
-        return {'decision': 'undecided', 'why': 'several classes ' + str(sorted(full_cs))}
-    if varied:
-        return {'decision': 'new_algorithm', 'functions': sorted(varied), 'partial': part}
-    return {'decision': 'undecided', 'why': 'no full run', 'partial': part}
+    by_root = {r: set().union(*[v for n, v in cs.items() if base(n) == r]) for r in rts}
+    if all(len(v) == 1 for v in by_root.values()) and len(set().union(*by_root.values())) == 1:
+        return {'decision': 'new_version', 'class': min(set().union(*by_root.values())), 'roots': sorted(rts),
+                'nodes': learn_facts.nodes(p)}          # the structure, the second witness (eval_decision.py)
+    if any(by_root.values()):
+        return {'decision': 'undecided', 'why': 'roots of no or different classes', 'classes': {r: sorted(v) for r, v in by_root.items()}}
+    varied = all(len({o for _, o in rs[n][1]}) > 1 for n in rs if base(n) in rts)
+    if varied and all(any(base(n) == r for n in rs) for r in rts):
+        return {'decision': 'new_algorithm', 'roots': sorted(rts)}
+    return {'decision': 'undecided', 'why': 'output does not depend on the input', 'roots': sorted(rts)}
 
 
 if __name__ == '__main__':
