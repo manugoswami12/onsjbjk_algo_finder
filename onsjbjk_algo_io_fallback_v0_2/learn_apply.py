@@ -42,19 +42,23 @@ def learn(labelled: dict[Path, str | None], rules: Path = RULES, workers: int = 
     return count
 
 
-def apply(path: Path, rules: Path = RULES, io_labels=(), trace_labels=()):
+def apply(path: Path, rules: Path = RULES, io_labels=(), trace_labels=(), logic_labels=(), hand=None):
     """([tree nodes of the file], [(node, label, rule)] of the learned branches holding at its deepest node,
     {labels with a learned branch there}, {the normal process's branches there}); io_labels: the training
-    labels whose behaviour the file has; trace_labels: those whose write trace it has too."""
+    labels whose behaviour the file has; trace_labels: those whose write trace it has too; logic_labels: those whose exact traced logic (AP13 learn-dir) it has; hand: a set that receives the labels of the
+    hand rules holding (prolog/ta_rules.pl)."""
     kind, text = learn_facts.tree_facts(path)
     if not text.strip():
         return [], [], set(), set()
     with tempfile.TemporaryDirectory(prefix='v02_io_') as td:
         io = Path(td) / 'io.pl'
         io.write_text(''.join(f"io_equal('{lab}').\n" for lab in sorted(io_labels))
-                      + ''.join(f"io_trace_equal('{lab}').\n" for lab in sorted(trace_labels)), encoding='utf-8')
+                      + ''.join(f"io_trace_equal('{lab}').\n" for lab in sorted(trace_labels))
+                      + ''.join(f"logic_equal('{lab}').\n" for lab in sorted(logic_labels)), encoding='utf-8')
         lines = learn_facts.swipl_facts('learn_apply_main', PROLOG / 'learn_apply.pl', kind, text, str(rules), str(io))
     nodes = [line.split('|', 1)[1] for line in lines if line.startswith('NODE|')]
     branch_at = {line.split('|')[2] for line in lines if line.startswith('BRANCH_AT|')}
     normal = {line.split('|')[2] for line in lines if line.startswith('NORMAL|')}
+    if hand is not None:                          # the hand rules' labels (prolog/ta_rules.pl), for the caller
+        hand.update(line.split('|')[2] for line in lines if line.startswith('HAND|'))
     return nodes, [tuple(line.split('|')[1:]) for line in lines if line.startswith('LEARNED|')], branch_at, normal

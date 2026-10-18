@@ -78,7 +78,21 @@ class TaIo(compare_learners.IoCatalog):
         return out, traced
 
 
-def answer(path: Path, io: TaIo, labels: set[str], gs: dict[str, str]) -> dict:
+class TaLogic(compare_learners.Ap13Dir):
+    """AP13 learn-dir over the corpus: every function's traced logic stored as an exact Prolog reference (scratch
+    store); a file matches the labels of the references its functions match (AP13 scan, leaf MATCH). The scan names
+    the matching functions by name (compare_learners.Ap13Dir.labels_by_function looks them up by id and finds none)."""
+
+    def labels_matched(self, path: Path) -> set[str]:
+        try:
+            result = self.cli.scan(path, self.store, include_unreviewed=True, quiet=True)
+        except ERRORS + compare_learners.ERRORS:
+            return set()
+        return {self.labels[self.ref_file[m['label']]] for m in result['leaves']
+                if m['result'] == 'MATCH' and self.ref_file.get(m['label']) in self.labels} - {'none'}
+
+
+def answer(path: Path, io: TaIo, labels: set[str], gs: dict[str, str], logic: TaLogic | None = None) -> dict:
     """{'got': group or None, 'why': built|learned|io|ambiguous|none|no_algorithm, ...} of one file."""
     if path.suffix == '.lisp' and ecl_logic.NOCODE in ecl_logic.families(path):
         return {'got': None, 'why': 'no_algorithm'}
@@ -90,17 +104,21 @@ def answer(path: Path, io: TaIo, labels: set[str], gs: dict[str, str]) -> dict:
         by_fn, traced = {}, {}
     io_labels = {lab for v in by_fn.values() for lab in v} & labels
     trace_labels = {lab for v in traced.values() for lab in v} & labels
+    logic_labels = logic.labels_matched(path) & labels if logic else set()
     try:
-        nodes, found, _, normal = learn_apply.apply(path, RULES, io_labels, trace_labels)
+        hand = set()
+        nodes, found, _, normal = learn_apply.apply(path, RULES, io_labels, trace_labels, logic_labels, hand)
     except ERRORS as exc:
-        nodes, found, normal = [], [], set()
+        nodes, found, normal, hand = [], [], set(), set()
         print(f'  ({path.name}: {type(exc).__name__}: {str(exc)[:100]})', flush=True)
-    built = {ta_corpus.group(b, gs) for b in normal if b in ta_corpus.BUILT or b in labels}
+    built = {ta_corpus.group(b, gs) for b in normal | hand if b in ta_corpus.BUILT or b in labels}
     held = sorted({lab for _, lab, r in found if r == 'io'})
-    held_trace = sorted({lab for _, lab, r in found if r == 'trace'})
-    out = {'nodes': nodes, 'built': sorted(built), 'held': held, 'held_trace': held_trace, 'io': sorted(io_labels)}
-    # the most specific evidence that holds decides: a built branch, a learned branch with the write trace, a learned
-    # branch with the behaviour, the behaviour alone (each holds only where the one after it holds too, or is built)
+    held_trace = sorted({lab for _, lab, r in found if r in ('trace', 'logic')})
+    out = {'nodes': nodes, 'built': sorted(built), 'held': held, 'held_trace': held_trace, 'io': sorted(io_labels),
+           'logic': sorted(logic_labels)}
+    # the most specific evidence that holds decides: a built branch; a learned branch with an exact trace (the write
+    # trace of the training files' behaviour, or their exact traced logic: AP13 learn-dir); a learned branch with the
+    # behaviour; the behaviour alone
     for why, cands in (('built', built), ('trace', {ta_corpus.group(h, gs) for h in held_trace}),
                        ('learned', {ta_corpus.group(h, gs) for h in held}),
                        ('io', {ta_corpus.group(i, gs) for i in io_labels})):
@@ -119,9 +137,13 @@ def answer_all(units: dict[str, Path], corpus: Path, labels: dict[str, str], out
     gs = ta_corpus.groups()
     crosslang_frontends.install(lisp_sbcl=False)
     io = TaIo(corpus, labels, workers)
+    with tempfile.TemporaryDirectory(prefix='v02_ta_') as td:
+        truth = Path(td) / 'train.json'
+        truth.write_text(json.dumps({'files': labels}), encoding='utf-8')
+        logic = TaLogic(corpus, [truth], workers)
     done = load(out)
     with ThreadPoolExecutor(max_workers=workers) as pool:
-        for n, (rel, res) in enumerate(pool.map(lambda kv: (kv[0], answer(kv[1], io, set(labels.values()), gs)),
+        for n, (rel, res) in enumerate(pool.map(lambda kv: (kv[0], answer(kv[1], io, set(labels.values()), gs, logic)),
                                                 sorted(units.items())), 1):
             done[rel] = res
             if n % 100 == 0:

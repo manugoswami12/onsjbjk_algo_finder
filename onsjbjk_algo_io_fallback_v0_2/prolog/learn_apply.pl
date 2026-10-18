@@ -1,14 +1,17 @@
 /* v0.2 learning (doc 04 section 14): the learned branches applied to a test file at its deepest node(s).
      learn_apply_main -- Facts Kind Rules Io : NODE|Path for the file's tree nodes, NORMAL|Node|Branch for the
-                                              normal process's branch there, BRANCH_AT|Node|Label for the
+                                              normal process's branch there, HAND|Node|Label for a hand rule
+                                              (ta_rules.pl hand_answer/2) holding for the file, BRANCH_AT|Node|Label for the
                                               labels with a learned branch there, LEARNED|Node|Label|Rule for
                                               every branch that holds
    Io holds io_equal(Label) facts: the training labels whose input->output behaviour the file has, and
-   io_trace_equal(Label) facts: those whose write trace it has too. All
+   io_trace_equal(Label) facts: those whose write trace it has too, and logic_equal(Label) facts: those whose
+   exact traced logic it has (AP13 learn-dir references). All
    answers are collected (findall): no cut, no first match, so the order of the clauses decides nothing.
 */
-:- prolog_load_context(directory, Dir), directory_file_path(Dir, 'tree_main.pl', T), load_files(T, []).
-:- dynamic learned_branch/4, io_equal/1, io_trace_equal/1.
+:- prolog_load_context(directory, Dir), directory_file_path(Dir, 'tree_main.pl', T), load_files(T, []),
+   directory_file_path(Dir, 'ta_rules.pl', H), load_files(H, []).
+:- dynamic learned_branch/4, io_equal/1, io_trace_equal/1, logic_equal/1.
 
 learn_apply_main :-
     current_prolog_flag(argv, [Facts, Kind, Rules, Io|_]), tree_load(Facts, Kind),
@@ -20,6 +23,9 @@ learn_apply_main :-
     forall(( func(F, _, _), deepest_families_v02(F, Ps), member(C, Ps), memberchk(C, Nodes),
              family_branch(C, F, B), B \== none ),
            ( atomic_list_concat(C, '>', CA), format('NORMAL|~w|~w~n', [CA, B]) )),
+    % the hand rules (ta_rules.pl) at any node of the file's functions
+    forall(hand_answer(C, H),
+           ( atomic_list_concat(C, '>', CA), format('HAND|~w|~w~n', [CA, H]) )),
     forall(( member(C, Nodes), setof(L, R^B^clause(learned_branch(C, L, R, io), B), Ls), member(L, Ls) ),
            ( atomic_list_concat(C, '>', CA), format('BRANCH_AT|~w|~w~n', [CA, L]) )),
     findall(C-L-R, ( member(C, Nodes), learned_branch(C, L, R, io) ), Found0), sort(Found0, Found),

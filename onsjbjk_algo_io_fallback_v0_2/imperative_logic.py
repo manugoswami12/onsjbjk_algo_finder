@@ -5,9 +5,12 @@ same facts in every language. Only additions; everything AP13 lowers stays as it
   an assignment used as a value (a = b = e in Python, (y = f(x)) < x in C): the value e
   a slice s[i:j] (Python): call(slice, [s, i, j]) (AP13's s[k:] with a constant k stays tail(s, k))
   a field p->f, s.f, o.f: field(p, f) (AP13: other(field); a length field stays len(o))
+  a counted loop's constant step: loop_step(L, K), from Python range(a, b, K) and C for (...; i += K) / i = i + K /
+  i++ / i-- (AP13 keeps neither; doc 04 section 17)
 """
 from __future__ import annotations
 
+from dataclasses import dataclass, field
 from pathlib import Path
 
 import compare_learners
@@ -22,7 +25,52 @@ from parse_source import parse
 ASSIGNMENT_VALUES = {'assignment', 'assignment_expression'}
 
 
+@dataclass
+class StepFacts(FactSet):
+    """AP13's fact set with loop_step/2 facts after AP13's own."""
+    steps: list = field(default_factory=list)
+
+    def text(self) -> str:
+        return super().text() + ''.join(f"loop_step('{lp}',{k}).\n" for lp, k in self.steps)
+
+
 class ImperativeLowerer(ap13.Lowerer):
+    def stmt(self, node, ctx, implicit=False):
+        loop_id = super().stmt(node, ctx, implicit)
+        if loop_id is not None and node is not None and isinstance(self.facts, StepFacts):
+            kind, roles = self.kind(node)
+            k = (self.range_step(self.role(node, roles, 'iter')) if kind == 'for_range'
+                 else self.update_step(self.role(node, roles, 'update')) if kind == 'c_for' else None)
+            if k is not None:
+                self.facts.steps.append((loop_id, k))
+        return loop_id
+
+    def range_step(self, it):
+        """K of range(a, b, K) with a constant K."""
+        t = self.expr(it) if it is not None else None
+        if t and t[0] == 'call' and t[1] == 'range' and len(t[2]) == 3:
+            return constant(t[2][2])
+        return None
+
+    def update_step(self, upd):
+        """K of i += K, i -= K, i = i + K, i = i - K, i++, i-- (C for update)."""
+        if upd is None:
+            return None
+        name = self.updated_name(upd)
+        kind, roles = self.kind(upd)
+        if kind == 'update':
+            return -1 if '--' in text(upd) else 1
+        if name is None or kind not in ('assign', 'aug_assign'):
+            return None
+        v = self.expr(self.role(upd, roles, 'right'))
+        if '+=' in text(upd) or '-=' in text(upd):
+            k = constant(v)
+            return None if k is None else (-k if '-=' in text(upd) else k)
+        if v and v[0] == 'op' and v[1] in ('add', 'sub') and v[2][0] == ('var', name):
+            k = constant(v[2][1])
+            return None if k is None else (k if v[1] == 'add' else -k)
+        return None
+
     def expr(self, node):
         if node is not None and node.type in ASSIGNMENT_VALUES:          # a = b = e: the value e
             right = node.child_by_field_name('right')
@@ -56,8 +104,17 @@ class ImperativeLowerer(ap13.Lowerer):
         return [self.expr(b) if b is not None else other('none') for b in bounds[:2]]
 
 
+def constant(t):
+    """The integer of int(K) or -K, else None."""
+    if t and t[0] == 'int':
+        return t[1]
+    if t and t[0] == 'op' and t[1] == 'neg' and t[2][0][0] == 'int':
+        return -t[2][0][1]
+    return None
+
+
 def lower(path: Path) -> str:
     """The base facts of a Python, C, ... file, lowered by the subclass."""
     lang, _, root = parse(path)
-    return ImperativeLowerer(lang, FactSet(lang)).run(root).text()
+    return ImperativeLowerer(lang, StepFacts(lang)).run(root).text()
 
