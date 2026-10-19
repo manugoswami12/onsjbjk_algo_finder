@@ -1711,6 +1711,7 @@ label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_s
 label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', call(str,[field(var(p(0)),root)])).
 label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', call(str,[field(var(p(0)),value)])).
 label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', call(traversal_function,[field(var(p(0)),root)])).
+label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', concat([call('$self',[]),list([var(p(0))]),call('$self',[])])).
 label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', elem(list([]),op(sub,[var(p(1)),int(1)]))).
 label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', field(field(var(p(1)),parent),left)-var(p(2))).
 label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', field(field(var(p(1)),parent),right)-var(p(2))).
@@ -1724,12 +1725,14 @@ label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_s
 label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', field(var(v),parent)-var(v)).
 label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', field(var(v),right)-call('Node',[elem(var(v),var(p(1)))])).
 label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', field(var(v),value)-field(var(v),value)).
+label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', list([])).
 label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', op('is not',[field(var(p(1)),left),other(none)])).
 label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', op('is not',[field(var(p(1)),parent),other(none)])).
 label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', op('is not',[field(var(p(1)),right),other(none)])).
 label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', op('is not',[var(p(0)),other(none)])).
 label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', op('is not',[var(p(1)),other(none)])).
 label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', op('is not',[var(p(2)),other(none)])).
+label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', op(add,[op(add,[call('$self',[]),call('$self',[])]),list([var(p(0))])])).
 label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', op(and,[op('is not',[var(v),other(none)]),op('is not',[field(var(v),value),var(p(1))])])).
 label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', op(and,[op(is,[field(var(p(0)),left),other(none)]),op(is,[field(var(p(0)),right),other(none)])])).
 label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', op(and,[op(is,[field(var(v),left),other(none)]),op(is,[field(var(v),right),other(none)])])).
@@ -2141,8 +2144,8 @@ label_file_component('lazy_segment_tree', 'data_structures/binary_tree/lazy_segm
 label_file_component('lazy_segment_tree', 'data_structures/binary_tree/lazy_segment_tree.py', call(fn,[var(p(0)),int(1),int(1),call(len,[var(p(0))]),var(v),var(v)])).
 label_file_component('lazy_segment_tree', 'data_structures/binary_tree/lazy_segment_tree.py', call(fn,[var(p(0)),var(p(1))])).
 label_file_component('lazy_segment_tree', 'data_structures/binary_tree/lazy_segment_tree.py', call(len,[var(p(0))])-var(p(1))).
+label_file_component('lazy_segment_tree', 'data_structures/binary_tree/lazy_segment_tree.py', call(max,[call('$self',[]),call('$self',[])])).
 label_file_component('lazy_segment_tree', 'data_structures/binary_tree/lazy_segment_tree.py', call(max,[elem(field(var(p(0)),segment_tree),call(fn,[var(p(0)),var(p(1))])),elem(field(var(p(0)),segment_tree),call(fn,[var(p(0)),var(p(1))]))])).
-label_file_component('lazy_segment_tree', 'data_structures/binary_tree/lazy_segment_tree.py', call(max,[var(v),call('$self',[])])).
 label_file_component('lazy_segment_tree', 'data_structures/binary_tree/lazy_segment_tree.py', call(max,[var(v),var(v)])).
 label_file_component('lazy_segment_tree', 'data_structures/binary_tree/lazy_segment_tree.py', call(range,[int(1),op(add,[call(len,[var(p(0))]),int(1)])])).
 label_file_component('lazy_segment_tree', 'data_structures/binary_tree/lazy_segment_tree.py', call(range,[op(mul,[int(4),var(p(1))])])).
@@ -2534,8 +2537,8 @@ label_file_component('segment_tree', 'data_structures/binary_tree/segment_tree.p
 label_file_component('segment_tree', 'data_structures/binary_tree/segment_tree.py', call(fn,[var(p(0)),var(p(1))])).
 label_file_component('segment_tree', 'data_structures/binary_tree/segment_tree.py', call(fn,[var(p(0)),var(v),var(v)])).
 label_file_component('segment_tree', 'data_structures/binary_tree/segment_tree.py', call(len,[field(var(p(0)),'A')])).
+label_file_component('segment_tree', 'data_structures/binary_tree/segment_tree.py', call(max,[call('$self',[]),call('$self',[])])).
 label_file_component('segment_tree', 'data_structures/binary_tree/segment_tree.py', call(max,[elem(field(var(p(0)),st),call(fn,[var(p(0)),var(p(1))])),elem(field(var(p(0)),st),call(fn,[var(p(0)),var(p(1))]))])).
-label_file_component('segment_tree', 'data_structures/binary_tree/segment_tree.py', call(max,[var(v),call('$self',[])])).
 label_file_component('segment_tree', 'data_structures/binary_tree/segment_tree.py', call(max,[var(v),var(v)])).
 label_file_component('segment_tree', 'data_structures/binary_tree/segment_tree.py', call(print,[var(v)])).
 label_file_component('segment_tree', 'data_structures/binary_tree/segment_tree.py', call(range,[int(1),op(add,[field(var(p(0)),'N'),int(1)])])).
@@ -2733,9 +2736,9 @@ label_file_component('wavelet_tree', 'data_structures/binary_tree/wavelet_tree.p
 label_file_component('wavelet_tree', 'data_structures/binary_tree/wavelet_tree.py', fstring([field(var(p(0)),minn),field(var(p(0)),maxx)])).
 label_file_component('wavelet_tree', 'data_structures/binary_tree/wavelet_tree.py', int(-1)).
 label_file_component('wavelet_tree', 'data_structures/binary_tree/wavelet_tree.py', int(0)).
+label_file_component('wavelet_tree', 'data_structures/binary_tree/wavelet_tree.py', op(add,[call('$self',[]),call('$self',[])])).
 label_file_component('wavelet_tree', 'data_structures/binary_tree/wavelet_tree.py', op(add,[op(sub,[var(p(2)),var(p(1))]),int(1)])).
 label_file_component('wavelet_tree', 'data_structures/binary_tree/wavelet_tree.py', op(add,[var(p(2)),int(1)])).
-label_file_component('wavelet_tree', 'data_structures/binary_tree/wavelet_tree.py', op(add,[var(v),call('$self',[])])).
 label_file_component('wavelet_tree', 'data_structures/binary_tree/wavelet_tree.py', op(and,[op(le,[var(p(3)),field(var(p(0)),minn)]),op(le,[field(var(p(0)),maxx),var(p(4))])])).
 label_file_component('wavelet_tree', 'data_structures/binary_tree/wavelet_tree.py', op(eq,[field(var(p(0)),maxx),field(var(p(0)),minn)])).
 label_file_component('wavelet_tree', 'data_structures/binary_tree/wavelet_tree.py', op(eq,[field(var(p(0)),minn),field(var(p(0)),maxx)])).

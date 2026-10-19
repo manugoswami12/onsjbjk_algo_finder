@@ -7,8 +7,8 @@ The pipeline answer is kept; a proposed branch (prolog/proposed_branches.pl, lea
 | C | 69 | 32 | 0 | 31 / 1 | 96.9% | 44.9% | 2 | 2 / 0 |
 | Common-Lisp | 75 | 43 | 0 | 42 / 1 | 97.7% | 56.0% | 0 | 0 / 0 |
 | Haskell | 144 | 31 | 1 | 30 / 2 | 93.8% | 20.8% | 3 | 3 / 0 |
-| Python | 162 | 62 | 1 | 57 / 6 | 90.5% | 35.2% | 9 | 9 / 0 |
-| all | 450 | 168 | 2 | 160 / 10 | 94.1% | 35.6% | 14 | 14 / 0 |
+| Python | 162 | 62 | 1 | 58 / 5 | 92.1% | 35.8% | 9 | 9 / 0 |
+| all | 450 | 168 | 2 | 161 / 9 | 94.7% | 35.8% | 14 | 14 / 0 |
 
 ## Held-out files answered by a branch (2)
 

@@ -405,9 +405,9 @@
   },
   "Task/Factorial/Python/factorial-7.py": {
    "answer": "algorithm",
-   "correct": false,
+   "correct": true,
    "family_correct": null,
-   "name": "problem_020",
+   "name": "Factorial",
    "task": "Factorial"
   },
   "Task/Factorial/Python/factorial-8.py": {

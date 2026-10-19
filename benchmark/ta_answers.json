@@ -17,7 +17,6 @@
 "got": "equal_loudness_filter",
 "held": [],
 "held_trace": [
-"binary_search_tree",
 "binary_search_tree_recursive",
 "binary_tree_traversals",
 "equal_loudness_filter",
@@ -1565,9 +1564,13 @@
 "built": [],
 "got": "bifid",
 "held": [],
-"held_trace": [],
+"held_trace": [
+"bifid"
+],
 "io": [],
-"logic": [],
+"logic": [
+"bifid"
+],
 "nodes": [],
 "specific": [
 "bifid"
@@ -1596,7 +1599,10 @@
 ],
 "io": [],
 "logic": [
-"caesar_cipher"
+"base64_to_binary",
+"caesar_cipher",
+"decimal_to_hexadecimal",
+"harshad_numbers"
 ],
 "nodes": [
 "sequence_query",
@@ -3746,7 +3752,6 @@
 "held": [],
 "held_trace": [
 "basic_binary_tree",
-"binary_search_tree",
 "binary_search_tree_recursive",
 "binary_tree_traversals",
 "red_black_tree",
@@ -3772,7 +3777,9 @@
 "why": "file_rule"
 },
 "data_structures/binary_tree/binary_search_tree.py": {
-"built": [],
+"built": [
+"Sorting-algorithms-Quicksort"
+],
 "got": "binary_search_tree",
 "held": [
 "binary_search_tree",
@@ -3801,7 +3808,8 @@
 "nodes": [
 "numeric",
 "numeric>recurrence>double_recursion",
-"sequence_query"
+"sequence_query",
+"sequence_transformation>comparison_sort>partition_recursive"
 ],
 "specific": [
 "binary_search_tree"
@@ -3812,11 +3820,9 @@
 "built": [],
 "got": "binary_search_tree_recursive",
 "held": [
-"binary_search_tree",
 "binary_search_tree_recursive"
 ],
 "held_trace": [
-"binary_search_tree",
 "binary_search_tree_recursive",
 "binary_tree_traversals",
 "red_black_tree",
@@ -3921,7 +3927,6 @@
 "held": [],
 "held_trace": [
 "basic_binary_tree",
-"binary_search_tree",
 "binary_search_tree_recursive",
 "binary_tree_traversals",
 "red_black_tree",
@@ -4068,9 +4073,7 @@
 "built": [],
 "got": "inorder_tree_traversal_2022",
 "held": [],
-"held_trace": [
-"binary_search_tree"
-],
+"held_trace": [],
 "io": [],
 "logic": [
 "binary_search_tree"
@@ -4303,7 +4306,6 @@
 "got": "red_black_tree",
 "held": [],
 "held_trace": [
-"binary_search_tree",
 "binary_search_tree_recursive",
 "binary_tree_traversals",
 "red_black_tree",
@@ -4334,7 +4336,9 @@
 "lazy_segment_tree",
 "segment_tree"
 ],
-"held_trace": [],
+"held_trace": [
+"segment_tree"
+],
 "io": [
 "dijkstra_algorithm",
 "heap_generic",
@@ -4342,7 +4346,9 @@
 "min_heap",
 "segment_tree"
 ],
-"logic": [],
+"logic": [
+"segment_tree"
+],
 "nodes": [
 "numeric>recurrence>double_recursion"
 ],
@@ -4390,7 +4396,6 @@
 "got": "splay_tree",
 "held": [],
 "held_trace": [
-"binary_search_tree",
 "binary_search_tree_recursive",
 "binary_tree_traversals",
 "red_black_tree",
@@ -4458,7 +4463,6 @@
 "got": "wavelet_tree",
 "held": [],
 "held_trace": [
-"binary_search_tree",
 "binary_search_tree_recursive",
 "binary_tree_traversals",
 "red_black_tree",
@@ -10966,9 +10970,13 @@
 "built": [],
 "got": "mab",
 "held": [],
-"held_trace": [],
+"held_trace": [
+"mab"
+],
 "io": [],
-"logic": [],
+"logic": [
+"mab"
+],
 "nodes": [],
 "specific": [
 "mab"
@@ -24182,13 +24190,9 @@
 "built": [],
 "got": "aho_corasick",
 "held": [],
-"held_trace": [
-"aho_corasick"
-],
+"held_trace": [],
 "io": [],
-"logic": [
-"aho_corasick"
-],
+"logic": [],
 "nodes": [
 "numeric"
 ],

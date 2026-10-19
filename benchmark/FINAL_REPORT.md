@@ -20,8 +20,8 @@ Reporting criteria (final_report.py): bad code is ignored. A held-out file is no
 | C | 69 | 35 | 34 | 31 | 1 | 3 | 96.9% | 91.2% | 44.9% |
 | Common-Lisp | 75 | 29 | 46 | 44 | 1 | 2 | 97.8% | 95.7% | 58.7% |
 | Haskell | 144 | 102 | 42 | 33 | 2 | 9 | 94.3% | 78.6% | 22.9% |
-| Python | 162 | 79 | 83 | 65 | 6 | 18 | 91.5% | 78.3% | 40.1% |
-| all | 450 | 245 | 205 | 173 | 10 | 32 | 94.5% | 84.4% | 38.4% |
+| Python | 162 | 79 | 83 | 66 | 5 | 17 | 93.0% | 79.5% | 40.7% |
+| all | 450 | 245 | 205 | 174 | 9 | 31 | 95.1% | 84.9% | 38.7% |
 
 False negatives = scored files without a correct answer (wrong ones included).
 
@@ -36,7 +36,6 @@ False negatives = scored files without a correct answer (wrong ones included).
 
 - Task/Factorial/C/factorial-2.c: problem_020 (algorithm), task Factorial
 - Task/Factorial/Haskell/factorial-8.hs: problem_020 (algorithm), task Factorial
-- Task/Factorial/Python/factorial-7.py: problem_020 (algorithm), task Factorial
 - Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-9.lisp: signum (algorithm), task Fibonacci-sequence
 - Task/Least-common-multiple/Python/least-common-multiple-2.py: Greatest-common-divisor (algorithm), task Least-common-multiple
 - Task/Levenshtein-distance/Python/levenshtein-distance-5.py: problem_007 (algorithm), task Levenshtein-distance

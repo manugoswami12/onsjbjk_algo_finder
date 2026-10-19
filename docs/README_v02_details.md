@@ -88,10 +88,10 @@ TheAlgorithms are right.
 | C | 34 of 69 | 96.9% | 91.2% | 44.9% |
 | Common Lisp | 46 of 75 | 97.8% | 95.7% | 58.7% |
 | Haskell | 42 of 144 | 94.3% | 78.6% | 22.9% |
-| Python | 83 of 162 | 91.5% | 78.3% | 40.1% |
-| **all** | **205 of 450** | **94.5%** | **84.4%** | **38.4%** |
+| Python | 83 of 162 | 93.0% | 79.5% | 40.7% |
+| **all** | **205 of 450** | **95.1%** | **84.9%** | **38.7%** |
 
-All 10 wrong answers on new code come from the main pipeline. The separate fallback made none.
+All 9 wrong answers on new code come from the main pipeline. The separate fallback made none.
 
 To reproduce every number above, follow "Reproduce the results" in the root [README.md](../README.md).
 

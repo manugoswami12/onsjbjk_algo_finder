@@ -5358,13 +5358,6 @@ learned_branch([numeric, recurrence, double_recursion], basic_binary_tree, trace
     io_trace_equal(basic_binary_tree).
 learned_branch([numeric, recurrence, double_recursion], basic_binary_tree, logic, io) :-
     logic_equal(basic_binary_tree).
-% binary_search_tree under [numeric>recurrence>double_recursion]: learned from [data_structures/binary_tree/binary_search_tree.py]
-learned_branch([numeric, recurrence, double_recursion], binary_search_tree, io, io) :-
-    io_equal(binary_search_tree).
-learned_branch([numeric, recurrence, double_recursion], binary_search_tree, trace, io) :-
-    io_trace_equal(binary_search_tree).
-learned_branch([numeric, recurrence, double_recursion], binary_search_tree, logic, io) :-
-    logic_equal(binary_search_tree).
 % binary_search_tree_recursive under [numeric>recurrence>double_recursion]: learned from [data_structures/binary_tree/binary_search_tree_recursive.py]
 learned_branch([numeric, recurrence, double_recursion], binary_search_tree_recursive, io, io) :-
     io_equal(binary_search_tree_recursive).
@@ -8907,6 +8900,13 @@ learned_branch([sequence_transformation, comparison_sort, merge], recursive_merg
     io_trace_equal(recursive_mergesort_array).
 learned_branch([sequence_transformation, comparison_sort, merge], recursive_mergesort_array, logic, io) :-
     logic_equal(recursive_mergesort_array).
+% binary_search_tree under [sequence_transformation>comparison_sort>partition_recursive]: learned from [data_structures/binary_tree/binary_search_tree.py]
+learned_branch([sequence_transformation, comparison_sort, partition_recursive], binary_search_tree, io, io) :-
+    io_equal(binary_search_tree).
+learned_branch([sequence_transformation, comparison_sort, partition_recursive], binary_search_tree, trace, io) :-
+    io_trace_equal(binary_search_tree).
+learned_branch([sequence_transformation, comparison_sort, partition_recursive], binary_search_tree, logic, io) :-
+    logic_equal(binary_search_tree).
 % circle_sort under [sequence_transformation>comparison_sort>partition_recursive]: learned from [sorts/circle_sort.py]
 learned_branch([sequence_transformation, comparison_sort, partition_recursive], circle_sort, io, io) :-
     io_equal(circle_sort).

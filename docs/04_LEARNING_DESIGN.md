@@ -507,3 +507,31 @@ Everything in this section is separate from the pipeline. No pipeline file loads
   - wrong answers are never excluded, and the all-files numbers are reported beside the analysable ones.
 - **Measured and not built:** a class veto of the pipeline's wrong answers. It fixes none, and its looser form would
   turn 15 correct specific answers into a class name.
+
+## 19. Tracing the code's logic: conversion fixes, each tested against all data (user: "all these are due to bad tracing of code logic")
+
+**Rule (user).** The remaining wrong answers come from converting code to Prolog wrongly, not from the tree. Each
+conversion fix is a rule of the language, never of an algorithm. It goes in alone and is checked against all existing
+data: the nodes of all 1346 TheAlgorithms and 450 held-out files, then relearning and full runs. A change is dropped
+if one problem occurs that the idea itself cannot fix. A file that worked before and breaks is checked once: its
+generated parts (learned branches, fingerprints) are regenerated; a hand rule is never rewritten silently.
+
+**19.1 A returned value traced through the variable that holds a recursive call** (`prolog/trace_returns.pl`, called
+by `tree_main.pl` `tree_load/2`). AP13's copy propagation replaces only a variable with one definition, so
+`lesser = f(lesser); ...; return lesser + equal + greater` and `z = 1; if n > 1: z = n * f(n - 1); return z` were not
+traced to the recursive calls. Two value-flow shapes, by line order and guards: the last definition holds on every
+path to the return (substituted), or a default plus one guarded override (two guarded returns, as a conditional return
+is). Only values holding a recursive call, only when the variable is read nowhere but in the return; the call's facts
+(the call and its parameter updates) move with its value.
+
+| Check | Result |
+|---|---|
+| hand check | factorial-7.py reaches `range_accumulation`, as TheAlgorithms' factorial does; quicksort-1.py traced but still `sequence_query` (list `+` is not `concat`: another idea) |
+| fault found, fixed within the idea | red_black_tree's `black_height` lost `double_recursion`: its variables are also tested (`left != right`); now traced only when the return is the variable's only use |
+| nodes, all 1796 files | 2 change: factorial-7.py and binary_search_tree.py (`inorder`, `postorder`: default `[]` and the guarded join, now traced) |
+| relearn + full runs | first run: 3 learnt files lost (segment_tree, lazy_segment_tree, wavelet_tree): their file rules' fingerprint (`same_file/1`, generated from the facts) held the untraced returns. Fingerprints regenerated from the current facts (`ta_signatures.json` -> `ta_file_components.pl`; `ta_file_rules.pl` unchanged): learnt 1344/1344, 0 differences; new code 158/10 -> 159/9 (factorial-7.py: problem_020 -> Factorial) |
+
+Next, each tested the same way: the Haskell lowering's missing recursion condition (factorial-8.hs); list `+` as
+concatenation (quicksort-1.py); C `x op= y` and the Lisp `finally` (lowering_v03.py); a returned lambda applied to
+the next argument (lcm, Levenshtein); problem_007's is_prime.
+
