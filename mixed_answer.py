@@ -10,7 +10,9 @@ the Prolog rules are used as they are, never edited. Two corrections to how beha
                       only on its helpers, including a built branch at a helper's tree node, are reported as
                       components: least-common-multiple-2.py is "main: not identified, contains: gcd".
 
-The tiers and their order are the pipeline's (eval_ta.decide), applied to the main labels.
+Both corrections apply to the io evidence (MixedIo) and to AP13's exact traced logic (MixedLogic: each stored pattern
+records its source function). The tiers and their order are the pipeline's (eval_ta.decide), applied to the main
+labels.
 
 usage: PYTHONPATH=.:tools_manual python mixed_answer.py CORPUS --heldout ROSETTA   -> benchmark/mixed_heldout.json
        PYTHONPATH=.:tools_manual python mixed_answer.py CORPUS --corpus           -> benchmark/mixed_corpus.json
@@ -86,6 +88,45 @@ class MixedIo(eval_ta.TaIo):
         return out, traced
 
 
+class MixedLogic(eval_ta.TaLogic):
+    """eval_ta.TaLogic (AP13's exact traced logic) with each match named by the algorithm of the TheAlgorithms
+    function it came from (pattern.function_name), as MixedIo names an io match, and split by the new file's roots."""
+
+    def attach(self, io: MixedIo, file_roots: dict[str, list[str]]):
+        io_names = {}
+        for (rel, name), names in io.name_of.items():
+            io_names.setdefault((rel, base(name)), set()).update(names)
+        own = {(rel, base(name)) for rel, name in io.own}
+        self.name_of_ref = {}
+        with self.ks.connect(self.store) as db:
+            for label, rel, fn in db.execute('SELECT label, source_path, function_name FROM pattern'):
+                key = (rel, base(fn))
+                if rel not in self.labels:
+                    continue
+                if key in own or (key not in io_names and file_roots.get(rel) == [base(fn)]):
+                    self.name_of_ref[label] = {self.labels[rel]}          # a root of a single-algorithm file
+                else:
+                    self.name_of_ref[label] = io_names.get(key, set())    # a helper or a library function
+
+    def labels_split(self, path: Path, is_root) -> tuple[set[str], set[str]]:
+        """(labels matched on the new file's roots, labels matched only on its helpers)."""
+        import re
+        try:
+            _, facts = self.cli.facts_text(path)
+            result = self.cli.scan(path, self.store, include_unreviewed=True, quiet=True)
+        except eval_ta.ERRORS + compare_learners.ERRORS:
+            return set(), set()
+        names = dict(re.findall(r"^func\('([^']*)','([^']*)'", facts, re.MULTILINE))
+        main, comp = set(), set()
+        for m in result['leaves']:
+            if m['result'] != 'MATCH':
+                continue
+            labs = self.name_of_ref.get(m['label'], set()) - {'none'}
+            fns = [names.get(fid, '') for fid in m['functions'].split(',')]
+            (main if any(is_root(fn) for fn in fns) else comp).update(labs)
+        return main, comp
+
+
 def function_nodes(path: Path) -> dict[str, set[str]]:
     """{function: its tree nodes} (the tree's NODE|Function|Path lines)."""
     kind, text = learn_facts.tree_facts(path)
@@ -139,7 +180,8 @@ def answer(path: Path, io: MixedIo, labels: set[str], gs: dict[str, str], logic)
     main_io = {lab for fn, v in by_fn.items() if is_root(fn) for lab in v} & labels
     comp_io = {lab for fn, v in by_fn.items() if not is_root(fn) for lab in v} & labels
     main_trace = {lab for fn, v in traced.items() if is_root(fn) for lab in v} & labels
-    logic_labels = logic.labels_matched(path) & labels if logic else set()
+    main_logic, comp_logic = logic.labels_split(path, is_root) if logic else (set(), set())
+    logic_labels = main_logic & labels
     try:
         built, found, specific = built_by_node(path, eval_ta.RULES, main_io, main_trace, logic_labels)
         fnodes = function_nodes(path)
@@ -154,7 +196,7 @@ def answer(path: Path, io: MixedIo, labels: set[str], gs: dict[str, str], logic)
            'held_trace': sorted({lab for _, lab, r in found if r in ('trace', 'logic')}),
            'io': sorted(main_io), 'logic': sorted(logic_labels)}
     res = eval_ta.decide(out, main_built, specific, labels, gs)
-    comps = {ta_corpus.group(c, gs) for c in comp_io | {b for b in comp_built if b in ta_corpus.BUILT or b in labels}}
+    comps = {ta_corpus.group(c, gs) for c in (comp_io | comp_logic) & labels | {b for b in comp_built if b in ta_corpus.BUILT or b in labels}}
     res['components'] = sorted(comps - {res.get('got')})
     res['roots'] = sorted(rts)
     return res
@@ -168,7 +210,8 @@ def run(units: dict[str, Path], corpus: Path, out: Path, workers: int, extra: di
     with tempfile.TemporaryDirectory(prefix='v02_mix_') as td:
         truth = Path(td) / 'train.json'
         truth.write_text(json.dumps({'files': labels}), encoding='utf-8')
-        logic = eval_ta.TaLogic(corpus, [truth], workers)
+        logic = MixedLogic(corpus, [truth], workers)
+    logic.attach(io, json.loads(ROOTS.read_text(encoding='utf-8')))
     done = {}
     with ThreadPoolExecutor(max_workers=workers) as pool:
         for n, (rel, res) in enumerate(pool.map(
