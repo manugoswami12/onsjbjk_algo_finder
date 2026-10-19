@@ -21,21 +21,15 @@
 },
 "Task/Factorial/C/factorial-2.c": {
 "built": [],
-"components": [],
-"got": "problem_020",
+"components": [
+"Factorial",
+"double_factorial"
+],
+"got": null,
 "held": [],
-"held_trace": [
-"problem_020"
-],
+"held_trace": [],
 "io": [],
-"logic": [
-"double_factorial",
-"factorial",
-"gcd_of_n_numbers",
-"number_of_possible_binary_trees",
-"primelib",
-"problem_020"
-],
+"logic": [],
 "nodes": [
 "numeric"
 ],
@@ -44,7 +38,7 @@
 ],
 "specific": [],
 "task": "Factorial",
-"why": "trace"
+"why": "none"
 },
 "Task/Factorial/C/factorial-3.c": {
 "built": [
@@ -55,15 +49,11 @@
 "held": [
 "factorial"
 ],
-"held_trace": [
-"factorial"
-],
+"held_trace": [],
 "io": [
 "factorial"
 ],
-"logic": [
-"factorial"
-],
+"logic": [],
 "nodes": [
 "numeric>recurrence>range_accumulation"
 ],
@@ -134,30 +124,18 @@
 "built": [
 "Factorial"
 ],
-"components": [],
+"components": [
+"double_factorial"
+],
 "got": "Factorial",
 "held": [
 "factorial"
 ],
-"held_trace": [
-"double_factorial",
-"factorial",
-"gcd_of_n_numbers",
-"number_of_possible_binary_trees",
-"primelib",
-"problem_020"
-],
+"held_trace": [],
 "io": [
 "factorial"
 ],
-"logic": [
-"double_factorial",
-"factorial",
-"gcd_of_n_numbers",
-"number_of_possible_binary_trees",
-"primelib",
-"problem_020"
-],
+"logic": [],
 "nodes": [
 "numeric>recurrence>range_accumulation"
 ],
@@ -252,16 +230,14 @@
 },
 "Task/Least-common-multiple/Python/least-common-multiple-2.py": {
 "built": [],
-"components": [],
-"got": "Greatest-common-divisor",
+"components": [
+"Greatest-common-divisor"
+],
+"got": null,
 "held": [],
-"held_trace": [
-"greatest_common_divisor"
-],
+"held_trace": [],
 "io": [],
-"logic": [
-"greatest_common_divisor"
-],
+"logic": [],
 "nodes": [],
 "roots": [
 "enumFromTo",
@@ -272,7 +248,7 @@
 ],
 "specific": [],
 "task": "Least-common-multiple",
-"why": "trace"
+"why": "none"
 },
 "Task/Levenshtein-distance/Python/levenshtein-distance-5.py": {
 "built": [],
@@ -380,16 +356,11 @@
 "Task/Roman-numerals-Encode/Python/roman-numerals-encode-2.py": {
 "built": [],
 "components": [],
-"got": "magicdiamondpattern",
+"got": null,
 "held": [],
-"held_trace": [
-"magicdiamondpattern"
-],
+"held_trace": [],
 "io": [],
-"logic": [
-"from_sequence",
-"magicdiamondpattern"
-],
+"logic": [],
 "nodes": [
 "numeric"
 ],
@@ -398,7 +369,7 @@
 ],
 "specific": [],
 "task": "Roman-numerals-Encode",
-"why": "trace"
+"why": "none"
 },
 "Task/Sorting-algorithms-Gnome-sort/Python/sorting-algorithms-gnome-sort.py": {
 "built": [
