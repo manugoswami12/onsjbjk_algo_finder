@@ -381,7 +381,13 @@
 "Factorial"
 ],
 "got": "Factorial",
-"held": [],
+"held": [
+"factorial",
+"krishnamurthy_number",
+"number_of_possible_binary_trees",
+"primelib",
+"problem_020"
+],
 "held_trace": [
 "double_factorial",
 "factorial",
@@ -391,7 +397,11 @@
 "problem_020"
 ],
 "io": [
-"maximum_fenwick_tree"
+"factorial",
+"krishnamurthy_number",
+"number_of_possible_binary_trees",
+"primelib",
+"problem_020"
 ],
 "logic": [
 "double_factorial",
@@ -411,12 +421,18 @@
 "Task/Factorial/C/factorial-2.c": {
 "built": [],
 "got": "problem_020",
-"held": [],
+"held": [
+"problem_020"
+],
 "held_trace": [
 "problem_020"
 ],
 "io": [
-"maximum_fenwick_tree"
+"factorial",
+"krishnamurthy_number",
+"number_of_possible_binary_trees",
+"primelib",
+"problem_020"
 ],
 "logic": [
 "double_factorial",
@@ -619,9 +635,21 @@
 "Factorial"
 ],
 "got": "Factorial",
-"held": [],
+"held": [
+"factorial",
+"krishnamurthy_number",
+"number_of_possible_binary_trees",
+"primelib",
+"problem_020"
+],
 "held_trace": [],
-"io": [],
+"io": [
+"factorial",
+"krishnamurthy_number",
+"number_of_possible_binary_trees",
+"primelib",
+"problem_020"
+],
 "logic": [],
 "nodes": [
 "numeric>recurrence>range_accumulation"
@@ -1368,11 +1396,16 @@
 },
 "Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-9.lisp": {
 "built": [],
-"got": "signum",
-"held": [],
+"got": "Fibonacci-sequence",
+"held": [
+"fast_fibonacci"
+],
 "held_trace": [],
 "io": [
-"signum"
+"climbing_stairs",
+"fast_fibonacci",
+"nth_fibonacci_using_matrix_exponentiation",
+"primelib"
 ],
 "logic": [],
 "nodes": [
@@ -1380,7 +1413,7 @@
 ],
 "specific": [],
 "task": "Fibonacci-sequence",
-"why": "io"
+"why": "learned"
 },
 "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-1.hs": {
 "built": [],

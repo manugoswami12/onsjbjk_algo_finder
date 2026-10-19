@@ -2164,13 +2164,13 @@
   ]
  },
  "Task/Primality-by-trial-division/C/primality-by-trial-division-2.c": {
-  "decision": "undecided",
-  "why": "a root does not run on every input",
+  "decision": "new_version",
+  "class": "prime_check",
   "roots": [
    "prime"
   ],
-  "not_full": [
-   "prime"
+  "nodes": [
+   "numeric>divisor_test"
   ]
  },
  "Task/Primality-by-trial-division/Common-Lisp/primality-by-trial-division-1.lisp": {
@@ -3709,12 +3709,8 @@
   ]
  },
  "Task/Sum-digits-of-an-integer/C/sum-digits-of-an-integer.c": {
-  "decision": "undecided",
-  "why": "a root does not run on every input",
+  "decision": "new_algorithm",
   "roots": [
-   "SumDigits"
-  ],
-  "not_full": [
    "SumDigits"
   ]
  },
@@ -3860,7 +3856,8 @@
   ]
  },
  "Task/Towers-of-Hanoi/Python/towers-of-hanoi-1.py": {
-  "decision": "new_algorithm",
+  "decision": "undecided",
+  "why": "output does not depend on the input",
   "roots": [
    "hanoi"
   ]

@@ -543,7 +543,19 @@ the self-call steps also carry is context, not a base case.
 | nodes, 157 Haskell files (TheAlgorithms is Python: its facts cannot change) | 2 change: factorial-8.hs, and `adjust` in sieve-of-eratosthenes-16.hs (numeric -> sequence_query: AP13 nests a called local function under its caller's loop and both name an unnamed parameter `$arg0`; a separate lowering fix, no answer changed) |
 | 450 held-out files | 1 answer changes: factorial-8.hs problem_020 -> UNKNOWN; new code 8 wrong, precision 95.6% |
 
+**19.4 Two behaviour-lowering fixes switched on** (`lowering_v03.py`, installed by `crosslang_frontends.install`): the
+Lisp loop's `finally` runs once after the loop (it ran inside the body: fib(n) = 1, signum's behaviour), and C/Java
+`x op= y` keeps its operator (`result *= i` was `result = i`).
+
+| Check | Result |
+|---|---|
+| behaviour normal forms, all 2102 files | 28 change, all Rosetta C or Lisp programs with `x op= y` or `finally`; no TheAlgorithms normal form changes, so the catalog and learnt answers cannot change |
+| 450 held-out files | 1 answer changes: fibonacci-sequence-9.lisp signum -> Fibonacci-sequence (factorial-2.c now computes n!, still named problem_020 by the exact-trace tier) |
+| class fallback recomputed | primality-by-trial-division-2.c now runs (prime_check); sum-digits.c now runs (no class: its base argument); towers-of-hanoi-1.py undecided (it only prints; the same with the old code) |
+
+New code: 7 wrong, precision 96.2%, recall 85.0%.
+
 Next, each tested the same way: list `+` as
-concatenation (quicksort-1.py); C `x op= y` and the Lisp `finally` (lowering_v03.py); a returned lambda applied to
+concatenation (quicksort-1.py); a returned lambda applied to
 the next argument (lcm, Levenshtein); problem_007's is_prime.
 

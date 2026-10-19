@@ -683,8 +683,8 @@
    "answer": "pipeline",
    "branch": null,
    "branch_correct": null,
-   "correct": false,
-   "pipeline": "signum",
+   "correct": true,
+   "pipeline": "Fibonacci-sequence",
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-1.hs": {

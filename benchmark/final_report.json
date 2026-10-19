@@ -1378,22 +1378,22 @@
    "n": 69,
    "ok": 31,
    "unanswered": 37,
-   "not_analysable": 35,
+   "not_analysable": 34,
    "wrong": 1
   },
   "all": {
    "n": 450,
-   "ok": 174,
+   "ok": 175,
    "unanswered": 268,
-   "not_analysable": 245,
-   "wrong": 8
+   "not_analysable": 244,
+   "wrong": 7
   },
   "Common-Lisp": {
    "n": 75,
-   "ok": 44,
+   "ok": 45,
    "unanswered": 30,
    "not_analysable": 29,
-   "wrong": 1
+   "wrong": 0
   },
   "Haskell": {
    "n": 144,
@@ -1417,7 +1417,7 @@
    "no root function": 1
   },
   "all": {
-   "a root does not run on every input": 161,
+   "a root does not run on every input": 160,
    "no root function": 28,
    "no run": 53,
    "output does not depend on the input": 3
@@ -1428,7 +1428,7 @@
    "output does not depend on the input": 3
   },
   "C": {
-   "a root does not run on every input": 27,
+   "a root does not run on every input": 26,
    "no root function": 8
   },
   "Common-Lisp": {

@@ -61,6 +61,15 @@ Faults met: sieve-of-eratosthenes-16.hs's `adjust` changed node because AP13 nes
 caller's loop (under/2) and both name an unnamed parameter `$arg0` (a separate lowering fix: unique names); no answer
 changed. Result: factorial-8.hs problem_020 -> UNKNOWN (no longer wrong).
 
+### Behaviour lowering: Lisp `finally`, C `x op= y` (lowering_v03.py, installed by crosslang_frontends)
+> A program runs to the wrong outputs on the battery (fib(n) = 1 for n >= 2; factorial(n) = n). Dump its behaviour
+> normal form (`io_trace.normal_form`) and find the statement lowered against the language's semantics: `finally`
+> placed inside the loop body; `x *= y` lowered as `x = y` because the operator sits in a field the lowerer reads only
+> for Python's kind. Fix the lowering method in our layer, then compare the normal forms of all files old against new:
+> none of TheAlgorithms may change (the catalog depends on it), and every changed held-out file must use the construct.
+
+Result: 28 normal forms change (C and Lisp only); fibonacci-sequence-9.lisp signum -> Fibonacci-sequence.
+
 ## Tried and dropped (do not repeat)
 
 - Naming a match by the matched function's algorithm, in Python rules added case by case (mixed answers): removed 9

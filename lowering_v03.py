@@ -1,6 +1,6 @@
-"""v0.3 fixes of the behaviour lowering (doc 04 section 18.7), kept separate from the pipeline: polyglot_logic's
-lisp_to_prolog.py and to_prolog.py are not edited; install() changes two of their methods in this process only (the
-way crosslang_frontends plugs its front ends into io_trace).
+"""v0.3 fixes of the behaviour lowering (doc 04 section 18.7), installed by crosslang_frontends.install (doc 04
+section 19.4): polyglot_logic's lisp_to_prolog.py and to_prolog.py are not edited; install() changes two of their
+methods in this process only.
 
   Lisp `finally`   AP13's LispPNF.f_loop puts the `finally` form in `post`, which is also where `for x = e then e2`
                    keeps its per-iteration update, and `post` is the end of the loop BODY. So (loop for i from 2 upto

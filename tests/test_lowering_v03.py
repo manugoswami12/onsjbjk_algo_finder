@@ -1,4 +1,4 @@
-"""lowering_v03.py (separate from the pipeline, not used by it): two semantics fixes of the behaviour lowering, the
+"""lowering_v03.py (installed by crosslang_frontends, doc 04 section 19.4): two semantics fixes of the behaviour lowering, the
 same for every program. The Lisp loop's `finally` runs once after the loop; C's `x op= y` keeps its operator."""
 import sys
 import tempfile

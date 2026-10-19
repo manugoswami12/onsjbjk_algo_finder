@@ -4,6 +4,7 @@ pipeline (polyglot_logic/tools/io_trace.py) at run time; polyglot_logic itself i
   .hs    GHC Core (haskell_core_pnf.py)
   .lisp  SBCL macro-expansion of standard macros, then the AP13 Lisp translator (lisp_sbcl_pnf.py)
   any    a formatted result string is its value (without_formatting)
+  .lisp, .c  lowering_v03.py: the Lisp loop's `finally` runs after the loop; C's x op= y keeps its operator
 """
 from __future__ import annotations
 
@@ -34,6 +35,8 @@ def install(lisp_sbcl: bool = True):
         lang, funs = original(path)
         return lang, without_formatting(funs)
     io_trace.normal_form = normal_form
+    import lowering_v03
+    lowering_v03.install()
     _installed = True
 
 

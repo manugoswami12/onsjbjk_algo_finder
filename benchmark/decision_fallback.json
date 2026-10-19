@@ -524,9 +524,9 @@
   },
   "Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-9.lisp": {
    "answer": "algorithm",
-   "correct": false,
+   "correct": true,
    "family_correct": null,
-   "name": "signum",
+   "name": "Fibonacci-sequence",
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-1.hs": {
