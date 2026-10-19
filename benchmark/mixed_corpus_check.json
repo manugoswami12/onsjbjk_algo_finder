@@ -19,6 +19,52 @@
 "specific": [],
 "why": "trace"
 },
+"backtracking/sudoku.py": {
+"built": [],
+"components": [],
+"got": "sudoku",
+"held": [],
+"held_trace": [
+"sudoku"
+],
+"io": [],
+"logic": [
+"sudoku"
+],
+"nodes": [
+"sequence_query"
+],
+"roots": [
+"find_empty_location",
+"print_solution",
+"sudoku"
+],
+"specific": [],
+"why": "trace"
+},
+"ciphers/caesar_cipher.py": {
+"built": [],
+"components": [
+"base64_to_binary",
+"decimal_to_hexadecimal"
+],
+"got": "Caesar-cipher",
+"held": [],
+"held_trace": [
+"caesar_cipher"
+],
+"io": [],
+"logic": [
+"caesar_cipher",
+"harshad_numbers"
+],
+"nodes": [],
+"roots": [
+"brute_force"
+],
+"specific": [],
+"why": "trace"
+},
 "digital_image_processing/morphological_operations/dilation_operation.py": {
 "built": [],
 "components": [],
@@ -107,8 +153,7 @@
 "components": [],
 "got": "Factorial",
 "held": [
-"factorial",
-"primelib"
+"factorial"
 ],
 "held_trace": [
 "double_factorial",
@@ -117,8 +162,7 @@
 "primelib"
 ],
 "io": [
-"factorial",
-"primelib"
+"factorial"
 ],
 "logic": [
 "double_factorial",
@@ -136,6 +180,37 @@
 "specific": [],
 "why": "built"
 },
+"maths/perfect_number.py": {
+"built": [
+"Perfect-numbers"
+],
+"components": [],
+"got": "Perfect-numbers",
+"held": [
+"perfect_number"
+],
+"held_trace": [
+"perfect_number"
+],
+"io": [
+"perfect_number"
+],
+"logic": [
+"perfect_number"
+],
+"nodes": [
+"numeric>divisor_test"
+],
+"roots": [
+"find_perfect_numbers",
+"get_divisors",
+"perfect_optimized"
+],
+"specific": [
+"Perfect-numbers"
+],
+"why": "file_rule"
+},
 "maths/primelib.py": {
 "built": [
 "Factorial"
@@ -143,10 +218,6 @@
 "components": [
 "Sieve-of-Eratosthenes",
 "prime_sieve_eratosthenes",
-"problem_051",
-"problem_060",
-"problem_800",
-"rabin_miller",
 "sieve_of_atkin"
 ],
 "got": "primelib",
@@ -165,7 +236,9 @@
 "prime_sieve_eratosthenes",
 "primelib",
 "problem_051",
+"problem_060",
 "problem_800",
+"rabin_miller",
 "sieve_of_atkin",
 "sieve_of_eratosthenes"
 ],
@@ -193,6 +266,26 @@
 "primelib"
 ],
 "why": "file_rule"
+},
+"other/magicdiamondpattern.py": {
+"built": [],
+"components": [],
+"got": "magicdiamondpattern",
+"held": [],
+"held_trace": [
+"magicdiamondpattern"
+],
+"io": [],
+"logic": [
+"from_sequence",
+"magicdiamondpattern"
+],
+"nodes": [],
+"roots": [
+"pretty_print"
+],
+"specific": [],
+"why": "trace"
 },
 "project_euler/problem_020/sol1.py": {
 "built": [],
