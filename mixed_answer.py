@@ -1,14 +1,16 @@
 """Mixed-algorithm answers (doc 04 section 18.6), kept separate from the pipeline: eval_ta.py, learn_apply.py and
 the Prolog rules are used as they are, never edited. Two corrections to how behaviour (io) evidence is labelled:
 
-  TheAlgorithms side  A match on a TheAlgorithms function names that file's label only when the function is a root of
-                      a single-algorithm file (every root of the file behaves the same: maths/factorial.py has
-                      factorial and factorial_recursive). A helper (problem_020's factorial()) or a function of a
-                      library file (primelib's is_perfect_number) is named by the single-algorithm files whose root
-                      behaves the same (factorial, perfect_number), and by nothing when there is none.
-  new-file side       Only the new file's root functions (prolog/call_roots.pl) decide its main answer. Labels found
-                      only on its helpers, including a built branch at a helper's tree node, are reported as
-                      components: least-common-multiple-2.py is "main: not identified, contains: gcd".
+  TheAlgorithms side  A match on a TheAlgorithms function names that file's label when the function is a root of the
+                      file, or when no root of the file runs (the functions that run are then its algorithm). A root
+                      of a file whose roots behave differently (primelib's is_perfect_number) is also named by the
+                      single-algorithm files whose root behaves the same (perfect_number). A helper of a file whose
+                      root runs (problem_020's factorial()) is named only by those single-algorithm files, and by
+                      nothing when there is none.
+  new-file side       When one of the new file's root functions (prolog/call_roots.pl) runs, only the roots decide
+                      its main answer; labels found only on its helpers, including a built branch at a helper's tree
+                      node, are reported as components: least-common-multiple-2.py is "main: not identified,
+                      contains: gcd". When no root runs (a demo root that only prints), every function counts.
 
 Both corrections apply to the io evidence (MixedIo) and to AP13's exact traced logic (MixedLogic: each stored pattern
 records its source function). The tiers and their order are the pipeline's (eval_ta.decide), applied to the main
@@ -55,22 +57,31 @@ class MixedIo(eval_ta.TaIo):
 
     def __init__(self, corpus: Path, labels: dict[str, str], workers=4):
         super().__init__(corpus, labels, workers)
-        file_roots = json.loads(ROOTS.read_text(encoding='utf-8'))
+        file_roots = {rel: set(r) for rel, r in json.loads(ROOTS.read_text(encoding='utf-8')).items()}
         by_file = {}
-        for (rel, name), ref in self.cat.items():
+        for (rel, name), ref in self.cat.items():         # the catalog holds the functions that run (discriminative)
             by_file.setdefault(rel, {})[name] = ref
         self.own = set()                            # (rel, name): a root of a single-algorithm file
+        self.running_root = set()                   # files with a root that runs
         for rel, funs in by_file.items():
-            rts = [n for n in funs if base(n) in set(file_roots.get(rel, []))]
+            rts = [n for n in funs if base(n) in file_roots.get(rel, set())]
+            if rts:
+                self.running_root.add(rel)
             if rts and all(self.same(funs[a], funs[b]) for a in rts for b in rts):
                 self.own.update((rel, n) for n in rts)
         self.name_of = {}                           # (rel, name) -> labels of its algorithm
         for key, ref in self.cat.items():
+            rel, name = key
+            alike = {self.labels[o[0]] for o, oref in self.by_sig[(tuple(ref['sig']), len(ref['outputs']))]
+                     if o in self.own and o[0] != rel and self.same(ref, oref)}
             if key in self.own:
-                self.name_of[key] = {self.labels[key[0]]}
-            else:
-                self.name_of[key] = {self.labels[o[0]] for o, oref in self.by_sig[(tuple(ref['sig']), len(ref['outputs']))]
-                                     if o in self.own and self.same(ref, oref)}
+                self.name_of[key] = {self.labels[rel]}
+            elif base(name) in file_roots.get(rel, set()):   # a root of a file with several algorithms (primelib)
+                self.name_of[key] = {self.labels[rel]} | alike
+            elif rel not in self.running_root:      # no root runs: the functions that run are the file's algorithm
+                self.name_of[key] = {self.labels[rel]}
+            else:                                   # a helper (problem_020's factorial): its own algorithm only
+                self.name_of[key] = alike
 
     def same(self, a: dict, b: dict) -> bool:
         return self.ioc.compare(a, b) in ('io', 'logic')
@@ -101,20 +112,23 @@ class MixedLogic(eval_ta.TaLogic):
     function it came from (pattern.function_name), as MixedIo names an io match, and split by the new file's roots."""
 
     def attach(self, io: MixedIo, file_roots: dict[str, list[str]]):
+        """Each stored pattern named as MixedIo names its function: by the io naming when the function runs, else by
+        the file's label when it is a root or no root of the file runs, else (a helper) by nothing."""
         io_names = {}
         for (rel, name), names in io.name_of.items():
             io_names.setdefault((rel, base(name)), set()).update(names)
-        own = {(rel, base(name)) for rel, name in io.own}
         self.name_of_ref = {}
         with self.ks.connect(self.store) as db:
             for label, rel, fn in db.execute('SELECT label, source_path, function_name FROM pattern'):
                 key = (rel, base(fn))
                 if rel not in self.labels:
                     continue
-                if key in own or (key not in io_names and file_roots.get(rel) == [base(fn)]):
-                    self.name_of_ref[label] = {self.labels[rel]}          # a root of a single-algorithm file
+                if key in io_names:
+                    self.name_of_ref[label] = io_names[key]
+                elif base(fn) in file_roots.get(rel, []) or rel not in io.running_root:
+                    self.name_of_ref[label] = {self.labels[rel]}
                 else:
-                    self.name_of_ref[label] = io_names.get(key, set())    # a helper or a library function
+                    self.name_of_ref[label] = set()
 
     def labels_split(self, path: Path, is_root) -> tuple[set[str], set[str]]:
         """(labels matched on the new file's roots, labels matched only on its helpers)."""
@@ -181,10 +195,15 @@ def answer(path: Path, io: MixedIo, labels: set[str], gs: dict[str, str], logic)
     except Exception:                               # noqa: BLE001
         rts = set()
     try:
-        by_fn, traced = io.labels_by_kind(path, io.describe(path))
+        me = io.describe(path)
+        by_fn, traced = io.labels_by_kind(path, me)
     except eval_ta.ERRORS:
-        by_fn, traced = {}, {}
-    is_root = (lambda fn: base(fn) in rts) if rts else (lambda fn: True)   # no roots known: every function counts
+        me, by_fn, traced = {}, {}, {}
+    # the roots decide when one of them runs; when none runs (a demo root that only prints: caesar_cipher.py's
+    # brute_force) or no root is known, every function counts, as in the pipeline
+    if not any(base(fn) in rts and d['discriminative'] for fn, d in me.items()):
+        rts = set()
+    is_root = (lambda fn: base(fn) in rts) if rts else (lambda fn: True)
     main_io = {lab for fn, v in by_fn.items() if is_root(fn) for lab in v} & labels
     comp_io = {lab for fn, v in by_fn.items() if not is_root(fn) for lab in v} & labels
     main_trace = {lab for fn, v in traced.items() if is_root(fn) for lab in v} & labels
