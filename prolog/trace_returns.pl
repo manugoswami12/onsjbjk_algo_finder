@@ -26,7 +26,7 @@ trace_returns(N) :-                              % one variable per return per r
 
 % a variable of the returned value whose definitions have shape A or B
 tr_traced_var(F, S, R, V, Shape) :-
-    once(( sub_term(T, R), compound(T), T = var(V), atom(V), \+ param(F, _, V), \+ loop_var(_, V),
+    once(( tr_free_var(R, V), \+ param(F, _, V), \+ loop_var(_, V),
            tr_defs_before(F, S, V, Ds), Ds \== [],
            (   last(Ds, D), tr_guards_within(D, S), \+ tr_written_between(F, V, D, S), tr_value_of(D, E), tr_recursive(E),
                \+ tr_used_elsewhere(F, V, [D], S)
@@ -36,6 +36,11 @@ tr_traced_var(F, S, R, V, Shape) :-
                \+ tr_used_elsewhere(F, V, [D0, D1], S)
            ->  Shape = b(D0, E0, D1, E1, C, P)
            ) )).
+
+% a variable of the returned value outside the arguments of a recursive call: in return f(lesser) + equal, the
+% lesser passed to f is the value before the call, never the traced result
+tr_free_var(var(V), V) :- atom(V).
+tr_free_var(T, V) :- compound(T), T \= var(_), T \= call('$self', _), T =.. [_|As], member(A, As), tr_free_var(A, V).
 
 % the assignments of var(V) in F before S, by line; none when V is also assigned in a tuple
 tr_defs_before(F, S, V, Ds) :-
