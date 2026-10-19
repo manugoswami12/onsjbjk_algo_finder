@@ -8,7 +8,8 @@
    language; nothing names an algorithm:
      A  the last definition D of v before the return S holds on every path to S (its guards are among S's) and v is
         not written in between (no append or element write): v in S's value is D's value;
-   in both, v is read nowhere but in the return (otherwise its value is used for more than the result);
+   in both, v is read nowhere after its traced definition but in the return (otherwise its value is used for more
+   than the result);
      B  v has two definitions, a default D0 that holds on every path to S, then D1 under one more guard C (polarity P):
         S becomes two returns, D1's value under C = P and D0's under the other polarity (as a conditional return is).
    Only values holding a recursive call ('$self') are traced, the fault found; a loop of kind recursion contains the
@@ -26,11 +27,13 @@ trace_returns(N) :-                              % one variable per return per r
 % a variable of the returned value whose definitions have shape A or B
 tr_traced_var(F, S, R, V, Shape) :-
     once(( sub_term(T, R), compound(T), T = var(V), atom(V), \+ param(F, _, V), \+ loop_var(_, V),
-           tr_defs_before(F, S, V, Ds), Ds \== [], \+ tr_used_elsewhere(F, V, S),
-           (   last(Ds, D), tr_guards_within(D, S), \+ tr_written_between(F, V, D, S), tr_value_of(D, E), tr_recursive(E)
+           tr_defs_before(F, S, V, Ds), Ds \== [],
+           (   last(Ds, D), tr_guards_within(D, S), \+ tr_written_between(F, V, D, S), tr_value_of(D, E), tr_recursive(E),
+               \+ tr_used_elsewhere(F, V, [D], S)
            ->  Shape = a(D, E)
            ;   Ds = [D0, D1], tr_guards_within(D0, S), tr_extra_guard(D1, S, C, P), \+ tr_written_between(F, V, D1, S),
-               \+ tr_written_between(F, V, D0, D1), tr_value_of(D0, E0), tr_value_of(D1, E1), tr_recursive(E1)
+               \+ tr_written_between(F, V, D0, D1), tr_value_of(D0, E0), tr_value_of(D1, E1), tr_recursive(E1),
+               \+ tr_used_elsewhere(F, V, [D0, D1], S)
            ->  Shape = b(D0, E0, D1, E1, C, P)
            ) )).
 
@@ -40,9 +43,12 @@ tr_defs_before(F, S, V, Ds) :-
     findall(L-D, ( assign(D, T, _), T == var(V), stmt(D, F, _, L), L < LS ), LDs), msort(LDs, Sorted),
     pairs_values(Sorted, Ds).
 tr_value_of(D, E) :- assign(D, T, E), T = var(_), !.
-% v is read by a statement other than the return S (a test, another value, a call, another return): its value is
-% then not only the returned one, and the call stays where it is (red_black_tree's black_height tests left != right)
-tr_used_elsewhere(F, V, S) :- stmt(W, F, _, _), W \== S, tr_reads(W, V), !.
+% the traced value of v (from its first traced definition Ds on) is read by a statement other than the return S and
+% those definitions (a test, another value, a call, another return): its value is then not only the returned one, and
+% the call stays where it is (red_black_tree's black_height tests left != right after left = f(...)). A read before
+% that definition (the appends that build lesser, f(lesser) itself) reads the earlier value, not the returned one.
+tr_used_elsewhere(F, V, [D|Ds], S) :- stmt(D, F, _, LD), stmt(W, F, _, LW), LW > LD, W \== S, \+ memberchk(W, [D|Ds]),
+    tr_reads(W, V), !.
 tr_reads(W, V) :- ( guard(W, X, _) ; assign(W, _, X) ; call_at(W, _, X) ; ret(W, X) ; loop_cond(W, X) ; loop_iter(W, X) ),
     sub_term(T, X), T == var(V), !.
 tr_recursive(E) :- sub_term(C, E), compound(C), C = call('$self', _), !.
