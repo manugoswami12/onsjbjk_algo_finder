@@ -23,9 +23,12 @@ family_path_v02(F, [sequence_transformation, comparison_sort]) :- once(decided_p
 family_path_v02(F, [sequence_transformation, comparison_sort, select_extreme]) :-
     once(( decided_position(F, _, S, _, Sk), under(Sk, L), loop(L, F, Kind), Kind \== recursion, \+ under(S, L) )).
 
-% deepest paths of AP13 family_path and these branches together (AP13 prefix_of_other/2 reused)
+% deepest paths of AP13 family_path and these branches together (AP13 prefix_of_other/2 reused). AP13's one-level
+% fallbacks hold "only when no branch below applies" (families.pl deeper_path/1), but deeper_path/1 sees AP13's own
+% clauses only: when a branch of this file below the root holds, the fallback is dropped, as AP13 drops it for its own.
 deepest_families_v02(F, Paths) :-
-    findall(P, ( family_path(F, P) ; family_path_v02(F, P) ), Ps0), sort(Ps0, Ps),
+    findall(P, ( family_path(F, P) ; family_path_v02(F, P) ), Ps0), sort(Ps0, Ps1),
+    ( once(family_path_v02(F, [_, _|_])) -> exclude([P]>>( P = [_] ), Ps1, Ps) ; Ps = Ps1 ),
     exclude(prefix_of_other(Ps), Ps, Paths).
 
 % x, y := y, t with t := f(x, y) earlier in the same loop body: t's only definition inside the loop
