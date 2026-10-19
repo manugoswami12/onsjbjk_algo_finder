@@ -331,8 +331,8 @@
    "answer": "pipeline",
    "branch": null,
    "branch_correct": null,
-   "correct": false,
-   "pipeline": "problem_020",
+   "correct": true,
+   "pipeline": "Factorial",
    "task": "Factorial"
   },
   "Task/Factorial/C/factorial-3.c": {
@@ -2272,11 +2272,11 @@
    "task": "Roman-numerals-Encode"
   },
   "Task/Roman-numerals-Encode/Python/roman-numerals-encode-2.py": {
-   "answer": "pipeline",
+   "answer": "unknown",
    "branch": null,
    "branch_correct": null,
-   "correct": false,
-   "pipeline": "magicdiamondpattern",
+   "correct": null,
+   "pipeline": null,
    "task": "Roman-numerals-Encode"
   },
   "Task/Roman-numerals-Encode/Python/roman-numerals-encode-3.py": {

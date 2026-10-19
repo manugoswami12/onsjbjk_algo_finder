@@ -85,13 +85,13 @@ TheAlgorithms are right.
 
 | New code (held-out Rosetta) | analysable files | precision | recall (analysable) | recall (all files) |
 |---|---|---|---|---|
-| C | 35 of 69 | 96.9% | 88.6% | 44.9% |
+| C | 35 of 69 | 100.0% | 91.4% | 46.4% |
 | Common Lisp | 46 of 75 | 100.0% | 97.8% | 60.0% |
 | Haskell | 42 of 144 | 97.1% | 78.6% | 22.9% |
-| Python | 83 of 162 | 93.0% | 79.5% | 40.7% |
-| **all** | **206 of 450** | **96.2%** | **85.0%** | **38.9%** |
+| Python | 83 of 162 | 94.3% | 79.5% | 40.7% |
+| **all** | **206 of 450** | **97.2%** | **85.4%** | **39.1%** |
 
-All 7 wrong answers on new code come from the main pipeline. The separate fallback made none.
+All 5 wrong answers on new code come from the main pipeline. The separate fallback made none.
 
 To reproduce every number above, follow "Reproduce the results" in the root [README.md](../README.md).
 

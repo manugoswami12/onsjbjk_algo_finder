@@ -43,6 +43,22 @@ class TraceReturnsTests(unittest.TestCase):
         self.assertEqual(nodes(src)['g'], {'sequence_query>aggregate>gatherer'})
 
 
+class InputCheckGuardTests(unittest.TestCase):
+    def test_an_input_check_before_the_loop_does_not_condition_the_accumulation(self):
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / 'f.c'
+            path.write_text('int f(int n) { int r = 1; if (n < 0) return -1; for (int i = 1; i <= n; ++i) r *= i; return r; }\n')
+            kind, text = learn_facts.tree_facts(path)
+            got = {line.split('|', 2)[2] for line in learn_facts.swipl_facts('tree_main', learn_facts.TREE_MAIN, kind, text)
+                   if line.startswith('NODE|')}
+        self.assertEqual(got, {'numeric>recurrence>range_accumulation'})
+
+    def test_a_guard_inside_the_loop_nest_still_conditions_it(self):
+        src = ('def sieve(n):\n    p = [True] * (n + 1)\n    for i in range(2, n):\n        if p[i]:\n'
+               '            j = i * i\n            while j <= n:\n                p[j] = False\n                j += i\n    return p\n')
+        self.assertNotIn('numeric>recurrence>range_accumulation', nodes(src).get('sieve', set()))
+
+
 class HaskellBaseCaseTests(unittest.TestCase):
     def test_pattern_base_case_ends_the_recursion(self):
         with tempfile.TemporaryDirectory() as td:

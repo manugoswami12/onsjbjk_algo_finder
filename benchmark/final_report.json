@@ -1376,17 +1376,17 @@
  "new": {
   "C": {
    "n": 69,
-   "ok": 31,
+   "ok": 32,
    "unanswered": 37,
    "not_analysable": 34,
-   "wrong": 1
+   "wrong": 0
   },
   "all": {
    "n": 450,
-   "ok": 175,
-   "unanswered": 268,
+   "ok": 176,
+   "unanswered": 269,
    "not_analysable": 244,
-   "wrong": 7
+   "wrong": 5
   },
   "Common-Lisp": {
    "n": 75,
@@ -1405,9 +1405,9 @@
   "Python": {
    "n": 162,
    "ok": 66,
-   "unanswered": 91,
+   "unanswered": 92,
    "not_analysable": 79,
-   "wrong": 5
+   "wrong": 4
   }
  },
  "excluded": {

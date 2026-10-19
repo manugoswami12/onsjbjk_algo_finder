@@ -17,11 +17,11 @@ Reporting criteria (final_report.py): bad code is ignored. A held-out file is no
 
 | language | files | not analysable (excluded) | scored | correct | false positives | false negatives | precision | recall (analysable) | recall (all files) |
 |---|---|---|---|---|---|---|---|---|---|
-| C | 69 | 34 | 35 | 31 | 1 | 4 | 96.9% | 88.6% | 44.9% |
+| C | 69 | 34 | 35 | 32 | 0 | 3 | 100.0% | 91.4% | 46.4% |
 | Common-Lisp | 75 | 29 | 46 | 45 | 0 | 1 | 100.0% | 97.8% | 60.0% |
 | Haskell | 144 | 102 | 42 | 33 | 1 | 9 | 97.1% | 78.6% | 22.9% |
-| Python | 162 | 79 | 83 | 66 | 5 | 17 | 93.0% | 79.5% | 40.7% |
-| all | 450 | 244 | 206 | 175 | 7 | 31 | 96.2% | 85.0% | 38.9% |
+| Python | 162 | 79 | 83 | 66 | 4 | 17 | 94.3% | 79.5% | 40.7% |
+| all | 450 | 244 | 206 | 176 | 5 | 30 | 97.2% | 85.4% | 39.1% |
 
 False negatives = scored files without a correct answer (wrong ones included).
 
@@ -34,11 +34,9 @@ False negatives = scored files without a correct answer (wrong ones included).
 
 ### The false positives (all from the main pipeline; the fallback made none)
 
-- Task/Factorial/C/factorial-2.c: problem_020 (algorithm), task Factorial
 - Task/Least-common-multiple/Python/least-common-multiple-2.py: Greatest-common-divisor (algorithm), task Least-common-multiple
 - Task/Levenshtein-distance/Python/levenshtein-distance-5.py: problem_007 (algorithm), task Levenshtein-distance
 - Task/Perfect-numbers/Haskell/perfect-numbers-1.hs: primelib (algorithm), task Perfect-numbers
-- Task/Roman-numerals-Encode/Python/roman-numerals-encode-2.py: magicdiamondpattern (algorithm), task Roman-numerals-Encode
 - Task/Sorting-algorithms-Insertion-sort/Python/sorting-algorithms-insertion-sort-3.py: average_mode (algorithm), task Sorting-algorithms-Insertion-sort
 - Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-1.py: Sorting-algorithms-Cycle-sort (algorithm), task Sorting-algorithms-Quicksort
 

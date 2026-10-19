@@ -564,6 +564,20 @@ TheAlgorithms' huffman.py were answered Quicksort, and inorder_tree_traversal_20
 lost their answers. A fault of the tree's rule, not of this conversion: dropped under the rule. The next idea is the
 partition rule itself: the parts must be filtered by comparing elements with a pivot.
 
+**19.6 The user's split of the remaining 7.** 1 (quicksort-1) and 2 (insertion-sort-3): tree-sitter gives no more
+information (that `+` joins lists); no Python reverse engineering, other parsers only tested on the side. 3, 6, 7:
+solve. 4, 5: hand-test combinations first.
+
+| Case | Change | Result |
+|---|---|---|
+| 3 factorial-2.c -> problem_020 | accumulation rule: a guard every enclosing loop has (C's `if (n < 0) return -1;`, Python raises instead) does not condition the update; first version (any enclosing loop) took two sieves and lost problem_124, fixed within the idea | adopted: learnt 0 differences; problem_020 -> Factorial |
+| 7 roman-2 -> magicdiamondpattern | an AP13 exact-logic match is dropped when behaviour contradicts it (every function of the match computes outputs, the matched function none; or both compute and differ); faults fixed within the idea: compare's no-verdict is no contradiction (bucket_sort), a match spanning a running helper is not contradicted (expected_shortfall) | adopted: learnt 0 differences; magicdiamondpattern -> UNKNOWN |
+| 2 insertion-sort-3 -> average_mode | `q[:] = E` read as a write of q (and q the output) | dropped: became Cycle-sort (still wrong), rotate_matrix and haralick_descriptors lost |
+| 6 perfect-numbers-1 -> primelib | a match on a root of a file whose roots compute different things names nothing | dropped: 9 learnt answers lost or wrong (volume.py, rotate_bits.py: several functions of one topic look the same as a library) |
+| 4 lcm-2, 5 levenshtein-5 | hand-tested, not built: `def f(x): return lambda y: E` as f(x, y) in (a) the structure facts, (b) the behaviour form, (c) both, (d) any statements before the return | (b)/(c): lcm computes exactly TheAlgorithms' LCM (36, 35, 0, 42, 300), but the hand-built gcd branch at the helper gcd_.go's node decides first (built tier before io); (d) uncurries levenshtein, whose body is reduce/scanl with functions as values, which AP13's interpreter cannot evaluate |
+
+New code after 19.6: 5 wrong (quicksort-1, insertion-sort-3, lcm-2, levenshtein-5, perfect-numbers-1).
+
 **Remaining wrong answers (7)** after 19.1-19.4: factorial-2.c -> problem_020 (exact-trace tier: problem_020's
 branch sits at its helper's node); least-common-multiple-2.py -> gcd and levenshtein-distance-5.py -> problem_007 (a
 curried root returns a lambda and never runs; problem_007's is_prime lowered wrongly); perfect-numbers-1.hs ->

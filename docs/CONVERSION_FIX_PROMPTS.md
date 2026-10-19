@@ -78,7 +78,24 @@ changed. Result: factorial-8.hs problem_020 -> UNKNOWN (no longer wrong).
 
 Result: 28 normal forms change (C and Lisp only); fibonacci-sequence-9.lisp signum -> Fibonacci-sequence.
 
+### An input check that guards the loop (prolog/families_v02.pl continuation_guard/4)
+> A rule that requires an update to be unconditional fails because an early exit (`if (n < 0) return -1;`) puts its
+> guard on every later statement. Treat a guard that EVERY loop around the update also carries as the nest's
+> context, not a condition of the update; check sieves and other conditioned updates stay out.
+
+### Logic matches contradicted by behaviour (eval_ta.TaLogic.consistent)
+> An exact-logic (pattern) match names an unrelated algorithm. Drop the match only on a real contradiction:
+> every function of the match computes varying outputs and the matched function computes none, or both compute
+> outputs that differ on a common input. AP13's compare returning no verdict (too little evidence) is not one.
+
 ## Tried and dropped (do not repeat)
+
+- `q[:] = E` as a write of q: insertion-sort-3 became Cycle-sort and two learnt files were lost.
+- Library files (roots computing different things) naming nothing: volume.py, rotate_bits.py and seven other
+  learnt files lost or wrong; a file of several functions of one topic cannot be told from a library.
+- Uncurrying `return lambda` (hand-tested only): the behaviour becomes right for lcm-2, but the hand-built gcd branch
+  at its helper's node decides first; levenshtein-5's functional body (reduce, scanl, functions as values) still
+  cannot be evaluated.
 
 - `+` on lists as concatenation (prolog/list_concat.pl, removed): the conversion was right, but AP13's partition idiom
   takes any join of two recursive results as a partition sort; Hanoi's moves and TheAlgorithms' huffman became

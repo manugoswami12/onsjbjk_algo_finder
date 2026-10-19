@@ -216,9 +216,9 @@
   },
   "Task/Factorial/C/factorial-2.c": {
    "answer": "algorithm",
-   "correct": false,
+   "correct": true,
    "family_correct": null,
-   "name": "problem_020",
+   "name": "Factorial",
    "task": "Factorial"
   },
   "Task/Factorial/C/factorial-3.c": {
@@ -1916,10 +1916,10 @@
    "task": "Roman-numerals-Encode"
   },
   "Task/Roman-numerals-Encode/Python/roman-numerals-encode-2.py": {
-   "answer": "algorithm",
-   "correct": false,
-   "family_correct": null,
-   "name": "magicdiamondpattern",
+   "answer": "variation_root",
+   "correct": null,
+   "family_correct": false,
+   "name": "numeric",
    "task": "Roman-numerals-Encode"
   },
   "Task/Roman-numerals-Encode/Python/roman-numerals-encode-3.py": {
