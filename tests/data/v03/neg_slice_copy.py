@@ -1,2 +1,0 @@
-def clear(seq):
-    seq[:] = []

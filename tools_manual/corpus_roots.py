@@ -1,5 +1,5 @@
 """Separate tool (doc 04 section 18.6): the root functions of every TheAlgorithms file (prolog/call_roots.pl, as
-tools_manual/decide_new_or_known.roots) -> benchmark/corpus_roots.json. Used by mixed_answer.py.
+tools_manual/decide_new_or_known.roots) -> benchmark/corpus_roots.json.
 
 usage: PYTHONPATH=. python tools_manual/corpus_roots.py data/TheAlgorithms-Python
 """
