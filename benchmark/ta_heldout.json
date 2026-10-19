@@ -419,12 +419,23 @@
 "why": "built"
 },
 "Task/Factorial/C/factorial-2.c": {
-"built": [],
-"got": "problem_020",
+"built": [
+"Factorial"
+],
+"got": "Factorial",
 "held": [
+"factorial",
+"krishnamurthy_number",
+"number_of_possible_binary_trees",
+"primelib",
 "problem_020"
 ],
 "held_trace": [
+"double_factorial",
+"factorial",
+"gcd_of_n_numbers",
+"number_of_possible_binary_trees",
+"primelib",
 "problem_020"
 ],
 "io": [
@@ -443,11 +454,11 @@
 "problem_020"
 ],
 "nodes": [
-"numeric"
+"numeric>recurrence>range_accumulation"
 ],
 "specific": [],
 "task": "Factorial",
-"why": "trace"
+"why": "built"
 },
 "Task/Factorial/C/factorial-3.c": {
 "built": [

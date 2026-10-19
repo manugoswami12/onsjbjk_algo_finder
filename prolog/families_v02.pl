@@ -98,6 +98,11 @@ family_path_v02(F, [numeric, recurrence, range_accumulation]) :-
            in_func(S, F), value(S, var(X2), op(O, Args)), X2 == X, member(var(I), Args), I \== X,
            role(F, stepper, I), guard(S, _, _),
            forall(guard(S, C, P), continuation_guard(F, S, C, P)) )).
+% a guard every loop around the update has: the whole loop nest runs under it (an input check before the loop,
+% if (n < 0) return -1;), so it does not condition the update (a sieve's j += i inside if primes[i] is conditioned:
+% its outer loop over i does not have that guard)
+continuation_guard(F, S, C, P) :- under(S, L0), loop(L0, F, _),
+    forall(( under(S, L), loop(L, F, _) ), ( guard(L, C2, P2), C2 == C, P2 == P )), !.
 continuation_guard(F, S, C, P) :- under(S, L), loop(L, F, _), loop_cond(L, LC),
     ( P == true, LC == C ; P == false, LC == op(not, [C]) ), !.
 
