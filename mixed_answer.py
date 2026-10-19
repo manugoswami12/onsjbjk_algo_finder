@@ -19,7 +19,8 @@ labels.
 Two v0.3 fixes, also separate (doc 04 section 18.7): the tree with the branches of prolog/families_v03.pl
 (prolog/tree_v03.pl, prolog/learn_apply_v03.pl: partition by recursion through variables, a sequence rewritten whole
 in place), so a file reaches its algorithm's node and not a broad one where another label's branch is the only one;
-and the Lisp loop's `finally` run after the loop (lisp_loop_v03.py). No TheAlgorithms file changes node under the v0.3
+and two behaviour-lowering fixes (lowering_v03.py: the Lisp loop's `finally` runs after the loop; C's x op= y keeps
+its operator). No TheAlgorithms file changes node under the v0.3
 tree, so the learned branches (placed with the v0.2 tree) stay where they are.
 
 usage: PYTHONPATH=.:tools_manual python mixed_answer.py CORPUS --heldout ROSETTA   -> benchmark/mixed_heldout.json
@@ -39,7 +40,7 @@ import compare_learners
 import crosslang_frontends
 import eval_ta
 import learn_facts
-import lisp_loop_v03
+import lowering_v03
 import ta_corpus
 from ta_corpus import ROOT
 
@@ -69,28 +70,43 @@ class MixedIo(eval_ta.TaIo):
                 self.running_root.add(rel)
             if rts and all(self.same(funs[a], funs[b]) for a in rts for b in rts):
                 self.own.update((rel, n) for n in rts)
-        self.name_of = {}                           # (rel, name) -> labels of its algorithm
+        self.name_of = {}                           # (rel, name) -> labels of its algorithm, for a behaviour match
+        self.exact_of = {}                          # the same for an exact match (write trace, traced logic)
+        self.whole = set()                          # (rel, name): a non-root function standing for its whole file
+        is_root = lambda o: base(o[1]) in file_roots.get(o[0], set())
         for key, ref in self.cat.items():
             rel, name = key
-            alike = {self.labels[o[0]] for o, oref in self.by_sig[(tuple(ref['sig']), len(ref['outputs']))]
-                     if o in self.own and o[0] != rel and self.same(ref, oref)}
-            if key in self.own:
+            equal = [o for o, oref in self.by_sig[(tuple(ref['sig']), len(ref['outputs']))]
+                     if o[0] != rel and self.same(ref, oref)]
+            alike = {self.labels[o[0]] for o in equal if o in self.own}
+            if not is_root(key) and rel in self.running_root:   # a helper (problem_020's factorial): its own
+                self.name_of[key] = self.exact_of[key] = alike   # algorithm only
+                continue
+            # a root, or a function of a file whose roots do not run: an exact match is that file's own logic
+            self.exact_of[key] = {self.labels[rel]}
+            if not is_root(key):
+                self.whole.add(key)
+            if key in self.own or not is_root(key):
                 self.name_of[key] = {self.labels[rel]}
-            elif base(name) in file_roots.get(rel, set()):   # a root of a file with several algorithms (primelib)
-                self.name_of[key] = {self.labels[rel]} | alike
-            elif rel not in self.running_root:      # no root runs: the functions that run are the file's algorithm
-                self.name_of[key] = {self.labels[rel]}
-            else:                                   # a helper (problem_020's factorial): its own algorithm only
-                self.name_of[key] = alike
+            elif alike:                             # a root of a file of several algorithms (primelib's factorial):
+                self.name_of[key] = alike           # the single-algorithm files that behave the same
+            else:                                   # (is_perfect_number): any of the roots that behave the same
+                self.name_of[key] = {self.labels[rel]} | {self.labels[o[0]] for o in equal if is_root(o)}
 
     def same(self, a: dict, b: dict) -> bool:
         return self.ioc.compare(a, b) in ('io', 'logic')
 
     def labels_by_kind(self, path, me=None):
         """As TaIo.labels_by_kind, with each match named by name_of instead of by its file's label."""
+        out, traced, _, _ = self.matches(path, me)
+        return out, traced
+
+    def matches(self, path, me=None):
+        """(by behaviour, by write trace too, and the same two for the matches on a TheAlgorithms function that stands
+        for its whole file): each {function of the new file: labels}."""
         if me is None:
             me = self.describe(path)
-        out, traced = {}, {}
+        out, traced, out_whole, traced_whole = {}, {}, {}, {}
         for name, d in me.items():
             if not d['discriminative']:
                 continue
@@ -98,13 +114,19 @@ class MixedIo(eval_ta.TaIo):
                 how = self.ioc.compare(d, ref)
                 if how in ('logic', 'io'):
                     out.setdefault(name, set()).update(self.name_of[key])
+                    if key in self.whole:
+                        out_whole.setdefault(name, set()).update(self.name_of[key])
                 if how == 'logic':
-                    traced.setdefault(name, set()).update(self.name_of[key])
+                    traced.setdefault(name, set()).update(self.exact_of[key])
+                    if key in self.whole:
+                        traced_whole.setdefault(name, set()).update(self.exact_of[key])
             if d['sig'] == ['int']:
                 for key, ref in self.ints:
                     if compare_learners.shifted_sequence(d, ref):
                         out.setdefault(name, set()).update(self.name_of[key])
-        return out, traced
+                        if key in self.whole:
+                            out_whole.setdefault(name, set()).update(self.name_of[key])
+        return out, traced, out_whole, traced_whole
 
 
 class MixedLogic(eval_ta.TaLogic):
@@ -113,25 +135,31 @@ class MixedLogic(eval_ta.TaLogic):
 
     def attach(self, io: MixedIo, file_roots: dict[str, list[str]]):
         """Each stored pattern named as MixedIo names its function: by the io naming when the function runs, else by
-        the file's label when it is a root or no root of the file runs, else (a helper) by nothing."""
+        the file's label when it is a root or no root of the file runs, else (a helper) by nothing. whole_ref: the
+        patterns of a non-root function that stands for its whole file."""
         io_names = {}
-        for (rel, name), names in io.name_of.items():
+        for (rel, name), names in io.exact_of.items():
             io_names.setdefault((rel, base(name)), set()).update(names)
-        self.name_of_ref = {}
+        whole = {(rel, base(name)) for rel, name in io.whole}
+        self.name_of_ref, self.whole_ref = {}, set()
         with self.ks.connect(self.store) as db:
             for label, rel, fn in db.execute('SELECT label, source_path, function_name FROM pattern'):
                 key = (rel, base(fn))
                 if rel not in self.labels:
                     continue
+                is_root = base(fn) in file_roots.get(rel, [])
                 if key in io_names:
                     self.name_of_ref[label] = io_names[key]
-                elif base(fn) in file_roots.get(rel, []) or rel not in io.running_root:
+                elif is_root or rel not in io.running_root:
                     self.name_of_ref[label] = {self.labels[rel]}
                 else:
                     self.name_of_ref[label] = set()
+                if key in whole or (key not in io_names and not is_root and rel not in io.running_root):
+                    self.whole_ref.add(label)
 
     def labels_split(self, path: Path, is_root) -> tuple[set[str], set[str]]:
-        """(labels matched on the new file's roots, labels matched only on its helpers)."""
+        """(labels matched on the new file's roots or on a TheAlgorithms function standing for its whole file,
+        labels matched only on the new file's helpers)."""
         import re
         try:
             _, facts = self.cli.facts_text(path)
@@ -144,8 +172,8 @@ class MixedLogic(eval_ta.TaLogic):
             if m['result'] != 'MATCH':
                 continue
             labs = self.name_of_ref.get(m['label'], set()) - {'none'}
-            fns = [names.get(fid, '') for fid in m['functions'].split(',')]
-            (main if any(is_root(fn) for fn in fns) else comp).update(labs)
+            fns = [names.get(f, f) for f in m['functions'].split(',')]   # names (AP13 scan), or ids
+            (main if m['label'] in self.whole_ref or any(is_root(fn) for fn in fns) else comp).update(labs)
         return main, comp
 
 
@@ -184,6 +212,41 @@ def built_by_node(path: Path, rules: Path, io_labels, trace_labels, logic_labels
     return built, found, specific
 
 
+def same_function(name: str, callee: str) -> bool:
+    """A function name and a call's name are the same function: go$0 = go, fib_fast_rec.inner_fib = inner_fib."""
+    name, callee = base(name), base(callee)
+    return name == callee or name.endswith('.' + callee)
+
+
+def with_delegates(path: Path, rts: set[str]) -> set[str]:
+    """The roots and the functions that are part of them: one defined inside a root (fib_fast_rec.inner_fib), or one
+    whose result a root returns as it is (fib n = go n 0 1; gcd x y = gcd_ (abs x) (abs y)), and so on down. A helper
+    whose result the root computes further (lcm: a * b // gcd(a, b)) is not part of it: it stays a component."""
+    if not rts:
+        return rts
+    compare_learners._ap13()
+    import io_trace
+    try:
+        _, funs = io_trace.normal_form(path)
+    except Exception:                               # noqa: BLE001
+        return rts
+    bodies = {name: body for name, _, body in funs}
+    out, todo = set(rts), [n for n in bodies if base(n) in rts]
+    while todo:
+        root = todo.pop()
+        body = bodies[root]
+        returns = body[1] if isinstance(body, tuple) and body[0] == 'seq' else []
+        callees = [s[1][1] for s in returns if isinstance(s, tuple) and s[0] == 'return'
+                   and isinstance(s[1], tuple) and s[1][0] == 'call'] if len(returns) == 1 else []
+        for name in bodies:
+            if base(name) in out:
+                continue
+            if base(name).startswith(base(root) + '.') or any(same_function(name, c) for c in callees):
+                out.add(base(name))
+                todo.append(name)
+    return out
+
+
 def answer(path: Path, io: MixedIo, labels: set[str], gs: dict[str, str], logic) -> dict:
     """{'got': main group or None, 'why', 'components': groups found only on helpers, ...}."""
     if path.suffix == '.lisp' and eval_ta.ecl_logic.NOCODE in eval_ta.ecl_logic.families(path):
@@ -195,18 +258,18 @@ def answer(path: Path, io: MixedIo, labels: set[str], gs: dict[str, str], logic)
     except Exception:                               # noqa: BLE001
         rts = set()
     try:
-        me = io.describe(path)
-        by_fn, traced = io.labels_by_kind(path, me)
+        by_fn, traced, by_whole, traced_whole = io.matches(path)
     except eval_ta.ERRORS:
-        me, by_fn, traced = {}, {}, {}
-    # the roots decide when one of them runs; when none runs (a demo root that only prints: caesar_cipher.py's
-    # brute_force) or no root is known, every function counts, as in the pipeline
-    if not any(base(fn) in rts and d['discriminative'] for fn, d in me.items()):
-        rts = set()
-    is_root = (lambda fn: base(fn) in rts) if rts else (lambda fn: True)
-    main_io = {lab for fn, v in by_fn.items() if is_root(fn) for lab in v} & labels
-    comp_io = {lab for fn, v in by_fn.items() if not is_root(fn) for lab in v} & labels
-    main_trace = {lab for fn, v in traced.items() if is_root(fn) for lab in v} & labels
+        by_fn, traced, by_whole, traced_whole = {}, {}, {}, {}
+    rts = with_delegates(path, rts)                 # a function the root returns as it is is part of the root
+    is_root = (lambda fn: base(fn) in rts) if rts else (lambda fn: True)   # no roots known: every function counts
+    # the main answer: matches on the roots, and matches on a TheAlgorithms function that stands for its whole file
+    # (caesar_cipher.py: its root brute_force does not run, encrypt does); the rest are components
+    main_io = ({lab for fn, v in by_fn.items() if is_root(fn) for lab in v}
+               | {lab for v in by_whole.values() for lab in v}) & labels
+    comp_io = {lab for fn, v in by_fn.items() if not is_root(fn) for lab in v} & labels - main_io
+    main_trace = ({lab for fn, v in traced.items() if is_root(fn) for lab in v}
+                  | {lab for v in traced_whole.values() for lab in v}) & labels
     main_logic, comp_logic = logic.labels_split(path, is_root) if logic else (set(), set())
     logic_labels = main_logic & labels
     try:
@@ -233,7 +296,7 @@ def run(units: dict[str, Path], corpus: Path, out: Path, workers: int, extra: di
     labels = ta_corpus.files(corpus)
     gs = ta_corpus.groups(labels.values())
     crosslang_frontends.install(lisp_sbcl=False)
-    lisp_loop_v03.install()
+    lowering_v03.install()
     io = MixedIo(corpus, labels, workers)
     with tempfile.TemporaryDirectory(prefix='v02_mix_') as td:
         truth = Path(td) / 'train.json'

@@ -1,5 +1,5 @@
 """v0.3 fixes, separate from the pipeline (doc 04 section 18.7): the tree branches of prolog/families_v03.pl (through
-prolog/tree_v03.pl) and the Lisp loop's `finally` (lisp_loop_v03.py). Each positive case is a shape the v0.2 tree or
+prolog/tree_v03.pl) and the Lisp loop's `finally` (lowering_v03.py). Each positive case is a shape the v0.2 tree or
 lowering got wrong; each negative case is a near shape the new branch must leave alone."""
 import sys
 import unittest
@@ -42,9 +42,9 @@ class TreeV03Tests(unittest.TestCase):
 class LispFinallyTests(unittest.TestCase):
     def test_finally_runs_after_the_loop(self):
         import crosslang_frontends
-        import lisp_loop_v03
+        import lowering_v03
         crosslang_frontends.install(lisp_sbcl=False)
-        lisp_loop_v03.install()
+        lowering_v03.install()
         import io_trace
         runs = io_trace.run_functions(DATA / 'fib_finally.lisp')['fib-loop']
         got = dict(zip([x[0] for x in runs['inputs']], [r[1] for r in runs['runs']]))

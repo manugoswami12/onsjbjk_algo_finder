@@ -19,17 +19,55 @@
 "task": "Caesar-cipher",
 "why": "built"
 },
+"Task/Factorial/C/factorial-1.c": {
+"built": [
+"Factorial"
+],
+"components": [],
+"got": "Factorial",
+"held": [
+"factorial"
+],
+"held_trace": [
+"double_factorial",
+"factorial",
+"gcd_of_n_numbers",
+"primelib"
+],
+"io": [
+"factorial"
+],
+"logic": [
+"double_factorial",
+"factorial",
+"gcd_of_n_numbers",
+"primelib"
+],
+"nodes": [
+"numeric>recurrence>range_accumulation"
+],
+"roots": [
+"factorial"
+],
+"specific": [],
+"task": "Factorial",
+"why": "built"
+},
 "Task/Factorial/C/factorial-2.c": {
 "built": [],
-"components": [
-"Factorial",
-"double_factorial"
-],
-"got": null,
+"components": [],
+"got": "Factorial",
 "held": [],
 "held_trace": [],
-"io": [],
-"logic": [],
+"io": [
+"factorial"
+],
+"logic": [
+"double_factorial",
+"factorial",
+"gcd_of_n_numbers",
+"primelib"
+],
 "nodes": [
 "numeric"
 ],
@@ -38,7 +76,7 @@
 ],
 "specific": [],
 "task": "Factorial",
-"why": "none"
+"why": "io"
 },
 "Task/Factorial/C/factorial-3.c": {
 "built": [
@@ -49,11 +87,15 @@
 "held": [
 "factorial"
 ],
-"held_trace": [],
+"held_trace": [
+"factorial"
+],
 "io": [
 "factorial"
 ],
-"logic": [],
+"logic": [
+"factorial"
+],
 "nodes": [
 "numeric>recurrence>range_accumulation"
 ],
@@ -128,18 +170,26 @@
 "built": [
 "Factorial"
 ],
-"components": [
-"double_factorial"
-],
+"components": [],
 "got": "Factorial",
 "held": [
 "factorial"
 ],
-"held_trace": [],
+"held_trace": [
+"double_factorial",
+"factorial",
+"gcd_of_n_numbers",
+"primelib"
+],
 "io": [
 "factorial"
 ],
-"logic": [],
+"logic": [
+"double_factorial",
+"factorial",
+"gcd_of_n_numbers",
+"primelib"
+],
 "nodes": [
 "numeric>recurrence>range_accumulation"
 ],
@@ -194,6 +244,33 @@
 "task": "Fibonacci-sequence",
 "why": "learned"
 },
+"Task/Fibonacci-sequence/Haskell/fibonacci-sequence-9.hs": {
+"built": [
+"Fibonacci-sequence"
+],
+"components": [],
+"got": "Fibonacci-sequence",
+"held": [
+"climbing_stairs"
+],
+"held_trace": [],
+"io": [
+"climbing_stairs",
+"fast_fibonacci",
+"nth_fibonacci_using_matrix_exponentiation"
+],
+"logic": [],
+"nodes": [
+"numeric>recurrence>pair_recurrence"
+],
+"roots": [
+"fib",
+"go"
+],
+"specific": [],
+"task": "Fibonacci-sequence",
+"why": "built"
+},
 "Task/Fibonacci-sequence/Python/fibonacci-sequence-10.py": {
 "built": [
 "Fibonacci-sequence"
@@ -202,7 +279,9 @@
 "got": "Fibonacci-sequence",
 "held": [],
 "held_trace": [],
-"io": [],
+"io": [
+"minimum_spanning_tree_prims2"
+],
 "logic": [],
 "nodes": [
 "numeric>recurrence>pair_recurrence"
@@ -212,6 +291,62 @@
 ],
 "specific": [],
 "task": "Fibonacci-sequence",
+"why": "built"
+},
+"Task/Fibonacci-sequence/Python/fibonacci-sequence-7.py": {
+"built": [
+"Fibonacci-sequence"
+],
+"components": [],
+"got": "Fibonacci-sequence",
+"held": [
+"climbing_stairs"
+],
+"held_trace": [],
+"io": [
+"climbing_stairs",
+"fast_fibonacci",
+"nth_fibonacci_using_matrix_exponentiation"
+],
+"logic": [],
+"nodes": [
+"numeric>recurrence>pair_recurrence"
+],
+"roots": [
+"fib_fast_rec",
+"fib_fast_rec.inner_fib"
+],
+"specific": [],
+"task": "Fibonacci-sequence",
+"why": "built"
+},
+"Task/Greatest-common-divisor/Haskell/greatest-common-divisor.hs": {
+"built": [
+"Greatest-common-divisor"
+],
+"components": [],
+"got": "Greatest-common-divisor",
+"held": [
+"greatest_common_divisor"
+],
+"held_trace": [
+"greatest_common_divisor"
+],
+"io": [
+"greatest_common_divisor"
+],
+"logic": [
+"greatest_common_divisor"
+],
+"nodes": [
+"numeric>recurrence>modulo_recurrence"
+],
+"roots": [
+"gcd",
+"gcd_"
+],
+"specific": [],
+"task": "Greatest-common-divisor",
 "why": "built"
 },
 "Task/Josephus-problem/C/josephus-problem.c": {
@@ -246,10 +381,13 @@
 "held_trace": [],
 "io": [],
 "logic": [],
-"nodes": [],
+"nodes": [
+"sequence_query"
+],
 "roots": [
 "enumFromTo",
 "fTable",
+"fTable.go",
 "lcm",
 "uncurry",
 "unlines"
@@ -274,8 +412,11 @@
 "roots": [
 "concat",
 "levenshtein",
+"levenshtein.go",
+"levenshtein.go.gap",
 "swap",
 "tabulated",
+"tabulated.go",
 "take",
 "uncurry"
 ],
@@ -346,10 +487,12 @@
 "Task/Perfect-numbers/Haskell/perfect-numbers-1.hs": {
 "built": [],
 "components": [],
-"got": null,
+"got": "primelib",
 "held": [],
 "held_trace": [],
-"io": [],
+"io": [
+"primelib"
+],
 "logic": [],
 "nodes": [
 "numeric>divisor_test"
@@ -359,16 +502,21 @@
 ],
 "specific": [],
 "task": "Perfect-numbers",
-"why": "none"
+"why": "io"
 },
 "Task/Roman-numerals-Encode/Python/roman-numerals-encode-2.py": {
 "built": [],
 "components": [],
-"got": null,
+"got": "magicdiamondpattern",
 "held": [],
-"held_trace": [],
+"held_trace": [
+"magicdiamondpattern"
+],
 "io": [],
-"logic": [],
+"logic": [
+"from_sequence",
+"magicdiamondpattern"
+],
 "nodes": [
 "numeric"
 ],
@@ -377,7 +525,7 @@
 ],
 "specific": [],
 "task": "Roman-numerals-Encode",
-"why": "none"
+"why": "trace"
 },
 "Task/Sorting-algorithms-Gnome-sort/Python/sorting-algorithms-gnome-sort.py": {
 "built": [
@@ -402,12 +550,14 @@
 "circle_sort",
 "cocktail_shaker_sort",
 "comb_sort",
+"counting_sort",
 "cycle_sort",
 "double_sort",
 "exchange_sort",
 "gnome_sort",
 "heap_sort",
 "insertion_sort",
+"intro_sort",
 "iterative_merge_sort",
 "merge_insertion_sort",
 "merge_sort",
@@ -465,12 +615,14 @@
 "circle_sort",
 "cocktail_shaker_sort",
 "comb_sort",
+"counting_sort",
 "cycle_sort",
 "double_sort",
 "exchange_sort",
 "gnome_sort",
 "heap_sort",
 "insertion_sort",
+"intro_sort",
 "iterative_merge_sort",
 "merge_insertion_sort",
 "merge_sort",
@@ -501,6 +653,24 @@
 "specific": [],
 "task": "Sorting-algorithms-Insertion-sort",
 "why": "ambiguous"
+},
+"Task/Sorting-algorithms-Merge-sort/Python/sorting-algorithms-merge-sort-2.py": {
+"built": [],
+"components": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"logic": [],
+"nodes": [
+"sequence_transformation>comparison_sort>merge"
+],
+"roots": [
+"merge"
+],
+"specific": [],
+"task": "Sorting-algorithms-Merge-sort",
+"why": "none"
 },
 "Task/Sorting-algorithms-Quicksort/Common-Lisp/sorting-algorithms-quicksort-1.lisp": {
 "built": [
@@ -548,12 +718,14 @@
 "circle_sort",
 "cocktail_shaker_sort",
 "comb_sort",
+"counting_sort",
 "cycle_sort",
 "double_sort",
 "exchange_sort",
 "gnome_sort",
 "heap_sort",
 "insertion_sort",
+"intro_sort",
 "iterative_merge_sort",
 "merge_insertion_sort",
 "merge_sort",
@@ -623,6 +795,45 @@
 ],
 "specific": [],
 "task": "Sorting-algorithms-Stooge-sort",
+"why": "built"
+},
+"Task/Sum-digits-of-an-integer/C/sum-digits-of-an-integer.c": {
+"built": [],
+"components": [],
+"got": null,
+"held": [],
+"held_trace": [],
+"io": [],
+"logic": [],
+"nodes": [
+"numeric"
+],
+"roots": [
+"SumDigits"
+],
+"specific": [],
+"task": "Sum-digits-of-an-integer",
+"why": "none"
+},
+"Task/Towers-of-Hanoi/Haskell/towers-of-hanoi-2.hs": {
+"built": [
+"Towers-of-Hanoi"
+],
+"components": [],
+"got": "Towers-of-Hanoi",
+"held": [],
+"held_trace": [],
+"io": [],
+"logic": [],
+"nodes": [
+"numeric>recurrence>double_recursion"
+],
+"roots": [
+"hanoi",
+"hanoiToList"
+],
+"specific": [],
+"task": "Towers-of-Hanoi",
 "why": "built"
 }
 }
