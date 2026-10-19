@@ -14,6 +14,12 @@ Both corrections apply to the io evidence (MixedIo) and to AP13's exact traced l
 records its source function). The tiers and their order are the pipeline's (eval_ta.decide), applied to the main
 labels.
 
+Two v0.3 fixes, also separate (doc 04 section 18.7): the tree with the branches of prolog/families_v03.pl
+(prolog/tree_v03.pl, prolog/learn_apply_v03.pl: partition by recursion through variables, a sequence rewritten whole
+in place), so a file reaches its algorithm's node and not a broad one where another label's branch is the only one;
+and the Lisp loop's `finally` run after the loop (lisp_loop_v03.py). No TheAlgorithms file changes node under the v0.3
+tree, so the learned branches (placed with the v0.2 tree) stay where they are.
+
 usage: PYTHONPATH=.:tools_manual python mixed_answer.py CORPUS --heldout ROSETTA   -> benchmark/mixed_heldout.json
        PYTHONPATH=.:tools_manual python mixed_answer.py CORPUS --corpus           -> benchmark/mixed_corpus.json
 """
@@ -30,12 +36,14 @@ from decide_new_or_known import roots
 import compare_learners
 import crosslang_frontends
 import eval_ta
-import learn_apply
 import learn_facts
+import lisp_loop_v03
 import ta_corpus
 from ta_corpus import ROOT
 
 ROOTS = ROOT / 'benchmark' / 'corpus_roots.json'
+TREE_V03 = ROOT / 'prolog' / 'tree_v03.pl'
+APPLY_V03 = ROOT / 'prolog' / 'learn_apply_v03.pl'
 
 
 def base(name: str) -> str:
@@ -128,12 +136,12 @@ class MixedLogic(eval_ta.TaLogic):
 
 
 def function_nodes(path: Path) -> dict[str, set[str]]:
-    """{function: its tree nodes} (the tree's NODE|Function|Path lines)."""
+    """{function: its tree nodes} (the v0.3 tree's NODE|Function|Path lines)."""
     kind, text = learn_facts.tree_facts(path)
     if not text.strip():
         return {}
     out = {}
-    for line in learn_facts.swipl_facts('tree_main', learn_facts.TREE_MAIN, kind, text):
+    for line in learn_facts.swipl_facts('tree_main', TREE_V03, kind, text):
         if line.startswith('NODE|'):
             _, fn, node = line.split('|', 2)
             out.setdefault(fn, set()).add(node)
@@ -141,7 +149,8 @@ def function_nodes(path: Path) -> dict[str, set[str]]:
 
 
 def built_by_node(path: Path, rules: Path, io_labels, trace_labels, logic_labels):
-    """learn_apply.apply's evidence, with each built/hand branch's tree node kept: ({node: {branch}}, found, specific)."""
+    """learn_apply.apply's evidence on the v0.3 tree, with each built/hand branch's tree node kept: ({node: {branch}},
+    found, specific)."""
     kind, text = learn_facts.tree_facts(path)
     if not text.strip():
         return {}, [], set()
@@ -150,8 +159,7 @@ def built_by_node(path: Path, rules: Path, io_labels, trace_labels, logic_labels
         io.write_text(''.join(f"io_equal('{lab}').\n" for lab in sorted(io_labels))
                       + ''.join(f"io_trace_equal('{lab}').\n" for lab in sorted(trace_labels))
                       + ''.join(f"logic_equal('{lab}').\n" for lab in sorted(logic_labels)), encoding='utf-8')
-        lines = learn_facts.swipl_facts('learn_apply_main', learn_apply.PROLOG / 'learn_apply.pl', kind, text,
-                                        str(rules), str(io))
+        lines = learn_facts.swipl_facts('learn_apply_main', APPLY_V03, kind, text, str(rules), str(io))
     built = {}
     for line in lines:
         if line.startswith(('NORMAL|', 'HAND|')):
@@ -206,6 +214,7 @@ def run(units: dict[str, Path], corpus: Path, out: Path, workers: int, extra: di
     labels = ta_corpus.files(corpus)
     gs = ta_corpus.groups(labels.values())
     crosslang_frontends.install(lisp_sbcl=False)
+    lisp_loop_v03.install()
     io = MixedIo(corpus, labels, workers)
     with tempfile.TemporaryDirectory(prefix='v02_mix_') as td:
         truth = Path(td) / 'train.json'

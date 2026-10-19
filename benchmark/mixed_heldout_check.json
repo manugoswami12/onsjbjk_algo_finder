@@ -70,9 +70,13 @@
 ],
 "components": [],
 "got": "Factorial",
-"held": [],
+"held": [
+"factorial"
+],
 "held_trace": [],
-"io": [],
+"io": [
+"factorial"
+],
 "logic": [],
 "nodes": [
 "numeric>recurrence>range_accumulation"
@@ -169,11 +173,15 @@
 "Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-9.lisp": {
 "built": [],
 "components": [],
-"got": "signum",
-"held": [],
+"got": "Fibonacci-sequence",
+"held": [
+"fast_fibonacci"
+],
 "held_trace": [],
 "io": [
-"signum"
+"climbing_stairs",
+"fast_fibonacci",
+"nth_fibonacci_using_matrix_exponentiation"
 ],
 "logic": [],
 "nodes": [
@@ -184,7 +192,7 @@
 ],
 "specific": [],
 "task": "Fibonacci-sequence",
-"why": "io"
+"why": "learned"
 },
 "Task/Fibonacci-sequence/Python/fibonacci-sequence-10.py": {
 "built": [
@@ -432,11 +440,20 @@
 "why": "built"
 },
 "Task/Sorting-algorithms-Insertion-sort/Python/sorting-algorithms-insertion-sort-3.py": {
+"at": "learned",
 "built": [],
+"clash": [
+"Sorting-algorithms-Insertion-sort",
+"Sorting-algorithms-Merge-sort",
+"Sorting-algorithms-Pancake-sort"
+],
 "components": [],
-"got": "average_mode",
+"got": null,
 "held": [
-"average_mode"
+"binary_insertion_sort",
+"iterative_merge_sort",
+"merge_sort",
+"pancake_sort"
 ],
 "held_trace": [],
 "io": [
@@ -475,13 +492,15 @@
 "tim_sort"
 ],
 "logic": [],
-"nodes": [],
+"nodes": [
+"sequence_transformation"
+],
 "roots": [
 "insertion_sort_bin"
 ],
 "specific": [],
 "task": "Sorting-algorithms-Insertion-sort",
-"why": "learned"
+"why": "ambiguous"
 },
 "Task/Sorting-algorithms-Quicksort/Common-Lisp/sorting-algorithms-quicksort-1.lisp": {
 "built": [
@@ -507,13 +526,19 @@
 "why": "built"
 },
 "Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-1.py": {
-"built": [],
-"components": [],
-"got": "Sorting-algorithms-Cycle-sort",
-"held": [
-"cycle_sort"
+"built": [
+"Sorting-algorithms-Quicksort"
 ],
-"held_trace": [],
+"components": [],
+"got": "Sorting-algorithms-Quicksort",
+"held": [
+"circle_sort",
+"quick_sort",
+"recursive_quick_sort"
+],
+"held_trace": [
+"quick_sort"
+],
 "io": [
 "adaptive_merge_sort",
 "average_mode",
@@ -551,14 +576,34 @@
 ],
 "logic": [],
 "nodes": [
-"sequence_query"
+"sequence_transformation>comparison_sort>partition_recursive"
 ],
 "roots": [
 "quick_sort"
 ],
 "specific": [],
 "task": "Sorting-algorithms-Quicksort",
-"why": "learned"
+"why": "built"
+},
+"Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-5.py": {
+"built": [
+"Sorting-algorithms-Quicksort"
+],
+"components": [],
+"got": "Sorting-algorithms-Quicksort",
+"held": [],
+"held_trace": [],
+"io": [],
+"logic": [],
+"nodes": [
+"sequence_transformation>comparison_sort>partition_recursive"
+],
+"roots": [
+"quickSort"
+],
+"specific": [],
+"task": "Sorting-algorithms-Quicksort",
+"why": "built"
 },
 "Task/Sorting-algorithms-Stooge-sort/C/sorting-algorithms-stooge-sort.c": {
 "built": [
