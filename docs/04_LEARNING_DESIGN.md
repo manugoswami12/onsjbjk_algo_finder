@@ -555,7 +555,22 @@ Lisp loop's `finally` runs once after the loop (it ran inside the body: fib(n) =
 
 New code: 7 wrong, precision 96.2%, recall 85.0%.
 
-Next, each tested the same way: list `+` as
-concatenation (quicksort-1.py); a returned lambda applied to
+**19.5 Dropped: `+` on lists as concatenation.** In a function, an `add` with an operand known to be a list (a list
+literal, a concat, a variable created as a list) was read as `concat`, the form `[*a, *b]` already lowers to. The
+conversion is right (quicksort-1.py and -3.py reached `partition_recursive` and were answered Quicksort), but AP13's
+partition idiom accepts any concat of two recursive results as a partition sort, with no test that the parts were
+split by a comparison with a pivot. Correctly converted joins then became sorts: towers-of-hanoi-2.py and -3.py and
+TheAlgorithms' huffman.py were answered Quicksort, and inorder_tree_traversal_2022, problem_109 and counting-sort-1
+lost their answers. A fault of the tree's rule, not of this conversion: dropped under the rule. The next idea is the
+partition rule itself: the parts must be filtered by comparing elements with a pivot.
+
+**Remaining wrong answers (7)** after 19.1-19.4: factorial-2.c -> problem_020 (exact-trace tier: problem_020's
+branch sits at its helper's node); least-common-multiple-2.py -> gcd and levenshtein-distance-5.py -> problem_007 (a
+curried root returns a lambda and never runs; problem_007's is_prime lowered wrongly); perfect-numbers-1.hs ->
+primelib (its is_perfect_number lives in a library file); roman-numerals-encode-2.py -> magicdiamondpattern (an AP13
+logic pattern too general); insertion-sort-3.py -> average_mode (`seq[:] = ...` not read as a write);
+quicksort-1.py -> Cycle-sort (the partition rule above).
+
+Next, each tested the same way: the partition rule's pivot test (quicksort-1.py); a returned lambda applied to
 the next argument (lcm, Levenshtein); problem_007's is_prime.
 

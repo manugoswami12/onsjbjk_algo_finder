@@ -80,6 +80,10 @@ Result: 28 normal forms change (C and Lisp only); fibonacci-sequence-9.lisp sign
 
 ## Tried and dropped (do not repeat)
 
+- `+` on lists as concatenation (prolog/list_concat.pl, removed): the conversion was right, but AP13's partition idiom
+  takes any join of two recursive results as a partition sort; Hanoi's moves and TheAlgorithms' huffman became
+  Quicksort. Fix the partition rule (parts filtered by a pivot comparison) first, then retry this.
+
 - Naming a match by the matched function's algorithm, in Python rules added case by case (mixed answers): removed 9
   wrong answers but lost 19 learnt answers and made 2 wrong. Rules in Python patched per case are hard coding.
 - Branches written from failing held-out files (partition through variables, `seq[:] = ...`): test-set rules; removed.
