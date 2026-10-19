@@ -761,11 +761,17 @@
 "why": "ambiguous"
 },
 "Task/Factorial/Haskell/factorial-2.hs": {
+"at": "io",
 "built": [],
-"got": "problem_020",
-"held": [
+"clash": [
+"Factorial",
+"krishnamurthy_number",
+"number_of_possible_binary_trees",
+"primelib",
 "problem_020"
 ],
+"got": null,
+"held": [],
 "held_trace": [],
 "io": [
 "factorial",
@@ -778,7 +784,7 @@
 "nodes": [],
 "specific": [],
 "task": "Factorial",
-"why": "learned"
+"why": "ambiguous"
 },
 "Task/Factorial/Haskell/factorial-3.hs": {
 "built": [
@@ -2475,8 +2481,7 @@
 "logic": [],
 "nodes": [
 "numeric>recurrence>capacity_reduction",
-"sequence_query",
-"sequence_transformation"
+"sequence_query"
 ],
 "specific": [],
 "task": "Knapsack-problem-0-1",
@@ -2970,8 +2975,7 @@
 "logic": [],
 "nodes": [
 "sequence_query",
-"sequence_query>two_sequence_match>longest_common",
-"sequence_transformation"
+"sequence_query>two_sequence_match>longest_common"
 ],
 "specific": [],
 "task": "Longest-common-subsequence",
@@ -2988,8 +2992,7 @@
 "logic": [],
 "nodes": [
 "sequence_query",
-"sequence_query>two_sequence_match>longest_common",
-"sequence_transformation"
+"sequence_query>two_sequence_match>longest_common"
 ],
 "specific": [],
 "task": "Longest-common-subsequence",
@@ -3346,8 +3349,7 @@
 "io": [],
 "logic": [],
 "nodes": [
-"search>diagonal_conflict",
-"sequence_query"
+"search>diagonal_conflict"
 ],
 "specific": [],
 "task": "N-queens-problem",
@@ -3459,8 +3461,7 @@
 "io": [],
 "logic": [],
 "nodes": [
-"search>diagonal_conflict",
-"sequence_query"
+"search>diagonal_conflict"
 ],
 "specific": [],
 "task": "N-queens-problem",
@@ -3476,8 +3477,7 @@
 "io": [],
 "logic": [],
 "nodes": [
-"search>diagonal_conflict",
-"sequence_query"
+"search>diagonal_conflict"
 ],
 "specific": [],
 "task": "N-queens-problem",

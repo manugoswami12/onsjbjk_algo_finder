@@ -8,14 +8,13 @@ Identified = algorithm or class. A family answer is right when TheAlgorithms fil
 |---|---|---|---|---|---|---|---|
 | C | 69 | 31 / 1 | 96.9% | 44.9% | 7 / 1 | 7 / 7 | 15 |
 | Common-Lisp | 75 | 44 / 1 | 97.8% | 58.7% | 9 / 2 | 4 / 5 | 10 |
-| Haskell | 144 | 33 / 3 | 91.7% | 22.9% | 3 / 3 | 17 / 29 | 56 |
+| Haskell | 144 | 33 / 2 | 94.3% | 22.9% | 3 / 3 | 17 / 29 | 57 |
 | Python | 162 | 65 / 6 | 91.5% | 40.1% | 11 / 4 | 23 / 12 | 41 |
-| all | 450 | 173 / 11 | 94.0% | 38.4% | 30 / 10 | 51 / 53 | 122 |
+| all | 450 | 173 / 10 | 94.5% | 38.4% | 30 / 10 | 51 / 53 | 123 |
 
-## Wrong answers (11)
+## Wrong answers (10)
 
 - Task/Factorial/C/factorial-2.c: algorithm problem_020, task Factorial
-- Task/Factorial/Haskell/factorial-2.hs: algorithm problem_020, task Factorial
 - Task/Factorial/Haskell/factorial-8.hs: algorithm problem_020, task Factorial
 - Task/Factorial/Python/factorial-7.py: algorithm problem_020, task Factorial
 - Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-9.lisp: algorithm signum, task Fibonacci-sequence
@@ -39,13 +38,14 @@ Identified = algorithm or class. A family answer is right when TheAlgorithms fil
 - Task/Sorting-algorithms-Stooge-sort/Haskell/sorting-algorithms-stooge-sort-1.hs: numeric>recurrence>double_recursion, task Sorting-algorithms-Stooge-sort
 - Task/Towers-of-Hanoi/Haskell/towers-of-hanoi-1.hs: sequence_transformation>comparison_sort>partition_recursive, task Towers-of-Hanoi
 
-## Error or new class: reaches no tree node (122; every held-out task is known, so each is a program the lowering or interpreter cannot handle)
+## Error or new class: reaches no tree node (123; every held-out task is known, so each is a program the lowering or interpreter cannot handle)
 
 - Task/Binary-search/Haskell/binary-search-2.hs (task Binary-search)
 - Task/Binary-search/Haskell/binary-search-3.hs (task Binary-search)
 - Task/Binary-search/Python/binary-search-5.py (task Binary-search)
 - Task/Caesar-cipher/Python/caesar-cipher-4.py (task Caesar-cipher)
 - Task/Factorial/C/factorial-6.c (task Factorial)
+- Task/Factorial/Haskell/factorial-2.hs (task Factorial)
 - Task/Factorial/Haskell/factorial-4.hs (task Factorial)
 - Task/Factorial/Haskell/factorial-5.hs (task Factorial)
 - Task/Factorial/Haskell/factorial-9.hs (task Factorial)

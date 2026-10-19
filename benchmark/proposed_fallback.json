@@ -432,11 +432,11 @@
    "task": "Factorial"
   },
   "Task/Factorial/Haskell/factorial-2.hs": {
-   "answer": "pipeline",
+   "answer": "unknown",
    "branch": null,
    "branch_correct": null,
-   "correct": false,
-   "pipeline": "problem_020",
+   "correct": null,
+   "pipeline": null,
    "task": "Factorial"
   },
   "Task/Factorial/Haskell/factorial-3.hs": {

@@ -1384,9 +1384,9 @@
   "all": {
    "n": 450,
    "ok": 173,
-   "unanswered": 266,
+   "unanswered": 267,
    "not_analysable": 245,
-   "wrong": 11
+   "wrong": 10
   },
   "Common-Lisp": {
    "n": 75,
@@ -1397,10 +1397,10 @@
   },
   "Haskell": {
    "n": 144,
-   "unanswered": 108,
+   "unanswered": 109,
    "not_analysable": 102,
    "ok": 33,
-   "wrong": 3
+   "wrong": 2
   },
   "Python": {
    "n": 162,

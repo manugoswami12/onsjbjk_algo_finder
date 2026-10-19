@@ -31,13 +31,6 @@ learned_branch([], adams_bashforth, trace, io) :-
     io_trace_equal(adams_bashforth).
 learned_branch([], adams_bashforth, logic, io) :-
     logic_equal(adams_bashforth).
-% aliquot_sum under []: learned from [maths/aliquot_sum.py]
-learned_branch([], aliquot_sum, io, io) :-
-    io_equal(aliquot_sum).
-learned_branch([], aliquot_sum, trace, io) :-
-    io_trace_equal(aliquot_sum).
-learned_branch([], aliquot_sum, logic, io) :-
-    logic_equal(aliquot_sum).
 % all_construct under []: learned from [dynamic_programming/all_construct.py]
 learned_branch([], all_construct, io, io) :-
     io_equal(all_construct).
@@ -283,13 +276,6 @@ learned_branch([], binomial_distribution, trace, io) :-
     io_trace_equal(binomial_distribution).
 learned_branch([], binomial_distribution, logic, io) :-
     logic_equal(binomial_distribution).
-% binomial_expansion under []: learned from [maths/binomial_expansion.py]
-learned_branch([], binomial_expansion, io, io) :-
-    io_equal(binomial_expansion).
-learned_branch([], binomial_expansion, trace, io) :-
-    io_trace_equal(binomial_expansion).
-learned_branch([], binomial_expansion, logic, io) :-
-    logic_equal(binomial_expansion).
 % bitap_string_match under []: learned from [strings/bitap_string_match.py]
 learned_branch([], bitap_string_match, io, io) :-
     io_equal(bitap_string_match).
@@ -297,6 +283,13 @@ learned_branch([], bitap_string_match, trace, io) :-
     io_trace_equal(bitap_string_match).
 learned_branch([], bitap_string_match, logic, io) :-
     logic_equal(bitap_string_match).
+% booths_algorithm under []: learned from [strings/booths_algorithm.py]
+learned_branch([], booths_algorithm, io, io) :-
+    io_equal(booths_algorithm).
+learned_branch([], booths_algorithm, trace, io) :-
+    io_trace_equal(booths_algorithm).
+learned_branch([], booths_algorithm, logic, io) :-
+    logic_equal(booths_algorithm).
 % bragg_angle under []: learned from [physics/bragg_angle.py]
 learned_branch([], bragg_angle, io, io) :-
     io_equal(bragg_angle).
@@ -367,13 +360,6 @@ learned_branch([], butterworth_filter, trace, io) :-
     io_trace_equal(butterworth_filter).
 learned_branch([], butterworth_filter, logic, io) :-
     logic_equal(butterworth_filter).
-% can_string_be_rearranged_as_palindrome under []: learned from [strings/can_string_be_rearranged_as_palindrome.py]
-learned_branch([], can_string_be_rearranged_as_palindrome, io, io) :-
-    io_equal(can_string_be_rearranged_as_palindrome).
-learned_branch([], can_string_be_rearranged_as_palindrome, trace, io) :-
-    io_trace_equal(can_string_be_rearranged_as_palindrome).
-learned_branch([], can_string_be_rearranged_as_palindrome, logic, io) :-
-    logic_equal(can_string_be_rearranged_as_palindrome).
 % carrier_concentration under []: learned from [electronics/carrier_concentration.py]
 learned_branch([], carrier_concentration, io, io) :-
     io_equal(carrier_concentration).
@@ -402,13 +388,6 @@ learned_branch([], ceil, trace, io) :-
     io_trace_equal(ceil).
 learned_branch([], ceil, logic, io) :-
     logic_equal(ceil).
-% center_of_mass under []: learned from [physics/center_of_mass.py]
-learned_branch([], center_of_mass, io, io) :-
-    io_equal(center_of_mass).
-learned_branch([], center_of_mass, trace, io) :-
-    io_trace_equal(center_of_mass).
-learned_branch([], center_of_mass, logic, io) :-
-    logic_equal(center_of_mass).
 % centripetal_force under []: learned from [physics/centripetal_force.py]
 learned_branch([], centripetal_force, io, io) :-
     io_equal(centripetal_force).
@@ -521,13 +500,6 @@ learned_branch([], coulombs_law, trace, io) :-
     io_trace_equal(coulombs_law).
 learned_branch([], coulombs_law, logic, io) :-
     logic_equal(coulombs_law).
-% count_vowels under []: learned from [strings/count_vowels.py]
-learned_branch([], count_vowels, io, io) :-
-    io_equal(count_vowels).
-learned_branch([], count_vowels, trace, io) :-
-    io_trace_equal(count_vowels).
-learned_branch([], count_vowels, logic, io) :-
-    logic_equal(count_vowels).
 % covid_stats_via_xpath under []: learned from [web_programming/covid_stats_via_xpath.py]
 learned_branch([], covid_stats_via_xpath, io, io) :-
     io_equal(covid_stats_via_xpath).
@@ -612,13 +584,6 @@ learned_branch([], data_transformations, trace, io) :-
     io_trace_equal(data_transformations).
 learned_branch([], data_transformations, logic, io) :-
     logic_equal(data_transformations).
-% dbscan under []: learned from [machine_learning/dbscan.py]
-learned_branch([], dbscan, io, io) :-
-    io_equal(dbscan).
-learned_branch([], dbscan, trace, io) :-
-    io_trace_equal(dbscan).
-learned_branch([], dbscan, logic, io) :-
-    logic_equal(dbscan).
 % decimal_isolate under []: learned from [maths/decimal_isolate.py]
 learned_branch([], decimal_isolate, io, io) :-
     io_equal(decimal_isolate).
@@ -689,13 +654,6 @@ learned_branch([], dilation_operation, trace, io) :-
     io_trace_equal(dilation_operation).
 learned_branch([], dilation_operation, logic, io) :-
     logic_equal(dilation_operation).
-% disarum_number under []: learned from [maths/special_numbers/disarum_number.py]
-learned_branch([], disarum_number, io, io) :-
-    io_equal(disarum_number).
-learned_branch([], disarum_number, trace, io) :-
-    io_trace_equal(disarum_number).
-learned_branch([], disarum_number, logic, io) :-
-    logic_equal(disarum_number).
 % dna under []: learned from [strings/dna.py]
 learned_branch([], dna, io, io) :-
     io_equal(dna).
@@ -773,13 +731,6 @@ learned_branch([], escape_velocity, trace, io) :-
     io_trace_equal(escape_velocity).
 learned_branch([], escape_velocity, logic, io) :-
     logic_equal(escape_velocity).
-% euclidean_distance under []: learned from [maths/euclidean_distance.py]
-learned_branch([], euclidean_distance, io, io) :-
-    io_equal(euclidean_distance).
-learned_branch([], euclidean_distance, trace, io) :-
-    io_trace_equal(euclidean_distance).
-learned_branch([], euclidean_distance, logic, io) :-
-    logic_equal(euclidean_distance).
 % euler_method under []: learned from [maths/euler_method.py]
 learned_branch([], euler_method, io, io) :-
     io_equal(euler_method).
@@ -1396,13 +1347,6 @@ learned_branch([], job_sequencing_with_deadline, trace, io) :-
     io_trace_equal(job_sequencing_with_deadline).
 learned_branch([], job_sequencing_with_deadline, logic, io) :-
     logic_equal(job_sequencing_with_deadline).
-% joint_probability_distribution under []: learned from [maths/joint_probability_distribution.py]
-learned_branch([], joint_probability_distribution, io, io) :-
-    io_equal(joint_probability_distribution).
-learned_branch([], joint_probability_distribution, trace, io) :-
-    io_trace_equal(joint_probability_distribution).
-learned_branch([], joint_probability_distribution, logic, io) :-
-    logic_equal(joint_probability_distribution).
 % juggler_sequence under []: learned from [maths/juggler_sequence.py]
 learned_branch([], juggler_sequence, io, io) :-
     io_equal(juggler_sequence).
@@ -1641,13 +1585,6 @@ learned_branch([], mab, trace, io) :-
     io_trace_equal(mab).
 learned_branch([], mab, logic, io) :-
     logic_equal(mab).
-% maclaurin_series under []: learned from [maths/maclaurin_series.py]
-learned_branch([], maclaurin_series, io, io) :-
-    io_equal(maclaurin_series).
-learned_branch([], maclaurin_series, trace, io) :-
-    io_trace_equal(maclaurin_series).
-learned_branch([], maclaurin_series, logic, io) :-
-    logic_equal(maclaurin_series).
 % magnetic_flux under []: learned from [physics/magnetic_flux.py]
 learned_branch([], magnetic_flux, io, io) :-
     io_equal(magnetic_flux).
@@ -1704,13 +1641,6 @@ learned_branch([], median_filter, trace, io) :-
     io_trace_equal(median_filter).
 learned_branch([], median_filter, logic, io) :-
     logic_equal(median_filter).
-% median_matrix under []: learned from [matrix/median_matrix.py]
-learned_branch([], median_matrix, io, io) :-
-    io_equal(median_matrix).
-learned_branch([], median_matrix, trace, io) :-
-    io_trace_equal(median_matrix).
-learned_branch([], median_matrix, logic, io) :-
-    logic_equal(median_matrix).
 % median_two_array under []: learned from [data_structures/arrays/median_two_array.py]
 learned_branch([], median_two_array, io, io) :-
     io_equal(median_two_array).
@@ -1746,13 +1676,6 @@ learned_branch([], minimum_steps_to_one, trace, io) :-
     io_trace_equal(minimum_steps_to_one).
 learned_branch([], minimum_steps_to_one, logic, io) :-
     logic_equal(minimum_steps_to_one).
-% minkowski_distance under []: learned from [maths/minkowski_distance.py]
-learned_branch([], minkowski_distance, io, io) :-
-    io_equal(minkowski_distance).
-learned_branch([], minkowski_distance, trace, io) :-
-    io_trace_equal(minkowski_distance).
-learned_branch([], minkowski_distance, logic, io) :-
-    logic_equal(minkowski_distance).
 % mirror_formulae under []: learned from [physics/mirror_formulae.py]
 learned_branch([], mirror_formulae, io, io) :-
     io_equal(mirror_formulae).
@@ -1914,13 +1837,6 @@ learned_branch([], non_preemptive_shortest_job_first, trace, io) :-
     io_trace_equal(non_preemptive_shortest_job_first).
 learned_branch([], non_preemptive_shortest_job_first, logic, io) :-
     logic_equal(non_preemptive_shortest_job_first).
-% nor_gate under []: learned from [boolean_algebra/nor_gate.py]
-learned_branch([], nor_gate, io, io) :-
-    io_equal(nor_gate).
-learned_branch([], nor_gate, trace, io) :-
-    io_trace_equal(nor_gate).
-learned_branch([], nor_gate, logic, io) :-
-    logic_equal(nor_gate).
 % not_gate under []: learned from [boolean_algebra/not_gate.py]
 learned_branch([], not_gate, io, io) :-
     io_equal(not_gate).
@@ -2033,13 +1949,6 @@ learned_branch([], perfect_cube, trace, io) :-
     io_trace_equal(perfect_cube).
 learned_branch([], perfect_cube, logic, io) :-
     logic_equal(perfect_cube).
-% perfect_number under []: learned from [maths/special_numbers/perfect_number.py]
-learned_branch([], perfect_number, io, io) :-
-    io_equal(perfect_number).
-learned_branch([], perfect_number, trace, io) :-
-    io_trace_equal(perfect_number).
-learned_branch([], perfect_number, logic, io) :-
-    logic_equal(perfect_number).
 % perfect_square under []: learned from [maths/perfect_square.py]
 learned_branch([], perfect_square, io, io) :-
     io_equal(perfect_square).
@@ -2103,13 +2012,6 @@ learned_branch([], prefix_sum, trace, io) :-
     io_trace_equal(prefix_sum).
 learned_branch([], prefix_sum, logic, io) :-
     logic_equal(prefix_sum).
-% present_value under []: learned from [financial/present_value.py]
-learned_branch([], present_value, io, io) :-
-    io_equal(present_value).
-learned_branch([], present_value, trace, io) :-
-    io_trace_equal(present_value).
-learned_branch([], present_value, logic, io) :-
-    logic_equal(present_value).
 % pressure_conversions under []: learned from [conversions/pressure_conversions.py]
 learned_branch([], pressure_conversions, io, io) :-
     io_equal(pressure_conversions).
@@ -2145,7 +2047,7 @@ learned_branch([], print_multiplication_table, trace, io) :-
     io_trace_equal(print_multiplication_table).
 learned_branch([], print_multiplication_table, logic, io) :-
     logic_equal(print_multiplication_table).
-% problem_001 under []: learned from [project_euler/problem_001/sol1.py,project_euler/problem_001/sol2.py,project_euler/problem_001/sol4.py,project_euler/problem_001/sol5.py]
+% problem_001 under []: learned from [project_euler/problem_001/sol2.py,project_euler/problem_001/sol4.py]
 learned_branch([], problem_001, io, io) :-
     io_equal(problem_001).
 learned_branch([], problem_001, trace, io) :-
@@ -2166,13 +2068,6 @@ learned_branch([], problem_006, trace, io) :-
     io_trace_equal(problem_006).
 learned_branch([], problem_006, logic, io) :-
     logic_equal(problem_006).
-% problem_008 under []: learned from [project_euler/problem_008/sol2.py]
-learned_branch([], problem_008, io, io) :-
-    io_equal(problem_008).
-learned_branch([], problem_008, trace, io) :-
-    io_trace_equal(problem_008).
-learned_branch([], problem_008, logic, io) :-
-    logic_equal(problem_008).
 % problem_009 under []: learned from [project_euler/problem_009/sol3.py]
 learned_branch([], problem_009, io, io) :-
     io_equal(problem_009).
@@ -2187,13 +2082,6 @@ learned_branch([], problem_011, trace, io) :-
     io_trace_equal(problem_011).
 learned_branch([], problem_011, logic, io) :-
     logic_equal(problem_011).
-% problem_013 under []: learned from [project_euler/problem_013/sol1.py]
-learned_branch([], problem_013, io, io) :-
-    io_equal(problem_013).
-learned_branch([], problem_013, trace, io) :-
-    io_trace_equal(problem_013).
-learned_branch([], problem_013, logic, io) :-
-    logic_equal(problem_013).
 % problem_014 under []: learned from [project_euler/problem_014/sol2.py]
 learned_branch([], problem_014, io, io) :-
     io_equal(problem_014).
@@ -2208,13 +2096,6 @@ learned_branch([], problem_015, trace, io) :-
     io_trace_equal(problem_015).
 learned_branch([], problem_015, logic, io) :-
     logic_equal(problem_015).
-% problem_020 under []: learned from [project_euler/problem_020/sol2.py]
-learned_branch([], problem_020, io, io) :-
-    io_equal(problem_020).
-learned_branch([], problem_020, trace, io) :-
-    io_trace_equal(problem_020).
-learned_branch([], problem_020, logic, io) :-
-    logic_equal(problem_020).
 % problem_023 under []: learned from [project_euler/problem_023/sol1.py]
 learned_branch([], problem_023, io, io) :-
     io_equal(problem_023).
@@ -2243,13 +2124,6 @@ learned_branch([], problem_029, trace, io) :-
     io_trace_equal(problem_029).
 learned_branch([], problem_029, logic, io) :-
     logic_equal(problem_029).
-% problem_030 under []: learned from [project_euler/problem_030/sol1.py]
-learned_branch([], problem_030, io, io) :-
-    io_equal(problem_030).
-learned_branch([], problem_030, trace, io) :-
-    io_trace_equal(problem_030).
-learned_branch([], problem_030, logic, io) :-
-    logic_equal(problem_030).
 % problem_031 under []: learned from [project_euler/problem_031/sol2.py]
 learned_branch([], problem_031, io, io) :-
     io_equal(problem_031).
@@ -2257,13 +2131,6 @@ learned_branch([], problem_031, trace, io) :-
     io_trace_equal(problem_031).
 learned_branch([], problem_031, logic, io) :-
     logic_equal(problem_031).
-% problem_034 under []: learned from [project_euler/problem_034/sol1.py]
-learned_branch([], problem_034, io, io) :-
-    io_equal(problem_034).
-learned_branch([], problem_034, trace, io) :-
-    io_trace_equal(problem_034).
-learned_branch([], problem_034, logic, io) :-
-    logic_equal(problem_034).
 % problem_039 under []: learned from [project_euler/problem_039/sol1.py]
 learned_branch([], problem_039, io, io) :-
     io_equal(problem_039).
@@ -2278,13 +2145,6 @@ learned_branch([], problem_040, trace, io) :-
     io_trace_equal(problem_040).
 learned_branch([], problem_040, logic, io) :-
     logic_equal(problem_040).
-% problem_043 under []: learned from [project_euler/problem_043/sol1.py]
-learned_branch([], problem_043, io, io) :-
-    io_equal(problem_043).
-learned_branch([], problem_043, trace, io) :-
-    io_trace_equal(problem_043).
-learned_branch([], problem_043, logic, io) :-
-    logic_equal(problem_043).
 % problem_048 under []: learned from [project_euler/problem_048/sol1.py]
 learned_branch([], problem_048, io, io) :-
     io_equal(problem_048).
@@ -2313,13 +2173,6 @@ learned_branch([], problem_062, trace, io) :-
     io_trace_equal(problem_062).
 learned_branch([], problem_062, logic, io) :-
     logic_equal(problem_062).
-% problem_063 under []: learned from [project_euler/problem_063/sol1.py]
-learned_branch([], problem_063, io, io) :-
-    io_equal(problem_063).
-learned_branch([], problem_063, trace, io) :-
-    io_trace_equal(problem_063).
-learned_branch([], problem_063, logic, io) :-
-    logic_equal(problem_063).
 % problem_067 under []: learned from [project_euler/problem_067/sol2.py]
 learned_branch([], problem_067, io, io) :-
     io_equal(problem_067).
@@ -2341,13 +2194,6 @@ learned_branch([], problem_072, trace, io) :-
     io_trace_equal(problem_072).
 learned_branch([], problem_072, logic, io) :-
     logic_equal(problem_072).
-% problem_074 under []: learned from [project_euler/problem_074/sol1.py,project_euler/problem_074/sol2.py]
-learned_branch([], problem_074, io, io) :-
-    io_equal(problem_074).
-learned_branch([], problem_074, trace, io) :-
-    io_trace_equal(problem_074).
-learned_branch([], problem_074, logic, io) :-
-    logic_equal(problem_074).
 % problem_075 under []: learned from [project_euler/problem_075/sol1.py]
 learned_branch([], problem_075, io, io) :-
     io_equal(problem_075).
@@ -2390,13 +2236,6 @@ learned_branch([], problem_104, trace, io) :-
     io_trace_equal(problem_104).
 learned_branch([], problem_104, logic, io) :-
     logic_equal(problem_104).
-% problem_111 under []: learned from [project_euler/problem_111/sol1.py]
-learned_branch([], problem_111, io, io) :-
-    io_equal(problem_111).
-learned_branch([], problem_111, trace, io) :-
-    io_trace_equal(problem_111).
-learned_branch([], problem_111, logic, io) :-
-    logic_equal(problem_111).
 % problem_114 under []: learned from [project_euler/problem_114/sol1.py]
 learned_branch([], problem_114, io, io) :-
     io_equal(problem_114).
@@ -2418,20 +2257,6 @@ learned_branch([], problem_117, trace, io) :-
     io_trace_equal(problem_117).
 learned_branch([], problem_117, logic, io) :-
     logic_equal(problem_117).
-% problem_119 under []: learned from [project_euler/problem_119/sol1.py]
-learned_branch([], problem_119, io, io) :-
-    io_equal(problem_119).
-learned_branch([], problem_119, trace, io) :-
-    io_trace_equal(problem_119).
-learned_branch([], problem_119, logic, io) :-
-    logic_equal(problem_119).
-% problem_120 under []: learned from [project_euler/problem_120/sol1.py]
-learned_branch([], problem_120, io, io) :-
-    io_equal(problem_120).
-learned_branch([], problem_120, trace, io) :-
-    io_trace_equal(problem_120).
-learned_branch([], problem_120, logic, io) :-
-    logic_equal(problem_120).
 % problem_125 under []: learned from [project_euler/problem_125/sol1.py]
 learned_branch([], problem_125, io, io) :-
     io_equal(problem_125).
@@ -2936,13 +2761,6 @@ learned_branch([], soboleva_modified_hyperbolic_tangent, trace, io) :-
     io_trace_equal(soboleva_modified_hyperbolic_tangent).
 learned_branch([], soboleva_modified_hyperbolic_tangent, logic, io) :-
     logic_equal(soboleva_modified_hyperbolic_tangent).
-% sock_merchant under []: learned from [maths/sock_merchant.py]
-learned_branch([], sock_merchant, io, io) :-
-    io_equal(sock_merchant).
-learned_branch([], sock_merchant, trace, io) :-
-    io_trace_equal(sock_merchant).
-learned_branch([], sock_merchant, logic, io) :-
-    logic_equal(sock_merchant).
 % softmax under []: learned from [maths/softmax.py]
 learned_branch([], softmax, io, io) :-
     io_equal(softmax).
@@ -3237,13 +3055,6 @@ learned_branch([], ugly_numbers, trace, io) :-
     io_trace_equal(ugly_numbers).
 learned_branch([], ugly_numbers, logic, io) :-
     logic_equal(ugly_numbers).
-% upper under []: learned from [strings/upper.py]
-learned_branch([], upper, io, io) :-
-    io_equal(upper).
-learned_branch([], upper, trace, io) :-
-    io_trace_equal(upper).
-learned_branch([], upper, logic, io) :-
-    logic_equal(upper).
 % validate_sudoku_board under []: learned from [matrix/validate_sudoku_board.py]
 learned_branch([], validate_sudoku_board, io, io) :-
     io_equal(validate_sudoku_board).
@@ -3804,6 +3615,13 @@ learned_branch([numeric], binary_to_gray_code, trace, io) :-
     io_trace_equal(binary_to_gray_code).
 learned_branch([numeric], binary_to_gray_code, logic, io) :-
     logic_equal(binary_to_gray_code).
+% binomial_expansion under [numeric]: learned from [maths/binomial_expansion.py]
+learned_branch([numeric], binomial_expansion, io, io) :-
+    io_equal(binomial_expansion).
+learned_branch([numeric], binomial_expansion, trace, io) :-
+    io_trace_equal(binomial_expansion).
+learned_branch([numeric], binomial_expansion, logic, io) :-
+    logic_equal(binomial_expansion).
 % bisection under [numeric]: learned from [maths/numerical_analysis/bisection.py]
 learned_branch([numeric], bisection, io, io) :-
     io_equal(bisection).
@@ -3846,6 +3664,13 @@ learned_branch([numeric], breadth_first_search_shortest_path, trace, io) :-
     io_trace_equal(breadth_first_search_shortest_path).
 learned_branch([numeric], breadth_first_search_shortest_path, logic, io) :-
     logic_equal(breadth_first_search_shortest_path).
+% can_string_be_rearranged_as_palindrome under [numeric]: learned from [strings/can_string_be_rearranged_as_palindrome.py]
+learned_branch([numeric], can_string_be_rearranged_as_palindrome, io, io) :-
+    io_equal(can_string_be_rearranged_as_palindrome).
+learned_branch([numeric], can_string_be_rearranged_as_palindrome, trace, io) :-
+    io_trace_equal(can_string_be_rearranged_as_palindrome).
+learned_branch([numeric], can_string_be_rearranged_as_palindrome, logic, io) :-
+    logic_equal(can_string_be_rearranged_as_palindrome).
 % capacitor_equivalence under [numeric]: learned from [electronics/capacitor_equivalence.py]
 learned_branch([numeric], capacitor_equivalence, io, io) :-
     io_equal(capacitor_equivalence).
@@ -3867,6 +3692,13 @@ learned_branch([numeric], catalan_number, trace, io) :-
     io_trace_equal(catalan_number).
 learned_branch([numeric], catalan_number, logic, io) :-
     logic_equal(catalan_number).
+% center_of_mass under [numeric]: learned from [physics/center_of_mass.py]
+learned_branch([numeric], center_of_mass, io, io) :-
+    io_equal(center_of_mass).
+learned_branch([numeric], center_of_mass, trace, io) :-
+    io_trace_equal(center_of_mass).
+learned_branch([numeric], center_of_mass, logic, io) :-
+    logic_equal(center_of_mass).
 % check_polygon under [numeric]: learned from [maths/check_polygon.py]
 learned_branch([numeric], check_polygon, io, io) :-
     io_equal(check_polygon).
@@ -3909,6 +3741,13 @@ learned_branch([numeric], count_number_of_one_bits, trace, io) :-
     io_trace_equal(count_number_of_one_bits).
 learned_branch([numeric], count_number_of_one_bits, logic, io) :-
     logic_equal(count_number_of_one_bits).
+% dbscan under [numeric]: learned from [machine_learning/dbscan.py]
+learned_branch([numeric], dbscan, io, io) :-
+    io_equal(dbscan).
+learned_branch([numeric], dbscan, trace, io) :-
+    io_trace_equal(dbscan).
+learned_branch([numeric], dbscan, logic, io) :-
+    logic_equal(dbscan).
 % decimal_to_any under [numeric]: learned from [conversions/decimal_to_any.py]
 learned_branch([numeric], decimal_to_any, io, io) :-
     io_equal(decimal_to_any).
@@ -3972,6 +3811,13 @@ learned_branch([numeric], disarium, trace, io) :-
     io_trace_equal(disarium).
 learned_branch([numeric], disarium, logic, io) :-
     logic_equal(disarium).
+% disarum_number under [numeric]: learned from [maths/special_numbers/disarum_number.py]
+learned_branch([numeric], disarum_number, io, io) :-
+    io_equal(disarum_number).
+learned_branch([numeric], disarum_number, trace, io) :-
+    io_trace_equal(disarum_number).
+learned_branch([numeric], disarum_number, logic, io) :-
+    logic_equal(disarum_number).
 % disjoint_set under [numeric]: learned from [data_structures/disjoint_set/disjoint_set.py]
 learned_branch([numeric], disjoint_set, io, io) :-
     io_equal(disjoint_set).
@@ -4014,6 +3860,13 @@ learned_branch([numeric], elgamal_key_generator, trace, io) :-
     io_trace_equal(elgamal_key_generator).
 learned_branch([numeric], elgamal_key_generator, logic, io) :-
     logic_equal(elgamal_key_generator).
+% euclidean_distance under [numeric]: learned from [maths/euclidean_distance.py]
+learned_branch([numeric], euclidean_distance, io, io) :-
+    io_equal(euclidean_distance).
+learned_branch([numeric], euclidean_distance, trace, io) :-
+    io_trace_equal(euclidean_distance).
+learned_branch([numeric], euclidean_distance, logic, io) :-
+    logic_equal(euclidean_distance).
 % evil_number under [numeric]: learned from [maths/special_numbers/evil_number.py]
 learned_branch([numeric], evil_number, io, io) :-
     io_equal(evil_number).
@@ -4063,13 +3916,6 @@ learned_branch([numeric], fletcher16, trace, io) :-
     io_trace_equal(fletcher16).
 learned_branch([numeric], fletcher16, logic, io) :-
     logic_equal(fletcher16).
-% floor_and_ceiling under [numeric]: learned from [data_structures/binary_tree/floor_and_ceiling.py]
-learned_branch([numeric], floor_and_ceiling, io, io) :-
-    io_equal(floor_and_ceiling).
-learned_branch([numeric], floor_and_ceiling, trace, io) :-
-    io_trace_equal(floor_and_ceiling).
-learned_branch([numeric], floor_and_ceiling, logic, io) :-
-    logic_equal(floor_and_ceiling).
 % floyds_cycle_detection under [numeric]: learned from [data_structures/linked_list/floyds_cycle_detection.py]
 learned_branch([numeric], floyds_cycle_detection, io, io) :-
     io_equal(floyds_cycle_detection).
@@ -4238,13 +4084,6 @@ learned_branch([numeric], is_polish_national_id, trace, io) :-
     io_trace_equal(is_polish_national_id).
 learned_branch([numeric], is_polish_national_id, logic, io) :-
     logic_equal(is_polish_national_id).
-% is_sum_tree under [numeric]: learned from [data_structures/binary_tree/is_sum_tree.py]
-learned_branch([numeric], is_sum_tree, io, io) :-
-    io_equal(is_sum_tree).
-learned_branch([numeric], is_sum_tree, trace, io) :-
-    io_trace_equal(is_sum_tree).
-learned_branch([numeric], is_sum_tree, logic, io) :-
-    logic_equal(is_sum_tree).
 % jenkins_one_at_a_time under [numeric]: learned from [hashes/jenkins_one_at_a_time.py]
 learned_branch([numeric], jenkins_one_at_a_time, io, io) :-
     io_equal(jenkins_one_at_a_time).
@@ -4252,6 +4091,13 @@ learned_branch([numeric], jenkins_one_at_a_time, trace, io) :-
     io_trace_equal(jenkins_one_at_a_time).
 learned_branch([numeric], jenkins_one_at_a_time, logic, io) :-
     logic_equal(jenkins_one_at_a_time).
+% joint_probability_distribution under [numeric]: learned from [maths/joint_probability_distribution.py]
+learned_branch([numeric], joint_probability_distribution, io, io) :-
+    io_equal(joint_probability_distribution).
+learned_branch([numeric], joint_probability_distribution, trace, io) :-
+    io_trace_equal(joint_probability_distribution).
+learned_branch([numeric], joint_probability_distribution, logic, io) :-
+    logic_equal(joint_probability_distribution).
 % largest_pow_of_two_le_num under [numeric]: learned from [bit_manipulation/largest_pow_of_two_le_num.py]
 learned_branch([numeric], largest_pow_of_two_le_num, io, io) :-
     io_equal(largest_pow_of_two_le_num).
@@ -4294,6 +4140,13 @@ learned_branch([numeric], macaulay_duration, trace, io) :-
     io_trace_equal(macaulay_duration).
 learned_branch([numeric], macaulay_duration, logic, io) :-
     logic_equal(macaulay_duration).
+% maclaurin_series under [numeric]: learned from [maths/maclaurin_series.py]
+learned_branch([numeric], maclaurin_series, io, io) :-
+    io_equal(maclaurin_series).
+learned_branch([numeric], maclaurin_series, trace, io) :-
+    io_trace_equal(maclaurin_series).
+learned_branch([numeric], maclaurin_series, logic, io) :-
+    logic_equal(maclaurin_series).
 % magicdiamondpattern under [numeric]: learned from [other/magicdiamondpattern.py]
 learned_branch([numeric], magicdiamondpattern, io, io) :-
     io_equal(magicdiamondpattern).
@@ -4343,13 +4196,13 @@ learned_branch([numeric], minimum_spanning_tree_kruskal2, trace, io) :-
     io_trace_equal(minimum_spanning_tree_kruskal2).
 learned_branch([numeric], minimum_spanning_tree_kruskal2, logic, io) :-
     logic_equal(minimum_spanning_tree_kruskal2).
-% mirror_binary_tree under [numeric]: learned from [data_structures/binary_tree/mirror_binary_tree.py]
-learned_branch([numeric], mirror_binary_tree, io, io) :-
-    io_equal(mirror_binary_tree).
-learned_branch([numeric], mirror_binary_tree, trace, io) :-
-    io_trace_equal(mirror_binary_tree).
-learned_branch([numeric], mirror_binary_tree, logic, io) :-
-    logic_equal(mirror_binary_tree).
+% minkowski_distance under [numeric]: learned from [maths/minkowski_distance.py]
+learned_branch([numeric], minkowski_distance, io, io) :-
+    io_equal(minkowski_distance).
+learned_branch([numeric], minkowski_distance, trace, io) :-
+    io_trace_equal(minkowski_distance).
+learned_branch([numeric], minkowski_distance, logic, io) :-
+    logic_equal(minkowski_distance).
 % modular_exponential under [numeric]: learned from [maths/modular_exponential.py]
 learned_branch([numeric], modular_exponential, io, io) :-
     io_equal(modular_exponential).
@@ -4532,6 +4385,13 @@ learned_branch([numeric], prefix_conversions_string, trace, io) :-
     io_trace_equal(prefix_conversions_string).
 learned_branch([numeric], prefix_conversions_string, logic, io) :-
     logic_equal(prefix_conversions_string).
+% present_value under [numeric]: learned from [financial/present_value.py]
+learned_branch([numeric], present_value, io, io) :-
+    io_equal(present_value).
+learned_branch([numeric], present_value, trace, io) :-
+    io_trace_equal(present_value).
+learned_branch([numeric], present_value, logic, io) :-
+    logic_equal(present_value).
 % priority_queue_using_list under [numeric]: learned from [data_structures/queues/priority_queue_using_list.py]
 learned_branch([numeric], priority_queue_using_list, io, io) :-
     io_equal(priority_queue_using_list).
@@ -4539,7 +4399,7 @@ learned_branch([numeric], priority_queue_using_list, trace, io) :-
     io_trace_equal(priority_queue_using_list).
 learned_branch([numeric], priority_queue_using_list, logic, io) :-
     logic_equal(priority_queue_using_list).
-% problem_001 under [numeric]: learned from [project_euler/problem_001/sol3.py,project_euler/problem_001/sol6.py,project_euler/problem_001/sol7.py]
+% problem_001 under [numeric]: learned from [project_euler/problem_001/sol1.py,project_euler/problem_001/sol3.py,project_euler/problem_001/sol5.py,project_euler/problem_001/sol6.py,project_euler/problem_001/sol7.py]
 learned_branch([numeric], problem_001, io, io) :-
     io_equal(problem_001).
 learned_branch([numeric], problem_001, trace, io) :-
@@ -4574,6 +4434,13 @@ learned_branch([numeric], problem_009, trace, io) :-
     io_trace_equal(problem_009).
 learned_branch([numeric], problem_009, logic, io) :-
     logic_equal(problem_009).
+% problem_013 under [numeric]: learned from [project_euler/problem_013/sol1.py]
+learned_branch([numeric], problem_013, io, io) :-
+    io_equal(problem_013).
+learned_branch([numeric], problem_013, trace, io) :-
+    io_trace_equal(problem_013).
+learned_branch([numeric], problem_013, logic, io) :-
+    logic_equal(problem_013).
 % problem_016 under [numeric]: learned from [project_euler/problem_016/sol1.py]
 learned_branch([numeric], problem_016, io, io) :-
     io_equal(problem_016).
@@ -4588,7 +4455,7 @@ learned_branch([numeric], problem_019, trace, io) :-
     io_trace_equal(problem_019).
 learned_branch([numeric], problem_019, logic, io) :-
     logic_equal(problem_019).
-% problem_020 under [numeric]: learned from [project_euler/problem_020/sol3.py]
+% problem_020 under [numeric]: learned from [project_euler/problem_020/sol2.py,project_euler/problem_020/sol3.py]
 learned_branch([numeric], problem_020, io, io) :-
     io_equal(problem_020).
 learned_branch([numeric], problem_020, trace, io) :-
@@ -4616,6 +4483,13 @@ learned_branch([numeric], problem_028, trace, io) :-
     io_trace_equal(problem_028).
 learned_branch([numeric], problem_028, logic, io) :-
     logic_equal(problem_028).
+% problem_030 under [numeric]: learned from [project_euler/problem_030/sol1.py]
+learned_branch([numeric], problem_030, io, io) :-
+    io_equal(problem_030).
+learned_branch([numeric], problem_030, trace, io) :-
+    io_trace_equal(problem_030).
+learned_branch([numeric], problem_030, logic, io) :-
+    logic_equal(problem_030).
 % problem_031 under [numeric]: learned from [project_euler/problem_031/sol1.py]
 learned_branch([numeric], problem_031, io, io) :-
     io_equal(problem_031).
@@ -4623,6 +4497,13 @@ learned_branch([numeric], problem_031, trace, io) :-
     io_trace_equal(problem_031).
 learned_branch([numeric], problem_031, logic, io) :-
     logic_equal(problem_031).
+% problem_034 under [numeric]: learned from [project_euler/problem_034/sol1.py]
+learned_branch([numeric], problem_034, io, io) :-
+    io_equal(problem_034).
+learned_branch([numeric], problem_034, trace, io) :-
+    io_trace_equal(problem_034).
+learned_branch([numeric], problem_034, logic, io) :-
+    logic_equal(problem_034).
 % problem_036 under [numeric]: learned from [project_euler/problem_036/sol1.py]
 learned_branch([numeric], problem_036, io, io) :-
     io_equal(problem_036).
@@ -4637,6 +4518,13 @@ learned_branch([numeric], problem_038, trace, io) :-
     io_trace_equal(problem_038).
 learned_branch([numeric], problem_038, logic, io) :-
     logic_equal(problem_038).
+% problem_043 under [numeric]: learned from [project_euler/problem_043/sol1.py]
+learned_branch([numeric], problem_043, io, io) :-
+    io_equal(problem_043).
+learned_branch([numeric], problem_043, trace, io) :-
+    io_trace_equal(problem_043).
+learned_branch([numeric], problem_043, logic, io) :-
+    logic_equal(problem_043).
 % problem_044 under [numeric]: learned from [project_euler/problem_044/sol1.py]
 learned_branch([numeric], problem_044, io, io) :-
     io_equal(problem_044).
@@ -4679,13 +4567,13 @@ learned_branch([numeric], problem_055, trace, io) :-
     io_trace_equal(problem_055).
 learned_branch([numeric], problem_055, logic, io) :-
     logic_equal(problem_055).
-% problem_059 under [numeric]: learned from [project_euler/problem_059/sol1.py]
-learned_branch([numeric], problem_059, io, io) :-
-    io_equal(problem_059).
-learned_branch([numeric], problem_059, trace, io) :-
-    io_trace_equal(problem_059).
-learned_branch([numeric], problem_059, logic, io) :-
-    logic_equal(problem_059).
+% problem_063 under [numeric]: learned from [project_euler/problem_063/sol1.py]
+learned_branch([numeric], problem_063, io, io) :-
+    io_equal(problem_063).
+learned_branch([numeric], problem_063, trace, io) :-
+    io_trace_equal(problem_063).
+learned_branch([numeric], problem_063, logic, io) :-
+    logic_equal(problem_063).
 % problem_064 under [numeric]: learned from [project_euler/problem_064/sol1.py]
 learned_branch([numeric], problem_064, io, io) :-
     io_equal(problem_064).
@@ -4714,6 +4602,13 @@ learned_branch([numeric], problem_073, trace, io) :-
     io_trace_equal(problem_073).
 learned_branch([numeric], problem_073, logic, io) :-
     logic_equal(problem_073).
+% problem_074 under [numeric]: learned from [project_euler/problem_074/sol1.py,project_euler/problem_074/sol2.py]
+learned_branch([numeric], problem_074, io, io) :-
+    io_equal(problem_074).
+learned_branch([numeric], problem_074, trace, io) :-
+    io_trace_equal(problem_074).
+learned_branch([numeric], problem_074, logic, io) :-
+    logic_equal(problem_074).
 % problem_080 under [numeric]: learned from [project_euler/problem_080/sol1.py]
 learned_branch([numeric], problem_080, io, io) :-
     io_equal(problem_080).
@@ -4777,6 +4672,20 @@ learned_branch([numeric], problem_113, trace, io) :-
     io_trace_equal(problem_113).
 learned_branch([numeric], problem_113, logic, io) :-
     logic_equal(problem_113).
+% problem_119 under [numeric]: learned from [project_euler/problem_119/sol1.py]
+learned_branch([numeric], problem_119, io, io) :-
+    io_equal(problem_119).
+learned_branch([numeric], problem_119, trace, io) :-
+    io_trace_equal(problem_119).
+learned_branch([numeric], problem_119, logic, io) :-
+    logic_equal(problem_119).
+% problem_120 under [numeric]: learned from [project_euler/problem_120/sol1.py]
+learned_branch([numeric], problem_120, io, io) :-
+    io_equal(problem_120).
+learned_branch([numeric], problem_120, trace, io) :-
+    io_trace_equal(problem_120).
+learned_branch([numeric], problem_120, logic, io) :-
+    logic_equal(problem_120).
 % problem_123 under [numeric]: learned from [project_euler/problem_123/sol1.py]
 learned_branch([numeric], problem_123, io, io) :-
     io_equal(problem_123).
@@ -4791,13 +4700,6 @@ learned_branch([numeric], problem_129, trace, io) :-
     io_trace_equal(problem_129).
 learned_branch([numeric], problem_129, logic, io) :-
     logic_equal(problem_129).
-% problem_131 under [numeric]: learned from [project_euler/problem_131/sol1.py]
-learned_branch([numeric], problem_131, io, io) :-
-    io_equal(problem_131).
-learned_branch([numeric], problem_131, trace, io) :-
-    io_trace_equal(problem_131).
-learned_branch([numeric], problem_131, logic, io) :-
-    logic_equal(problem_131).
 % problem_138 under [numeric]: learned from [project_euler/problem_138/sol1.py]
 learned_branch([numeric], problem_138, io, io) :-
     io_equal(problem_138).
@@ -5036,6 +4938,20 @@ learned_branch([numeric], sliding_window_attention, trace, io) :-
     io_trace_equal(sliding_window_attention).
 learned_branch([numeric], sliding_window_attention, logic, io) :-
     logic_equal(sliding_window_attention).
+% sock_merchant under [numeric]: learned from [maths/sock_merchant.py]
+learned_branch([numeric], sock_merchant, io, io) :-
+    io_equal(sock_merchant).
+learned_branch([numeric], sock_merchant, trace, io) :-
+    io_trace_equal(sock_merchant).
+learned_branch([numeric], sock_merchant, logic, io) :-
+    logic_equal(sock_merchant).
+% solution42 under [numeric]: learned from [project_euler/problem_042/solution42.py]
+learned_branch([numeric], solution42, io, io) :-
+    io_equal(solution42).
+learned_branch([numeric], solution42, trace, io) :-
+    io_trace_equal(solution42).
+learned_branch([numeric], solution42, logic, io) :-
+    logic_equal(solution42).
 % sorted_linked_list under [numeric]: learned from [data_structures/linked_list/sorted_linked_list.py]
 learned_branch([numeric], sorted_linked_list, io, io) :-
     io_equal(sorted_linked_list).
@@ -5064,13 +4980,6 @@ learned_branch([numeric], suffix_automaton, trace, io) :-
     io_trace_equal(suffix_automaton).
 learned_branch([numeric], suffix_automaton, logic, io) :-
     logic_equal(suffix_automaton).
-% swap_nodes under [numeric]: learned from [data_structures/linked_list/swap_nodes.py]
-learned_branch([numeric], swap_nodes, io, io) :-
-    io_equal(swap_nodes).
-learned_branch([numeric], swap_nodes, trace, io) :-
-    io_trace_equal(swap_nodes).
-learned_branch([numeric], swap_nodes, logic, io) :-
-    logic_equal(swap_nodes).
 % t_stochastic_neighbour_embedding under [numeric]: learned from [machine_learning/t_stochastic_neighbour_embedding.py]
 learned_branch([numeric], t_stochastic_neighbour_embedding, io, io) :-
     io_equal(t_stochastic_neighbour_embedding).
@@ -5092,13 +5001,6 @@ learned_branch([numeric], trailing_zeroes, trace, io) :-
     io_trace_equal(trailing_zeroes).
 learned_branch([numeric], trailing_zeroes, logic, io) :-
     logic_equal(trailing_zeroes).
-% tree_sort under [numeric]: learned from [sorts/tree_sort.py]
-learned_branch([numeric], tree_sort, io, io) :-
-    io_equal(tree_sort).
-learned_branch([numeric], tree_sort, trace, io) :-
-    io_trace_equal(tree_sort).
-learned_branch([numeric], tree_sort, logic, io) :-
-    logic_equal(tree_sort).
 % vision_transformer under [numeric]: learned from [computer_vision/vision_transformer.py]
 learned_branch([numeric], vision_transformer, io, io) :-
     io_equal(vision_transformer).
@@ -5246,6 +5148,13 @@ learned_branch([numeric, divisor_test], abundant_numbers, trace, io) :-
     io_trace_equal(abundant_numbers).
 learned_branch([numeric, divisor_test], abundant_numbers, logic, io) :-
     logic_equal(abundant_numbers).
+% aliquot_sum under [numeric>divisor_test]: learned from [maths/aliquot_sum.py]
+learned_branch([numeric, divisor_test], aliquot_sum, io, io) :-
+    io_equal(aliquot_sum).
+learned_branch([numeric, divisor_test], aliquot_sum, trace, io) :-
+    io_trace_equal(aliquot_sum).
+learned_branch([numeric, divisor_test], aliquot_sum, logic, io) :-
+    logic_equal(aliquot_sum).
 % deficient_numbers under [numeric>divisor_test]: learned from [maths/special_numbers/deficient_numbers.py]
 learned_branch([numeric, divisor_test], deficient_numbers, io, io) :-
     io_equal(deficient_numbers).
@@ -5274,7 +5183,7 @@ learned_branch([numeric, divisor_test], next_prime_number, trace, io) :-
     io_trace_equal(next_prime_number).
 learned_branch([numeric, divisor_test], next_prime_number, logic, io) :-
     logic_equal(next_prime_number).
-% perfect_number under [numeric>divisor_test]: learned from [maths/perfect_number.py]
+% perfect_number under [numeric>divisor_test]: learned from [maths/perfect_number.py,maths/special_numbers/perfect_number.py]
 learned_branch([numeric, divisor_test], perfect_number, io, io) :-
     io_equal(perfect_number).
 learned_branch([numeric, divisor_test], perfect_number, trace, io) :-
@@ -5393,6 +5302,13 @@ learned_branch([numeric, divisor_test], problem_058, trace, io) :-
     io_trace_equal(problem_058).
 learned_branch([numeric, divisor_test], problem_058, logic, io) :-
     logic_equal(problem_058).
+% problem_131 under [numeric>divisor_test]: learned from [project_euler/problem_131/sol1.py]
+learned_branch([numeric, divisor_test], problem_131, io, io) :-
+    io_equal(problem_131).
+learned_branch([numeric, divisor_test], problem_131, trace, io) :-
+    io_trace_equal(problem_131).
+learned_branch([numeric, divisor_test], problem_131, logic, io) :-
+    logic_equal(problem_131).
 % reverse_factorial_recursive under [numeric>divisor_test]: learned from [maths/reverse_factorial_recursive.py]
 learned_branch([numeric, divisor_test], reverse_factorial_recursive, io, io) :-
     io_equal(reverse_factorial_recursive).
@@ -5414,13 +5330,6 @@ learned_branch([numeric, predicate], problem_033, trace, io) :-
     io_trace_equal(problem_033).
 learned_branch([numeric, predicate], problem_033, logic, io) :-
     logic_equal(problem_033).
-% problem_091 under [numeric>predicate]: learned from [project_euler/problem_091/sol1.py]
-learned_branch([numeric, predicate], problem_091, io, io) :-
-    io_equal(problem_091).
-learned_branch([numeric, predicate], problem_091, trace, io) :-
-    io_trace_equal(problem_091).
-learned_branch([numeric, predicate], problem_091, logic, io) :-
-    logic_equal(problem_091).
 % doomsday under [numeric>predicate>leap_rule]: learned from [other/doomsday.py]
 learned_branch([numeric, predicate, leap_rule], doomsday, io, io) :-
     io_equal(doomsday).
@@ -5995,6 +5904,13 @@ learned_branch([numeric, recurrence, range_accumulation], problem_051, trace, io
     io_trace_equal(problem_051).
 learned_branch([numeric, recurrence, range_accumulation], problem_051, logic, io) :-
     logic_equal(problem_051).
+% problem_091 under [numeric>recurrence>range_accumulation]: learned from [project_euler/problem_091/sol1.py]
+learned_branch([numeric, recurrence, range_accumulation], problem_091, io, io) :-
+    io_equal(problem_091).
+learned_branch([numeric, recurrence, range_accumulation], problem_091, trace, io) :-
+    io_trace_equal(problem_091).
+learned_branch([numeric, recurrence, range_accumulation], problem_091, logic, io) :-
+    logic_equal(problem_091).
 % problem_122 under [numeric>recurrence>range_accumulation]: learned from [project_euler/problem_122/sol1.py]
 learned_branch([numeric, recurrence, range_accumulation], problem_122, io, io) :-
     io_equal(problem_122).
@@ -6240,13 +6156,6 @@ learned_branch([search, backtracking], word_search, trace, io) :-
     io_trace_equal(word_search).
 learned_branch([search, backtracking], word_search, logic, io) :-
     logic_equal(word_search).
-% booths_algorithm under [search>diagonal_conflict]: learned from [strings/booths_algorithm.py]
-learned_branch([search, diagonal_conflict], booths_algorithm, io, io) :-
-    io_equal(booths_algorithm).
-learned_branch([search, diagonal_conflict], booths_algorithm, trace, io) :-
-    io_trace_equal(booths_algorithm).
-learned_branch([search, diagonal_conflict], booths_algorithm, logic, io) :-
-    logic_equal(booths_algorithm).
 % n_queens_math under [search>diagonal_conflict]: learned from [backtracking/n_queens_math.py]
 learned_branch([search, diagonal_conflict], n_queens_math, io, io) :-
     io_equal(n_queens_math).
@@ -6695,6 +6604,13 @@ learned_branch([sequence_query], flip_augmentation, trace, io) :-
     io_trace_equal(flip_augmentation).
 learned_branch([sequence_query], flip_augmentation, logic, io) :-
     logic_equal(flip_augmentation).
+% floor_and_ceiling under [sequence_query]: learned from [data_structures/binary_tree/floor_and_ceiling.py]
+learned_branch([sequence_query], floor_and_ceiling, io, io) :-
+    io_equal(floor_and_ceiling).
+learned_branch([sequence_query], floor_and_ceiling, trace, io) :-
+    io_trace_equal(floor_and_ceiling).
+learned_branch([sequence_query], floor_and_ceiling, logic, io) :-
+    logic_equal(floor_and_ceiling).
 % fractional_differentiation under [sequence_query]: learned from [financial/fractional_differentiation.py]
 learned_branch([sequence_query], fractional_differentiation, io, io) :-
     io_equal(fractional_differentiation).
@@ -6891,6 +6807,13 @@ learned_branch([sequence_query], is_square_free, trace, io) :-
     io_trace_equal(is_square_free).
 learned_branch([sequence_query], is_square_free, logic, io) :-
     logic_equal(is_square_free).
+% is_sum_tree under [sequence_query]: learned from [data_structures/binary_tree/is_sum_tree.py]
+learned_branch([sequence_query], is_sum_tree, io, io) :-
+    io_equal(is_sum_tree).
+learned_branch([sequence_query], is_sum_tree, trace, io) :-
+    io_trace_equal(is_sum_tree).
+learned_branch([sequence_query], is_sum_tree, logic, io) :-
+    logic_equal(is_sum_tree).
 % is_valid_email_address under [sequence_query]: learned from [strings/is_valid_email_address.py]
 learned_branch([sequence_query], is_valid_email_address, io, io) :-
     io_equal(is_valid_email_address).
@@ -7045,13 +6968,6 @@ learned_branch([sequence_query], manhattan_distance, trace, io) :-
     io_trace_equal(manhattan_distance).
 learned_branch([sequence_query], manhattan_distance, logic, io) :-
     logic_equal(manhattan_distance).
-% matrix_class under [sequence_query]: learned from [matrix/matrix_class.py]
-learned_branch([sequence_query], matrix_class, io, io) :-
-    io_equal(matrix_class).
-learned_branch([sequence_query], matrix_class, trace, io) :-
-    io_trace_equal(matrix_class).
-learned_branch([sequence_query], matrix_class, logic, io) :-
-    logic_equal(matrix_class).
 % matrix_equalization under [sequence_query]: learned from [matrix/matrix_equalization.py]
 learned_branch([sequence_query], matrix_equalization, io, io) :-
     io_equal(matrix_equalization).
@@ -7059,13 +6975,6 @@ learned_branch([sequence_query], matrix_equalization, trace, io) :-
     io_trace_equal(matrix_equalization).
 learned_branch([sequence_query], matrix_equalization, logic, io) :-
     logic_equal(matrix_equalization).
-% matrix_operation under [sequence_query]: learned from [matrix/matrix_operation.py]
-learned_branch([sequence_query], matrix_operation, io, io) :-
-    io_equal(matrix_operation).
-learned_branch([sequence_query], matrix_operation, trace, io) :-
-    io_trace_equal(matrix_operation).
-learned_branch([sequence_query], matrix_operation, logic, io) :-
-    logic_equal(matrix_operation).
 % max_area_of_island under [sequence_query]: learned from [matrix/max_area_of_island.py]
 learned_branch([sequence_query], max_area_of_island, io, io) :-
     io_equal(max_area_of_island).
@@ -7129,6 +7038,13 @@ learned_branch([sequence_query], maximum_subsequence, trace, io) :-
     io_trace_equal(maximum_subsequence).
 learned_branch([sequence_query], maximum_subsequence, logic, io) :-
     logic_equal(maximum_subsequence).
+% median_matrix under [sequence_query]: learned from [matrix/median_matrix.py]
+learned_branch([sequence_query], median_matrix, io, io) :-
+    io_equal(median_matrix).
+learned_branch([sequence_query], median_matrix, trace, io) :-
+    io_trace_equal(median_matrix).
+learned_branch([sequence_query], median_matrix, logic, io) :-
+    logic_equal(median_matrix).
 % median_of_medians under [sequence_query]: learned from [searches/median_of_medians.py]
 learned_branch([sequence_query], median_of_medians, io, io) :-
     io_equal(median_of_medians).
@@ -7171,6 +7087,13 @@ learned_branch([sequence_query], minimum_waiting_time, trace, io) :-
     io_trace_equal(minimum_waiting_time).
 learned_branch([sequence_query], minimum_waiting_time, logic, io) :-
     logic_equal(minimum_waiting_time).
+% mirror_binary_tree under [sequence_query]: learned from [data_structures/binary_tree/mirror_binary_tree.py]
+learned_branch([sequence_query], mirror_binary_tree, io, io) :-
+    io_equal(mirror_binary_tree).
+learned_branch([sequence_query], mirror_binary_tree, trace, io) :-
+    io_trace_equal(mirror_binary_tree).
+learned_branch([sequence_query], mirror_binary_tree, logic, io) :-
+    logic_equal(mirror_binary_tree).
 % monotonic_array under [sequence_query]: learned from [data_structures/arrays/monotonic_array.py]
 learned_branch([sequence_query], monotonic_array, io, io) :-
     io_equal(monotonic_array).
@@ -7199,6 +7122,13 @@ learned_branch([sequence_query], nested_brackets, trace, io) :-
     io_trace_equal(nested_brackets).
 learned_branch([sequence_query], nested_brackets, logic, io) :-
     logic_equal(nested_brackets).
+% nor_gate under [sequence_query]: learned from [boolean_algebra/nor_gate.py]
+learned_branch([sequence_query], nor_gate, io, io) :-
+    io_equal(nor_gate).
+learned_branch([sequence_query], nor_gate, trace, io) :-
+    io_trace_equal(nor_gate).
+learned_branch([sequence_query], nor_gate, logic, io) :-
+    logic_equal(nor_gate).
 % octal_to_binary under [sequence_query]: learned from [conversions/octal_to_binary.py]
 learned_branch([sequence_query], octal_to_binary, io, io) :-
     io_equal(octal_to_binary).
@@ -7325,7 +7255,7 @@ learned_branch([sequence_query], print_reverse, trace, io) :-
     io_trace_equal(print_reverse).
 learned_branch([sequence_query], print_reverse, logic, io) :-
     logic_equal(print_reverse).
-% problem_008 under [sequence_query]: learned from [project_euler/problem_008/sol1.py]
+% problem_008 under [sequence_query]: learned from [project_euler/problem_008/sol1.py,project_euler/problem_008/sol2.py]
 learned_branch([sequence_query], problem_008, io, io) :-
     io_equal(problem_008).
 learned_branch([sequence_query], problem_008, trace, io) :-
@@ -7542,13 +7472,6 @@ learned_branch([sequence_query], sharpe_ratio, trace, io) :-
     io_trace_equal(sharpe_ratio).
 learned_branch([sequence_query], sharpe_ratio, logic, io) :-
     logic_equal(sharpe_ratio).
-% sherman_morrison under [sequence_query]: learned from [matrix/sherman_morrison.py]
-learned_branch([sequence_query], sherman_morrison, io, io) :-
-    io_equal(sherman_morrison).
-learned_branch([sequence_query], sherman_morrison, trace, io) :-
-    io_trace_equal(sherman_morrison).
-learned_branch([sequence_query], sherman_morrison, logic, io) :-
-    logic_equal(sherman_morrison).
 % shoelace under [sequence_query]: learned from [geometry/shoelace.py]
 learned_branch([sequence_query], shoelace, io, io) :-
     io_equal(shoelace).
@@ -7633,6 +7556,13 @@ learned_branch([sequence_query], support_vector_machines, trace, io) :-
     io_trace_equal(support_vector_machines).
 learned_branch([sequence_query], support_vector_machines, logic, io) :-
     logic_equal(support_vector_machines).
+% swap_nodes under [sequence_query]: learned from [data_structures/linked_list/swap_nodes.py]
+learned_branch([sequence_query], swap_nodes, io, io) :-
+    io_equal(swap_nodes).
+learned_branch([sequence_query], swap_nodes, trace, io) :-
+    io_trace_equal(swap_nodes).
+learned_branch([sequence_query], swap_nodes, logic, io) :-
+    logic_equal(swap_nodes).
 % tabu_search under [sequence_query]: learned from [searches/tabu_search.py]
 learned_branch([sequence_query], tabu_search, io, io) :-
     io_equal(tabu_search).
@@ -7661,6 +7591,13 @@ learned_branch([sequence_query], trapezoidal_rule, trace, io) :-
     io_trace_equal(trapezoidal_rule).
 learned_branch([sequence_query], trapezoidal_rule, logic, io) :-
     logic_equal(trapezoidal_rule).
+% tree_sort under [sequence_query]: learned from [sorts/tree_sort.py]
+learned_branch([sequence_query], tree_sort, io, io) :-
+    io_equal(tree_sort).
+learned_branch([sequence_query], tree_sort, trace, io) :-
+    io_trace_equal(tree_sort).
+learned_branch([sequence_query], tree_sort, logic, io) :-
+    logic_equal(tree_sort).
 % trie under [sequence_query]: learned from [data_structures/trie/trie.py]
 learned_branch([sequence_query], trie, io, io) :-
     io_equal(trie).
@@ -7808,6 +7745,13 @@ learned_branch([sequence_query, aggregate, gatherer], count_negative_numbers_in_
     io_trace_equal(count_negative_numbers_in_sorted_matrix).
 learned_branch([sequence_query, aggregate, gatherer], count_negative_numbers_in_sorted_matrix, logic, io) :-
     logic_equal(count_negative_numbers_in_sorted_matrix).
+% count_vowels under [sequence_query>aggregate>gatherer]: learned from [strings/count_vowels.py]
+learned_branch([sequence_query, aggregate, gatherer], count_vowels, io, io) :-
+    io_equal(count_vowels).
+learned_branch([sequence_query, aggregate, gatherer], count_vowels, trace, io) :-
+    io_trace_equal(count_vowels).
+learned_branch([sequence_query, aggregate, gatherer], count_vowels, logic, io) :-
+    logic_equal(count_vowels).
 % elf under [sequence_query>aggregate>gatherer]: learned from [hashes/elf.py]
 learned_branch([sequence_query, aggregate, gatherer], elf, io, io) :-
     io_equal(elf).
@@ -7850,6 +7794,20 @@ learned_branch([sequence_query, aggregate, gatherer], lz77, trace, io) :-
     io_trace_equal(lz77).
 learned_branch([sequence_query, aggregate, gatherer], lz77, logic, io) :-
     logic_equal(lz77).
+% matrix_class under [sequence_query>aggregate>gatherer]: learned from [matrix/matrix_class.py]
+learned_branch([sequence_query, aggregate, gatherer], matrix_class, io, io) :-
+    io_equal(matrix_class).
+learned_branch([sequence_query, aggregate, gatherer], matrix_class, trace, io) :-
+    io_trace_equal(matrix_class).
+learned_branch([sequence_query, aggregate, gatherer], matrix_class, logic, io) :-
+    logic_equal(matrix_class).
+% matrix_operation under [sequence_query>aggregate>gatherer]: learned from [matrix/matrix_operation.py]
+learned_branch([sequence_query, aggregate, gatherer], matrix_operation, io, io) :-
+    io_equal(matrix_operation).
+learned_branch([sequence_query, aggregate, gatherer], matrix_operation, trace, io) :-
+    io_trace_equal(matrix_operation).
+learned_branch([sequence_query, aggregate, gatherer], matrix_operation, logic, io) :-
+    logic_equal(matrix_operation).
 % md5 under [sequence_query>aggregate>gatherer]: learned from [hashes/md5.py]
 learned_branch([sequence_query, aggregate, gatherer], md5, io, io) :-
     io_equal(md5).
@@ -8200,13 +8158,6 @@ learned_branch([sequence_transformation], depth_first_search, trace, io) :-
     io_trace_equal(depth_first_search).
 learned_branch([sequence_transformation], depth_first_search, logic, io) :-
     logic_equal(depth_first_search).
-% des_ecb under [sequence_transformation]: learned from [ciphers/des_ecb.py]
-learned_branch([sequence_transformation], des_ecb, io, io) :-
-    io_equal(des_ecb).
-learned_branch([sequence_transformation], des_ecb, trace, io) :-
-    io_trace_equal(des_ecb).
-learned_branch([sequence_transformation], des_ecb, logic, io) :-
-    logic_equal(des_ecb).
 % dijkstra_algorithm under [sequence_transformation]: learned from [graphs/dijkstra_algorithm.py]
 learned_branch([sequence_transformation], dijkstra_algorithm, io, io) :-
     io_equal(dijkstra_algorithm).
@@ -8501,13 +8452,6 @@ learned_branch([sequence_transformation], radix_sort, trace, io) :-
     io_trace_equal(radix_sort).
 learned_branch([sequence_transformation], radix_sort, logic, io) :-
     logic_equal(radix_sort).
-% rc4 under [sequence_transformation]: learned from [ciphers/rc4.py]
-learned_branch([sequence_transformation], rc4, io, io) :-
-    io_equal(rc4).
-learned_branch([sequence_transformation], rc4, trace, io) :-
-    io_trace_equal(rc4).
-learned_branch([sequence_transformation], rc4, logic, io) :-
-    logic_equal(rc4).
 % rmsprop under [sequence_transformation]: learned from [machine_learning/rmsprop.py]
 learned_branch([sequence_transformation], rmsprop, io, io) :-
     io_equal(rmsprop).
@@ -9138,6 +9082,13 @@ learned_branch([sequence_transformation, elementwise_map], base85, trace, io) :-
     io_trace_equal(base85).
 learned_branch([sequence_transformation, elementwise_map], base85, logic, io) :-
     logic_equal(base85).
+% des_ecb under [sequence_transformation>elementwise_map]: learned from [ciphers/des_ecb.py]
+learned_branch([sequence_transformation, elementwise_map], des_ecb, io, io) :-
+    io_equal(des_ecb).
+learned_branch([sequence_transformation, elementwise_map], des_ecb, trace, io) :-
+    io_trace_equal(des_ecb).
+learned_branch([sequence_transformation, elementwise_map], des_ecb, logic, io) :-
+    logic_equal(des_ecb).
 % lower under [sequence_transformation>elementwise_map]: learned from [strings/lower.py]
 learned_branch([sequence_transformation, elementwise_map], lower, io, io) :-
     io_equal(lower).
@@ -9166,13 +9117,41 @@ learned_branch([sequence_transformation, elementwise_map], problem_013, trace, i
     io_trace_equal(problem_013).
 learned_branch([sequence_transformation, elementwise_map], problem_013, logic, io) :-
     logic_equal(problem_013).
-% solution42 under [sequence_transformation>elementwise_map]: learned from [project_euler/problem_042/solution42.py]
-learned_branch([sequence_transformation, elementwise_map], solution42, io, io) :-
-    io_equal(solution42).
-learned_branch([sequence_transformation, elementwise_map], solution42, trace, io) :-
-    io_trace_equal(solution42).
-learned_branch([sequence_transformation, elementwise_map], solution42, logic, io) :-
-    logic_equal(solution42).
+% problem_059 under [sequence_transformation>elementwise_map]: learned from [project_euler/problem_059/sol1.py]
+learned_branch([sequence_transformation, elementwise_map], problem_059, io, io) :-
+    io_equal(problem_059).
+learned_branch([sequence_transformation, elementwise_map], problem_059, trace, io) :-
+    io_trace_equal(problem_059).
+learned_branch([sequence_transformation, elementwise_map], problem_059, logic, io) :-
+    logic_equal(problem_059).
+% problem_111 under [sequence_transformation>elementwise_map]: learned from [project_euler/problem_111/sol1.py]
+learned_branch([sequence_transformation, elementwise_map], problem_111, io, io) :-
+    io_equal(problem_111).
+learned_branch([sequence_transformation, elementwise_map], problem_111, trace, io) :-
+    io_trace_equal(problem_111).
+learned_branch([sequence_transformation, elementwise_map], problem_111, logic, io) :-
+    logic_equal(problem_111).
+% rc4 under [sequence_transformation>elementwise_map]: learned from [ciphers/rc4.py]
+learned_branch([sequence_transformation, elementwise_map], rc4, io, io) :-
+    io_equal(rc4).
+learned_branch([sequence_transformation, elementwise_map], rc4, trace, io) :-
+    io_trace_equal(rc4).
+learned_branch([sequence_transformation, elementwise_map], rc4, logic, io) :-
+    logic_equal(rc4).
+% sherman_morrison under [sequence_transformation>elementwise_map]: learned from [matrix/sherman_morrison.py]
+learned_branch([sequence_transformation, elementwise_map], sherman_morrison, io, io) :-
+    io_equal(sherman_morrison).
+learned_branch([sequence_transformation, elementwise_map], sherman_morrison, trace, io) :-
+    io_trace_equal(sherman_morrison).
+learned_branch([sequence_transformation, elementwise_map], sherman_morrison, logic, io) :-
+    logic_equal(sherman_morrison).
+% upper under [sequence_transformation>elementwise_map]: learned from [strings/upper.py]
+learned_branch([sequence_transformation, elementwise_map], upper, io, io) :-
+    io_equal(upper).
+learned_branch([sequence_transformation, elementwise_map], upper, trace, io) :-
+    io_trace_equal(upper).
+learned_branch([sequence_transformation, elementwise_map], upper, logic, io) :-
+    logic_equal(upper).
 % rot13 under [sequence_transformation>elementwise_map>alphabet_rotation]: learned from [ciphers/rot13.py]
 learned_branch([sequence_transformation, elementwise_map, alphabet_rotation], rot13, io, io) :-
     io_equal(rot13).

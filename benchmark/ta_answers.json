@@ -1565,13 +1565,9 @@
 "built": [],
 "got": "bifid",
 "held": [],
-"held_trace": [
-"bifid"
-],
+"held_trace": [],
 "io": [],
-"logic": [
-"bifid"
-],
+"logic": [],
 "nodes": [],
 "specific": [
 "bifid"
@@ -1600,10 +1596,7 @@
 ],
 "io": [],
 "logic": [
-"base64_to_binary",
-"caesar_cipher",
-"decimal_to_hexadecimal",
-"harshad_numbers"
+"caesar_cipher"
 ],
 "nodes": [
 "sequence_query",
@@ -6396,7 +6389,6 @@
 "mergesort"
 ],
 "nodes": [
-"sequence_query",
 "sequence_transformation>comparison_sort>merge"
 ],
 "specific": [],
@@ -10302,8 +10294,7 @@
 "io": [],
 "logic": [],
 "nodes": [
-"numeric>recurrence>capacity_reduction",
-"sequence_query"
+"numeric>recurrence>capacity_reduction"
 ],
 "specific": [],
 "why": "built"
@@ -12699,7 +12690,6 @@
 "josephus_problem"
 ],
 "nodes": [
-"numeric",
 "numeric>recurrence>josephus_recurrence",
 "sequence_transformation>elimination_cycle"
 ],
@@ -16062,7 +16052,8 @@
 ],
 "logic": [
 "capacitor_equivalence",
-"resistor_equivalence"
+"resistor_equivalence",
+"simple_neural_network"
 ],
 "nodes": [
 "marking>table_fill",
@@ -16576,8 +16567,7 @@
 "number_container_system"
 ],
 "nodes": [
-"sequence_query>target_search>interval_halving",
-"sequence_transformation"
+"sequence_query>target_search>interval_halving"
 ],
 "specific": [
 "number_container_system"
@@ -24192,9 +24182,13 @@
 "built": [],
 "got": "aho_corasick",
 "held": [],
-"held_trace": [],
+"held_trace": [
+"aho_corasick"
+],
 "io": [],
-"logic": [],
+"logic": [
+"aho_corasick"
+],
 "nodes": [
 "numeric"
 ],
