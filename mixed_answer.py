@@ -1,16 +1,21 @@
 """Mixed-algorithm answers (doc 04 section 18.6), kept separate from the pipeline: eval_ta.py, learn_apply.py and
 the Prolog rules are used as they are, never edited. Two corrections to how behaviour (io) evidence is labelled:
 
-  TheAlgorithms side  A match on a TheAlgorithms function names that file's label when the function is a root of the
-                      file, or when no root of the file runs (the functions that run are then its algorithm). A root
-                      of a file whose roots behave differently (primelib's is_perfect_number) is also named by the
-                      single-algorithm files whose root behaves the same (perfect_number). A helper of a file whose
-                      root runs (problem_020's factorial()) is named only by those single-algorithm files, and by
-                      nothing when there is none.
-  new-file side       When one of the new file's root functions (prolog/call_roots.pl) runs, only the roots decide
-                      its main answer; labels found only on its helpers, including a built branch at a helper's tree
-                      node, are reported as components: least-common-multiple-2.py is "main: not identified,
-                      contains: gcd". When no root runs (a demo root that only prints), every function counts.
+  TheAlgorithms side  Each catalog function is named by the algorithm it computes:
+                        a root of a single-algorithm file (every root behaves the same): the file's label;
+                        a function of a file whose roots do not run (caesar_cipher.py): the file's label, and it
+                          "stands for its whole file";
+                        a root of a file of several algorithms (primelib's factorial): the single-algorithm files
+                          whose root behaves the same (Factorial); with none (is_perfect_number), nothing;
+                        a helper of a file whose root runs (problem_020's factorial()): those single-algorithm files;
+                          with none, nothing.
+                      A function that names nothing is reported as a part of its file (a component). An exact match
+                      (write trace, traced logic) on a root, or on a file whose roots do not run, names that file.
+  new-file side       The new file's roots (prolog/call_roots.pl) decide its main answer, with the functions that
+                      are part of a root: one defined inside it, or one whose result the root returns as it is
+                      (fib n = go n 0 1). A match on another function counts for the main answer only when the
+                      TheAlgorithms function it matched stands for its whole file; otherwise it is a component:
+                      least-common-multiple-2.py is "main: not identified, contains: gcd".
 
 Both corrections apply to the io evidence (MixedIo) and to AP13's exact traced logic (MixedLogic: each stored pattern
 records its source function). The tiers and their order are the pipeline's (eval_ta.decide), applied to the main
@@ -73,6 +78,7 @@ class MixedIo(eval_ta.TaIo):
         self.name_of = {}                           # (rel, name) -> labels of its algorithm, for a behaviour match
         self.exact_of = {}                          # the same for an exact match (write trace, traced logic)
         self.whole = set()                          # (rel, name): a non-root function standing for its whole file
+        self.part_of = {}                           # (rel, name) -> its file's label, when it names nothing itself
         is_root = lambda o: base(o[1]) in file_roots.get(o[0], set())
         for key, ref in self.cat.items():
             rel, name = key
@@ -81,6 +87,8 @@ class MixedIo(eval_ta.TaIo):
             alike = {self.labels[o[0]] for o in equal if o in self.own}
             if not is_root(key) and rel in self.running_root:   # a helper (problem_020's factorial): its own
                 self.name_of[key] = self.exact_of[key] = alike   # algorithm only
+                if not alike:
+                    self.part_of[key] = {self.labels[rel]}
                 continue
             # a root, or a function of a file whose roots do not run: an exact match is that file's own logic
             self.exact_of[key] = {self.labels[rel]}
@@ -88,25 +96,25 @@ class MixedIo(eval_ta.TaIo):
                 self.whole.add(key)
             if key in self.own or not is_root(key):
                 self.name_of[key] = {self.labels[rel]}
-            elif alike:                             # a root of a file of several algorithms (primelib's factorial):
-                self.name_of[key] = alike           # the single-algorithm files that behave the same
-            else:                                   # (is_perfect_number): any of the roots that behave the same
-                self.name_of[key] = {self.labels[rel]} | {self.labels[o[0]] for o in equal if is_root(o)}
+            else:                                   # a root of a file of several algorithms (primelib's factorial):
+                self.name_of[key] = alike           # the single-algorithm files that behave the same; with none
+                if not alike:                       # (is_perfect_number) it names nothing, and is reported as a
+                    self.part_of[key] = {self.labels[rel]}   # part of that file
 
     def same(self, a: dict, b: dict) -> bool:
         return self.ioc.compare(a, b) in ('io', 'logic')
 
     def labels_by_kind(self, path, me=None):
         """As TaIo.labels_by_kind, with each match named by name_of instead of by its file's label."""
-        out, traced, _, _ = self.matches(path, me)
+        out, traced, _, _, _ = self.matches(path, me)
         return out, traced
 
     def matches(self, path, me=None):
-        """(by behaviour, by write trace too, and the same two for the matches on a TheAlgorithms function that stands
-        for its whole file): each {function of the new file: labels}."""
+        """(by behaviour, by write trace too, the same two for the matches on a TheAlgorithms function that stands
+        for its whole file, and the files of matched functions that name nothing: parts): each {function: labels}."""
         if me is None:
             me = self.describe(path)
-        out, traced, out_whole, traced_whole = {}, {}, {}, {}
+        out, traced, out_whole, traced_whole, part = {}, {}, {}, {}, {}
         for name, d in me.items():
             if not d['discriminative']:
                 continue
@@ -114,6 +122,7 @@ class MixedIo(eval_ta.TaIo):
                 how = self.ioc.compare(d, ref)
                 if how in ('logic', 'io'):
                     out.setdefault(name, set()).update(self.name_of[key])
+                    part.setdefault(name, set()).update(self.part_of.get(key, set()))
                     if key in self.whole:
                         out_whole.setdefault(name, set()).update(self.name_of[key])
                 if how == 'logic':
@@ -126,7 +135,7 @@ class MixedIo(eval_ta.TaIo):
                         out.setdefault(name, set()).update(self.name_of[key])
                         if key in self.whole:
                             out_whole.setdefault(name, set()).update(self.name_of[key])
-        return out, traced, out_whole, traced_whole
+        return out, traced, out_whole, traced_whole, part
 
 
 class MixedLogic(eval_ta.TaLogic):
@@ -258,16 +267,17 @@ def answer(path: Path, io: MixedIo, labels: set[str], gs: dict[str, str], logic)
     except Exception:                               # noqa: BLE001
         rts = set()
     try:
-        by_fn, traced, by_whole, traced_whole = io.matches(path)
+        by_fn, traced, by_whole, traced_whole, parts = io.matches(path)
     except eval_ta.ERRORS:
-        by_fn, traced, by_whole, traced_whole = {}, {}, {}, {}
+        by_fn, traced, by_whole, traced_whole, parts = {}, {}, {}, {}, {}
     rts = with_delegates(path, rts)                 # a function the root returns as it is is part of the root
     is_root = (lambda fn: base(fn) in rts) if rts else (lambda fn: True)   # no roots known: every function counts
     # the main answer: matches on the roots, and matches on a TheAlgorithms function that stands for its whole file
     # (caesar_cipher.py: its root brute_force does not run, encrypt does); the rest are components
     main_io = ({lab for fn, v in by_fn.items() if is_root(fn) for lab in v}
                | {lab for v in by_whole.values() for lab in v}) & labels
-    comp_io = {lab for fn, v in by_fn.items() if not is_root(fn) for lab in v} & labels - main_io
+    comp_io = ({lab for fn, v in by_fn.items() if not is_root(fn) for lab in v}
+               | {lab for v in parts.values() for lab in v}) & labels - main_io
     main_trace = ({lab for fn, v in traced.items() if is_root(fn) for lab in v}
                   | {lab for v in traced_whole.values() for lab in v}) & labels
     main_logic, comp_logic = logic.labels_split(path, is_root) if logic else (set(), set())
