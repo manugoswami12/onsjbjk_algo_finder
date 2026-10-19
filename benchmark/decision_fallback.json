@@ -348,10 +348,10 @@
    "task": "Factorial"
   },
   "Task/Factorial/Haskell/factorial-8.hs": {
-   "answer": "algorithm",
-   "correct": false,
-   "family_correct": null,
-   "name": "problem_020",
+   "answer": "variation",
+   "correct": null,
+   "family_correct": true,
+   "name": "numeric>recurrence>range_accumulation",
    "task": "Factorial"
   },
   "Task/Factorial/Haskell/factorial-9.hs": {
@@ -2115,7 +2115,7 @@
    "answer": "variation_root",
    "correct": null,
    "family_correct": false,
-   "name": "numeric",
+   "name": "sequence_query",
    "task": "Sieve-of-Eratosthenes"
   },
   "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-17.hs": {

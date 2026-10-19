@@ -887,9 +887,21 @@
 "why": "built"
 },
 "Task/Factorial/Haskell/factorial-8.hs": {
+"at": "learned",
 "built": [],
-"got": "problem_020",
+"clash": [
+"Factorial",
+"krishnamurthy_number",
+"number_of_possible_binary_trees",
+"primelib",
+"problem_020"
+],
+"got": null,
 "held": [
+"factorial",
+"krishnamurthy_number",
+"number_of_possible_binary_trees",
+"primelib",
 "problem_020"
 ],
 "held_trace": [],
@@ -902,11 +914,11 @@
 ],
 "logic": [],
 "nodes": [
-"numeric"
+"numeric>recurrence>range_accumulation"
 ],
 "specific": [],
 "task": "Factorial",
-"why": "learned"
+"why": "ambiguous"
 },
 "Task/Factorial/Haskell/factorial-9.hs": {
 "built": [],
@@ -4681,7 +4693,6 @@
 "io": [],
 "logic": [],
 "nodes": [
-"numeric",
 "sequence_query",
 "sequence_transformation"
 ],

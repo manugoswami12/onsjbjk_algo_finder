@@ -11,6 +11,7 @@ in the other languages. Only additions; what AP13 lowers stays as it is.
   x ! (i, k): elem(elem(x, i), k);  f a $ b: f a b;  if c then a else b: two results under c / not c
   let binds in e: the binds as a where, then e;  (x ==): x = _ (an operator section);  \a b -> e: e
   (-) as a value: fn(sub);  a top-level f = e (point-free): a function of no parameters returning e
+  a recursion ends at its base cases: their guards give the loop condition, as AP13 derives in the other languages
   (a, b): tuple([a, b]), as AP13's Python lowerer writes a tuple;  fromIntegral x: x (a numeric conversion)
 """
 from __future__ import annotations
@@ -22,7 +23,7 @@ import compare_learners
 
 compare_learners._ap13()
 import lower_equations as ap13  # AP13 tools on the path
-from fact_io import FactSet, call, elem, num, op, other, var
+from fact_io import SELF, FactSet, call, elem, has_call, num, op, other, var
 from lower_equations import kids, line, text
 from parse_source import parser_for
 
@@ -313,4 +314,28 @@ def lower(path: Path) -> str:
     tree = parser_for('haskell').parse(source)    # the tree stays referenced while its nodes are read
     facts = HaskellLowerer(FactSet('haskell')).run(tree.root_node)
     del tree
+    base_case_conditions(facts)
     return facts.text()
+
+
+def base_case_conditions(facts):
+    """The recursion ends at its base cases, as AP13's shared post-pass derives for the other languages
+    (fact_io.FactSet.finish): the guard of a return without a self-call gives the loop condition not(guard). AP13's
+    equational lowerer derives it only from a | guard of variables, so go acc 0 = acc (the guard n == 0 of a pattern)
+    gave a recursion with no condition; here every base case of a recursion loop gives it, as in Python."""
+    loops = {a[1]: a[0] for a in facts.facts['loop'] if a[2] == 'recursion'}
+    stmt_func = {a[0]: a[1] for a in facts.facts['stmt']}
+    have = {(a[0], repr(a[1])) for a in facts.facts['loop_cond']}
+    # the statements making a self-call: a guard they carry too is the context (an enclosing equation's pattern,
+    # inherited by a where function), not what ends the recursion
+    steps = {a[0] for a in facts.facts['call_at'] if a[1] == SELF}
+    step_guards = {(stmt_func.get(g_s), repr(cond), pol) for g_s, cond, pol in facts.facts['guard'] if g_s in steps}
+    for s, value in list(facts.facts['ret']):
+        loop = loops.get(stmt_func.get(s))
+        if loop is None or has_call(value, SELF):
+            continue
+        for g_s, cond, pol in list(facts.facts['guard']):
+            c = op('not', cond)
+            if g_s == s and pol == 'true' and cond[0] == 'op' and (loop, repr(c)) not in have                     and (stmt_func.get(s), repr(cond), pol) not in step_guards:
+                facts.facts['loop_cond'].append((loop, c))
+                have.add((loop, repr(c)))

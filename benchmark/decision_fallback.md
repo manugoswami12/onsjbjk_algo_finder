@@ -8,14 +8,13 @@ Identified = algorithm or class. A family answer is right when TheAlgorithms fil
 |---|---|---|---|---|---|---|---|
 | C | 69 | 31 / 1 | 96.9% | 44.9% | 7 / 1 | 7 / 7 | 15 |
 | Common-Lisp | 75 | 44 / 1 | 97.8% | 58.7% | 9 / 2 | 4 / 5 | 10 |
-| Haskell | 144 | 33 / 2 | 94.3% | 22.9% | 3 / 3 | 17 / 29 | 57 |
+| Haskell | 144 | 33 / 1 | 97.1% | 22.9% | 4 / 3 | 17 / 29 | 57 |
 | Python | 162 | 66 / 5 | 93.0% | 40.7% | 11 / 4 | 23 / 12 | 41 |
-| all | 450 | 174 / 9 | 95.1% | 38.7% | 30 / 10 | 51 / 53 | 123 |
+| all | 450 | 174 / 8 | 95.6% | 38.7% | 31 / 10 | 51 / 53 | 123 |
 
-## Wrong answers (9)
+## Wrong answers (8)
 
 - Task/Factorial/C/factorial-2.c: algorithm problem_020, task Factorial
-- Task/Factorial/Haskell/factorial-8.hs: algorithm problem_020, task Factorial
 - Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-9.lisp: algorithm signum, task Fibonacci-sequence
 - Task/Least-common-multiple/Python/least-common-multiple-2.py: algorithm Greatest-common-divisor, task Least-common-multiple
 - Task/Levenshtein-distance/Python/levenshtein-distance-5.py: algorithm problem_007, task Levenshtein-distance

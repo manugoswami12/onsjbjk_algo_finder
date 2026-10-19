@@ -531,7 +531,19 @@ is). Only values holding a recursive call, only when the variable is read nowher
 | nodes, all 1796 files | 2 change: factorial-7.py and binary_search_tree.py (`inorder`, `postorder`: default `[]` and the guarded join, now traced) |
 | relearn + full runs | first run: 3 learnt files lost (segment_tree, lazy_segment_tree, wavelet_tree): their file rules' fingerprint (`same_file/1`, generated from the facts) held the untraced returns. Fingerprints regenerated from the current facts (`ta_signatures.json` -> `ta_file_components.pl`; `ta_file_rules.pl` unchanged): learnt 1344/1344, 0 differences; new code 158/10 -> 159/9 (factorial-7.py: problem_020 -> Factorial) |
 
-Next, each tested the same way: the Haskell lowering's missing recursion condition (factorial-8.hs); list `+` as
+**19.2 A Haskell recursion ends at its base cases** (`haskell_logic.py` `base_case_conditions`). AP13's equational
+lowerer derives the recursion's loop condition only from a `|` guard of variables, so `go acc 0 = acc; go acc n =
+go (acc * n) (n - 1)` had none and the accumulation rule (an update guarded only by the continuation) could not hold.
+As AP13's shared post-pass does for the other languages, every return without a self-call gives `not(guard)`; a guard
+the self-call steps also carry is context, not a base case.
+
+| Check | Result |
+|---|---|
+| hand check | factorial-8.hs reaches `range_accumulation`; gcd, fib and hanoi Haskell files keep their nodes |
+| nodes, 157 Haskell files (TheAlgorithms is Python: its facts cannot change) | 2 change: factorial-8.hs, and `adjust` in sieve-of-eratosthenes-16.hs (numeric -> sequence_query: AP13 nests a called local function under its caller's loop and both name an unnamed parameter `$arg0`; a separate lowering fix, no answer changed) |
+| 450 held-out files | 1 answer changes: factorial-8.hs problem_020 -> UNKNOWN; new code 8 wrong, precision 95.6% |
+
+Next, each tested the same way: list `+` as
 concatenation (quicksort-1.py); C `x op= y` and the Lisp `finally` (lowering_v03.py); a returned lambda applied to
 the next argument (lcm, Levenshtein); problem_007's is_prime.
 

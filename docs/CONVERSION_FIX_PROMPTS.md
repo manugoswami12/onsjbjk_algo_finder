@@ -1,0 +1,70 @@
+# Prompts: how each hard case was solved (doc 04 section 19)
+
+One prompt per kind of fix, written so it can be run again for a new case. Every prompt follows the same method.
+
+## The method (run this for every change)
+
+> A held-out file is answered wrongly. First find where the code's logic is traced wrongly: dump its facts
+> (`learn_facts.tree_facts`) and compare them with the facts of the TheAlgorithms file that does the same thing in
+> another form. Fix the conversion as a rule of the language, never of an algorithm, in our own layer (a front-end
+> subclass, a fact normalisation in `prolog/`), never in `polyglot_logic`. Then check it against all existing data,
+> in a copy of the repository:
+> 1. hand-check on about 5 programs: the broken one, the TheAlgorithms form it should equal, and near negatives;
+> 2. the tree nodes of all 1346 TheAlgorithms and 450 held-out files, old against new: every change must be explained;
+> 3. relearn (`eval_ta.py --learn`), re-index the file-rule fingerprints (`ta_distinct.py --index`, then regenerate
+>    `prolog/ta_file_components.pl` only; never rewrite `ta_file_rules.pl`), run `--run` and `--heldout`;
+> 4. learnt code must stay 1344/1344 with 0 differences and no new wrong answer may appear.
+> A file that worked before and breaks is checked once: regenerate its generated parts; if it still breaks and the
+> idea itself cannot fix it, drop the change.
+
+## Cases solved
+
+### Rule order in the tree (prolog/families_v02.pl)
+> AP13's one-level fallback nodes ([numeric], [sequence_query], [sequence_transformation]) must hold only when no
+> branch below applies. Find functions that reach both a deep v0.2 node and an unrelated fallback node; make
+> deepest_families_v02/2 drop the one-level fallback when a v0.2 branch below the root holds. Check that only the
+> stray fallback nodes disappear and no answer changes.
+
+Result: 12 files lost a stray node; 0 answers changed.
+
+### Stale rule placement (prolog/learned_ta.pl)
+> A fresh run of unchanged code loses answers the committed results have. Compare each lost file's current tree node
+> with the node its learned branch is placed at. If they differ, the branches were learned on an older tree: relearn
+> with the current tree and rerun everything; never reuse old evidence.
+
+Result: 11 lost answers back (dbscan, booths_algorithm, problem_074 ...); learnt 1344/1344 from fresh evidence.
+
+### The tier decision in Prolog (prolog/decide.pl)
+> Move the choice of the deciding tier from Python into Prolog: tiers as data (tier/2), every label of a tier
+> collected (setof), no cut, no clause order. Replay the stored evidence of every file through the old and the new
+> decision; they must agree on every file before the Python one is replaced.
+
+Result: 1767 decisions, all equal.
+
+### A return through the variable holding a recursive call (prolog/trace_returns.pl)
+> `z = 1; if n > 1: z = n * f(n - 1); return z` is not traced as `return n * f(n - 1)` (AP13 propagates only
+> single-definition variables). Trace two value-flow shapes by line order and guards: the last definition holding on
+> every path; a default plus one guarded override (split into two guarded returns). Only values holding a recursive
+> call; only when the variable is read nowhere but in the return; the call's facts move with its value.
+
+Faults met and how: `black_height` lost its node (its variables are also tested: trace only a variable used only in
+the return); three file rules stopped matching (their fingerprints were generated from the old facts: regenerate the
+fingerprints, the rules unchanged). Result: factorial-7.py problem_020 -> Factorial; learnt 1344/1344.
+
+### A Haskell recursion with no loop condition (haskell_logic.py base_case_conditions)
+> `go acc 0 = acc; go acc n = go (acc * n) (n - 1)` lowers with no loop condition, so the accumulation rule (an update
+> guarded only by the loop's continuation) cannot hold; the Python lowering derives the condition from every base
+> case. Derive it the same way in the Haskell front end: the guard of a return without a self-call gives
+> not(guard); a guard the self-call steps also carry is inherited context, not a base case.
+
+Faults met: sieve-of-eratosthenes-16.hs's `adjust` changed node because AP13 nests a called local function under its
+caller's loop (under/2) and both name an unnamed parameter `$arg0` (a separate lowering fix: unique names); no answer
+changed. Result: factorial-8.hs problem_020 -> UNKNOWN (no longer wrong).
+
+## Tried and dropped (do not repeat)
+
+- Naming a match by the matched function's algorithm, in Python rules added case by case (mixed answers): removed 9
+  wrong answers but lost 19 learnt answers and made 2 wrong. Rules in Python patched per case are hard coding.
+- Branches written from failing held-out files (partition through variables, `seq[:] = ...`): test-set rules; removed.
+- Placing a file's label only at its roots' nodes: moves 248 learnt files (136 to no node), because TheAlgorithms
+  often writes the algorithm in a helper (`all_combinations.py`'s root only calls `create_all_state`).
