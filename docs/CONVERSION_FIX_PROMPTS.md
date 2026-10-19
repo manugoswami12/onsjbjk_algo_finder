@@ -10,6 +10,7 @@ One prompt per kind of fix, written so it can be run again for a new case. Every
 > subclass, a fact normalisation in `prolog/`), never in `polyglot_logic`. Then check it against all existing data,
 > in a copy of the repository:
 > 1. hand-check on about 5 programs: the broken one, the TheAlgorithms form it should equal, and near negatives;
+>    dump the broken program's facts and confirm they now equal the TheAlgorithms form, not only its node;
 > 2. the tree nodes of all 1346 TheAlgorithms and 450 held-out files, old against new: every change must be explained;
 > 3. relearn (`eval_ta.py --learn`), re-index the file-rule fingerprints (`ta_distinct.py --index`, then regenerate
 >    `prolog/ta_file_components.pl` only; never rewrite `ta_file_rules.pl`), run `--run` and `--heldout`;
@@ -50,6 +51,13 @@ Result: 1767 decisions, all equal.
 Faults met and how: `black_height` lost its node (its variables are also tested: trace only a variable used only in
 the return); three file rules stopped matching (their fingerprints were generated from the old facts: regenerate the
 fingerprints, the rules unchanged). Result: factorial-7.py problem_020 -> Factorial; learnt 1344/1344.
+Two later fixes, each re-checked against all data with no answer change: only reads AFTER the traced definition block
+the tracing (the appends that build `lesser` read its earlier value); never substitute inside a recursive call's
+arguments (`f(lesser)` was traced again into `f(f(lesser))`, eight times).
+
+Lesson: "no answer changed" is not enough. In the hand check, dump the facts of the very file the change is for and
+confirm they come out exactly in the TheAlgorithms form (`concat([f(lesser), equal, f(greater)])`); the nesting bug
+passed two full checks because no answer depended on it.
 
 ### A Haskell recursion with no loop condition (haskell_logic.py base_case_conditions)
 > `go acc 0 = acc; go acc n = go (acc * n) (n - 1)` lowers with no loop condition, so the accumulation rule (an update
