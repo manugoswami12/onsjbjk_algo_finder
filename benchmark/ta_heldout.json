@@ -132,18 +132,12 @@
 ],
 "got": "Binary-search",
 "held": [],
-"held_trace": [
-"binary_search"
-],
+"held_trace": [],
 "io": [
 "double_linear_search",
 "jump_search"
 ],
-"logic": [
-"binary_search",
-"download_images_from_google_query",
-"exponential_search"
-],
+"logic": [],
 "nodes": [
 "sequence_query>target_search>interval_halving"
 ],
@@ -389,9 +383,7 @@
 "problem_020"
 ],
 "held_trace": [
-"double_factorial",
 "factorial",
-"gcd_of_n_numbers",
 "number_of_possible_binary_trees",
 "primelib",
 "problem_020"
@@ -404,9 +396,7 @@
 "problem_020"
 ],
 "logic": [
-"double_factorial",
 "factorial",
-"gcd_of_n_numbers",
 "number_of_possible_binary_trees",
 "primelib",
 "problem_020"
@@ -431,9 +421,7 @@
 "problem_020"
 ],
 "held_trace": [
-"double_factorial",
 "factorial",
-"gcd_of_n_numbers",
 "number_of_possible_binary_trees",
 "primelib",
 "problem_020"
@@ -446,9 +434,7 @@
 "problem_020"
 ],
 "logic": [
-"double_factorial",
 "factorial",
-"gcd_of_n_numbers",
 "number_of_possible_binary_trees",
 "primelib",
 "problem_020"
@@ -742,9 +728,7 @@
 "problem_020"
 ],
 "held_trace": [
-"double_factorial",
 "factorial",
-"gcd_of_n_numbers",
 "number_of_possible_binary_trees",
 "primelib",
 "problem_020"
@@ -757,9 +741,7 @@
 "problem_020"
 ],
 "logic": [
-"double_factorial",
 "factorial",
-"gcd_of_n_numbers",
 "number_of_possible_binary_trees",
 "primelib",
 "problem_020"
@@ -838,9 +820,7 @@
 "problem_020"
 ],
 "held_trace": [
-"double_factorial",
 "factorial",
-"gcd_of_n_numbers",
 "number_of_possible_binary_trees",
 "primelib",
 "problem_020"
@@ -853,9 +833,7 @@
 "problem_020"
 ],
 "logic": [
-"double_factorial",
 "factorial",
-"gcd_of_n_numbers",
 "number_of_possible_binary_trees",
 "primelib",
 "problem_020"
@@ -996,9 +974,7 @@
 "problem_020"
 ],
 "held_trace": [
-"double_factorial",
 "factorial",
-"gcd_of_n_numbers",
 "number_of_possible_binary_trees",
 "primelib",
 "problem_020"
@@ -1011,9 +987,7 @@
 "problem_020"
 ],
 "logic": [
-"double_factorial",
 "factorial",
-"gcd_of_n_numbers",
 "number_of_possible_binary_trees",
 "primelib",
 "problem_020"
@@ -1330,8 +1304,7 @@
 "primelib"
 ],
 "logic": [
-"fibonacci",
-"lucas_series"
+"fibonacci"
 ],
 "nodes": [
 "numeric>recurrence>double_recursion"
@@ -1943,8 +1916,7 @@
 "primelib"
 ],
 "logic": [
-"fibonacci",
-"lucas_series"
+"fibonacci"
 ],
 "nodes": [
 "numeric>recurrence>double_recursion"
@@ -4338,22 +4310,17 @@
 },
 "Task/Roman-numerals-Encode/Python/roman-numerals-encode-2.py": {
 "built": [],
-"got": "magicdiamondpattern",
+"got": null,
 "held": [],
-"held_trace": [
-"magicdiamondpattern"
-],
+"held_trace": [],
 "io": [],
-"logic": [
-"from_sequence",
-"magicdiamondpattern"
-],
+"logic": [],
 "nodes": [
 "numeric"
 ],
 "specific": [],
 "task": "Roman-numerals-Encode",
-"why": "trace"
+"why": "none"
 },
 "Task/Roman-numerals-Encode/Python/roman-numerals-encode-3.py": {
 "built": [],
@@ -7449,29 +7416,18 @@
 "why": "no_algorithm"
 },
 "Task/Sum-digits-of-an-integer/Haskell/sum-digits-of-an-integer-1.hs": {
-"at": "trace",
 "built": [],
-"clash": [
-"capacitor_equivalence",
-"resistor_equivalence"
-],
 "got": null,
 "held": [],
-"held_trace": [
-"capacitor_equivalence",
-"resistor_equivalence"
-],
+"held_trace": [],
 "io": [],
-"logic": [
-"capacitor_equivalence",
-"resistor_equivalence"
-],
+"logic": [],
 "nodes": [
 "numeric"
 ],
 "specific": [],
 "task": "Sum-digits-of-an-integer",
-"why": "ambiguous"
+"why": "none"
 },
 "Task/Sum-digits-of-an-integer/Haskell/sum-digits-of-an-integer-2.hs": {
 "built": [],

@@ -45,6 +45,7 @@ class TaIo(compare_learners.IoCatalog):
     """AP13's behaviour catalog of the corpus, its references indexed by signature (same comparison)."""
 
     def __init__(self, corpus: Path, labels: dict[str, str], workers=4):
+        self.corpus = corpus
         with tempfile.TemporaryDirectory(prefix='v02_ta_') as td:
             truth = Path(td) / 'train.json'
             truth.write_text(json.dumps({'files': labels}), encoding='utf-8')
@@ -84,13 +85,48 @@ class TaLogic(compare_learners.Ap13Dir):
     store); a file matches the labels of the references its functions match (AP13 scan, leaf MATCH). The scan names
     the matching functions by name (compare_learners.Ap13Dir.labels_by_function looks them up by id and finds none)."""
 
-    def labels_matched(self, path: Path) -> set[str]:
+    def labels_matched(self, path: Path, me: dict | None = None, io: TaIo | None = None) -> set[str]:
+        """The labels of the references the file's functions match; with the file's behaviour (me) and the catalog
+        (io), a match whose behaviour contradicts it is left out (consistent)."""
         try:
             result = self.cli.scan(path, self.store, include_unreviewed=True, quiet=True)
         except ERRORS + compare_learners.ERRORS:
             return set()
         return {self.labels[self.ref_file[m['label']]] for m in result['leaves']
-                if m['result'] == 'MATCH' and self.ref_file.get(m['label']) in self.labels} - {'none'}
+                if m['result'] == 'MATCH' and self.ref_file.get(m['label']) in self.labels
+                and (me is None or io is None or self.consistent(m, me, io))} - {'none'}
+
+    def consistent(self, m: dict, me: dict, io: TaIo) -> bool:
+        """An exact-logic match holds unless behaviour contradicts it (AP13's compare giving no verdict for want of
+        evidence is no contradiction): both functions compute outputs and they differ on a common input, or the new
+        function computes varying outputs while the matched TheAlgorithms function computes none (it only prints or
+        does not run on the battery: roman-numerals-encode-2's toRoman matched the pattern of magicdiamondpattern's
+        star-printing loops). Only when every function of the match computes outputs (expected_shortfall's match spans a helper that does and
+        the function itself, which does not)."""
+        if not hasattr(self, 'ref_fn'):
+            with self.ks.connect(self.store) as db:
+                self.ref_fn = {r['label']: r['function_name'] for r in db.execute('SELECT label, function_name FROM pattern')}
+            self.described = {}
+        base = lambda n: n.split('$')[0]
+        rel, fn = self.ref_file[m['label']], base(self.ref_fn.get(m['label'], ''))
+        names = {base(f) for f in m['functions'].split(',')}
+        mine = [d for n, d in me.items() if base(n) in names and d['discriminative']]
+        if not mine or len({base(n) for n, d in me.items() if base(n) in names and d['discriminative']}) < len(names):
+            return True                                      # some function of the match computes nothing: no contradiction
+        if rel not in self.described:
+            self.described[rel] = io.describe(io.corpus / rel)
+        refs = [d for n, d in self.described[rel].items() if base(n) == fn]
+        if not refs:
+            return False                                     # it computes nothing on the battery, the new one does
+        for a in mine:
+            for b in refs:
+                if len({o for o in b['outputs'] if o is not None}) < 2:
+                    continue                                 # b computes no varying output (prints only): contradicts
+                if a['sig'] != b['sig'] or len(a['outputs']) != len(b['outputs']):
+                    return True                              # not comparable: no evidence either way
+                if not any(x is not None and y is not None and x != y for x, y in zip(a['outputs'], b['outputs'])):
+                    return True                              # no differing output
+        return False
 
 
 def answer(path: Path, io: TaIo, labels: set[str], gs: dict[str, str], logic: TaLogic | None = None) -> dict:
@@ -100,12 +136,13 @@ def answer(path: Path, io: TaIo, labels: set[str], gs: dict[str, str], logic: Ta
     if path.suffix != '.lisp' and not learn_apply.learn_facts.defines_code(path):
         return {'got': None, 'why': 'no_algorithm'}
     try:
-        by_fn, traced = io.labels_by_kind(path, io.describe(path))
+        me = io.describe(path)
+        by_fn, traced = io.labels_by_kind(path, me)
     except ERRORS:
-        by_fn, traced = {}, {}
+        me, by_fn, traced = {}, {}, {}
     io_labels = {lab for v in by_fn.values() for lab in v} & labels
     trace_labels = {lab for v in traced.values() for lab in v} & labels
-    logic_labels = logic.labels_matched(path) & labels if logic else set()
+    logic_labels = logic.labels_matched(path, me, io) & labels if logic else set()
     try:
         hand, specific = set(), set()
         nodes, found, _, normal = learn_apply.apply(path, RULES, io_labels, trace_labels, logic_labels, hand, specific)
