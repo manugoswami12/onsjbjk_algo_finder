@@ -1,0 +1,4997 @@
+{
+"audio_filters/butterworth_filter.py": [
+"make_allpass",
+"make_bandpass",
+"make_bandpass_peak",
+"make_highpass",
+"make_highshelf",
+"make_lowpass",
+"make_lowshelf",
+"make_notch",
+"make_peak"
+],
+"audio_filters/equal_loudness_filter.py": [
+"EqualLoudnessFilter.process"
+],
+"audio_filters/iir_filter.py": [
+"IIRFilter.process",
+"IIRFilter.set_coefficients"
+],
+"audio_filters/show_response.py": [
+"show_frequency_response",
+"show_phase_response"
+],
+"backtracking/all_combinations.py": [
+"combination_lists",
+"generate_all_combinations"
+],
+"backtracking/all_permutations.py": [
+"generate_all_permutations"
+],
+"backtracking/all_subsequences.py": [
+"generate_all_subsequences"
+],
+"backtracking/coloring.py": [
+"color"
+],
+"backtracking/combination_sum.py": [
+"combination_sum"
+],
+"backtracking/crossword_puzzle_solver.py": [
+"solve_crossword"
+],
+"backtracking/generate_parentheses.py": [
+"generate_parenthesis"
+],
+"backtracking/generate_parentheses_iterative.py": [
+"generate_parentheses_iterative"
+],
+"backtracking/hamiltonian_cycle.py": [
+"hamilton_cycle"
+],
+"backtracking/knight_tour.py": [
+"open_knight_tour"
+],
+"backtracking/m_coloring_problem.py": [
+"graph_coloring"
+],
+"backtracking/match_word_pattern.py": [
+"match_word_pattern"
+],
+"backtracking/minimax.py": [
+"minimax"
+],
+"backtracking/n_queens.py": [
+"solve"
+],
+"backtracking/n_queens_math.py": [
+"n_queens_solution"
+],
+"backtracking/power_sum.py": [
+"solve"
+],
+"backtracking/rat_in_maze.py": [
+"solve_maze"
+],
+"backtracking/sudoku.py": [
+"find_empty_location",
+"print_solution",
+"sudoku"
+],
+"backtracking/sum_of_subsets.py": [
+"generate_sum_of_subsets_solutions"
+],
+"backtracking/word_break.py": [
+"word_break"
+],
+"backtracking/word_ladder.py": [
+"word_ladder"
+],
+"backtracking/word_search.py": [
+"get_word_path",
+"word_exists"
+],
+"bit_manipulation/binary_and_operator.py": [
+"binary_and"
+],
+"bit_manipulation/binary_coded_decimal.py": [
+"binary_coded_decimal"
+],
+"bit_manipulation/binary_count_setbits.py": [
+"binary_count_setbits"
+],
+"bit_manipulation/binary_count_trailing_zeros.py": [
+"binary_count_trailing_zeros"
+],
+"bit_manipulation/binary_or_operator.py": [
+"binary_or"
+],
+"bit_manipulation/binary_shifts.py": [
+"arithmetic_right_shift",
+"logical_left_shift",
+"logical_right_shift"
+],
+"bit_manipulation/binary_twos_complement.py": [
+"twos_complement"
+],
+"bit_manipulation/binary_xor_operator.py": [
+"binary_xor"
+],
+"bit_manipulation/bitwise_addition_recursive.py": [
+"bitwise_addition_recursive"
+],
+"bit_manipulation/count_1s_brian_kernighan_method.py": [
+"get_1s_count"
+],
+"bit_manipulation/count_number_of_one_bits.py": [
+"benchmark"
+],
+"bit_manipulation/excess_3_code.py": [
+"excess_3_code"
+],
+"bit_manipulation/fast_walsh_hadamard_transform.py": [
+"and_convolution",
+"or_convolution",
+"xor_convolution"
+],
+"bit_manipulation/find_previous_power_of_two.py": [
+"find_previous_power_of_two"
+],
+"bit_manipulation/find_unique_number.py": [
+"find_unique_number"
+],
+"bit_manipulation/gray_code_sequence.py": [
+"gray_code"
+],
+"bit_manipulation/highest_set_bit.py": [
+"get_highest_set_bit_position"
+],
+"bit_manipulation/index_of_rightmost_set_bit.py": [
+"get_index_of_rightmost_set_bit"
+],
+"bit_manipulation/is_even.py": [
+"is_even",
+"is_even_using_shift_operator"
+],
+"bit_manipulation/is_power_of_two.py": [
+"is_power_of_two"
+],
+"bit_manipulation/largest_pow_of_two_le_num.py": [
+"largest_pow_of_two_le_num"
+],
+"bit_manipulation/missing_number.py": [
+"find_missing_number"
+],
+"bit_manipulation/next_power_of_two.py": [
+"next_power_of_two"
+],
+"bit_manipulation/numbers_different_signs.py": [
+"different_signs"
+],
+"bit_manipulation/parity.py": [
+"parity"
+],
+"bit_manipulation/power_of_4.py": [
+"power_of_4"
+],
+"bit_manipulation/reverse_bits.py": [
+"get_reverse_bit_string",
+"reverse_bit"
+],
+"bit_manipulation/rotate_bits.py": [
+"rotate_left32",
+"rotate_right32"
+],
+"bit_manipulation/single_bit_manipulation_operations.py": [
+"clear_bit",
+"clear_least_significant_set_bit",
+"flip_bit",
+"get_bit",
+"is_bit_set",
+"set_bit"
+],
+"bit_manipulation/swap_all_odd_and_even_bits.py": [
+"show_bits",
+"swap_odd_even_bits"
+],
+"bit_manipulation/xor_swap_two_integers.py": [
+"xor_swap"
+],
+"blockchain/diophantine_equation.py": [
+"all_diophantine_solutions",
+"diophantine_all_soln"
+],
+"blockchain/merkle_tree.py": [
+"merkle_root",
+"verify_proof"
+],
+"blockchain/proof_of_stake.py": [
+"choose_validator"
+],
+"blockchain/proof_of_work.py": [
+"Blockchain.add_block",
+"Blockchain.is_chain_valid"
+],
+"blockchain/simple_blockchain.py": [
+"Blockchain.add_block",
+"Blockchain.is_valid"
+],
+"blockchain/simple_proof_of_work.py": [
+"proof_of_work"
+],
+"boolean_algebra/and_gate.py": [
+"and_gate",
+"n_input_and_gate"
+],
+"boolean_algebra/imply_gate.py": [
+"recursive_imply_list"
+],
+"boolean_algebra/karnaugh_map_simplification.py": [
+"simplify_kmap"
+],
+"boolean_algebra/multiplexer.py": [
+"mux"
+],
+"boolean_algebra/nand_gate.py": [
+"nand_gate"
+],
+"boolean_algebra/nimply_gate.py": [
+"nimply_gate"
+],
+"boolean_algebra/nor_gate.py": [
+"nor_gate",
+"truth_table"
+],
+"boolean_algebra/not_gate.py": [
+"not_gate"
+],
+"boolean_algebra/or_gate.py": [
+"or_gate"
+],
+"boolean_algebra/quine_mc_cluskey.py": [
+"check",
+"decimal_to_binary",
+"prime_implicant_chart",
+"selection"
+],
+"boolean_algebra/xnor_gate.py": [
+"xnor_gate"
+],
+"boolean_algebra/xor_gate.py": [
+"xor_gate"
+],
+"cellular_automata/conways_game_of_life.py": [
+"generate_images"
+],
+"cellular_automata/elementary_cellular_automaton.py": [
+"generate_rule_30"
+],
+"cellular_automata/game_of_life.py": [
+"run",
+"seed"
+],
+"cellular_automata/langtons_ant.py": [
+"LangtonsAnt.display",
+"LangtonsAnt.move_ant"
+],
+"cellular_automata/nagel_schrekenberg.py": [
+"construct_highway",
+"simulate"
+],
+"cellular_automata/one_dimensional.py": [
+"format_ruleset",
+"generate_image",
+"new_generation"
+],
+"cellular_automata/wa_tor.py": [
+"WaTor.run",
+"visualise"
+],
+"ciphers/a1z26.py": [
+"decode",
+"encode"
+],
+"ciphers/affine_cipher.py": [
+"decrypt_message",
+"encrypt_message",
+"get_random_key"
+],
+"ciphers/atbash.py": [
+"atbash",
+"atbash_slow",
+"benchmark"
+],
+"ciphers/autokey.py": [
+"decrypt",
+"encrypt"
+],
+"ciphers/baconian_cipher.py": [
+"decode",
+"encode"
+],
+"ciphers/base16.py": [
+"base16_decode",
+"base16_encode"
+],
+"ciphers/base32.py": [
+"base32_decode",
+"base32_encode"
+],
+"ciphers/base58.py": [
+"base64_decode",
+"base64_encode"
+],
+"ciphers/base64_cipher.py": [
+"base64_decode",
+"base64_encode"
+],
+"ciphers/base85.py": [
+"ascii85_decode",
+"ascii85_encode"
+],
+"ciphers/beaufort_cipher.py": [
+"cipher_text",
+"generate_key",
+"original_text"
+],
+"ciphers/bifid.py": [
+"BifidCipher.decode",
+"BifidCipher.encode"
+],
+"ciphers/brute_force_caesar_cipher.py": [
+"decrypt"
+],
+"ciphers/caesar_cipher.py": [
+"brute_force"
+],
+"ciphers/columnar_transposition.py": [
+"decrypt",
+"encrypt"
+],
+"ciphers/cryptomath_module.py": [
+"find_mod_inverse"
+],
+"ciphers/decrypt_caesar_with_chi_squared.py": [
+"decrypt_caesar_with_chi_squared"
+],
+"ciphers/des_ecb.py": [
+"Des.decrypt",
+"Des.encrypt",
+"Des.generate_key"
+],
+"ciphers/deterministic_miller_rabin.py": [
+"miller_rabin"
+],
+"ciphers/diffie.py": [
+"find_primitive"
+],
+"ciphers/diffie_hellman.py": [
+"DiffieHellman.generate_public_key",
+"DiffieHellman.generate_shared_key",
+"DiffieHellman.generate_shared_key_static",
+"DiffieHellman.get_private_key",
+"DiffieHellman.is_valid_public_key",
+"DiffieHellman.is_valid_public_key_static"
+],
+"ciphers/elgamal_key_generator.py": [
+"make_key_files"
+],
+"ciphers/enigma_machine2.py": [
+"enigma"
+],
+"ciphers/fractionated_morse_cipher.py": [
+"decrypt_fractionated_morse",
+"encrypt_fractionated_morse"
+],
+"ciphers/gronsfeld_cipher.py": [
+"gronsfeld"
+],
+"ciphers/hill_cipher.py": [
+"HillCipher.decrypt",
+"HillCipher.encrypt"
+],
+"ciphers/mixed_keyword_cypher.py": [
+"mixed_keyword"
+],
+"ciphers/mono_alphabetic_ciphers.py": [
+"decrypt_message",
+"encrypt_message"
+],
+"ciphers/morse_code.py": [
+"decrypt",
+"encrypt"
+],
+"ciphers/onepad_cipher.py": [
+"Onepad.decrypt",
+"Onepad.encrypt"
+],
+"ciphers/permutation_cipher.py": [
+"decrypt",
+"encrypt"
+],
+"ciphers/playfair_cipher.py": [
+"decode",
+"encode"
+],
+"ciphers/polybius.py": [
+"PolybiusCipher.decode",
+"PolybiusCipher.encode"
+],
+"ciphers/porta_cipher.py": [
+"decrypt"
+],
+"ciphers/rabin_miller.py": [
+"generate_large_prime"
+],
+"ciphers/rail_fence_cipher.py": [
+"bruteforce",
+"encrypt"
+],
+"ciphers/rc4.py": [
+"decrypt"
+],
+"ciphers/rot13.py": [
+"dencrypt"
+],
+"ciphers/rsa_cipher.py": [
+"encrypt_and_write_to_file",
+"read_from_file_and_decrypt"
+],
+"ciphers/rsa_factorization.py": [
+"rsafactor"
+],
+"ciphers/rsa_key_generator.py": [
+"make_key_files"
+],
+"ciphers/running_key_cipher.py": [
+"running_key_decrypt",
+"running_key_encrypt"
+],
+"ciphers/shuffled_shift_cipher.py": [
+"ShuffledShiftCipher.decrypt",
+"ShuffledShiftCipher.encrypt"
+],
+"ciphers/simple_keyword_cypher.py": [
+"create_cipher_map",
+"decipher",
+"encipher"
+],
+"ciphers/simple_substitution_cipher.py": [
+"check_valid_key",
+"decrypt_message",
+"encrypt_message",
+"get_random_key"
+],
+"ciphers/skytale_cipher.py": [
+"decrypt",
+"encrypt"
+],
+"ciphers/transposition_cipher.py": [
+"decrypt_message",
+"encrypt_message"
+],
+"ciphers/transposition_cipher_encrypt_decrypt_file.py": [],
+"ciphers/trifid_cipher.py": [
+"decrypt_message",
+"encrypt_message"
+],
+"ciphers/vernam_cipher.py": [
+"vernam_decrypt",
+"vernam_encrypt"
+],
+"ciphers/vigenere_cipher.py": [
+"decrypt_message",
+"encrypt_message"
+],
+"ciphers/xor_cipher.py": [
+"XORCipher.decrypt",
+"XORCipher.decrypt_file",
+"XORCipher.encrypt",
+"XORCipher.encrypt_file"
+],
+"ciphers/xtea.py": [
+"xtea_decrypt",
+"xtea_encrypt"
+],
+"computer_vision/flip_augmentation.py": [
+"get_dataset",
+"random_chars",
+"update_image_and_anno"
+],
+"computer_vision/gramian.py": [
+"gram_loss"
+],
+"computer_vision/haralick_descriptors.py": [
+"binarize",
+"binary_mask",
+"closing_filter",
+"get_descriptors",
+"get_distances",
+"grayscale",
+"normalize_image",
+"opening_filter",
+"root_mean_square_error"
+],
+"computer_vision/harris_corner.py": [
+"HarrisCorner.detect"
+],
+"computer_vision/horn_schunck.py": [
+"horn_schunck"
+],
+"computer_vision/intensity_based_segmentation.py": [
+"segment_image"
+],
+"computer_vision/mean_threshold.py": [
+"mean_threshold"
+],
+"computer_vision/mosaic_augmentation.py": [
+"get_dataset",
+"random_chars",
+"update_image_and_anno"
+],
+"computer_vision/otsu_threshold.py": [
+"otsu_threshold"
+],
+"computer_vision/pooling_functions.py": [
+"avgpooling",
+"maxpooling"
+],
+"computer_vision/vision_transformer.py": [
+"vision_transformer"
+],
+"conversions/astronomical_length_scale_conversion.py": [
+"length_conversion"
+],
+"conversions/base64_to_binary.py": [
+"base64_to_bin"
+],
+"conversions/binary_to_base64.py": [
+"bin_to_base64"
+],
+"conversions/binary_to_decimal.py": [
+"bin_to_decimal"
+],
+"conversions/binary_to_excess3.py": [
+"binary_to_excess3"
+],
+"conversions/binary_to_gray.py": [
+"binary_to_gray"
+],
+"conversions/binary_to_gray_code.py": [
+"decimal_to_gray",
+"gray_to_decimal"
+],
+"conversions/binary_to_hexadecimal.py": [
+"bin_to_hexadecimal"
+],
+"conversions/binary_to_octal.py": [
+"bin_to_octal"
+],
+"conversions/convert_number_to_words.py": [
+"NumberingSystem.max_value",
+"convert_number"
+],
+"conversions/decimal_to_any.py": [
+"decimal_to_any"
+],
+"conversions/decimal_to_binary.py": [
+"decimal_to_binary_iterative",
+"decimal_to_binary_recursive"
+],
+"conversions/decimal_to_hexadecimal.py": [
+"decimal_to_hexadecimal"
+],
+"conversions/decimal_to_octal.py": [
+"decimal_to_octal"
+],
+"conversions/endianness.py": [
+"bytes_to_int_big",
+"bytes_to_int_little",
+"int_to_bytes_big",
+"int_to_bytes_little",
+"swap_endianness_16",
+"swap_endianness_32",
+"swap_endianness_64"
+],
+"conversions/energy_conversions.py": [
+"energy_conversion"
+],
+"conversions/excel_title_to_column.py": [
+"excel_title_to_column"
+],
+"conversions/hex_to_bin.py": [
+"hex_to_bin"
+],
+"conversions/hex_to_rgb.py": [
+"hex_to_rgb"
+],
+"conversions/hexadecimal_to_decimal.py": [
+"hex_to_decimal"
+],
+"conversions/int_to_negative_binary_base.py": [
+"decimal_to_negative_binary"
+],
+"conversions/ipv4_conversion.py": [
+"alt_ipv4_to_decimal",
+"decimal_to_ipv4",
+"ipv4_to_decimal"
+],
+"conversions/length_conversion.py": [
+"length_conversion"
+],
+"conversions/molecular_chemistry.py": [
+"mass_to_moles",
+"molarity_to_normality",
+"moles_to_molecules",
+"moles_to_pressure",
+"moles_to_volume",
+"pressure_and_volume_to_temperature"
+],
+"conversions/negative_binary_base_to_int.py": [
+"negative_binary_to_int"
+],
+"conversions/octal_to_binary.py": [
+"octal_to_binary"
+],
+"conversions/octal_to_decimal.py": [
+"oct_to_decimal"
+],
+"conversions/octal_to_hexadecimal.py": [
+"octal_to_hex"
+],
+"conversions/prefix_conversions.py": [
+"convert_binary_prefix",
+"convert_si_prefix"
+],
+"conversions/prefix_conversions_string.py": [
+"add_binary_prefix",
+"add_si_prefix"
+],
+"conversions/pressure_conversions.py": [
+"pressure_conversion"
+],
+"conversions/rectangular_to_polar.py": [
+"rectangular_to_polar"
+],
+"conversions/rgb_cmyk_conversion.py": [
+"rgb_to_cmyk"
+],
+"conversions/rgb_hsv_conversion.py": [
+"approximately_equal_hsv",
+"hsv_to_rgb",
+"rgb_to_hsv"
+],
+"conversions/roman_numerals.py": [
+"int_to_roman",
+"roman_to_int"
+],
+"conversions/speed_conversions.py": [
+"convert_speed"
+],
+"conversions/temperature_conversions.py": [
+"celsius_to_fahrenheit",
+"celsius_to_kelvin",
+"celsius_to_rankine",
+"fahrenheit_to_celsius",
+"fahrenheit_to_kelvin",
+"fahrenheit_to_rankine",
+"kelvin_to_celsius",
+"kelvin_to_fahrenheit",
+"kelvin_to_rankine",
+"rankine_to_celsius",
+"rankine_to_fahrenheit",
+"rankine_to_kelvin",
+"reaumur_to_celsius",
+"reaumur_to_fahrenheit",
+"reaumur_to_kelvin",
+"reaumur_to_rankine"
+],
+"conversions/time_conversions.py": [
+"convert_time"
+],
+"conversions/volume_conversions.py": [
+"volume_conversion"
+],
+"conversions/weight_conversion.py": [
+"weight_conversion"
+],
+"data_compression/burrows_wheeler.py": [
+"bwt_transform",
+"reverse_bwt"
+],
+"data_compression/coordinate_compression.py": [
+"CoordinateCompressor.compress",
+"CoordinateCompressor.decompress"
+],
+"data_compression/huffman.py": [
+"huffman"
+],
+"data_compression/lempel_ziv.py": [
+"compress"
+],
+"data_compression/lempel_ziv_decompress.py": [
+"compress"
+],
+"data_compression/lz77.py": [
+"LZ77Compressor.compress",
+"LZ77Compressor.decompress"
+],
+"data_compression/move_to_front.py": [
+"move_to_front_decode",
+"move_to_front_encode"
+],
+"data_compression/peak_signal_to_noise_ratio.py": [
+"peak_signal_to_noise_ratio"
+],
+"data_compression/run_length_encoding.py": [
+"run_length_decode",
+"run_length_encode"
+],
+"data_structures/arrays/dynamic_array.py": [
+"DynamicArray.append",
+"DynamicArray.get"
+],
+"data_structures/arrays/equilibrium_index_in_array.py": [
+"equilibrium_index"
+],
+"data_structures/arrays/find_triplets_with_0_sum.py": [
+"find_triplets_with_0_sum",
+"find_triplets_with_0_sum_hashing",
+"find_triplets_with_0_sum_two_pointers"
+],
+"data_structures/arrays/gas_station.py": [
+"can_complete_circuit"
+],
+"data_structures/arrays/index_2d_array_in_1d.py": [
+"index_2d_array_in_1d"
+],
+"data_structures/arrays/kth_largest_element.py": [
+"kth_largest_element"
+],
+"data_structures/arrays/median_two_array.py": [
+"find_median_sorted_arrays"
+],
+"data_structures/arrays/merge_intervals.py": [
+"merge_intervals"
+],
+"data_structures/arrays/merge_sorted.py": [
+"merge_sorted_arrays"
+],
+"data_structures/arrays/monotonic_array.py": [
+"is_monotonic"
+],
+"data_structures/arrays/pairs_with_given_sum.py": [
+"pairs_with_sum"
+],
+"data_structures/arrays/pairwise_iteration.py": [
+"pairwise_iteration_comprehension",
+"pairwise_iteration_tee"
+],
+"data_structures/arrays/permutations.py": [
+"permute_backtrack",
+"permute_recursive"
+],
+"data_structures/arrays/prefix_sum.py": [
+"PrefixSum.contains_sum",
+"PrefixSum.get_sum"
+],
+"data_structures/arrays/product_sum.py": [
+"benchmark",
+"product_sum_array",
+"product_sum_iterative"
+],
+"data_structures/arrays/reverse_array.py": [
+"reverse_array"
+],
+"data_structures/arrays/rotate_array.py": [
+"rotate_array"
+],
+"data_structures/arrays/set_matrix_zeroes.py": [
+"set_matrix_zeroes"
+],
+"data_structures/arrays/sparse_table.py": [
+"build_sparse_table",
+"query"
+],
+"data_structures/arrays/sudoku_solver.py": [
+"cross",
+"from_file",
+"random_puzzle",
+"solve_all",
+"test"
+],
+"data_structures/binary_tree/avl_tree.py": [
+"AVLtree.del_node",
+"AVLtree.insert",
+"MyQueue.count",
+"MyQueue.print_queue",
+"MyQueue.push",
+"_test",
+"del_node",
+"get_right_most"
+],
+"data_structures/binary_tree/basic_binary_tree.py": [
+"BinaryTree.depth",
+"BinaryTree.is_full",
+"BinaryTree.medium_tree",
+"BinaryTree.small_tree",
+"Node.is_full"
+],
+"data_structures/binary_tree/binary_search_tree.py": [
+"BinarySearchTree.find_kth_smallest",
+"BinarySearchTree.get_min",
+"BinarySearchTree.insert",
+"BinarySearchTree.remove",
+"BinarySearchTree.traversal_tree",
+"Node.is_right",
+"postorder"
+],
+"data_structures/binary_tree/binary_search_tree_recursive.py": [
+"BinarySearchTree.empty",
+"BinarySearchTree.is_empty",
+"BinarySearchTreeTest._get_binary_search_tree",
+"binary_search_tree_example"
+],
+"data_structures/binary_tree/binary_tree_maximum_path_sum.py": [
+"GetMaxPathSum.max_path_sum",
+"construct_tree"
+],
+"data_structures/binary_tree/binary_tree_mirror.py": [
+"binary_tree_mirror"
+],
+"data_structures/binary_tree/binary_tree_node_sum.py": [],
+"data_structures/binary_tree/binary_tree_path_sum.py": [
+"BinaryTreePathSum.path_sum"
+],
+"data_structures/binary_tree/binary_tree_traversals.py": [
+"inorder",
+"level_order",
+"make_tree",
+"postorder",
+"preorder",
+"reverse_inorder",
+"zigzag"
+],
+"data_structures/binary_tree/diameter_of_binary_tree.py": [
+"Node.diameter"
+],
+"data_structures/binary_tree/diff_views_of_binary_tree.py": [
+"binary_tree_bottom_side_view",
+"binary_tree_left_side_view",
+"binary_tree_right_side_view",
+"binary_tree_top_side_view",
+"make_tree"
+],
+"data_structures/binary_tree/distribute_coins.py": [
+"distribute_coins"
+],
+"data_structures/binary_tree/fenwick_tree.py": [
+"FenwickTree.add",
+"FenwickTree.get_array",
+"FenwickTree.rank_query",
+"FenwickTree.update"
+],
+"data_structures/binary_tree/flatten_binarytree_to_linkedlist.py": [
+"build_tree",
+"display_linked_list",
+"flatten"
+],
+"data_structures/binary_tree/floor_and_ceiling.py": [
+"floor_ceiling"
+],
+"data_structures/binary_tree/inorder_tree_traversal_2022.py": [
+"inorder",
+"make_tree"
+],
+"data_structures/binary_tree/is_sorted.py": [
+"Node.is_sorted"
+],
+"data_structures/binary_tree/is_sum_tree.py": [
+"BinaryTree.build_a_sum_tree",
+"BinaryTree.build_a_tree",
+"BinaryTree.is_sum_tree",
+"Node.is_sum_node"
+],
+"data_structures/binary_tree/lazy_segment_tree.py": [
+"SegmentTree.build",
+"SegmentTree.update"
+],
+"data_structures/binary_tree/lowest_common_ancestor.py": [
+"breadth_first_search",
+"create_sparse",
+"lowest_common_ancestor"
+],
+"data_structures/binary_tree/maximum_fenwick_tree.py": [
+"MaxFenwickTree.query",
+"MaxFenwickTree.update"
+],
+"data_structures/binary_tree/maximum_sum_bst.py": [
+"max_sum_bst"
+],
+"data_structures/binary_tree/merge_two_binary_trees.py": [
+"merge_two_binary_trees",
+"print_preorder"
+],
+"data_structures/binary_tree/mirror_binary_tree.py": [
+"Node.mirror",
+"make_tree_nine",
+"make_tree_seven"
+],
+"data_structures/binary_tree/non_recursive_segment_tree.py": [
+"SegmentTree.query",
+"SegmentTree.update"
+],
+"data_structures/binary_tree/number_of_possible_binary_trees.py": [
+"binary_tree_count"
+],
+"data_structures/binary_tree/persistent_segment_tree.py": [
+"PersistentSegmentTree.query",
+"PersistentSegmentTree.update"
+],
+"data_structures/binary_tree/red_black_tree.py": [
+"RedBlackTree.ceil",
+"RedBlackTree.check_color_properties",
+"RedBlackTree.floor",
+"RedBlackTree.get_min",
+"RedBlackTree.grandparent",
+"RedBlackTree.inorder_traverse",
+"RedBlackTree.insert",
+"RedBlackTree.postorder_traverse",
+"RedBlackTree.preorder_traverse",
+"RedBlackTree.remove",
+"RedBlackTree.sibling",
+"print_results",
+"pytests"
+],
+"data_structures/binary_tree/segment_tree.py": [
+"SegmentTree.show_data",
+"SegmentTree.update"
+],
+"data_structures/binary_tree/segment_tree_other.py": [
+"SegmentTree.query_range",
+"SegmentTree.traverse",
+"SegmentTree.update"
+],
+"data_structures/binary_tree/serialize_deserialize_binary_tree.py": [
+"TreeNode.five_tree",
+"deserialize"
+],
+"data_structures/binary_tree/splay_tree.py": [
+"SplayTree.delete",
+"SplayTree.insert",
+"SplayTree.search"
+],
+"data_structures/binary_tree/symmetric_tree.py": [
+"is_symmetric_tree",
+"make_asymmetric_tree",
+"make_symmetric_tree"
+],
+"data_structures/binary_tree/treap.py": [
+"inorder",
+"interact_treap"
+],
+"data_structures/binary_tree/wavelet_tree.py": [
+"build_tree",
+"quantile",
+"range_counting",
+"rank"
+],
+"data_structures/disjoint_set/alternate_disjoint_set.py": [
+"DisjointSet.merge"
+],
+"data_structures/disjoint_set/disjoint_set.py": [
+"find_python_set",
+"make_set",
+"union_set"
+],
+"data_structures/hashing/bloom_filter.py": [
+"Bloom.add",
+"Bloom.bitstring",
+"Bloom.estimated_error_rate",
+"Bloom.format_hash"
+],
+"data_structures/hashing/double_hash.py": [
+"DoubleHash._collision_resolution"
+],
+"data_structures/hashing/hash_map.py": [
+"HashMap._try_set"
+],
+"data_structures/hashing/hash_table.py": [
+"HashTable.balanced_factor",
+"HashTable.bulk_insert",
+"HashTable.keys"
+],
+"data_structures/hashing/hash_table_with_linked_list.py": [
+"HashTableWithLinkedList._collision_resolution",
+"HashTableWithLinkedList._set_value",
+"HashTableWithLinkedList.balanced_factor"
+],
+"data_structures/hashing/number_theory/prime_numbers.py": [
+"next_prime"
+],
+"data_structures/hashing/quadratic_probing.py": [
+"QuadraticProbing._collision_resolution"
+],
+"data_structures/heap/binomial_heap.py": [
+"BinomialHeap.delete_min",
+"BinomialHeap.insert",
+"BinomialHeap.peek"
+],
+"data_structures/heap/heap.py": [
+"Heap.build_max_heap",
+"Heap.extract_max",
+"Heap.heap_sort",
+"Heap.insert",
+"Heap.parent_index"
+],
+"data_structures/heap/heap_generic.py": [
+"Heap.extract_top",
+"Heap.insert_item",
+"Heap.update_item"
+],
+"data_structures/heap/max_heap.py": [
+"BinaryHeap.get_list",
+"BinaryHeap.insert",
+"BinaryHeap.pop"
+],
+"data_structures/heap/min_heap.py": [
+"MinHeap.decrease_key",
+"MinHeap.insert",
+"MinHeap.is_empty",
+"MinHeap.peek",
+"MinHeap.remove"
+],
+"data_structures/heap/randomized_heap.py": [
+"RandomizedHeap.clear",
+"RandomizedHeap.to_sorted_list",
+"RandomizedHeapNode.value"
+],
+"data_structures/heap/skew_heap.py": [
+"SkewHeap.clear",
+"SkewNode.value"
+],
+"data_structures/kd_tree/build_kdtree.py": [
+"build_kdtree"
+],
+"data_structures/kd_tree/example/example_usage.py": [],
+"data_structures/kd_tree/example/hypercube_points.py": [
+"hypercube_points"
+],
+"data_structures/kd_tree/kd_node.py": [],
+"data_structures/kd_tree/nearest_neighbour_search.py": [
+"nearest_neighbour_search"
+],
+"data_structures/linked_list/circular_linked_list.py": [
+"CircularLinkedList.delete_front",
+"CircularLinkedList.delete_tail",
+"CircularLinkedList.insert_head",
+"CircularLinkedList.insert_tail",
+"CircularLinkedList.is_empty"
+],
+"data_structures/linked_list/deque_doubly.py": [
+"LinkedDeque.add_first",
+"LinkedDeque.add_last",
+"LinkedDeque.first",
+"LinkedDeque.last",
+"LinkedDeque.remove_first",
+"LinkedDeque.remove_last",
+"_DoublyLinkedBase._Node.has_next_and_prev",
+"_DoublyLinkedBase.is_empty"
+],
+"data_structures/linked_list/doubly_linked_list.py": [
+"DoublyLinkedList.delete",
+"DoublyLinkedList.insert_at_head",
+"DoublyLinkedList.insert_at_tail",
+"DoublyLinkedList.is_empty"
+],
+"data_structures/linked_list/doubly_linked_list_two.py": [
+"LinkedList.delete_value",
+"LinkedList.get_head_data",
+"LinkedList.get_node",
+"LinkedList.get_tail_data",
+"LinkedList.insert",
+"LinkedList.insert_at_position",
+"LinkedList.is_empty",
+"create_linked_list"
+],
+"data_structures/linked_list/floyds_cycle_detection.py": [
+"LinkedList.add_node",
+"LinkedList.detect_cycle"
+],
+"data_structures/linked_list/from_sequence.py": [
+"make_linked_list"
+],
+"data_structures/linked_list/has_loop.py": [
+"Node.has_loop"
+],
+"data_structures/linked_list/is_palindrome.py": [
+"is_palindrome",
+"is_palindrome_dict",
+"is_palindrome_stack"
+],
+"data_structures/linked_list/kth_element_from_end.py": [
+"LinkedList.add",
+"LinkedList.kth_element_from_end"
+],
+"data_structures/linked_list/merge_sort_linked_list.py": [
+"iter_linked_list",
+"merge_sort_linked_list"
+],
+"data_structures/linked_list/merge_two_lists.py": [
+"merge_lists"
+],
+"data_structures/linked_list/middle_element_of_linked_list.py": [
+"LinkedList.middle_element",
+"LinkedList.push"
+],
+"data_structures/linked_list/partition_linked_list.py": [
+"LinkedList.add",
+"LinkedList.partition_liked_list"
+],
+"data_structures/linked_list/print_reverse.py": [
+"in_reverse",
+"make_linked_list"
+],
+"data_structures/linked_list/remove_nth_node_from_end_of_list.py": [
+"LinkedList.append",
+"LinkedList.remove_nth_from_end",
+"LinkedList.view"
+],
+"data_structures/linked_list/reverse_k_group.py": [
+"LinkedList.reverse_k_nodes"
+],
+"data_structures/linked_list/rotate_to_the_right.py": [
+"insert_node",
+"print_linked_list",
+"rotate_to_the_right"
+],
+"data_structures/linked_list/singly_linked_list.py": [
+"LinkedList.delete_head",
+"LinkedList.delete_tail",
+"LinkedList.insert_head",
+"LinkedList.insert_tail",
+"LinkedList.is_empty",
+"LinkedList.print_list",
+"LinkedList.reverse"
+],
+"data_structures/linked_list/skip_list.py": [
+"Node.level",
+"SkipList.delete",
+"SkipList.find",
+"SkipList.insert",
+"pytests",
+"test_delete_doesnt_leave_dead_nodes.traverse_keys",
+"test_iter_always_yields_sorted_values.is_sorted"
+],
+"data_structures/linked_list/sorted_linked_list.py": [
+"SortedLinkedList.delete",
+"SortedLinkedList.is_empty",
+"SortedLinkedList.max_value",
+"SortedLinkedList.merge",
+"SortedLinkedList.min_value",
+"SortedLinkedList.remove_duplicates",
+"SortedLinkedList.search"
+],
+"data_structures/linked_list/swap_nodes.py": [
+"LinkedList.push",
+"LinkedList.swap_nodes"
+],
+"data_structures/linked_list/xor_linked_list.py": [
+"XORLinkedList._xor",
+"XORLinkedList.insert",
+"XORLinkedList.to_list"
+],
+"data_structures/queues/circular_queue.py": [
+"CircularQueue.dequeue",
+"CircularQueue.enqueue",
+"CircularQueue.first"
+],
+"data_structures/queues/circular_queue_linked_list.py": [
+"CircularQueueLinkedList.dequeue",
+"CircularQueueLinkedList.enqueue",
+"CircularQueueLinkedList.first"
+],
+"data_structures/queues/double_ended_queue.py": [
+"Deque.extend",
+"Deque.extendleft",
+"Deque.pop",
+"Deque.popleft"
+],
+"data_structures/queues/linked_queue.py": [
+"LinkedQueue.clear",
+"LinkedQueue.get",
+"LinkedQueue.put"
+],
+"data_structures/queues/monotonic_queue.py": [
+"max_sliding_window"
+],
+"data_structures/queues/priority_queue_using_list.py": [
+"element_priority_queue",
+"fixed_priority_queue"
+],
+"data_structures/queues/queue_by_list.py": [
+"QueueByList.get_front",
+"QueueByList.rotate"
+],
+"data_structures/queues/queue_by_two_stacks.py": [
+"QueueByTwoStacks.get",
+"QueueByTwoStacks.put"
+],
+"data_structures/queues/queue_on_pseudo_stack.py": [
+"Queue.front",
+"Queue.size"
+],
+"data_structures/stacks/balanced_parentheses.py": [
+"balanced_parentheses"
+],
+"data_structures/stacks/dijkstras_two_stack_algorithm.py": [
+"dijkstras_two_stack_algorithm"
+],
+"data_structures/stacks/infix_to_postfix_conversion.py": [
+"infix_to_postfix"
+],
+"data_structures/stacks/infix_to_prefix_conversion.py": [
+"infix_2_prefix"
+],
+"data_structures/stacks/kth_next_greater_element.py": [
+"find_kth_next_greater_element"
+],
+"data_structures/stacks/largest_rectangle_histogram.py": [
+"largest_rectangle_area"
+],
+"data_structures/stacks/lexicographical_numbers.py": [
+"lexical_order"
+],
+"data_structures/stacks/next_greater_element.py": [
+"next_greatest_element",
+"next_greatest_element_fast",
+"next_greatest_element_slow"
+],
+"data_structures/stacks/postfix_evaluation.py": [
+"evaluate"
+],
+"data_structures/stacks/postfix_to_infix_conversion.py": [
+"postfix_to_infix"
+],
+"data_structures/stacks/prefix_evaluation.py": [
+"evaluate",
+"evaluate_recursive"
+],
+"data_structures/stacks/stack.py": [
+"Stack.is_empty",
+"Stack.is_full",
+"Stack.peek",
+"Stack.pop",
+"Stack.push",
+"Stack.size"
+],
+"data_structures/stacks/stack_tracking_min_max.py": [
+"MinMaxStack.get_current_max",
+"MinMaxStack.get_current_min",
+"MinMaxStack.pop_value",
+"MinMaxStack.push_value"
+],
+"data_structures/stacks/stack_using_two_queues.py": [
+"StackWithQueues.peek",
+"StackWithQueues.pop",
+"StackWithQueues.push"
+],
+"data_structures/stacks/stack_with_doubly_linked_list.py": [
+"Stack.is_empty",
+"Stack.pop",
+"Stack.print_stack",
+"Stack.push",
+"Stack.top"
+],
+"data_structures/stacks/stack_with_singly_linked_list.py": [
+"LinkedStack.clear",
+"LinkedStack.peek",
+"LinkedStack.pop",
+"LinkedStack.push"
+],
+"data_structures/stacks/stock_span_problem.py": [
+"calculate_span",
+"print_array"
+],
+"data_structures/suffix_tree/example/example_usage.py": [],
+"data_structures/suffix_tree/suffix_tree.py": [
+"SuffixTree.search"
+],
+"data_structures/suffix_tree/suffix_tree_node.py": [],
+"data_structures/trie/radix_tree.py": [
+"RadixNode.delete",
+"RadixNode.find",
+"RadixNode.insert_many",
+"RadixNode.print_tree"
+],
+"data_structures/trie/trie.py": [
+"TrieNode.delete",
+"TrieNode.find",
+"TrieNode.insert_many",
+"print_results",
+"print_words",
+"pytests"
+],
+"digital_image_processing/change_brightness.py": [
+"change_brightness"
+],
+"digital_image_processing/change_contrast.py": [
+"change_contrast"
+],
+"digital_image_processing/convert_to_negative.py": [
+"convert_to_negative"
+],
+"digital_image_processing/dithering/burkes.py": [
+"Burkes.process"
+],
+"digital_image_processing/edge_detection/canny.py": [
+"canny"
+],
+"digital_image_processing/filters/bilateral_filter.py": [
+"bilateral_filter",
+"parse_args"
+],
+"digital_image_processing/filters/convolve.py": [
+"img_convolve"
+],
+"digital_image_processing/filters/gabor_filter.py": [
+"gabor_filter_kernel"
+],
+"digital_image_processing/filters/gaussian_filter.py": [
+"gaussian_filter"
+],
+"digital_image_processing/filters/laplacian_filter.py": [
+"my_laplacian"
+],
+"digital_image_processing/filters/local_binary_pattern.py": [
+"local_binary_value"
+],
+"digital_image_processing/filters/median_filter.py": [
+"median_filter"
+],
+"digital_image_processing/filters/sobel_filter.py": [
+"sobel_filter"
+],
+"digital_image_processing/histogram_equalization/histogram_stretch.py": [
+"ConstantStretch.plot_histogram",
+"ConstantStretch.show_image",
+"ConstantStretch.stretch"
+],
+"digital_image_processing/index_calculation.py": [
+"IndexCalculation._if",
+"IndexCalculation.arv12",
+"IndexCalculation.atsavi",
+"IndexCalculation.bndvi",
+"IndexCalculation.bwdrvi",
+"IndexCalculation.calculation",
+"IndexCalculation.ccci",
+"IndexCalculation.ci",
+"IndexCalculation.ci_green",
+"IndexCalculation.ci_rededge",
+"IndexCalculation.ctvi",
+"IndexCalculation.cvi",
+"IndexCalculation.dvi",
+"IndexCalculation.evi",
+"IndexCalculation.gbndvi",
+"IndexCalculation.gdvi",
+"IndexCalculation.gemi",
+"IndexCalculation.gli",
+"IndexCalculation.gndvi",
+"IndexCalculation.gosavi",
+"IndexCalculation.grndvi",
+"IndexCalculation.gsavi",
+"IndexCalculation.hue",
+"IndexCalculation.i",
+"IndexCalculation.ipvi",
+"IndexCalculation.ivi",
+"IndexCalculation.m_savi",
+"IndexCalculation.mrvi",
+"IndexCalculation.ndre",
+"IndexCalculation.ngrdi",
+"IndexCalculation.norm_g",
+"IndexCalculation.norm_nir",
+"IndexCalculation.norm_r",
+"IndexCalculation.pndvi",
+"IndexCalculation.rbndvi",
+"IndexCalculation.red_edge_ndvi",
+"IndexCalculation.ri",
+"IndexCalculation.s",
+"IndexCalculation.tvi"
+],
+"digital_image_processing/morphological_operations/dilation_operation.py": [
+"dilation",
+"gray_to_binary",
+"rgb_to_gray"
+],
+"digital_image_processing/morphological_operations/erosion_operation.py": [
+"erosion",
+"gray_to_binary",
+"rgb_to_gray"
+],
+"digital_image_processing/resize/resize.py": [
+"NearestNeighbour.process"
+],
+"digital_image_processing/rotation/rotation.py": [
+"get_rotation"
+],
+"digital_image_processing/sepia.py": [
+"make_sepia"
+],
+"divide_and_conquer/closest_pair_of_points.py": [
+"closest_pair_of_points"
+],
+"divide_and_conquer/convex_hull.py": [
+"convex_hull_bf",
+"convex_hull_melkman",
+"convex_hull_recursive"
+],
+"divide_and_conquer/heaps_algorithm.py": [
+"heaps"
+],
+"divide_and_conquer/heaps_algorithm_iterative.py": [
+"heaps"
+],
+"divide_and_conquer/inversions.py": [
+"count_inversions_bf",
+"count_inversions_recursive"
+],
+"divide_and_conquer/kth_order_statistic.py": [
+"kth_number"
+],
+"divide_and_conquer/max_difference_pair.py": [
+"max_difference"
+],
+"divide_and_conquer/max_subarray.py": [
+"plot_runtimes"
+],
+"divide_and_conquer/mergesort.py": [
+"merge_sort"
+],
+"divide_and_conquer/minimum_element_of_array.py": [
+"selection_sort"
+],
+"divide_and_conquer/peak.py": [
+"peak"
+],
+"divide_and_conquer/power.py": [
+"power"
+],
+"divide_and_conquer/strassen_matrix_multiplication.py": [
+"print_matrix",
+"strassen"
+],
+"docs/conf.py": [],
+"dynamic_programming/abbreviation.py": [
+"abbr"
+],
+"dynamic_programming/all_construct.py": [
+"all_construct"
+],
+"dynamic_programming/bitmask.py": [
+"AssignmentUsingBitmask.count_no_of_ways"
+],
+"dynamic_programming/catalan_numbers.py": [
+"catalan_numbers"
+],
+"dynamic_programming/climbing_stairs.py": [
+"climb_stairs"
+],
+"dynamic_programming/combination_sum_iv.py": [
+"combination_sum_iv",
+"combination_sum_iv_bottom_up",
+"combination_sum_iv_dp_array"
+],
+"dynamic_programming/edit_distance.py": [
+"EditDistance.min_dist_bottom_up",
+"EditDistance.min_dist_top_down"
+],
+"dynamic_programming/egg_dropping.py": [
+"egg_dropping"
+],
+"dynamic_programming/factorial.py": [
+"factorial"
+],
+"dynamic_programming/fast_fibonacci.py": [
+"fibonacci"
+],
+"dynamic_programming/fibonacci.py": [
+"Fibonacci.get"
+],
+"dynamic_programming/fizz_buzz.py": [
+"fizz_buzz"
+],
+"dynamic_programming/floyd_warshall.py": [
+"Graph.add_edge",
+"Graph.floyd_warshall",
+"Graph.show_min"
+],
+"dynamic_programming/integer_partition.py": [
+"partition"
+],
+"dynamic_programming/iterating_through_submasks.py": [
+"list_of_submasks"
+],
+"dynamic_programming/knapsack.py": [
+"knapsack_with_example_solution",
+"mf_knapsack"
+],
+"dynamic_programming/largest_divisible_subset.py": [
+"largest_divisible_subset"
+],
+"dynamic_programming/longest_common_subsequence.py": [
+"longest_common_subsequence"
+],
+"dynamic_programming/longest_common_substring.py": [
+"longest_common_substring"
+],
+"dynamic_programming/longest_increasing_subsequence.py": [
+"longest_subsequence"
+],
+"dynamic_programming/longest_increasing_subsequence_iterative.py": [
+"longest_subsequence"
+],
+"dynamic_programming/longest_increasing_subsequence_o_nlogn.py": [
+"longest_increasing_subsequence_length"
+],
+"dynamic_programming/longest_palindromic_subsequence.py": [
+"longest_palindromic_subsequence"
+],
+"dynamic_programming/longest_repeating_subsequence.py": [
+"longest_repeating_subsequence"
+],
+"dynamic_programming/matrix_chain_multiplication.py": [
+"elapsed_time",
+"matrix_chain_multiply",
+"matrix_chain_order"
+],
+"dynamic_programming/matrix_chain_order.py": [
+"matrix_chain_order",
+"print_optimal_solution"
+],
+"dynamic_programming/max_non_adjacent_sum.py": [
+"maximum_non_adjacent_sum"
+],
+"dynamic_programming/max_product_subarray.py": [
+"max_product_subarray"
+],
+"dynamic_programming/max_subarray_sum.py": [
+"max_subarray_sum"
+],
+"dynamic_programming/min_distance_up_bottom.py": [
+"min_distance_up_bottom"
+],
+"dynamic_programming/minimum_coin_change.py": [
+"dp_count"
+],
+"dynamic_programming/minimum_cost_path.py": [
+"minimum_cost_path"
+],
+"dynamic_programming/minimum_partition.py": [
+"find_min"
+],
+"dynamic_programming/minimum_size_subarray_sum.py": [
+"minimum_subarray_sum"
+],
+"dynamic_programming/minimum_squares_to_represent_a_number.py": [
+"minimum_squares_to_represent_a_number"
+],
+"dynamic_programming/minimum_steps_to_one.py": [
+"min_steps_to_one"
+],
+"dynamic_programming/minimum_tickets_cost.py": [
+"mincost_tickets"
+],
+"dynamic_programming/narcissistic_number.py": [
+"find_narcissistic_numbers"
+],
+"dynamic_programming/needleman_wunsch.py": [
+"needleman_wunsch"
+],
+"dynamic_programming/optimal_binary_search_tree.py": [
+"find_optimal_binary_search_tree"
+],
+"dynamic_programming/palindrome_partitioning.py": [
+"find_minimum_partitions"
+],
+"dynamic_programming/range_sum_query.py": [
+"prefix_sum"
+],
+"dynamic_programming/regex_match.py": [
+"dp_match",
+"recursive_match"
+],
+"dynamic_programming/rod_cutting.py": [
+"bottom_up_cut_rod",
+"naive_cut_rod_recursive",
+"top_down_cut_rod"
+],
+"dynamic_programming/smith_waterman.py": [
+"smith_waterman",
+"traceback"
+],
+"dynamic_programming/subset_generation.py": [
+"subset_combinations"
+],
+"dynamic_programming/sum_of_subset.py": [
+"is_sum_subset"
+],
+"dynamic_programming/trapped_water.py": [
+"trapped_rainwater"
+],
+"dynamic_programming/tribonacci.py": [
+"tribonacci"
+],
+"dynamic_programming/viterbi.py": [
+"viterbi"
+],
+"dynamic_programming/wildcard_matching.py": [
+"is_match"
+],
+"dynamic_programming/word_break.py": [
+"word_break"
+],
+"electronics/apparent_power.py": [
+"apparent_power"
+],
+"electronics/builtin_voltage.py": [
+"builtin_voltage"
+],
+"electronics/capacitor_equivalence.py": [
+"capacitor_parallel",
+"capacitor_series"
+],
+"electronics/carrier_concentration.py": [
+"carrier_concentration"
+],
+"electronics/charging_capacitor.py": [
+"charging_capacitor"
+],
+"electronics/charging_inductor.py": [
+"charging_inductor"
+],
+"electronics/circular_convolution.py": [
+"CircularConvolution.circular_convolution"
+],
+"electronics/coulombs_law.py": [
+"couloumbs_law"
+],
+"electronics/electric_conductivity.py": [
+"electric_conductivity"
+],
+"electronics/electric_power.py": [
+"electric_power"
+],
+"electronics/electrical_impedance.py": [
+"electrical_impedance"
+],
+"electronics/full_wave_rectifier.py": [
+"dc_current",
+"dc_voltage",
+"max_current",
+"max_load_current",
+"rms_current",
+"rms_voltage"
+],
+"electronics/half_wave_rectifier.py": [
+"dc_current",
+"dc_voltage",
+"max_current",
+"max_load_current",
+"rms_current",
+"rms_voltage"
+],
+"electronics/ic_555_timer.py": [
+"astable_duty_cycle",
+"astable_frequency"
+],
+"electronics/ind_reactance.py": [
+"ind_reactance"
+],
+"electronics/ohms_law.py": [
+"ohms_law"
+],
+"electronics/power_factor_correction.py": [
+"shunt_capacitor_power_factor_correction",
+"shunt_inductor_power_factor_correction"
+],
+"electronics/real_and_reactive_power.py": [
+"reactive_power",
+"real_power"
+],
+"electronics/resistor_color_code.py": [
+"calculate_resistance"
+],
+"electronics/resistor_equivalence.py": [
+"resistor_parallel",
+"resistor_series"
+],
+"electronics/resonant_frequency.py": [
+"resonant_frequency"
+],
+"electronics/star_delta_conversions.py": [
+"delta_to_star",
+"star_to_delta"
+],
+"electronics/wheatstone_bridge.py": [
+"wheatstone_solver"
+],
+"file_transfer/receive_file.py": [],
+"file_transfer/send_file.py": [
+"send_file"
+],
+"financial/annuity_due_future_value.py": [
+"annuity_due_future_value"
+],
+"financial/equated_monthly_installments.py": [
+"equated_monthly_installments"
+],
+"financial/expected_shortfall.py": [
+"expected_shortfall"
+],
+"financial/exponential_moving_average.py": [
+"exponential_moving_average"
+],
+"financial/fractional_differentiation.py": [
+"fracdiff_fixedwindow"
+],
+"financial/interest.py": [
+"apr_interest",
+"simple_interest"
+],
+"financial/kelly_criterion.py": [
+"fractional_kelly",
+"kelly_criterion_extended"
+],
+"financial/macaulay_duration.py": [
+"macaulay_duration"
+],
+"financial/ordinary_annuity_future_value.py": [
+"ordinary_annuity_future_value"
+],
+"financial/present_value.py": [
+"present_value"
+],
+"financial/price_plus_tax.py": [
+"price_plus_tax"
+],
+"financial/sharpe_ratio.py": [
+"annualized_sharpe_ratio"
+],
+"financial/simple_moving_average.py": [
+"simple_moving_average"
+],
+"financial/straight_line_depreciation.py": [
+"straight_line_depreciation"
+],
+"financial/streaming_moving_average.py": [
+"StreamingMovingAverage.mov_avg",
+"StreamingMovingAverage.update"
+],
+"financial/time_and_half_pay.py": [
+"pay"
+],
+"financial/value_at_risk.py": [
+"value_at_risk"
+],
+"fractals/barnsley_fern.py": [
+"generate_fern"
+],
+"fractals/hilbert_curve.py": [
+"hilbert_curve",
+"plot_hilbert_curve"
+],
+"fractals/julia_sets.py": [
+"eval_exponential",
+"eval_quadratic_polynomial",
+"ignore_overflow_warnings",
+"iterate_function",
+"prepare_grid",
+"show_results"
+],
+"fractals/koch_snowflake.py": [
+"iterate",
+"plot"
+],
+"fractals/mandelbrot.py": [
+"get_image"
+],
+"fractals/sierpinski_carpet.py": [
+"count_filled_cells",
+"generate_carpet"
+],
+"fractals/sierpinski_triangle.py": [
+"triangle"
+],
+"fractals/vicsek.py": [
+"draw_vicsek_fractal"
+],
+"fuzzy_logic/fuzzy_operations.py": [
+"FuzzySet.complement",
+"FuzzySet.intersection",
+"FuzzySet.plot",
+"FuzzySet.union"
+],
+"fuzzy_logic/fuzzy_set_operations.py": [
+"algebraic_product",
+"algebraic_sum",
+"bounded_difference",
+"bounded_sum",
+"fuzzy_complement",
+"fuzzy_difference",
+"fuzzy_intersection",
+"fuzzy_union",
+"triangular_membership"
+],
+"genetic_algorithm/basic_string.py": [
+"basic"
+],
+"genetic_algorithm/travelling_salesman_problem.py": [
+"chose_rws",
+"chose_ts",
+"crossing",
+"fitness",
+"init",
+"mutate"
+],
+"geodesy/haversine_distance.py": [
+"haversine_distance"
+],
+"geodesy/lamberts_ellipsoidal_distance.py": [
+"lamberts_ellipsoidal_distance"
+],
+"geodesy/radar_target_calculation.py": [
+"calculate_target_coordinates"
+],
+"geometry/braik_mac_construction.py": [
+"BraikMac.generate"
+],
+"geometry/geometry.py": [
+"Circle.diameter",
+"Circle.max_parts",
+"Ellipse.area",
+"Ellipse.eccentricity",
+"Polygon.area",
+"Polygon.get_side",
+"Polygon.set_side",
+"Rectangle.area",
+"Square.area",
+"Triangle.area"
+],
+"geometry/graham_scan.py": [
+"graham_scan"
+],
+"geometry/jarvis_march.py": [
+"jarvis_march"
+],
+"geometry/monotone_chain.py": [
+"monotone_chain"
+],
+"geometry/ramer_douglas_peucker.py": [
+"ramer_douglas_peucker"
+],
+"geometry/rotating_calipers.py": [
+"rotating_calipers"
+],
+"geometry/segment_intersection.py": [
+"segments_intersect"
+],
+"geometry/shoelace.py": [
+"area_of_polygon"
+],
+"geometry/triangle.py": [
+"Triangle.circumcenter",
+"Triangle.incenter",
+"Triangle.orthocenter"
+],
+"graphics/bezier_curve.py": [
+"BezierCurve.derivative",
+"BezierCurve.plot_curve"
+],
+"graphics/bresenham_line_basic.py": [
+"classic_bresenham_line"
+],
+"graphics/bresenham_line_generalized.py": [
+"generalized_bresenham_line"
+],
+"graphics/butterfly_pattern.py": [
+"butterfly_pattern"
+],
+"graphics/digital_differential_analyzer_line.py": [
+"digital_differential_analyzer_line"
+],
+"graphics/vector3_for_2d_rendering.py": [
+"convert_to_2d",
+"rotate"
+],
+"graphs/a_star.py": [
+"search"
+],
+"graphs/ant_colony_optimization_algorithms.py": [
+"city_select",
+"pheromone_update"
+],
+"graphs/articulation_points.py": [
+"compute_ap"
+],
+"graphs/basic_graphs.py": [
+"adjm",
+"bfs",
+"dfs",
+"dijk",
+"edglist",
+"find_isolated_nodes",
+"floyd_warshall",
+"initialize_unweighted_directed_graph",
+"initialize_unweighted_undirected_graph",
+"initialize_weighted_undirected_graph",
+"krusk",
+"prim",
+"topo"
+],
+"graphs/bellman_ford.py": [
+"bellman_ford",
+"print_distance"
+],
+"graphs/bi_directional_dijkstra.py": [
+"bidirectional_dij"
+],
+"graphs/bidirectional_a_star.py": [
+"AStar.search",
+"BidirectionalAStar.search"
+],
+"graphs/bidirectional_breadth_first_search.py": [
+"BidirectionalBreadthFirstSearch.search",
+"BreadthFirstSearch.search"
+],
+"graphs/bidirectional_search.py": [
+"bidirectional_search"
+],
+"graphs/boruvka.py": [
+"Graph.add_edge",
+"Graph.boruvka"
+],
+"graphs/breadth_first_search.py": [
+"Graph.add_edge",
+"Graph.bfs",
+"Graph.print_graph"
+],
+"graphs/breadth_first_search_2.py": [
+"benchmark_function",
+"breadth_first_search",
+"breadth_first_search_with_deque"
+],
+"graphs/breadth_first_search_shortest_path.py": [
+"Graph.breath_first_search",
+"Graph.shortest_path"
+],
+"graphs/breadth_first_search_shortest_path_2.py": [
+"bfs_shortest_path",
+"bfs_shortest_path_distance"
+],
+"graphs/breadth_first_search_zero_one_shortest_path.py": [
+"AdjacencyList.add_edge",
+"AdjacencyList.get_shortest_path",
+"AdjacencyList.size"
+],
+"graphs/check_bipatrite.py": [
+"is_bipartite_bfs",
+"is_bipartite_dfs"
+],
+"graphs/check_cycle.py": [
+"check_cycle"
+],
+"graphs/connected_components.py": [
+"connected_components"
+],
+"graphs/deep_clone_graph.py": [
+"clone_graph"
+],
+"graphs/depth_first_search.py": [
+"depth_first_search"
+],
+"graphs/depth_first_search_2.py": [
+"Graph.add_edge",
+"Graph.dfs",
+"Graph.print_graph"
+],
+"graphs/dijkstra.py": [
+"dijkstra"
+],
+"graphs/dijkstra_2.py": [
+"dijkstra"
+],
+"graphs/dijkstra_algorithm.py": [
+"Graph.add_edge",
+"Graph.dijkstra",
+"Graph.show_graph",
+"Graph.show_path"
+],
+"graphs/dijkstra_alternate.py": [
+"Graph.dijkstra"
+],
+"graphs/dijkstra_binary_grid.py": [
+"dijkstra"
+],
+"graphs/dinic.py": [
+"Dinic.add_edge",
+"Dinic.max_flow"
+],
+"graphs/directed_and_undirected_weighted_graph.py": [
+"DirectedGraph.all_nodes",
+"DirectedGraph.bfs_time",
+"DirectedGraph.cycle_nodes",
+"DirectedGraph.dfs_time",
+"DirectedGraph.fill_graph_randomly",
+"DirectedGraph.has_cycle",
+"DirectedGraph.in_degree",
+"DirectedGraph.out_degree",
+"DirectedGraph.remove_pair",
+"DirectedGraph.topological_sort",
+"Graph.all_nodes",
+"Graph.bfs_time",
+"Graph.cycle_nodes",
+"Graph.degree",
+"Graph.dfs_time",
+"Graph.fill_graph_randomly",
+"Graph.has_cycle",
+"Graph.remove_pair"
+],
+"graphs/edmonds_blossom_algorithm.py": [
+"EdmondsBlossomAlgorithm.maximum_matching"
+],
+"graphs/edmonds_karp_multiple_source_and_sink.py": [
+"FlowNetwork.find_maximum_flow",
+"FlowNetwork.set_maximum_flow_algorithm",
+"MaximumFlowAlgorithmExecutor.get_maximum_flow",
+"PushRelabelExecutor.push"
+],
+"graphs/eulerian_path_and_circuit_for_undirected_graph.py": [
+"check_euler"
+],
+"graphs/even_tree.py": [
+"even_tree"
+],
+"graphs/finding_bridges.py": [
+"__get_demo_graph",
+"compute_bridges"
+],
+"graphs/frequent_pattern_graph_miner.py": [
+"construct_graph",
+"find_freq_subgraph_given_support",
+"freq_subgraphs_edge_list",
+"get_cluster",
+"get_frequency_table",
+"get_nodes",
+"get_support",
+"preprocess",
+"print_all"
+],
+"graphs/g_topological_sort.py": [
+"print_stack",
+"topological_sort"
+],
+"graphs/gale_shapley_bigraph.py": [
+"stable_matching"
+],
+"graphs/graph_adjacency_list.py": [
+"GraphAdjacencyList.clear_graph",
+"GraphAdjacencyList.remove_edge",
+"GraphAdjacencyList.remove_vertex"
+],
+"graphs/graph_adjacency_matrix.py": [
+"GraphAdjacencyMatrix.clear_graph",
+"GraphAdjacencyMatrix.remove_edge",
+"GraphAdjacencyMatrix.remove_vertex"
+],
+"graphs/graph_centrality.py": [
+"find_central_and_median_node",
+"floyd_warshall_algorithm"
+],
+"graphs/graph_list.py": [
+"GraphAdjacencyList.add_edge"
+],
+"graphs/graph_peripherality.py": [
+"find_peripheral_and_far_node",
+"floyd_warshall_algorithm"
+],
+"graphs/graphs_floyd_warshall.py": [
+"floyd_warshall"
+],
+"graphs/greedy_best_first.py": [
+"GreedyBestFirst.search"
+],
+"graphs/greedy_min_vertex_cover.py": [
+"greedy_min_vertex_cover"
+],
+"graphs/hopcroft_karp.py": [
+"hopcroft_karp"
+],
+"graphs/johnson.py": [
+"johnson"
+],
+"graphs/kahns_algorithm_long.py": [
+"longest_distance"
+],
+"graphs/kahns_algorithm_topo.py": [
+"topological_sort"
+],
+"graphs/karger.py": [
+"partition_graph"
+],
+"graphs/lanczos_eigenvectors.py": [
+"find_lanczos_eigenvectors"
+],
+"graphs/markov_chain.py": [
+"get_transitions"
+],
+"graphs/matching_min_vertex_cover.py": [
+"matching_min_vertex_cover"
+],
+"graphs/minimum_path_sum.py": [
+"min_path_sum"
+],
+"graphs/minimum_spanning_tree_boruvka.py": [
+"Graph.boruvka_mst",
+"Graph.distinct_weight"
+],
+"graphs/minimum_spanning_tree_kruskal.py": [
+"kruskal"
+],
+"graphs/minimum_spanning_tree_kruskal2.py": [
+"GraphUndirectedWeighted.kruskal"
+],
+"graphs/minimum_spanning_tree_prims.py": [
+"prisms_algorithm"
+],
+"graphs/minimum_spanning_tree_prims2.py": [
+"GraphUndirectedWeighted.add_edge",
+"MinPriorityQueue.push",
+"prims_algo"
+],
+"graphs/multi_heuristic_astar.py": [
+"PriorityQueue.get",
+"heuristic_1",
+"heuristic_2",
+"make_common_ground",
+"multi_a_star"
+],
+"graphs/page_rank.py": [
+"Node.add_inbound",
+"Node.add_outbound",
+"page_rank"
+],
+"graphs/prim.py": [
+"connect",
+"prim",
+"prim_heap"
+],
+"graphs/random_graph_generator.py": [
+"random_graph"
+],
+"graphs/scc_kosaraju.py": [
+"kosaraju"
+],
+"graphs/strongly_connected_components.py": [
+"strongly_connected_components"
+],
+"graphs/tarjans_scc.py": [
+"create_graph",
+"tarjan"
+],
+"graphs/travelling_salesman_problem.py": [
+"travelling_salesman_brute_force",
+"travelling_salesman_dynamic_programming"
+],
+"greedy_methods/activity_selection.py": [
+"activity_selection"
+],
+"greedy_methods/best_time_to_buy_and_sell_stock.py": [
+"max_profit"
+],
+"greedy_methods/fractional_cover_problem.py": [
+"Item.ratio",
+"fractional_cover"
+],
+"greedy_methods/fractional_knapsack.py": [
+"frac_knapsack"
+],
+"greedy_methods/fractional_knapsack_2.py": [
+"fractional_knapsack"
+],
+"greedy_methods/gas_station.py": [
+"can_complete_journey",
+"get_gas_stations"
+],
+"greedy_methods/minimize_deviation_in_array.py": [
+"Solution.minimum_deviation"
+],
+"greedy_methods/minimum_coin_change.py": [
+"find_minimum_change"
+],
+"greedy_methods/minimum_waiting_time.py": [
+"minimum_waiting_time"
+],
+"greedy_methods/optimal_merge_pattern.py": [
+"optimal_merge_pattern"
+],
+"greedy_methods/sliding_window.py": [
+"sliding_window"
+],
+"greedy_methods/smallest_range.py": [
+"smallest_range"
+],
+"hashes/adler32.py": [
+"adler32"
+],
+"hashes/chaos_machine.py": [
+"pull",
+"push",
+"reset"
+],
+"hashes/crc32.py": [
+"_generate_crc32_table",
+"crc32"
+],
+"hashes/djb2.py": [
+"djb2"
+],
+"hashes/elf.py": [
+"elf_hash"
+],
+"hashes/enigma_machine.py": [
+"encode_or_decode",
+"menu"
+],
+"hashes/fletcher16.py": [
+"fletcher16"
+],
+"hashes/hamming_code.py": [
+"emitter_converter",
+"receptor_converter",
+"text_from_bits",
+"text_to_bits"
+],
+"hashes/jenkins_one_at_a_time.py": [
+"jenkins_one_at_a_time"
+],
+"hashes/luhn.py": [
+"is_luhn"
+],
+"hashes/md5.py": [
+"md5_me"
+],
+"hashes/sdbm.py": [
+"sdbm"
+],
+"hashes/sha1.py": [
+"SHA1Hash.final_hash"
+],
+"hashes/sha256.py": [],
+"knapsack/greedy_knapsack.py": [
+"calc_profit"
+],
+"knapsack/knapsack.py": [
+"knapsack"
+],
+"knapsack/recursive_approach_knapsack.py": [
+"knapsack"
+],
+"linear_algebra/gauss_jordan.py": [
+"gauss_jordan"
+],
+"linear_algebra/gaussian_elimination.py": [
+"gaussian_elimination"
+],
+"linear_algebra/jacobi_iteration_method.py": [
+"jacobi_iteration_method"
+],
+"linear_algebra/lu_decomposition.py": [
+"lower_upper_decomposition"
+],
+"linear_algebra/matrix_inversion.py": [
+"invert_matrix"
+],
+"linear_algebra/src/conjugate_gradient.py": [
+"_create_spd_matrix",
+"_is_matrix_spd",
+"conjugate_gradient"
+],
+"linear_algebra/src/gaussian_elimination_pivoting.py": [
+"solve_linear_system"
+],
+"linear_algebra/src/lib.py": [
+"Vector.angle",
+"Vector.copy",
+"axpy",
+"random_matrix",
+"random_vector",
+"square_zero_matrix",
+"unit_basis_vector"
+],
+"linear_algebra/src/polynom_for_points.py": [
+"points_to_polynomial"
+],
+"linear_algebra/src/power_iteration.py": [
+"power_iteration"
+],
+"linear_algebra/src/rank_of_matrix.py": [
+"rank_of_matrix"
+],
+"linear_algebra/src/rayleigh_quotient.py": [
+"is_hermitian",
+"tests"
+],
+"linear_algebra/src/schur_complement.py": [
+"schur_complement"
+],
+"linear_algebra/src/transformations_2d.py": [
+"projection",
+"reflection",
+"rotation",
+"scaling"
+],
+"linear_programming/simplex.py": [
+"Tableau.run_simplex"
+],
+"machine_learning/apriori_algorithm.py": [
+"apriori",
+"load_data"
+],
+"machine_learning/astar.py": [
+"Cell.showcell",
+"Gridworld.show",
+"astar"
+],
+"machine_learning/automatic_differentiation.py": [
+"GradientTracker.gradient"
+],
+"machine_learning/data_transformations.py": [
+"normalization",
+"standardization"
+],
+"machine_learning/dbscan.py": [
+"dbscan"
+],
+"machine_learning/decision_tree.py": [
+"DecisionTree.predict",
+"DecisionTree.train"
+],
+"machine_learning/dimensionality_reduction.py": [
+"linear_discriminant_analysis",
+"principal_component_analysis",
+"t_distributed_stochastic_neighbor_embedding"
+],
+"machine_learning/federated_averaging.py": [
+"federated_average"
+],
+"machine_learning/forecasting/run.py": [
+"data_safety_checker",
+"interquartile_range_checker",
+"linear_regression_prediction",
+"random_forest_regressor",
+"sarimax_predictor",
+"support_vector_regressor"
+],
+"machine_learning/frequent_pattern_growth.py": [
+"TreeNode.disp",
+"mine_tree"
+],
+"machine_learning/gaussian_mixture_model.py": [
+"GaussianMixture.fit",
+"GaussianMixture.plot_results"
+],
+"machine_learning/gaussian_naive_bayes.py": [],
+"machine_learning/gradient_boosting_classifier.py": [
+"GradientBoostingClassifier.fit"
+],
+"machine_learning/gradient_boosting_regressor.py": [],
+"machine_learning/gradient_descent.py": [
+"run_gradient_descent"
+],
+"machine_learning/k_means_clust.py": [
+"get_initial_centroids",
+"kmeans",
+"plot_heterogeneity",
+"plot_kmeans",
+"report_generator"
+],
+"machine_learning/k_medoids.py": [
+"_get_data",
+"apply_k_medoids"
+],
+"machine_learning/k_nearest_neighbors.py": [
+"KNN.classify"
+],
+"machine_learning/linear_discriminant_analysis.py": [
+"accuracy",
+"calculate_mean",
+"calculate_probabilities",
+"calculate_variance",
+"gaussian_distribution",
+"predict_y_values",
+"valid_input",
+"y_generator"
+],
+"machine_learning/linear_regression.py": [
+"collect_dataset",
+"mean_absolute_error",
+"plot_loss",
+"plot_regression",
+"run_linear_regression"
+],
+"machine_learning/linear_regression_vectorized.py": [
+"collect_dataset",
+"gradient_descent",
+"mean_absolute_error"
+],
+"machine_learning/local_weighted_learning/local_weighted_learning.py": [
+"load_data",
+"local_weight_regression",
+"plot_preds"
+],
+"machine_learning/logistic_regression.py": [
+"log_likelihood",
+"logistic_reg",
+"predict_prob"
+],
+"machine_learning/loss_functions.py": [
+"binary_cross_entropy",
+"binary_focal_cross_entropy",
+"categorical_cross_entropy",
+"categorical_focal_cross_entropy",
+"connectionist_temporal_classification_loss",
+"gaussian_negative_log_likelihood_loss",
+"hinge_loss",
+"huber_loss",
+"kullback_leibler_divergence",
+"mean_absolute_error",
+"mean_absolute_percentage_error",
+"mean_squared_error",
+"mean_squared_logarithmic_error",
+"perplexity_loss",
+"smooth_l1_loss",
+"sparse_categorical_cross_entropy",
+"symmetric_mean_absolute_percentage_error"
+],
+"machine_learning/mab.py": [
+"demo_mab_strategies"
+],
+"machine_learning/mean_shift.py": [
+"mean_shift"
+],
+"machine_learning/mfcc.py": [
+"example"
+],
+"machine_learning/mini_batch_gradient_descent.py": [
+"mini_batch_gradient_descent"
+],
+"machine_learning/multilayer_perceptron_classifier.py": [
+"Dataloader.shuffle_data",
+"MLP.get_acc_loss",
+"MLP.train"
+],
+"machine_learning/naive_bayes_text_classification.py": [
+"NaiveBayesTextClassifier.fit",
+"NaiveBayesTextClassifier.predict",
+"build_toy_dataset"
+],
+"machine_learning/ordinary_least_squares_regression.py": [
+"ols_regression"
+],
+"machine_learning/polynomial_regression.py": [
+"PolynomialRegression.fit",
+"PolynomialRegression.predict"
+],
+"machine_learning/principle_component_analysis.py": [
+"apply_pca",
+"collect_dataset"
+],
+"machine_learning/q_learning.py": [
+"run_q_learning"
+],
+"machine_learning/random_forest_classifier.py": [],
+"machine_learning/random_forest_regressor.py": [],
+"machine_learning/ridge_regression.py": [
+"RidgeRegression.compute_cost",
+"RidgeRegression.fit",
+"RidgeRegression.mean_absolute_error",
+"RidgeRegression.predict"
+],
+"machine_learning/rmsprop.py": [
+"rmsprop"
+],
+"machine_learning/scoring_functions.py": [
+"mae",
+"manual_accuracy",
+"mbd",
+"mse",
+"rmse",
+"rmsle"
+],
+"machine_learning/self_organizing_map.py": [
+"SelfOrganizingMap.get_winner",
+"SelfOrganizingMap.update"
+],
+"machine_learning/sequential_minimum_optimization.py": [
+"Kernel._linear",
+"Kernel._polynomial",
+"Kernel._rbf",
+"SmoSVM._k",
+"SmoSVM.fit",
+"SmoSVM.length",
+"SmoSVM.support",
+"SmoSVM.unbound",
+"count_time",
+"plot_partition_boundary"
+],
+"machine_learning/similarity_search.py": [
+"cosine_similarity",
+"similarity_search"
+],
+"machine_learning/support_vector_machines.py": [
+"SVC.__linear",
+"SVC.__rbf",
+"SVC.fit",
+"SVC.predict"
+],
+"machine_learning/t_stochastic_neighbour_embedding.py": [
+"apply_tsne",
+"collect_dataset"
+],
+"machine_learning/word_frequency_functions.py": [
+"document_frequency",
+"inverse_document_frequency",
+"term_frequency",
+"tf_idf"
+],
+"maths/abs.py": [
+"abs_max",
+"abs_max_sort",
+"abs_min"
+],
+"maths/addition_without_arithmetic.py": [
+"add"
+],
+"maths/aliquot_sum.py": [
+"aliquot_sum"
+],
+"maths/allocation_number.py": [
+"allocation_num"
+],
+"maths/arc_length.py": [
+"arc_length"
+],
+"maths/area.py": [
+"area_circle",
+"area_ellipse",
+"area_parallelogram",
+"area_rectangle",
+"area_rhombus",
+"area_square",
+"area_trapezium",
+"area_triangle",
+"area_triangle_three_sides",
+"lateral_surface_cone",
+"lateral_surface_cylinder",
+"surface_area_cone",
+"surface_area_conical_frustum",
+"surface_area_cube",
+"surface_area_cuboid",
+"surface_area_cylinder",
+"surface_area_hemisphere",
+"surface_area_reg_prism",
+"surface_area_sphere",
+"surface_area_torus"
+],
+"maths/area_under_curve.py": [
+"f",
+"trapezoidal_area"
+],
+"maths/autocorrelation.py": [
+"autocorrelation"
+],
+"maths/average_absolute_deviation.py": [
+"average_absolute_deviation"
+],
+"maths/average_mean.py": [
+"mean"
+],
+"maths/average_median.py": [
+"median"
+],
+"maths/average_mode.py": [
+"mode"
+],
+"maths/bailey_borwein_plouffe.py": [
+"bailey_borwein_plouffe"
+],
+"maths/base_neg2_conversion.py": [
+"decimal_to_negative_base_2"
+],
+"maths/basic_maths.py": [
+"euler_phi",
+"number_of_divisors",
+"sum_of_divisors"
+],
+"maths/bearing.py": [
+"initial_bearing"
+],
+"maths/binary_exponentiation.py": [
+"binary_exp_iterative",
+"binary_exp_mod_iterative",
+"binary_exp_mod_recursive",
+"binary_exp_recursive"
+],
+"maths/binary_multiplication.py": [
+"binary_mod_multiply",
+"binary_multiply"
+],
+"maths/binomial_coefficient.py": [
+"binomial_coefficient"
+],
+"maths/binomial_distribution.py": [
+"binomial_distribution"
+],
+"maths/binomial_expansion.py": [
+"binomial_expansion"
+],
+"maths/ceil.py": [
+"ceil"
+],
+"maths/chebyshev_distance.py": [
+"chebyshev_distance"
+],
+"maths/check_polygon.py": [
+"check_polygon"
+],
+"maths/chinese_remainder_theorem.py": [
+"chinese_remainder_theorem",
+"chinese_remainder_theorem2"
+],
+"maths/cholesky_decomposition.py": [
+"cholesky_decomposition",
+"solve_cholesky"
+],
+"maths/chudnovsky_algorithm.py": [
+"pi"
+],
+"maths/collatz_sequence.py": [
+"collatz_sequence"
+],
+"maths/combinations.py": [
+"combinations"
+],
+"maths/continued_fraction.py": [
+"continued_fraction"
+],
+"maths/convolve_1d.py": [
+"DiscreteConvolve1D.convolve_1d"
+],
+"maths/decimal_isolate.py": [
+"decimal_isolate"
+],
+"maths/decimal_to_fraction.py": [
+"decimal_to_fraction"
+],
+"maths/derangement.py": [
+"derangement"
+],
+"maths/digital_root.py": [
+"digital_root"
+],
+"maths/disarium.py": [
+"is_disarium"
+],
+"maths/dodecahedron.py": [
+"dodecahedron_surface_area",
+"dodecahedron_volume"
+],
+"maths/double_factorial.py": [
+"double_factorial_iterative",
+"double_factorial_recursive"
+],
+"maths/dual_number_automatic_differentiation.py": [
+"Dual.reduce",
+"differentiate",
+"f"
+],
+"maths/ear_clipping_polygon_triangulation.py": [
+"triangulate_polygon"
+],
+"maths/entropy.py": [
+"calculate_prob"
+],
+"maths/euclidean_distance.py": [
+"benchmark",
+"euclidean_distance",
+"euclidean_distance_no_np"
+],
+"maths/euler_method.py": [
+"explicit_euler"
+],
+"maths/euler_modified.py": [
+"euler_modified"
+],
+"maths/eulers_totient.py": [
+"totient"
+],
+"maths/extended_euclidean_algorithm.py": [
+"extended_euclidean_algorithm"
+],
+"maths/factorial.py": [
+"factorial",
+"factorial_recursive"
+],
+"maths/factors.py": [
+"factors_of_a_number"
+],
+"maths/fast_inverse_sqrt.py": [
+"fast_inverse_sqrt"
+],
+"maths/fermat_little_theorem.py": [
+"binary_exponentiation"
+],
+"maths/fibonacci.py": [
+"fib_binet",
+"fib_iterative",
+"fib_iterative_yield",
+"fib_matrix_np",
+"fib_memoization",
+"fib_recursive",
+"fib_recursive_cached",
+"time_func"
+],
+"maths/find_max.py": [
+"find_max_iterative",
+"find_max_recursive"
+],
+"maths/find_min.py": [
+"find_min_iterative",
+"find_min_recursive"
+],
+"maths/first_fundamental_form.py": [
+"first_fundamental_form"
+],
+"maths/floor.py": [
+"floor"
+],
+"maths/gamma.py": [
+"gamma_iterative",
+"gamma_recursive",
+"integrand"
+],
+"maths/gaussian.py": [
+"gaussian"
+],
+"maths/gcd_of_n_numbers.py": [
+"get_factors",
+"get_greatest_common_divisor"
+],
+"maths/geometric_mean.py": [
+"compute_geometric_mean"
+],
+"maths/germain_primes.py": [
+"is_germain_prime",
+"is_safe_prime"
+],
+"maths/greatest_common_divisor.py": [
+"gcd_by_iterative",
+"greatest_common_divisor"
+],
+"maths/hardy_ramanujanalgo.py": [
+"exact_prime_factor_count"
+],
+"maths/integer_square_root.py": [
+"integer_square_root"
+],
+"maths/interquartile_range.py": [
+"interquartile_range"
+],
+"maths/is_int_palindrome.py": [
+"is_int_palindrome"
+],
+"maths/is_ip_v4_address_valid.py": [
+"is_ip_v4_address_valid"
+],
+"maths/is_ipv6_address_valid.py": [
+"is_ipv6_address_valid"
+],
+"maths/is_square_free.py": [
+"is_square_free"
+],
+"maths/jaccard_similarity.py": [
+"jaccard_similarity"
+],
+"maths/joint_probability_distribution.py": [
+"covariance",
+"joint_probability_distribution",
+"standard_deviation",
+"variance"
+],
+"maths/josephus_problem.py": [
+"find_winner",
+"josephus_iterative"
+],
+"maths/juggler_sequence.py": [
+"juggler_sequence"
+],
+"maths/karatsuba.py": [
+"karatsuba"
+],
+"maths/keith_number.py": [
+"find_keith_numbers"
+],
+"maths/kth_lexicographic_permutation.py": [
+"kth_permutation"
+],
+"maths/laplace_transformation.py": [
+"laplace_transform"
+],
+"maths/largest_of_very_large_numbers.py": [
+"res"
+],
+"maths/least_common_multiple.py": [
+"benchmark",
+"least_common_multiple_fast",
+"least_common_multiple_slow"
+],
+"maths/line_intersection.py": [
+"segment_intersection"
+],
+"maths/line_length.py": [
+"f",
+"line_length"
+],
+"maths/liouville_lambda.py": [
+"liouville_lambda"
+],
+"maths/lucas_series.py": [
+"dynamic_lucas_number",
+"recursive_lucas_number"
+],
+"maths/maclaurin_series.py": [
+"maclaurin_cos",
+"maclaurin_sin"
+],
+"maths/manhattan_distance.py": [
+"manhattan_distance",
+"manhattan_distance_one_liner"
+],
+"maths/matrix_exponentiation.py": [
+"fibonacci_with_matrix_exponentiation",
+"matrix_exponentiation_time",
+"simple_fibonacci",
+"simple_fibonacci_time"
+],
+"maths/max_sum_sliding_window.py": [
+"max_sum_in_array"
+],
+"maths/minkowski_distance.py": [
+"minkowski_distance"
+],
+"maths/mobius_function.py": [
+"mobius"
+],
+"maths/modular_division.py": [
+"greatest_common_divisor",
+"modular_division",
+"modular_division2"
+],
+"maths/modular_exponential.py": [
+"modular_exponential"
+],
+"maths/monte_carlo.py": [
+"area_under_line_estimator_check",
+"pi_estimator",
+"pi_estimator_using_area_under_curve"
+],
+"maths/monte_carlo_dice.py": [
+"Dice.roll",
+"throw_dice"
+],
+"maths/ncr_combinations.py": [
+"combinations"
+],
+"maths/next_prime_number.py": [
+"next_prime"
+],
+"maths/number_of_digits.py": [
+"benchmark",
+"num_digits",
+"num_digits_fast",
+"num_digits_faster"
+],
+"maths/numerical_analysis/adams_bashforth.py": [
+"AdamsBashforth.step_2",
+"AdamsBashforth.step_3",
+"AdamsBashforth.step_4",
+"AdamsBashforth.step_5"
+],
+"maths/numerical_analysis/bisection.py": [
+"bisection",
+"f"
+],
+"maths/numerical_analysis/bisection_2.py": [
+"bisection"
+],
+"maths/numerical_analysis/brent_method.py": [
+"brent_method"
+],
+"maths/numerical_analysis/gauss_seidel_method.py": [
+"gauss_seidel"
+],
+"maths/numerical_analysis/integration_by_simpson_approx.py": [
+"f",
+"simpson_integration"
+],
+"maths/numerical_analysis/intersection.py": [
+"f",
+"intersection"
+],
+"maths/numerical_analysis/nevilles_method.py": [
+"neville_interpolate"
+],
+"maths/numerical_analysis/newton_forward_interpolation.py": [
+"ucal"
+],
+"maths/numerical_analysis/newton_raphson.py": [
+"func",
+"newton_raphson"
+],
+"maths/numerical_analysis/nth_root.py": [
+"nth_root"
+],
+"maths/numerical_analysis/numerical_integration.py": [
+"f",
+"trapezoidal_area"
+],
+"maths/numerical_analysis/proper_fractions.py": [
+"proper_fractions"
+],
+"maths/numerical_analysis/runge_kutta.py": [
+"runge_kutta"
+],
+"maths/numerical_analysis/runge_kutta_fehlberg_45.py": [
+"runge_kutta_fehlberg_45"
+],
+"maths/numerical_analysis/runge_kutta_gills.py": [
+"runge_kutta_gills"
+],
+"maths/numerical_analysis/secant_method.py": [
+"secant_method"
+],
+"maths/numerical_analysis/simpson_rule.py": [
+"method_2"
+],
+"maths/numerical_analysis/square_root.py": [
+"square_root_iterative"
+],
+"maths/numerical_analysis/weierstrass_method.py": [
+"weierstrass_method"
+],
+"maths/odd_sieve.py": [
+"odd_sieve"
+],
+"maths/padovan_sequence.py": [
+"padovan_sequence"
+],
+"maths/pell_number.py": [
+"pell_number_iterative",
+"pell_number_recursive"
+],
+"maths/perfect_cube.py": [
+"perfect_cube",
+"perfect_cube_binary_search"
+],
+"maths/perfect_number.py": [
+"find_perfect_numbers",
+"get_divisors",
+"perfect_optimized"
+],
+"maths/perfect_square.py": [
+"perfect_square",
+"perfect_square_binary_search"
+],
+"maths/persistence.py": [
+"additive_persistence",
+"multiplicative_persistence"
+],
+"maths/pi_generator.py": [
+"calculate_pi"
+],
+"maths/pi_monte_carlo_estimation.py": [
+"estimate_pi"
+],
+"maths/points_are_collinear_3d.py": [
+"are_collinear"
+],
+"maths/pollard_rho.py": [
+"pollard_rho"
+],
+"maths/polynomial_evaluation.py": [
+"evaluate_poly",
+"horner"
+],
+"maths/polynomials/single_indeterminate_operations.py": [
+"Polynomial.derivative",
+"Polynomial.evaluate",
+"Polynomial.integral"
+],
+"maths/power_using_recursion.py": [
+"power"
+],
+"maths/prime_check.py": [
+"is_prime"
+],
+"maths/prime_factors.py": [
+"prime_factors",
+"unique_prime_factors"
+],
+"maths/prime_numbers.py": [
+"benchmark",
+"fast_primes",
+"primes",
+"slow_primes"
+],
+"maths/prime_sieve_eratosthenes.py": [
+"prime_sieve_eratosthenes"
+],
+"maths/primelib.py": [
+"factorial",
+"fib",
+"get_prime",
+"get_primes_between",
+"goldbach",
+"greatest_prime_factor",
+"is_even",
+"is_odd",
+"is_perfect_number",
+"kg_v",
+"sieve_er",
+"simplify_fraction",
+"smallest_prime_factor"
+],
+"maths/print_multiplication_table.py": [
+"multiplication_table"
+],
+"maths/pythagoras.py": [
+"distance"
+],
+"maths/qr_decomposition.py": [
+"qr_householder"
+],
+"maths/quadratic_equations_complex_numbers.py": [
+"quadratic_roots"
+],
+"maths/radians.py": [
+"radians"
+],
+"maths/radix2_fft.py": [],
+"maths/recursive_digit_sum.py": [
+"super_digit"
+],
+"maths/remove_digit.py": [
+"remove_digit"
+],
+"maths/reverse_factorial_recursive.py": [
+"reverse_factorial_recursive"
+],
+"maths/segmented_sieve.py": [
+"sieve"
+],
+"maths/series/alternate_harmonic_series.py": [
+"is_alternate_harmonic_series"
+],
+"maths/series/alternating_harmonic_series.py": [
+"is_alternate_harmonic_series"
+],
+"maths/series/arithmetic.py": [
+"arithmetic_mean",
+"is_arithmetic_series"
+],
+"maths/series/geometric.py": [
+"geometric_mean",
+"is_geometric_series"
+],
+"maths/series/geometric_series.py": [
+"geometric_series"
+],
+"maths/series/harmonic.py": [
+"harmonic_mean",
+"is_harmonic_series"
+],
+"maths/series/harmonic_series.py": [
+"harmonic_series"
+],
+"maths/series/hexagonal_numbers.py": [
+"hexagonal_numbers"
+],
+"maths/series/logarithmic_series.py": [
+"logarithmic_series"
+],
+"maths/series/p_series.py": [
+"p_series"
+],
+"maths/shoelace_area.py": [
+"shoelace_area"
+],
+"maths/sieve_of_atkin.py": [
+"sieve_of_atkin"
+],
+"maths/sieve_of_eratosthenes.py": [
+"prime_sieve"
+],
+"maths/sigmoid.py": [
+"sigmoid"
+],
+"maths/signum.py": [
+"signum"
+],
+"maths/simultaneous_linear_equation_solver.py": [
+"solve_simultaneous"
+],
+"maths/sin.py": [
+"sin"
+],
+"maths/sock_merchant.py": [
+"sock_merchant"
+],
+"maths/softmax.py": [
+"softmax"
+],
+"maths/spearman_rank_correlation_coefficient.py": [
+"calculate_spearman_rank_correlation"
+],
+"maths/special_numbers/abundant_numbers.py": [
+"is_abundant_number"
+],
+"maths/special_numbers/armstrong_numbers.py": [
+"armstrong_number",
+"narcissistic_number",
+"pluperfect_number"
+],
+"maths/special_numbers/automorphic_number.py": [
+"is_automorphic_number"
+],
+"maths/special_numbers/bell_numbers.py": [
+"bell_numbers"
+],
+"maths/special_numbers/carmichael_number.py": [
+"is_carmichael_number"
+],
+"maths/special_numbers/catalan_number.py": [
+"catalan"
+],
+"maths/special_numbers/deficient_numbers.py": [
+"is_deficient_number"
+],
+"maths/special_numbers/disarum_number.py": [
+"is_disarium_number"
+],
+"maths/special_numbers/evil_number.py": [
+"is_evil_number"
+],
+"maths/special_numbers/hamming_numbers.py": [
+"hamming"
+],
+"maths/special_numbers/happy_number.py": [
+"is_happy_number"
+],
+"maths/special_numbers/harshad_numbers.py": [
+"harshad_numbers_in_base",
+"is_harshad_number_in_base"
+],
+"maths/special_numbers/hexagonal_number.py": [
+"hexagonal"
+],
+"maths/special_numbers/jacobsthal_number.py": [
+"jacobsthal_number",
+"jacobsthal_sequence"
+],
+"maths/special_numbers/kaprekar_constant.py": [
+"is_kaprekar_valid",
+"kaprekar_constant"
+],
+"maths/special_numbers/kaprekar_number.py": [
+"is_kaprekar"
+],
+"maths/special_numbers/krishnamurthy_number.py": [
+"krishnamurthy"
+],
+"maths/special_numbers/perfect_number.py": [
+"perfect"
+],
+"maths/special_numbers/polygonal_numbers.py": [
+"polygonal_num"
+],
+"maths/special_numbers/pronic_number.py": [
+"is_pronic"
+],
+"maths/special_numbers/proth_number.py": [
+"is_proth_number",
+"proth"
+],
+"maths/special_numbers/spy_number.py": [
+"is_spy_number"
+],
+"maths/special_numbers/triangular_numbers.py": [
+"triangular_number"
+],
+"maths/special_numbers/trimorphic_number.py": [
+"is_trimorphic"
+],
+"maths/special_numbers/ugly_numbers.py": [
+"ugly_numbers"
+],
+"maths/special_numbers/weird_number.py": [
+"weird"
+],
+"maths/sum_of_arithmetic_series.py": [
+"sum_of_ap_series"
+],
+"maths/sum_of_digits.py": [
+"benchmark",
+"sum_of_digits",
+"sum_of_digits_compact",
+"sum_of_digits_recursion"
+],
+"maths/sum_of_geometric_progression.py": [
+"sum_of_geometric_progression"
+],
+"maths/sum_of_harmonic_series.py": [
+"sum_of_harmonic_progression"
+],
+"maths/sumset.py": [
+"sumset"
+],
+"maths/sylvester_sequence.py": [
+"sylvester"
+],
+"maths/tanh.py": [
+"tangent_hyperbolic"
+],
+"maths/three_sum.py": [
+"three_sum"
+],
+"maths/tonelli_shanks.py": [
+"tonelli_shanks"
+],
+"maths/trailing_zeroes.py": [
+"trailing_zeroes"
+],
+"maths/trapezoidal_rule.py": [
+"trapezoidal_rule"
+],
+"maths/triplet_sum.py": [
+"make_dataset",
+"solution_times",
+"triplet_sum1",
+"triplet_sum2"
+],
+"maths/twin_prime.py": [
+"twin_prime"
+],
+"maths/two_pointer.py": [
+"two_pointer"
+],
+"maths/two_sum.py": [
+"two_sum"
+],
+"maths/volume.py": [
+"vol_circular_cylinder",
+"vol_cone",
+"vol_conical_frustum",
+"vol_cube",
+"vol_cuboid",
+"vol_hemisphere",
+"vol_hollow_circular_cylinder",
+"vol_icosahedron",
+"vol_octahedron",
+"vol_prism",
+"vol_pyramid",
+"vol_right_circ_cone",
+"vol_spheres_union",
+"vol_torus"
+],
+"maths/weddles_rule.py": [
+"apply_weights",
+"compute_solution",
+"compute_table",
+"get_inputs",
+"safe_function_eval"
+],
+"maths/weighted_average.py": [
+"weighted_average"
+],
+"maths/zellers_congruence.py": [
+"zeller"
+],
+"matrix/binary_search_matrix.py": [
+"mat_bin_search"
+],
+"matrix/count_islands_in_matrix.py": [
+"Matrix.count_islands"
+],
+"matrix/count_negative_numbers_in_sorted_matrix.py": [
+"benchmark",
+"count_negatives_binary_search",
+"count_negatives_brute_force",
+"count_negatives_brute_force_with_break",
+"generate_large_matrix",
+"validate_grid"
+],
+"matrix/count_paths.py": [
+"depth_first_search"
+],
+"matrix/cramers_rule_2x2.py": [
+"cramers_rule_2x2"
+],
+"matrix/inverse_of_matrix.py": [
+"inverse_of_matrix"
+],
+"matrix/kronecker_product.py": [
+"is_2d",
+"kronecker_product"
+],
+"matrix/largest_square_area_in_matrix.py": [
+"largest_square_area_in_matrix_bottom_up",
+"largest_square_area_in_matrix_bottom_up_space_optimization",
+"largest_square_area_in_matrix_top_down_approch",
+"largest_square_area_in_matrix_top_down_approch_with_dp"
+],
+"matrix/matrix_based_game.py": [
+"parse_moves",
+"process_game",
+"validate_matrix_content",
+"validate_matrix_size",
+"validate_moves"
+],
+"matrix/matrix_class.py": [
+"Matrix.add_column",
+"Matrix.add_row",
+"Matrix.get_cofactor",
+"Matrix.is_square",
+"Matrix.num_columns",
+"Matrix.num_rows",
+"Matrix.order"
+],
+"matrix/matrix_equalization.py": [
+"array_equalization"
+],
+"matrix/matrix_multiplication_recursion.py": [
+"is_square",
+"matrix_multiply",
+"matrix_multiply_recursive"
+],
+"matrix/matrix_operation.py": [
+"add",
+"identity",
+"inverse",
+"multiply",
+"permanent",
+"subtract"
+],
+"matrix/max_area_of_island.py": [
+"find_max_area"
+],
+"matrix/median_matrix.py": [
+"median"
+],
+"matrix/nth_fibonacci_using_matrix_exponentiation.py": [
+"nth_fibonacci_bruteforce",
+"nth_fibonacci_matrix"
+],
+"matrix/pascal_triangle.py": [
+"benchmark",
+"generate_pascal_triangle_optimized",
+"print_pascal_triangle"
+],
+"matrix/rotate_matrix.py": [
+"make_matrix",
+"print_matrix",
+"rotate_180",
+"rotate_270",
+"rotate_90"
+],
+"matrix/searching_in_sorted_matrix.py": [
+"search_in_a_sorted_matrix"
+],
+"matrix/sherman_morrison.py": [
+"Matrix.validate_indices",
+"test1",
+"test2"
+],
+"matrix/similar_matrices.py": [
+"are_similar_matrices"
+],
+"matrix/spiral_print.py": [
+"spiral_print_clockwise",
+"spiral_traversal"
+],
+"matrix/transitive_closure.py": [
+"transitive_closure"
+],
+"matrix/validate_sudoku_board.py": [
+"is_valid_sudoku_board"
+],
+"networking_flow/dinic.py": [
+"Dinic.add_edge",
+"Dinic.max_flow"
+],
+"networking_flow/ford_fulkerson.py": [
+"ford_fulkerson"
+],
+"networking_flow/minimum_cut.py": [
+"mincut"
+],
+"networking_flow/push_relabel.py": [
+"PushRelabel.add_edge",
+"PushRelabel.max_flow"
+],
+"neural_network/activation_functions/binary_step.py": [
+"binary_step"
+],
+"neural_network/activation_functions/exponential_linear_unit.py": [
+"exponential_linear_unit"
+],
+"neural_network/activation_functions/gaussian_error_linear_unit.py": [
+"gaussian_error_linear_unit"
+],
+"neural_network/activation_functions/leaky_rectified_linear_unit.py": [
+"leaky_rectified_linear_unit"
+],
+"neural_network/activation_functions/mish.py": [
+"mish"
+],
+"neural_network/activation_functions/rectified_linear_unit.py": [
+"relu"
+],
+"neural_network/activation_functions/scaled_exponential_linear_unit.py": [
+"scaled_exponential_linear_unit"
+],
+"neural_network/activation_functions/soboleva_modified_hyperbolic_tangent.py": [
+"soboleva_modified_hyperbolic_tangent"
+],
+"neural_network/activation_functions/softplus.py": [
+"softplus"
+],
+"neural_network/activation_functions/softsign.py": [
+"softsign"
+],
+"neural_network/activation_functions/squareplus.py": [
+"squareplus"
+],
+"neural_network/activation_functions/swish.py": [
+"sigmoid_linear_unit",
+"swish"
+],
+"neural_network/back_propagation_neural_network.py": [
+"example",
+"sigmoid"
+],
+"neural_network/convolution_neural_network.py": [
+"CNN.convolution",
+"CNN.do_round",
+"CNN.predict",
+"CNN.read_model",
+"CNN.save_model",
+"CNN.train"
+],
+"neural_network/lstm.py": [
+"LongShortTermMemory.test",
+"LongShortTermMemory.train"
+],
+"neural_network/optimizers/adagrad.py": [
+"Adagrad.update"
+],
+"neural_network/optimizers/adam_optimizer.py": [
+"Adam.update"
+],
+"neural_network/optimizers/momentum_sgd.py": [
+"MomentumSGD.update"
+],
+"neural_network/optimizers/muon_optimizer.py": [
+"Muon.update"
+],
+"neural_network/optimizers/nesterov_accelerated_sgd.py": [
+"NesterovAcceleratedGradient.update"
+],
+"neural_network/perceptron.py": [
+"Perceptron.sort",
+"Perceptron.training"
+],
+"neural_network/simple_neural_network.py": [
+"forward_propagation"
+],
+"neural_network/sliding_window_attention.py": [
+"SlidingWindowAttention.forward"
+],
+"neural_network/two_hidden_layers_neural_network.py": [
+"example"
+],
+"other/activity_selection.py": [
+"print_max_activities"
+],
+"other/alternative_list_arrange.py": [
+"alternative_list_arrange"
+],
+"other/bankers_algorithm.py": [
+"BankersAlgorithm.__need_index_manager",
+"BankersAlgorithm.__pretty_data"
+],
+"other/cheap_progress.py": [
+"progress"
+],
+"other/dancing_links.py": [
+"DancingLinks.solve"
+],
+"other/davis_putnam_logemann_loveland.py": [
+"dpll_algorithm",
+"generate_formula",
+"generate_parameters"
+],
+"other/doomsday.py": [
+"get_week_day"
+],
+"other/fischer_yates_shuffle.py": [
+"fisher_yates_shuffle"
+],
+"other/gauss_easter.py": [
+"gauss_easter"
+],
+"other/graham_scan.py": [
+"graham_scan"
+],
+"other/greedy.py": [
+"Things.get_name",
+"Things.value_weight",
+"build_menu",
+"greedy"
+],
+"other/guess_the_number_search.py": [
+"guess_the_number",
+"temp_input_value"
+],
+"other/h_index.py": [
+"h_index"
+],
+"other/least_recently_used.py": [
+"LRUCache.display",
+"LRUCache.refer"
+],
+"other/lfu_cache.py": [
+"DoubleLinkedList.add",
+"LFUCache.decorator"
+],
+"other/linear_congruential_generator.py": [
+"LinearCongruentialGenerator.next_number"
+],
+"other/lru_cache.py": [
+"DoubleLinkedList.add",
+"LRUCache.decorator"
+],
+"other/magicdiamondpattern.py": [
+"pretty_print"
+],
+"other/majority_vote_algorithm.py": [
+"majority_vote"
+],
+"other/maximum_subsequence.py": [
+"max_subsequence_sum"
+],
+"other/nested_brackets.py": [
+"is_balanced"
+],
+"other/number_container_system.py": [
+"NumberContainer.change",
+"NumberContainer.find"
+],
+"other/password.py": [
+"alternative_password_generator",
+"is_strong_password",
+"password_generator"
+],
+"other/pipeline.py": [],
+"other/quine.py": [],
+"other/scoring_algorithm.py": [
+"procentual_proximity"
+],
+"other/sdes.py": [
+"function",
+"left_shift"
+],
+"other/sliding_window_maximum.py": [
+"sliding_window_maximum"
+],
+"other/token_bucket.py": [
+"TokenBucketRateLimiter.allow_request"
+],
+"other/tower_of_hanoi.py": [
+"move_tower"
+],
+"other/word_search.py": [
+"WordSearch.insert_east",
+"WordSearch.insert_north",
+"WordSearch.insert_northeast",
+"WordSearch.insert_northwest",
+"WordSearch.insert_south",
+"WordSearch.insert_southeast",
+"WordSearch.insert_southwest",
+"WordSearch.insert_west",
+"visualise_word_search"
+],
+"physics/altitude_pressure.py": [
+"get_altitude_at_pressure"
+],
+"physics/archimedes_principle_of_buoyant_force.py": [
+"archimedes_principle"
+],
+"physics/basic_orbital_capture.py": [
+"capture_area",
+"capture_radii"
+],
+"physics/boyles_law.py": [
+"boyles_law"
+],
+"physics/bragg_angle.py": [
+"bragg_angle"
+],
+"physics/casimir_effect.py": [
+"casimir_force"
+],
+"physics/center_of_mass.py": [
+"center_of_mass"
+],
+"physics/centripetal_force.py": [
+"centripetal"
+],
+"physics/coulombs_law.py": [
+"coulombs_law"
+],
+"physics/doppler_frequency.py": [
+"doppler_effect"
+],
+"physics/escape_velocity.py": [
+"escape_velocity"
+],
+"physics/faraday_lenz_law.py": [
+"induced_electromotive_force"
+],
+"physics/first_law_of_thermodynamics.py": [
+"heat",
+"internal_energy_variation",
+"work"
+],
+"physics/fresnel_diffract.py": [
+"fresnel_diffract"
+],
+"physics/grahams_law.py": [
+"effusion_ratio",
+"first_effusion_rate",
+"first_molar_mass",
+"second_effusion_rate",
+"second_molar_mass"
+],
+"physics/hamiltonian.py": [
+"classical_hamiltonian",
+"quantum_hamiltonian"
+],
+"physics/hookes_law.py": [
+"hookes_law"
+],
+"physics/horizontal_projectile_motion.py": [
+"horizontal_distance",
+"max_height",
+"total_time"
+],
+"physics/hubble_parameter.py": [
+"hubble_parameter"
+],
+"physics/ideal_gas_law.py": [
+"moles_of_gas_system",
+"pressure_of_gas_system",
+"temperature_of_gas_system",
+"volume_of_gas_system"
+],
+"physics/in_static_equilibrium.py": [
+"in_static_equilibrium",
+"polar_force"
+],
+"physics/kinetic_energy.py": [
+"kinetic_energy"
+],
+"physics/lens_formulae.py": [
+"focal_length_of_lens",
+"image_distance",
+"object_distance"
+],
+"physics/light_aberration.py": [
+"get_aberration_angle"
+],
+"physics/lorentz_transformation_four_vector.py": [
+"transform"
+],
+"physics/magnetic_flux.py": [
+"magnetic_flux"
+],
+"physics/malus_law.py": [
+"malus_law"
+],
+"physics/mass_energy_equivalence.py": [
+"energy_from_mass",
+"mass_from_energy"
+],
+"physics/maxwells_equations.py": [
+"ampere_maxwell_law",
+"electromagnetic_wave_impedance",
+"electromagnetic_wave_speed",
+"energy_density_electromagnetic",
+"faraday_law",
+"gauss_law_electric",
+"gauss_law_magnetic",
+"poynting_vector_magnitude"
+],
+"physics/mirror_formulae.py": [
+"focal_length",
+"image_distance",
+"object_distance"
+],
+"physics/n_body_simulation.py": [
+"Body.position",
+"Body.velocity",
+"example_1",
+"example_2",
+"example_3",
+"plot"
+],
+"physics/newtons_law_of_gravitation.py": [
+"gravitational_law"
+],
+"physics/newtons_second_law_of_motion.py": [
+"newtons_second_law_of_motion"
+],
+"physics/orbital_transfer_work.py": [
+"orbital_transfer_work"
+],
+"physics/period_of_pendulum.py": [
+"period_of_pendulum"
+],
+"physics/photoelectric_effect.py": [
+"maximum_kinetic_energy"
+],
+"physics/potential_energy.py": [
+"potential_energy"
+],
+"physics/rainfall_intensity.py": [
+"rainfall_intensity"
+],
+"physics/relativistic_kinetic_energy.py": [
+"relativistic_kinetic_energy"
+],
+"physics/relativistic_velocity_summation.py": [
+"relativistic_velocity_summation"
+],
+"physics/reynolds_number.py": [
+"reynolds_number"
+],
+"physics/rms_speed_of_molecule.py": [
+"rms_speed_of_molecule"
+],
+"physics/shear_stress.py": [
+"shear_stress"
+],
+"physics/snells_law.py": [
+"calculate_refraction_angle"
+],
+"physics/speed_of_sound.py": [
+"speed_of_sound_in_a_fluid"
+],
+"physics/speeds_of_gas_molecules.py": [
+"avg_speed_of_molecule",
+"mps_speed_of_molecule"
+],
+"physics/terminal_velocity.py": [
+"terminal_velocity"
+],
+"project_euler/problem_001/sol1.py": [
+"solution"
+],
+"project_euler/problem_001/sol2.py": [
+"solution"
+],
+"project_euler/problem_001/sol3.py": [
+"solution"
+],
+"project_euler/problem_001/sol4.py": [
+"solution"
+],
+"project_euler/problem_001/sol5.py": [
+"solution"
+],
+"project_euler/problem_001/sol6.py": [
+"solution"
+],
+"project_euler/problem_001/sol7.py": [
+"solution"
+],
+"project_euler/problem_002/sol1.py": [
+"solution"
+],
+"project_euler/problem_002/sol2.py": [
+"solution"
+],
+"project_euler/problem_002/sol3.py": [
+"solution"
+],
+"project_euler/problem_002/sol4.py": [
+"solution"
+],
+"project_euler/problem_002/sol5.py": [
+"solution"
+],
+"project_euler/problem_003/sol1.py": [
+"solution"
+],
+"project_euler/problem_003/sol2.py": [
+"solution"
+],
+"project_euler/problem_003/sol3.py": [
+"solution"
+],
+"project_euler/problem_004/sol1.py": [
+"solution"
+],
+"project_euler/problem_004/sol2.py": [
+"solution"
+],
+"project_euler/problem_005/sol1.py": [
+"solution"
+],
+"project_euler/problem_005/sol2.py": [
+"solution"
+],
+"project_euler/problem_006/sol1.py": [
+"solution"
+],
+"project_euler/problem_006/sol2.py": [
+"solution"
+],
+"project_euler/problem_006/sol3.py": [
+"solution"
+],
+"project_euler/problem_006/sol4.py": [
+"solution"
+],
+"project_euler/problem_007/sol1.py": [
+"solution"
+],
+"project_euler/problem_007/sol2.py": [
+"solution"
+],
+"project_euler/problem_007/sol3.py": [
+"solution"
+],
+"project_euler/problem_008/sol1.py": [
+"solution"
+],
+"project_euler/problem_008/sol2.py": [
+"solution"
+],
+"project_euler/problem_008/sol3.py": [
+"solution"
+],
+"project_euler/problem_009/sol1.py": [
+"benchmark",
+"solution",
+"solution_fast"
+],
+"project_euler/problem_009/sol2.py": [
+"solution"
+],
+"project_euler/problem_009/sol3.py": [
+"solution"
+],
+"project_euler/problem_009/sol4.py": [
+"solution"
+],
+"project_euler/problem_010/sol1.py": [
+"solution"
+],
+"project_euler/problem_010/sol2.py": [
+"solution"
+],
+"project_euler/problem_010/sol3.py": [
+"solution"
+],
+"project_euler/problem_011/sol1.py": [
+"solution"
+],
+"project_euler/problem_011/sol2.py": [
+"solution"
+],
+"project_euler/problem_012/sol1.py": [
+"count_divisors",
+"solution"
+],
+"project_euler/problem_012/sol2.py": [
+"solution"
+],
+"project_euler/problem_013/sol1.py": [
+"solution"
+],
+"project_euler/problem_013/sol2.py": [
+"solution"
+],
+"project_euler/problem_014/sol1.py": [
+"solution"
+],
+"project_euler/problem_014/sol2.py": [
+"solution"
+],
+"project_euler/problem_015/sol1.py": [
+"solution"
+],
+"project_euler/problem_015/sol2.py": [
+"solution"
+],
+"project_euler/problem_016/sol1.py": [
+"solution"
+],
+"project_euler/problem_016/sol2.py": [
+"solution"
+],
+"project_euler/problem_017/sol1.py": [
+"solution"
+],
+"project_euler/problem_018/solution.py": [
+"solution"
+],
+"project_euler/problem_019/sol1.py": [
+"solution"
+],
+"project_euler/problem_020/sol1.py": [
+"solution"
+],
+"project_euler/problem_020/sol2.py": [
+"solution"
+],
+"project_euler/problem_020/sol3.py": [
+"solution"
+],
+"project_euler/problem_020/sol4.py": [
+"solution"
+],
+"project_euler/problem_021/sol1.py": [
+"solution"
+],
+"project_euler/problem_022/sol1.py": [
+"solution"
+],
+"project_euler/problem_022/sol2.py": [
+"solution"
+],
+"project_euler/problem_023/sol1.py": [
+"solution"
+],
+"project_euler/problem_024/sol1.py": [
+"solution"
+],
+"project_euler/problem_025/sol1.py": [
+"solution"
+],
+"project_euler/problem_025/sol2.py": [
+"solution"
+],
+"project_euler/problem_025/sol3.py": [
+"solution"
+],
+"project_euler/problem_026/sol1.py": [
+"solution"
+],
+"project_euler/problem_027/sol1.py": [
+"solution"
+],
+"project_euler/problem_028/sol1.py": [
+"solution"
+],
+"project_euler/problem_029/sol1.py": [
+"solution"
+],
+"project_euler/problem_030/sol1.py": [
+"solution"
+],
+"project_euler/problem_031/sol1.py": [
+"solution"
+],
+"project_euler/problem_031/sol2.py": [
+"solution"
+],
+"project_euler/problem_032/sol32.py": [
+"solution"
+],
+"project_euler/problem_033/sol1.py": [
+"solution"
+],
+"project_euler/problem_034/sol1.py": [
+"solution"
+],
+"project_euler/problem_035/sol1.py": [
+"solution"
+],
+"project_euler/problem_036/sol1.py": [
+"solution"
+],
+"project_euler/problem_037/sol1.py": [
+"solution"
+],
+"project_euler/problem_038/sol1.py": [
+"solution"
+],
+"project_euler/problem_039/sol1.py": [
+"solution"
+],
+"project_euler/problem_040/sol1.py": [
+"solution"
+],
+"project_euler/problem_041/sol1.py": [
+"solution"
+],
+"project_euler/problem_042/solution42.py": [
+"solution"
+],
+"project_euler/problem_043/sol1.py": [
+"solution"
+],
+"project_euler/problem_044/sol1.py": [
+"solution"
+],
+"project_euler/problem_045/sol1.py": [
+"solution"
+],
+"project_euler/problem_046/sol1.py": [
+"solution"
+],
+"project_euler/problem_047/sol1.py": [
+"solution"
+],
+"project_euler/problem_048/sol1.py": [
+"solution"
+],
+"project_euler/problem_049/sol1.py": [
+"solution"
+],
+"project_euler/problem_050/sol1.py": [
+"solution"
+],
+"project_euler/problem_051/sol1.py": [
+"solution"
+],
+"project_euler/problem_052/sol1.py": [
+"solution"
+],
+"project_euler/problem_053/sol1.py": [
+"solution"
+],
+"project_euler/problem_054/sol1.py": [
+"PokerHand.hand",
+"PokerHand.hand_name",
+"solution"
+],
+"project_euler/problem_055/sol1.py": [
+"is_palindrome",
+"solution"
+],
+"project_euler/problem_056/sol1.py": [
+"solution"
+],
+"project_euler/problem_057/sol1.py": [
+"solution"
+],
+"project_euler/problem_058/sol1.py": [
+"solution"
+],
+"project_euler/problem_059/sol1.py": [
+"solution"
+],
+"project_euler/problem_060/sol1.py": [
+"solution",
+"sum_digits"
+],
+"project_euler/problem_062/sol1.py": [
+"solution"
+],
+"project_euler/problem_063/sol1.py": [
+"solution"
+],
+"project_euler/problem_064/sol1.py": [
+"solution"
+],
+"project_euler/problem_065/sol1.py": [
+"solution"
+],
+"project_euler/problem_067/sol1.py": [
+"solution"
+],
+"project_euler/problem_067/sol2.py": [
+"solution"
+],
+"project_euler/problem_068/sol1.py": [
+"solution"
+],
+"project_euler/problem_069/sol1.py": [
+"solution"
+],
+"project_euler/problem_070/sol1.py": [
+"solution"
+],
+"project_euler/problem_071/sol1.py": [
+"solution"
+],
+"project_euler/problem_072/sol1.py": [
+"solution"
+],
+"project_euler/problem_072/sol2.py": [
+"solution"
+],
+"project_euler/problem_073/sol1.py": [
+"solution"
+],
+"project_euler/problem_074/sol1.py": [
+"solution"
+],
+"project_euler/problem_074/sol2.py": [
+"solution"
+],
+"project_euler/problem_075/sol1.py": [
+"solution"
+],
+"project_euler/problem_076/sol1.py": [
+"solution"
+],
+"project_euler/problem_077/sol1.py": [
+"solution"
+],
+"project_euler/problem_078/sol1.py": [
+"solution"
+],
+"project_euler/problem_079/sol1.py": [
+"solution"
+],
+"project_euler/problem_080/sol1.py": [
+"solution"
+],
+"project_euler/problem_081/sol1.py": [
+"solution"
+],
+"project_euler/problem_082/sol1.py": [
+"solution"
+],
+"project_euler/problem_085/sol1.py": [
+"solution"
+],
+"project_euler/problem_086/sol1.py": [
+"solution"
+],
+"project_euler/problem_087/sol1.py": [
+"solution"
+],
+"project_euler/problem_089/sol1.py": [
+"solution"
+],
+"project_euler/problem_091/sol1.py": [
+"solution"
+],
+"project_euler/problem_092/sol1.py": [
+"solution"
+],
+"project_euler/problem_094/sol1.py": [
+"solution"
+],
+"project_euler/problem_095/sol1.py": [
+"solution"
+],
+"project_euler/problem_097/sol1.py": [
+"solution"
+],
+"project_euler/problem_099/sol1.py": [
+"solution"
+],
+"project_euler/problem_100/sol1.py": [
+"solution"
+],
+"project_euler/problem_101/sol1.py": [
+"question_function",
+"solution"
+],
+"project_euler/problem_102/sol1.py": [
+"solution"
+],
+"project_euler/problem_104/sol1.py": [
+"solution"
+],
+"project_euler/problem_107/sol1.py": [
+"solution"
+],
+"project_euler/problem_109/sol1.py": [
+"solution"
+],
+"project_euler/problem_111/sol1.py": [
+"solution"
+],
+"project_euler/problem_112/sol1.py": [
+"solution"
+],
+"project_euler/problem_113/sol1.py": [
+"solution"
+],
+"project_euler/problem_114/sol1.py": [
+"solution"
+],
+"project_euler/problem_115/sol1.py": [
+"solution"
+],
+"project_euler/problem_116/sol1.py": [
+"solution"
+],
+"project_euler/problem_117/sol1.py": [
+"solution"
+],
+"project_euler/problem_119/sol1.py": [
+"solution"
+],
+"project_euler/problem_120/sol1.py": [
+"solution"
+],
+"project_euler/problem_121/sol1.py": [
+"solution"
+],
+"project_euler/problem_122/sol1.py": [
+"solution",
+"solve"
+],
+"project_euler/problem_123/sol1.py": [
+"solution"
+],
+"project_euler/problem_124/sol1.py": [
+"solution"
+],
+"project_euler/problem_125/sol1.py": [
+"solution"
+],
+"project_euler/problem_129/sol1.py": [
+"solution"
+],
+"project_euler/problem_131/sol1.py": [
+"solution"
+],
+"project_euler/problem_135/sol1.py": [
+"solution"
+],
+"project_euler/problem_136/sol1.py": [
+"solution"
+],
+"project_euler/problem_137/sol1.py": [
+"solution"
+],
+"project_euler/problem_138/sol1.py": [
+"solution"
+],
+"project_euler/problem_142/sol1.py": [
+"solution"
+],
+"project_euler/problem_144/sol1.py": [
+"solution"
+],
+"project_euler/problem_145/sol1.py": [
+"benchmark",
+"slow_solution",
+"solution"
+],
+"project_euler/problem_164/sol1.py": [
+"solution"
+],
+"project_euler/problem_173/sol1.py": [
+"solution"
+],
+"project_euler/problem_174/sol1.py": [
+"solution"
+],
+"project_euler/problem_180/sol1.py": [
+"solution"
+],
+"project_euler/problem_187/sol1.py": [
+"benchmark",
+"slow_solution",
+"solution",
+"while_solution"
+],
+"project_euler/problem_188/sol1.py": [
+"solution"
+],
+"project_euler/problem_190/sol1.py": [
+"solution"
+],
+"project_euler/problem_191/sol1.py": [
+"solution"
+],
+"project_euler/problem_203/sol1.py": [
+"solution"
+],
+"project_euler/problem_205/sol1.py": [
+"solution"
+],
+"project_euler/problem_206/sol1.py": [
+"solution"
+],
+"project_euler/problem_207/sol1.py": [
+"solution"
+],
+"project_euler/problem_234/sol1.py": [
+"solution"
+],
+"project_euler/problem_301/sol1.py": [
+"solution"
+],
+"project_euler/problem_345/sol1.py": [
+"solution"
+],
+"project_euler/problem_493/sol1.py": [
+"solution"
+],
+"project_euler/problem_551/sol1.py": [
+"add",
+"solution"
+],
+"project_euler/problem_587/sol1.py": [
+"solution"
+],
+"project_euler/problem_686/sol1.py": [
+"solution"
+],
+"project_euler/problem_800/sol1.py": [
+"solution"
+],
+"quantum/shor_algorithm.py": [
+"Shor.shor_algorithm"
+],
+"scheduling/cpuschedulingalgorithms.py": [
+"CPUSchedulerGUI.add_process",
+"CPUSchedulerGUI.animate",
+"CPUSchedulerGUI.delete_process",
+"CPUSchedulerGUI.run_scheduling"
+],
+"scheduling/first_come_first_served.py": [
+"calculate_average_turnaround_time",
+"calculate_average_waiting_time",
+"calculate_turnaround_times",
+"calculate_waiting_times"
+],
+"scheduling/highest_response_ratio_next.py": [
+"calculate_turn_around_time",
+"calculate_waiting_time"
+],
+"scheduling/job_sequence_with_deadline.py": [
+"max_tasks"
+],
+"scheduling/job_sequencing_with_deadline.py": [
+"job_sequencing_with_deadlines"
+],
+"scheduling/multi_level_feedback_queue.py": [
+"MLFQ.calculate_completion_time",
+"MLFQ.calculate_remaining_burst_time_of_processes",
+"MLFQ.calculate_sequence_of_finish_queue",
+"MLFQ.calculate_turnaround_time",
+"MLFQ.calculate_waiting_time",
+"MLFQ.multi_level_feedback_queue"
+],
+"scheduling/non_preemptive_shortest_job_first.py": [
+"calculate_turnaroundtime",
+"calculate_waitingtime"
+],
+"scheduling/round_robin.py": [
+"calculate_turn_around_times",
+"calculate_waiting_times"
+],
+"scheduling/shortest_job_first.py": [
+"calculate_average_times",
+"calculate_turnaroundtime",
+"calculate_waitingtime"
+],
+"scheduling/weighted_interval_scheduling.py": [
+"weighted_interval_scheduling"
+],
+"searches/binary_search.py": [
+"binary_search",
+"binary_search_std_lib",
+"binary_search_with_duplicates",
+"exponential_search",
+"insort_left",
+"insort_right"
+],
+"searches/binary_tree_traversal.py": [
+"build_tree",
+"in_order",
+"in_order_iter",
+"level_order",
+"level_order_actual",
+"post_order",
+"post_order_iter",
+"pre_order",
+"pre_order_iter",
+"prompt"
+],
+"searches/double_linear_search.py": [
+"double_linear_search"
+],
+"searches/double_linear_search_recursion.py": [
+"search"
+],
+"searches/exponential_search.py": [
+"exponential_search"
+],
+"searches/fibonacci_search.py": [
+"fibonacci_search"
+],
+"searches/hill_climbing.py": [
+"hill_climbing"
+],
+"searches/interpolation_search.py": [
+"interpolation_search",
+"interpolation_search_by_recursion"
+],
+"searches/jump_search.py": [
+"jump_search"
+],
+"searches/linear_search.py": [
+"linear_search",
+"rec_linear_search"
+],
+"searches/median_of_medians.py": [
+"quick_select"
+],
+"searches/quick_select.py": [
+"median"
+],
+"searches/sentinel_linear_search.py": [
+"sentinel_linear_search"
+],
+"searches/simple_binary_search.py": [
+"binary_search"
+],
+"searches/simulated_annealing.py": [
+"simulated_annealing"
+],
+"searches/tabu_search.py": [
+"generate_first_solution",
+"generate_neighbours",
+"tabu_search"
+],
+"searches/ternary_search.py": [
+"ite_ternary_search",
+"rec_ternary_search"
+],
+"sorts/adaptive_merge_sort.py": [
+"adaptive_merge_sort"
+],
+"sorts/bead_sort.py": [
+"bead_sort"
+],
+"sorts/benchmark_sorts.py": [
+"all_sorts_agree",
+"benchmark",
+"is_sorted"
+],
+"sorts/binary_insertion_sort.py": [
+"binary_insertion_sort"
+],
+"sorts/bitonic_sort.py": [
+"bitonic_sort"
+],
+"sorts/bogo_sort.py": [
+"bogo_sort"
+],
+"sorts/bubble_sort.py": [
+"bubble_sort_iterative",
+"bubble_sort_recursive"
+],
+"sorts/bubble_sort_recursive.py": [
+"bubble_sort_recursive"
+],
+"sorts/bucket_sort.py": [
+"bucket_sort"
+],
+"sorts/circle_sort.py": [
+"circle_sort"
+],
+"sorts/cocktail_shaker_sort.py": [
+"cocktail_shaker_sort"
+],
+"sorts/comb_sort.py": [
+"comb_sort"
+],
+"sorts/counting_sort.py": [
+"counting_sort_string"
+],
+"sorts/cycle_sort.py": [
+"cycle_sort"
+],
+"sorts/cyclic_sort.py": [
+"cyclic_sort"
+],
+"sorts/double_sort.py": [
+"double_sort"
+],
+"sorts/dutch_national_flag_sort.py": [
+"dutch_national_flag_sort"
+],
+"sorts/exchange_sort.py": [
+"exchange_sort"
+],
+"sorts/external_sort.py": [
+"parse_memory"
+],
+"sorts/flash_sort.py": [
+"flash_sort"
+],
+"sorts/gnome_sort.py": [
+"gnome_sort"
+],
+"sorts/heap_sort.py": [
+"heap_sort"
+],
+"sorts/insertion_sort.py": [
+"insertion_sort"
+],
+"sorts/intro_sort.py": [
+"sort"
+],
+"sorts/iterative_merge_sort.py": [
+"iter_merge_sort"
+],
+"sorts/kirkpatrick_reisch_sort.py": [
+"kirkpatrick_reisch_sort"
+],
+"sorts/merge_insertion_sort.py": [
+"merge_insertion_sort"
+],
+"sorts/merge_sort.py": [
+"merge_sort"
+],
+"sorts/msd_radix_sort.py": [
+"msd_radix_sort",
+"msd_radix_sort_inplace"
+],
+"sorts/natural_sort.py": [
+"natural_sort"
+],
+"sorts/odd_even_sort.py": [
+"odd_even_sort"
+],
+"sorts/odd_even_transposition_parallel.py": [
+"odd_even_transposition",
+"oe_process"
+],
+"sorts/odd_even_transposition_single_threaded.py": [
+"odd_even_transposition"
+],
+"sorts/pancake_sort.py": [
+"pancake_sort"
+],
+"sorts/patience_sort.py": [
+"patience_sort"
+],
+"sorts/pigeon_sort.py": [
+"pigeon_sort"
+],
+"sorts/pigeonhole_sort.py": [
+"pigeonhole_sort"
+],
+"sorts/power_sort.py": [
+"power_sort"
+],
+"sorts/quick_sort.py": [
+"quick_sort"
+],
+"sorts/quick_sort_3_partition.py": [
+"quick_sort_3partition",
+"quick_sort_lomuto_partition",
+"quicksort_hoare",
+"three_way_radix_quicksort"
+],
+"sorts/radix_sort.py": [
+"radix_sort"
+],
+"sorts/recursive_insertion_sort.py": [
+"rec_insertion_sort"
+],
+"sorts/recursive_mergesort_array.py": [
+"merge"
+],
+"sorts/recursive_quick_sort.py": [
+"quick_sort"
+],
+"sorts/reverse_selection.py": [
+"reverse_selection_sort"
+],
+"sorts/reversort.py": [
+"reversort",
+"reversort_cost"
+],
+"sorts/selection_sort.py": [
+"selection_sort"
+],
+"sorts/shell_sort.py": [
+"shell_sort"
+],
+"sorts/shrink_shell_sort.py": [
+"shell_sort"
+],
+"sorts/slowsort.py": [
+"slowsort"
+],
+"sorts/smoothsort.py": [
+"smoothsort"
+],
+"sorts/stalin_sort.py": [
+"stalin_sort"
+],
+"sorts/stooge_sort.py": [
+"stooge_sort"
+],
+"sorts/strand_sort.py": [
+"strand_sort"
+],
+"sorts/tim_sort.py": [
+"tim_sort"
+],
+"sorts/topological_sort.py": [
+"topological_sort"
+],
+"sorts/tree_sort.py": [
+"tree_sort"
+],
+"sorts/unknown_sort.py": [
+"merge_sort"
+],
+"sorts/wiggle_sort.py": [
+"wiggle_sort"
+],
+"strings/aho_corasick.py": [
+"Automaton.search_in"
+],
+"strings/alternative_string_arrange.py": [
+"alternative_string_arrange"
+],
+"strings/anagrams.py": [
+"anagram"
+],
+"strings/autocomplete_using_trie.py": [
+"Trie.insert_word",
+"autocomplete_using_trie"
+],
+"strings/barcode_validator.py": [
+"get_barcode",
+"is_valid"
+],
+"strings/bitap_string_match.py": [
+"bitap_string_match"
+],
+"strings/booths_algorithm.py": [
+"BoothsAlgorithm.find_minimal_rotation"
+],
+"strings/boyer_moore_horspool.py": [
+"boyer_moore_horspool_search",
+"boyer_moore_horspool_search_all"
+],
+"strings/boyer_moore_search.py": [
+"BoyerMooreSearch.bad_character_heuristic"
+],
+"strings/bpe_tokenizer.py": [
+"Tokenizer.decode",
+"Tokenizer.encode"
+],
+"strings/camel_case_to_snake_case.py": [
+"camel_to_snake_case"
+],
+"strings/can_string_be_rearranged_as_palindrome.py": [
+"benchmark"
+],
+"strings/capitalize.py": [
+"capitalize"
+],
+"strings/check_anagrams.py": [
+"check_anagrams"
+],
+"strings/count_vowels.py": [
+"count_vowels"
+],
+"strings/count_vowels_consonants.py": [
+"count_vowels_and_consonants"
+],
+"strings/credit_card_validator.py": [
+"validate_credit_card_number"
+],
+"strings/damerau_levenshtein_distance.py": [
+"damerau_levenshtein_distance"
+],
+"strings/detecting_english_programmatically.py": [
+"is_english",
+"load_dictionary"
+],
+"strings/dna.py": [
+"dna"
+],
+"strings/edit_distance.py": [
+"edit_distance"
+],
+"strings/frequency_finder.py": [
+"english_freq_match_score",
+"get_item_at_index_zero"
+],
+"strings/hamming_distance.py": [
+"hamming_distance"
+],
+"strings/indian_phone_validator.py": [
+"indian_phone_validator"
+],
+"strings/is_contains_unique_chars.py": [
+"is_contains_unique_chars"
+],
+"strings/is_isogram.py": [
+"is_isogram"
+],
+"strings/is_isomorphic.py": [
+"is_isomorphic"
+],
+"strings/is_pangram.py": [
+"benchmark",
+"is_pangram",
+"is_pangram_faster",
+"is_pangram_fastest"
+],
+"strings/is_polish_national_id.py": [
+"is_polish_national_id"
+],
+"strings/is_spain_national_id.py": [
+"is_spain_national_id"
+],
+"strings/is_srilankan_phone_number.py": [
+"is_sri_lankan_phone_number"
+],
+"strings/is_valid_email_address.py": [
+"is_valid_email_address"
+],
+"strings/jaro_winkler.py": [
+"jaro_winkler"
+],
+"strings/join.py": [
+"join"
+],
+"strings/knuth_morris_pratt.py": [
+"knuth_morris_pratt"
+],
+"strings/largest_smallest_words.py": [
+"find_smallest_and_largest_words"
+],
+"strings/levenshtein_distance.py": [
+"benchmark_levenshtein_distance",
+"levenshtein_distance",
+"levenshtein_distance_optimized"
+],
+"strings/longest_word_in_sentence.py": [
+"longest_word"
+],
+"strings/lower.py": [
+"lower"
+],
+"strings/manacher.py": [
+"palindromic_string"
+],
+"strings/min_cost_string_conversion.py": [
+"assemble_transformation",
+"compute_transform_tables"
+],
+"strings/min_window_substring.py": [
+"min_window"
+],
+"strings/naive_string_search.py": [
+"naive_pattern_search"
+],
+"strings/ngram.py": [
+"create_ngram"
+],
+"strings/palindrome.py": [
+"benchmark_function",
+"is_palindrome",
+"is_palindrome_ignore_case_and_spaces",
+"is_palindrome_recursive",
+"is_palindrome_slice",
+"is_palindrome_traversal"
+],
+"strings/pig_latin.py": [
+"pig_latin"
+],
+"strings/prefix_function.py": [
+"longest_prefix"
+],
+"strings/rabin_karp.py": [
+"rabin_karp"
+],
+"strings/remove_duplicate.py": [
+"remove_duplicates"
+],
+"strings/reverse_letters.py": [
+"reverse_letters"
+],
+"strings/reverse_words.py": [
+"reverse_words"
+],
+"strings/snake_case_to_camel_pascal_case.py": [
+"snake_to_camel_case"
+],
+"strings/split.py": [
+"split"
+],
+"strings/string_is_valid_number.py": [
+"is_valid_number"
+],
+"strings/string_switch_case.py": [
+"to_camel_case",
+"to_kebab_case",
+"to_pascal_case",
+"to_snake_case"
+],
+"strings/strip.py": [
+"strip"
+],
+"strings/suffix_automaton.py": [
+"SuffixAutomaton.contains",
+"SuffixAutomaton.count_distinct_substrings",
+"SuffixAutomaton.count_occurrences"
+],
+"strings/text_justification.py": [
+"text_justification"
+],
+"strings/title.py": [
+"sentence_to_title_case"
+],
+"strings/top_k_frequent_words.py": [
+"top_k_frequent_words"
+],
+"strings/upper.py": [
+"upper"
+],
+"strings/wave_string.py": [
+"wave"
+],
+"strings/wildcard_pattern_matching.py": [
+"match_pattern"
+],
+"strings/word_occurrence.py": [
+"word_occurrence"
+],
+"strings/word_patterns.py": [
+"get_word_pattern"
+],
+"strings/z_function.py": [
+"find_pattern"
+],
+"web_programming/co2_emission.py": [
+"fetch_from_to",
+"fetch_last_half_hour"
+],
+"web_programming/covid_stats_via_xpath.py": [
+"covid_stats"
+],
+"web_programming/crawl_google_results.py": [],
+"web_programming/crawl_google_scholar_citation.py": [
+"get_citation"
+],
+"web_programming/crypto_price.py": [
+"eth_to_usd"
+],
+"web_programming/crypto_price_tracker.py": [
+"crypto_price"
+],
+"web_programming/currency_converter.py": [
+"convert_currency"
+],
+"web_programming/current_stock_price.py": [
+"stock_price"
+],
+"web_programming/current_weather.py": [
+"current_weather"
+],
+"web_programming/daily_horoscope.py": [
+"horoscope"
+],
+"web_programming/download_images_from_google_query.py": [
+"download_images_from_google_query"
+],
+"web_programming/emails_from_url.py": [
+"Parser.handle_starttag",
+"emails_from_url"
+],
+"web_programming/fetch_anime_and_play.py": [
+"get_anime_episode",
+"search_anime_episode_list",
+"search_scraper"
+],
+"web_programming/fetch_bbc_news.py": [
+"fetch_bbc_news"
+],
+"web_programming/fetch_github_info.py": [
+"fetch_github_info"
+],
+"web_programming/fetch_jobs.py": [
+"fetch_jobs"
+],
+"web_programming/fetch_quotes.py": [
+"quote_of_the_day",
+"random_quotes"
+],
+"web_programming/fetch_well_rx_price.py": [
+"fetch_pharmacy_and_price_list"
+],
+"web_programming/get_amazon_product_data.py": [
+"get_amazon_product_data"
+],
+"web_programming/get_imdb_top_250_movies_csv.py": [
+"write_movies"
+],
+"web_programming/get_ip_geolocation.py": [
+"get_ip_geolocation"
+],
+"web_programming/get_top_billionaires.py": [
+"display_billionaires",
+"get_forbes_real_time_billionaires"
+],
+"web_programming/get_top_hn_posts.py": [
+"hackernews_top_stories_as_markdown"
+],
+"web_programming/giphy.py": [
+"get_gifs"
+],
+"web_programming/instagram_crawler.py": [
+"InstagramUser.biography",
+"InstagramUser.email",
+"InstagramUser.fullname",
+"InstagramUser.is_private",
+"InstagramUser.is_verified",
+"InstagramUser.number_of_followers",
+"InstagramUser.number_of_followings",
+"InstagramUser.number_of_posts",
+"InstagramUser.profile_picture_url",
+"InstagramUser.username",
+"InstagramUser.website"
+],
+"web_programming/instagram_pic.py": [
+"download_image"
+],
+"web_programming/instagram_video.py": [
+"download_video"
+],
+"web_programming/nasa_data.py": [
+"get_archive_data",
+"save_apod"
+],
+"web_programming/open_google_results.py": [],
+"web_programming/random_anime_character.py": [
+"random_anime_character"
+],
+"web_programming/recaptcha_verification.py": [
+"login_using_recaptcha"
+],
+"web_programming/reddit.py": [
+"get_subreddit_data"
+],
+"web_programming/search_books_by_isbn.py": [
+"summarize_book"
+],
+"web_programming/slack_message.py": [
+"send_slack_message"
+],
+"web_programming/world_covid19_stats.py": [
+"world_covid19_stats"
+]
+}
