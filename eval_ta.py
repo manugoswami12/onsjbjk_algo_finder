@@ -33,6 +33,7 @@ import ta_corpus
 from ta_corpus import ROOT
 
 RULES = ROOT / 'prolog' / 'learned_ta.pl'
+DECIDE = ROOT / 'prolog' / 'decide.pl'
 BENCH = ROOT / 'benchmark'
 ANSWERS, HELDOUT = BENCH / 'ta_answers.json', BENCH / 'ta_heldout.json'
 STATUS, RESULT, PROMPTS = BENCH / 'ta_status.json', BENCH / 'ta_result.md', BENCH / 'hand_rule_prompts.jsonl'
@@ -118,21 +119,30 @@ def answer(path: Path, io: TaIo, labels: set[str], gs: dict[str, str], logic: Ta
 
 
 def decide(out: dict, built_names, specific, labels: set[str], gs: dict[str, str]) -> dict:
-    """The answer from the evidence: the most specific that names anything decides. A file rule (ta_file_rules.pl);
-    a built or hand branch; a learned branch with an exact trace (the write trace of the training files' behaviour,
-    or their exact traced logic: AP13 learn-dir); a learned branch with the behaviour; the behaviour alone. Several
-    groups at the deciding level: UNKNOWN."""
+    """The answer from the evidence, decided in Prolog (prolog/decide.pl: the tiers are data, tried in order; every
+    label of a tier collected): a file rule (ta_file_rules.pl); a built or hand branch; a learned branch with an exact
+    trace (the write trace of the training files' behaviour, or their exact traced logic: AP13 learn-dir); a learned
+    branch with the behaviour; the behaviour alone. Several groups at the deciding tier: UNKNOWN. Here the evidence is
+    only gathered and named by its group (ta_corpus.group)."""
     built = {ta_corpus.group(b, gs) for b in built_names if b in ta_corpus.BUILT or b in labels}
     spec = {ta_corpus.group(b, gs) for b in specific if b in labels}
     out = {**out, 'built': sorted(built), 'specific': sorted(spec)}
-    for why, cands in (('file_rule', spec), ('built', built),
-                       ('trace', {ta_corpus.group(h, gs) for h in out['held_trace']}),
-                       ('learned', {ta_corpus.group(h, gs) for h in out['held']}),
-                       ('io', {ta_corpus.group(i, gs) for i in out['io']})):
-        if len(cands) == 1:
-            return {**out, 'got': next(iter(cands)), 'why': why}
-        if cands:
-            return {**out, 'got': None, 'why': 'ambiguous', 'clash': sorted(cands), 'at': why}
+    evidence = [('file_rule', spec), ('built', built),
+                ('trace', {ta_corpus.group(h, gs) for h in out['held_trace']}),
+                ('learned', {ta_corpus.group(h, gs) for h in out['held']}),
+                ('io', {ta_corpus.group(i, gs) for i in out['io']})]
+    compare_learners._ap13()
+    from fact_io import term  # AP13's inert Prolog text (polyglot_logic/tools)
+    with tempfile.TemporaryDirectory(prefix='v02_decide_') as td:
+        facts = Path(td) / 'evidence.pl'
+        facts.write_text(''.join(f'evidence({tier},{term(g)}).\n' for tier, gs_ in evidence for g in sorted(gs_)),
+                         encoding='utf-8')
+        line = learn_apply.learn_facts.env_run.swipl('decide_main', [DECIDE], [str(facts)])[-1]
+    kind, *rest = line.split('|', 2)
+    if kind == 'GOT':
+        return {**out, 'got': rest[1], 'why': rest[0]}
+    if kind == 'AMBIGUOUS':
+        return {**out, 'got': None, 'why': 'ambiguous', 'clash': sorted(rest[1].split(',')), 'at': rest[0]}
     return {**out, 'got': None, 'why': 'none'}
 
 
