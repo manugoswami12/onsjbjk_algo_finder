@@ -23,8 +23,9 @@ def tree_facts(path: Path) -> tuple[str, str]:
     if path.suffix == '.lisp':
         units = ecl_compile.ecl_units(path)
         return 'lisp', ecl_facts.facts_of(units) if any(units) else ''
-    if path.suffix == '.c':
-        return 'ap13', c_facts(path)
+    if path.suffix == '.c':                           # clang's parser checks tree-sitter's functions (19.11)
+        import c_ast_check
+        return 'ap13', c_ast_check.check(c_facts(path), path)
     if path.suffix == '.py' and path.read_text(encoding='utf-8', errors='replace').lstrip().startswith('>>>'):
         return 'ap13', session_facts(path)
     if path.suffix == '.hs':                          # AP13's Haskell lowerer, subclassed (haskell_logic.py)

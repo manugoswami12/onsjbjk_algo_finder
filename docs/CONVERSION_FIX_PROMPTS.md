@@ -128,7 +128,7 @@ Faults met: interp_v03's reduce never worked (foldl/6 with a state pair: write t
 exact-logic tier is per file, so the helper rule needs the functions of each match (TaLogic.labels_matched by_match);
 the facts lowering must be installed where the facts are made (learn_facts), not only with the front ends.
 
-### The language's own parser checks tree-sitter's facts (haskell_ast_check.py)
+### The language's own parser checks tree-sitter's facts (haskell_ast_check.py, c_ast_check.py)
 > Ask the language's own compiler for its AST (parsed only: GHC -ddump-parsed-ast; clang -ast-dump=json) and list the
 > functions it defines. Compare with the functions and parameters tree-sitter's facts claim, over every file of the
 > language; explain each difference before any rule (local functions, lambda lifting, escaped names are not faults).

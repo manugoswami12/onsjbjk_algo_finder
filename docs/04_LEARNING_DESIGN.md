@@ -642,6 +642,14 @@ answered right, has an indentation error tree-sitter recovers from). Over the 14
 every function except sieve-of-eratosthenes-15.hs's `<=` and `otherwise` (a guard read as definitions); a parameter
 count above GHC's is the lowerer's lambda lifting. All data: 0 differences, no answer changed.
 
+**19.11 clang's parser checks the C structure facts (c_ast_check.py).** The same check for C: `clang
+-fsyntax-only -Xclang -ast-dump=json` (parsed and type-checked only) gives the file's function definitions with their
+parameters in order. With a parse free of errors, a function tree-sitter reports that clang does not define is
+dropped, and a function with fewer parameters than clang's takes clang's: tree-sitter's parameter rule (the first
+identifier of a declarator) misses a function-pointer parameter, `int (*cmp)(const void *, const void *)`
+(sorting-algorithms-cocktail-sort-3.c). A file clang reports errors in (GCC nested functions, missing headers: 16 of
+69) keeps its facts. All data: 0 differences, no answer changed.
+
 **Later stage: the 242 held-out files that cannot be evaluated.** They are left out of this round's numbers (no
 answer, and no root function runs on every battery input). This is not "no algorithm": some are fragments
 (`binary-search-5.py` only calls bisect), most define functions the evaluator cannot run yet: the battery cannot call
