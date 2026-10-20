@@ -578,6 +578,31 @@ solve. 4, 5: hand-test combinations first.
 
 New code after 19.6: 5 wrong (quicksort-1, insertion-sort-3, lcm-2, levenshtein-5, perfect-numbers-1).
 
+**19.7 Python tells about its own programs (cases 1 and 2).** User: "use python to answer about its own programs".
+Tree-sitter stays the parser; Python's own ast (static, the program is never run) adds facts beside its facts for a
+`.py` file (pyast_facts.py, called by learn_facts.tree_facts): `list_var(F, X)` (every assignment of X in F, annotated
+ones included, gives a list, or X is appended to), `list_param(F, P)` (P is sliced), `list_func(F)` (every return
+gives a list; a fixed point over the file's functions). Three rules use them, each a rule of the language:
+
+| Rule | What it does | Faults met, fixed inside the idea |
+|---|---|---|
+| prolog/ast_concat.pl (after trace_returns) | an add with a list operand is concat, flattened (as `[*a, *b]` lowers) | facts of one predicate written apart (34 files failed to load); annotated assignments not read (problem_109) |
+| families_v02.pl partition_evidence/1 | for a join Python made concat, `partition_recursive` holds only when two recursive results are joined on parts split by a comparison (appended under one, or filtered by one), or AP13's exchange loop partitions; otherwise the node falls back to `[sequence_transformation]` | `ac_joined/1` undefined on the Lisp path; Hanoi's moves and huffman stay `double_recursion` |
+| prolog/slice_write.pl (before trace_returns) | `q[:] = E` of a parameter, in a function that returns nothing, is a write of q with value E and q is its output | applied to every function, rotate_matrix's reverse_column (which returns the matrix) lost its node |
+
+Two hand terms quoted the old wrong reading of a list join and were restated in the corrected form, the rules
+unchanged: problem_109's file rule (`singles + doubles + triples + [0]` is `concat([v, v, v, [0]])`), and the LCS
+built branch's "matched element put in front" (`[x] + lcs(...)` is also accepted as `concat([list([_]), D])`; found
+by tests/test_uniform, no file of the data changes node).
+
+Checked against all data: tree nodes of 2102 files (14 changed, each explained: quicksort-1, -2, -3, -6 and
+TheAlgorithms' three_way_radix_quicksort reach `partition_recursive`; returns that join lists become sequence
+transformations: merge, merge_sort, to_title_case; insertion-sort-3 reaches `sequence_transformation`; a few one-level
+nodes the add had made go away), relearnt, fingerprints re-indexed, `--run` and `--heldout`: learnt 1344/1344 with 0
+differences. New code: quicksort-1 Cycle-sort -> Quicksort, quicksort-3 UNKNOWN -> Quicksort, insertion-sort-3
+average_mode -> UNKNOWN (Insertion, Merge and Pancake sort hold alike at its node). 177 correct, 3 wrong, precision
+98.3%, recall 85.9%. Remaining wrong: lcm-2, levenshtein-5, perfect-numbers-1.hs (19.6).
+
 **Remaining wrong answers (7)** after 19.1-19.4: factorial-2.c -> problem_020 (exact-trace tier: problem_020's
 branch sits at its helper's node); least-common-multiple-2.py -> gcd and levenshtein-distance-5.py -> problem_007 (a
 curried root returns a lambda and never runs; problem_007's is_prime lowered wrongly); perfect-numbers-1.hs ->

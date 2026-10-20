@@ -6121,6 +6121,13 @@ learned_branch([search, backtracking], scc_kosaraju, trace, io) :-
     io_trace_equal(scc_kosaraju).
 learned_branch([search, backtracking], scc_kosaraju, logic, io) :-
     logic_equal(scc_kosaraju).
+% strongly_connected_components under [search>backtracking]: learned from [graphs/strongly_connected_components.py]
+learned_branch([search, backtracking], strongly_connected_components, io, io) :-
+    io_equal(strongly_connected_components).
+learned_branch([search, backtracking], strongly_connected_components, trace, io) :-
+    io_trace_equal(strongly_connected_components).
+learned_branch([search, backtracking], strongly_connected_components, logic, io) :-
+    logic_equal(strongly_connected_components).
 % sum_of_subsets under [search>backtracking]: learned from [backtracking/sum_of_subsets.py]
 learned_branch([search, backtracking], sum_of_subsets, io, io) :-
     io_equal(sum_of_subsets).
@@ -7563,13 +7570,6 @@ learned_branch([sequence_query], tabu_search, trace, io) :-
     io_trace_equal(tabu_search).
 learned_branch([sequence_query], tabu_search, logic, io) :-
     logic_equal(tabu_search).
-% title under [sequence_query]: learned from [strings/title.py]
-learned_branch([sequence_query], title, io, io) :-
-    io_equal(title).
-learned_branch([sequence_query], title, trace, io) :-
-    io_trace_equal(title).
-learned_branch([sequence_query], title, logic, io) :-
-    logic_equal(title).
 % top_k_frequent_words under [sequence_query]: learned from [strings/top_k_frequent_words.py]
 learned_branch([sequence_query], top_k_frequent_words, io, io) :-
     io_equal(top_k_frequent_words).
@@ -7612,13 +7612,6 @@ learned_branch([sequence_query], triplet_sum, trace, io) :-
     io_trace_equal(triplet_sum).
 learned_branch([sequence_query], triplet_sum, logic, io) :-
     logic_equal(triplet_sum).
-% unknown_sort under [sequence_query]: learned from [sorts/unknown_sort.py]
-learned_branch([sequence_query], unknown_sort, io, io) :-
-    io_equal(unknown_sort).
-learned_branch([sequence_query], unknown_sort, trace, io) :-
-    io_trace_equal(unknown_sort).
-learned_branch([sequence_query], unknown_sort, logic, io) :-
-    logic_equal(unknown_sort).
 % value_at_risk under [sequence_query]: learned from [financial/value_at_risk.py]
 learned_branch([sequence_query], value_at_risk, io, io) :-
     io_equal(value_at_risk).
@@ -7885,13 +7878,6 @@ learned_branch([sequence_query, aggregate, gatherer], simple_substitution_cipher
     io_trace_equal(simple_substitution_cipher).
 learned_branch([sequence_query, aggregate, gatherer], simple_substitution_cipher, logic, io) :-
     logic_equal(simple_substitution_cipher).
-% strongly_connected_components under [sequence_query>aggregate>gatherer]: learned from [graphs/strongly_connected_components.py]
-learned_branch([sequence_query, aggregate, gatherer], strongly_connected_components, io, io) :-
-    io_equal(strongly_connected_components).
-learned_branch([sequence_query, aggregate, gatherer], strongly_connected_components, trace, io) :-
-    io_trace_equal(strongly_connected_components).
-learned_branch([sequence_query, aggregate, gatherer], strongly_connected_components, logic, io) :-
-    logic_equal(strongly_connected_components).
 % xor_cipher under [sequence_query>aggregate>gatherer]: learned from [ciphers/xor_cipher.py]
 learned_branch([sequence_query, aggregate, gatherer], xor_cipher, io, io) :-
     io_equal(xor_cipher).
@@ -8543,6 +8529,13 @@ learned_branch([sequence_transformation], sudoku_solver, trace, io) :-
     io_trace_equal(sudoku_solver).
 learned_branch([sequence_transformation], sudoku_solver, logic, io) :-
     logic_equal(sudoku_solver).
+% title under [sequence_transformation]: learned from [strings/title.py]
+learned_branch([sequence_transformation], title, io, io) :-
+    io_equal(title).
+learned_branch([sequence_transformation], title, trace, io) :-
+    io_trace_equal(title).
+learned_branch([sequence_transformation], title, logic, io) :-
+    logic_equal(title).
 % transitive_closure under [sequence_transformation]: learned from [matrix/transitive_closure.py]
 learned_branch([sequence_transformation], transitive_closure, io, io) :-
     io_equal(transitive_closure).
@@ -8564,6 +8557,13 @@ learned_branch([sequence_transformation], two_pointer, trace, io) :-
     io_trace_equal(two_pointer).
 learned_branch([sequence_transformation], two_pointer, logic, io) :-
     logic_equal(two_pointer).
+% unknown_sort under [sequence_transformation]: learned from [sorts/unknown_sort.py]
+learned_branch([sequence_transformation], unknown_sort, io, io) :-
+    io_equal(unknown_sort).
+learned_branch([sequence_transformation], unknown_sort, trace, io) :-
+    io_trace_equal(unknown_sort).
+learned_branch([sequence_transformation], unknown_sort, logic, io) :-
+    logic_equal(unknown_sort).
 % weddles_rule under [sequence_transformation]: learned from [maths/weddles_rule.py]
 learned_branch([sequence_transformation], weddles_rule, io, io) :-
     io_equal(weddles_rule).

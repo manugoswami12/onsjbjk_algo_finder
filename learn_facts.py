@@ -30,6 +30,9 @@ def tree_facts(path: Path) -> tuple[str, str]:
     if path.suffix == '.hs':                          # AP13's Haskell lowerer, subclassed (haskell_logic.py)
         import haskell_logic
         return 'ap13', haskell_logic.lower(path)
+    if path.suffix == '.py':                          # with what Python tells about its own program
+        import pyast_facts
+        return 'ap13', imperative_facts(path) + pyast_facts.facts(path)
     return 'ap13', imperative_facts(path)
 
 

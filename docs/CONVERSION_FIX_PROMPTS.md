@@ -88,18 +88,43 @@ Result: 28 normal forms change (C and Lisp only); fibonacci-sequence-9.lisp sign
 > every function of the match computes varying outputs and the matched function computes none, or both compute
 > outputs that differ on a common input. AP13's compare returning no verdict (too little evidence) is not one.
 
+### Python tells about its own programs (pyast_facts.py, prolog/ast_concat.pl, prolog/slice_write.pl)
+> Tree-sitter gives only the token: `a + b` cannot be told from a list join. Ask Python's own ast (static: the
+> program is never run) which names hold lists (every assignment a list, annotated ones included, or appended to),
+> which parameters are sliced and which functions return lists; add them as facts beside tree-sitter's. Rewrite an
+> add with a list operand as concat, flattened (the same form `[*a, *b]` lowers to). Then the rules the old wrong
+> reading had hidden must hold: a join of two recursive results is a partition sort only when the parts are split by
+> a comparison (appended under one, or filtered by one), else Hanoi's moves are a sort. For an in-place rewrite
+> `q[:] = E`: it is a write of q, and q the output, only in a function that returns nothing (one that returns
+> already names its output).
+
+Faults met and how (each one fix inside the idea, then all data again):
+- 34 files failed to load: one predicate's facts were written apart (swipl's discontiguous warning is a failure).
+  Write each predicate's facts together.
+- The Lisp path never loads ast_concat.pl: declare `ac_joined/1` dynamic where it is read (families_v02.pl).
+- problem_109 lost its file rule: Python did not see `singles: list[int] = ...` (annotated assignment), and the hand
+  rule quoted the old wrong reading of `singles + doubles + triples + [0]`; read annotated assignments, and restate
+  the rule's term in the corrected form (same rule, same uniqueness check).
+- `[x] + lcs(...)` in the LCS built branch: the rule read the join only as `op(add, [list([_]), D])`; it accepts the
+  corrected `concat([list([_]), D])` too (found by tests/test_uniform, not by the full check: run the tests too).
+- `q[:] = E` everywhere broke rotate_matrix's reverse_column (it returns the matrix): limited to no-return functions.
+
+Lesson: a corrected conversion changes the terms hand rules quote. Grep the hand rules and built branches for the
+old form before the full run.
+
 ## Tried and dropped (do not repeat)
 
-- `q[:] = E` as a write of q: insertion-sort-3 became Cycle-sort and two learnt files were lost.
+- `q[:] = E` as a write of q in every function (before Python's facts): insertion-sort-3 became Cycle-sort and two
+  learnt files were lost. Solved later, limited to functions that return nothing (above).
 - Library files (roots computing different things) naming nothing: volume.py, rotate_bits.py and seven other
   learnt files lost or wrong; a file of several functions of one topic cannot be told from a library.
 - Uncurrying `return lambda` (hand-tested only): the behaviour becomes right for lcm-2, but the hand-built gcd branch
   at its helper's node decides first; levenshtein-5's functional body (reduce, scanl, functions as values) still
   cannot be evaluated.
 
-- `+` on lists as concatenation (prolog/list_concat.pl, removed): the conversion was right, but AP13's partition idiom
-  takes any join of two recursive results as a partition sort; Hanoi's moves and TheAlgorithms' huffman became
-  Quicksort. Fix the partition rule (parts filtered by a pivot comparison) first, then retry this.
+- `+` on lists as concatenation without types (prolog/list_concat.pl, removed): every `+` of a recursive result
+  became a join, and AP13's partition idiom takes any join of two recursive results as a partition sort; Hanoi's
+  moves and TheAlgorithms' huffman became Quicksort. Solved later with Python's facts and the partition test (above).
 
 - Naming a match by the matched function's algorithm, in Python rules added case by case (mixed answers): removed 9
   wrong answers but lost 19 learnt answers and made 2 wrong. Rules in Python patched per case are hard coding.

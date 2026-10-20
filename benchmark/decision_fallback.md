@@ -9,16 +9,14 @@ Identified = algorithm or class. A family answer is right when TheAlgorithms fil
 | C | 69 | 32 / 0 | 100.0% | 46.4% | 7 / 1 | 7 / 7 | 15 |
 | Common-Lisp | 75 | 45 / 0 | 100.0% | 60.0% | 9 / 2 | 4 / 5 | 10 |
 | Haskell | 144 | 33 / 1 | 97.1% | 22.9% | 4 / 3 | 17 / 29 | 57 |
-| Python | 162 | 66 / 4 | 94.3% | 40.7% | 11 / 4 | 23 / 13 | 41 |
-| all | 450 | 176 / 5 | 97.2% | 39.1% | 31 / 10 | 51 / 54 | 123 |
+| Python | 162 | 67 / 2 | 97.1% | 41.4% | 11 / 4 | 24 / 13 | 41 |
+| all | 450 | 177 / 3 | 98.3% | 39.3% | 31 / 10 | 52 / 54 | 123 |
 
-## Wrong answers (5)
+## Wrong answers (3)
 
 - Task/Least-common-multiple/Python/least-common-multiple-2.py: algorithm Greatest-common-divisor, task Least-common-multiple
 - Task/Levenshtein-distance/Python/levenshtein-distance-5.py: algorithm problem_007, task Levenshtein-distance
 - Task/Perfect-numbers/Haskell/perfect-numbers-1.hs: algorithm primelib, task Perfect-numbers
-- Task/Sorting-algorithms-Insertion-sort/Python/sorting-algorithms-insertion-sort-3.py: algorithm average_mode, task Sorting-algorithms-Insertion-sort
-- Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-1.py: algorithm Sorting-algorithms-Cycle-sort, task Sorting-algorithms-Quicksort
 
 ## Variation of a deep family, family wrong (10)
 

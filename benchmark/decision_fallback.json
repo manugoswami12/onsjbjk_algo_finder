@@ -2679,10 +2679,10 @@
    "task": "Sorting-algorithms-Insertion-sort"
   },
   "Task/Sorting-algorithms-Insertion-sort/Python/sorting-algorithms-insertion-sort-3.py": {
-   "answer": "algorithm",
-   "correct": false,
-   "family_correct": null,
-   "name": "average_mode",
+   "answer": "variation_root",
+   "correct": null,
+   "family_correct": true,
+   "name": "sequence_transformation",
    "task": "Sorting-algorithms-Insertion-sort"
   },
   "Task/Sorting-algorithms-Insertion-sort/Python/sorting-algorithms-insertion-sort-4.py": {
@@ -2876,9 +2876,9 @@
   },
   "Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-1.py": {
    "answer": "algorithm",
-   "correct": false,
+   "correct": true,
    "family_correct": null,
-   "name": "Sorting-algorithms-Cycle-sort",
+   "name": "Sorting-algorithms-Quicksort",
    "task": "Sorting-algorithms-Quicksort"
   },
   "Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-2.py": {
@@ -2889,10 +2889,10 @@
    "task": "Sorting-algorithms-Quicksort"
   },
   "Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-3.py": {
-   "answer": "class",
+   "answer": "algorithm",
    "correct": true,
    "family_correct": null,
-   "name": "sorting",
+   "name": "Sorting-algorithms-Quicksort",
    "task": "Sorting-algorithms-Quicksort"
   },
   "Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-4.py": {

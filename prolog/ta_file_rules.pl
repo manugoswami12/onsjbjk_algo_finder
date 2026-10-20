@@ -935,7 +935,7 @@ hand_specific(_, 'problem_095') :- file_has(op(gt,[op(pow,[elem(call(enumerate,[
 % problem_097
 hand_specific(_, 'problem_097') :- file_has(var(v)-op(pow,[int(10),var(p(0))])), same_file('problem_097').
 % problem_109
-hand_specific(_, 'problem_109') :- file_has(var(v)-op(add,[op(add,[op(add,[var(v),var(v)]),var(v)]),list([int(0)])])), same_file('problem_109').
+hand_specific(_, 'problem_109') :- file_has(var(v)-concat([var(v),var(v),var(v),list([int(0)])])), same_file('problem_109').
 % problem_111
 hand_specific(_, 'problem_111') :- file_has(var(v)-call(fn,[op(add,[call(int,[call(sqrt,[var(p(0))])]),int(1)])])), same_file('problem_111').
 % problem_120

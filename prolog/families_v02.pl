@@ -28,8 +28,27 @@ family_path_v02(F, [sequence_transformation, comparison_sort, select_extreme]) :
 % clauses only: when a branch of this file below the root holds, the fallback is dropped, as AP13 drops it for its own.
 deepest_families_v02(F, Paths) :-
     findall(P, ( family_path(F, P) ; family_path_v02(F, P) ), Ps0), sort(Ps0, Ps1),
-    ( once(family_path_v02(F, [_, _|_])) -> exclude([P]>>( P = [_] ), Ps1, Ps) ; Ps = Ps1 ),
+    ( once(family_path_v02(F, [_, _|_])) -> exclude([P]>>( P = [_] ), Ps1, Ps2) ; Ps2 = Ps1 ),
+    ( memberchk([sequence_transformation, comparison_sort, partition_recursive], Ps2), \+ partition_evidence(F)
+    ->  exclude(==([sequence_transformation, comparison_sort, partition_recursive]), Ps2, Ps3),
+        ( Ps3 == [] -> Ps = [[sequence_transformation]] ; Ps = Ps3 )
+    ;   Ps = Ps2 ),
     exclude(prefix_of_other(Ps), Ps, Paths).
+% a partition sort joins recursive results on parts split by a comparison (appended under one, or filtered by one), or
+% partitions in place (AP13's exchange loop); a join of two recursive results alone is not one (Hanoi's moves). Checked
+% for the joins Python's ast made concat (ast_concat.pl ac_joined/1); a join the lowering already gave keeps its node
+:- dynamic ac_joined/1.
+partition_evidence(F) :- \+ ( in_func(S, F), ac_joined(S) ), !.     % only joins Python told us are lists here
+partition_evidence(F) :- self_calls(F, K), K >= 2, partition_loop(F), !.
+partition_evidence(F) :- in_func(S, F), ret(S, R), sub_term(C, R), compound(C), C = concat(Ps),
+    findall(A, ( member(P, Ps), P = call('$self', [A|_]), compared_arg(F, A) ), As), length(As, K), K >= 2, !.
+compared_arg(F, var(X)) :- !, compared_part(F, X).
+compared_arg(_, filter(_, Cond)) :- compared_cond(Cond).
+compared_cond(Cond) :- sub_term(O, Cond), compound(O), O = op(Op, _), memberchk(Op, [lt, le, gt, ge, eq]), !.
+compared_part(F, X) :- in_func(S, F), call_at(S, append, [V|_]), V == var(X), guard(S, op(Op, _), true),
+    memberchk(Op, [lt, le, gt, ge, eq]), !.
+compared_part(F, X) :- in_func(S, F), assign(S, V, filter(_, Cond)), V == var(X), sub_term(O, Cond), compound(O),
+    O = op(Op, _), memberchk(Op, [lt, le, gt, ge, eq]), !.
 
 % x, y := y, t with t := f(x, y) earlier in the same loop body: t's only definition inside the loop
 % reaches the parallel assignment (reaching definitions; an initial t = nil outside the loop is
@@ -216,10 +235,12 @@ one_step(call('$self', As)) :- include([A]>>stepped(A, _), As, [_]).
 family_path_v02(F, [sequence_query, two_sequence_match, longest_common]) :-
     once(( in_func(S1, F), under_match(S1, true), matched_plus_one(S1),
            larger_step(F) )).
-% on a match: the diagonal plus one, the matched element put in front (cons, [x] + rest), or, as AP13 writes
-% x : f xs ys, the diagonal self-call with the element written to the output
+% on a match: the diagonal plus one, the matched element put in front (cons, [x] + rest, which ast_concat.pl reads
+% as concat when Python tells the operand is a list), or, as AP13 writes x : f xs ys, the diagonal self-call with the
+% element written to the output
 matched_plus_one(S) :- ( value(S, _, V) ; ret(S, V) ), sub_term(G, V), compound(G),
-    ( G = op(add, [D, int(1)]) ; G = cons(_, D) ; G = op(add, [list([_]), D]) ), diagonal(D), !.
+    ( G = op(add, [D, int(1)]) ; G = cons(_, D) ; G = op(add, [list([_]), D]) ; G = concat([list([_]), D]) ),
+    diagonal(D), !.
 matched_plus_one(S) :- ( value(S, _, V) ; ret(S, V) ), sub_term(G, V), compound(G), G = op(add, [var(L), int(1)]),
     stmt(S, F, _, _), in_func(S0, F), under_match(S0, true), value(S0, var(L2), T), L2 == L,   % (seq len) = f(...)
     sub_term(D, T), compound(D), diagonal(D), !.

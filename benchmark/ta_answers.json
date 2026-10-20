@@ -3635,8 +3635,7 @@
 "reverse_array"
 ],
 "logic": [
-"reverse_array",
-"rotate_array"
+"reverse_array"
 ],
 "nodes": [
 "sequence_transformation>uncompared_rearrangement"
@@ -3787,10 +3786,7 @@
 ],
 "held_trace": [
 "binary_search_tree",
-"binary_search_tree_recursive",
-"binary_tree_traversals",
-"red_black_tree",
-"splay_tree"
+"binary_search_tree_recursive"
 ],
 "io": [
 "binary_search_tree",
@@ -3799,11 +3795,7 @@
 ],
 "logic": [
 "binary_search_tree",
-"binary_search_tree_recursive",
-"binary_tree_traversals",
-"decision_tree",
-"red_black_tree",
-"splay_tree"
+"binary_search_tree_recursive"
 ],
 "nodes": [
 "numeric",
@@ -4336,9 +4328,7 @@
 "lazy_segment_tree",
 "segment_tree"
 ],
-"held_trace": [
-"segment_tree"
-],
+"held_trace": [],
 "io": [
 "dijkstra_algorithm",
 "heap_generic",
@@ -4346,9 +4336,7 @@
 "min_heap",
 "segment_tree"
 ],
-"logic": [
-"segment_tree"
-],
+"logic": [],
 "nodes": [
 "numeric>recurrence>double_recursion"
 ],
@@ -6569,8 +6557,7 @@
 "climbing_stairs"
 ],
 "held_trace": [
-"climbing_stairs",
-"matrix_exponentiation"
+"climbing_stairs"
 ],
 "io": [
 "climbing_stairs",
@@ -6579,10 +6566,7 @@
 "primelib"
 ],
 "logic": [
-"capacitor_equivalence",
-"climbing_stairs",
-"matrix_exponentiation",
-"resistor_equivalence"
+"climbing_stairs"
 ],
 "nodes": [
 "numeric>recurrence>pair_recurrence"
@@ -9741,7 +9725,6 @@
 ],
 "nodes": [
 "search>backtracking",
-"sequence_query>aggregate>gatherer",
 "sequence_transformation"
 ],
 "specific": [],
@@ -11671,8 +11654,7 @@
 ],
 "logic": [
 "binary_exponentiation",
-"fermat_little_theorem",
-"matrix_exponentiation"
+"fermat_little_theorem"
 ],
 "nodes": [
 "numeric",
@@ -11689,17 +11671,13 @@
 "binary_multiplication"
 ],
 "held_trace": [
-"binary_multiplication",
-"capacitor_equivalence",
-"resistor_equivalence"
+"binary_multiplication"
 ],
 "io": [
 "binary_multiplication"
 ],
 "logic": [
-"binary_multiplication",
-"capacitor_equivalence",
-"resistor_equivalence"
+"binary_multiplication"
 ],
 "nodes": [
 "numeric"
@@ -12035,23 +12013,13 @@
 "double_factorial"
 ],
 "held_trace": [
-"double_factorial",
-"factorial",
-"gcd_of_n_numbers",
-"number_of_possible_binary_trees",
-"primelib",
-"problem_020"
+"double_factorial"
 ],
 "io": [
 "double_factorial"
 ],
 "logic": [
-"double_factorial",
-"factorial",
-"gcd_of_n_numbers",
-"number_of_possible_binary_trees",
-"primelib",
-"problem_020"
+"double_factorial"
 ],
 "nodes": [
 "numeric>recurrence>range_accumulation"
@@ -12217,9 +12185,7 @@
 "problem_020"
 ],
 "held_trace": [
-"double_factorial",
 "factorial",
-"gcd_of_n_numbers",
 "number_of_possible_binary_trees",
 "primelib",
 "problem_020"
@@ -12232,9 +12198,7 @@
 "problem_020"
 ],
 "logic": [
-"double_factorial",
 "factorial",
-"gcd_of_n_numbers",
 "number_of_possible_binary_trees",
 "primelib",
 "problem_020"
@@ -12315,15 +12279,13 @@
 "fibonacci"
 ],
 "held_trace": [
-"fibonacci",
-"lucas_series"
+"fibonacci"
 ],
 "io": [
 "fibonacci"
 ],
 "logic": [
-"fibonacci",
-"lucas_series"
+"fibonacci"
 ],
 "nodes": [
 "numeric",
@@ -12879,14 +12841,12 @@
 "lucas_series"
 ],
 "held_trace": [
-"fibonacci",
 "lucas_series"
 ],
 "io": [
 "lucas_series"
 ],
 "logic": [
-"fibonacci",
 "lucas_series"
 ],
 "nodes": [
@@ -13452,8 +13412,6 @@
 "trapezoidal_rule"
 ],
 "held_trace": [
-"capacitor_equivalence",
-"resistor_equivalence",
 "simpson_rule"
 ],
 "io": [
@@ -13463,8 +13421,6 @@
 "trapezoidal_rule"
 ],
 "logic": [
-"capacitor_equivalence",
-"resistor_equivalence",
 "simpson_rule"
 ],
 "nodes": [
@@ -14113,8 +14069,7 @@
 "alternate_harmonic_series"
 ],
 "logic": [
-"alternate_harmonic_series",
-"harmonic"
+"alternate_harmonic_series"
 ],
 "nodes": [],
 "specific": [],
@@ -14221,7 +14176,6 @@
 "harmonic"
 ],
 "logic": [
-"alternate_harmonic_series",
 "harmonic"
 ],
 "nodes": [
@@ -14553,14 +14507,11 @@
 "got": "bell_numbers",
 "held": [],
 "held_trace": [
-"bell_numbers",
-"combinations"
+"bell_numbers"
 ],
 "io": [],
 "logic": [
-"bell_numbers",
-"combinations",
-"number_of_possible_binary_trees"
+"bell_numbers"
 ],
 "nodes": [
 "numeric"
@@ -15156,8 +15107,6 @@
 "trapezoidal_rule"
 ],
 "held_trace": [
-"capacitor_equivalence",
-"resistor_equivalence",
 "trapezoidal_rule"
 ],
 "io": [
@@ -15167,8 +15116,6 @@
 "trapezoidal_rule"
 ],
 "logic": [
-"capacitor_equivalence",
-"resistor_equivalence",
 "trapezoidal_rule"
 ],
 "nodes": [
@@ -17431,17 +17378,13 @@
 "problem_001"
 ],
 "held_trace": [
-"capacitor_equivalence",
-"problem_001",
-"resistor_equivalence"
+"problem_001"
 ],
 "io": [
 "problem_001"
 ],
 "logic": [
-"capacitor_equivalence",
-"problem_001",
-"resistor_equivalence"
+"problem_001"
 ],
 "nodes": [
 "numeric"
@@ -17463,10 +17406,8 @@
 "problem_001"
 ],
 "nodes": [],
-"specific": [
-"problem_001"
-],
-"why": "file_rule"
+"specific": [],
+"why": "trace"
 },
 "project_euler/problem_001/sol5.py": {
 "built": [],
@@ -17490,17 +17431,13 @@
 "problem_001"
 ],
 "held_trace": [
-"capacitor_equivalence",
-"problem_001",
-"resistor_equivalence"
+"problem_001"
 ],
 "io": [
 "problem_001"
 ],
 "logic": [
-"capacitor_equivalence",
-"problem_001",
-"resistor_equivalence"
+"problem_001"
 ],
 "nodes": [
 "numeric"
@@ -17517,17 +17454,13 @@
 "problem_001"
 ],
 "held_trace": [
-"capacitor_equivalence",
-"problem_001",
-"resistor_equivalence"
+"problem_001"
 ],
 "io": [
 "problem_001"
 ],
 "logic": [
-"capacitor_equivalence",
-"problem_001",
-"resistor_equivalence"
+"problem_001"
 ],
 "nodes": [
 "numeric"
@@ -17550,9 +17483,7 @@
 "problem_002"
 ],
 "logic": [
-"capacitor_equivalence",
-"problem_002",
-"resistor_equivalence"
+"problem_002"
 ],
 "nodes": [
 "numeric>recurrence>pair_recurrence"
@@ -18550,9 +18481,7 @@
 "sum_of_digits"
 ],
 "held_trace": [
-"double_factorial",
 "factorial",
-"gcd_of_n_numbers",
 "number_of_possible_binary_trees",
 "primelib",
 "problem_020"
@@ -18567,14 +18496,10 @@
 "sum_of_digits"
 ],
 "logic": [
-"capacitor_equivalence",
-"double_factorial",
 "factorial",
-"gcd_of_n_numbers",
 "number_of_possible_binary_trees",
 "primelib",
-"problem_020",
-"resistor_equivalence"
+"problem_020"
 ],
 "nodes": [
 "numeric>decomposition>digits",
@@ -20136,17 +20061,13 @@
 "problem_094"
 ],
 "held_trace": [
-"capacitor_equivalence",
-"problem_094",
-"resistor_equivalence"
+"problem_094"
 ],
 "io": [
 "problem_094"
 ],
 "logic": [
-"capacitor_equivalence",
-"problem_094",
-"resistor_equivalence"
+"problem_094"
 ],
 "nodes": [
 "numeric"
@@ -20322,9 +20243,14 @@
 "built": [],
 "got": "problem_111",
 "held": [],
-"held_trace": [],
+"held_trace": [
+"problem_111"
+],
 "io": [],
-"logic": [],
+"logic": [
+"problem_111",
+"problem_124"
+],
 "nodes": [
 "sequence_transformation>elementwise_map"
 ],
@@ -20673,17 +20599,13 @@
 "problem_138"
 ],
 "held_trace": [
-"capacitor_equivalence",
-"problem_138",
-"resistor_equivalence"
+"problem_138"
 ],
 "io": [
 "problem_138"
 ],
 "logic": [
-"capacitor_equivalence",
-"problem_138",
-"resistor_equivalence"
+"problem_138"
 ],
 "nodes": [
 "numeric"
@@ -21031,11 +20953,9 @@
 "sieve_of_eratosthenes"
 ],
 "logic": [
-"capacitor_equivalence",
 "problem_050",
 "problem_051",
-"problem_234",
-"resistor_equivalence"
+"problem_234"
 ],
 "nodes": [
 "numeric",
@@ -24062,7 +23982,6 @@
 "tim_sort"
 ],
 "held_trace": [
-"binary_search",
 "tim_sort"
 ],
 "io": [
@@ -24102,10 +24021,7 @@
 "stooge_sort",
 "tim_sort"
 ],
-"logic": [
-"binary_search",
-"exponential_search"
-],
+"logic": [],
 "nodes": [
 "sequence_query>target_search>interval_halving",
 "sequence_transformation"
@@ -24160,7 +24076,7 @@
 "unknown_sort"
 ],
 "nodes": [
-"sequence_query"
+"sequence_transformation"
 ],
 "specific": [],
 "why": "trace"
@@ -24190,9 +24106,13 @@
 "built": [],
 "got": "aho_corasick",
 "held": [],
-"held_trace": [],
+"held_trace": [
+"aho_corasick"
+],
 "io": [],
-"logic": [],
+"logic": [
+"aho_corasick"
+],
 "nodes": [
 "numeric"
 ],
@@ -25138,7 +25058,7 @@
 "title"
 ],
 "nodes": [
-"sequence_query"
+"sequence_transformation"
 ],
 "specific": [],
 "why": "trace"

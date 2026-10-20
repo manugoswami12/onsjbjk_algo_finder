@@ -126,8 +126,8 @@ label_file_component('equal_loudness_filter', 'audio_filters/equal_loudness_filt
 label_file_component('equal_loudness_filter', 'audio_filters/equal_loudness_filter.py', var(v)).
 label_file_component('equal_loudness_filter', 'audio_filters/equal_loudness_filter.py', var(v)-call('$self',[field(var(p(0)),yulewalk_filter),var(p(1))])).
 label_file_component('equal_loudness_filter', 'audio_filters/equal_loudness_filter.py', var(v)-call(arange,[var(v),var(v)])).
-label_file_component('equal_loudness_filter', 'audio_filters/equal_loudness_filter.py', var(v)-call(array,[var(v),op(add,[elem(var(v),other(string)),list([call(max,[other(float),op(fdiv,[var(p(1)),int(2)])])])])])).
-label_file_component('equal_loudness_filter', 'audio_filters/equal_loudness_filter.py', var(v)-call(array,[var(v),op(add,[elem(var(v),other(string)),list([int(140)])])])).
+label_file_component('equal_loudness_filter', 'audio_filters/equal_loudness_filter.py', var(v)-call(array,[var(v),concat([elem(var(v),other(string)),list([call(max,[other(float),op(fdiv,[var(p(1)),int(2)])])])])])).
+label_file_component('equal_loudness_filter', 'audio_filters/equal_loudness_filter.py', var(v)-call(array,[var(v),concat([elem(var(v),other(string)),list([int(140)])])])).
 label_file_component('equal_loudness_filter', 'audio_filters/equal_loudness_filter.py', var(v)-call(concatenate,[var(v),list([list([other(float)]),call(ones,[var(v),op(sub,[var(v),int(1)])]),call(zeros,[var(v),op(sub,[var(v),var(v)])])])])).
 label_file_component('equal_loudness_filter', 'audio_filters/equal_loudness_filter.py', var(v)-call(concatenate,[var(v),list([list([other(float)]),elem(call(lstsq,[field(var(v),linalg),var(v),var(v)]),int(0))])])).
 label_file_component('equal_loudness_filter', 'audio_filters/equal_loudness_filter.py', var(v)-call(concatenate,[var(v),list([var(v),call(slice,[var(v),int(-2),int(0),int(-1)])])])).
@@ -187,10 +187,10 @@ label_file_component('show_response', 'audio_filters/show_response.py', var(v)-c
 label_file_component('show_response', 'audio_filters/show_response.py', var(v)-call(fn,[var(v),var(p(1))])).
 label_file_component('show_response', 'audio_filters/show_response.py', var(v)-call(max,[list([int(20),call(max,[var(v),call(slice,[var(p(0)),int(1),op(sub,[op(div,[var(p(1)),int(2)]),int(1)])])])])])).
 label_file_component('show_response', 'audio_filters/show_response.py', var(v)-call(min,[list([int(-20),call(min,[var(v),call(slice,[var(p(0)),int(1),op(sub,[op(div,[var(p(1)),int(2)]),int(1)])])])])])).
+label_file_component('show_response', 'audio_filters/show_response.py', var(v)-concat([list([int(1)]),op(mul,[list([int(0)]),op(sub,[var(v),int(1)])])])).
+label_file_component('show_response', 'audio_filters/show_response.py', var(v)-concat([var(v),var(v)])).
 label_file_component('show_response', 'audio_filters/show_response.py', var(v)-int(512)).
 label_file_component('show_response', 'audio_filters/show_response.py', var(v)-map(var(v),call(fn,[var(p(0)),elem(var(v),var(v))]),bool(true))).
-label_file_component('show_response', 'audio_filters/show_response.py', var(v)-op(add,[list([int(1)]),op(mul,[list([int(0)]),op(sub,[var(v),int(1)])])])).
-label_file_component('show_response', 'audio_filters/show_response.py', var(v)-op(add,[var(v),var(v)])).
 label_file_component('show_response', 'audio_filters/show_response.py', var(v)-op(mul,[int(20),call(log10,[var(v),var(v)])])).
 label_file_component('show_response', 'audio_filters/show_response.py', var(v)-op(mul,[list([int(0)]),op(sub,[var(p(1)),var(v)])])).
 label_file_component('all_subsequences', 'backtracking/all_subsequences.py', call(append,[var(p(1)),elem(var(p(0)),var(p(2)))])).
@@ -1711,6 +1711,7 @@ label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_s
 label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', call(str,[field(var(p(0)),root)])).
 label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', call(str,[field(var(p(0)),value)])).
 label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', call(traversal_function,[field(var(p(0)),root)])).
+label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', concat([call('$self',[]),call('$self',[]),list([var(p(0))])])).
 label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', concat([call('$self',[]),list([var(p(0))]),call('$self',[])])).
 label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', elem(list([]),op(sub,[var(p(1)),int(1)]))).
 label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', field(field(var(p(1)),parent),left)-var(p(2))).
@@ -1732,7 +1733,6 @@ label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_s
 label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', op('is not',[var(p(0)),other(none)])).
 label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', op('is not',[var(p(1)),other(none)])).
 label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', op('is not',[var(p(2)),other(none)])).
-label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', op(add,[op(add,[call('$self',[]),call('$self',[])]),list([var(p(0))])])).
 label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', op(and,[op('is not',[var(v),other(none)]),op('is not',[field(var(v),value),var(p(1))])])).
 label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', op(and,[op(is,[field(var(p(0)),left),other(none)]),op(is,[field(var(p(0)),right),other(none)])])).
 label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', op(and,[op(is,[field(var(v),left),other(none)]),op(is,[field(var(v),right),other(none)])])).
@@ -1769,13 +1769,13 @@ label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_s
 label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', var(v)-call('Node',[elem(var(v),var(p(1)))])).
 label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', var(v)-call(fn,[var(p(0)),field(var(v),left)])).
 label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', var(v)-call(fn,[var(p(0)),var(p(1))])).
+label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', var(v)-concat([call('$self',[field(var(p(0)),left)]),call('$self',[field(var(p(0)),right)]),list([var(p(0))])])).
 label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', var(v)-concat([call('$self',[field(var(p(0)),left)]),list([var(p(0))]),call('$self',[field(var(p(0)),right)])])).
 label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', var(v)-field(var(p(0)),root)).
 label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', var(v)-field(var(v),left)).
 label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', var(v)-field(var(v),right)).
 label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', var(v)-fstring([var(p(1))])).
 label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', var(v)-list([])).
-label_file_component('binary_search_tree', 'data_structures/binary_tree/binary_search_tree.py', var(v)-op(add,[op(add,[call('$self',[field(var(p(0)),left)]),call('$self',[field(var(p(0)),right)])]),list([var(p(0))])])).
 label_file_component('binary_search_tree_recursive', 'data_structures/binary_tree/binary_search_tree_recursive.py', bool(true)).
 label_file_component('binary_search_tree_recursive', 'data_structures/binary_tree/binary_search_tree_recursive.py', call('$self',[])).
 label_file_component('binary_search_tree_recursive', 'data_structures/binary_tree/binary_search_tree_recursive.py', call('BinarySearchTree',[])).
@@ -2568,8 +2568,8 @@ label_file_component('segment_tree', 'data_structures/binary_tree/segment_tree.p
 label_file_component('segment_tree', 'data_structures/binary_tree/segment_tree.py', var(p(3))-op(div,[op(add,[var(p(2)),var(p(3))]),int(2)])).
 label_file_component('segment_tree', 'data_structures/binary_tree/segment_tree.py', var(v)-call('$self',[var(p(0)),call(fn,[var(p(0)),var(p(1))]),op(add,[var(v),int(1)]),var(p(3)),var(p(4)),var(p(5))])).
 label_file_component('segment_tree', 'data_structures/binary_tree/segment_tree.py', var(v)-call('$self',[var(p(0)),call(fn,[var(p(0)),var(p(1))]),var(p(2)),var(v),var(p(4)),var(p(5))])).
+label_file_component('segment_tree', 'data_structures/binary_tree/segment_tree.py', var(v)-concat([var(v),list([call(fn,[var(p(0)),var(v),var(v)])])])).
 label_file_component('segment_tree', 'data_structures/binary_tree/segment_tree.py', var(v)-list([])).
-label_file_component('segment_tree', 'data_structures/binary_tree/segment_tree.py', var(v)-op(add,[var(v),list([call(fn,[var(p(0)),var(v),var(v)])])])).
 label_file_component('segment_tree', 'data_structures/binary_tree/segment_tree.py', var(v)-op(div,[op(add,[var(p(2)),var(p(3))]),int(2)])).
 label_file_component('serialize_deserialize_binary_tree', 'data_structures/binary_tree/serialize_deserialize_binary_tree.py', call('TreeNode',[call(int,[call(pop,[var(v),int(0)])])])).
 label_file_component('serialize_deserialize_binary_tree', 'data_structures/binary_tree/serialize_deserialize_binary_tree.py', call('TreeNode',[call(int,[var(v)])])).
@@ -4833,7 +4833,7 @@ label_file_component('frequent_pattern_graph_miner', 'graphs/frequent_pattern_gr
 label_file_component('frequent_pattern_graph_miner', 'graphs/frequent_pattern_graph_miner.py', tuple([elem(elem(var(v),var(v)),int(0)),elem(elem(var(v),var(v)),int(1))])).
 label_file_component('frequent_pattern_graph_miner', 'graphs/frequent_pattern_graph_miner.py', var(p(1))-call(tuple,[elem(elem(var(p(0)),var(p(1))),var(v))])).
 label_file_component('frequent_pattern_graph_miner', 'graphs/frequent_pattern_graph_miner.py', var(p(3))).
-label_file_component('frequent_pattern_graph_miner', 'graphs/frequent_pattern_graph_miner.py', var(p(3))-op(add,[op(or,[var(p(3)),list([])]),list([var(p(1))])])).
+label_file_component('frequent_pattern_graph_miner', 'graphs/frequent_pattern_graph_miner.py', var(p(3))-concat([op(or,[var(p(3)),list([])]),list([var(p(1))])])).
 label_file_component('frequent_pattern_graph_miner', 'graphs/frequent_pattern_graph_miner.py', var(v)-call(fn,[var(p(0)),elem(var(v),var(v))])).
 label_file_component('frequent_pattern_graph_miner', 'graphs/frequent_pattern_graph_miner.py', var(v)-call(fn,[var(p(0))])).
 label_file_component('frequent_pattern_graph_miner', 'graphs/frequent_pattern_graph_miner.py', var(v)-call(int,[op(mul,[op(fdiv,[var(p(0)),int(100)]),op(sub,[call(len,[var(p(1))]),int(1)])])])).
@@ -6163,7 +6163,7 @@ label_file_component('is_ipv6_address_valid', 'maths/is_ipv6_address_valid.py', 
 label_file_component('is_ipv6_address_valid', 'maths/is_ipv6_address_valid.py', call(split,[var(v),other(string)])).
 label_file_component('is_ipv6_address_valid', 'maths/is_ipv6_address_valid.py', op(and,[op(and,[op(eq,[call(len,[call(split,[var(p(0)),other(string)])]),int(8)]),call(all,[map(call(split,[var(p(0)),other(string)]),op(ne,[elem(call(split,[var(p(0)),other(string)]),var(v)),other(string)]),bool(true))])]),call(all,[map(call(split,[var(p(0)),other(string)]),call(fn,[elem(call(split,[var(p(0)),other(string)]),var(v))]),bool(true))])])).
 label_file_component('is_ipv6_address_valid', 'maths/is_ipv6_address_valid.py', op(and,[op(ge,[call(len,[var(p(0))]),int(1)]),call(all,[map(var(p(0)),op(in,[elem(var(p(0)),var(v)),var(v)]),bool(true))])])).
-label_file_component('is_ipv6_address_valid', 'maths/is_ipv6_address_valid.py', op(and,[op(gt,[int(8),op(add,[call(len,[var(v)]),call(len,[var(v)])])]),call(all,[map(op(add,[var(v),var(v)]),call(fn,[elem(op(add,[var(v),var(v)]),var(v))]),bool(true))])])).
+label_file_component('is_ipv6_address_valid', 'maths/is_ipv6_address_valid.py', op(and,[op(gt,[int(8),op(add,[call(len,[var(v)]),call(len,[var(v)])])]),call(all,[map(concat([var(v),var(v)]),call(fn,[elem(concat([var(v),var(v)]),var(v))]),bool(true))])])).
 label_file_component('is_ipv6_address_valid', 'maths/is_ipv6_address_valid.py', op(eq,[int(0),var(v)])).
 label_file_component('is_ipv6_address_valid', 'maths/is_ipv6_address_valid.py', op(eq,[int(1),var(v)])).
 label_file_component('is_ipv6_address_valid', 'maths/is_ipv6_address_valid.py', op(eq,[var(v),int(0)])).
@@ -6758,12 +6758,12 @@ label_file_component('segmented_sieve', 'maths/segmented_sieve.py', var(v)).
 label_file_component('segmented_sieve', 'maths/segmented_sieve.py', var(v)-call(int,[call(sqrt,[var(v),var(p(0))])])).
 label_file_component('segmented_sieve', 'maths/segmented_sieve.py', var(v)-call(min,[op(add,[var(v),var(v)]),var(p(0))])).
 label_file_component('segmented_sieve', 'maths/segmented_sieve.py', var(v)-call(min,[op(mul,[int(2),var(v)]),var(p(0))])).
+label_file_component('segmented_sieve', 'maths/segmented_sieve.py', var(v)-concat([var(v),var(v)])).
 label_file_component('segmented_sieve', 'maths/segmented_sieve.py', var(v)-fstring([var(p(0))])).
 label_file_component('segmented_sieve', 'maths/segmented_sieve.py', var(v)-int(2)).
 label_file_component('segmented_sieve', 'maths/segmented_sieve.py', var(v)-list([])).
 label_file_component('segmented_sieve', 'maths/segmented_sieve.py', var(v)-op(add,[var(v),elem(var(v),var(v))])).
 label_file_component('segmented_sieve', 'maths/segmented_sieve.py', var(v)-op(add,[var(v),int(1)])).
-label_file_component('segmented_sieve', 'maths/segmented_sieve.py', var(v)-op(add,[var(v),var(v)])).
 label_file_component('segmented_sieve', 'maths/segmented_sieve.py', var(v)-op(mul,[call(floor,[var(v),op(fdiv,[var(v),elem(var(v),var(v))])]),elem(var(v),var(v))])).
 label_file_component('segmented_sieve', 'maths/segmented_sieve.py', var(v)-op(mul,[list([bool(true)]),op(add,[op(sub,[var(v),var(v)]),int(1)])])).
 label_file_component('segmented_sieve', 'maths/segmented_sieve.py', var(v)-op(mul,[list([bool(true)]),op(add,[var(v),int(1)])])).
@@ -8156,7 +8156,7 @@ label_file_component('problem_001', 'project_euler/problem_001/sol4.py', op(eq,[
 label_file_component('problem_001', 'project_euler/problem_001/sol4.py', op(gt,[var(p(0)),var(v)])).
 label_file_component('problem_001', 'project_euler/problem_001/sol4.py', op(gt,[var(v),var(p(0))])).
 label_file_component('problem_001', 'project_euler/problem_001/sol4.py', var(v)).
-label_file_component('problem_001', 'project_euler/problem_001/sol4.py', var(v)-call(list,[call(set,[op(add,[var(v),var(v)])])])).
+label_file_component('problem_001', 'project_euler/problem_001/sol4.py', var(v)-call(list,[call(set,[concat([var(v),var(v)])])])).
 label_file_component('problem_001', 'project_euler/problem_001/sol4.py', var(v)-int(0)).
 label_file_component('problem_001', 'project_euler/problem_001/sol4.py', var(v)-int(1)).
 label_file_component('problem_001', 'project_euler/problem_001/sol4.py', var(v)-int(3)).
@@ -9334,11 +9334,11 @@ label_file_component('problem_109', 'project_euler/problem_109/sol1.py', op(gt,[
 label_file_component('problem_109', 'project_euler/problem_109/sol1.py', op(gt,[var(v),var(p(0))])).
 label_file_component('problem_109', 'project_euler/problem_109/sol1.py', var(v)).
 label_file_component('problem_109', 'project_euler/problem_109/sol1.py', var(v)-concat([call(list,[call(range,[int(1),int(21)])]),list([int(25)])])).
+label_file_component('problem_109', 'project_euler/problem_109/sol1.py', var(v)-concat([map(call(range,[int(1),int(21)]),op(mul,[int(2),elem(call(range,[int(1),int(21)]),var(v))]),bool(true)),list([int(50)])])).
+label_file_component('problem_109', 'project_euler/problem_109/sol1.py', var(v)-concat([var(v),var(v),var(v),list([int(0)])])).
 label_file_component('problem_109', 'project_euler/problem_109/sol1.py', var(v)-int(0)).
 label_file_component('problem_109', 'project_euler/problem_109/sol1.py', var(v)-map(call(range,[int(1),int(21)]),op(mul,[int(3),elem(call(range,[int(1),int(21)]),var(v))]),bool(true))).
-label_file_component('problem_109', 'project_euler/problem_109/sol1.py', var(v)-op(add,[map(call(range,[int(1),int(21)]),op(mul,[int(2),elem(call(range,[int(1),int(21)]),var(v))]),bool(true)),list([int(50)])])).
 label_file_component('problem_109', 'project_euler/problem_109/sol1.py', var(v)-op(add,[op(add,[elem(var(v),var(v)),elem(call(combinations_with_replacement,[var(v),int(2)]),var(v))]),elem(call(combinations_with_replacement,[var(v),int(2)]),var(v))])).
-label_file_component('problem_109', 'project_euler/problem_109/sol1.py', var(v)-op(add,[op(add,[op(add,[var(v),var(v)]),var(v)]),list([int(0)])])).
 label_file_component('problem_109', 'project_euler/problem_109/sol1.py', var(v)-op(add,[var(v),int(1)])).
 label_file_component('problem_111', 'project_euler/problem_111/sol1.py', call(all,[map(var(p(1)),op(ne,[op(mod,[var(p(0)),elem(var(p(1)),var(v))]),int(0)]),bool(true))])).
 label_file_component('problem_111', 'project_euler/problem_111/sol1.py', call(append,[var(v),var(v)])).
@@ -9375,9 +9375,9 @@ label_file_component('problem_111', 'project_euler/problem_111/sol1.py', var(v)-
 label_file_component('problem_111', 'project_euler/problem_111/sol1.py', var(v)-call(int,[op(add,[op(add,[op(add,[op(add,[op(mul,[call(str,[elem(call(list,[var(v)]),var(v))]),var(v)]),call(str,[var(v)])]),op(mul,[call(str,[elem(call(list,[var(v)]),var(v))]),var(v)])]),call(str,[var(v)])]),op(mul,[call(str,[elem(call(list,[var(v)]),var(v))]),op(sub,[op(sub,[var(v),var(v)]),var(v)])])])])).
 label_file_component('problem_111', 'project_euler/problem_111/sol1.py', var(v)-call(int,[op(add,[op(add,[op(mul,[call(str,[var(v)]),var(v)]),call(str,[var(v)])]),op(mul,[call(str,[var(v)]),op(sub,[var(v),var(v)])])])])).
 label_file_component('problem_111', 'project_euler/problem_111/sol1.py', var(v)-call(set,[])).
+label_file_component('problem_111', 'project_euler/problem_111/sol1.py', var(v)-concat([var(v),list([var(v)])])).
 label_file_component('problem_111', 'project_euler/problem_111/sol1.py', var(v)-int(0)).
 label_file_component('problem_111', 'project_euler/problem_111/sol1.py', var(v)-list([])).
-label_file_component('problem_111', 'project_euler/problem_111/sol1.py', var(v)-op(add,[var(v),list([var(v)])])).
 label_file_component('problem_111', 'project_euler/problem_111/sol1.py', var(v)-op(add,[var(v),var(v)])).
 label_file_component('problem_111', 'project_euler/problem_111/sol1.py', var(v)-op(mul,[list([bool(true)]),op(add,[var(p(0)),int(1)])])).
 label_file_component('problem_111', 'project_euler/problem_111/sol1.py', var(v)-op(mul,[var(v),var(v)])).
@@ -9518,12 +9518,12 @@ label_file_component('problem_187', 'project_euler/problem_187/sol1.py', call(ra
 label_file_component('problem_187', 'project_euler/problem_187/sol1.py', call(slice,[var(v),op(div,[op(pow,[var(v),int(2)]),int(2)]),other(none),var(v)])-op(mul,[list([bool(false)]),call(len,[call(range,[op(div,[op(pow,[var(v),int(2)]),int(2)]),op(div,[var(p(0)),int(2)]),var(v)])])])).
 label_file_component('problem_187', 'project_euler/problem_187/sol1.py', call(sqrt,[op(sub,[var(p(0)),int(1)])])).
 label_file_component('problem_187', 'project_euler/problem_187/sol1.py', call(timeit,[other(string)])).
+label_file_component('problem_187', 'project_euler/problem_187/sol1.py', concat([list([int(2)]),map(call(range,[int(1),op(div,[var(p(0)),int(2)])]),op(add,[op(mul,[int(2),elem(call(range,[int(1),op(div,[var(p(0)),int(2)])]),var(v))]),int(1)]),elem(op(mul,[list([bool(true)]),op(div,[var(p(0)),int(2)])]),elem(call(range,[int(1),op(div,[var(p(0)),int(2)])]),var(v))))])).
 label_file_component('problem_187', 'project_euler/problem_187/sol1.py', elem(var(v),op(div,[var(v),int(2)]))).
 label_file_component('problem_187', 'project_euler/problem_187/sol1.py', elem(var(v),var(v))).
 label_file_component('problem_187', 'project_euler/problem_187/sol1.py', elem(var(v),var(v))-bool(false)).
 label_file_component('problem_187', 'project_euler/problem_187/sol1.py', filter(call(range,[int(2),var(p(0))]),elem(op(mul,[list([bool(true)]),var(p(0))]),elem(call(range,[int(2),var(p(0))]),var(v))))).
 label_file_component('problem_187', 'project_euler/problem_187/sol1.py', list([])).
-label_file_component('problem_187', 'project_euler/problem_187/sol1.py', op(add,[list([int(2)]),map(call(range,[int(1),op(div,[var(p(0)),int(2)])]),op(add,[op(mul,[int(2),elem(call(range,[int(1),op(div,[var(p(0)),int(2)])]),var(v))]),int(1)]),elem(op(mul,[list([bool(true)]),op(div,[var(p(0)),int(2)])]),elem(call(range,[int(1),op(div,[var(p(0)),int(2)])]),var(v))))])).
 label_file_component('problem_187', 'project_euler/problem_187/sol1.py', op(ge,[int(2),var(p(0))])).
 label_file_component('problem_187', 'project_euler/problem_187/sol1.py', op(ge,[op(mul,[elem(var(v),var(v)),elem(var(v),var(v))]),var(p(0))])).
 label_file_component('problem_187', 'project_euler/problem_187/sol1.py', op(ge,[var(v),var(v)])).
@@ -10233,7 +10233,7 @@ label_file_component('wave_string', 'strings/wave_string.py', call(isalpha,[elem
 label_file_component('wave_string', 'strings/wave_string.py', call(len,[var(p(0))])).
 label_file_component('wave_string', 'strings/wave_string.py', call(range,[call(len,[var(p(0))])])).
 label_file_component('wave_string', 'strings/wave_string.py', call(upper,[elem(var(p(0)),var(v))])).
-label_file_component('wave_string', 'strings/wave_string.py', map(call(range,[call(len,[var(p(0))])]),op(add,[op(add,[call(slice,[var(p(0)),other(none),elem(call(range,[call(len,[var(p(0))])]),var(v))]),call(upper,[elem(var(p(0)),elem(call(range,[call(len,[var(p(0))])]),var(v)))])]),call(slice,[var(p(0)),op(add,[elem(call(range,[call(len,[var(p(0))])]),var(v)),int(1)]),other(none)])]),call(isalpha,[elem(var(p(0)),elem(call(range,[call(len,[var(p(0))])]),var(v)))]))).
+label_file_component('wave_string', 'strings/wave_string.py', map(call(range,[call(len,[var(p(0))])]),concat([call(slice,[var(p(0)),other(none),elem(call(range,[call(len,[var(p(0))])]),var(v))]),call(upper,[elem(var(p(0)),elem(call(range,[call(len,[var(p(0))])]),var(v)))]),call(slice,[var(p(0)),op(add,[elem(call(range,[call(len,[var(p(0))])]),var(v)),int(1)]),other(none)])]),call(isalpha,[elem(var(p(0)),elem(call(range,[call(len,[var(p(0))])]),var(v)))]))).
 label_file_component('co2_emission', 'web_programming/co2_emission.py', call(get,[var(v),fstring([var(v),var(p(0)),var(p(1))])])).
 label_file_component('co2_emission', 'web_programming/co2_emission.py', call(get,[var(v),var(v)])).
 label_file_component('co2_emission', 'web_programming/co2_emission.py', call(json,[elem(var(v),fstring([var(v),var(p(0)),var(p(1))]))])).

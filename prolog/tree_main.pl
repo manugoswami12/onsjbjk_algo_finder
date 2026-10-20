@@ -5,10 +5,12 @@
    returned value traced through the variable that holds a recursive call (trace_returns.pl).
 */
 :- prolog_load_context(directory, Dir), directory_file_path(Dir, 'ecl_main.pl', P), load_files(P, [if(not_loaded)]),
-   directory_file_path(Dir, 'trace_returns.pl', R), load_files(R, [if(not_loaded)]).
+   directory_file_path(Dir, 'trace_returns.pl', R), load_files(R, [if(not_loaded)]),
+   directory_file_path(Dir, 'ast_concat.pl', A), load_files(A, [if(not_loaded)]),
+   directory_file_path(Dir, 'slice_write.pl', W), load_files(W, [if(not_loaded)]).
 
 tree_load(Facts, Kind) :-
-    ( Kind == lisp -> ecl_load(Facts) ; load_data(Facts), normalise_accessors, row_major, trace_returns, assert_observations ).
+    ( Kind == lisp -> ecl_load(Facts) ; load_data(Facts), normalise_accessors, row_major, slice_write, trace_returns, ast_concat, assert_observations ).
 % AP13's load_family_data with one more normalisation: a row-major index q[r * d + c] with a non-constant
 % stride d (C's flat 2-D arrays) is q[r][c], as ecl_norm.pl already reads ECL's (aref m i j)
 row_major :-

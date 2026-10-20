@@ -3144,11 +3144,11 @@
    "task": "Sorting-algorithms-Insertion-sort"
   },
   "Task/Sorting-algorithms-Insertion-sort/Python/sorting-algorithms-insertion-sort-3.py": {
-   "answer": "pipeline",
+   "answer": "unknown",
    "branch": null,
    "branch_correct": null,
-   "correct": false,
-   "pipeline": "average_mode",
+   "correct": null,
+   "pipeline": null,
    "task": "Sorting-algorithms-Insertion-sort"
   },
   "Task/Sorting-algorithms-Insertion-sort/Python/sorting-algorithms-insertion-sort-4.py": {
@@ -3371,8 +3371,8 @@
    "answer": "pipeline",
    "branch": null,
    "branch_correct": null,
-   "correct": false,
-   "pipeline": "Sorting-algorithms-Cycle-sort",
+   "correct": true,
+   "pipeline": "Sorting-algorithms-Quicksort",
    "task": "Sorting-algorithms-Quicksort"
   },
   "Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-2.py": {
@@ -3384,11 +3384,11 @@
    "task": "Sorting-algorithms-Quicksort"
   },
   "Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-3.py": {
-   "answer": "unknown",
+   "answer": "pipeline",
    "branch": null,
    "branch_correct": null,
-   "correct": null,
-   "pipeline": null,
+   "correct": true,
+   "pipeline": "Sorting-algorithms-Quicksort",
    "task": "Sorting-algorithms-Quicksort"
   },
   "Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-4.py": {
