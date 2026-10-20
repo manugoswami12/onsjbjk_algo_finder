@@ -1,6 +1,6 @@
 """Final report (doc 04 section 18.5): precision, recall, false positives and false negatives on learnt code
 (TheAlgorithms/Python) and on new code (the held-out Rosetta files), under the reporting criteria the user set:
-bad code is ignored, not worked on.
+a file the system cannot evaluate is left out of the scored set (never a wrong answer), and counted apart.
 
 Reporting criteria
   learnt code   every TheAlgorithms file. Files with the same logic (the same abstracted Prolog components:
@@ -9,9 +9,11 @@ Reporting criteria
   new code      every held-out file, answered as benchmark/decision_fallback.json says (pipeline algorithm, else a
                 class from the separate fallback). A file is NOT ANALYSABLE, and left out of the scored set, when
                 the pipeline gave it no answer AND none of its root functions runs on every battery input (or it has
-                no function): neither its structure nor its input->output (sum(2,3,X)) can be checked, so it is bad
-                code for this system (a GHCi transcript, a fragment, a missing package, a type error, a construct the
-                interpreter lacks). A wrong answer is never left out, so precision is never improved by excluding.
+                no function): neither its structure nor its input->output (sum(2,3,X)) can be checked. Some are
+                fragments (a GHCi transcript, a call of a function the file does not define); most define functions
+                the evaluator cannot run yet (an in-place void function on an array plus a length, a missing package
+                such as GMP, Python 2, a Haskell operator definition): later-stage work, each a lowering or battery
+                change. A wrong answer is never left out, so precision is never improved by excluding.
   Both the all-files and the analysable-only numbers are reported.
 
 usage: python final_report.py CORPUS HELD_DECIDED.json   -> benchmark/final_report.json, benchmark/FINAL_REPORT.md
@@ -31,6 +33,19 @@ SIGNATURES = ROOT / 'benchmark' / 'ta_signatures.json'
 DECISION = ROOT / 'benchmark' / 'decision_fallback.json'
 OUT, REPORT = ROOT / 'benchmark' / 'final_report.json', ROOT / 'benchmark' / 'FINAL_REPORT.md'
 NOT_RUN = ('no run', 'a root does not run', 'no root function', 'output does not depend')
+DEFINES = {'.py': r'^\s*def ', '.c': r'^\w[\w\s\*]*\([^;]*\)\s*\{?\s*$', '.lisp': r'\(defun |\(defmacro ',
+           '.hs': r'^[a-z]\w*.*='}
+
+
+def fragment(rel: str) -> bool:
+    """A static look at an excluded file: under 5 non-blank lines, or no function definition (a fragment)."""
+    import re
+    path = ROOT / 'data' / 'rosetta' / rel.split('rosetta/')[-1]
+    if not path.exists():
+        return False
+    text = path.read_text(encoding='utf-8', errors='replace')
+    lines = [line for line in text.splitlines() if line.strip()]
+    return len(lines) < 5 or not re.search(DEFINES.get(path.suffix, r'$^'), text, re.M)
 
 
 def learnt(corpus: Path) -> tuple[dict, dict]:
@@ -78,10 +93,11 @@ def main():
             if bad:
                 s['not_analysable'] += 1
                 excluded[key][why.split(':')[0]] += 1
+                s['fragments'] += fragment(rel)
     n_lc = sum(len(v) for v in lc.values())
     ok_lc = len(lc['ok']) + len(lc['alias_ok'])
     lines = ['# Final report (doc 04 section 18.5)', '',
-             ('Reporting criteria (final_report.py): bad code is ignored. A held-out file is not analysable when the '
+             ('Reporting criteria (final_report.py): a held-out file is not analysable when the '
               'pipeline gave it no answer and none of its root functions runs on every battery input; a wrong answer '
               'is never excluded. Identical TheAlgorithms files are one alias group. All-files numbers are kept '
               'beside the analysable-only ones. The main pipeline is unchanged; the class answers come from the '
@@ -111,6 +127,13 @@ def main():
     lines += ['', 'False negatives = scored files without a correct answer (wrong ones included).', '',
               '### Why files are not analysable (all languages)', '']
     lines += [f'- {why}: {n}' for why, n in sorted(excluded['all'].items(), key=lambda kv: -kv[1])]
+    a = score['all']
+    lines += ['', (f"Not analysable is not 'no algorithm': of the {a['not_analysable']} files, {a['fragments']} are "
+                   f"fragments (under 5 non-blank lines, or no function definition); the other "
+                   f"{a['not_analysable'] - a['fragments']} define functions the evaluator cannot run yet (in-place void "
+                   f"functions on an array plus a length, GMP, Python 2, Haskell operator definitions, ...): later-stage "
+                   f"work. Recall over the files that are not fragments: {a['ok']} of "
+                   f"{a['n'] - a['fragments']} = {a['ok'] / (a['n'] - a['fragments']):.1%}.")]
     lines += ['', '### The false positives (all from the main pipeline; the fallback made none)', '']
     lines += [f"- {r}: {x['name']} ({x['answer']}), task {x['task']}" for r, x in rows.items() if x['correct'] is False]
     lines += ['', '### Closed, measured, not built', '',
@@ -119,7 +142,7 @@ def main():
                'turns 15 correct specific TheAlgorithms answers (mergesort, tim_sort, jump_search, ...) into a class '
                'name. Not built.'),
               ('- Haskell files that are not programs (GHCi transcripts, bare expressions, missing packages, deferred '
-               'type errors) and Python scripts with no function: bad code under these criteria.')]
+               'type errors) and Python scripts with no function: not analysable under these criteria.')]
     REPORT.write_text('\n'.join(lines) + '\n', encoding='utf-8')
     OUT.write_text(json.dumps({'learnt': lc, 'new': score, 'excluded': excluded}, indent=1, default=list) + '\n',
                    encoding='utf-8')

@@ -603,6 +603,16 @@ differences. New code: quicksort-1 Cycle-sort -> Quicksort, quicksort-3 UNKNOWN 
 average_mode -> UNKNOWN (Insertion, Merge and Pancake sort hold alike at its node). 177 correct, 3 wrong, precision
 98.3%, recall 85.9%. Remaining wrong: lcm-2, levenshtein-5, perfect-numbers-1.hs (19.6).
 
+**Later stage: the 244 held-out files that cannot be evaluated.** They are left out of the scored set (no answer, and
+no root function runs on every battery input); this is not "no algorithm". A static look (final_report.py fragment/1)
+splits them: 66 fragments (under 5 non-blank lines, or no function definition: `binary-search-5.py` only calls
+bisect, `bubble-sort-2.lisp` only calls bubble-sort) and 178 files that define functions. Causes seen in the second
+group, each to be taken later as a lowering or battery change under the same method (doc CONVERSION_FIX_PROMPTS.md):
+the battery cannot call the shape (comb-sort.c: `void f(double a[], int n)` sorting in place); a library
+(fibonacci-sequence-5.c: GMP); a language version (roman-numerals-encode-5.py: Python 2 `print`); a construct the
+lowering lacks (factorial-9.hs: a postfix operator `(!)`; Haskell `main :: IO ()` programs). Over every file that is not
+a fragment, recall is 177 of 384 = 46.1%; precision does not change (a wrong answer is never left out).
+
 **Remaining wrong answers (7)** after 19.1-19.4: factorial-2.c -> problem_020 (exact-trace tier: problem_020's
 branch sits at its helper's node); least-common-multiple-2.py -> gcd and levenshtein-distance-5.py -> problem_007 (a
 curried root returns a lambda and never runs; problem_007's is_prime lowered wrongly); perfect-numbers-1.hs ->

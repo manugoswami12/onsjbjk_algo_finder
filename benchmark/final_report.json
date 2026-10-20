@@ -1379,6 +1379,7 @@
    "ok": 32,
    "unanswered": 37,
    "not_analysable": 34,
+   "fragments": 3,
    "wrong": 0
   },
   "all": {
@@ -1386,6 +1387,7 @@
    "ok": 177,
    "unanswered": 270,
    "not_analysable": 244,
+   "fragments": 66,
    "wrong": 3
   },
   "Common-Lisp": {
@@ -1393,12 +1395,14 @@
    "ok": 45,
    "unanswered": 30,
    "not_analysable": 29,
+   "fragments": 10,
    "wrong": 0
   },
   "Haskell": {
    "n": 144,
    "unanswered": 110,
    "not_analysable": 102,
+   "fragments": 33,
    "ok": 33,
    "wrong": 1
   },
@@ -1407,6 +1411,7 @@
    "ok": 67,
    "unanswered": 93,
    "not_analysable": 79,
+   "fragments": 20,
    "wrong": 2
   }
  },

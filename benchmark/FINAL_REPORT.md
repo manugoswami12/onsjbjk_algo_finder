@@ -1,6 +1,6 @@
 # Final report (doc 04 section 18.5)
 
-Reporting criteria (final_report.py): bad code is ignored. A held-out file is not analysable when the pipeline gave it no answer and none of its root functions runs on every battery input; a wrong answer is never excluded. Identical TheAlgorithms files are one alias group. All-files numbers are kept beside the analysable-only ones. The main pipeline is unchanged; the class answers come from the separate fallback (eval_decision.py, v0.3 runner, node witness).
+Reporting criteria (final_report.py): a held-out file is not analysable when the pipeline gave it no answer and none of its root functions runs on every battery input; a wrong answer is never excluded. Identical TheAlgorithms files are one alias group. All-files numbers are kept beside the analysable-only ones. The main pipeline is unchanged; the class answers come from the separate fallback (eval_decision.py, v0.3 runner, node witness).
 
 ## Learnt code: TheAlgorithms/Python
 
@@ -32,6 +32,8 @@ False negatives = scored files without a correct answer (wrong ones included).
 - no root function: 28
 - output does not depend on the input: 3
 
+Not analysable is not 'no algorithm': of the 244 files, 66 are fragments (under 5 non-blank lines, or no function definition); the other 178 define functions the evaluator cannot run yet (in-place void functions on an array plus a length, GMP, Python 2, Haskell operator definitions, ...): later-stage work. Recall over the files that are not fragments: 177 of 384 = 46.1%.
+
 ### The false positives (all from the main pipeline; the fallback made none)
 
 - Task/Least-common-multiple/Python/least-common-multiple-2.py: Greatest-common-divisor (algorithm), task Least-common-multiple
@@ -41,4 +43,4 @@ False negatives = scored files without a correct answer (wrong ones included).
 ### Closed, measured, not built
 
 - Class veto of the pipeline's wrong answers: overriding only an answer of a known, different class changes nothing on either set; overriding any answer of unknown class fixes 0 held-out answers and turns 15 correct specific TheAlgorithms answers (mergesort, tim_sort, jump_search, ...) into a class name. Not built.
-- Haskell files that are not programs (GHCi transcripts, bare expressions, missing packages, deferred type errors) and Python scripts with no function: bad code under these criteria.
+- Haskell files that are not programs (GHCi transcripts, bare expressions, missing packages, deferred type errors) and Python scripts with no function: not analysable under these criteria.
