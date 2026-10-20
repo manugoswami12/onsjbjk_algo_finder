@@ -112,6 +112,22 @@ Faults met and how (each one fix inside the idea, then all data again):
 Lesson: a corrected conversion changes the terms hand rules quote. Grep the hand rules and built branches for the
 old form before the full run.
 
+### A function that returns a function; a nested function; a helper (returns_function.py, behaviour_v04.py, interp_v04.pl, eval_ta.helper_functions)
+> First tell whether a function returns a value or a function (every own return a lambda). A value: nothing changes.
+> A function: lower it exactly as a new function, recursively: f(x) returning lambda y: E is f(x, y) returning E,
+> and h(a)(b) is h(a, b). Then make what it computes evaluable, again as rules of the language: a nested function
+> reading its enclosing function's variables takes them as parameters (lambda lifting; as a value it is a closure);
+> a parameter passed to list()/zip() is a sequence; the library relations the interpreter lacks (n-ary zip/min/max,
+> accumulate, reduce, a boolean as 0/1). Last, the decision: a function called by one that computes something else
+> is that function's step, so its evidence (behaviour, built/hand branch, exact logic) does not name the file.
+
+Method followed: each part built by hand on the two files first (scratch: the lifted normal form printed, the
+interpreter called on kitten/sitting -> 3, the helper rule applied to the printed per-function evidence), then in a
+copy of the code, hand-checked on the 13 held-out and 4 TheAlgorithms files with such functions, then all data.
+Faults met: interp_v03's reduce never worked (foldl/6 with a state pair: write the fold as plain recursion); the
+exact-logic tier is per file, so the helper rule needs the functions of each match (TaLogic.labels_matched by_match);
+the facts lowering must be installed where the facts are made (learn_facts), not only with the front ends.
+
 ## Tried and dropped (do not repeat)
 
 - `q[:] = E` as a write of q in every function (before Python's facts): insertion-sort-3 became Cycle-sort and two

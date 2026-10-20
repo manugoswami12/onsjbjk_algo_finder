@@ -19,15 +19,15 @@ Reporting criteria (final_report.py): a held-out file is not analysable when the
 |---|---|---|---|---|---|---|---|---|---|
 | C | 69 | 34 | 35 | 32 | 0 | 3 | 100.0% | 91.4% | 46.4% |
 | Common-Lisp | 75 | 29 | 46 | 45 | 0 | 1 | 100.0% | 97.8% | 60.0% |
-| Haskell | 144 | 102 | 42 | 33 | 1 | 9 | 97.1% | 78.6% | 22.9% |
-| Python | 162 | 79 | 83 | 67 | 2 | 16 | 97.1% | 80.7% | 41.4% |
-| all | 450 | 244 | 206 | 177 | 3 | 29 | 98.3% | 85.9% | 39.3% |
+| Haskell | 144 | 102 | 42 | 34 | 1 | 8 | 97.1% | 81.0% | 23.6% |
+| Python | 162 | 77 | 85 | 72 | 0 | 13 | 100.0% | 84.7% | 44.4% |
+| all | 450 | 242 | 208 | 183 | 1 | 25 | 99.5% | 88.0% | 40.7% |
 
 False negatives = scored files without a correct answer (wrong ones included).
 
 ### Why files are not analysable (all languages)
 
-- a root does not run on every input: 160
+- a root does not run on every input: 158
 - no run: 53
 - no root function: 28
 - output does not depend on the input: 3
@@ -36,8 +36,6 @@ These files are left out of this round's numbers: some are fragments, most defin
 
 ### The false positives (all from the main pipeline; the fallback made none)
 
-- Task/Least-common-multiple/Python/least-common-multiple-2.py: Greatest-common-divisor (algorithm), task Least-common-multiple
-- Task/Levenshtein-distance/Python/levenshtein-distance-5.py: problem_007 (algorithm), task Levenshtein-distance
 - Task/Perfect-numbers/Haskell/perfect-numbers-1.hs: primelib (algorithm), task Perfect-numbers
 
 ### Closed, measured, not built

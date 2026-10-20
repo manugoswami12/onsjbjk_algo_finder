@@ -1154,9 +1154,9 @@
   },
   "Task/Least-common-multiple/Python/least-common-multiple-2.py": {
    "answer": "algorithm",
-   "correct": false,
+   "correct": true,
    "family_correct": null,
-   "name": "Greatest-common-divisor",
+   "name": "Least-common-multiple",
    "task": "Least-common-multiple"
   },
   "Task/Least-common-multiple/Python/least-common-multiple-3.py": {
@@ -1209,24 +1209,24 @@
    "task": "Levenshtein-distance"
   },
   "Task/Levenshtein-distance/Haskell/levenshtein-distance-2.hs": {
-   "answer": "variation_root",
-   "correct": null,
-   "family_correct": true,
-   "name": "sequence_query",
+   "answer": "algorithm",
+   "correct": true,
+   "family_correct": null,
+   "name": "Levenshtein-distance",
    "task": "Levenshtein-distance"
   },
   "Task/Levenshtein-distance/Python/levenshtein-distance-1.py": {
-   "answer": "variation_root",
-   "correct": null,
-   "family_correct": true,
-   "name": "sequence_query",
+   "answer": "algorithm",
+   "correct": true,
+   "family_correct": null,
+   "name": "Levenshtein-distance",
    "task": "Levenshtein-distance"
   },
   "Task/Levenshtein-distance/Python/levenshtein-distance-2.py": {
-   "answer": "variation_root",
-   "correct": null,
-   "family_correct": true,
-   "name": "sequence_query",
+   "answer": "algorithm",
+   "correct": true,
+   "family_correct": null,
+   "name": "Levenshtein-distance",
    "task": "Levenshtein-distance"
   },
   "Task/Levenshtein-distance/Python/levenshtein-distance-3.py": {
@@ -1245,9 +1245,9 @@
   },
   "Task/Levenshtein-distance/Python/levenshtein-distance-5.py": {
    "answer": "algorithm",
-   "correct": false,
+   "correct": true,
    "family_correct": null,
-   "name": "problem_007",
+   "name": "Levenshtein-distance",
    "task": "Levenshtein-distance"
   },
   "Task/Longest-common-subsequence/C/longest-common-subsequence-1.c": {
@@ -1776,10 +1776,10 @@
    "task": "Perfect-numbers"
   },
   "Task/Perfect-numbers/Python/perfect-numbers-4.py": {
-   "answer": "variation_root",
-   "correct": null,
-   "family_correct": true,
-   "name": "numeric",
+   "answer": "algorithm",
+   "correct": true,
+   "family_correct": null,
+   "name": "Perfect-numbers",
    "task": "Perfect-numbers"
   },
   "Task/Primality-by-trial-division/C/primality-by-trial-division-1.c": {

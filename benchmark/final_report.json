@@ -1383,10 +1383,10 @@
   },
   "all": {
    "n": 450,
-   "ok": 177,
-   "unanswered": 270,
-   "not_analysable": 244,
-   "wrong": 3
+   "ok": 183,
+   "unanswered": 266,
+   "not_analysable": 242,
+   "wrong": 1
   },
   "Common-Lisp": {
    "n": 75,
@@ -1397,17 +1397,17 @@
   },
   "Haskell": {
    "n": 144,
-   "unanswered": 110,
+   "unanswered": 109,
    "not_analysable": 102,
-   "ok": 33,
+   "ok": 34,
    "wrong": 1
   },
   "Python": {
    "n": 162,
-   "ok": 67,
-   "unanswered": 93,
-   "not_analysable": 79,
-   "wrong": 2
+   "ok": 72,
+   "unanswered": 90,
+   "not_analysable": 77,
+   "wrong": 0
   }
  },
  "excluded": {
@@ -1417,13 +1417,13 @@
    "no root function": 1
   },
   "all": {
-   "a root does not run on every input": 160,
+   "a root does not run on every input": 158,
    "no root function": 28,
    "no run": 53,
    "output does not depend on the input": 3
   },
   "Python": {
-   "a root does not run on every input": 63,
+   "a root does not run on every input": 61,
    "no root function": 13,
    "output does not depend on the input": 3
   },

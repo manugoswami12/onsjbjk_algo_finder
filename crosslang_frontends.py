@@ -37,6 +37,10 @@ def install(lisp_sbcl: bool = True):
     io_trace.normal_form = normal_form
     import lowering_v03
     lowering_v03.install()
+    import returns_function                   # a function returning a function, lowered as a new one (19.8)
+    returns_function.install()
+    import behaviour_v04                      # nested functions lifted, the v0.4 interpreter (19.8)
+    behaviour_v04.install()
     _installed = True
 
 

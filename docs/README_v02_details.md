@@ -87,11 +87,11 @@ TheAlgorithms are right.
 |---|---|---|---|---|
 | C | 35 of 69 | 100.0% | 91.4% | 46.4% |
 | Common Lisp | 46 of 75 | 100.0% | 97.8% | 60.0% |
-| Haskell | 42 of 144 | 97.1% | 78.6% | 22.9% |
-| Python | 83 of 162 | 97.1% | 80.7% | 41.4% |
-| **all** | **206 of 450** | **98.3%** | **85.9%** | **39.3%** |
+| Haskell | 42 of 144 | 97.1% | 81.0% | 23.6% |
+| Python | 85 of 162 | 100.0% | 84.7% | 44.4% |
+| **all** | **208 of 450** | **99.5%** | **88.0%** | **40.7%** |
 
-All 3 wrong answers on new code come from the main pipeline. The separate fallback made none.
+The 1 wrong answer on new code comes from the main pipeline. The separate fallback made none.
 
 To reproduce every number above, follow "Reproduce the results" in the root [README.md](../README.md).
 

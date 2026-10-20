@@ -603,7 +603,25 @@ differences. New code: quicksort-1 Cycle-sort -> Quicksort, quicksort-3 UNKNOWN 
 average_mode -> UNKNOWN (Insertion, Merge and Pancake sort hold alike at its node). 177 correct, 3 wrong, precision
 98.3%, recall 85.9%. Remaining wrong: lcm-2, levenshtein-5, perfect-numbers-1.hs (19.6).
 
-**Later stage: the 244 held-out files that cannot be evaluated.** They are left out of this round's numbers (no
+**19.8 A function that returns a function (cases lcm-2, levenshtein-5).** User: "first ensure our code can
+differentiate whether a function returns a variable or a function; if it returns a function, recurse exactly the way
+we deal with a new function". Built by hand first (scratch), then in the code; each a rule of the language:
+
+| Part | Rule | Why it was needed |
+|---|---|---|
+| returns_function.py (both lowerings) | a function whose every own return gives a lambda (same parameters) is the new function f(x, y): the lambda's parameters follow, its expression is the return (repeat for lambda in lambda); `h(a)(b)` of such a function of the file is `h(a, b)` | lcm(x) returned lambda y: ...; nothing of it was read |
+| behaviour_v04.py lift | a nested function is a new function: the variables it reads from its enclosing function become trailing parameters; inside, `g(a)` is `A.g(a, free...)` and `g` as a value the closure `lambda(params, A.g(...))`; names resolve lexically | levenshtein's go reads s1 and is passed to reduce |
+| behaviour_v04.py kinds | a parameter passed to list(), zip(), enumerate(), sorted(), reversed(), set() or tuple() is a sequence | `list(sa)` made sa an int on the battery |
+| prolog/interp_v04.pl (main behaviour tier) | zip/min/max of any arity, itertools.accumulate, functools.reduce (interp_v03's reduce failed: a foldl/6 call with a state pair), a boolean in + - * as 0 or 1; each clause only where interp.pl throws | TheAlgorithms' levenshtein_distance adds `(c1 != c2)`: it now runs on every input (was 2 of 5) |
+| eval_ta.helper_functions | a function called (directly or through others) by one whose own behaviour names labels, none of which its evidence (behaviour, built and hand branches at its node, exact-logic matches) names, is that function's step: its evidence does not name the file (learn_apply.pl prints the evidence per function and the calls) | the gcd branch on lcm's helper gcd_.go decided first |
+
+Hand test, then all data (2102 files: only held-out files with such functions change node, the uncurried functions
+reaching one-level nodes; relearnt, re-indexed, --run, --heldout): learnt 1344/1344, 0 differences. New code:
+lcm-2 gcd -> Least-common-multiple, levenshtein-5 problem_007 -> Levenshtein-distance, and gained
+levenshtein-distance-1.py, -2.py, -2.hs and perfect-numbers-4.py. 183 correct, 1 wrong (perfect-numbers-1.hs ->
+primelib), precision 99.5%, recall 88.0% of 208.
+
+**Later stage: the 242 held-out files that cannot be evaluated.** They are left out of this round's numbers (no
 answer, and no root function runs on every battery input). This is not "no algorithm": some are fragments
 (`binary-search-5.py` only calls bisect), most define functions the evaluator cannot run yet: the battery cannot call
 the shape (comb-sort.c: `void f(double a[], int n)` sorting in place), a library (fibonacci-sequence-5.c: GMP), a

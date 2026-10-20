@@ -85,16 +85,21 @@ class TaLogic(compare_learners.Ap13Dir):
     store); a file matches the labels of the references its functions match (AP13 scan, leaf MATCH). The scan names
     the matching functions by name (compare_learners.Ap13Dir.labels_by_function looks them up by id and finds none)."""
 
-    def labels_matched(self, path: Path, me: dict | None = None, io: TaIo | None = None) -> set[str]:
+    def labels_matched(self, path: Path, me: dict | None = None, io: TaIo | None = None, by_match=None) -> set[str]:
         """The labels of the references the file's functions match; with the file's behaviour (me) and the catalog
-        (io), a match whose behaviour contradicts it is left out (consistent)."""
+        (io), a match whose behaviour contradicts it is left out (consistent). by_match: a list that receives
+        (the matching functions, label) of each match kept (doc 04 section 19.8)."""
         try:
             result = self.cli.scan(path, self.store, include_unreviewed=True, quiet=True)
         except ERRORS + compare_learners.ERRORS:
             return set()
-        return {self.labels[self.ref_file[m['label']]] for m in result['leaves']
+        kept = [(frozenset(f.split('$')[0] for f in m['functions'].split(',')), self.labels[self.ref_file[m['label']]])
+                for m in result['leaves']
                 if m['result'] == 'MATCH' and self.ref_file.get(m['label']) in self.labels
-                and (me is None or io is None or self.consistent(m, me, io))} - {'none'}
+                and (me is None or io is None or self.consistent(m, me, io))]
+        if by_match is not None:
+            by_match.extend(kept)
+        return {lab for _, lab in kept} - {'none'}
 
     def consistent(self, m: dict, me: dict, io: TaIo) -> bool:
         """An exact-logic match holds unless behaviour contradicts it (AP13's compare giving no verdict for want of
@@ -142,10 +147,20 @@ def answer(path: Path, io: TaIo, labels: set[str], gs: dict[str, str], logic: Ta
         me, by_fn, traced = {}, {}, {}
     io_labels = {lab for v in by_fn.values() for lab in v} & labels
     trace_labels = {lab for v in traced.values() for lab in v} & labels
-    logic_labels = logic.labels_matched(path, me, io) & labels if logic else set()
+    matches = []
+    logic_labels = logic.labels_matched(path, me, io, matches) & labels if logic else set()
     try:
-        hand, specific = set(), set()
-        nodes, found, _, normal = learn_apply.apply(path, RULES, io_labels, trace_labels, logic_labels, hand, specific)
+        hand, specific, per_fn = set(), set(), {}
+        nodes, found, _, normal = learn_apply.apply(path, RULES, io_labels, trace_labels, logic_labels, hand, specific,
+                                                    per_fn)
+        helpers = helper_functions(per_fn, by_fn, labels, gs)
+        if helpers:                               # their evidence is their caller's step, not the file's (19.8)
+            io_labels = {lab for f, v in by_fn.items() if f not in helpers for lab in v} & labels
+            trace_labels = {lab for f, v in traced.items() if f not in helpers for lab in v} & labels
+            logic_labels = {lab for fs, lab in matches if not fs <= helpers} & labels
+            normal = {b for b in normal if any(f not in helpers and x == b for f, x in per_fn['normal'])}
+            hand = {h for h in hand if any(f not in helpers and x == h for f, x in per_fn['hand'])}
+            nodes, found, _, _ = learn_apply.apply(path, RULES, io_labels, trace_labels, logic_labels, set(), set())
     except ERRORS as exc:
         nodes, found, normal, hand, specific = [], [], set(), set(), set()
         print(f'  ({path.name}: {type(exc).__name__}: {str(exc)[:100]})', flush=True)
@@ -153,6 +168,51 @@ def answer(path: Path, io: TaIo, labels: set[str], gs: dict[str, str], logic: Ta
            'held_trace': sorted({lab for _, lab, r in found if r in ('trace', 'logic')}), 'io': sorted(io_labels),
            'logic': sorted(logic_labels)}
     return decide(out, normal | hand, specific, labels, gs)
+
+
+def helper_functions(per_fn: dict, by_fn: dict, labels: set[str], gs: dict[str, str]) -> set[str]:
+    """The functions that are a step of another function's algorithm (doc 04 section 19.8): F is called (directly or
+    through others) by a function G of the file whose own behaviour names labels, none of which F's evidence (its
+    behaviour, the built and hand branches at its node) names. lcm(x, y) = |x * y| / gcd_(x, y) computes LCM; gcd_
+    and its go compute GCD for it. A callee resolves lexically: G's own nested function before a top-level one."""
+    funcs = per_fn.get('funcs', [])
+    names = set(funcs)
+
+    def resolve(caller, g):
+        s = caller
+        while True:
+            if f'{s}.{g}' in names:
+                return f'{s}.{g}'
+            if '.' not in s:
+                return g if g in names else None
+            s = s.rsplit('.', 1)[0]
+
+    calls = {}
+    for a, g in per_fn.get('calls', []):
+        r = resolve(a, g)
+        if r is not None and r != a:
+            calls.setdefault(a, set()).add(r)
+
+    def behaviour(f):
+        return {ta_corpus.group(lab, gs) for lab in by_fn.get(f, ()) if lab in labels}
+    evidence = {f: behaviour(f) for f in funcs}
+    for f, b in per_fn.get('normal', []) + per_fn.get('hand', []):
+        if b in ta_corpus.BUILT or b in labels:
+            evidence.setdefault(f, set()).add(ta_corpus.group(b, gs))
+    out = set()
+    for g in funcs:
+        own = behaviour(g)
+        if not own:
+            continue
+        seen, stack = set(), list(calls.get(g, ()))
+        while stack:
+            f = stack.pop()
+            if f in seen or f == g:
+                continue
+            seen.add(f)
+            stack.extend(calls.get(f, ()))
+        out |= {f for f in seen if evidence.get(f) and not own & evidence[f]}
+    return out
 
 
 def decide(out: dict, built_names, specific, labels: set[str], gs: dict[str, str]) -> dict:

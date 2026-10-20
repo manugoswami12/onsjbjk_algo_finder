@@ -4,13 +4,18 @@
 "Binary-search"
 ],
 "got": "Binary-search",
-"held": [],
+"held": [
+"binary_search"
+],
 "held_trace": [
 "binary_search"
 ],
 "io": [
+"binary_search",
 "double_linear_search",
-"jump_search"
+"exponential_search",
+"jump_search",
+"linear_search"
 ],
 "logic": [
 "binary_search"
@@ -97,11 +102,16 @@
 "Binary-search"
 ],
 "got": "Binary-search",
-"held": [],
+"held": [
+"binary_search"
+],
 "held_trace": [],
 "io": [
+"binary_search",
 "double_linear_search",
-"jump_search"
+"exponential_search",
+"jump_search",
+"linear_search"
 ],
 "logic": [],
 "nodes": [
@@ -131,11 +141,16 @@
 "Binary-search"
 ],
 "got": "Binary-search",
-"held": [],
+"held": [
+"binary_search"
+],
 "held_trace": [],
 "io": [
+"binary_search",
 "double_linear_search",
-"jump_search"
+"exponential_search",
+"jump_search",
+"linear_search"
 ],
 "logic": [],
 "nodes": [
@@ -175,18 +190,32 @@
 "why": "none"
 },
 "Task/Binary-search/Python/binary-search-6.py": {
+"at": "learned",
 "built": [],
+"clash": [
+"exponential_search",
+"jump_search"
+],
 "got": null,
-"held": [],
+"held": [
+"exponential_search",
+"jump_search"
+],
 "held_trace": [],
-"io": [],
+"io": [
+"binary_search",
+"double_linear_search",
+"exponential_search",
+"jump_search",
+"linear_search"
+],
 "logic": [],
 "nodes": [
 "sequence_query"
 ],
 "specific": [],
 "task": "Binary-search",
-"why": "none"
+"why": "ambiguous"
 },
 "Task/Binary-search/Python/binary-search-7.py": {
 "built": [],
@@ -1004,20 +1033,28 @@
 "Factorial"
 ],
 "got": "Factorial",
-"held": [],
-"held_trace": [
-"double_factorial",
+"held": [
 "factorial",
-"gcd_of_n_numbers",
+"krishnamurthy_number",
 "number_of_possible_binary_trees",
 "primelib",
 "problem_020"
 ],
-"io": [],
-"logic": [
-"double_factorial",
+"held_trace": [
 "factorial",
-"gcd_of_n_numbers",
+"number_of_possible_binary_trees",
+"primelib",
+"problem_020"
+],
+"io": [
+"factorial",
+"krishnamurthy_number",
+"number_of_possible_binary_trees",
+"primelib",
+"problem_020"
+],
+"logic": [
+"factorial",
 "number_of_possible_binary_trees",
 "primelib",
 "problem_020"
@@ -1030,16 +1067,30 @@
 "why": "built"
 },
 "Task/Factorial/Python/factorial-4.py": {
+"at": "io",
 "built": [],
+"clash": [
+"Factorial",
+"krishnamurthy_number",
+"number_of_possible_binary_trees",
+"primelib",
+"problem_020"
+],
 "got": null,
 "held": [],
 "held_trace": [],
-"io": [],
+"io": [
+"factorial",
+"krishnamurthy_number",
+"number_of_possible_binary_trees",
+"primelib",
+"problem_020"
+],
 "logic": [],
 "nodes": [],
 "specific": [],
 "task": "Factorial",
-"why": "none"
+"why": "ambiguous"
 },
 "Task/Factorial/Python/factorial-5.py": {
 "built": [],
@@ -1299,10 +1350,7 @@
 "got": "Fibonacci-sequence",
 "held": [],
 "held_trace": [],
-"io": [
-"climbing_stairs",
-"primelib"
-],
+"io": [],
 "logic": [
 "fibonacci"
 ],
@@ -1350,10 +1398,7 @@
 "got": "Fibonacci-sequence",
 "held": [],
 "held_trace": [],
-"io": [
-"fast_fibonacci",
-"nth_fibonacci_using_matrix_exponentiation"
-],
+"io": [],
 "logic": [],
 "nodes": [
 "numeric>recurrence>double_recursion"
@@ -1911,10 +1956,7 @@
 "got": "Fibonacci-sequence",
 "held": [],
 "held_trace": [],
-"io": [
-"climbing_stairs",
-"primelib"
-],
+"io": [],
 "logic": [
 "fibonacci"
 ],
@@ -2686,31 +2728,21 @@
 "why": "none"
 },
 "Task/Least-common-multiple/Python/least-common-multiple-2.py": {
-"built": [
-"Greatest-common-divisor"
-],
-"got": "Greatest-common-divisor",
-"held": [
-"greatest_common_divisor",
-"modular_division"
-],
-"held_trace": [
-"greatest_common_divisor"
-],
+"built": [],
+"got": "Least-common-multiple",
+"held": [],
+"held_trace": [],
 "io": [
-"greatest_common_divisor",
-"modular_division"
+"least_common_multiple"
 ],
-"logic": [
-"greatest_common_divisor"
-],
+"logic": [],
 "nodes": [
 "numeric>recurrence>modulo_recurrence",
 "sequence_query"
 ],
 "specific": [],
 "task": "Least-common-multiple",
-"why": "built"
+"why": "io"
 },
 "Task/Least-common-multiple/Python/least-common-multiple-3.py": {
 "built": [],
@@ -2827,45 +2859,57 @@
 },
 "Task/Levenshtein-distance/Haskell/levenshtein-distance-2.hs": {
 "built": [],
-"got": null,
-"held": [],
+"got": "Levenshtein-distance",
+"held": [
+"levenshtein_distance"
+],
 "held_trace": [],
-"io": [],
+"io": [
+"levenshtein_distance"
+],
 "logic": [],
 "nodes": [
 "sequence_query"
 ],
 "specific": [],
 "task": "Levenshtein-distance",
-"why": "none"
+"why": "learned"
 },
 "Task/Levenshtein-distance/Python/levenshtein-distance-1.py": {
 "built": [],
-"got": null,
-"held": [],
+"got": "Levenshtein-distance",
+"held": [
+"levenshtein_distance"
+],
 "held_trace": [],
-"io": [],
+"io": [
+"levenshtein_distance"
+],
 "logic": [],
 "nodes": [
 "sequence_query"
 ],
 "specific": [],
 "task": "Levenshtein-distance",
-"why": "none"
+"why": "learned"
 },
 "Task/Levenshtein-distance/Python/levenshtein-distance-2.py": {
 "built": [],
-"got": null,
-"held": [],
+"got": "Levenshtein-distance",
+"held": [
+"levenshtein_distance"
+],
 "held_trace": [],
-"io": [],
+"io": [
+"levenshtein_distance"
+],
 "logic": [],
 "nodes": [
 "sequence_query"
 ],
 "specific": [],
 "task": "Levenshtein-distance",
-"why": "none"
+"why": "learned"
 },
 "Task/Levenshtein-distance/Python/levenshtein-distance-3.py": {
 "built": [
@@ -2874,7 +2918,9 @@
 "got": "Levenshtein-distance",
 "held": [],
 "held_trace": [],
-"io": [],
+"io": [
+"convex_hull"
+],
 "logic": [],
 "nodes": [
 "sequence_query>two_sequence_match>edit_distance"
@@ -2890,7 +2936,9 @@
 "got": "Levenshtein-distance",
 "held": [],
 "held_trace": [],
-"io": [],
+"io": [
+"levenshtein_distance"
+],
 "logic": [],
 "nodes": [
 "sequence_query>two_sequence_match>edit_distance"
@@ -2901,10 +2949,13 @@
 },
 "Task/Levenshtein-distance/Python/levenshtein-distance-5.py": {
 "built": [],
-"got": "problem_007",
-"held": [],
+"got": "Levenshtein-distance",
+"held": [
+"levenshtein_distance"
+],
 "held_trace": [],
 "io": [
+"levenshtein_distance",
 "problem_007"
 ],
 "logic": [],
@@ -2913,7 +2964,7 @@
 ],
 "specific": [],
 "task": "Levenshtein-distance",
-"why": "io"
+"why": "learned"
 },
 "Task/Longest-common-subsequence/C/longest-common-subsequence-1.c": {
 "built": [],
@@ -3227,9 +3278,20 @@
 "Luhn-test-of-credit-card-numbers"
 ],
 "got": "Luhn-test-of-credit-card-numbers",
-"held": [],
+"held": [
+"circular_linked_list",
+"circular_queue",
+"doubly_linked_list",
+"linked_queue"
+],
 "held_trace": [],
-"io": [],
+"io": [
+"binomial_heap",
+"circular_linked_list",
+"circular_queue",
+"doubly_linked_list",
+"linked_queue"
+],
 "logic": [],
 "nodes": [
 "sequence_query"
@@ -3689,7 +3751,8 @@
 "held": [],
 "held_trace": [],
 "io": [
-"palindrome"
+"palindrome",
+"problem_047"
 ],
 "logic": [],
 "nodes": [
@@ -3723,7 +3786,8 @@
 "palindrome"
 ],
 "io": [
-"palindrome"
+"palindrome",
+"problem_047"
 ],
 "logic": [],
 "nodes": [
@@ -3767,7 +3831,8 @@
 "held": [],
 "held_trace": [],
 "io": [
-"palindrome"
+"palindrome",
+"problem_047"
 ],
 "logic": [],
 "nodes": [
@@ -3785,7 +3850,8 @@
 "held": [],
 "held_trace": [],
 "io": [
-"palindrome"
+"palindrome",
+"problem_047"
 ],
 "logic": [],
 "nodes": [
@@ -3827,7 +3893,8 @@
 ],
 "held_trace": [],
 "io": [
-"palindrome"
+"palindrome",
+"problem_047"
 ],
 "logic": [],
 "nodes": [
@@ -3988,17 +4055,19 @@
 },
 "Task/Perfect-numbers/Python/perfect-numbers-4.py": {
 "built": [],
-"got": null,
+"got": "Perfect-numbers",
 "held": [],
 "held_trace": [],
-"io": [],
+"io": [
+"perfect_number"
+],
 "logic": [],
 "nodes": [
 "numeric"
 ],
 "specific": [],
 "task": "Perfect-numbers",
-"why": "none"
+"why": "io"
 },
 "Task/Primality-by-trial-division/C/primality-by-trial-division-1.c": {
 "built": [
@@ -5110,6 +5179,7 @@
 "at": "io",
 "built": [],
 "clash": [
+"closest_pair_of_points",
 "msd_radix_sort",
 "rail_fence_cipher",
 "skytale_cipher",
@@ -5119,6 +5189,7 @@
 "held": [],
 "held_trace": [],
 "io": [
+"closest_pair_of_points",
 "msd_radix_sort",
 "rail_fence_cipher",
 "skytale_cipher",
@@ -5236,6 +5307,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -5244,6 +5316,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -5329,6 +5402,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -5337,6 +5411,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -5453,6 +5528,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -5461,6 +5537,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -5525,6 +5602,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -5533,6 +5611,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -5632,6 +5711,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -5640,6 +5720,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -5840,6 +5921,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -5848,6 +5930,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -5898,6 +5981,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -5906,6 +5990,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -6050,6 +6135,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -6058,6 +6144,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -6159,6 +6246,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -6167,6 +6255,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -6223,6 +6312,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -6231,6 +6321,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -6284,6 +6375,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -6292,6 +6384,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -6403,6 +6496,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -6411,6 +6505,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -6729,6 +6824,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -6737,6 +6833,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -6803,6 +6900,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -6811,6 +6909,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -6861,6 +6960,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -6869,6 +6969,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -6917,6 +7018,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -6925,6 +7027,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -7024,6 +7127,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -7032,6 +7136,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -7125,28 +7230,24 @@
 "why": "none"
 },
 "Task/Sorting-algorithms-Selection-sort/Haskell/sorting-algorithms-selection-sort-3.hs": {
-"at": "trace",
+"at": "learned",
 "built": [],
 "clash": [
-"abs",
-"find_min"
+"Sorting-algorithms-Cycle-sort",
+"Sorting-algorithms-Insertion-sort",
+"Sorting-algorithms-Merge-sort",
+"Sorting-algorithms-Pancake-sort"
 ],
 "got": null,
 "held": [
-"abs",
 "binary_insertion_sort",
 "cycle_sort",
-"find_min",
 "iterative_merge_sort",
 "merge_sort",
 "pancake_sort"
 ],
-"held_trace": [
-"abs",
-"find_min"
-],
+"held_trace": [],
 "io": [
-"abs",
 "adaptive_merge_sort",
 "average_mode",
 "binary_insertion_sort",
@@ -7159,7 +7260,6 @@
 "cycle_sort",
 "double_sort",
 "exchange_sort",
-"find_min",
 "gnome_sort",
 "heap_sort",
 "insertion_sort",
@@ -7168,6 +7268,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -7176,6 +7277,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -7370,6 +7472,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -7378,6 +7481,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -7429,18 +7533,29 @@
 "why": "no_algorithm"
 },
 "Task/Sum-digits-of-an-integer/Haskell/sum-digits-of-an-integer-1.hs": {
+"at": "trace",
 "built": [],
+"clash": [
+"capacitor_equivalence",
+"resistor_equivalence"
+],
 "got": null,
 "held": [],
-"held_trace": [],
+"held_trace": [
+"capacitor_equivalence",
+"resistor_equivalence"
+],
 "io": [],
-"logic": [],
+"logic": [
+"capacitor_equivalence",
+"resistor_equivalence"
+],
 "nodes": [
 "numeric"
 ],
 "specific": [],
 "task": "Sum-digits-of-an-integer",
-"why": "none"
+"why": "ambiguous"
 },
 "Task/Sum-digits-of-an-integer/Haskell/sum-digits-of-an-integer-2.hs": {
 "built": [],
@@ -7691,7 +7806,6 @@
 "io": [],
 "logic": [],
 "nodes": [
-"numeric",
 "numeric>recurrence>double_recursion",
 "sequence_query"
 ],

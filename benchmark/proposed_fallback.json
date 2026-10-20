@@ -1403,8 +1403,8 @@
    "answer": "pipeline",
    "branch": null,
    "branch_correct": null,
-   "correct": false,
-   "pipeline": "Greatest-common-divisor",
+   "correct": true,
+   "pipeline": "Least-common-multiple",
    "task": "Least-common-multiple"
   },
   "Task/Least-common-multiple/Python/least-common-multiple-3.py": {
@@ -1464,27 +1464,27 @@
    "task": "Levenshtein-distance"
   },
   "Task/Levenshtein-distance/Haskell/levenshtein-distance-2.hs": {
-   "answer": "unknown",
+   "answer": "pipeline",
    "branch": null,
    "branch_correct": null,
-   "correct": null,
-   "pipeline": null,
+   "correct": true,
+   "pipeline": "Levenshtein-distance",
    "task": "Levenshtein-distance"
   },
   "Task/Levenshtein-distance/Python/levenshtein-distance-1.py": {
-   "answer": "unknown",
+   "answer": "pipeline",
    "branch": null,
    "branch_correct": null,
-   "correct": null,
-   "pipeline": null,
+   "correct": true,
+   "pipeline": "Levenshtein-distance",
    "task": "Levenshtein-distance"
   },
   "Task/Levenshtein-distance/Python/levenshtein-distance-2.py": {
-   "answer": "unknown",
+   "answer": "pipeline",
    "branch": null,
    "branch_correct": null,
-   "correct": null,
-   "pipeline": null,
+   "correct": true,
+   "pipeline": "Levenshtein-distance",
    "task": "Levenshtein-distance"
   },
   "Task/Levenshtein-distance/Python/levenshtein-distance-3.py": {
@@ -1507,8 +1507,8 @@
    "answer": "pipeline",
    "branch": null,
    "branch_correct": null,
-   "correct": false,
-   "pipeline": "problem_007",
+   "correct": true,
+   "pipeline": "Levenshtein-distance",
    "task": "Levenshtein-distance"
   },
   "Task/Longest-common-subsequence/C/longest-common-subsequence-1.c": {
@@ -2112,11 +2112,11 @@
    "task": "Perfect-numbers"
   },
   "Task/Perfect-numbers/Python/perfect-numbers-4.py": {
-   "answer": "unknown",
+   "answer": "pipeline",
    "branch": null,
    "branch_correct": null,
-   "correct": null,
-   "pipeline": null,
+   "correct": true,
+   "pipeline": "Perfect-numbers",
    "task": "Perfect-numbers"
   },
   "Task/Primality-by-trial-division/C/primality-by-trial-division-1.c": {

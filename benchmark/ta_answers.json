@@ -1564,13 +1564,9 @@
 "built": [],
 "got": "bifid",
 "held": [],
-"held_trace": [
-"bifid"
-],
+"held_trace": [],
 "io": [],
-"logic": [
-"bifid"
-],
+"logic": [],
 "nodes": [],
 "specific": [
 "bifid"
@@ -1599,10 +1595,7 @@
 ],
 "io": [],
 "logic": [
-"base64_to_binary",
-"caesar_cipher",
-"decimal_to_hexadecimal",
-"harshad_numbers"
+"caesar_cipher"
 ],
 "nodes": [
 "sequence_query",
@@ -1614,11 +1607,15 @@
 "ciphers/columnar_transposition.py": {
 "built": [],
 "got": "columnar_transposition",
-"held": [],
+"held": [
+"columnar_transposition"
+],
 "held_trace": [
 "columnar_transposition"
 ],
-"io": [],
+"io": [
+"columnar_transposition"
+],
 "logic": [
 "columnar_transposition"
 ],
@@ -1999,12 +1996,14 @@
 "built": [],
 "got": "rail_fence_cipher",
 "held": [
+"closest_pair_of_points",
 "rail_fence_cipher"
 ],
 "held_trace": [
 "rail_fence_cipher"
 ],
 "io": [
+"closest_pair_of_points",
 "msd_radix_sort",
 "rail_fence_cipher",
 "recursive_insertion_sort",
@@ -2206,6 +2205,7 @@
 "skytale_cipher"
 ],
 "io": [
+"closest_pair_of_points",
 "msd_radix_sort",
 "rail_fence_cipher",
 "recursive_insertion_sort",
@@ -2711,11 +2711,15 @@
 "conversions/decimal_to_binary.py": {
 "built": [],
 "got": "decimal_to_binary",
-"held": [],
+"held": [
+"decimal_to_binary"
+],
 "held_trace": [
 "decimal_to_binary"
 ],
-"io": [],
+"io": [
+"decimal_to_binary"
+],
 "logic": [
 "decimal_to_binary"
 ],
@@ -2939,18 +2943,16 @@
 "conversions/negative_binary_base_to_int.py": {
 "built": [],
 "got": "negative_binary_base_to_int",
-"held": [],
-"held_trace": [
-"base64_to_binary",
-"decimal_to_hexadecimal",
-"harshad_numbers",
+"held": [
 "negative_binary_base_to_int"
 ],
-"io": [],
+"held_trace": [
+"negative_binary_base_to_int"
+],
+"io": [
+"negative_binary_base_to_int"
+],
 "logic": [
-"base64_to_binary",
-"decimal_to_hexadecimal",
-"harshad_numbers",
 "negative_binary_base_to_int"
 ],
 "nodes": [
@@ -3080,9 +3082,13 @@
 "conversions/rgb_cmyk_conversion.py": {
 "built": [],
 "got": "rgb_cmyk_conversion",
-"held": [],
+"held": [
+"rgb_cmyk_conversion"
+],
 "held_trace": [],
-"io": [],
+"io": [
+"rgb_cmyk_conversion"
+],
 "logic": [],
 "nodes": [],
 "specific": [
@@ -3399,11 +3405,15 @@
 "data_structures/arrays/equilibrium_index_in_array.py": {
 "built": [],
 "got": "equilibrium_index_in_array",
-"held": [],
+"held": [
+"equilibrium_index_in_array"
+],
 "held_trace": [
 "equilibrium_index_in_array"
 ],
-"io": [],
+"io": [
+"equilibrium_index_in_array"
+],
 "logic": [
 "equilibrium_index_in_array"
 ],
@@ -3646,11 +3656,15 @@
 "data_structures/arrays/rotate_array.py": {
 "built": [],
 "got": "rotate_array",
-"held": [],
+"held": [
+"rotate_array"
+],
 "held_trace": [
 "rotate_array"
 ],
-"io": [],
+"io": [
+"rotate_array"
+],
 "logic": [
 "rotate_array"
 ],
@@ -4296,14 +4310,19 @@
 "data_structures/binary_tree/red_black_tree.py": {
 "built": [],
 "got": "red_black_tree",
-"held": [],
+"held": [
+"red_black_tree"
+],
 "held_trace": [
 "binary_search_tree_recursive",
 "binary_tree_traversals",
 "red_black_tree",
 "splay_tree"
 ],
-"io": [],
+"io": [
+"red_black_tree",
+"trie"
+],
 "logic": [
 "binary_search_tree",
 "binary_search_tree_recursive",
@@ -5846,11 +5865,16 @@
 "data_structures/trie/trie.py": {
 "built": [],
 "got": "trie",
-"held": [],
+"held": [
+"trie"
+],
 "held_trace": [
 "trie"
 ],
-"io": [],
+"io": [
+"red_black_tree",
+"trie"
+],
 "logic": [
 "trie"
 ],
@@ -5863,9 +5887,14 @@
 "digital_image_processing/change_brightness.py": {
 "built": [],
 "got": "change_brightness",
-"held": [],
+"held": [
+"change_brightness"
+],
 "held_trace": [],
-"io": [],
+"io": [
+"change_brightness",
+"md5"
+],
 "logic": [],
 "nodes": [],
 "specific": [
@@ -5876,9 +5905,13 @@
 "digital_image_processing/change_contrast.py": {
 "built": [],
 "got": "change_contrast",
-"held": [],
+"held": [
+"change_contrast"
+],
 "held_trace": [],
-"io": [],
+"io": [
+"change_contrast"
+],
 "logic": [],
 "nodes": [],
 "specific": [
@@ -6183,13 +6216,18 @@
 "built": [],
 "got": "closest_pair_of_points",
 "held": [
-"closest_pair_of_points"
+"closest_pair_of_points",
+"rail_fence_cipher"
 ],
 "held_trace": [
 "closest_pair_of_points"
 ],
 "io": [
-"closest_pair_of_points"
+"closest_pair_of_points",
+"msd_radix_sort",
+"rail_fence_cipher",
+"skytale_cipher",
+"viterbi"
 ],
 "logic": [
 "closest_pair_of_points"
@@ -6335,7 +6373,8 @@
 "built": [],
 "got": "mergesort",
 "held": [
-"mergesort"
+"mergesort",
+"recursive_mergesort_array"
 ],
 "held_trace": [
 "mergesort"
@@ -6361,6 +6400,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -6369,6 +6409,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -6566,7 +6607,9 @@
 "primelib"
 ],
 "logic": [
-"climbing_stairs"
+"capacitor_equivalence",
+"climbing_stairs",
+"resistor_equivalence"
 ],
 "nodes": [
 "numeric>recurrence>pair_recurrence"
@@ -6700,16 +6743,17 @@
 "fizz_buzz"
 ],
 "got": "fizz_buzz",
-"held": [],
-"held_trace": [
-"fizz_buzz",
-"magicdiamondpattern"
+"held": [
+"fizz_buzz"
 ],
-"io": [],
+"held_trace": [
+"fizz_buzz"
+],
+"io": [
+"fizz_buzz"
+],
 "logic": [
-"fizz_buzz",
-"from_sequence",
-"magicdiamondpattern"
+"fizz_buzz"
 ],
 "nodes": [
 "numeric"
@@ -7419,6 +7463,7 @@
 "viterbi"
 ],
 "io": [
+"closest_pair_of_points",
 "msd_radix_sort",
 "rail_fence_cipher",
 "skytale_cipher",
@@ -7495,12 +7540,18 @@
 "electronics/capacitor_equivalence.py": {
 "built": [],
 "got": "capacitor_equivalence",
-"held": [],
+"held": [
+"capacitor_equivalence",
+"resistor_equivalence"
+],
 "held_trace": [
 "capacitor_equivalence",
 "resistor_equivalence"
 ],
-"io": [],
+"io": [
+"capacitor_equivalence",
+"resistor_equivalence"
+],
 "logic": [
 "capacitor_equivalence",
 "resistor_equivalence"
@@ -7736,12 +7787,18 @@
 "electronics/resistor_equivalence.py": {
 "built": [],
 "got": "resistor_equivalence",
-"held": [],
+"held": [
+"capacitor_equivalence",
+"resistor_equivalence"
+],
 "held_trace": [
 "capacitor_equivalence",
 "resistor_equivalence"
 ],
-"io": [],
+"io": [
+"capacitor_equivalence",
+"resistor_equivalence"
+],
 "logic": [
 "capacitor_equivalence",
 "resistor_equivalence"
@@ -7868,11 +7925,15 @@
 "financial/exponential_moving_average.py": {
 "built": [],
 "got": "exponential_moving_average",
-"held": [],
+"held": [
+"exponential_moving_average"
+],
 "held_trace": [
 "exponential_moving_average"
 ],
-"io": [],
+"io": [
+"exponential_moving_average"
+],
 "logic": [
 "exponential_moving_average"
 ],
@@ -8247,6 +8308,7 @@
 "io": [
 "area",
 "fuzzy_set_operations",
+"karatsuba",
 "newtons_second_law_of_motion"
 ],
 "logic": [],
@@ -8665,11 +8727,15 @@
 "bellman_ford"
 ],
 "got": "bellman_ford",
-"held": [],
+"held": [
+"bellman_ford"
+],
 "held_trace": [
 "bellman_ford"
 ],
-"io": [],
+"io": [
+"bellman_ford"
+],
 "logic": [
 "bellman_ford"
 ],
@@ -8821,15 +8887,11 @@
 "breadth_first_search"
 ],
 "got": "breadth_first_search_shortest_path",
-"held": [
-"breadth_first_search_shortest_path_2"
-],
+"held": [],
 "held_trace": [
 "breadth_first_search_shortest_path_2"
 ],
-"io": [
-"breadth_first_search_shortest_path_2"
-],
+"io": [],
 "logic": [
 "breadth_first_search_shortest_path_2"
 ],
@@ -9893,11 +9955,15 @@
 "greedy_methods/minimum_coin_change.py": {
 "built": [],
 "got": "minimum_coin_change",
-"held": [],
+"held": [
+"minimum_coin_change"
+],
 "held_trace": [
 "minimum_coin_change"
 ],
-"io": [],
+"io": [
+"minimum_coin_change"
+],
 "logic": [
 "minimum_coin_change"
 ],
@@ -10158,6 +10224,7 @@
 "md5"
 ],
 "io": [
+"change_brightness",
 "md5"
 ],
 "logic": [
@@ -11385,14 +11452,17 @@
 "held": [
 "area",
 "fuzzy_set_operations",
-"newtons_second_law_of_motion"
+"newtons_second_law_of_motion",
+"problem_029"
 ],
 "held_trace": [],
 "io": [
 "area",
 "fuzzy_set_operations",
 "integration_by_simpson_approx",
+"karatsuba",
 "newtons_second_law_of_motion",
+"problem_029",
 "simpson_rule",
 "trapezoidal_rule"
 ],
@@ -11492,9 +11562,13 @@
 "maths/average_median.py": {
 "built": [],
 "got": "average_median",
-"held": [],
+"held": [
+"average_median"
+],
 "held_trace": [],
-"io": [],
+"io": [
+"average_median"
+],
 "logic": [],
 "nodes": [],
 "specific": [
@@ -11506,7 +11580,8 @@
 "built": [],
 "got": "average_mode",
 "held": [
-"average_mode"
+"average_mode",
+"natural_sort"
 ],
 "held_trace": [
 "average_mode"
@@ -11532,6 +11607,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -11540,6 +11616,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -11600,7 +11677,8 @@
 "io": [
 "basic_maths",
 "prime_factors",
-"problem_012"
+"problem_012",
+"problem_047"
 ],
 "logic": [
 "basic_maths"
@@ -11671,13 +11749,17 @@
 "binary_multiplication"
 ],
 "held_trace": [
-"binary_multiplication"
+"binary_multiplication",
+"capacitor_equivalence",
+"resistor_equivalence"
 ],
 "io": [
 "binary_multiplication"
 ],
 "logic": [
-"binary_multiplication"
+"binary_multiplication",
+"capacitor_equivalence",
+"resistor_equivalence"
 ],
 "nodes": [
 "numeric"
@@ -12556,7 +12638,9 @@
 "is_int_palindrome"
 ],
 "io": [
-"is_int_palindrome"
+"is_int_palindrome",
+"problem_036",
+"problem_055"
 ],
 "logic": [
 "is_int_palindrome"
@@ -12600,9 +12684,13 @@
 "is_isogram"
 ],
 "got": "is_square_free",
-"held": [],
+"held": [
+"is_square_free"
+],
 "held_trace": [],
-"io": [],
+"io": [
+"is_square_free"
+],
 "logic": [],
 "nodes": [
 "sequence_query"
@@ -12688,11 +12776,18 @@
 "maths/karatsuba.py": {
 "built": [],
 "got": "karatsuba",
-"held": [],
+"held": [
+"karatsuba"
+],
 "held_trace": [
 "karatsuba"
 ],
-"io": [],
+"io": [
+"area",
+"fuzzy_set_operations",
+"karatsuba",
+"newtons_second_law_of_motion"
+],
 "logic": [
 "karatsuba"
 ],
@@ -13195,6 +13290,7 @@
 "io": [
 "area",
 "integration_by_simpson_approx",
+"problem_029",
 "simpson_rule",
 "trapezoidal_rule"
 ],
@@ -13412,15 +13508,20 @@
 "trapezoidal_rule"
 ],
 "held_trace": [
+"capacitor_equivalence",
+"resistor_equivalence",
 "simpson_rule"
 ],
 "io": [
 "area",
 "integration_by_simpson_approx",
+"problem_029",
 "simpson_rule",
 "trapezoidal_rule"
 ],
 "logic": [
+"capacitor_equivalence",
+"resistor_equivalence",
 "simpson_rule"
 ],
 "nodes": [
@@ -13607,14 +13708,16 @@
 "maths/pi_generator.py": {
 "built": [],
 "got": "pi_generator",
-"held": [],
+"held": [
+"pi_generator"
+],
 "held_trace": [
 "pi_generator"
 ],
-"io": [],
+"io": [
+"pi_generator"
+],
 "logic": [
-"from_sequence",
-"magicdiamondpattern",
 "pi_generator"
 ],
 "nodes": [
@@ -13679,11 +13782,15 @@
 "maths/polynomial_evaluation.py": {
 "built": [],
 "got": "polynomial_evaluation",
-"held": [],
+"held": [
+"polynomial_evaluation"
+],
 "held_trace": [
 "polynomial_evaluation"
 ],
-"io": [],
+"io": [
+"polynomial_evaluation"
+],
 "logic": [
 "polynomial_evaluation"
 ],
@@ -13779,14 +13886,16 @@
 "built": [],
 "got": "prime_factors",
 "held": [
-"prime_factors"
+"prime_factors",
+"problem_047"
 ],
 "held_trace": [
 "prime_factors"
 ],
 "io": [
 "basic_maths",
-"prime_factors"
+"prime_factors",
+"problem_047"
 ],
 "logic": [
 "prime_factors"
@@ -14078,9 +14187,13 @@
 "maths/series/alternating_harmonic_series.py": {
 "built": [],
 "got": "alternating_harmonic_series",
-"held": [],
+"held": [
+"alternating_harmonic_series"
+],
 "held_trace": [],
-"io": [],
+"io": [
+"alternating_harmonic_series"
+],
 "logic": [],
 "nodes": [],
 "specific": [
@@ -14472,11 +14585,15 @@
 "maths/special_numbers/armstrong_numbers.py": {
 "built": [],
 "got": "armstrong_numbers",
-"held": [],
+"held": [
+"armstrong_numbers"
+],
 "held_trace": [
 "armstrong_numbers"
 ],
-"io": [],
+"io": [
+"armstrong_numbers"
+],
 "logic": [
 "armstrong_numbers"
 ],
@@ -14507,11 +14624,14 @@
 "got": "bell_numbers",
 "held": [],
 "held_trace": [
-"bell_numbers"
+"bell_numbers",
+"combinations"
 ],
 "io": [],
 "logic": [
-"bell_numbers"
+"bell_numbers",
+"combinations",
+"number_of_possible_binary_trees"
 ],
 "nodes": [
 "numeric"
@@ -14623,11 +14743,15 @@
 "maths/special_numbers/hamming_numbers.py": {
 "built": [],
 "got": "hamming_numbers",
-"held": [],
+"held": [
+"hamming_numbers"
+],
 "held_trace": [
 "hamming_numbers"
 ],
-"io": [],
+"io": [
+"hamming_numbers"
+],
 "logic": [
 "hamming_numbers"
 ],
@@ -14722,9 +14846,13 @@
 "maths/special_numbers/kaprekar_number.py": {
 "built": [],
 "got": "kaprekar_number",
-"held": [],
+"held": [
+"kaprekar_number"
+],
 "held_trace": [],
-"io": [],
+"io": [
+"kaprekar_number"
+],
 "logic": [],
 "nodes": [],
 "specific": [
@@ -14887,11 +15015,15 @@
 "maths/special_numbers/ugly_numbers.py": {
 "built": [],
 "got": "ugly_numbers",
-"held": [],
+"held": [
+"ugly_numbers"
+],
 "held_trace": [
 "ugly_numbers"
 ],
-"io": [],
+"io": [
+"ugly_numbers"
+],
 "logic": [
 "ugly_numbers"
 ],
@@ -15107,15 +15239,20 @@
 "trapezoidal_rule"
 ],
 "held_trace": [
+"capacitor_equivalence",
+"resistor_equivalence",
 "trapezoidal_rule"
 ],
 "io": [
 "area",
 "integration_by_simpson_approx",
+"problem_029",
 "simpson_rule",
 "trapezoidal_rule"
 ],
 "logic": [
+"capacitor_equivalence",
+"resistor_equivalence",
 "trapezoidal_rule"
 ],
 "nodes": [
@@ -16007,8 +16144,7 @@
 ],
 "logic": [
 "capacitor_equivalence",
-"resistor_equivalence",
-"simple_neural_network"
+"resistor_equivalence"
 ],
 "nodes": [
 "marking>table_fill",
@@ -16477,11 +16613,15 @@
 "other/maximum_subsequence.py": {
 "built": [],
 "got": "maximum_subsequence",
-"held": [],
+"held": [
+"maximum_subsequence"
+],
 "held_trace": [
 "maximum_subsequence"
 ],
-"io": [],
+"io": [
+"maximum_subsequence"
+],
 "logic": [
 "maximum_subsequence"
 ],
@@ -17146,6 +17286,7 @@
 "io": [
 "area",
 "fuzzy_set_operations",
+"karatsuba",
 "newtons_second_law_of_motion"
 ],
 "logic": [],
@@ -17378,13 +17519,17 @@
 "problem_001"
 ],
 "held_trace": [
-"problem_001"
+"capacitor_equivalence",
+"problem_001",
+"resistor_equivalence"
 ],
 "io": [
 "problem_001"
 ],
 "logic": [
-"problem_001"
+"capacitor_equivalence",
+"problem_001",
+"resistor_equivalence"
 ],
 "nodes": [
 "numeric"
@@ -17397,11 +17542,15 @@
 "project_euler/problem_001/sol4.py": {
 "built": [],
 "got": "problem_001",
-"held": [],
+"held": [
+"problem_001"
+],
 "held_trace": [
 "problem_001"
 ],
-"io": [],
+"io": [
+"problem_001"
+],
 "logic": [
 "problem_001"
 ],
@@ -17431,13 +17580,17 @@
 "problem_001"
 ],
 "held_trace": [
-"problem_001"
+"capacitor_equivalence",
+"problem_001",
+"resistor_equivalence"
 ],
 "io": [
 "problem_001"
 ],
 "logic": [
-"problem_001"
+"capacitor_equivalence",
+"problem_001",
+"resistor_equivalence"
 ],
 "nodes": [
 "numeric"
@@ -17454,13 +17607,17 @@
 "problem_001"
 ],
 "held_trace": [
-"problem_001"
+"capacitor_equivalence",
+"problem_001",
+"resistor_equivalence"
 ],
 "io": [
 "problem_001"
 ],
 "logic": [
-"problem_001"
+"capacitor_equivalence",
+"problem_001",
+"resistor_equivalence"
 ],
 "nodes": [
 "numeric"
@@ -17483,7 +17640,9 @@
 "problem_002"
 ],
 "logic": [
-"problem_002"
+"capacitor_equivalence",
+"problem_002",
+"resistor_equivalence"
 ],
 "nodes": [
 "numeric>recurrence>pair_recurrence"
@@ -18380,11 +18539,15 @@
 "project_euler/problem_016/sol1.py": {
 "built": [],
 "got": "problem_016",
-"held": [],
+"held": [
+"problem_016"
+],
 "held_trace": [
 "problem_016"
 ],
-"io": [],
+"io": [
+"problem_016"
+],
 "logic": [
 "problem_016"
 ],
@@ -18496,10 +18659,12 @@
 "sum_of_digits"
 ],
 "logic": [
+"capacitor_equivalence",
 "factorial",
 "number_of_possible_binary_trees",
 "primelib",
-"problem_020"
+"problem_020",
+"resistor_equivalence"
 ],
 "nodes": [
 "numeric>decomposition>digits",
@@ -18549,11 +18714,15 @@
 "Factorial"
 ],
 "got": "problem_020",
-"held": [],
+"held": [
+"problem_020"
+],
 "held_trace": [
 "problem_020"
 ],
-"io": [],
+"io": [
+"problem_020"
+],
 "logic": [
 "problem_020"
 ],
@@ -18702,9 +18871,13 @@
 "project_euler/problem_025/sol3.py": {
 "built": [],
 "got": "problem_025",
-"held": [],
+"held": [
+"problem_025"
+],
 "held_trace": [],
-"io": [],
+"io": [
+"problem_025"
+],
 "logic": [],
 "nodes": [
 "numeric>recurrence>pair_recurrence"
@@ -18801,11 +18974,20 @@
 "project_euler/problem_029/sol1.py": {
 "built": [],
 "got": "problem_029",
-"held": [],
+"held": [
+"area",
+"problem_029"
+],
 "held_trace": [
 "problem_029"
 ],
-"io": [],
+"io": [
+"area",
+"integration_by_simpson_approx",
+"problem_029",
+"simpson_rule",
+"trapezoidal_rule"
+],
 "logic": [
 "problem_029"
 ],
@@ -18955,13 +19137,20 @@
 "Palindrome-detection"
 ],
 "got": "problem_036",
-"held": [],
+"held": [
+"problem_036",
+"problem_055"
+],
 "held_trace": [
 "capacitor_equivalence",
 "problem_036",
 "resistor_equivalence"
 ],
-"io": [],
+"io": [
+"is_int_palindrome",
+"problem_036",
+"problem_055"
+],
 "logic": [
 "capacitor_equivalence",
 "problem_036",
@@ -19212,11 +19401,19 @@
 "project_euler/problem_047/sol1.py": {
 "built": [],
 "got": "problem_047",
-"held": [],
+"held": [
+"prime_factors",
+"problem_047"
+],
 "held_trace": [
 "problem_047"
 ],
-"io": [],
+"io": [
+"basic_maths",
+"palindrome",
+"prime_factors",
+"problem_047"
+],
 "logic": [
 "problem_047"
 ],
@@ -19410,11 +19607,18 @@
 "Palindrome-detection"
 ],
 "got": "problem_055",
-"held": [],
+"held": [
+"problem_036",
+"problem_055"
+],
 "held_trace": [
 "problem_055"
 ],
-"io": [],
+"io": [
+"is_int_palindrome",
+"problem_036",
+"problem_055"
+],
 "logic": [
 "problem_055"
 ],
@@ -19442,11 +19646,15 @@
 "project_euler/problem_057/sol1.py": {
 "built": [],
 "got": "problem_057",
-"held": [],
+"held": [
+"problem_057"
+],
 "held_trace": [
 "problem_057"
 ],
-"io": [],
+"io": [
+"problem_057"
+],
 "logic": [
 "problem_057"
 ],
@@ -19697,11 +19905,15 @@
 "project_euler/problem_070/sol1.py": {
 "built": [],
 "got": "problem_070",
-"held": [],
+"held": [
+"problem_070"
+],
 "held_trace": [
 "problem_070"
 ],
-"io": [],
+"io": [
+"problem_070"
+],
 "logic": [
 "problem_070"
 ],
@@ -20061,13 +20273,17 @@
 "problem_094"
 ],
 "held_trace": [
-"problem_094"
+"capacitor_equivalence",
+"problem_094",
+"resistor_equivalence"
 ],
 "io": [
 "problem_094"
 ],
 "logic": [
-"problem_094"
+"capacitor_equivalence",
+"problem_094",
+"resistor_equivalence"
 ],
 "nodes": [
 "numeric"
@@ -20243,14 +20459,9 @@
 "built": [],
 "got": "problem_111",
 "held": [],
-"held_trace": [
-"problem_111"
-],
+"held_trace": [],
 "io": [],
-"logic": [
-"problem_111",
-"problem_124"
-],
+"logic": [],
 "nodes": [
 "sequence_transformation>elementwise_map"
 ],
@@ -20484,11 +20695,15 @@
 "Palindrome-detection"
 ],
 "got": "problem_125",
-"held": [],
+"held": [
+"problem_125"
+],
 "held_trace": [
 "problem_125"
 ],
-"io": [],
+"io": [
+"problem_125"
+],
 "logic": [
 "problem_125"
 ],
@@ -20599,13 +20814,17 @@
 "problem_138"
 ],
 "held_trace": [
-"problem_138"
+"capacitor_equivalence",
+"problem_138",
+"resistor_equivalence"
 ],
 "io": [
 "problem_138"
 ],
 "logic": [
-"problem_138"
+"capacitor_equivalence",
+"problem_138",
+"resistor_equivalence"
 ],
 "nodes": [
 "numeric"
@@ -20953,9 +21172,11 @@
 "sieve_of_eratosthenes"
 ],
 "logic": [
+"capacitor_equivalence",
 "problem_050",
 "problem_051",
-"problem_234"
+"problem_234",
+"resistor_equivalence"
 ],
 "nodes": [
 "numeric",
@@ -21314,7 +21535,11 @@
 "binary_search"
 ],
 "io": [
-"binary_search"
+"binary_search",
+"double_linear_search",
+"exponential_search",
+"jump_search",
+"linear_search"
 ],
 "logic": [
 "binary_search"
@@ -21351,14 +21576,18 @@
 "built": [],
 "got": "double_linear_search",
 "held": [
-"double_linear_search"
+"double_linear_search",
+"linear_search"
 ],
 "held_trace": [
 "double_linear_search"
 ],
 "io": [
+"binary_search",
 "double_linear_search",
-"jump_search"
+"exponential_search",
+"jump_search",
+"linear_search"
 ],
 "logic": [
 "double_linear_search"
@@ -21397,11 +21626,20 @@
 "Binary-search"
 ],
 "got": "exponential_search",
-"held": [],
+"held": [
+"exponential_search",
+"jump_search"
+],
 "held_trace": [
 "exponential_search"
 ],
-"io": [],
+"io": [
+"binary_search",
+"double_linear_search",
+"exponential_search",
+"jump_search",
+"linear_search"
+],
 "logic": [
 "binary_search",
 "exponential_search"
@@ -21481,14 +21719,18 @@
 "built": [],
 "got": "jump_search",
 "held": [
+"exponential_search",
 "jump_search"
 ],
 "held_trace": [
 "jump_search"
 ],
 "io": [
+"binary_search",
 "double_linear_search",
-"jump_search"
+"exponential_search",
+"jump_search",
+"linear_search"
 ],
 "logic": [
 "jump_search"
@@ -21504,12 +21746,21 @@
 "linear_search"
 ],
 "got": "linear_search",
-"held": [],
+"held": [
+"double_linear_search",
+"linear_search"
+],
 "held_trace": [
 "double_linear_search",
 "linear_search"
 ],
-"io": [],
+"io": [
+"binary_search",
+"double_linear_search",
+"exponential_search",
+"jump_search",
+"linear_search"
+],
 "logic": [
 "double_linear_search",
 "linear_search"
@@ -21692,6 +21943,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -21700,6 +21952,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -21781,6 +22034,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -21789,6 +22043,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -21882,6 +22137,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -21890,6 +22146,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -21946,6 +22203,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -21954,6 +22212,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -22022,6 +22281,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -22030,6 +22290,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -22086,6 +22347,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -22094,6 +22356,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -22144,6 +22407,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -22152,6 +22416,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -22202,6 +22467,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -22210,6 +22476,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -22258,6 +22525,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -22266,6 +22534,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -22336,6 +22605,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -22344,6 +22614,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -22412,6 +22683,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -22420,6 +22692,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -22457,11 +22730,15 @@
 "sorts/flash_sort.py": {
 "built": [],
 "got": "flash_sort",
-"held": [],
+"held": [
+"flash_sort"
+],
 "held_trace": [
 "flash_sort"
 ],
-"io": [],
+"io": [
+"flash_sort"
+],
 "logic": [
 "flash_sort"
 ],
@@ -22509,6 +22786,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -22517,6 +22795,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -22566,6 +22845,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -22574,6 +22854,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -22624,6 +22905,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -22632,6 +22914,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -22680,6 +22963,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -22688,6 +22972,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -22742,6 +23027,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -22750,6 +23036,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -22816,6 +23103,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -22824,6 +23112,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -22879,6 +23168,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -22887,6 +23177,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -22915,6 +23206,7 @@
 "msd_radix_sort"
 ],
 "io": [
+"closest_pair_of_points",
 "msd_radix_sort",
 "rail_fence_cipher",
 "skytale_cipher",
@@ -22934,9 +23226,50 @@
 "sorts/natural_sort.py": {
 "built": [],
 "got": "natural_sort",
-"held": [],
+"held": [
+"average_mode",
+"natural_sort"
+],
 "held_trace": [],
-"io": [],
+"io": [
+"adaptive_merge_sort",
+"average_mode",
+"binary_insertion_sort",
+"bubble_sort",
+"bubble_sort_recursive",
+"circle_sort",
+"cocktail_shaker_sort",
+"comb_sort",
+"counting_sort",
+"cycle_sort",
+"double_sort",
+"exchange_sort",
+"gnome_sort",
+"heap_sort",
+"insertion_sort",
+"intro_sort",
+"iterative_merge_sort",
+"merge_insertion_sort",
+"merge_sort",
+"mergesort",
+"natural_sort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded",
+"pancake_sort",
+"pigeon_sort",
+"pigeonhole_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"recursive_insertion_sort",
+"recursive_mergesort_array",
+"recursive_quick_sort",
+"reverse_selection",
+"selection_sort",
+"shell_sort",
+"shrink_shell_sort",
+"stooge_sort",
+"tim_sort"
+],
 "logic": [],
 "nodes": [],
 "specific": [
@@ -22982,6 +23315,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -22990,6 +23324,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -23059,6 +23394,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -23067,6 +23403,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -23118,6 +23455,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -23126,6 +23464,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -23194,6 +23533,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -23202,6 +23542,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -23252,6 +23593,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -23260,6 +23602,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -23337,6 +23680,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -23345,6 +23689,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -23398,6 +23743,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -23406,6 +23752,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -23480,6 +23827,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -23489,6 +23837,7 @@
 "quick_sort_3_partition",
 "rail_fence_cipher",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -23513,11 +23862,52 @@
 "Sorting-algorithms-Merge-sort"
 ],
 "got": "recursive_mergesort_array",
-"held": [],
+"held": [
+"mergesort",
+"recursive_mergesort_array"
+],
 "held_trace": [
 "recursive_mergesort_array"
 ],
-"io": [],
+"io": [
+"adaptive_merge_sort",
+"average_mode",
+"binary_insertion_sort",
+"bubble_sort",
+"bubble_sort_recursive",
+"circle_sort",
+"cocktail_shaker_sort",
+"comb_sort",
+"counting_sort",
+"cycle_sort",
+"double_sort",
+"exchange_sort",
+"gnome_sort",
+"heap_sort",
+"insertion_sort",
+"intro_sort",
+"iterative_merge_sort",
+"merge_insertion_sort",
+"merge_sort",
+"mergesort",
+"natural_sort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded",
+"pancake_sort",
+"pigeon_sort",
+"pigeonhole_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"recursive_insertion_sort",
+"recursive_mergesort_array",
+"recursive_quick_sort",
+"reverse_selection",
+"selection_sort",
+"shell_sort",
+"shrink_shell_sort",
+"stooge_sort",
+"tim_sort"
+],
 "logic": [
 "recursive_mergesort_array"
 ],
@@ -23564,6 +23954,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -23572,6 +23963,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -23619,6 +24011,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -23627,6 +24020,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -23697,6 +24091,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -23705,6 +24100,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -23758,6 +24154,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -23766,6 +24163,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -23816,6 +24214,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -23824,6 +24223,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -23931,6 +24331,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -23939,6 +24340,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -24005,6 +24407,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
 "pancake_sort",
@@ -24013,6 +24416,7 @@
 "quick_sort",
 "quick_sort_3_partition",
 "recursive_insertion_sort",
+"recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
 "selection_sort",
@@ -24702,11 +25106,15 @@
 "strings/levenshtein_distance.py": {
 "built": [],
 "got": "Levenshtein-distance",
-"held": [],
+"held": [
+"levenshtein_distance"
+],
 "held_trace": [
 "levenshtein_distance"
 ],
-"io": [],
+"io": [
+"levenshtein_distance"
+],
 "logic": [
 "levenshtein_distance"
 ],
@@ -24842,7 +25250,8 @@
 "palindrome"
 ],
 "io": [
-"palindrome"
+"palindrome",
+"problem_047"
 ],
 "logic": [
 "palindrome"

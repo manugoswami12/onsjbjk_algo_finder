@@ -40,6 +40,8 @@ def imperative_facts(path: Path) -> str:
     """AP13's imperative lowerer, subclassed (imperative_logic.py) for Python and C; AP13's own otherwise."""
     if path.suffix in ('.py', '.c'):
         import imperative_logic
+        import returns_function                   # a function returning a function is lowered as a new one (19.8)
+        returns_function.install()
         return imperative_logic.lower(path)
     return cli.facts_text(path)[1]
 

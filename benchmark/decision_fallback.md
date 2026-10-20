@@ -8,14 +8,12 @@ Identified = algorithm or class. A family answer is right when TheAlgorithms fil
 |---|---|---|---|---|---|---|---|
 | C | 69 | 32 / 0 | 100.0% | 46.4% | 7 / 1 | 7 / 7 | 15 |
 | Common-Lisp | 75 | 45 / 0 | 100.0% | 60.0% | 9 / 2 | 4 / 5 | 10 |
-| Haskell | 144 | 33 / 1 | 97.1% | 22.9% | 4 / 3 | 17 / 29 | 57 |
-| Python | 162 | 67 / 2 | 97.1% | 41.4% | 11 / 4 | 24 / 13 | 41 |
-| all | 450 | 177 / 3 | 98.3% | 39.3% | 31 / 10 | 52 / 54 | 123 |
+| Haskell | 144 | 34 / 1 | 97.1% | 23.6% | 4 / 3 | 16 / 29 | 57 |
+| Python | 162 | 72 / 0 | 100.0% | 44.4% | 11 / 4 | 21 / 13 | 41 |
+| all | 450 | 183 / 1 | 99.5% | 40.7% | 31 / 10 | 48 / 54 | 123 |
 
-## Wrong answers (3)
+## Wrong answers (1)
 
-- Task/Least-common-multiple/Python/least-common-multiple-2.py: algorithm Greatest-common-divisor, task Least-common-multiple
-- Task/Levenshtein-distance/Python/levenshtein-distance-5.py: algorithm problem_007, task Levenshtein-distance
 - Task/Perfect-numbers/Haskell/perfect-numbers-1.hs: algorithm primelib, task Perfect-numbers
 
 ## Variation of a deep family, family wrong (10)

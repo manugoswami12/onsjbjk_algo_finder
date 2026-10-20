@@ -42,11 +42,14 @@ def learn(labelled: dict[Path, str | None], rules: Path = RULES, workers: int = 
     return count
 
 
-def apply(path: Path, rules: Path = RULES, io_labels=(), trace_labels=(), logic_labels=(), hand=None, specific=None):
+def apply(path: Path, rules: Path = RULES, io_labels=(), trace_labels=(), logic_labels=(), hand=None, specific=None,
+          per_fn=None):
     """([tree nodes of the file], [(node, label, rule)] of the learned branches holding at its deepest node,
     {labels with a learned branch there}, {the normal process's branches there}); io_labels: the training
     labels whose behaviour the file has; trace_labels: those whose write trace it has too; logic_labels: those whose exact traced logic (AP13 learn-dir) it has; hand: a set that receives the labels of the
-    hand rules holding (prolog/ta_rules.pl); specific: one that receives the file rules' labels (ta_file_rules.pl)."""
+    hand rules holding (prolog/ta_rules.pl); specific: one that receives the file rules' labels (ta_file_rules.pl);
+    per_fn: a dict that receives the evidence per function ('funcs', 'normal' and 'hand' as (function, label), 'calls'
+    as (caller, callee as written))."""
     kind, text = learn_facts.tree_facts(path)
     if not text.strip():
         return [], [], set(), set()
@@ -63,4 +66,9 @@ def apply(path: Path, rules: Path = RULES, io_labels=(), trace_labels=(), logic_
         hand.update(line.split('|')[2] for line in lines if line.startswith('HAND|'))
     if specific is not None:                      # the file rules' labels (prolog/ta_file_rules.pl)
         specific.update(line.split('|')[1] for line in lines if line.startswith('SPECIFIC|'))
+    if per_fn is not None:                        # per function (doc 04 section 19.8)
+        per_fn['funcs'] = [line.split('|', 1)[1] for line in lines if line.startswith('FUNC|')]
+        per_fn['normal'] = [(f, b) for f, _, b in (line.split('|')[1:] for line in lines if line.startswith('FNORMAL|'))]
+        per_fn['hand'] = [(f, b) for f, _, b in (line.split('|')[1:] for line in lines if line.startswith('FHAND|'))]
+        per_fn['calls'] = [tuple(line.split('|')[1:3]) for line in lines if line.startswith('CALLS|')]
     return nodes, [tuple(line.split('|')[1:]) for line in lines if line.startswith('LEARNED|')], branch_at, normal

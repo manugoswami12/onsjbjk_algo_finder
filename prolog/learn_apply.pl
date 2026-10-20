@@ -4,7 +4,9 @@
                                               (ta_rules.pl hand_answer/2) holding for the file, SPECIFIC|Label for a file rule
                                               (ta_file_rules.pl), BRANCH_AT|Node|Label for the
                                               labels with a learned branch there, LEARNED|Node|Label|Rule for
-                                              every branch that holds
+                                              every branch that holds; per function (doc 04 section 19.8):
+                                              FUNC|Name, FNORMAL|Name|Node|Branch, FHAND|Name|Node|Label and
+                                              CALLS|Caller|Callee (the callee as written)
    Io holds io_equal(Label) facts: the training labels whose input->output behaviour the file has, and
    io_trace_equal(Label) facts: those whose write trace it has too, and logic_equal(Label) facts: those whose
    exact traced logic it has (AP13 learn-dir references). All
@@ -33,7 +35,17 @@ learn_apply_main :-
     forall(( member(C, Nodes), setof(L, R^B^clause(learned_branch(C, L, R, io), B), Ls), member(L, Ls) ),
            ( atomic_list_concat(C, '>', CA), format('BRANCH_AT|~w|~w~n', [CA, L]) )),
     findall(C-L-R, ( member(C, Nodes), learned_branch(C, L, R, io) ), Found0), sort(Found0, Found),
-    forall(member(C-L-R, Found), ( atomic_list_concat(C, '>', CA), format('LEARNED|~w|~w|~w~n', [CA, L, R]) )).
+    forall(member(C-L-R, Found), ( atomic_list_concat(C, '>', CA), format('LEARNED|~w|~w|~w~n', [CA, L, R]) )),
+    per_function.
+% the evidence of each function and the file's calls: which function holds a branch, and who calls it
+per_function :-
+    forall(func(_, N, _), format('FUNC|~w~n', [N])),
+    forall(( func(F, N, _), deepest_families_v02(F, Ps), member(C, Ps), family_branch(C, F, B), B \== none ),
+           ( atomic_list_concat(C, '>', CA), format('FNORMAL|~w|~w|~w~n', [N, CA, B]) )),
+    forall(( hand_answer(C, H), func(F, N, _), deepest_families_v02(F, Ps), memberchk(C, Ps) ),
+           ( atomic_list_concat(C, '>', CA), format('FHAND|~w|~w|~w~n', [N, CA, H]) )),
+    forall(distinct(N-G, ( func(F, N, _), stmt(S, F, _, _), call_at(S, G, _), atom(G), G \== '$self' )),
+           format('CALLS|~w|~w~n', [N, G])).
 % the deepest node(s): the paths of the greatest length; a file on no path is at the root
 deepest([], [[]]) :- !.
 deepest(Paths, Nodes) :- aggregate_all(max(N), ( member(P, Paths), length(P, N) ), Max),
