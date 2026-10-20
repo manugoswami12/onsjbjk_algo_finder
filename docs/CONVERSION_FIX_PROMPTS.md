@@ -160,3 +160,6 @@ the facts lowering must be installed where the facts are made (learn_facts), not
 - A null input (0, []) as no evidence, with a mixed file's functions at other nodes naming nothing (doc 04 section
   19.12): fixed perfect-numbers-1.hs by hand, lost six learnt answers (signum, not_gate, stooge_sort ...): for them
   the null input is the algorithm, not a convention.
+- The exact-logic tier on the tree's facts with canonical patterns (input check as context, range bound a variable;
+  doc 04 section 19.13): fixed perfect-numbers-1.hs by traced logic by hand, lost 19 learnt answers and crashed the
+  held-out run. The tier still reads AP13's older facts.
