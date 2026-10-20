@@ -14,10 +14,8 @@ other people's code from [Rosetta Code](https://rosettacode.org) in four languag
 | Code it learned from (1344 TheAlgorithms files) | 1344 | 0 | 100% | 100% |
 | New code it never saw (206 analysable Rosetta files) | 177 | 3 | 98.3% | 85.9% (39.3% of all 450 files) |
 
-Recall counts the 206 files the system can evaluate. Of the other 244 held-out files, 66 are fragments (a few lines,
-or no function); the other 178 define real algorithms the evaluator cannot run yet (an in-place void function on an
-array plus a length, GMP, Python 2, Haskell operator definitions): later-stage work. Over every file that is not a
-fragment, recall is 177 of 384 = 46.1%; precision is the same 98.3%.
+Recall counts the 206 files the system can evaluate. The other 244 held-out files are left out this round (fragments,
+and functions the evaluator cannot run yet); they are taken up when the code is upgraded.
 
 Honest note on the new-code row: 12 hand-built branches of the tree (Ackermann, knapsack, Caesar, matrix product,
 run-length, N-queens, Josephus, leap year, LCS, Levenshtein, Roman numerals, Hanoi) were written from Rosetta

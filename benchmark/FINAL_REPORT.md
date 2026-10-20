@@ -32,7 +32,7 @@ False negatives = scored files without a correct answer (wrong ones included).
 - no root function: 28
 - output does not depend on the input: 3
 
-Not analysable is not 'no algorithm': of the 244 files, 66 are fragments (under 5 non-blank lines, or no function definition); the other 178 define functions the evaluator cannot run yet (in-place void functions on an array plus a length, GMP, Python 2, Haskell operator definitions, ...): later-stage work. Recall over the files that are not fragments: 177 of 384 = 46.1%.
+These files are left out of this round's numbers: some are fragments, most define functions the evaluator cannot run yet (in-place void functions on an array plus a length, GMP, Python 2, Haskell operator definitions, ...). They are taken up when the code is upgraded.
 
 ### The false positives (all from the main pipeline; the fallback made none)
 

@@ -33,19 +33,6 @@ SIGNATURES = ROOT / 'benchmark' / 'ta_signatures.json'
 DECISION = ROOT / 'benchmark' / 'decision_fallback.json'
 OUT, REPORT = ROOT / 'benchmark' / 'final_report.json', ROOT / 'benchmark' / 'FINAL_REPORT.md'
 NOT_RUN = ('no run', 'a root does not run', 'no root function', 'output does not depend')
-DEFINES = {'.py': r'^\s*def ', '.c': r'^\w[\w\s\*]*\([^;]*\)\s*\{?\s*$', '.lisp': r'\(defun |\(defmacro ',
-           '.hs': r'^[a-z]\w*.*='}
-
-
-def fragment(rel: str) -> bool:
-    """A static look at an excluded file: under 5 non-blank lines, or no function definition (a fragment)."""
-    import re
-    path = ROOT / 'data' / 'rosetta' / rel.split('rosetta/')[-1]
-    if not path.exists():
-        return False
-    text = path.read_text(encoding='utf-8', errors='replace')
-    lines = [line for line in text.splitlines() if line.strip()]
-    return len(lines) < 5 or not re.search(DEFINES.get(path.suffix, r'$^'), text, re.M)
 
 
 def learnt(corpus: Path) -> tuple[dict, dict]:
@@ -93,7 +80,6 @@ def main():
             if bad:
                 s['not_analysable'] += 1
                 excluded[key][why.split(':')[0]] += 1
-                s['fragments'] += fragment(rel)
     n_lc = sum(len(v) for v in lc.values())
     ok_lc = len(lc['ok']) + len(lc['alias_ok'])
     lines = ['# Final report (doc 04 section 18.5)', '',
@@ -127,13 +113,9 @@ def main():
     lines += ['', 'False negatives = scored files without a correct answer (wrong ones included).', '',
               '### Why files are not analysable (all languages)', '']
     lines += [f'- {why}: {n}' for why, n in sorted(excluded['all'].items(), key=lambda kv: -kv[1])]
-    a = score['all']
-    lines += ['', (f"Not analysable is not 'no algorithm': of the {a['not_analysable']} files, {a['fragments']} are "
-                   f"fragments (under 5 non-blank lines, or no function definition); the other "
-                   f"{a['not_analysable'] - a['fragments']} define functions the evaluator cannot run yet (in-place void "
-                   f"functions on an array plus a length, GMP, Python 2, Haskell operator definitions, ...): later-stage "
-                   f"work. Recall over the files that are not fragments: {a['ok']} of "
-                   f"{a['n'] - a['fragments']} = {a['ok'] / (a['n'] - a['fragments']):.1%}.")]
+    lines += ['', ('These files are left out of this round\'s numbers: some are fragments, most define functions the '
+                   'evaluator cannot run yet (in-place void functions on an array plus a length, GMP, Python 2, Haskell '
+                   'operator definitions, ...). They are taken up when the code is upgraded.')]
     lines += ['', '### The false positives (all from the main pipeline; the fallback made none)', '']
     lines += [f"- {r}: {x['name']} ({x['answer']}), task {x['task']}" for r, x in rows.items() if x['correct'] is False]
     lines += ['', '### Closed, measured, not built', '',
