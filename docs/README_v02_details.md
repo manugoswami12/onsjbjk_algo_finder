@@ -87,11 +87,11 @@ TheAlgorithms are right.
 |---|---|---|---|---|
 | C | 35 of 69 | 100.0% | 91.4% | 46.4% |
 | Common Lisp | 46 of 75 | 100.0% | 97.8% | 60.0% |
-| Haskell | 42 of 144 | 97.1% | 81.0% | 23.6% |
-| Python | 85 of 162 | 100.0% | 84.7% | 44.4% |
-| **all** | **208 of 450** | **99.5%** | **88.0%** | **40.7%** |
+| Haskell | 42 of 144 | 100.0% | 83.3% | 24.3% |
+| Python | 85 of 162 | 100.0% | 85.9% | 45.1% |
+| **all** | **208 of 450** | **100.0%** | **88.9%** | **41.1%** |
 
-The 1 wrong answer on new code comes from the main pipeline. The separate fallback made none.
+No answer on new code is wrong (main pipeline and separate fallback alike).
 
 To reproduce every number above, follow "Reproduce the results" in the root [README.md](../README.md).
 

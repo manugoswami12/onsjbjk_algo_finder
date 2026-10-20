@@ -85,6 +85,10 @@ class TaLogic(compare_learners.Ap13Dir):
     store); a file matches the labels of the references its functions match (AP13 scan, leaf MATCH). The scan names
     the matching functions by name (compare_learners.Ap13Dir.labels_by_function looks them up by id and finds none)."""
 
+    def __init__(self, corpus: Path, truth_files, workers=4):
+        super().__init__(corpus, truth_files, workers)
+        self.canon = CanonicalLogic(corpus, self.labels, workers)  # the second, canonical view (doc 04 section 19.13)
+
     def labels_matched(self, path: Path, me: dict | None = None, io: TaIo | None = None, by_match=None) -> set[str]:
         """The labels of the references the file's functions match; with the file's behaviour (me) and the catalog
         (io), a match whose behaviour contradicts it is left out (consistent). by_match: a list that receives
@@ -92,28 +96,43 @@ class TaLogic(compare_learners.Ap13Dir):
         try:
             result = self.cli.scan(path, self.store, include_unreviewed=True, quiet=True)
         except ERRORS + compare_learners.ERRORS:
-            return set()
-        kept = [(frozenset(f.split('$')[0] for f in m['functions'].split(',')), self.labels[self.ref_file[m['label']]])
-                for m in result['leaves']
-                if m['result'] == 'MATCH' and self.ref_file.get(m['label']) in self.labels
-                and (me is None or io is None or self.consistent(m, me, io))]
+            result = {'leaves': []}
+        kept = self.kept(result, self, me, io)
         if by_match is not None:
             by_match.extend(kept)
         return {lab for _, lab in kept} - {'none'}
 
-    def consistent(self, m: dict, me: dict, io: TaIo) -> bool:
+    def canonical_matched(self, path: Path, me: dict, io: TaIo, by_match=None) -> set[str]:
+        """The labels the canonical view's patterns match (consulted where the literal view names nothing; a tier of
+        its own after the learned branches, doc 04 section 19.13); by_match as in labels_matched."""
+        kept = self.kept(self.canon.scan(path), self.canon, me, io)
+        if by_match is not None:
+            by_match.extend(kept)
+        return {lab for _, lab in kept} - {'none'}
+
+    def kept(self, result: dict, view, me, io) -> list:
+        """(matching functions, label) of the scan's MATCH leaves that behaviour does not contradict."""
+        return [(frozenset(f.split('$')[0] for f in m['functions'].split(',')), self.labels[view.ref_file[m['label']]])
+                for m in result.get('leaves', [])
+                if m['result'] == 'MATCH' and view.ref_file.get(m['label']) in self.labels
+                and (me is None or io is None or self.consistent(m, me, io, view))]
+
+    def consistent(self, m: dict, me: dict, io: TaIo, view=None) -> bool:
         """An exact-logic match holds unless behaviour contradicts it (AP13's compare giving no verdict for want of
         evidence is no contradiction): both functions compute outputs and they differ on a common input, or the new
         function computes varying outputs while the matched TheAlgorithms function computes none (it only prints or
         does not run on the battery: roman-numerals-encode-2's toRoman matched the pattern of magicdiamondpattern's
         star-printing loops). Only when every function of the match computes outputs (expected_shortfall's match spans a helper that does and
         the function itself, which does not)."""
-        if not hasattr(self, 'ref_fn'):
-            with self.ks.connect(self.store) as db:
-                self.ref_fn = {r['label']: r['function_name'] for r in db.execute('SELECT label, function_name FROM pattern')}
+        view = self if view is None else view
+        if not hasattr(view, 'ref_fn'):
+            with self.ks.connect(view.store) as db:
+                view.ref_fn = {r['label']: r['function_name'] for r in db.execute('SELECT label, function_name FROM pattern')}
+        if not hasattr(self, 'described'):
             self.described = {}
         base = lambda n: n.split('$')[0]
-        rel, fn = self.ref_file[m['label']], base(self.ref_fn.get(m['label'], ''))
+        rel, fn = view.ref_file[m['label']], base(view.ref_fn.get(m['label'], ''))
+        canonical = view is not self                         # an unrunnable reference is no evidence there only
         names = {base(f) for f in m['functions'].split(',')}
         mine = [d for n, d in me.items() if base(n) in names and d['discriminative']]
         if not mine or len({base(n) for n, d in me.items() if base(n) in names and d['discriminative']}) < len(names):
@@ -121,17 +140,87 @@ class TaLogic(compare_learners.Ap13Dir):
         if rel not in self.described:
             self.described[rel] = io.describe(io.corpus / rel)
         refs = [d for n, d in self.described[rel].items() if base(n) == fn]
-        if not refs:
-            return False                                     # it computes nothing on the battery, the new one does
+        if not refs:                                         # it computes nothing on the battery, the new one does,
+            return canonical and self.unrunnable(io, rel, fn, base)   # unless its conversion cannot run it
         for a in mine:
             for b in refs:
                 if len({o for o in b['outputs'] if o is not None}) < 2:
+                    if canonical and self.unrunnable(io, rel, fn, base):
+                        return True                          # b's behaviour is not converted yet: no evidence
                     continue                                 # b computes no varying output (prints only): contradicts
                 if a['sig'] != b['sig'] or len(a['outputs']) != len(b['outputs']):
                     return True                              # not comparable: no evidence either way
                 if not any(x is not None and y is not None and x != y for x, y in zip(a['outputs'], b['outputs'])):
                     return True                              # no differing output
         return False
+
+    def unrunnable(self, io: TaIo, rel: str, fn: str, base) -> bool:
+        """The matched corpus function fails on most battery inputs (an error, not a value: its behaviour is not
+        converted yet, as TheAlgorithms' perfect() with a generator argument): its behaviour is no evidence, so the
+        traced logic stands (doc 04 section 19.13). A function that runs and prints (no output) still contradicts."""
+        if not hasattr(self, 'raw'):
+            self.raw = {}
+        if rel not in self.raw:
+            try:
+                self.raw[rel] = io.run_isolated(io.corpus / rel)
+            except ERRORS + compare_learners.ERRORS:
+                self.raw[rel] = {}
+        runs = [r for n, d in self.raw[rel].items() if base(n) == fn for r in d.get('runs', [])]
+        return bool(runs) and sum(1 for r in runs if r[0]) * 2 < len(runs)
+
+
+class CanonicalLogic:
+    """The canonical view of the traced-logic tier (doc 04 section 19.13): AP13's learn-dir and scan on the tree's facts
+    (logic_canon.facts_of), every pattern in canonical form (logic_canon.canonical_lines: an input check on every
+    statement dropped as context, a range bound a variable). TaLogic consults it only where AP13's literal facts match
+    nothing: TheAlgorithms' perfect() is a trivial pattern in the literal view (its generator argument unread) and a
+    real one here, which perfect-numbers-1.hs matches."""
+
+    def __init__(self, corpus: Path, labels: dict[str, str], workers=4):
+        import hashlib
+        import logic_canon
+        compare_learners._ap13()
+        import cli
+        import knowledge_store
+        import report
+        self.cli, self.ks, self.report, self.lc = cli, knowledge_store, report, logic_canon
+        self.store = Path(tempfile.mkdtemp(prefix='v02_canonstore_'))
+
+        def learn(rel):
+            prefix = 'cn_' + ''.join(ch if ch.isalnum() else '_' for ch in rel.rsplit('.', 1)[0])[:60] + \
+                '_' + hashlib.sha256(rel.encode()).hexdigest()[:8]
+            try:
+                lf = logic_canon.facts_of(corpus / rel)
+                if lf is None:
+                    return rel, None, None
+                return rel, lf[0], logic_canon.canonical_lines(cli.run_prolog('learn_all_main', lf[1], [prefix]))
+            except ERRORS + compare_learners.ERRORS:
+                return rel, None, None
+        counts = {}
+        with ThreadPoolExecutor(max_workers=workers) as pool:
+            for rel, lang, lines in pool.map(learn, sorted(labels)):
+                if lines:
+                    try:
+                        cli.store_learned(self.store, lang, rel, lines, counts)
+                    except ERRORS + compare_learners.ERRORS:
+                        pass
+        with knowledge_store.connect(self.store) as db:
+            self.ref_file = {r['label']: r['source_path'] for r in db.execute('SELECT label, source_path FROM pattern')}
+
+    def scan(self, path: Path) -> dict:
+        """AP13's scan of the file's tree facts against the canonical patterns ({'leaves': []} when nothing runs)."""
+        try:
+            lf = self.lc.facts_of(path)
+            if lf is None:
+                return {'leaves': []}
+            refs = self.ks.reference_files(self.store, True)
+            have = self.ks.fact_features(lf[1])
+            refs = [r for r in refs if self.ks.ref_features(r) <= have]
+            if not refs:
+                return {'leaves': []}
+            return self.report.parse_scan(self.cli.run_prolog('scan_main', lf[1], [str(r) for r in refs]))
+        except ERRORS + compare_learners.ERRORS:
+            return {'leaves': []}
 
 
 def answer(path: Path, io: TaIo, labels: set[str], gs: dict[str, str], logic: TaLogic | None = None) -> dict:
@@ -147,26 +236,29 @@ def answer(path: Path, io: TaIo, labels: set[str], gs: dict[str, str], logic: Ta
         me, by_fn, traced = {}, {}, {}
     io_labels = {lab for v in by_fn.values() for lab in v} & labels
     trace_labels = {lab for v in traced.values() for lab in v} & labels
-    matches = []
+    matches, canon_matches = [], []
     logic_labels = logic.labels_matched(path, me, io, matches) & labels if logic else set()
+    canon_labels = logic.canonical_matched(path, me, io, canon_matches) & labels if logic and not logic_labels else set()
     try:
         hand, specific, per_fn = set(), set(), {}
-        nodes, found, _, normal = learn_apply.apply(path, RULES, io_labels, trace_labels, logic_labels, hand, specific,
-                                                    per_fn)
+        nodes, found, branch_at, normal = learn_apply.apply(path, RULES, io_labels, trace_labels, logic_labels, hand,
+                                                            specific, per_fn)
         helpers = helper_functions(per_fn, by_fn, labels, gs)
         if helpers:                               # their evidence is their caller's step, not the file's (19.8)
             io_labels = {lab for f, v in by_fn.items() if f not in helpers for lab in v} & labels
             trace_labels = {lab for f, v in traced.items() if f not in helpers for lab in v} & labels
             logic_labels = {lab for fs, lab in matches if not fs <= helpers} & labels
+            canon_labels = {lab for fs, lab in canon_matches if not fs <= helpers} & labels
             normal = {b for b in normal if any(f not in helpers and x == b for f, x in per_fn['normal'])}
             hand = {h for h in hand if any(f not in helpers and x == h for f, x in per_fn['hand'])}
             nodes, found, _, _ = learn_apply.apply(path, RULES, io_labels, trace_labels, logic_labels, set(), set())
     except ERRORS as exc:
-        nodes, found, normal, hand, specific = [], [], set(), set(), set()
+        nodes, found, normal, hand, specific, branch_at = [], [], set(), set(), set(), set()
         print(f'  ({path.name}: {type(exc).__name__}: {str(exc)[:100]})', flush=True)
+    canonical = canon_labels & branch_at                 # the looser logic: only a label learned at the file's node
     out = {'nodes': nodes, 'held': sorted({lab for _, lab, r in found if r == 'io'}),
            'held_trace': sorted({lab for _, lab, r in found if r in ('trace', 'logic')}), 'io': sorted(io_labels),
-           'logic': sorted(logic_labels)}
+           'logic': sorted(logic_labels), 'canonical': sorted(canonical)}
     return decide(out, normal | hand, specific, labels, gs)
 
 
@@ -227,6 +319,7 @@ def decide(out: dict, built_names, specific, labels: set[str], gs: dict[str, str
     evidence = [('file_rule', spec), ('built', built),
                 ('trace', {ta_corpus.group(h, gs) for h in out['held_trace']}),
                 ('learned', {ta_corpus.group(h, gs) for h in out['held']}),
+                ('canonical', {ta_corpus.group(i, gs) for i in out.get('canonical', [])}),
                 ('io', {ta_corpus.group(i, gs) for i in out['io']})]
     compare_learners._ap13()
     from fact_io import term  # AP13's inert Prolog text (polyglot_logic/tools)

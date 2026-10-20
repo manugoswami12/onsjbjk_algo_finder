@@ -19,9 +19,9 @@ Reporting criteria (final_report.py): a held-out file is not analysable when the
 |---|---|---|---|---|---|---|---|---|---|
 | C | 69 | 34 | 35 | 32 | 0 | 3 | 100.0% | 91.4% | 46.4% |
 | Common-Lisp | 75 | 29 | 46 | 45 | 0 | 1 | 100.0% | 97.8% | 60.0% |
-| Haskell | 144 | 102 | 42 | 34 | 1 | 8 | 97.1% | 81.0% | 23.6% |
-| Python | 162 | 77 | 85 | 72 | 0 | 13 | 100.0% | 84.7% | 44.4% |
-| all | 450 | 242 | 208 | 183 | 1 | 25 | 99.5% | 88.0% | 40.7% |
+| Haskell | 144 | 102 | 42 | 35 | 0 | 7 | 100.0% | 83.3% | 24.3% |
+| Python | 162 | 77 | 85 | 73 | 0 | 12 | 100.0% | 85.9% | 45.1% |
+| all | 450 | 242 | 208 | 185 | 0 | 23 | 100.0% | 88.9% | 41.1% |
 
 False negatives = scored files without a correct answer (wrong ones included).
 
@@ -36,7 +36,6 @@ These files are left out of this round's numbers: some are fragments, most defin
 
 ### The false positives (all from the main pipeline; the fallback made none)
 
-- Task/Perfect-numbers/Haskell/perfect-numbers-1.hs: primelib (algorithm), task Perfect-numbers
 
 ### Closed, measured, not built
 

@@ -663,18 +663,26 @@ one position later) is the loosest behaviour rule but sits in the io tier with e
 naming only a label learned at the file's own node, it kept fibonacci-sequence-1.py (Binet's formula, the numbers of
 climbing_stairs one position later) from becoming climbing_stairs in the hand check.
 
-**19.13 Traced logic as the primary tier, on the tree's facts (tried, dropped).** User: trace logic is the primary
-object, input/output the fallback. Found: the exact-logic tier (eval_ta.TaLogic, AP13 learn-dir and scan) read AP13's
-own facts, an older conversion than the tree's: TheAlgorithms' perfect() became sum(var, other(for_in_clause),
-other(if_clause)), a trivial pattern, so no perfect-number logic was learned. Tried (logic_canon.py): the logic tier on
-learn_facts.tree_facts, patterns in a canonical form (an input check guarding every statement dropped as context; a
-range bound a pattern variable), and a reference that fails on most battery inputs (its behaviour not converted) no
-contradiction of a logic match. By hand: perfect-numbers-1.hs -> Perfect-numbers by traced logic (the canonical pattern
-of special_numbers/perfect_number.py matches it, 5 of 5 relations), roman-2 still UNKNOWN, every earlier-broken case
-kept. All data: 19 learnt answers lost (generate_parentheses_iterative, rail_fence_cipher, lz77, keith_number,
-odd_sieve, problem_074 ...: their own exact-logic matches change with the facts and the looser patterns) and the
-held-out run failed in SWI-Prolog on a canonicalised pattern. Dropped. The finding stands: the primary tier still
-reads the older conversion; moving it to the tree's facts needs its own work, file by file against the lost answers.
+**19.13 Traced logic in two views: literal first, canonical second (adopted).** User: trace logic is the primary
+object, input/output the fallback. The exact-logic tier (eval_ta.TaLogic, AP13 learn-dir and scan) reads AP13's own
+facts, an older conversion than the tree's: TheAlgorithms' perfect() became sum(var, other(for_in_clause),
+other(if_clause)), a trivial pattern, so perfect-numbers-1.hs could only be named by behaviour (primelib).
+First try, on the tree's facts for the whole tier (dropped): 19 learnt answers lost, for two causes found file by file:
+(a) the canonicaliser, editing pattern text, left a variable of an abstracted range bound in the pattern's variable list,
+and AP13's scan crashed on it (atomic_list_concat: not sufficiently instantiated) for every file scanning that pattern;
+(b) the tree's facts are more canonical, so six files' own exact patterns now also matched other files
+(floor_and_ceiling with nine list classes) or no longer matched themselves (odd_sieve).
+Adopted, specific before general:
+| Part | Rule |
+|---|---|
+| prolog/logic_canon.pl | the canonical form on the term: an input check (a parameter compared with a constant, on every statement) dropped as context; call(range, [Lo, Hi]) with Hi a variable; the variable list keeps only the clause's variables |
+| eval_ta.CanonicalLogic | a second store: AP13 learn-dir on the tree's facts (logic_canon.facts_of), patterns canonical; scanned only where the literal view matches nothing |
+| prolog/decide.pl tier 5 canonical | its labels, only those learned at the file's own node, decide after the learned branches (exact behaviour at the node) and before behaviour alone |
+| eval_ta.TaLogic.unrunnable | in the canonical view only: a matched corpus function that fails on most battery inputs (its behaviour not converted) does not contradict the logic; one that runs and prints still does (roman-2) |
+The literal view and every tier above are unchanged. By hand: the canonical pattern of special_numbers/perfect_number.py
+matches perfect-numbers-1.hs (5 of 5 relations); all 19 files and every earlier-broken case keep their answers. All data:
+learnt 1344/1344, 0 differences; new code perfect-numbers-1.hs primelib -> Perfect-numbers, perfect-numbers-3.py
+UNKNOWN -> Perfect-numbers. 185 correct, 0 wrong, precision 100%, recall 88.9%.
 
 **Later stage: the 242 held-out files that cannot be evaluated.** They are left out of this round's numbers (no
 answer, and no root function runs on every battery input). This is not "no algorithm": some are fragments

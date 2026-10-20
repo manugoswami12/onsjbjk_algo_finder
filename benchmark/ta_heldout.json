@@ -3,6 +3,7 @@
 "built": [
 "Binary-search"
 ],
+"canonical": [],
 "got": "Binary-search",
 "held": [
 "binary_search"
@@ -31,6 +32,7 @@
 "built": [
 "Binary-search"
 ],
+"canonical": [],
 "got": "Binary-search",
 "held": [],
 "held_trace": [],
@@ -47,6 +49,7 @@
 "built": [
 "Binary-search"
 ],
+"canonical": [],
 "got": "Binary-search",
 "held": [],
 "held_trace": [],
@@ -61,6 +64,7 @@
 },
 "Task/Binary-search/Haskell/binary-search-1.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -75,6 +79,7 @@
 },
 "Task/Binary-search/Haskell/binary-search-2.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -87,6 +92,7 @@
 },
 "Task/Binary-search/Haskell/binary-search-3.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -101,6 +107,7 @@
 "built": [
 "Binary-search"
 ],
+"canonical": [],
 "got": "Binary-search",
 "held": [
 "binary_search"
@@ -123,6 +130,7 @@
 },
 "Task/Binary-search/Python/binary-search-2.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -140,6 +148,7 @@
 "built": [
 "Binary-search"
 ],
+"canonical": [],
 "got": "Binary-search",
 "held": [
 "binary_search"
@@ -162,6 +171,7 @@
 },
 "Task/Binary-search/Python/binary-search-4.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -179,6 +189,7 @@
 },
 "Task/Binary-search/Python/binary-search-5.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -192,6 +203,7 @@
 "Task/Binary-search/Python/binary-search-6.py": {
 "at": "learned",
 "built": [],
+"canonical": [],
 "clash": [
 "exponential_search",
 "jump_search"
@@ -219,6 +231,7 @@
 },
 "Task/Binary-search/Python/binary-search-7.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -233,6 +246,7 @@
 },
 "Task/Caesar-cipher/C/caesar-cipher.c": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -249,6 +263,7 @@
 "built": [
 "Caesar-cipher"
 ],
+"canonical": [],
 "got": "Caesar-cipher",
 "held": [],
 "held_trace": [],
@@ -265,6 +280,7 @@
 "built": [
 "Caesar-cipher"
 ],
+"canonical": [],
 "got": "Caesar-cipher",
 "held": [],
 "held_trace": [],
@@ -279,6 +295,7 @@
 },
 "Task/Caesar-cipher/Common-Lisp/caesar-cipher-3.lisp": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -295,6 +312,7 @@
 "built": [
 "Caesar-cipher"
 ],
+"canonical": [],
 "got": "Caesar-cipher",
 "held": [],
 "held_trace": [],
@@ -311,6 +329,7 @@
 "built": [
 "Caesar-cipher"
 ],
+"canonical": [],
 "got": "Caesar-cipher",
 "held": [],
 "held_trace": [],
@@ -327,6 +346,7 @@
 "built": [
 "Caesar-cipher"
 ],
+"canonical": [],
 "got": "Caesar-cipher",
 "held": [],
 "held_trace": [],
@@ -343,6 +363,7 @@
 "built": [
 "Caesar-cipher"
 ],
+"canonical": [],
 "got": "Caesar-cipher",
 "held": [],
 "held_trace": [],
@@ -359,6 +380,7 @@
 "built": [
 "Caesar-cipher"
 ],
+"canonical": [],
 "got": "Caesar-cipher",
 "held": [],
 "held_trace": [],
@@ -375,6 +397,7 @@
 "built": [
 "Caesar-cipher"
 ],
+"canonical": [],
 "got": "Caesar-cipher",
 "held": [],
 "held_trace": [],
@@ -389,6 +412,7 @@
 },
 "Task/Caesar-cipher/Python/caesar-cipher-4.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -403,6 +427,7 @@
 "built": [
 "Factorial"
 ],
+"canonical": [],
 "got": "Factorial",
 "held": [
 "factorial",
@@ -441,6 +466,7 @@
 "built": [
 "Factorial"
 ],
+"canonical": [],
 "got": "Factorial",
 "held": [
 "factorial",
@@ -479,6 +505,7 @@
 "built": [
 "Factorial"
 ],
+"canonical": [],
 "got": "Factorial",
 "held": [
 "factorial",
@@ -511,6 +538,7 @@
 "built": [
 "Factorial"
 ],
+"canonical": [],
 "got": "Factorial",
 "held": [
 "factorial",
@@ -542,6 +570,7 @@
 "Task/Factorial/C/factorial-5.c": {
 "at": "learned",
 "built": [],
+"canonical": [],
 "clash": [
 "Factorial",
 "krishnamurthy_number",
@@ -582,6 +611,7 @@
 "built": [
 "Factorial"
 ],
+"canonical": [],
 "got": "Factorial",
 "held": [
 "factorial",
@@ -614,6 +644,7 @@
 "built": [
 "Factorial"
 ],
+"canonical": [],
 "got": "Factorial",
 "held": [
 "factorial",
@@ -644,6 +675,7 @@
 },
 "Task/Factorial/Common-Lisp/factorial-3.lisp": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -660,6 +692,7 @@
 "built": [
 "Factorial"
 ],
+"canonical": [],
 "got": "Factorial",
 "held": [
 "factorial",
@@ -688,6 +721,7 @@
 "built": [
 "Factorial"
 ],
+"canonical": [],
 "got": "Factorial",
 "held": [
 "factorial",
@@ -716,6 +750,7 @@
 "built": [
 "Factorial"
 ],
+"canonical": [],
 "got": "Factorial",
 "held": [
 "factorial",
@@ -748,6 +783,7 @@
 "built": [
 "Factorial"
 ],
+"canonical": [],
 "got": "Factorial",
 "held": [
 "factorial",
@@ -785,6 +821,7 @@
 "Task/Factorial/Haskell/factorial-10.hs": {
 "at": "io",
 "built": [],
+"canonical": [],
 "clash": [
 "Factorial",
 "krishnamurthy_number",
@@ -813,6 +850,7 @@
 "Task/Factorial/Haskell/factorial-2.hs": {
 "at": "io",
 "built": [],
+"canonical": [],
 "clash": [
 "Factorial",
 "krishnamurthy_number",
@@ -840,6 +878,7 @@
 "built": [
 "Factorial"
 ],
+"canonical": [],
 "got": "Factorial",
 "held": [
 "factorial",
@@ -876,6 +915,7 @@
 },
 "Task/Factorial/Haskell/factorial-4.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -888,6 +928,7 @@
 },
 "Task/Factorial/Haskell/factorial-5.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -900,6 +941,7 @@
 },
 "Task/Factorial/Haskell/factorial-6.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -916,6 +958,7 @@
 "built": [
 "Factorial"
 ],
+"canonical": [],
 "got": "Factorial",
 "held": [],
 "held_trace": [
@@ -935,6 +978,7 @@
 "Task/Factorial/Haskell/factorial-8.hs": {
 "at": "learned",
 "built": [],
+"canonical": [],
 "clash": [
 "Factorial",
 "krishnamurthy_number",
@@ -968,6 +1012,7 @@
 },
 "Task/Factorial/Haskell/factorial-9.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -980,6 +1025,7 @@
 },
 "Task/Factorial/Python/factorial-1.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -994,6 +1040,7 @@
 "built": [
 "Factorial"
 ],
+"canonical": [],
 "got": "Factorial",
 "held": [
 "factorial",
@@ -1032,6 +1079,7 @@
 "built": [
 "Factorial"
 ],
+"canonical": [],
 "got": "Factorial",
 "held": [
 "factorial",
@@ -1069,6 +1117,7 @@
 "Task/Factorial/Python/factorial-4.py": {
 "at": "io",
 "built": [],
+"canonical": [],
 "clash": [
 "Factorial",
 "krishnamurthy_number",
@@ -1094,6 +1143,7 @@
 },
 "Task/Factorial/Python/factorial-5.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -1108,6 +1158,7 @@
 "built": [
 "Factorial"
 ],
+"canonical": [],
 "got": "Factorial",
 "held": [],
 "held_trace": [
@@ -1138,6 +1189,7 @@
 "built": [
 "Factorial"
 ],
+"canonical": [],
 "got": "Factorial",
 "held": [
 "factorial",
@@ -1166,6 +1218,7 @@
 "built": [
 "Factorial"
 ],
+"canonical": [],
 "got": "Factorial",
 "held": [
 "factorial",
@@ -1196,6 +1249,7 @@
 },
 "Task/Factorial/Python/factorial-9.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -1212,6 +1266,7 @@
 "built": [
 "Fibonacci-sequence"
 ],
+"canonical": [],
 "got": "Fibonacci-sequence",
 "held": [],
 "held_trace": [],
@@ -1226,6 +1281,7 @@
 },
 "Task/Fibonacci-sequence/C/fibonacci-sequence-2.c": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -1240,6 +1296,7 @@
 },
 "Task/Fibonacci-sequence/C/fibonacci-sequence-3.c": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -1252,6 +1309,7 @@
 },
 "Task/Fibonacci-sequence/C/fibonacci-sequence-4.c": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -1264,6 +1322,7 @@
 },
 "Task/Fibonacci-sequence/C/fibonacci-sequence-5.c": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -1278,6 +1337,7 @@
 },
 "Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-1.lisp": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -1292,6 +1352,7 @@
 },
 "Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-10.lisp": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -1308,6 +1369,7 @@
 "built": [
 "Fibonacci-sequence"
 ],
+"canonical": [],
 "got": "Fibonacci-sequence",
 "held": [
 "climbing_stairs"
@@ -1331,6 +1393,7 @@
 "built": [
 "Fibonacci-sequence"
 ],
+"canonical": [],
 "got": "Fibonacci-sequence",
 "held": [],
 "held_trace": [],
@@ -1347,6 +1410,7 @@
 "built": [
 "Fibonacci-sequence"
 ],
+"canonical": [],
 "got": "Fibonacci-sequence",
 "held": [],
 "held_trace": [],
@@ -1365,6 +1429,7 @@
 "built": [
 "Fibonacci-sequence"
 ],
+"canonical": [],
 "got": "Fibonacci-sequence",
 "held": [],
 "held_trace": [],
@@ -1379,6 +1444,7 @@
 },
 "Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-6.lisp": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -1395,6 +1461,7 @@
 "built": [
 "Fibonacci-sequence"
 ],
+"canonical": [],
 "got": "Fibonacci-sequence",
 "held": [],
 "held_trace": [],
@@ -1411,6 +1478,7 @@
 "built": [
 "Fibonacci-sequence"
 ],
+"canonical": [],
 "got": "Fibonacci-sequence",
 "held": [],
 "held_trace": [],
@@ -1425,6 +1493,7 @@
 },
 "Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-9.lisp": {
 "built": [],
+"canonical": [],
 "got": "Fibonacci-sequence",
 "held": [
 "fast_fibonacci"
@@ -1446,6 +1515,7 @@
 },
 "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-1.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -1458,6 +1528,7 @@
 },
 "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-10.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -1470,6 +1541,7 @@
 },
 "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-11.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -1482,6 +1554,7 @@
 },
 "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-12.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -1494,6 +1567,7 @@
 },
 "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-13.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -1506,6 +1580,7 @@
 },
 "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-14.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -1518,6 +1593,7 @@
 },
 "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-15.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -1530,6 +1606,7 @@
 },
 "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-16.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -1542,6 +1619,7 @@
 },
 "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-17.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -1554,6 +1632,7 @@
 },
 "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-18.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -1576,6 +1655,7 @@
 },
 "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-20.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -1590,6 +1670,7 @@
 },
 "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-21.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -1609,6 +1690,7 @@
 },
 "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-23.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -1629,6 +1711,7 @@
 },
 "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-25.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -1643,6 +1726,7 @@
 },
 "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-26.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -1659,6 +1743,7 @@
 "built": [
 "Fibonacci-sequence"
 ],
+"canonical": [],
 "got": "Fibonacci-sequence",
 "held": [],
 "held_trace": [],
@@ -1673,6 +1758,7 @@
 },
 "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-4.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -1689,6 +1775,7 @@
 "built": [
 "Fibonacci-sequence"
 ],
+"canonical": [],
 "got": "Fibonacci-sequence",
 "held": [],
 "held_trace": [],
@@ -1703,6 +1790,7 @@
 },
 "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-6.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -1715,6 +1803,7 @@
 },
 "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-7.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -1727,6 +1816,7 @@
 },
 "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-8.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -1741,6 +1831,7 @@
 "built": [
 "Fibonacci-sequence"
 ],
+"canonical": [],
 "got": "Fibonacci-sequence",
 "held": [
 "climbing_stairs"
@@ -1763,6 +1854,7 @@
 "Task/Fibonacci-sequence/Python/fibonacci-sequence-1.py": {
 "at": "io",
 "built": [],
+"canonical": [],
 "clash": [
 "climbing_stairs",
 "primelib"
@@ -1784,6 +1876,7 @@
 "built": [
 "Fibonacci-sequence"
 ],
+"canonical": [],
 "got": "Fibonacci-sequence",
 "held": [],
 "held_trace": [],
@@ -1800,6 +1893,7 @@
 },
 "Task/Fibonacci-sequence/Python/fibonacci-sequence-11.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -1814,6 +1908,7 @@
 },
 "Task/Fibonacci-sequence/Python/fibonacci-sequence-12.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -1828,6 +1923,7 @@
 },
 "Task/Fibonacci-sequence/Python/fibonacci-sequence-13.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -1842,6 +1938,7 @@
 },
 "Task/Fibonacci-sequence/Python/fibonacci-sequence-14.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -1856,6 +1953,7 @@
 },
 "Task/Fibonacci-sequence/Python/fibonacci-sequence-15.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -1868,6 +1966,7 @@
 },
 "Task/Fibonacci-sequence/Python/fibonacci-sequence-16.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -1880,6 +1979,7 @@
 },
 "Task/Fibonacci-sequence/Python/fibonacci-sequence-17.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -1892,6 +1992,7 @@
 },
 "Task/Fibonacci-sequence/Python/fibonacci-sequence-18.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -1904,6 +2005,7 @@
 },
 "Task/Fibonacci-sequence/Python/fibonacci-sequence-2.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -1916,6 +2018,7 @@
 },
 "Task/Fibonacci-sequence/Python/fibonacci-sequence-3.py": {
 "built": [],
+"canonical": [],
 "got": "Fibonacci-sequence",
 "held": [
 "fast_fibonacci"
@@ -1937,6 +2040,7 @@
 },
 "Task/Fibonacci-sequence/Python/fibonacci-sequence-4.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -1953,6 +2057,7 @@
 "built": [
 "Fibonacci-sequence"
 ],
+"canonical": [],
 "got": "Fibonacci-sequence",
 "held": [],
 "held_trace": [],
@@ -1969,6 +2074,7 @@
 },
 "Task/Fibonacci-sequence/Python/fibonacci-sequence-6.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -1983,6 +2089,7 @@
 "built": [
 "Fibonacci-sequence"
 ],
+"canonical": [],
 "got": "Fibonacci-sequence",
 "held": [
 "climbing_stairs"
@@ -2006,6 +2113,7 @@
 "built": [
 "Fibonacci-sequence"
 ],
+"canonical": [],
 "got": "Fibonacci-sequence",
 "held": [],
 "held_trace": [],
@@ -2020,6 +2128,7 @@
 },
 "Task/Fibonacci-sequence/Python/fibonacci-sequence-9.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -2032,6 +2141,7 @@
 },
 "Task/Greatest-common-divisor/C/greatest-common-divisor-1.c": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -2048,6 +2158,7 @@
 "built": [
 "Greatest-common-divisor"
 ],
+"canonical": [],
 "got": "Greatest-common-divisor",
 "held": [
 "greatest_common_divisor",
@@ -2072,6 +2183,7 @@
 },
 "Task/Greatest-common-divisor/C/greatest-common-divisor-3.c": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -2093,6 +2205,7 @@
 "built": [
 "Greatest-common-divisor"
 ],
+"canonical": [],
 "got": "Greatest-common-divisor",
 "held": [],
 "held_trace": [],
@@ -2107,6 +2220,7 @@
 },
 "Task/Greatest-common-divisor/Common-Lisp/greatest-common-divisor-3.lisp": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -2121,6 +2235,7 @@
 "built": [
 "Greatest-common-divisor"
 ],
+"canonical": [],
 "got": "Greatest-common-divisor",
 "held": [],
 "held_trace": [],
@@ -2137,6 +2252,7 @@
 "built": [
 "Greatest-common-divisor"
 ],
+"canonical": [],
 "got": "Greatest-common-divisor",
 "held": [
 "greatest_common_divisor",
@@ -2161,6 +2277,7 @@
 },
 "Task/Greatest-common-divisor/Python/greatest-common-divisor-1.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -2173,6 +2290,7 @@
 },
 "Task/Greatest-common-divisor/Python/greatest-common-divisor-2.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -2187,6 +2305,7 @@
 "built": [
 "Greatest-common-divisor"
 ],
+"canonical": [],
 "got": "Greatest-common-divisor",
 "held": [
 "greatest_common_divisor",
@@ -2213,6 +2332,7 @@
 "built": [
 "Greatest-common-divisor"
 ],
+"canonical": [],
 "got": "Greatest-common-divisor",
 "held": [
 "greatest_common_divisor",
@@ -2238,6 +2358,7 @@
 "Task/Greatest-common-divisor/Python/greatest-common-divisor-5.py": {
 "at": "io",
 "built": [],
+"canonical": [],
 "clash": [
 "Greatest-common-divisor",
 "modular_division"
@@ -2261,6 +2382,7 @@
 "built": [
 "Hailstone-sequence"
 ],
+"canonical": [],
 "got": "Hailstone-sequence",
 "held": [],
 "held_trace": [],
@@ -2275,6 +2397,7 @@
 },
 "Task/Hailstone-sequence/C/hailstone-sequence-2.c": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -2289,6 +2412,7 @@
 "built": [
 "Hailstone-sequence"
 ],
+"canonical": [],
 "got": "Hailstone-sequence",
 "held": [],
 "held_trace": [],
@@ -2303,6 +2427,7 @@
 },
 "Task/Hailstone-sequence/Haskell/hailstone-sequence-1.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -2317,6 +2442,7 @@
 "built": [
 "Hailstone-sequence"
 ],
+"canonical": [],
 "got": "Hailstone-sequence",
 "held": [],
 "held_trace": [],
@@ -2331,6 +2457,7 @@
 },
 "Task/Hailstone-sequence/Haskell/hailstone-sequence-3.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -2347,6 +2474,7 @@
 "built": [
 "Hailstone-sequence"
 ],
+"canonical": [],
 "got": "Hailstone-sequence",
 "held": [],
 "held_trace": [],
@@ -2363,6 +2491,7 @@
 "built": [
 "Hailstone-sequence"
 ],
+"canonical": [],
 "got": "Hailstone-sequence",
 "held": [],
 "held_trace": [],
@@ -2377,6 +2506,7 @@
 },
 "Task/Hailstone-sequence/Python/hailstone-sequence-3.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -2394,6 +2524,7 @@
 "built": [
 "Josephus-problem"
 ],
+"canonical": [],
 "got": "Josephus-problem",
 "held": [],
 "held_trace": [],
@@ -2411,6 +2542,7 @@
 "built": [
 "Josephus-problem"
 ],
+"canonical": [],
 "got": "Josephus-problem",
 "held": [
 "josephus_problem"
@@ -2429,6 +2561,7 @@
 },
 "Task/Josephus-problem/Common-Lisp/josephus-problem-2.lisp": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -2444,6 +2577,7 @@
 },
 "Task/Josephus-problem/Haskell/josephus-problem-1.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -2458,6 +2592,7 @@
 },
 "Task/Josephus-problem/Haskell/josephus-problem-2.hs": {
 "built": [],
+"canonical": [],
 "got": "Josephus-problem",
 "held": [],
 "held_trace": [],
@@ -2474,6 +2609,7 @@
 "built": [
 "Josephus-problem"
 ],
+"canonical": [],
 "got": "Josephus-problem",
 "held": [],
 "held_trace": [],
@@ -2490,6 +2626,7 @@
 "built": [
 "Josephus-problem"
 ],
+"canonical": [],
 "got": "Josephus-problem",
 "held": [
 "josephus_problem"
@@ -2508,6 +2645,7 @@
 },
 "Task/Josephus-problem/Python/josephus-problem-3.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -2520,6 +2658,7 @@
 },
 "Task/Josephus-problem/Python/josephus-problem-4.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -2534,6 +2673,7 @@
 "built": [
 "Knapsack-problem-0-1"
 ],
+"canonical": [],
 "got": "Knapsack-problem-0-1",
 "held": [],
 "held_trace": [],
@@ -2550,6 +2690,7 @@
 "built": [
 "Knapsack-problem-0-1"
 ],
+"canonical": [],
 "got": "Knapsack-problem-0-1",
 "held": [],
 "held_trace": [],
@@ -2565,6 +2706,7 @@
 },
 "Task/Knapsack-problem-0-1/Haskell/knapsack-problem-0-1-1.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -2582,6 +2724,7 @@
 "built": [
 "Knapsack-problem-0-1"
 ],
+"canonical": [],
 "got": "Knapsack-problem-0-1",
 "held": [],
 "held_trace": [],
@@ -2597,6 +2740,7 @@
 },
 "Task/Knapsack-problem-0-1/Haskell/knapsack-problem-0-1-3.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -2609,6 +2753,7 @@
 },
 "Task/Knapsack-problem-0-1/Python/knapsack-problem-0-1-1.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -2625,6 +2770,7 @@
 "built": [
 "Knapsack-problem-0-1"
 ],
+"canonical": [],
 "got": "Knapsack-problem-0-1",
 "held": [],
 "held_trace": [],
@@ -2640,6 +2786,7 @@
 },
 "Task/Knapsack-problem-0-1/Python/knapsack-problem-0-1-3.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -2654,6 +2801,7 @@
 },
 "Task/Knapsack-problem-0-1/Python/knapsack-problem-0-1-4.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -2668,6 +2816,7 @@
 "built": [
 "Least-common-multiple"
 ],
+"canonical": [],
 "got": "Least-common-multiple",
 "held": [],
 "held_trace": [],
@@ -2689,6 +2838,7 @@
 },
 "Task/Least-common-multiple/Common-Lisp/least-common-multiple-2.lisp": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -2703,6 +2853,7 @@
 "built": [
 "Least-common-multiple"
 ],
+"canonical": [],
 "got": "Least-common-multiple",
 "held": [],
 "held_trace": [],
@@ -2717,6 +2868,7 @@
 },
 "Task/Least-common-multiple/Python/least-common-multiple-1.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -2729,6 +2881,7 @@
 },
 "Task/Least-common-multiple/Python/least-common-multiple-2.py": {
 "built": [],
+"canonical": [],
 "got": "Least-common-multiple",
 "held": [],
 "held_trace": [],
@@ -2746,6 +2899,7 @@
 },
 "Task/Least-common-multiple/Python/least-common-multiple-3.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -2762,6 +2916,7 @@
 "built": [
 "Least-common-multiple"
 ],
+"canonical": [],
 "got": "Least-common-multiple",
 "held": [],
 "held_trace": [],
@@ -2779,6 +2934,7 @@
 },
 "Task/Least-common-multiple/Python/least-common-multiple-5.py": {
 "built": [],
+"canonical": [],
 "got": "Least-common-multiple",
 "held": [
 "least_common_multiple"
@@ -2799,6 +2955,7 @@
 "built": [
 "Levenshtein-distance"
 ],
+"canonical": [],
 "got": "Levenshtein-distance",
 "held": [],
 "held_trace": [],
@@ -2815,6 +2972,7 @@
 "built": [
 "Levenshtein-distance"
 ],
+"canonical": [],
 "got": "Levenshtein-distance",
 "held": [],
 "held_trace": [],
@@ -2830,6 +2988,7 @@
 },
 "Task/Levenshtein-distance/Common-Lisp/levenshtein-distance.lisp": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -2845,6 +3004,7 @@
 },
 "Task/Levenshtein-distance/Haskell/levenshtein-distance-1.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -2859,6 +3019,7 @@
 },
 "Task/Levenshtein-distance/Haskell/levenshtein-distance-2.hs": {
 "built": [],
+"canonical": [],
 "got": "Levenshtein-distance",
 "held": [
 "levenshtein_distance"
@@ -2877,6 +3038,7 @@
 },
 "Task/Levenshtein-distance/Python/levenshtein-distance-1.py": {
 "built": [],
+"canonical": [],
 "got": "Levenshtein-distance",
 "held": [
 "levenshtein_distance"
@@ -2895,6 +3057,7 @@
 },
 "Task/Levenshtein-distance/Python/levenshtein-distance-2.py": {
 "built": [],
+"canonical": [],
 "got": "Levenshtein-distance",
 "held": [
 "levenshtein_distance"
@@ -2915,6 +3078,7 @@
 "built": [
 "Levenshtein-distance"
 ],
+"canonical": [],
 "got": "Levenshtein-distance",
 "held": [],
 "held_trace": [],
@@ -2933,6 +3097,7 @@
 "built": [
 "Levenshtein-distance"
 ],
+"canonical": [],
 "got": "Levenshtein-distance",
 "held": [],
 "held_trace": [],
@@ -2949,6 +3114,7 @@
 },
 "Task/Levenshtein-distance/Python/levenshtein-distance-5.py": {
 "built": [],
+"canonical": [],
 "got": "Levenshtein-distance",
 "held": [
 "levenshtein_distance"
@@ -2968,6 +3134,7 @@
 },
 "Task/Longest-common-subsequence/C/longest-common-subsequence-1.c": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -2982,6 +3149,7 @@
 },
 "Task/Longest-common-subsequence/C/longest-common-subsequence-2.c": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -2996,6 +3164,7 @@
 "built": [
 "Longest-common-subsequence"
 ],
+"canonical": [],
 "got": "Longest-common-subsequence",
 "held": [],
 "held_trace": [],
@@ -3017,6 +3186,7 @@
 },
 "Task/Longest-common-subsequence/Common-Lisp/longest-common-subsequence-3.lisp": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -3031,6 +3201,7 @@
 "built": [
 "Longest-common-subsequence"
 ],
+"canonical": [],
 "got": "Longest-common-subsequence",
 "held": [],
 "held_trace": [],
@@ -3053,6 +3224,7 @@
 "built": [
 "Longest-common-subsequence"
 ],
+"canonical": [],
 "got": "Longest-common-subsequence",
 "held": [],
 "held_trace": [],
@@ -3070,6 +3242,7 @@
 "built": [
 "Longest-common-subsequence"
 ],
+"canonical": [],
 "got": "Longest-common-subsequence",
 "held": [],
 "held_trace": [],
@@ -3085,6 +3258,7 @@
 },
 "Task/Longest-common-subsequence/Haskell/longest-common-subsequence-3.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -3104,6 +3278,7 @@
 },
 "Task/Longest-common-subsequence/Haskell/longest-common-subsequence-5.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -3118,6 +3293,7 @@
 },
 "Task/Longest-common-subsequence/Haskell/longest-common-subsequence-6.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -3130,6 +3306,7 @@
 },
 "Task/Longest-common-subsequence/Python/longest-common-subsequence-1.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -3149,6 +3326,7 @@
 },
 "Task/Longest-common-subsequence/Python/longest-common-subsequence-3.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -3164,6 +3342,7 @@
 },
 "Task/Luhn-test-of-credit-card-numbers/C/luhn-test-of-credit-card-numbers.c": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -3178,6 +3357,7 @@
 },
 "Task/Luhn-test-of-credit-card-numbers/Common-Lisp/luhn-test-of-credit-card-numbers-1.lisp": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -3192,6 +3372,7 @@
 },
 "Task/Luhn-test-of-credit-card-numbers/Common-Lisp/luhn-test-of-credit-card-numbers-2.lisp": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -3204,6 +3385,7 @@
 },
 "Task/Luhn-test-of-credit-card-numbers/Haskell/luhn-test-of-credit-card-numbers-1.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -3221,6 +3403,7 @@
 },
 "Task/Luhn-test-of-credit-card-numbers/Haskell/luhn-test-of-credit-card-numbers-3.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -3235,6 +3418,7 @@
 },
 "Task/Luhn-test-of-credit-card-numbers/Python/luhn-test-of-credit-card-numbers-1.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -3249,6 +3433,7 @@
 },
 "Task/Luhn-test-of-credit-card-numbers/Python/luhn-test-of-credit-card-numbers-2.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -3261,6 +3446,7 @@
 },
 "Task/Luhn-test-of-credit-card-numbers/Python/luhn-test-of-credit-card-numbers-3.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -3277,6 +3463,7 @@
 "built": [
 "Luhn-test-of-credit-card-numbers"
 ],
+"canonical": [],
 "got": "Luhn-test-of-credit-card-numbers",
 "held": [
 "circular_linked_list",
@@ -3302,6 +3489,7 @@
 },
 "Task/N-queens-problem/C/n-queens-problem-1.c": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -3316,6 +3504,7 @@
 "built": [
 "N-queens-problem"
 ],
+"canonical": [],
 "got": "N-queens-problem",
 "held": [],
 "held_trace": [],
@@ -3331,6 +3520,7 @@
 },
 "Task/N-queens-problem/C/n-queens-problem-3.c": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -3347,6 +3537,7 @@
 "built": [
 "N-queens-problem"
 ],
+"canonical": [],
 "got": "N-queens-problem",
 "held": [],
 "held_trace": [],
@@ -3363,6 +3554,7 @@
 "built": [
 "N-queens-problem"
 ],
+"canonical": [],
 "got": "N-queens-problem",
 "held": [],
 "held_trace": [],
@@ -3377,6 +3569,7 @@
 },
 "Task/N-queens-problem/Common-Lisp/n-queens-problem-1.lisp": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -3394,6 +3587,7 @@
 "built": [
 "N-queens-problem"
 ],
+"canonical": [],
 "got": "N-queens-problem",
 "held": [],
 "held_trace": [],
@@ -3410,6 +3604,7 @@
 "built": [
 "N-queens-problem"
 ],
+"canonical": [],
 "got": "N-queens-problem",
 "held": [],
 "held_trace": [],
@@ -3425,6 +3620,7 @@
 },
 "Task/N-queens-problem/Haskell/n-queens-problem-1.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -3439,6 +3635,7 @@
 "built": [
 "N-queens-problem"
 ],
+"canonical": [],
 "got": "N-queens-problem",
 "held": [],
 "held_trace": [],
@@ -3455,6 +3652,7 @@
 "built": [
 "N-queens-problem"
 ],
+"canonical": [],
 "got": "N-queens-problem",
 "held": [],
 "held_trace": [],
@@ -3471,6 +3669,7 @@
 "built": [
 "N-queens-problem"
 ],
+"canonical": [],
 "got": "N-queens-problem",
 "held": [],
 "held_trace": [],
@@ -3488,6 +3687,7 @@
 "built": [
 "N-queens-problem"
 ],
+"canonical": [],
 "got": "N-queens-problem",
 "held": [],
 "held_trace": [],
@@ -3511,6 +3711,7 @@
 "built": [
 "N-queens-problem"
 ],
+"canonical": [],
 "got": "N-queens-problem",
 "held": [],
 "held_trace": [],
@@ -3525,6 +3726,7 @@
 },
 "Task/N-queens-problem/Python/n-queens-problem-10.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -3537,6 +3739,7 @@
 },
 "Task/N-queens-problem/Python/n-queens-problem-2.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -3551,6 +3754,7 @@
 "built": [
 "N-queens-problem"
 ],
+"canonical": [],
 "got": "N-queens-problem",
 "held": [],
 "held_trace": [],
@@ -3567,6 +3771,7 @@
 "built": [
 "N-queens-problem"
 ],
+"canonical": [],
 "got": "N-queens-problem",
 "held": [],
 "held_trace": [],
@@ -3583,6 +3788,7 @@
 "built": [
 "N-queens-problem"
 ],
+"canonical": [],
 "got": "N-queens-problem",
 "held": [],
 "held_trace": [],
@@ -3600,6 +3806,7 @@
 "built": [
 "N-queens-problem"
 ],
+"canonical": [],
 "got": "N-queens-problem",
 "held": [],
 "held_trace": [],
@@ -3617,6 +3824,7 @@
 "built": [
 "N-queens-problem"
 ],
+"canonical": [],
 "got": "N-queens-problem",
 "held": [],
 "held_trace": [],
@@ -3634,6 +3842,7 @@
 "built": [
 "N-queens-problem"
 ],
+"canonical": [],
 "got": "N-queens-problem",
 "held": [],
 "held_trace": [],
@@ -3650,6 +3859,7 @@
 },
 "Task/N-queens-problem/Python/n-queens-problem-9.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -3665,6 +3875,7 @@
 },
 "Task/Palindrome-detection/C/palindrome-detection-1.c": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -3677,6 +3888,7 @@
 },
 "Task/Palindrome-detection/C/palindrome-detection-2.c": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -3689,6 +3901,7 @@
 },
 "Task/Palindrome-detection/C/palindrome-detection-3.c": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -3701,6 +3914,7 @@
 },
 "Task/Palindrome-detection/C/palindrome-detection-4.c": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -3715,6 +3929,7 @@
 "built": [
 "Palindrome-detection"
 ],
+"canonical": [],
 "got": "Palindrome-detection",
 "held": [],
 "held_trace": [],
@@ -3731,6 +3946,7 @@
 "built": [
 "Palindrome-detection"
 ],
+"canonical": [],
 "got": "Palindrome-detection",
 "held": [],
 "held_trace": [],
@@ -3747,6 +3963,7 @@
 "built": [
 "Palindrome-detection"
 ],
+"canonical": [],
 "got": "Palindrome-detection",
 "held": [],
 "held_trace": [],
@@ -3764,6 +3981,7 @@
 },
 "Task/Palindrome-detection/Haskell/palindrome-detection-2.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -3778,6 +3996,7 @@
 },
 "Task/Palindrome-detection/Haskell/palindrome-detection-3.hs": {
 "built": [],
+"canonical": [],
 "got": "Palindrome-detection",
 "held": [
 "palindrome"
@@ -3801,6 +4020,7 @@
 "built": [
 "Palindrome-detection"
 ],
+"canonical": [],
 "got": "Palindrome-detection",
 "held": [],
 "held_trace": [],
@@ -3813,6 +4033,7 @@
 },
 "Task/Palindrome-detection/Python/palindrome-detection-2.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -3827,6 +4048,7 @@
 "built": [
 "Palindrome-detection"
 ],
+"canonical": [],
 "got": "Palindrome-detection",
 "held": [],
 "held_trace": [],
@@ -3846,6 +4068,7 @@
 "built": [
 "Palindrome-detection"
 ],
+"canonical": [],
 "got": "Palindrome-detection",
 "held": [],
 "held_trace": [],
@@ -3863,6 +4086,7 @@
 },
 "Task/Palindrome-detection/Python/palindrome-detection-5.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -3875,6 +4099,7 @@
 },
 "Task/Palindrome-detection/Python/palindrome-detection-6.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -3887,6 +4112,7 @@
 },
 "Task/Palindrome-detection/Python/palindrome-detection-7.py": {
 "built": [],
+"canonical": [],
 "got": "Palindrome-detection",
 "held": [
 "palindrome"
@@ -3906,6 +4132,7 @@
 },
 "Task/Palindrome-detection/Python/palindrome-detection-8.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -3920,6 +4147,7 @@
 "built": [
 "Perfect-numbers"
 ],
+"canonical": [],
 "got": "Perfect-numbers",
 "held": [],
 "held_trace": [],
@@ -3934,6 +4162,7 @@
 },
 "Task/Perfect-numbers/C/perfect-numbers-2.c": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -3948,6 +4177,7 @@
 "built": [
 "Perfect-numbers"
 ],
+"canonical": [],
 "got": "Perfect-numbers",
 "held": [],
 "held_trace": [],
@@ -3962,7 +4192,10 @@
 },
 "Task/Perfect-numbers/Haskell/perfect-numbers-1.hs": {
 "built": [],
-"got": "primelib",
+"canonical": [
+"perfect_number"
+],
+"got": "Perfect-numbers",
 "held": [],
 "held_trace": [],
 "io": [
@@ -3974,10 +4207,11 @@
 ],
 "specific": [],
 "task": "Perfect-numbers",
-"why": "io"
+"why": "canonical"
 },
 "Task/Perfect-numbers/Haskell/perfect-numbers-2.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -3992,6 +4226,7 @@
 },
 "Task/Perfect-numbers/Haskell/perfect-numbers-3.hs": {
 "built": [],
+"canonical": [],
 "got": "Perfect-numbers",
 "held": [],
 "held_trace": [],
@@ -4010,6 +4245,7 @@
 "built": [
 "Perfect-numbers"
 ],
+"canonical": [],
 "got": "Perfect-numbers",
 "held": [],
 "held_trace": [],
@@ -4026,6 +4262,7 @@
 },
 "Task/Perfect-numbers/Python/perfect-numbers-2.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4041,7 +4278,10 @@
 },
 "Task/Perfect-numbers/Python/perfect-numbers-3.py": {
 "built": [],
-"got": null,
+"canonical": [
+"perfect_number"
+],
+"got": "Perfect-numbers",
 "held": [],
 "held_trace": [],
 "io": [],
@@ -4051,10 +4291,11 @@
 ],
 "specific": [],
 "task": "Perfect-numbers",
-"why": "none"
+"why": "canonical"
 },
 "Task/Perfect-numbers/Python/perfect-numbers-4.py": {
 "built": [],
+"canonical": [],
 "got": "Perfect-numbers",
 "held": [],
 "held_trace": [],
@@ -4073,6 +4314,7 @@
 "built": [
 "Primality-by-trial-division"
 ],
+"canonical": [],
 "got": "Primality-by-trial-division",
 "held": [],
 "held_trace": [],
@@ -4089,6 +4331,7 @@
 "built": [
 "Primality-by-trial-division"
 ],
+"canonical": [],
 "got": "Primality-by-trial-division",
 "held": [
 "next_prime_number"
@@ -4112,6 +4355,7 @@
 "built": [
 "Primality-by-trial-division"
 ],
+"canonical": [],
 "got": "Primality-by-trial-division",
 "held": [],
 "held_trace": [],
@@ -4126,6 +4370,7 @@
 },
 "Task/Primality-by-trial-division/Common-Lisp/primality-by-trial-division-2.lisp": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4141,6 +4386,7 @@
 "Task/Primality-by-trial-division/Haskell/primality-by-trial-division-1.hs": {
 "at": "io",
 "built": [],
+"canonical": [],
 "clash": [
 "next_prime_number",
 "primelib",
@@ -4164,6 +4410,7 @@
 },
 "Task/Primality-by-trial-division/Haskell/primality-by-trial-division-2.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4179,6 +4426,7 @@
 "Task/Primality-by-trial-division/Haskell/primality-by-trial-division-3.hs": {
 "at": "io",
 "built": [],
+"canonical": [],
 "clash": [
 "next_prime_number",
 "primelib",
@@ -4202,6 +4450,7 @@
 },
 "Task/Primality-by-trial-division/Haskell/primality-by-trial-division-4.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4216,6 +4465,7 @@
 },
 "Task/Primality-by-trial-division/Python/primality-by-trial-division-1.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4230,6 +4480,7 @@
 },
 "Task/Primality-by-trial-division/Python/primality-by-trial-division-2.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4245,6 +4496,7 @@
 "Task/Primality-by-trial-division/Python/primality-by-trial-division-3.py": {
 "at": "io",
 "built": [],
+"canonical": [],
 "clash": [
 "next_prime_number",
 "primelib",
@@ -4268,6 +4520,7 @@
 },
 "Task/Primality-by-trial-division/Python/primality-by-trial-division-4.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4282,6 +4535,7 @@
 "built": [
 "Roman-numerals-Encode"
 ],
+"canonical": [],
 "got": "Roman-numerals-Encode",
 "held": [],
 "held_trace": [],
@@ -4299,6 +4553,7 @@
 "built": [
 "Roman-numerals-Encode"
 ],
+"canonical": [],
 "got": "Roman-numerals-Encode",
 "held": [],
 "held_trace": [],
@@ -4315,6 +4570,7 @@
 "built": [
 "Roman-numerals-Encode"
 ],
+"canonical": [],
 "got": "Roman-numerals-Encode",
 "held": [],
 "held_trace": [],
@@ -4329,6 +4585,7 @@
 },
 "Task/Roman-numerals-Encode/Haskell/roman-numerals-encode-1.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4341,6 +4598,7 @@
 },
 "Task/Roman-numerals-Encode/Haskell/roman-numerals-encode-2.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4355,6 +4613,7 @@
 },
 "Task/Roman-numerals-Encode/Haskell/roman-numerals-encode-3.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4367,6 +4626,7 @@
 },
 "Task/Roman-numerals-Encode/Python/roman-numerals-encode-1.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4379,6 +4639,7 @@
 },
 "Task/Roman-numerals-Encode/Python/roman-numerals-encode-2.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4393,6 +4654,7 @@
 },
 "Task/Roman-numerals-Encode/Python/roman-numerals-encode-3.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4407,6 +4669,7 @@
 },
 "Task/Roman-numerals-Encode/Python/roman-numerals-encode-4.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4421,6 +4684,7 @@
 },
 "Task/Roman-numerals-Encode/Python/roman-numerals-encode-5.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4433,6 +4697,7 @@
 },
 "Task/Roman-numerals-Encode/Python/roman-numerals-encode-6.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4447,6 +4712,7 @@
 },
 "Task/Roman-numerals-Encode/Python/roman-numerals-encode-7.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4459,6 +4725,7 @@
 },
 "Task/Roman-numerals-Encode/Python/roman-numerals-encode-8.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4473,6 +4740,7 @@
 },
 "Task/Run-length-encoding/C/run-length-encoding.c": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4489,6 +4757,7 @@
 "built": [
 "Run-length-encoding"
 ],
+"canonical": [],
 "got": "Run-length-encoding",
 "held": [],
 "held_trace": [],
@@ -4506,6 +4775,7 @@
 "built": [
 "Run-length-encoding"
 ],
+"canonical": [],
 "got": "Run-length-encoding",
 "held": [],
 "held_trace": [],
@@ -4522,6 +4792,7 @@
 "built": [
 "Run-length-encoding"
 ],
+"canonical": [],
 "got": "Run-length-encoding",
 "held": [],
 "held_trace": [],
@@ -4538,6 +4809,7 @@
 "built": [
 "Run-length-encoding"
 ],
+"canonical": [],
 "got": "Run-length-encoding",
 "held": [],
 "held_trace": [],
@@ -4553,6 +4825,7 @@
 },
 "Task/Run-length-encoding/Haskell/run-length-encoding-4.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4568,6 +4841,7 @@
 },
 "Task/Run-length-encoding/Python/run-length-encoding-1.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4582,6 +4856,7 @@
 },
 "Task/Run-length-encoding/Python/run-length-encoding-2.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4596,6 +4871,7 @@
 },
 "Task/Run-length-encoding/Python/run-length-encoding-3.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4610,6 +4886,7 @@
 "built": [
 "Sieve-of-Eratosthenes"
 ],
+"canonical": [],
 "got": "Sieve-of-Eratosthenes",
 "held": [],
 "held_trace": [],
@@ -4622,6 +4899,7 @@
 },
 "Task/Sieve-of-Eratosthenes/C/sieve-of-eratosthenes-2.c": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4643,6 +4921,7 @@
 "built": [
 "Sieve-of-Eratosthenes"
 ],
+"canonical": [],
 "got": "Sieve-of-Eratosthenes",
 "held": [],
 "held_trace": [],
@@ -4657,6 +4936,7 @@
 },
 "Task/Sieve-of-Eratosthenes/Common-Lisp/sieve-of-eratosthenes-2.lisp": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4671,6 +4951,7 @@
 },
 "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-1.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4683,6 +4964,7 @@
 },
 "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-10.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4697,6 +4979,7 @@
 },
 "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-11.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4711,6 +4994,7 @@
 },
 "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-12.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4726,6 +5010,7 @@
 },
 "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-13.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4738,6 +5023,7 @@
 },
 "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-14.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4753,6 +5039,7 @@
 },
 "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-15.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4767,6 +5054,7 @@
 },
 "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-16.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4782,6 +5070,7 @@
 },
 "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-17.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4796,6 +5085,7 @@
 },
 "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-18.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4811,6 +5101,7 @@
 },
 "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-19.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4825,6 +5116,7 @@
 },
 "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-2.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4837,6 +5129,7 @@
 },
 "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-20.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4876,6 +5169,7 @@
 },
 "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-3.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4893,6 +5187,7 @@
 },
 "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-5.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4908,6 +5203,7 @@
 },
 "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-6.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4920,6 +5216,7 @@
 },
 "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-7.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4935,6 +5232,7 @@
 },
 "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-8.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4947,6 +5245,7 @@
 },
 "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-9.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4959,6 +5258,7 @@
 },
 "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-1.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4973,6 +5273,7 @@
 },
 "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-10.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4985,6 +5286,7 @@
 },
 "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-11.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -4999,6 +5301,7 @@
 },
 "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-12.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -5011,6 +5314,7 @@
 },
 "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-13.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -5023,6 +5327,7 @@
 },
 "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-14.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -5037,6 +5342,7 @@
 },
 "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-15.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -5051,6 +5357,7 @@
 },
 "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-16.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -5067,6 +5374,7 @@
 "built": [
 "Sieve-of-Eratosthenes"
 ],
+"canonical": [],
 "got": "Sieve-of-Eratosthenes",
 "held": [
 "prime_sieve_eratosthenes",
@@ -5099,6 +5407,7 @@
 "built": [
 "Sieve-of-Eratosthenes"
 ],
+"canonical": [],
 "got": "Sieve-of-Eratosthenes",
 "held": [],
 "held_trace": [],
@@ -5113,6 +5422,7 @@
 },
 "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-4.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -5125,6 +5435,7 @@
 },
 "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-5.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -5137,6 +5448,7 @@
 },
 "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-6.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -5151,6 +5463,7 @@
 },
 "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-7.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -5165,6 +5478,7 @@
 },
 "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-8.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -5178,6 +5492,7 @@
 "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-9.py": {
 "at": "io",
 "built": [],
+"canonical": [],
 "clash": [
 "closest_pair_of_points",
 "msd_radix_sort",
@@ -5209,6 +5524,7 @@
 "built": [
 "Sorting-algorithms-Bubble-sort"
 ],
+"canonical": [],
 "got": "Sorting-algorithms-Bubble-sort",
 "held": [],
 "held_trace": [
@@ -5230,6 +5546,7 @@
 },
 "Task/Sorting-algorithms-Bubble-sort/Common-Lisp/sorting-algorithms-bubble-sort-1.lisp": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -5251,6 +5568,7 @@
 "built": [
 "Sorting-algorithms-Bubble-sort"
 ],
+"canonical": [],
 "got": "Sorting-algorithms-Bubble-sort",
 "held": [],
 "held_trace": [],
@@ -5267,6 +5585,7 @@
 "Task/Sorting-algorithms-Bubble-sort/Haskell/sorting-algorithms-bubble-sort-1.hs": {
 "at": "learned",
 "built": [],
+"canonical": [],
 "clash": [
 "Sorting-algorithms-Bubble-sort",
 "Sorting-algorithms-Cocktail-sort",
@@ -5336,6 +5655,7 @@
 },
 "Task/Sorting-algorithms-Bubble-sort/Haskell/sorting-algorithms-bubble-sort-2.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -5350,6 +5670,7 @@
 },
 "Task/Sorting-algorithms-Bubble-sort/Haskell/sorting-algorithms-bubble-sort-3.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -5367,6 +5688,7 @@
 "built": [
 "Sorting-algorithms-Bubble-sort"
 ],
+"canonical": [],
 "got": "Sorting-algorithms-Bubble-sort",
 "held": [
 "bubble_sort",
@@ -5433,6 +5755,7 @@
 },
 "Task/Sorting-algorithms-Cocktail-sort/C/sorting-algorithms-cocktail-sort-1.c": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -5452,6 +5775,7 @@
 },
 "Task/Sorting-algorithms-Cocktail-sort/C/sorting-algorithms-cocktail-sort-3.c": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -5466,6 +5790,7 @@
 },
 "Task/Sorting-algorithms-Cocktail-sort/Common-Lisp/sorting-algorithms-cocktail-sort.lisp": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -5481,6 +5806,7 @@
 },
 "Task/Sorting-algorithms-Cocktail-sort/Haskell/sorting-algorithms-cocktail-sort.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -5498,6 +5824,7 @@
 "built": [
 "Sorting-algorithms-Cocktail-sort"
 ],
+"canonical": [],
 "got": "Sorting-algorithms-Cocktail-sort",
 "held": [
 "adaptive_merge_sort",
@@ -5556,6 +5883,7 @@
 },
 "Task/Sorting-algorithms-Cocktail-sort/Python/sorting-algorithms-cocktail-sort-2.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -5570,6 +5898,7 @@
 "built": [
 "Sorting-algorithms-Cocktail-sort"
 ],
+"canonical": [],
 "got": "Sorting-algorithms-Cocktail-sort",
 "held": [
 "bubble_sort",
@@ -5630,6 +5959,7 @@
 },
 "Task/Sorting-algorithms-Comb-sort/C/sorting-algorithms-comb-sort.c": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -5646,6 +5976,7 @@
 "built": [
 "Sorting-algorithms-Comb-sort"
 ],
+"canonical": [],
 "got": "Sorting-algorithms-Comb-sort",
 "held": [],
 "held_trace": [],
@@ -5660,6 +5991,7 @@
 },
 "Task/Sorting-algorithms-Comb-sort/Haskell/sorting-algorithms-comb-sort-1.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -5681,6 +6013,7 @@
 "built": [
 "Sorting-algorithms-Comb-sort"
 ],
+"canonical": [],
 "got": "Sorting-algorithms-Comb-sort",
 "held": [
 "adaptive_merge_sort",
@@ -5741,6 +6074,7 @@
 "built": [
 "Sorting-algorithms-Counting-sort"
 ],
+"canonical": [],
 "got": "Sorting-algorithms-Counting-sort",
 "held": [],
 "held_trace": [],
@@ -5755,6 +6089,7 @@
 },
 "Task/Sorting-algorithms-Counting-sort/C/sorting-algorithms-counting-sort-2.c": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -5767,6 +6102,7 @@
 },
 "Task/Sorting-algorithms-Counting-sort/Common-Lisp/sorting-algorithms-counting-sort.lisp": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -5782,6 +6118,7 @@
 },
 "Task/Sorting-algorithms-Counting-sort/Haskell/sorting-algorithms-counting-sort.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -5796,6 +6133,7 @@
 "built": [
 "Sorting-algorithms-Counting-sort"
 ],
+"canonical": [],
 "got": "Sorting-algorithms-Counting-sort",
 "held": [],
 "held_trace": [],
@@ -5810,6 +6148,7 @@
 },
 "Task/Sorting-algorithms-Counting-sort/Python/sorting-algorithms-counting-sort-2.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -5824,6 +6163,7 @@
 },
 "Task/Sorting-algorithms-Cycle-sort/C/sorting-algorithms-cycle-sort.c": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -5839,6 +6179,7 @@
 },
 "Task/Sorting-algorithms-Cycle-sort/Python/sorting-algorithms-cycle-sort.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -5855,6 +6196,7 @@
 "built": [
 "Sorting-algorithms-Gnome-sort"
 ],
+"canonical": [],
 "got": "Sorting-algorithms-Gnome-sort",
 "held": [],
 "held_trace": [],
@@ -5872,6 +6214,7 @@
 "built": [
 "Sorting-algorithms-Gnome-sort"
 ],
+"canonical": [],
 "got": "Sorting-algorithms-Gnome-sort",
 "held": [],
 "held_trace": [],
@@ -5887,6 +6230,7 @@
 "Task/Sorting-algorithms-Gnome-sort/Haskell/sorting-algorithms-gnome-sort.hs": {
 "at": "learned",
 "built": [],
+"canonical": [],
 "clash": [
 "Sorting-algorithms-Insertion-sort",
 "Sorting-algorithms-Merge-sort",
@@ -5951,6 +6295,7 @@
 "built": [
 "Sorting-algorithms-Gnome-sort"
 ],
+"canonical": [],
 "got": "Sorting-algorithms-Gnome-sort",
 "held": [
 "adaptive_merge_sort",
@@ -6009,6 +6354,7 @@
 },
 "Task/Sorting-algorithms-Heapsort/C/sorting-algorithms-heapsort.c": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -6027,6 +6373,7 @@
 "built": [
 "Sorting-algorithms-Heapsort"
 ],
+"canonical": [],
 "got": "Sorting-algorithms-Heapsort",
 "held": [],
 "held_trace": [],
@@ -6051,6 +6398,7 @@
 },
 "Task/Sorting-algorithms-Heapsort/Haskell/sorting-algorithms-heapsort-1.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -6070,6 +6418,7 @@
 },
 "Task/Sorting-algorithms-Heapsort/Haskell/sorting-algorithms-heapsort-3.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -6089,6 +6438,7 @@
 "built": [
 "Sorting-algorithms-Heapsort"
 ],
+"canonical": [],
 "got": "Sorting-algorithms-Heapsort",
 "held": [],
 "held_trace": [],
@@ -6106,6 +6456,7 @@
 "built": [
 "Sorting-algorithms-Insertion-sort"
 ],
+"canonical": [],
 "got": "Sorting-algorithms-Insertion-sort",
 "held": [
 "insertion_sort",
@@ -6163,6 +6514,7 @@
 },
 "Task/Sorting-algorithms-Insertion-sort/Common-Lisp/sorting-algorithms-insertion-sort-1.lisp": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -6175,6 +6527,7 @@
 },
 "Task/Sorting-algorithms-Insertion-sort/Common-Lisp/sorting-algorithms-insertion-sort-2.lisp": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -6189,6 +6542,7 @@
 },
 "Task/Sorting-algorithms-Insertion-sort/Common-Lisp/sorting-algorithms-insertion-sort-3.lisp": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -6203,6 +6557,7 @@
 },
 "Task/Sorting-algorithms-Insertion-sort/Haskell/sorting-algorithms-insertion-sort.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -6217,6 +6572,7 @@
 "built": [
 "Sorting-algorithms-Insertion-sort"
 ],
+"canonical": [],
 "got": "Sorting-algorithms-Insertion-sort",
 "held": [
 "insertion_sort",
@@ -6275,6 +6631,7 @@
 "Task/Sorting-algorithms-Insertion-sort/Python/sorting-algorithms-insertion-sort-2.py": {
 "at": "learned",
 "built": [],
+"canonical": [],
 "clash": [
 "Sorting-algorithms-Insertion-sort",
 "Sorting-algorithms-Merge-sort",
@@ -6341,6 +6698,7 @@
 "Task/Sorting-algorithms-Insertion-sort/Python/sorting-algorithms-insertion-sort-3.py": {
 "at": "learned",
 "built": [],
+"canonical": [],
 "clash": [
 "Sorting-algorithms-Insertion-sort",
 "Sorting-algorithms-Merge-sort",
@@ -6403,6 +6761,7 @@
 },
 "Task/Sorting-algorithms-Insertion-sort/Python/sorting-algorithms-insertion-sort-4.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -6417,6 +6776,7 @@
 "built": [
 "Sorting-algorithms-Merge-sort"
 ],
+"canonical": [],
 "got": "Sorting-algorithms-Merge-sort",
 "held": [],
 "held_trace": [],
@@ -6431,6 +6791,7 @@
 },
 "Task/Sorting-algorithms-Merge-sort/C/sorting-algorithms-merge-sort-2.c": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -6445,6 +6806,7 @@
 },
 "Task/Sorting-algorithms-Merge-sort/Common-Lisp/sorting-algorithms-merge-sort.lisp": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -6460,6 +6822,7 @@
 "Task/Sorting-algorithms-Merge-sort/Haskell/sorting-algorithms-merge-sort-1.hs": {
 "at": "learned",
 "built": [],
+"canonical": [],
 "clash": [
 "Sorting-algorithms-Cycle-sort",
 "Sorting-algorithms-Insertion-sort",
@@ -6525,6 +6888,7 @@
 },
 "Task/Sorting-algorithms-Merge-sort/Haskell/sorting-algorithms-merge-sort-2.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -6540,6 +6904,7 @@
 },
 "Task/Sorting-algorithms-Merge-sort/Haskell/sorting-algorithms-merge-sort-3.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -6554,6 +6919,7 @@
 },
 "Task/Sorting-algorithms-Merge-sort/Python/sorting-algorithms-merge-sort-1.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -6568,6 +6934,7 @@
 },
 "Task/Sorting-algorithms-Merge-sort/Python/sorting-algorithms-merge-sort-2.py": {
 "built": [],
+"canonical": [],
 "got": "Sorting-algorithms-Merge-sort",
 "held": [],
 "held_trace": [],
@@ -6586,6 +6953,7 @@
 "built": [
 "Sorting-algorithms-Merge-sort"
 ],
+"canonical": [],
 "got": "Sorting-algorithms-Merge-sort",
 "held": [],
 "held_trace": [],
@@ -6604,6 +6972,7 @@
 },
 "Task/Sorting-algorithms-Pancake-sort/C/sorting-algorithms-pancake-sort-1.c": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -6618,6 +6987,7 @@
 },
 "Task/Sorting-algorithms-Pancake-sort/C/sorting-algorithms-pancake-sort-2.c": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -6632,6 +7002,7 @@
 },
 "Task/Sorting-algorithms-Pancake-sort/C/sorting-algorithms-pancake-sort-3.c": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -6644,6 +7015,7 @@
 },
 "Task/Sorting-algorithms-Pancake-sort/Common-Lisp/sorting-algorithms-pancake-sort-1.lisp": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -6663,6 +7035,7 @@
 },
 "Task/Sorting-algorithms-Pancake-sort/Haskell/sorting-algorithms-pancake-sort-1.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -6682,6 +7055,7 @@
 },
 "Task/Sorting-algorithms-Pancake-sort/Python/sorting-algorithms-pancake-sort-1.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -6701,6 +7075,7 @@
 },
 "Task/Sorting-algorithms-Quicksort/C/sorting-algorithms-quicksort-1.c": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -6715,6 +7090,7 @@
 },
 "Task/Sorting-algorithms-Quicksort/C/sorting-algorithms-quicksort-2.c": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -6731,6 +7107,7 @@
 "built": [
 "Sorting-algorithms-Quicksort"
 ],
+"canonical": [],
 "got": "Sorting-algorithms-Quicksort",
 "held": [],
 "held_trace": [],
@@ -6747,6 +7124,7 @@
 "built": [
 "Sorting-algorithms-Quicksort"
 ],
+"canonical": [],
 "got": "Sorting-algorithms-Quicksort",
 "held": [],
 "held_trace": [],
@@ -6761,6 +7139,7 @@
 },
 "Task/Sorting-algorithms-Quicksort/Common-Lisp/sorting-algorithms-quicksort-3.lisp": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -6779,6 +7158,7 @@
 "built": [
 "Sorting-algorithms-Quicksort"
 ],
+"canonical": [],
 "got": "Sorting-algorithms-Quicksort",
 "held": [],
 "held_trace": [],
@@ -6796,6 +7176,7 @@
 "built": [
 "Sorting-algorithms-Quicksort"
 ],
+"canonical": [],
 "got": "Sorting-algorithms-Quicksort",
 "held": [
 "circle_sort",
@@ -6854,6 +7235,7 @@
 "built": [
 "Sorting-algorithms-Quicksort"
 ],
+"canonical": [],
 "got": "Sorting-algorithms-Quicksort",
 "held": [],
 "held_trace": [],
@@ -6870,6 +7252,7 @@
 "built": [
 "Sorting-algorithms-Quicksort"
 ],
+"canonical": [],
 "got": "Sorting-algorithms-Quicksort",
 "held": [
 "circle_sort",
@@ -6930,6 +7313,7 @@
 "built": [
 "Sorting-algorithms-Quicksort"
 ],
+"canonical": [],
 "got": "Sorting-algorithms-Quicksort",
 "held": [
 "circle_sort",
@@ -6990,6 +7374,7 @@
 "built": [
 "Sorting-algorithms-Quicksort"
 ],
+"canonical": [],
 "got": "Sorting-algorithms-Quicksort",
 "held": [
 "circle_sort",
@@ -7048,6 +7433,7 @@
 "built": [
 "Sorting-algorithms-Quicksort"
 ],
+"canonical": [],
 "got": "Sorting-algorithms-Quicksort",
 "held": [],
 "held_trace": [],
@@ -7062,6 +7448,7 @@
 },
 "Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-5.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -7078,6 +7465,7 @@
 "built": [
 "Sorting-algorithms-Quicksort"
 ],
+"canonical": [],
 "got": "Sorting-algorithms-Quicksort",
 "held": [],
 "held_trace": [],
@@ -7093,6 +7481,7 @@
 "Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-7.py": {
 "at": "learned",
 "built": [],
+"canonical": [],
 "clash": [
 "Sorting-algorithms-Insertion-sort",
 "Sorting-algorithms-Merge-sort",
@@ -7155,6 +7544,7 @@
 },
 "Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-8.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -7171,6 +7561,7 @@
 "built": [
 "Sorting-algorithms-Selection-sort"
 ],
+"canonical": [],
 "got": "Sorting-algorithms-Selection-sort",
 "held": [],
 "held_trace": [],
@@ -7187,6 +7578,7 @@
 "built": [
 "Sorting-algorithms-Selection-sort"
 ],
+"canonical": [],
 "got": "Sorting-algorithms-Selection-sort",
 "held": [],
 "held_trace": [],
@@ -7203,6 +7595,7 @@
 },
 "Task/Sorting-algorithms-Selection-sort/Haskell/sorting-algorithms-selection-sort-1.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -7217,6 +7610,7 @@
 },
 "Task/Sorting-algorithms-Selection-sort/Haskell/sorting-algorithms-selection-sort-2.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -7232,6 +7626,7 @@
 "Task/Sorting-algorithms-Selection-sort/Haskell/sorting-algorithms-selection-sort-3.hs": {
 "at": "learned",
 "built": [],
+"canonical": [],
 "clash": [
 "Sorting-algorithms-Cycle-sort",
 "Sorting-algorithms-Insertion-sort",
@@ -7297,6 +7692,7 @@
 },
 "Task/Sorting-algorithms-Selection-sort/Python/sorting-algorithms-selection-sort.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -7313,6 +7709,7 @@
 "built": [
 "Sorting-algorithms-Shell-sort"
 ],
+"canonical": [],
 "got": "Sorting-algorithms-Shell-sort",
 "held": [],
 "held_trace": [],
@@ -7329,6 +7726,7 @@
 "built": [
 "Sorting-algorithms-Shell-sort"
 ],
+"canonical": [],
 "got": "Sorting-algorithms-Shell-sort",
 "held": [],
 "held_trace": [],
@@ -7344,6 +7742,7 @@
 },
 "Task/Sorting-algorithms-Shell-sort/Haskell/sorting-algorithms-shell-sort.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -7358,6 +7757,7 @@
 },
 "Task/Sorting-algorithms-Shell-sort/Python/sorting-algorithms-shell-sort.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -7374,6 +7774,7 @@
 "built": [
 "Sorting-algorithms-Stooge-sort"
 ],
+"canonical": [],
 "got": "Sorting-algorithms-Stooge-sort",
 "held": [],
 "held_trace": [],
@@ -7390,6 +7791,7 @@
 "built": [
 "Sorting-algorithms-Stooge-sort"
 ],
+"canonical": [],
 "got": "Sorting-algorithms-Stooge-sort",
 "held": [],
 "held_trace": [],
@@ -7404,6 +7806,7 @@
 },
 "Task/Sorting-algorithms-Stooge-sort/Haskell/sorting-algorithms-stooge-sort-1.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -7426,6 +7829,7 @@
 "built": [
 "Sorting-algorithms-Stooge-sort"
 ],
+"canonical": [],
 "got": "Sorting-algorithms-Stooge-sort",
 "held": [
 "stooge_sort"
@@ -7446,6 +7850,7 @@
 "built": [
 "Sorting-algorithms-Stooge-sort"
 ],
+"canonical": [],
 "got": "Sorting-algorithms-Stooge-sort",
 "held": [
 "stooge_sort"
@@ -7501,6 +7906,7 @@
 },
 "Task/Sum-digits-of-an-integer/C/sum-digits-of-an-integer.c": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -7515,6 +7921,7 @@
 },
 "Task/Sum-digits-of-an-integer/Common-Lisp/sum-digits-of-an-integer-1.lisp": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -7535,6 +7942,7 @@
 "Task/Sum-digits-of-an-integer/Haskell/sum-digits-of-an-integer-1.hs": {
 "at": "trace",
 "built": [],
+"canonical": [],
 "clash": [
 "capacitor_equivalence",
 "resistor_equivalence"
@@ -7559,6 +7967,7 @@
 },
 "Task/Sum-digits-of-an-integer/Haskell/sum-digits-of-an-integer-2.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -7571,6 +7980,7 @@
 },
 "Task/Sum-digits-of-an-integer/Haskell/sum-digits-of-an-integer-3.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -7583,6 +7993,7 @@
 },
 "Task/Sum-digits-of-an-integer/Python/sum-digits-of-an-integer-1.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -7597,6 +8008,7 @@
 },
 "Task/Sum-digits-of-an-integer/Python/sum-digits-of-an-integer-2.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -7611,6 +8023,7 @@
 },
 "Task/Sum-digits-of-an-integer/Python/sum-digits-of-an-integer-3.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -7625,6 +8038,7 @@
 },
 "Task/Sum-digits-of-an-integer/Python/sum-digits-of-an-integer-4.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -7642,6 +8056,7 @@
 "built": [
 "Towers-of-Hanoi"
 ],
+"canonical": [],
 "got": "Towers-of-Hanoi",
 "held": [],
 "held_trace": [],
@@ -7658,6 +8073,7 @@
 "built": [
 "Towers-of-Hanoi"
 ],
+"canonical": [],
 "got": "Towers-of-Hanoi",
 "held": [],
 "held_trace": [],
@@ -7674,6 +8090,7 @@
 "built": [
 "Towers-of-Hanoi"
 ],
+"canonical": [],
 "got": "Towers-of-Hanoi",
 "held": [],
 "held_trace": [],
@@ -7693,6 +8110,7 @@
 "Sorting-algorithms-Quicksort",
 "Towers-of-Hanoi"
 ],
+"canonical": [],
 "clash": [
 "Sorting-algorithms-Quicksort",
 "Towers-of-Hanoi"
@@ -7714,6 +8132,7 @@
 "built": [
 "Towers-of-Hanoi"
 ],
+"canonical": [],
 "got": "Towers-of-Hanoi",
 "held": [],
 "held_trace": [],
@@ -7728,6 +8147,7 @@
 },
 "Task/Towers-of-Hanoi/Haskell/towers-of-hanoi-3.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -7742,6 +8162,7 @@
 },
 "Task/Towers-of-Hanoi/Haskell/towers-of-hanoi-4.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -7756,6 +8177,7 @@
 },
 "Task/Towers-of-Hanoi/Haskell/towers-of-hanoi-5.hs": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -7772,6 +8194,7 @@
 "built": [
 "Towers-of-Hanoi"
 ],
+"canonical": [],
 "got": "Towers-of-Hanoi",
 "held": [],
 "held_trace": [],
@@ -7786,6 +8209,7 @@
 },
 "Task/Towers-of-Hanoi/Python/towers-of-hanoi-2.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],
@@ -7800,6 +8224,7 @@
 },
 "Task/Towers-of-Hanoi/Python/towers-of-hanoi-3.py": {
 "built": [],
+"canonical": [],
 "got": null,
 "held": [],
 "held_trace": [],

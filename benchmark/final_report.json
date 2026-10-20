@@ -1383,10 +1383,10 @@
   },
   "all": {
    "n": 450,
-   "ok": 183,
-   "unanswered": 266,
+   "ok": 185,
+   "unanswered": 265,
    "not_analysable": 242,
-   "wrong": 1
+   "wrong": 0
   },
   "Common-Lisp": {
    "n": 75,
@@ -1399,13 +1399,13 @@
    "n": 144,
    "unanswered": 109,
    "not_analysable": 102,
-   "ok": 34,
-   "wrong": 1
+   "ok": 35,
+   "wrong": 0
   },
   "Python": {
    "n": 162,
-   "ok": 72,
-   "unanswered": 90,
+   "ok": 73,
+   "unanswered": 89,
    "not_analysable": 77,
    "wrong": 0
   }

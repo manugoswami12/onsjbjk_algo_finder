@@ -12,7 +12,7 @@ other people's code from [Rosetta Code](https://rosettacode.org) in four languag
 | | correct | wrong | precision | recall |
 |---|---|---|---|---|
 | Code it learned from (1344 TheAlgorithms files) | 1344 | 0 | 100% | 100% |
-| New code it never saw (208 analysable Rosetta files) | 183 | 1 | 99.5% | 88.0% (40.7% of all 450 files) |
+| New code it never saw (208 analysable Rosetta files) | 185 | 0 | 100% | 88.9% (41.1% of all 450 files) |
 
 Recall counts the 208 files the system can evaluate. The other 242 held-out files are left out this round (fragments,
 and functions the evaluator cannot run yet); they are taken up when the code is upgraded.
@@ -21,7 +21,7 @@ Honest note on the new-code row: 12 hand-built branches of the tree (Ackermann, 
 run-length, N-queens, Josephus, leap year, LCS, Levenshtein, Roman numerals, Hanoi) were written from Rosetta
 files of these same tasks, because the Python examples cannot teach those forms. Without them, relearned from
 TheAlgorithms only, the pipeline names 114 of the 450 test files correctly and 10 wrongly (with them, before the
-conversion fixes of doc 04 section 19: 158 and 10; with them: 169 and 1).
+conversion fixes of doc 04 section 19: 158 and 10; with them: 171 and 0).
 
 The full report is in [benchmark/FINAL_REPORT.md](benchmark/FINAL_REPORT.md). "Analysable" is explained in
 [Reading the answers](#reading-the-answers).

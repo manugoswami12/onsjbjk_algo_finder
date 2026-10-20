@@ -4,7 +4,10 @@
      tier 2 built      a built or hand branch at the file's node (families_v02.pl, ta_rules.pl hand_branch/3)
      tier 3 trace      a learned branch holding with an exact trace (write trace, or AP13's traced logic)
      tier 4 learned    a learned branch holding with the behaviour (input -> output)
-     tier 5 io         the behaviour alone: the input -> output fallback
+     tier 5 canonical  traced logic in the canonical view (eval_ta.CanonicalLogic: the tree's facts, input checks as
+                       context, range bounds variables), where the literal view matches nothing, for a label learned
+                       at the file's own node (doc 04 section 19.13)
+     tier 6 io         the behaviour alone: the input -> output fallback
    The first tier that names anything decides: one group is the answer, several are UNKNOWN (ambiguous); a file whose
    evidence names nothing at any tier has no answer.
      decide_main -- Facts : GOT|Tier|Group, AMBIGUOUS|Tier|Group,Group,..., or NONE
@@ -17,7 +20,8 @@ tier(1, file_rule).
 tier(2, built).
 tier(3, trace).
 tier(4, learned).
-tier(5, io).
+tier(5, canonical).
+tier(6, io).
 
 grouped(L, G) :- ( group(L, G0) -> G = G0 ; G = L ).
 tier_groups(Tier, Gs) :- setof(G, L^( evidence(Tier, L), grouped(L, G) ), Gs).

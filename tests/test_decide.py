@@ -1,5 +1,5 @@
 """prolog/decide.pl through eval_ta.decide: the tiers are tried in tier/2's order (file rule, built, trace, learned,
-io); the first naming anything decides; several groups there are UNKNOWN; inside a tier no order counts."""
+canonical, io); the first naming anything decides; several groups there are UNKNOWN; inside a tier no order counts."""
 import sys
 import unittest
 from pathlib import Path
@@ -11,8 +11,9 @@ import eval_ta
 LABELS = {'a', 'b', 'c'}
 
 
-def decide(spec=(), built=(), trace=(), held=(), io=()):
-    out = {'nodes': [], 'held': list(held), 'held_trace': list(trace), 'io': list(io), 'logic': []}
+def decide(spec=(), built=(), trace=(), held=(), io=(), canonical=()):
+    out = {'nodes': [], 'held': list(held), 'held_trace': list(trace), 'io': list(io), 'logic': [],
+           'canonical': list(canonical)}
     r = eval_ta.decide(out, set(built), set(spec), LABELS, {'c': 'a'})
     return r['got'], r['why'], r.get('clash')
 
@@ -23,6 +24,10 @@ class DecideTests(unittest.TestCase):
         self.assertEqual(decide(built=['b'], trace=['a']), ('b', 'built', None))
         self.assertEqual(decide(held=['b'], io=['a']), ('b', 'learned', None))
         self.assertEqual(decide(io=['b']), ('b', 'io', None))
+
+    def test_canonical_logic_after_learned_before_behaviour(self):     # doc 04 section 19.13
+        self.assertEqual(decide(held=['b'], canonical=['a']), ('b', 'learned', None))
+        self.assertEqual(decide(canonical=['a'], io=['b']), ('a', 'canonical', None))
 
     def test_several_groups_at_the_deciding_tier_is_unknown(self):
         self.assertEqual(decide(trace=['b', 'a'], held=['a']), (None, 'ambiguous', ['a', 'b']))

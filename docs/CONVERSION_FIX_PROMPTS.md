@@ -134,6 +134,20 @@ the facts lowering must be installed where the facts are made (learn_facts), not
 > language; explain each difference before any rule (local functions, lambda lifting, escaped names are not faults).
 > Drop only what the compiler says is not there; leave a file it cannot parse as it is.
 
+### Traced logic first, behaviour as fallback: two views (logic_canon.py, prolog/logic_canon.pl, eval_ta.CanonicalLogic)
+> When a file's logic equals a corpus file's but only behaviour names it, trace the exact-logic tier: which facts it
+> learns and scans (AP13's own, cli.facts_text), the learned pattern of the corpus file, the scan of the test file
+> against it; name the relation that fails. Keep the literal view as it is; add a canonical view (the tree's facts,
+> patterns canonical on the term: an input check on every statement as context, a range bound a variable) consulted
+> only where the literal view matches nothing, as its own tier after the learned branches, for labels learned at the
+> file's node. Behaviour may not veto it with a reference whose conversion fails to run.
+
+Faults met: editing patterns as text left an abstracted variable in the variable list and crashed AP13's scan (write
+the canonicaliser in Prolog, on the term); findall copies variables (collect statements without copying, compare with
+==); the canonical view as a whole replacement lost 19 answers (more canonical facts are less specific: keep the
+literal view first); canonical labels in the trace tier outranked an exact behaviour match (joint_probability: a tier
+of its own after learned).
+
 ## Tried and dropped (do not repeat)
 
 - `q[:] = E` as a write of q in every function (before Python's facts): insertion-sort-3 became Cycle-sort and two
@@ -160,6 +174,5 @@ the facts lowering must be installed where the facts are made (learn_facts), not
 - A null input (0, []) as no evidence, with a mixed file's functions at other nodes naming nothing (doc 04 section
   19.12): fixed perfect-numbers-1.hs by hand, lost six learnt answers (signum, not_gate, stooge_sort ...): for them
   the null input is the algorithm, not a convention.
-- The exact-logic tier on the tree's facts with canonical patterns (input check as context, range bound a variable;
-  doc 04 section 19.13): fixed perfect-numbers-1.hs by traced logic by hand, lost 19 learnt answers and crashed the
-  held-out run. The tier still reads AP13's older facts.
+- The exact-logic tier switched to the tree's facts as a whole (doc 04 section 19.13): 19 learnt answers lost. Solved
+  as two views, literal first and canonical second (above).

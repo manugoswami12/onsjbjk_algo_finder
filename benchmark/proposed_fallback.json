@@ -2067,8 +2067,8 @@
    "answer": "pipeline",
    "branch": null,
    "branch_correct": null,
-   "correct": false,
-   "pipeline": "primelib",
+   "correct": true,
+   "pipeline": "Perfect-numbers",
    "task": "Perfect-numbers"
   },
   "Task/Perfect-numbers/Haskell/perfect-numbers-2.hs": {
@@ -2104,11 +2104,11 @@
    "task": "Perfect-numbers"
   },
   "Task/Perfect-numbers/Python/perfect-numbers-3.py": {
-   "answer": "unknown",
+   "answer": "pipeline",
    "branch": null,
    "branch_correct": null,
-   "correct": null,
-   "pipeline": null,
+   "correct": true,
+   "pipeline": "Perfect-numbers",
    "task": "Perfect-numbers"
   },
   "Task/Perfect-numbers/Python/perfect-numbers-4.py": {
