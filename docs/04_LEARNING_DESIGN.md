@@ -621,6 +621,27 @@ lcm-2 gcd -> Least-common-multiple, levenshtein-5 problem_007 -> Levenshtein-dis
 levenshtein-distance-1.py, -2.py, -2.hs and perfect-numbers-4.py. 183 correct, 1 wrong (perfect-numbers-1.hs ->
 primelib), precision 99.5%, recall 88.0% of 208.
 
+**19.9 perfect-numbers-1.hs -> primelib (tried, dropped).** The trace through the tree: the file reaches
+`numeric>divisor_test`, where the perfect_number branch (learned from maths/perfect_number.py and
+special_numbers/perfect_number.py) never holds: both TheAlgorithms files compute nothing on the battery, because a
+generator as a call's only argument (`sum(i for i in range(...) if n % i == 0)`) lowers wrongly in the main behaviour
+lowering. primelib, a mixed file, has its label only at its deepest node (its factorial's); the Haskell function
+reaches it only through the behaviour-only tier. Tried: (a) the generator as one comprehension, (b) an input check
+(leading `if p <op> k: return K` in a non-recursive function: that input no evidence), so that the node's branch
+holds (perfect-numbers-1.hs -> Perfect-numbers by hand). All data: is_power_of_two.py (learnt) became ambiguous with
+happy_number (which (a) makes run, still wrongly: int() of a character), and primality-by-trial-division-1/2 became
+next_prime_number ((b) also took `if n <= 3: return True`, a part of is_prime). Dropped. Earlier tries, also dropped:
+a hand rule for the filtered-sum form (not the logic the user asked for); `assert` as a precondition with a
+collection rule (fibonacci-sequence-1 became climbing_stairs).
+
+**19.10 GHC's parser checks the Haskell structure facts (haskell_ast_check.py).** User: use Haskell's own AST, better
+than tree-sitter, for validation. `ghc -fno-code -ddump-parsed-ast` (parsed only; the module prepared as for the Core
+path, haskell_core_pnf.prepared_source) gives every function binding of the file. A function tree-sitter reports that
+GHC does not bind is a misreading and its facts are dropped; a file GHC cannot parse keeps its facts (knapsack-0-1-2.hs,
+answered right, has an indentation error tree-sitter recovers from). Over the 144 held-out Haskell files GHC confirms
+every function except sieve-of-eratosthenes-15.hs's `<=` and `otherwise` (a guard read as definitions); a parameter
+count above GHC's is the lowerer's lambda lifting. All data: 0 differences, no answer changed.
+
 **Later stage: the 242 held-out files that cannot be evaluated.** They are left out of this round's numbers (no
 answer, and no root function runs on every battery input). This is not "no algorithm": some are fragments
 (`binary-search-5.py` only calls bisect), most define functions the evaluator cannot run yet: the battery cannot call

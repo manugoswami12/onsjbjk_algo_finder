@@ -28,7 +28,9 @@ CLASH = {'gcd', 'lcm', 'product', 'sum', 'length', 'reverse', 'elem', 'maximum',
 
 
 # ----------------------------------------------------------------------------------------- GHC
-def core_text(path: Path, timeout=90) -> str:
+def prepared_source(path: Path) -> str:
+    """The module GHC is given: GHCi prompts removed, pragmas first, a module header, the Prelude names the file
+    defines hidden (used by core_text and haskell_ast_check)."""
     src = path.read_text(encoding='utf-8', errors='replace')
     src = re.sub(r'^(?:Prelude|\*?Main|ghci|λ)?>.*$', '', src, flags=re.M)          # GHCi transcript lines
     pragmas = re.findall(r'^\{-#.*?#-\}', src, re.M | re.S)
@@ -47,6 +49,11 @@ def core_text(path: Path, timeout=90) -> str:
         body = re.sub(r'^import .*$', '', src, flags=re.M)
         src = head + '\n'.join(imports) + '\n' + body
     src = '\n'.join(pragmas) + '\n' + src
+    return src
+
+
+def core_text(path: Path, timeout=90) -> str:
+    src = prepared_source(path)
     with tempfile.TemporaryDirectory(prefix='v02_ghc_') as td:
         f = Path(td) / 'Main.hs'
         f.write_text(src, encoding='utf-8')

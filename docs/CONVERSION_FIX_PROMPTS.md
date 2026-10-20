@@ -128,6 +128,12 @@ Faults met: interp_v03's reduce never worked (foldl/6 with a state pair: write t
 exact-logic tier is per file, so the helper rule needs the functions of each match (TaLogic.labels_matched by_match);
 the facts lowering must be installed where the facts are made (learn_facts), not only with the front ends.
 
+### The language's own parser checks tree-sitter's facts (haskell_ast_check.py)
+> Ask the language's own compiler for its AST (parsed only: GHC -ddump-parsed-ast; clang -ast-dump=json) and list the
+> functions it defines. Compare with the functions and parameters tree-sitter's facts claim, over every file of the
+> language; explain each difference before any rule (local functions, lambda lifting, escaped names are not faults).
+> Drop only what the compiler says is not there; leave a file it cannot parse as it is.
+
 ## Tried and dropped (do not repeat)
 
 - `q[:] = E` as a write of q in every function (before Python's facts): insertion-sort-3 became Cycle-sort and two
@@ -147,3 +153,7 @@ the facts lowering must be installed where the facts are made (learn_facts), not
 - Branches written from failing held-out files (partition through variables, `seq[:] = ...`): test-set rules; removed.
 - Placing a file's label only at its roots' nodes: moves 248 learnt files (136 to no node), because TheAlgorithms
   often writes the algorithm in a helper (`all_combinations.py`'s root only calls `create_all_state`).
+- The perfect-number trace (doc 04 section 19.9): a generator argument as one comprehension plus an input-check rule
+  fixed perfect-numbers-1.hs by hand, but lost is_power_of_two.py (happy_number then runs, still converted wrongly)
+  and made primality-by-trial-division-1/2 wrong (`if n <= 3: return True` is part of is_prime, not an input check).
+  Fix first: int() of a character in the interpreter; an input check told from a base case.
