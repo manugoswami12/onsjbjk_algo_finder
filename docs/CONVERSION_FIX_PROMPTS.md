@@ -157,3 +157,6 @@ the facts lowering must be installed where the facts are made (learn_facts), not
   fixed perfect-numbers-1.hs by hand, but lost is_power_of_two.py (happy_number then runs, still converted wrongly)
   and made primality-by-trial-division-1/2 wrong (`if n <= 3: return True` is part of is_prime, not an input check).
   Fix first: int() of a character in the interpreter; an input check told from a base case.
+- A null input (0, []) as no evidence, with a mixed file's functions at other nodes naming nothing (doc 04 section
+  19.12): fixed perfect-numbers-1.hs by hand, lost six learnt answers (signum, not_gate, stooge_sort ...): for them
+  the null input is the algorithm, not a convention.

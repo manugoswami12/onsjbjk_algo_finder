@@ -650,6 +650,19 @@ identifier of a declarator) misses a function-pointer parameter, `int (*cmp)(con
 (sorting-algorithms-cocktail-sort-3.c). A file clang reports errors in (GCC nested functions, missing headers: 16 of
 69) keeps its facts. All data: 0 differences, no answer changed.
 
+**19.12 A null input as no evidence (tried, dropped).** User: a program's answer for no input is a Prolog rule
+computes(F, nul, _): an input whose arguments are all null (0, []) is no evidence. With the mixed-file naming (a
+corpus function at a tree node other than its file's learned node is another algorithm of the file: primelib's
+is_perfect_number at divisor_test, its label at its factorial's node), the hand check fixed perfect-numbers-1.hs
+(Haskell's perfect 0 = True, TheAlgorithms' input check gives False: without n = 0 both agree and the perfect_number
+branch at divisor_test holds). All data: six learnt answers lost (signum, not_gate, swap_all_odd_and_even_bits,
+endianness, sorted_linked_list; stooge_sort ambiguous among the sorts) and stooge-sort-2.py lost: for those the null
+input is part of the algorithm (signum(0) = 0, not_gate(0) = 1, the empty list sorted), not a convention. Dropped.
+A separate finding worth its own test: the shifted-sequence match (compare_learners.shifted_sequence: the same numbers
+one position later) is the loosest behaviour rule but sits in the io tier with exact equality; as its own last tier,
+naming only a label learned at the file's own node, it kept fibonacci-sequence-1.py (Binet's formula, the numbers of
+climbing_stairs one position later) from becoming climbing_stairs in the hand check.
+
 **Later stage: the 242 held-out files that cannot be evaluated.** They are left out of this round's numbers (no
 answer, and no root function runs on every battery input). This is not "no algorithm": some are fragments
 (`binary-search-5.py` only calls bisect), most define functions the evaluator cannot run yet: the battery cannot call
