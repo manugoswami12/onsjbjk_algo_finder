@@ -1,0 +1,10 @@
+{
+ "_source": "Augmented Python training examples (docs/04 section 11). Written for the tasks whose Rosetta Python files gave no usable example: the plain textbook algorithm in loops and arithmetic, not the test files (which are not read). Python only, labelled by task. Committed before the rerun; the frozen test key is unchanged.",
+ "files": {
+  "benchmark/learn_augment/ackermann_loop.py": "ackermann",
+  "benchmark/learn_augment/caesar_arith.py": "caesar_cipher",
+  "benchmark/learn_augment/knapsack_table.py": "knapsack_01",
+  "benchmark/learn_augment/matrix_loops.py": "matrix_multiplication",
+  "benchmark/learn_augment/run_length_scan.py": "run_length_encoding"
+ }
+}

@@ -24,3 +24,6 @@
 **/out/
 **/store/
 algo_reference_corpus/TheAlgorithms_Python/
+
+# analyze.py keeps what it learned here (rebuilt by itself when code or data change)
+.cache/

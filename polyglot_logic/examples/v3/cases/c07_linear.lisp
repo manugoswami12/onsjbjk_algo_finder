@@ -1,0 +1,5 @@
+(defun find-index (seq target)
+  (dotimes (i (length seq))
+    (when (= (elt seq i) target)
+      (return-from find-index i)))
+  -1)

@@ -1,0 +1,282 @@
+{
+ "_note": "AP13 v3 family truth (doc 08), written from each task's textbook algorithm class BEFORE the first family run on Rosetta; never tuned. A file is correct at the family level if one of its answered paths equals an accepted path or is a prefix of one (broader but true). Leaves the tree has no rule for (heap, merge, backtracking, ...) are named honestly, so any other deep answer counts as wrong.",
+ "tasks": {
+  "Ackermann-function": [
+   [
+    "numeric",
+    "recurrence",
+    "double_recursion"
+   ]
+  ],
+  "Binary-search": [
+   [
+    "sequence_query",
+    "target_search",
+    "interval_halving"
+   ]
+  ],
+  "Caesar-cipher": [
+   [
+    "sequence_transformation",
+    "elementwise_map"
+   ]
+  ],
+  "Dot-product": [
+   [
+    "sequence_query",
+    "aggregate",
+    "gatherer"
+   ]
+  ],
+  "Factorial": [
+   [
+    "numeric",
+    "recurrence",
+    "range_accumulation"
+   ]
+  ],
+  "Fibonacci-sequence": [
+   [
+    "numeric",
+    "recurrence",
+    "pair_recurrence"
+   ],
+   [
+    "numeric",
+    "recurrence",
+    "double_recursion"
+   ]
+  ],
+  "Greatest-common-divisor": [
+   [
+    "numeric",
+    "recurrence",
+    "modulo_recurrence"
+   ]
+  ],
+  "Hailstone-sequence": [
+   [
+    "numeric",
+    "conditional_iteration"
+   ]
+  ],
+  "Josephus-problem": [
+   [
+    "numeric",
+    "recurrence",
+    "josephus_recurrence"
+   ]
+  ],
+  "Knapsack-problem-0-1": [
+   [
+    "marking",
+    "table_fill"
+   ]
+  ],
+  "Leap-year": [
+   [
+    "numeric",
+    "predicate"
+   ]
+  ],
+  "Least-common-multiple": [
+   [
+    "numeric",
+    "recurrence",
+    "modulo_recurrence"
+   ]
+  ],
+  "Levenshtein-distance": [
+   [
+    "marking",
+    "table_fill"
+   ]
+  ],
+  "Longest-common-subsequence": [
+   [
+    "marking",
+    "table_fill"
+   ]
+  ],
+  "Luhn-test-of-credit-card-numbers": [
+   [
+    "numeric",
+    "decomposition",
+    "digits"
+   ],
+   [
+    "sequence_query",
+    "aggregate",
+    "gatherer"
+   ]
+  ],
+  "Matrix-multiplication": [
+   [
+    "linear_algebra",
+    "matrix_product"
+   ]
+  ],
+  "N-queens-problem": [
+   [
+    "search",
+    "backtracking"
+   ]
+  ],
+  "Palindrome-detection": [
+   [
+    "sequence_query",
+    "predicate",
+    "symmetric_compare"
+   ]
+  ],
+  "Perfect-numbers": [
+   [
+    "numeric",
+    "divisor_test"
+   ]
+  ],
+  "Primality-by-trial-division": [
+   [
+    "numeric",
+    "divisor_test"
+   ]
+  ],
+  "Roman-numerals-Encode": [
+   [
+    "numeric",
+    "decomposition",
+    "greedy_denominations"
+   ]
+  ],
+  "Run-length-encoding": [
+   [
+    "sequence_transformation",
+    "construction",
+    "run_length"
+   ]
+  ],
+  "Sieve-of-Eratosthenes": [
+   [
+    "marking",
+    "stride_marking"
+   ]
+  ],
+  "Sorting-algorithms-Bubble-sort": [
+   [
+    "sequence_transformation",
+    "comparison_sort",
+    "adjacent_exchange"
+   ]
+  ],
+  "Sorting-algorithms-Cocktail-sort": [
+   [
+    "sequence_transformation",
+    "comparison_sort",
+    "adjacent_exchange"
+   ]
+  ],
+  "Sorting-algorithms-Comb-sort": [
+   [
+    "sequence_transformation",
+    "comparison_sort",
+    "gap_exchange"
+   ]
+  ],
+  "Sorting-algorithms-Counting-sort": [
+   [
+    "sequence_transformation",
+    "distribution_sort",
+    "histogram"
+   ]
+  ],
+  "Sorting-algorithms-Cycle-sort": [
+   [
+    "sequence_transformation",
+    "comparison_sort",
+    "cycle_placement"
+   ]
+  ],
+  "Sorting-algorithms-Gnome-sort": [
+   [
+    "sequence_transformation",
+    "comparison_sort",
+    "adjacent_exchange"
+   ]
+  ],
+  "Sorting-algorithms-Heapsort": [
+   [
+    "sequence_transformation",
+    "comparison_sort",
+    "heap"
+   ]
+  ],
+  "Sorting-algorithms-Insertion-sort": [
+   [
+    "sequence_transformation",
+    "comparison_sort",
+    "shift_insertion"
+   ],
+   [
+    "sequence_transformation",
+    "comparison_sort",
+    "adjacent_exchange"
+   ]
+  ],
+  "Sorting-algorithms-Merge-sort": [
+   [
+    "sequence_transformation",
+    "comparison_sort",
+    "merge"
+   ]
+  ],
+  "Sorting-algorithms-Pancake-sort": [
+   [
+    "sequence_transformation",
+    "comparison_sort",
+    "prefix_reversal"
+   ]
+  ],
+  "Sorting-algorithms-Quicksort": [
+   [
+    "sequence_transformation",
+    "comparison_sort",
+    "partition_recursive"
+   ]
+  ],
+  "Sorting-algorithms-Selection-sort": [
+   [
+    "sequence_transformation",
+    "comparison_sort",
+    "select_extreme"
+   ]
+  ],
+  "Sorting-algorithms-Shell-sort": [
+   [
+    "sequence_transformation",
+    "comparison_sort",
+    "gap_exchange"
+   ]
+  ],
+  "Sorting-algorithms-Stooge-sort": [
+   [
+    "sequence_transformation",
+    "comparison_sort",
+    "stooge_recursion"
+   ]
+  ],
+  "Sum-digits-of-an-integer": [
+   [
+    "numeric",
+    "decomposition",
+    "digits"
+   ]
+  ],
+  "Towers-of-Hanoi": [
+   [
+    "numeric",
+    "recurrence",
+    "double_recursion"
+   ]
+  ]
+ }
+}

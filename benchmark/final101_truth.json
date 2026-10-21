@@ -1,0 +1,152 @@
+{
+  "_source": "TheAlgorithms/Python @ 25c712f2692449e91a57748d328ef34fccf25654 (MIT). FINAL 101: no file used in any earlier set, learning or learner comparison. Positives: every unused file whose name names a v0.2 branch task; labels from names only. Negatives: seeded sample ('25c712f2-final101') of the remaining files whose names match no algorithm keyword (excluding scripts/, web_programming/). Frozen and committed before any run. A list = any label accepted.",
+  "_allowed_on_negative": [
+    "recursive_decomposition"
+  ],
+  "files": {
+    "dynamic_programming/factorial.py": [
+      "factorial_like",
+      "recurrence"
+    ],
+    "dynamic_programming/fibonacci.py": "fibonacci_like",
+    "dynamic_programming/fast_fibonacci.py": "fibonacci_like",
+    "dynamic_programming/tribonacci.py": "recurrence",
+    "matrix/nth_fibonacci_using_matrix_exponentiation.py": "fibonacci_like",
+    "divide_and_conquer/minimum_element_of_array.py": [
+      "extremum_search",
+      "aggregate"
+    ],
+    "divide_and_conquer/power.py": "recurrence",
+    "maths/binary_exponentiation.py": "recurrence",
+    "maths/modular_exponential.py": "recurrence",
+    "maths/geometric_mean.py": [
+      "aggregate",
+      "element_accumulation"
+    ],
+    "maths/weighted_average.py": [
+      "aggregate",
+      "element_accumulation"
+    ],
+    "maths/average_absolute_deviation.py": [
+      "aggregate",
+      "element_accumulation"
+    ],
+    "maths/sum_of_harmonic_series.py": [
+      "series_sum",
+      "recurrence"
+    ],
+    "maths/sum_of_arithmetic_series.py": [
+      "series_sum",
+      "recurrence"
+    ],
+    "maths/reverse_factorial_recursive.py": [
+      "factorial_like",
+      "recurrence"
+    ],
+    "matrix/binary_search_matrix.py": [
+      "interval_lookup",
+      "indexed_lookup"
+    ],
+    "matrix/searching_in_sorted_matrix.py": [
+      "indexed_lookup",
+      "membership_lookup"
+    ],
+    "other/guess_the_number_search.py": [
+      "interval_lookup",
+      "indexed_lookup"
+    ],
+    "sorts/reversort.py": [
+      "sequence_rearrangement",
+      "comparison_driven_reordering"
+    ],
+    "sorts/smoothsort.py": [
+      "comparison_driven_reordering",
+      "sequence_rearrangement"
+    ],
+    "sorts/flash_sort.py": [
+      "comparison_driven_reordering",
+      "sequence_rearrangement",
+      "shift_insertion"
+    ],
+    "maths/chinese_remainder_theorem.py": "euclid_like",
+    "maths/modular_division.py": "euclid_like",
+    "maths/hardy_ramanujanalgo.py": "divisor_search",
+    "machine_learning/loss_functions.py": null,
+    "physics/speeds_of_gas_molecules.py": null,
+    "graphs/graph_centrality.py": null,
+    "computer_vision/pooling_functions.py": null,
+    "digital_image_processing/convert_to_negative.py": null,
+    "machine_learning/q_learning.py": null,
+    "searches/simulated_annealing.py": null,
+    "conversions/temperature_conversions.py": null,
+    "graphs/connected_components.py": null,
+    "other/alternative_list_arrange.py": null,
+    "graphs/eulerian_path_and_circuit_for_undirected_graph.py": null,
+    "blockchain/simple_proof_of_work.py": null,
+    "neural_network/perceptron.py": null,
+    "maths/line_intersection.py": null,
+    "ciphers/porta_cipher.py": null,
+    "strings/autocomplete_using_trie.py": null,
+    "graphs/gale_shapley_bigraph.py": null,
+    "hashes/md5.py": null,
+    "physics/newtons_law_of_gravitation.py": null,
+    "strings/detecting_english_programmatically.py": null,
+    "scheduling/weighted_interval_scheduling.py": null,
+    "matrix/cramers_rule_2x2.py": null,
+    "strings/top_k_frequent_words.py": null,
+    "computer_vision/horn_schunck.py": null,
+    "machine_learning/mfcc.py": null,
+    "machine_learning/frequent_pattern_growth.py": null,
+    "physics/hamiltonian.py": null,
+    "ciphers/morse_code.py": null,
+    "conversions/rgb_cmyk_conversion.py": null,
+    "data_compression/run_length_encoding.py": null,
+    "maths/floor.py": null,
+    "strings/rabin_karp.py": null,
+    "dynamic_programming/abbreviation.py": null,
+    "greedy_methods/fractional_cover_problem.py": null,
+    "geometry/shoelace.py": null,
+    "graphs/check_bipatrite.py": null,
+    "electronics/ind_reactance.py": null,
+    "dynamic_programming/integer_partition.py": null,
+    "ciphers/a1z26.py": null,
+    "electronics/circular_convolution.py": null,
+    "machine_learning/gradient_boosting_classifier.py": null,
+    "machine_learning/astar.py": null,
+    "machine_learning/mab.py": null,
+    "financial/fractional_differentiation.py": null,
+    "neural_network/convolution_neural_network.py": null,
+    "physics/altitude_pressure.py": null,
+    "digital_image_processing/change_contrast.py": null,
+    "ciphers/caesar_cipher.py": null,
+    "greedy_methods/gas_station.py": null,
+    "geometry/braik_mac_construction.py": null,
+    "maths/josephus_problem.py": null,
+    "maths/area_under_curve.py": null,
+    "maths/continued_fraction.py": null,
+    "electronics/carrier_concentration.py": null,
+    "maths/is_ipv6_address_valid.py": null,
+    "blockchain/diophantine_equation.py": null,
+    "conversions/hexadecimal_to_decimal.py": null,
+    "boolean_algebra/nor_gate.py": null,
+    "cellular_automata/wa_tor.py": null,
+    "file_transfer/send_file.py": null,
+    "maths/sin.py": null,
+    "conversions/rectangular_to_polar.py": null,
+    "financial/ordinary_annuity_future_value.py": null,
+    "boolean_algebra/quine_mc_cluskey.py": null,
+    "dynamic_programming/wildcard_matching.py": null,
+    "conversions/binary_to_excess3.py": null,
+    "ciphers/atbash.py": null,
+    "graphs/greedy_best_first.py": null,
+    "graphs/hopcroft_karp.py": null,
+    "physics/center_of_mass.py": null,
+    "strings/bpe_tokenizer.py": null,
+    "machine_learning/rmsprop.py": null,
+    "graphs/graph_peripherality.py": null,
+    "computer_vision/haralick_descriptors.py": null,
+    "physics/escape_velocity.py": null,
+    "graphs/directed_and_undirected_weighted_graph.py": null,
+    "conversions/int_to_negative_binary_base.py": null
+  }
+}

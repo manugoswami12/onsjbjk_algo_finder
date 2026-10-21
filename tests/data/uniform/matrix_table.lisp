@@ -1,0 +1,7 @@
+(defun matmul (a b n)
+  (let ((c (make-array (list n n) :initial-element 0)))
+    (dotimes (i n)
+      (dotimes (j n)
+        (dotimes (k n)
+          (setf (aref c i j) (+ (aref c i j) (* (aref a i k) (aref b k j)))))))
+    c))

@@ -1,0 +1,3992 @@
+{
+ "Task/Binary-search/C/binary-search.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "bsearch",
+   "bsearch_r"
+  ],
+  "not_full": [
+   "bsearch_r"
+  ]
+ },
+ "Task/Binary-search/Common-Lisp/binary-search-1.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "binary_search"
+  ],
+  "not_full": [
+   "binary_search"
+  ]
+ },
+ "Task/Binary-search/Common-Lisp/binary-search-2.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "binary_search"
+  ],
+  "not_full": [
+   "binary_search"
+  ]
+ },
+ "Task/Binary-search/Haskell/binary-search-1.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "axs",
+   "bSearchArray"
+  ],
+  "not_full": [
+   "axs",
+   "bSearchArray"
+  ]
+ },
+ "Task/Binary-search/Haskell/binary-search-2.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "findIndexBinary",
+   "haystack"
+  ],
+  "not_full": [
+   "findIndexBinary",
+   "haystack"
+  ]
+ },
+ "Task/Binary-search/Haskell/binary-search-3.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "findIndexBinary_",
+   "haystack"
+  ],
+  "not_full": [
+   "findIndexBinary_",
+   "haystack"
+  ]
+ },
+ "Task/Binary-search/Python/binary-search-1.py": {
+  "decision": "new_version",
+  "class": "search",
+  "roots": [
+   "binary_search"
+  ],
+  "nodes": [
+   "sequence_query>target_search>interval_halving"
+  ]
+ },
+ "Task/Binary-search/Python/binary-search-2.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "byKV",
+   "compare",
+   "findIndexBinary"
+  ],
+  "not_full": [
+   "byKV",
+   "compare",
+   "findIndexBinary"
+  ]
+ },
+ "Task/Binary-search/Python/binary-search-3.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "binary_search"
+  ],
+  "not_full": [
+   "binary_search"
+  ]
+ },
+ "Task/Binary-search/Python/binary-search-4.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "byKV",
+   "compare",
+   "findIndexBinary_"
+  ],
+  "not_full": [
+   "byKV",
+   "compare",
+   "findIndexBinary_"
+  ]
+ },
+ "Task/Binary-search/Python/binary-search-5.py": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/Binary-search/Python/binary-search-6.py": {
+  "decision": "new_version",
+  "class": "search",
+  "roots": [
+   "binary_search"
+  ],
+  "nodes": [
+   "sequence_query"
+  ]
+ },
+ "Task/Binary-search/Python/binary-search-7.py": {
+  "decision": "new_algorithm",
+  "roots": [
+   "binary_search"
+  ]
+ },
+ "Task/Caesar-cipher/C/caesar-cipher.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "rot"
+  ],
+  "not_full": [
+   "rot"
+  ]
+ },
+ "Task/Caesar-cipher/Common-Lisp/caesar-cipher-1.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "__lambda0",
+   "caesar_decipher"
+  ],
+  "not_full": [
+   "__lambda0",
+   "caesar_decipher"
+  ]
+ },
+ "Task/Caesar-cipher/Common-Lisp/caesar-cipher-2.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "__lambda0",
+   "caesar_decipher"
+  ],
+  "not_full": [
+   "__lambda0",
+   "caesar_decipher"
+  ]
+ },
+ "Task/Caesar-cipher/Common-Lisp/caesar-cipher-3.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "__lambda0",
+   "caesar"
+  ],
+  "not_full": [
+   "__lambda0",
+   "caesar"
+  ]
+ },
+ "Task/Caesar-cipher/Haskell/caesar-cipher-1.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "addChar",
+   "uncaesar"
+  ],
+  "not_full": [
+   "addChar",
+   "uncaesar"
+  ]
+ },
+ "Task/Caesar-cipher/Haskell/caesar-cipher-2.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "caesar",
+   "tr",
+   "uncaesar"
+  ],
+  "not_full": [
+   "caesar",
+   "tr",
+   "uncaesar"
+  ]
+ },
+ "Task/Caesar-cipher/Haskell/caesar-cipher-3.hs": {
+  "decision": "undecided",
+  "why": "no run: ValueError"
+ },
+ "Task/Caesar-cipher/Python/caesar-cipher-1.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "caesar"
+  ],
+  "not_full": [
+   "caesar"
+  ]
+ },
+ "Task/Caesar-cipher/Python/caesar-cipher-2.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "caesar"
+  ],
+  "not_full": [
+   "caesar"
+  ]
+ },
+ "Task/Caesar-cipher/Python/caesar-cipher-3.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "caesar"
+  ],
+  "not_full": [
+   "caesar"
+  ]
+ },
+ "Task/Caesar-cipher/Python/caesar-cipher-4.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "caesar"
+  ],
+  "not_full": [
+   "caesar"
+  ]
+ },
+ "Task/Factorial/C/factorial-1.c": {
+  "decision": "new_algorithm",
+  "roots": [
+   "factorial"
+  ]
+ },
+ "Task/Factorial/C/factorial-2.c": {
+  "decision": "new_algorithm",
+  "roots": [
+   "factorialSafe"
+  ]
+ },
+ "Task/Factorial/C/factorial-3.c": {
+  "decision": "new_algorithm",
+  "roots": [
+   "factorial"
+  ]
+ },
+ "Task/Factorial/C/factorial-4.c": {
+  "decision": "new_algorithm",
+  "roots": [
+   "factorialSafe"
+  ]
+ },
+ "Task/Factorial/C/factorial-5.c": {
+  "decision": "new_algorithm",
+  "roots": [
+   "fac_auxSafe",
+   "factorial"
+  ]
+ },
+ "Task/Factorial/C/factorial-6.c": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/Factorial/Common-Lisp/factorial-1.lisp": {
+  "decision": "new_algorithm",
+  "roots": [
+   "factorial"
+  ]
+ },
+ "Task/Factorial/Common-Lisp/factorial-2.lisp": {
+  "decision": "new_algorithm",
+  "roots": [
+   "factorial"
+  ]
+ },
+ "Task/Factorial/Common-Lisp/factorial-3.lisp": {
+  "decision": "new_algorithm",
+  "roots": [
+   "factorial"
+  ]
+ },
+ "Task/Factorial/Common-Lisp/factorial-4.lisp": {
+  "decision": "new_algorithm",
+  "roots": [
+   "factorial"
+  ]
+ },
+ "Task/Factorial/Common-Lisp/factorial-5.lisp": {
+  "decision": "new_algorithm",
+  "roots": [
+   "factorial"
+  ]
+ },
+ "Task/Factorial/Common-Lisp/factorial-6.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "factorial"
+  ],
+  "not_full": [
+   "factorial"
+  ]
+ },
+ "Task/Factorial/Haskell/factorial-1.hs": {
+  "decision": "new_algorithm",
+  "roots": [
+   "factorial"
+  ]
+ },
+ "Task/Factorial/Haskell/factorial-10.hs": {
+  "decision": "new_algorithm",
+  "roots": [
+   "factorial"
+  ]
+ },
+ "Task/Factorial/Haskell/factorial-2.hs": {
+  "decision": "new_algorithm",
+  "roots": [
+   "factorial"
+  ]
+ },
+ "Task/Factorial/Haskell/factorial-3.hs": {
+  "decision": "new_algorithm",
+  "roots": [
+   "factorial"
+  ]
+ },
+ "Task/Factorial/Haskell/factorial-4.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "factorials"
+  ],
+  "not_full": [
+   "factorials"
+  ]
+ },
+ "Task/Factorial/Haskell/factorial-5.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "factorials"
+  ],
+  "not_full": [
+   "factorials"
+  ]
+ },
+ "Task/Factorial/Haskell/factorial-6.hs": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/Factorial/Haskell/factorial-7.hs": {
+  "decision": "undecided",
+  "why": "no run: ValueError"
+ },
+ "Task/Factorial/Haskell/factorial-8.hs": {
+  "decision": "new_algorithm",
+  "roots": [
+   "fac"
+  ]
+ },
+ "Task/Factorial/Haskell/factorial-9.hs": {
+  "decision": "undecided",
+  "why": "no run: ValueError"
+ },
+ "Task/Factorial/Python/factorial-1.py": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/Factorial/Python/factorial-2.py": {
+  "decision": "new_algorithm",
+  "roots": [
+   "factorial"
+  ]
+ },
+ "Task/Factorial/Python/factorial-3.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "factorial"
+  ],
+  "not_full": [
+   "factorial"
+  ]
+ },
+ "Task/Factorial/Python/factorial-4.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "factorial"
+  ],
+  "not_full": [
+   "factorial"
+  ]
+ },
+ "Task/Factorial/Python/factorial-5.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "factorials"
+  ],
+  "not_full": [
+   "factorials"
+  ]
+ },
+ "Task/Factorial/Python/factorial-6.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "factorial"
+  ],
+  "not_full": [
+   "factorial"
+  ]
+ },
+ "Task/Factorial/Python/factorial-7.py": {
+  "decision": "new_algorithm",
+  "roots": [
+   "factorial"
+  ]
+ },
+ "Task/Factorial/Python/factorial-8.py": {
+  "decision": "new_algorithm",
+  "roots": [
+   "factorial"
+  ]
+ },
+ "Task/Factorial/Python/factorial-9.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "factorial"
+  ],
+  "not_full": [
+   "factorial"
+  ]
+ },
+ "Task/Fibonacci-sequence/C/fibonacci-sequence-1.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "fibb"
+  ],
+  "not_full": [
+   "fibb"
+  ]
+ },
+ "Task/Fibonacci-sequence/C/fibonacci-sequence-2.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "fibb"
+  ],
+  "not_full": [
+   "fibb"
+  ]
+ },
+ "Task/Fibonacci-sequence/C/fibonacci-sequence-3.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "fib"
+  ],
+  "not_full": [
+   "fib"
+  ]
+ },
+ "Task/Fibonacci-sequence/C/fibonacci-sequence-4.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "fibonacci",
+   "lambda"
+  ],
+  "not_full": [
+   "fibonacci"
+  ]
+ },
+ "Task/Fibonacci-sequence/C/fibonacci-sequence-5.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "fib"
+  ],
+  "not_full": [
+   "fib"
+  ]
+ },
+ "Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-1.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "fibonacci_iterative"
+  ],
+  "not_full": [
+   "fibonacci_iterative"
+  ]
+ },
+ "Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-10.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "fibo_list",
+   "fibo_range",
+   "grow_fibo"
+  ],
+  "not_full": [
+   "fibo_list",
+   "fibo_range",
+   "grow_fibo"
+  ]
+ },
+ "Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-2.lisp": {
+  "decision": "new_algorithm",
+  "roots": [
+   "fibonacci"
+  ]
+ },
+ "Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-3.lisp": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-4.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "fibonacci_recursive"
+  ],
+  "not_full": [
+   "fibonacci_recursive"
+  ]
+ },
+ "Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-5.lisp": {
+  "decision": "new_algorithm",
+  "roots": [
+   "fibonacci_tail_recursive"
+  ]
+ },
+ "Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-6.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "fib"
+  ],
+  "not_full": [
+   "fib"
+  ]
+ },
+ "Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-7.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "fibonacci"
+  ],
+  "not_full": [
+   "fibonacci"
+  ]
+ },
+ "Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-8.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "fib"
+  ],
+  "not_full": [
+   "fib"
+  ]
+ },
+ "Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-9.lisp": {
+  "decision": "new_algorithm",
+  "roots": [
+   "fibo"
+  ]
+ },
+ "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-1.hs": {
+  "decision": "undecided",
+  "why": "no run: ValueError"
+ },
+ "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-10.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "fib"
+  ],
+  "not_full": [
+   "fib"
+  ]
+ },
+ "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-11.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "fib"
+  ],
+  "not_full": [
+   "fib"
+  ]
+ },
+ "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-12.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "next"
+  ],
+  "not_full": [
+   "next"
+  ]
+ },
+ "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-13.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "fib"
+  ],
+  "not_full": [
+   "fib"
+  ]
+ },
+ "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-14.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "fib"
+  ],
+  "not_full": [
+   "fib"
+  ]
+ },
+ "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-15.hs": {
+  "decision": "undecided",
+  "why": "no run: ValueError"
+ },
+ "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-16.hs": {
+  "decision": "undecided",
+  "why": "no run: ValueError"
+ },
+ "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-17.hs": {
+  "decision": "undecided",
+  "why": "no run: ValueError"
+ },
+ "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-18.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "fibs"
+  ],
+  "not_full": [
+   "fibs"
+  ]
+ },
+ "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-19.hs": {
+  "decision": "undecided",
+  "why": "no run: ValueError"
+ },
+ "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-2.hs": {
+  "decision": "undecided",
+  "why": "no run: ValueError"
+ },
+ "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-20.hs": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-21.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "hsequence"
+  ],
+  "not_full": [
+   "hsequence"
+  ]
+ },
+ "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-22.hs": {
+  "decision": "undecided",
+  "why": "no run: ValueError"
+ },
+ "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-23.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "fibN2",
+   "fibnums",
+   "fibstep"
+  ],
+  "not_full": [
+   "fibN2",
+   "fibnums",
+   "fibstep"
+  ]
+ },
+ "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-24.hs": {
+  "decision": "undecided",
+  "why": "no run: ValueError"
+ },
+ "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-25.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "f"
+  ],
+  "not_full": [
+   "f"
+  ]
+ },
+ "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-26.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "g"
+  ],
+  "not_full": [
+   "g"
+  ]
+ },
+ "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-3.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "fib"
+  ],
+  "not_full": [
+   "fib"
+  ]
+ },
+ "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-4.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "fib"
+  ],
+  "not_full": [
+   "fib"
+  ]
+ },
+ "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-5.hs": {
+  "decision": "undecided",
+  "why": "no run: ValueError"
+ },
+ "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-6.hs": {
+  "decision": "undecided",
+  "why": "no run: ValueError"
+ },
+ "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-7.hs": {
+  "decision": "undecided",
+  "why": "no run: ValueError"
+ },
+ "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-8.hs": {
+  "decision": "undecided",
+  "why": "no run: ValueError"
+ },
+ "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-9.hs": {
+  "decision": "new_algorithm",
+  "roots": [
+   "fib"
+  ]
+ },
+ "Task/Fibonacci-sequence/Python/fibonacci-sequence-1.py": {
+  "decision": "new_algorithm",
+  "roots": [
+   "analytic_fibonacci"
+  ]
+ },
+ "Task/Fibonacci-sequence/Python/fibonacci-sequence-10.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "crazy_fib"
+  ],
+  "not_full": [
+   "crazy_fib"
+  ]
+ },
+ "Task/Fibonacci-sequence/Python/fibonacci-sequence-11.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "fib"
+  ],
+  "not_full": [
+   "fib"
+  ]
+ },
+ "Task/Fibonacci-sequence/Python/fibonacci-sequence-12.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "fib"
+  ],
+  "not_full": [
+   "fib"
+  ]
+ },
+ "Task/Fibonacci-sequence/Python/fibonacci-sequence-13.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "fib"
+  ],
+  "not_full": [
+   "fib"
+  ]
+ },
+ "Task/Fibonacci-sequence/Python/fibonacci-sequence-14.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "fib"
+  ],
+  "not_full": [
+   "fib"
+  ]
+ },
+ "Task/Fibonacci-sequence/Python/fibonacci-sequence-15.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "fibs"
+  ],
+  "not_full": [
+   "fibs"
+  ]
+ },
+ "Task/Fibonacci-sequence/Python/fibonacci-sequence-16.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "nth_fib"
+  ],
+  "not_full": [
+   "nth_fib"
+  ]
+ },
+ "Task/Fibonacci-sequence/Python/fibonacci-sequence-17.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "fib"
+  ],
+  "not_full": [
+   "fib"
+  ]
+ },
+ "Task/Fibonacci-sequence/Python/fibonacci-sequence-18.py": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/Fibonacci-sequence/Python/fibonacci-sequence-2.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "analytic_fibonacci91"
+  ],
+  "not_full": [
+   "analytic_fibonacci91"
+  ]
+ },
+ "Task/Fibonacci-sequence/Python/fibonacci-sequence-3.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "fib4k"
+  ],
+  "not_full": [
+   "fib4k"
+  ]
+ },
+ "Task/Fibonacci-sequence/Python/fibonacci-sequence-4.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "fib"
+  ],
+  "not_full": [
+   "fib"
+  ]
+ },
+ "Task/Fibonacci-sequence/Python/fibonacci-sequence-5.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "fib_rec"
+  ],
+  "not_full": [
+   "fib_rec"
+  ]
+ },
+ "Task/Fibonacci-sequence/Python/fibonacci-sequence-6.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "fib_memo"
+  ],
+  "not_full": [
+   "fib_memo"
+  ]
+ },
+ "Task/Fibonacci-sequence/Python/fibonacci-sequence-7.py": {
+  "decision": "new_algorithm",
+  "roots": [
+   "fib_fast_rec"
+  ]
+ },
+ "Task/Fibonacci-sequence/Python/fibonacci-sequence-8.py": {
+  "decision": "new_algorithm",
+  "roots": [
+   "fib_gen"
+  ]
+ },
+ "Task/Fibonacci-sequence/Python/fibonacci-sequence-9.py": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/Greatest-common-divisor/C/greatest-common-divisor-1.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "gcd_iter"
+  ],
+  "not_full": [
+   "gcd_iter"
+  ]
+ },
+ "Task/Greatest-common-divisor/C/greatest-common-divisor-2.c": {
+  "decision": "new_version",
+  "class": "gcd",
+  "roots": [
+   "gcd"
+  ],
+  "nodes": [
+   "numeric>recurrence>modulo_recurrence"
+  ]
+ },
+ "Task/Greatest-common-divisor/C/greatest-common-divisor-3.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "gcd_bin"
+  ],
+  "not_full": [
+   "gcd_bin"
+  ]
+ },
+ "Task/Greatest-common-divisor/Common-Lisp/greatest-common-divisor-1.lisp": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/Greatest-common-divisor/Common-Lisp/greatest-common-divisor-2.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "gcd_"
+  ],
+  "not_full": [
+   "gcd_"
+  ]
+ },
+ "Task/Greatest-common-divisor/Common-Lisp/greatest-common-divisor-3.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "gcd_"
+  ],
+  "not_full": [
+   "gcd_"
+  ]
+ },
+ "Task/Greatest-common-divisor/Common-Lisp/greatest-common-divisor-4.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "gcd_"
+  ],
+  "not_full": [
+   "gcd_"
+  ]
+ },
+ "Task/Greatest-common-divisor/Haskell/greatest-common-divisor.hs": {
+  "decision": "new_version",
+  "class": "gcd",
+  "roots": [
+   "gcd"
+  ],
+  "nodes": [
+   "numeric>recurrence>modulo_recurrence"
+  ]
+ },
+ "Task/Greatest-common-divisor/Python/greatest-common-divisor-1.py": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/Greatest-common-divisor/Python/greatest-common-divisor-2.py": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/Greatest-common-divisor/Python/greatest-common-divisor-3.py": {
+  "decision": "new_version",
+  "class": "gcd",
+  "roots": [
+   "gcd_iter"
+  ],
+  "nodes": [
+   "numeric>recurrence>modulo_recurrence"
+  ]
+ },
+ "Task/Greatest-common-divisor/Python/greatest-common-divisor-4.py": {
+  "decision": "new_version",
+  "class": "gcd",
+  "roots": [
+   "gcd"
+  ],
+  "nodes": [
+   "numeric>recurrence>modulo_recurrence"
+  ]
+ },
+ "Task/Greatest-common-divisor/Python/greatest-common-divisor-5.py": {
+  "decision": "new_version",
+  "class": "gcd",
+  "roots": [
+   "gcd_bin"
+  ],
+  "nodes": [
+   "numeric"
+  ]
+ },
+ "Task/Hailstone-sequence/C/hailstone-sequence-1.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "hailstone"
+  ],
+  "not_full": [
+   "hailstone"
+  ]
+ },
+ "Task/Hailstone-sequence/C/hailstone-sequence-2.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "hailstone"
+  ],
+  "not_full": [
+   "hailstone"
+  ]
+ },
+ "Task/Hailstone-sequence/Common-Lisp/hailstone-sequence.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "longest_hailstone"
+  ],
+  "not_full": [
+   "longest_hailstone"
+  ]
+ },
+ "Task/Hailstone-sequence/Haskell/hailstone-sequence-1.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "collatz",
+   "hailstone",
+   "longestChain"
+  ],
+  "not_full": [
+   "hailstone",
+   "longestChain"
+  ]
+ },
+ "Task/Hailstone-sequence/Haskell/hailstone-sequence-2.hs": {
+  "decision": "undecided",
+  "why": "no run: ToolError"
+ },
+ "Task/Hailstone-sequence/Haskell/hailstone-sequence-3.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "lastN_"
+  ],
+  "not_full": [
+   "lastN_"
+  ]
+ },
+ "Task/Hailstone-sequence/Python/hailstone-sequence-1.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "hailstone"
+  ],
+  "not_full": [
+   "hailstone"
+  ]
+ },
+ "Task/Hailstone-sequence/Python/hailstone-sequence-2.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "hailstone"
+  ],
+  "not_full": [
+   "hailstone"
+  ]
+ },
+ "Task/Hailstone-sequence/Python/hailstone-sequence-3.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "collatz",
+   "compose",
+   "drop",
+   "enumFromTo",
+   "hailstone",
+   "snd",
+   "unlines"
+  ],
+  "not_full": [
+   "compose",
+   "drop",
+   "enumFromTo",
+   "hailstone",
+   "snd",
+   "unlines"
+  ]
+ },
+ "Task/Josephus-problem/C/josephus-problem.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "jos",
+   "jos_large"
+  ],
+  "not_full": [
+   "jos",
+   "jos_large"
+  ]
+ },
+ "Task/Josephus-problem/Common-Lisp/josephus-problem-1.lisp": {
+  "decision": "new_algorithm",
+  "roots": [
+   "kill"
+  ]
+ },
+ "Task/Josephus-problem/Common-Lisp/josephus-problem-2.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "kill",
+   "one_element_clist_p"
+  ],
+  "not_full": [
+   "kill",
+   "one_element_clist_p"
+  ]
+ },
+ "Task/Josephus-problem/Haskell/josephus-problem-1.hs": {
+  "decision": "undecided",
+  "why": "no run: ValueError"
+ },
+ "Task/Josephus-problem/Haskell/josephus-problem-2.hs": {
+  "decision": "new_algorithm",
+  "roots": [
+   "jos",
+   "jseq"
+  ]
+ },
+ "Task/Josephus-problem/Python/josephus-problem-1.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "j"
+  ],
+  "not_full": [
+   "j"
+  ]
+ },
+ "Task/Josephus-problem/Python/josephus-problem-2.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "josephus"
+  ],
+  "not_full": [
+   "josephus"
+  ]
+ },
+ "Task/Josephus-problem/Python/josephus-problem-3.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "josephus"
+  ],
+  "not_full": [
+   "josephus"
+  ]
+ },
+ "Task/Josephus-problem/Python/josephus-problem-4.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "josephus"
+  ],
+  "not_full": [
+   "josephus"
+  ]
+ },
+ "Task/Knapsack-problem-0-1/C/knapsack-problem-0-1.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "knapsack"
+  ],
+  "not_full": [
+   "knapsack"
+  ]
+ },
+ "Task/Knapsack-problem-0-1/Common-Lisp/knapsack-problem-0-1.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "knapsack"
+  ],
+  "not_full": [
+   "knapsack"
+  ]
+ },
+ "Task/Knapsack-problem-0-1/Haskell/knapsack-problem-0-1-1.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "combs",
+   "inv"
+  ],
+  "not_full": [
+   "combs",
+   "inv"
+  ]
+ },
+ "Task/Knapsack-problem-0-1/Haskell/knapsack-problem-0-1-2.hs": {
+  "decision": "undecided",
+  "why": "no run: ValueError"
+ },
+ "Task/Knapsack-problem-0-1/Haskell/knapsack-problem-0-1-3.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "inv"
+  ],
+  "not_full": [
+   "inv"
+  ]
+ },
+ "Task/Knapsack-problem-0-1/Python/knapsack-problem-0-1-1.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "anycomb",
+   "totalvalue"
+  ],
+  "not_full": [
+   "anycomb",
+   "totalvalue"
+  ]
+ },
+ "Task/Knapsack-problem-0-1/Python/knapsack-problem-0-1-2.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "knapsack01_dp",
+   "totalvalue"
+  ],
+  "not_full": [
+   "knapsack01_dp",
+   "totalvalue"
+  ]
+ },
+ "Task/Knapsack-problem-0-1/Python/knapsack-problem-0-1-3.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "solve"
+  ],
+  "not_full": [
+   "solve"
+  ]
+ },
+ "Task/Knapsack-problem-0-1/Python/knapsack-problem-0-1-4.py": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/Least-common-multiple/C/least-common-multiple.c": {
+  "decision": "new_version",
+  "class": "lcm",
+  "roots": [
+   "lcm"
+  ],
+  "nodes": [
+   "numeric>recurrence>modulo_recurrence"
+  ]
+ },
+ "Task/Least-common-multiple/Common-Lisp/least-common-multiple-1.lisp": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/Least-common-multiple/Common-Lisp/least-common-multiple-2.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "__lambda0",
+   "my_lcm"
+  ],
+  "not_full": [
+   "__lambda0",
+   "my_lcm"
+  ]
+ },
+ "Task/Least-common-multiple/Haskell/least-common-multiple.hs": {
+  "decision": "new_version",
+  "class": "lcm",
+  "roots": [
+   "lcm"
+  ],
+  "nodes": []
+ },
+ "Task/Least-common-multiple/Python/least-common-multiple-1.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "lcm"
+  ],
+  "not_full": [
+   "lcm"
+  ]
+ },
+ "Task/Least-common-multiple/Python/least-common-multiple-2.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "enumFromTo",
+   "fTable",
+   "lcm",
+   "uncurry",
+   "unlines"
+  ],
+  "not_full": [
+   "enumFromTo",
+   "fTable",
+   "lcm",
+   "uncurry",
+   "unlines"
+  ]
+ },
+ "Task/Least-common-multiple/Python/least-common-multiple-3.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "lcm"
+  ],
+  "not_full": [
+   "lcm"
+  ]
+ },
+ "Task/Least-common-multiple/Python/least-common-multiple-4.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "lcm"
+  ],
+  "not_full": [
+   "lcm"
+  ]
+ },
+ "Task/Least-common-multiple/Python/least-common-multiple-5.py": {
+  "decision": "new_version",
+  "class": "lcm",
+  "roots": [
+   "lcm"
+  ],
+  "nodes": [
+   "numeric"
+  ]
+ },
+ "Task/Levenshtein-distance/C/levenshtein-distance-1.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "levenshtein"
+  ],
+  "not_full": [
+   "levenshtein"
+  ]
+ },
+ "Task/Levenshtein-distance/C/levenshtein-distance-2.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "levenshtein"
+  ],
+  "not_full": [
+   "levenshtein"
+  ]
+ },
+ "Task/Levenshtein-distance/Common-Lisp/levenshtein-distance.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "levenshtein"
+  ],
+  "not_full": [
+   "levenshtein"
+  ]
+ },
+ "Task/Levenshtein-distance/Haskell/levenshtein-distance-1.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "levenshtein"
+  ],
+  "not_full": [
+   "levenshtein"
+  ]
+ },
+ "Task/Levenshtein-distance/Haskell/levenshtein-distance-2.hs": {
+  "decision": "new_algorithm",
+  "roots": [
+   "levenshtein"
+  ]
+ },
+ "Task/Levenshtein-distance/Python/levenshtein-distance-1.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "levenshteinDistance"
+  ],
+  "not_full": [
+   "levenshteinDistance"
+  ]
+ },
+ "Task/Levenshtein-distance/Python/levenshtein-distance-2.py": {
+  "decision": "new_algorithm",
+  "roots": [
+   "minimumEditDistance"
+  ]
+ },
+ "Task/Levenshtein-distance/Python/levenshtein-distance-3.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "ld"
+  ],
+  "not_full": [
+   "ld"
+  ]
+ },
+ "Task/Levenshtein-distance/Python/levenshtein-distance-4.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "ld"
+  ],
+  "not_full": [
+   "ld"
+  ]
+ },
+ "Task/Levenshtein-distance/Python/levenshtein-distance-5.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "concat",
+   "levenshtein",
+   "swap",
+   "tabulated",
+   "take",
+   "uncurry"
+  ],
+  "not_full": [
+   "concat",
+   "levenshtein",
+   "swap",
+   "tabulated",
+   "take",
+   "uncurry"
+  ]
+ },
+ "Task/Longest-common-subsequence/C/longest-common-subsequence-1.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "lcs"
+  ],
+  "not_full": [
+   "lcs"
+  ]
+ },
+ "Task/Longest-common-subsequence/C/longest-common-subsequence-2.c": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/Longest-common-subsequence/Common-Lisp/longest-common-subsequence-1.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "longest_common_subsequence"
+  ],
+  "not_full": [
+   "longest_common_subsequence"
+  ]
+ },
+ "Task/Longest-common-subsequence/Common-Lisp/longest-common-subsequence-2.lisp": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/Longest-common-subsequence/Common-Lisp/longest-common-subsequence-3.lisp": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/Longest-common-subsequence/Common-Lisp/longest-common-subsequence-4.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "lcs"
+  ],
+  "not_full": [
+   "lcs"
+  ]
+ },
+ "Task/Longest-common-subsequence/Common-Lisp/longest-common-subsequence-5.lisp": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/Longest-common-subsequence/Haskell/longest-common-subsequence-1.hs": {
+  "decision": "new_algorithm",
+  "roots": [
+   "lcs"
+  ]
+ },
+ "Task/Longest-common-subsequence/Haskell/longest-common-subsequence-2.hs": {
+  "decision": "undecided",
+  "why": "no run: ValueError"
+ },
+ "Task/Longest-common-subsequence/Haskell/longest-common-subsequence-3.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "lcs"
+  ],
+  "not_full": [
+   "lcs"
+  ]
+ },
+ "Task/Longest-common-subsequence/Haskell/longest-common-subsequence-4.hs": {
+  "decision": "undecided",
+  "why": "no run: ValueError"
+ },
+ "Task/Longest-common-subsequence/Haskell/longest-common-subsequence-5.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "lcs",
+   "longest"
+  ],
+  "not_full": [
+   "lcs"
+  ]
+ },
+ "Task/Longest-common-subsequence/Haskell/longest-common-subsequence-6.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "lcs"
+  ],
+  "not_full": [
+   "lcs"
+  ]
+ },
+ "Task/Longest-common-subsequence/Python/longest-common-subsequence-1.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "lcs"
+  ],
+  "not_full": [
+   "lcs"
+  ]
+ },
+ "Task/Longest-common-subsequence/Python/longest-common-subsequence-2.py": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/Longest-common-subsequence/Python/longest-common-subsequence-3.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "lcs"
+  ],
+  "not_full": [
+   "lcs"
+  ]
+ },
+ "Task/Luhn-test-of-credit-card-numbers/C/luhn-test-of-credit-card-numbers.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "luhn"
+  ],
+  "not_full": [
+   "luhn"
+  ]
+ },
+ "Task/Luhn-test-of-credit-card-numbers/Common-Lisp/luhn-test-of-credit-card-numbers-1.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "luhn"
+  ],
+  "not_full": [
+   "luhn"
+  ]
+ },
+ "Task/Luhn-test-of-credit-card-numbers/Common-Lisp/luhn-test-of-credit-card-numbers-2.lisp": {
+  "decision": "undecided",
+  "why": "no run: IndexError"
+ },
+ "Task/Luhn-test-of-credit-card-numbers/Haskell/luhn-test-of-credit-card-numbers-1.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "luhn"
+  ],
+  "not_full": [
+   "luhn"
+  ]
+ },
+ "Task/Luhn-test-of-credit-card-numbers/Haskell/luhn-test-of-credit-card-numbers-2.hs": {
+  "decision": "undecided",
+  "why": "no run: ValueError"
+ },
+ "Task/Luhn-test-of-credit-card-numbers/Haskell/luhn-test-of-credit-card-numbers-3.hs": {
+  "decision": "undecided",
+  "why": "no run: ValueError"
+ },
+ "Task/Luhn-test-of-credit-card-numbers/Python/luhn-test-of-credit-card-numbers-1.py": {
+  "decision": "new_algorithm",
+  "roots": [
+   "luhn"
+  ]
+ },
+ "Task/Luhn-test-of-credit-card-numbers/Python/luhn-test-of-credit-card-numbers-2.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "luhn"
+  ],
+  "not_full": [
+   "luhn"
+  ]
+ },
+ "Task/Luhn-test-of-credit-card-numbers/Python/luhn-test-of-credit-card-numbers-3.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "luhn"
+  ],
+  "not_full": [
+   "luhn"
+  ]
+ },
+ "Task/Luhn-test-of-credit-card-numbers/Python/luhn-test-of-credit-card-numbers-4.py": {
+  "decision": "new_algorithm",
+  "roots": [
+   "v_rifLuhn"
+  ]
+ },
+ "Task/N-queens-problem/C/n-queens-problem-1.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "calloc_wrapper",
+   "queens"
+  ],
+  "not_full": [
+   "calloc_wrapper",
+   "queens"
+  ]
+ },
+ "Task/N-queens-problem/C/n-queens-problem-2.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "solve"
+  ],
+  "not_full": [
+   "solve"
+  ]
+ },
+ "Task/N-queens-problem/C/n-queens-problem-3.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "solve"
+  ],
+  "not_full": [
+   "solve"
+  ]
+ },
+ "Task/N-queens-problem/C/n-queens-problem-4.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "solve"
+  ],
+  "not_full": [
+   "solve"
+  ]
+ },
+ "Task/N-queens-problem/C/n-queens-problem-5.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "nqueens"
+  ],
+  "not_full": [
+   "nqueens"
+  ]
+ },
+ "Task/N-queens-problem/Common-Lisp/n-queens-problem-1.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "print_queens",
+   "print_solution"
+  ],
+  "not_full": [
+   "print_queens"
+  ]
+ },
+ "Task/N-queens-problem/Common-Lisp/n-queens-problem-2.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "queens1"
+  ],
+  "not_full": [
+   "queens1"
+  ]
+ },
+ "Task/N-queens-problem/Common-Lisp/n-queens-problem-3.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "queens2"
+  ],
+  "not_full": [
+   "queens2"
+  ]
+ },
+ "Task/N-queens-problem/Haskell/n-queens-problem-1.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "printSolution",
+   "queens"
+  ],
+  "not_full": [
+   "printSolution",
+   "queens"
+  ]
+ },
+ "Task/N-queens-problem/Haskell/n-queens-problem-2.hs": {
+  "decision": "undecided",
+  "why": "no run: IndexError"
+ },
+ "Task/N-queens-problem/Haskell/n-queens-problem-3.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "generate"
+  ],
+  "not_full": [
+   "generate"
+  ]
+ },
+ "Task/N-queens-problem/Haskell/n-queens-problem-4.hs": {
+  "decision": "undecided",
+  "why": "no run: ValueError"
+ },
+ "Task/N-queens-problem/Haskell/n-queens-problem-5.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "bfs",
+   "dfs",
+   "emptySt",
+   "move"
+  ],
+  "not_full": [
+   "bfs",
+   "dfs",
+   "emptySt",
+   "move"
+  ]
+ },
+ "Task/N-queens-problem/Python/n-queens-problem-1.py": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/N-queens-problem/Python/n-queens-problem-10.py": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/N-queens-problem/Python/n-queens-problem-2.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "board"
+  ],
+  "not_full": [
+   "board"
+  ]
+ },
+ "Task/N-queens-problem/Python/n-queens-problem-3.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "solve"
+  ],
+  "not_full": [
+   "solve"
+  ]
+ },
+ "Task/N-queens-problem/Python/n-queens-problem-4.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "solve"
+  ],
+  "not_full": [
+   "solve"
+  ]
+ },
+ "Task/N-queens-problem/Python/n-queens-problem-5.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "queens"
+  ],
+  "not_full": [
+   "queens"
+  ]
+ },
+ "Task/N-queens-problem/Python/n-queens-problem-6.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "queens"
+  ],
+  "not_full": [
+   "queens"
+  ]
+ },
+ "Task/N-queens-problem/Python/n-queens-problem-7.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "queens_lex"
+  ],
+  "not_full": [
+   "queens_lex"
+  ]
+ },
+ "Task/N-queens-problem/Python/n-queens-problem-8.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "fTable",
+   "queenPuzzle",
+   "showBoards"
+  ],
+  "not_full": [
+   "fTable",
+   "queenPuzzle",
+   "showBoards"
+  ]
+ },
+ "Task/N-queens-problem/Python/n-queens-problem-9.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "queens"
+  ],
+  "not_full": [
+   "queens"
+  ]
+ },
+ "Task/Palindrome-detection/C/palindrome-detection-1.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "palindrome"
+  ],
+  "not_full": [
+   "palindrome"
+  ]
+ },
+ "Task/Palindrome-detection/C/palindrome-detection-2.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "palindrome"
+  ],
+  "not_full": [
+   "palindrome"
+  ]
+ },
+ "Task/Palindrome-detection/C/palindrome-detection-3.c": {
+  "decision": "new_algorithm",
+  "roots": [
+   "palindrome_r"
+  ]
+ },
+ "Task/Palindrome-detection/C/palindrome-detection-4.c": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/Palindrome-detection/Common-Lisp/palindrome-detection-1.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "palindrome_p"
+  ],
+  "not_full": [
+   "palindrome_p"
+  ]
+ },
+ "Task/Palindrome-detection/Common-Lisp/palindrome-detection-2.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "palindrome"
+  ],
+  "not_full": [
+   "palindrome"
+  ]
+ },
+ "Task/Palindrome-detection/Haskell/palindrome-detection-1.hs": {
+  "decision": "new_version",
+  "class": "palindrome_check",
+  "roots": [
+   "is_palindrome"
+  ],
+  "nodes": [
+   "sequence_query>predicate>symmetric_compare"
+  ]
+ },
+ "Task/Palindrome-detection/Haskell/palindrome-detection-2.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "isPal",
+   "isPalindrome",
+   "prepared",
+   "showResult"
+  ],
+  "not_full": [
+   "isPal",
+   "isPalindrome",
+   "prepared",
+   "showResult"
+  ]
+ },
+ "Task/Palindrome-detection/Haskell/palindrome-detection-3.hs": {
+  "decision": "new_version",
+  "class": "palindrome_check",
+  "roots": [
+   "is_palindrome_r"
+  ],
+  "nodes": [
+   "sequence_query"
+  ]
+ },
+ "Task/Palindrome-detection/Python/palindrome-detection-1.py": {
+  "decision": "new_version",
+  "class": "palindrome_check",
+  "roots": [
+   "is_palindrome"
+  ],
+  "nodes": []
+ },
+ "Task/Palindrome-detection/Python/palindrome-detection-2.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "is_palindrome"
+  ],
+  "not_full": [
+   "is_palindrome"
+  ]
+ },
+ "Task/Palindrome-detection/Python/palindrome-detection-3.py": {
+  "decision": "new_version",
+  "class": "palindrome_check",
+  "roots": [
+   "is_palindrome_r"
+  ],
+  "nodes": [
+   "sequence_query>predicate>symmetric_compare"
+  ]
+ },
+ "Task/Palindrome-detection/Python/palindrome-detection-4.py": {
+  "decision": "new_version",
+  "class": "palindrome_check",
+  "roots": [
+   "is_palindrome_r2"
+  ],
+  "nodes": [
+   "sequence_query>predicate>symmetric_compare"
+  ]
+ },
+ "Task/Palindrome-detection/Python/palindrome-detection-5.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "test"
+  ],
+  "not_full": [
+   "test"
+  ]
+ },
+ "Task/Palindrome-detection/Python/palindrome-detection-6.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "p_loop"
+  ],
+  "not_full": [
+   "p_loop"
+  ]
+ },
+ "Task/Palindrome-detection/Python/palindrome-detection-7.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "cleaned",
+   "isPalindrome"
+  ],
+  "not_full": [
+   "cleaned"
+  ]
+ },
+ "Task/Palindrome-detection/Python/palindrome-detection-8.py": {
+  "decision": "undecided",
+  "why": "output does not depend on the input",
+  "roots": [
+   "palindromic"
+  ]
+ },
+ "Task/Perfect-numbers/C/perfect-numbers-1.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "perfect"
+  ],
+  "not_full": [
+   "perfect"
+  ]
+ },
+ "Task/Perfect-numbers/C/perfect-numbers-2.c": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/Perfect-numbers/Common-Lisp/perfect-numbers.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "perfectp"
+  ],
+  "not_full": [
+   "perfectp"
+  ]
+ },
+ "Task/Perfect-numbers/Haskell/perfect-numbers-1.hs": {
+  "decision": "new_algorithm",
+  "roots": [
+   "perfect"
+  ]
+ },
+ "Task/Perfect-numbers/Haskell/perfect-numbers-2.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "isPerfect"
+  ],
+  "not_full": [
+   "isPerfect"
+  ]
+ },
+ "Task/Perfect-numbers/Haskell/perfect-numbers-3.hs": {
+  "decision": "new_version",
+  "class": "perfect_number",
+  "roots": [
+   "isPerfect"
+  ],
+  "nodes": [
+   "numeric"
+  ]
+ },
+ "Task/Perfect-numbers/Python/perfect-numbers-1.py": {
+  "decision": "new_algorithm",
+  "roots": [
+   "perf1"
+  ]
+ },
+ "Task/Perfect-numbers/Python/perfect-numbers-2.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "perf4"
+  ],
+  "not_full": [
+   "perf4"
+  ]
+ },
+ "Task/Perfect-numbers/Python/perfect-numbers-3.py": {
+  "decision": "new_algorithm",
+  "roots": [
+   "perf2"
+  ]
+ },
+ "Task/Perfect-numbers/Python/perfect-numbers-4.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "perfect"
+  ],
+  "not_full": [
+   "perfect"
+  ]
+ },
+ "Task/Primality-by-trial-division/C/primality-by-trial-division-1.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "is_prime"
+  ],
+  "not_full": [
+   "is_prime"
+  ]
+ },
+ "Task/Primality-by-trial-division/C/primality-by-trial-division-2.c": {
+  "decision": "new_version",
+  "class": "prime_check",
+  "roots": [
+   "prime"
+  ],
+  "nodes": [
+   "numeric>divisor_test"
+  ]
+ },
+ "Task/Primality-by-trial-division/Common-Lisp/primality-by-trial-division-1.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "primep"
+  ],
+  "not_full": [
+   "primep"
+  ]
+ },
+ "Task/Primality-by-trial-division/Common-Lisp/primality-by-trial-division-2.lisp": {
+  "decision": "new_algorithm",
+  "roots": [
+   "prime"
+  ]
+ },
+ "Task/Primality-by-trial-division/Haskell/primality-by-trial-division-1.hs": {
+  "decision": "new_version",
+  "class": "prime_check",
+  "roots": [
+   "isPrime"
+  ],
+  "nodes": []
+ },
+ "Task/Primality-by-trial-division/Haskell/primality-by-trial-division-2.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "isPrime",
+   "primeNums"
+  ],
+  "not_full": [
+   "isPrime",
+   "primeNums"
+  ]
+ },
+ "Task/Primality-by-trial-division/Haskell/primality-by-trial-division-3.hs": {
+  "decision": "new_version",
+  "class": "prime_check",
+  "roots": [
+   "isPrime"
+  ],
+  "nodes": []
+ },
+ "Task/Primality-by-trial-division/Haskell/primality-by-trial-division-4.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "isPrime"
+  ],
+  "not_full": [
+   "isPrime"
+  ]
+ },
+ "Task/Primality-by-trial-division/Python/primality-by-trial-division-1.py": {
+  "decision": "new_version",
+  "class": "prime_check",
+  "roots": [
+   "prime"
+  ],
+  "nodes": [
+   "numeric>divisor_test"
+  ]
+ },
+ "Task/Primality-by-trial-division/Python/primality-by-trial-division-2.py": {
+  "decision": "new_version",
+  "class": "prime_check",
+  "roots": [
+   "prime2"
+  ],
+  "nodes": [
+   "numeric>divisor_test"
+  ]
+ },
+ "Task/Primality-by-trial-division/Python/primality-by-trial-division-3.py": {
+  "decision": "new_version",
+  "class": "prime_check",
+  "roots": [
+   "prime3"
+  ],
+  "nodes": []
+ },
+ "Task/Primality-by-trial-division/Python/primality-by-trial-division-4.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "isprime"
+  ],
+  "not_full": [
+   "isprime"
+  ]
+ },
+ "Task/Roman-numerals-Encode/C/roman-numerals-encode-1.c": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/Roman-numerals-Encode/C/roman-numerals-encode-2.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "RomanNumerals_parseInt",
+   "RomanNumerals_toString"
+  ],
+  "not_full": [
+   "RomanNumerals_parseInt",
+   "RomanNumerals_toString"
+  ]
+ },
+ "Task/Roman-numerals-Encode/Common-Lisp/roman-numerals-encode.lisp": {
+  "decision": "new_algorithm",
+  "roots": [
+   "roman_numeral"
+  ]
+ },
+ "Task/Roman-numerals-Encode/Haskell/roman-numerals-encode-1.hs": {
+  "decision": "new_algorithm",
+  "roots": [
+   "toRoman"
+  ]
+ },
+ "Task/Roman-numerals-Encode/Haskell/roman-numerals-encode-2.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "roman"
+  ],
+  "not_full": [
+   "roman"
+  ]
+ },
+ "Task/Roman-numerals-Encode/Haskell/roman-numerals-encode-3.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "romanDigits",
+   "test"
+  ],
+  "not_full": [
+   "romanDigits",
+   "test"
+  ]
+ },
+ "Task/Roman-numerals-Encode/Python/roman-numerals-encode-1.py": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/Roman-numerals-Encode/Python/roman-numerals-encode-2.py": {
+  "decision": "new_algorithm",
+  "roots": [
+   "toRoman"
+  ]
+ },
+ "Task/Roman-numerals-Encode/Python/roman-numerals-encode-3.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "arabic_to_roman"
+  ],
+  "not_full": [
+   "arabic_to_roman"
+  ]
+ },
+ "Task/Roman-numerals-Encode/Python/roman-numerals-encode-4.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "ToRoman"
+  ],
+  "not_full": [
+   "ToRoman"
+  ]
+ },
+ "Task/Roman-numerals-Encode/Python/roman-numerals-encode-5.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "to_roman"
+  ],
+  "not_full": [
+   "to_roman"
+  ]
+ },
+ "Task/Roman-numerals-Encode/Python/roman-numerals-encode-6.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "arabic_to_roman"
+  ],
+  "not_full": [
+   "arabic_to_roman"
+  ]
+ },
+ "Task/Roman-numerals-Encode/Python/roman-numerals-encode-7.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "number2romannumeral"
+  ],
+  "not_full": [
+   "number2romannumeral"
+  ]
+ },
+ "Task/Roman-numerals-Encode/Python/roman-numerals-encode-8.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "romanFromInt"
+  ],
+  "not_full": [
+   "romanFromInt"
+  ]
+ },
+ "Task/Run-length-encoding/C/run-length-encoding.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "decode",
+   "encode",
+   "file_put",
+   "sget",
+   "sput"
+  ],
+  "not_full": [
+   "decode",
+   "encode",
+   "file_put",
+   "sget",
+   "sput"
+  ]
+ },
+ "Task/Run-length-encoding/Common-Lisp/run-length-encoding.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "__lambda0",
+   "__lambda5",
+   "__lambda6",
+   "run_length_decode",
+   "run_length_encode"
+  ],
+  "not_full": [
+   "__lambda0",
+   "__lambda5",
+   "__lambda6",
+   "run_length_decode",
+   "run_length_encode"
+  ]
+ },
+ "Task/Run-length-encoding/Haskell/run-length-encoding-1.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "rldecode",
+   "rlencode"
+  ],
+  "not_full": [
+   "rldecode",
+   "rlencode"
+  ]
+ },
+ "Task/Run-length-encoding/Haskell/run-length-encoding-2.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "runLengthDecode",
+   "runLengthEncode"
+  ],
+  "not_full": [
+   "runLengthDecode",
+   "runLengthEncode"
+  ]
+ },
+ "Task/Run-length-encoding/Haskell/run-length-encoding-3.hs": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/Run-length-encoding/Haskell/run-length-encoding-4.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "runLengths",
+   "showLengths"
+  ],
+  "not_full": [
+   "showLengths"
+  ]
+ },
+ "Task/Run-length-encoding/Python/run-length-encoding-1.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "decode",
+   "encode"
+  ],
+  "not_full": [
+   "decode"
+  ]
+ },
+ "Task/Run-length-encoding/Python/run-length-encoding-2.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "decode",
+   "encode"
+  ],
+  "not_full": [
+   "decode",
+   "encode"
+  ]
+ },
+ "Task/Run-length-encoding/Python/run-length-encoding-3.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "decode",
+   "encode"
+  ],
+  "not_full": [
+   "decode",
+   "encode"
+  ]
+ },
+ "Task/Sieve-of-Eratosthenes/C/sieve-of-eratosthenes-1.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "eratosthenes"
+  ],
+  "not_full": [
+   "eratosthenes"
+  ]
+ },
+ "Task/Sieve-of-Eratosthenes/C/sieve-of-eratosthenes-2.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "sieve"
+  ],
+  "not_full": [
+   "sieve"
+  ]
+ },
+ "Task/Sieve-of-Eratosthenes/C/sieve-of-eratosthenes-3.c": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/Sieve-of-Eratosthenes/Common-Lisp/sieve-of-eratosthenes-1.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "sieve_of_eratosthenes"
+  ],
+  "not_full": [
+   "sieve_of_eratosthenes"
+  ]
+ },
+ "Task/Sieve-of-Eratosthenes/Common-Lisp/sieve-of-eratosthenes-2.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "sieve_odds"
+  ],
+  "not_full": [
+   "sieve_odds"
+  ]
+ },
+ "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-1.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "primesTo"
+  ],
+  "not_full": [
+   "primesTo"
+  ]
+ },
+ "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-10.hs": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-11.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "primesB"
+  ],
+  "not_full": [
+   "primesB"
+  ]
+ },
+ "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-12.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "primes"
+  ],
+  "not_full": [
+   "primes"
+  ]
+ },
+ "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-13.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "primesW",
+   "wheel"
+  ],
+  "not_full": [
+   "primesW",
+   "wheel"
+  ]
+ },
+ "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-14.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "primesTreeFoldingWheeled",
+   "wheelGen"
+  ],
+  "not_full": [
+   "primesTreeFoldingWheeled",
+   "wheelGen"
+  ]
+ },
+ "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-15.hs": {
+  "decision": "undecided",
+  "why": "no run: ValueError"
+ },
+ "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-16.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "primesPQ"
+  ],
+  "not_full": [
+   "primesPQ"
+  ]
+ },
+ "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-17.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "primesPQx"
+  ],
+  "not_full": [
+   "primesPQx"
+  ]
+ },
+ "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-18.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "primesPQWheeled"
+  ],
+  "not_full": [
+   "primesPQWheeled"
+  ]
+ },
+ "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-19.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "cSieveBufferRange",
+   "primes"
+  ],
+  "not_full": [
+   "cSieveBufferRange",
+   "primes"
+  ]
+ },
+ "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-2.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "primesToUO"
+  ],
+  "not_full": [
+   "primesToUO"
+  ]
+ },
+ "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-20.hs": {
+  "decision": "undecided",
+  "why": "no run: ValueError"
+ },
+ "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-21.hs": {
+  "decision": "undecided",
+  "why": "no run: ValueError"
+ },
+ "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-22.hs": {
+  "decision": "undecided",
+  "why": "no run: ValueError"
+ },
+ "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-23.hs": {
+  "decision": "undecided",
+  "why": "no run: ValueError"
+ },
+ "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-24.hs": {
+  "decision": "undecided",
+  "why": "no run: ValueError"
+ },
+ "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-25.hs": {
+  "decision": "undecided",
+  "why": "no run: ValueError"
+ },
+ "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-3.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "primesTo"
+  ],
+  "not_full": [
+   "primesTo"
+  ]
+ },
+ "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-4.hs": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-5.hs": {
+  "decision": "undecided",
+  "why": "no run: ValueError"
+ },
+ "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-6.hs": {
+  "decision": "undecided",
+  "why": "no run: ValueError"
+ },
+ "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-7.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "minus",
+   "primesTo"
+  ],
+  "not_full": [
+   "minus",
+   "primesTo"
+  ]
+ },
+ "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-8.hs": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-9.hs": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-1.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "eratosthenes2"
+  ],
+  "not_full": [
+   "eratosthenes2"
+  ]
+ },
+ "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-10.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "primes_upto2"
+  ],
+  "not_full": [
+   "primes_upto2"
+  ]
+ },
+ "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-11.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "primes_upto3"
+  ],
+  "not_full": [
+   "primes_upto3"
+  ]
+ },
+ "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-12.py": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-13.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "sieve"
+  ],
+  "not_full": [
+   "sieve"
+  ]
+ },
+ "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-14.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "primes_up_to"
+  ],
+  "not_full": [
+   "primes_up_to"
+  ]
+ },
+ "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-15.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "primes"
+  ],
+  "not_full": [
+   "primes"
+  ]
+ },
+ "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-16.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "primes"
+  ],
+  "not_full": [
+   "primes"
+  ]
+ },
+ "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-2.py": {
+  "decision": "new_algorithm",
+  "roots": [
+   "primes_upto"
+  ]
+ },
+ "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-3.py": {
+  "decision": "new_algorithm",
+  "roots": [
+   "iprimes_upto"
+  ]
+ },
+ "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-4.py": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-5.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "primes2"
+  ],
+  "not_full": [
+   "primes2"
+  ]
+ },
+ "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-6.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "iprimes2"
+  ],
+  "not_full": [
+   "iprimes2"
+  ]
+ },
+ "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-7.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "primes235"
+  ],
+  "not_full": [
+   "primes235"
+  ]
+ },
+ "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-8.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "primes2357"
+  ],
+  "not_full": [
+   "primes2357"
+  ]
+ },
+ "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-9.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "countPrimesTo",
+   "mkstrts",
+   "mkwhlptrn",
+   "primesTo"
+  ],
+  "not_full": [
+   "countPrimesTo",
+   "mkstrts",
+   "mkwhlptrn",
+   "primesTo"
+  ]
+ },
+ "Task/Sorting-algorithms-Bubble-sort/C/sorting-algorithms-bubble-sort.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "bubble_sort"
+  ],
+  "not_full": [
+   "bubble_sort"
+  ]
+ },
+ "Task/Sorting-algorithms-Bubble-sort/Common-Lisp/sorting-algorithms-bubble-sort-1.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "bubble_sort"
+  ],
+  "not_full": [
+   "bubble_sort"
+  ]
+ },
+ "Task/Sorting-algorithms-Bubble-sort/Common-Lisp/sorting-algorithms-bubble-sort-2.lisp": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/Sorting-algorithms-Bubble-sort/Common-Lisp/sorting-algorithms-bubble-sort-3.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "bubble_sort"
+  ],
+  "not_full": [
+   "bubble_sort"
+  ]
+ },
+ "Task/Sorting-algorithms-Bubble-sort/Haskell/sorting-algorithms-bubble-sort-1.hs": {
+  "decision": "new_version",
+  "class": "sorting",
+  "roots": [
+   "bsort"
+  ],
+  "nodes": [
+   "numeric",
+   "sequence_transformation>comparison_sort>adjacent_exchange"
+  ]
+ },
+ "Task/Sorting-algorithms-Bubble-sort/Haskell/sorting-algorithms-bubble-sort-2.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "bsort"
+  ],
+  "not_full": [
+   "bsort"
+  ]
+ },
+ "Task/Sorting-algorithms-Bubble-sort/Haskell/sorting-algorithms-bubble-sort-3.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "bsort"
+  ],
+  "not_full": [
+   "bsort"
+  ]
+ },
+ "Task/Sorting-algorithms-Bubble-sort/Python/sorting-algorithms-bubble-sort.py": {
+  "decision": "new_version",
+  "class": "sorting",
+  "roots": [
+   "bubble_sort"
+  ],
+  "nodes": [
+   "sequence_transformation>comparison_sort>adjacent_exchange"
+  ]
+ },
+ "Task/Sorting-algorithms-Cocktail-sort/C/sorting-algorithms-cocktail-sort-1.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "cocktailsort"
+  ],
+  "not_full": [
+   "cocktailsort"
+  ]
+ },
+ "Task/Sorting-algorithms-Cocktail-sort/C/sorting-algorithms-cocktail-sort-2.c": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/Sorting-algorithms-Cocktail-sort/C/sorting-algorithms-cocktail-sort-3.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "cocktail_sort",
+   "print",
+   "string_compare"
+  ],
+  "not_full": [
+   "cocktail_sort",
+   "string_compare"
+  ]
+ },
+ "Task/Sorting-algorithms-Cocktail-sort/Common-Lisp/sorting-algorithms-cocktail-sort.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "cocktail_sort",
+   "scan"
+  ],
+  "not_full": [
+   "cocktail_sort",
+   "scan"
+  ]
+ },
+ "Task/Sorting-algorithms-Cocktail-sort/Haskell/sorting-algorithms-cocktail-sort.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "cocktailSort"
+  ],
+  "not_full": [
+   "cocktailSort"
+  ]
+ },
+ "Task/Sorting-algorithms-Cocktail-sort/Python/sorting-algorithms-cocktail-sort-1.py": {
+  "decision": "new_version",
+  "class": "sorting",
+  "roots": [
+   "cocktailSort"
+  ],
+  "nodes": [
+   "sequence_transformation>comparison_sort"
+  ]
+ },
+ "Task/Sorting-algorithms-Cocktail-sort/Python/sorting-algorithms-cocktail-sort-2.py": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/Sorting-algorithms-Cocktail-sort/Python/sorting-algorithms-cocktail-sort-3.py": {
+  "decision": "new_version",
+  "class": "sorting",
+  "roots": [
+   "cocktail"
+  ],
+  "nodes": [
+   "sequence_transformation>comparison_sort>adjacent_exchange"
+  ]
+ },
+ "Task/Sorting-algorithms-Comb-sort/C/sorting-algorithms-comb-sort.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "Combsort11"
+  ],
+  "not_full": [
+   "Combsort11"
+  ]
+ },
+ "Task/Sorting-algorithms-Comb-sort/Common-Lisp/sorting-algorithms-comb-sort.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "comb_sort"
+  ],
+  "not_full": [
+   "comb_sort"
+  ]
+ },
+ "Task/Sorting-algorithms-Comb-sort/Haskell/sorting-algorithms-comb-sort-1.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "combSort"
+  ],
+  "not_full": [
+   "combSort"
+  ]
+ },
+ "Task/Sorting-algorithms-Comb-sort/Haskell/sorting-algorithms-comb-sort-2.hs": {
+  "decision": "undecided",
+  "why": "no run: ValueError"
+ },
+ "Task/Sorting-algorithms-Comb-sort/Python/sorting-algorithms-comb-sort.py": {
+  "decision": "new_version",
+  "class": "sorting",
+  "roots": [
+   "combsort"
+  ],
+  "nodes": [
+   "sequence_transformation>comparison_sort"
+  ]
+ },
+ "Task/Sorting-algorithms-Counting-sort/C/sorting-algorithms-counting-sort-1.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "counting_sort_mm",
+   "min_max"
+  ],
+  "not_full": [
+   "counting_sort_mm",
+   "min_max"
+  ]
+ },
+ "Task/Sorting-algorithms-Counting-sort/C/sorting-algorithms-counting-sort-2.c": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/Sorting-algorithms-Counting-sort/Common-Lisp/sorting-algorithms-counting-sort.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "__lambda2",
+   "__lambda8",
+   "counting_sort"
+  ],
+  "not_full": [
+   "__lambda2",
+   "__lambda8",
+   "counting_sort"
+  ]
+ },
+ "Task/Sorting-algorithms-Counting-sort/Haskell/sorting-algorithms-counting-sort.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "countingSort"
+  ],
+  "not_full": [
+   "countingSort"
+  ]
+ },
+ "Task/Sorting-algorithms-Counting-sort/Python/sorting-algorithms-counting-sort-1.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "countingSort"
+  ],
+  "not_full": [
+   "countingSort"
+  ]
+ },
+ "Task/Sorting-algorithms-Counting-sort/Python/sorting-algorithms-counting-sort-2.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "countingSort"
+  ],
+  "not_full": [
+   "countingSort"
+  ]
+ },
+ "Task/Sorting-algorithms-Cycle-sort/C/sorting-algorithms-cycle-sort.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "cycleSort",
+   "show_array"
+  ],
+  "not_full": [
+   "cycleSort",
+   "show_array"
+  ]
+ },
+ "Task/Sorting-algorithms-Cycle-sort/Python/sorting-algorithms-cycle-sort.py": {
+  "decision": "new_algorithm",
+  "roots": [
+   "cycleSort"
+  ]
+ },
+ "Task/Sorting-algorithms-Gnome-sort/C/sorting-algorithms-gnome-sort.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "gnome_sort"
+  ],
+  "not_full": [
+   "gnome_sort"
+  ]
+ },
+ "Task/Sorting-algorithms-Gnome-sort/Common-Lisp/sorting-algorithms-gnome-sort.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "gnome_sort"
+  ],
+  "not_full": [
+   "gnome_sort"
+  ]
+ },
+ "Task/Sorting-algorithms-Gnome-sort/Haskell/sorting-algorithms-gnome-sort.hs": {
+  "decision": "new_version",
+  "class": "sorting",
+  "roots": [
+   "gnomeSort"
+  ],
+  "nodes": [
+   "sequence_transformation"
+  ]
+ },
+ "Task/Sorting-algorithms-Gnome-sort/Python/sorting-algorithms-gnome-sort.py": {
+  "decision": "new_version",
+  "class": "sorting",
+  "roots": [
+   "gnomesort"
+  ],
+  "nodes": [
+   "sequence_transformation>comparison_sort"
+  ]
+ },
+ "Task/Sorting-algorithms-Heapsort/C/sorting-algorithms-heapsort.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "heapsort"
+  ],
+  "not_full": [
+   "heapsort"
+  ]
+ },
+ "Task/Sorting-algorithms-Heapsort/Common-Lisp/sorting-algorithms-heapsort.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "__lambda0",
+   "__lambda1",
+   "heap_empty_p",
+   "heapsort",
+   "left_index",
+   "make_heap",
+   "parent_index",
+   "right_index"
+  ],
+  "not_full": [
+   "__lambda0",
+   "__lambda1",
+   "heapsort",
+   "make_heap"
+  ]
+ },
+ "Task/Sorting-algorithms-Heapsort/Haskell/sorting-algorithms-heapsort-1.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "fromList",
+   "heapSort",
+   "insert",
+   "toList"
+  ],
+  "not_full": [
+   "fromList",
+   "heapSort",
+   "insert",
+   "toList"
+  ]
+ },
+ "Task/Sorting-algorithms-Heapsort/Haskell/sorting-algorithms-heapsort-2.hs": {
+  "decision": "undecided",
+  "why": "no run: ValueError"
+ },
+ "Task/Sorting-algorithms-Heapsort/Haskell/sorting-algorithms-heapsort-3.hs": {
+  "decision": "undecided",
+  "why": "no run: ValueError"
+ },
+ "Task/Sorting-algorithms-Heapsort/Haskell/sorting-algorithms-heapsort-4.hs": {
+  "decision": "undecided",
+  "why": "no run: ValueError"
+ },
+ "Task/Sorting-algorithms-Heapsort/Python/sorting-algorithms-heapsort.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "heapsort"
+  ],
+  "not_full": [
+   "heapsort"
+  ]
+ },
+ "Task/Sorting-algorithms-Insertion-sort/C/sorting-algorithms-insertion-sort.c": {
+  "decision": "new_version",
+  "class": "sorting",
+  "roots": [
+   "insertion_sort"
+  ],
+  "nodes": [
+   "sequence_transformation>comparison_sort>shift_insertion"
+  ]
+ },
+ "Task/Sorting-algorithms-Insertion-sort/Common-Lisp/sorting-algorithms-insertion-sort-1.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "__lambda0",
+   "insert",
+   "insertion_sort"
+  ],
+  "not_full": [
+   "__lambda0",
+   "insert",
+   "insertion_sort"
+  ]
+ },
+ "Task/Sorting-algorithms-Insertion-sort/Common-Lisp/sorting-algorithms-insertion-sort-2.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "insertion_sort"
+  ],
+  "not_full": [
+   "insertion_sort"
+  ]
+ },
+ "Task/Sorting-algorithms-Insertion-sort/Common-Lisp/sorting-algorithms-insertion-sort-3.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "nsrt"
+  ],
+  "not_full": [
+   "nsrt"
+  ]
+ },
+ "Task/Sorting-algorithms-Insertion-sort/Haskell/sorting-algorithms-insertion-sort.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "insertionSort"
+  ],
+  "not_full": [
+   "insertionSort"
+  ]
+ },
+ "Task/Sorting-algorithms-Insertion-sort/Python/sorting-algorithms-insertion-sort-1.py": {
+  "decision": "new_version",
+  "class": "sorting",
+  "roots": [
+   "insertion_sort"
+  ],
+  "nodes": [
+   "sequence_transformation>comparison_sort>shift_insertion"
+  ]
+ },
+ "Task/Sorting-algorithms-Insertion-sort/Python/sorting-algorithms-insertion-sort-2.py": {
+  "decision": "new_version",
+  "class": "sorting",
+  "roots": [
+   "insertion_sort"
+  ],
+  "nodes": [
+   "sequence_transformation>comparison_sort"
+  ]
+ },
+ "Task/Sorting-algorithms-Insertion-sort/Python/sorting-algorithms-insertion-sort-3.py": {
+  "decision": "new_version",
+  "class": "sorting",
+  "roots": [
+   "insertion_sort_bin"
+  ],
+  "nodes": [
+   "sequence_transformation"
+  ]
+ },
+ "Task/Sorting-algorithms-Insertion-sort/Python/sorting-algorithms-insertion-sort-4.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "insertion_sort_bin"
+  ],
+  "not_full": [
+   "insertion_sort_bin"
+  ]
+ },
+ "Task/Sorting-algorithms-Merge-sort/C/sorting-algorithms-merge-sort-1.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "merge_sort"
+  ],
+  "not_full": [
+   "merge_sort"
+  ]
+ },
+ "Task/Sorting-algorithms-Merge-sort/C/sorting-algorithms-merge-sort-2.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "mergesort"
+  ],
+  "not_full": [
+   "mergesort"
+  ]
+ },
+ "Task/Sorting-algorithms-Merge-sort/Common-Lisp/sorting-algorithms-merge-sort.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "merge_sort"
+  ],
+  "not_full": [
+   "merge_sort"
+  ]
+ },
+ "Task/Sorting-algorithms-Merge-sort/Haskell/sorting-algorithms-merge-sort-1.hs": {
+  "decision": "new_version",
+  "class": "sorting",
+  "roots": [
+   "mergeSort"
+  ],
+  "nodes": [
+   "sequence_query",
+   "sequence_transformation"
+  ]
+ },
+ "Task/Sorting-algorithms-Merge-sort/Haskell/sorting-algorithms-merge-sort-2.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "mergeSortBottomUp"
+  ],
+  "not_full": [
+   "mergeSortBottomUp"
+  ]
+ },
+ "Task/Sorting-algorithms-Merge-sort/Haskell/sorting-algorithms-merge-sort-3.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "sort"
+  ],
+  "not_full": [
+   "sort"
+  ]
+ },
+ "Task/Sorting-algorithms-Merge-sort/Python/sorting-algorithms-merge-sort-1.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "merge_sort"
+  ],
+  "not_full": [
+   "merge_sort"
+  ]
+ },
+ "Task/Sorting-algorithms-Merge-sort/Python/sorting-algorithms-merge-sort-2.py": {
+  "decision": "new_algorithm",
+  "roots": [
+   "merge"
+  ]
+ },
+ "Task/Sorting-algorithms-Merge-sort/Python/sorting-algorithms-merge-sort-3.py": {
+  "decision": "new_version",
+  "class": "sorting",
+  "roots": [
+   "sort"
+  ],
+  "nodes": [
+   "numeric>recurrence>double_recursion",
+   "sequence_transformation"
+  ]
+ },
+ "Task/Sorting-algorithms-Pancake-sort/C/sorting-algorithms-pancake-sort-1.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "pancake_sort"
+  ],
+  "not_full": [
+   "pancake_sort"
+  ]
+ },
+ "Task/Sorting-algorithms-Pancake-sort/C/sorting-algorithms-pancake-sort-2.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "do_flip"
+  ],
+  "not_full": [
+   "do_flip"
+  ]
+ },
+ "Task/Sorting-algorithms-Pancake-sort/C/sorting-algorithms-pancake-sort-3.c": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/Sorting-algorithms-Pancake-sort/Common-Lisp/sorting-algorithms-pancake-sort-1.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "pancake_sort"
+  ],
+  "not_full": [
+   "pancake_sort"
+  ]
+ },
+ "Task/Sorting-algorithms-Pancake-sort/Common-Lisp/sorting-algorithms-pancake-sort-2.lisp": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/Sorting-algorithms-Pancake-sort/Haskell/sorting-algorithms-pancake-sort-1.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "dopancakeSort"
+  ],
+  "not_full": [
+   "dopancakeSort"
+  ]
+ },
+ "Task/Sorting-algorithms-Pancake-sort/Haskell/sorting-algorithms-pancake-sort-2.hs": {
+  "decision": "undecided",
+  "why": "no run: ValueError"
+ },
+ "Task/Sorting-algorithms-Pancake-sort/Python/sorting-algorithms-pancake-sort-1.py": {
+  "decision": "new_algorithm",
+  "roots": [
+   "pancakesort"
+  ]
+ },
+ "Task/Sorting-algorithms-Pancake-sort/Python/sorting-algorithms-pancake-sort-2.py": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/Sorting-algorithms-Quicksort/C/sorting-algorithms-quicksort-1.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "quicksort"
+  ],
+  "not_full": [
+   "quicksort"
+  ]
+ },
+ "Task/Sorting-algorithms-Quicksort/C/sorting-algorithms-quicksort-2.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "quicksort"
+  ],
+  "not_full": [
+   "quicksort"
+  ]
+ },
+ "Task/Sorting-algorithms-Quicksort/Common-Lisp/sorting-algorithms-quicksort-1.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "__lambda0",
+   "__lambda1",
+   "__lambda2",
+   "quicksort"
+  ],
+  "not_full": [
+   "__lambda0",
+   "__lambda1",
+   "__lambda2",
+   "quicksort"
+  ]
+ },
+ "Task/Sorting-algorithms-Quicksort/Common-Lisp/sorting-algorithms-quicksort-2.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "pivot",
+   "qs"
+  ],
+  "not_full": [
+   "pivot",
+   "qs"
+  ]
+ },
+ "Task/Sorting-algorithms-Quicksort/Common-Lisp/sorting-algorithms-quicksort-3.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "quicksort"
+  ],
+  "not_full": [
+   "quicksort"
+  ]
+ },
+ "Task/Sorting-algorithms-Quicksort/Common-Lisp/sorting-algorithms-quicksort-4.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "__lambda3",
+   "__lambda4",
+   "quicksort"
+  ],
+  "not_full": [
+   "__lambda3",
+   "__lambda4",
+   "quicksort"
+  ]
+ },
+ "Task/Sorting-algorithms-Quicksort/Haskell/sorting-algorithms-quicksort-1.hs": {
+  "decision": "new_version",
+  "class": "sorting",
+  "roots": [
+   "qsort"
+  ],
+  "nodes": [
+   "sequence_transformation>comparison_sort>partition_recursive"
+  ]
+ },
+ "Task/Sorting-algorithms-Quicksort/Haskell/sorting-algorithms-quicksort-2.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "qsort"
+  ],
+  "not_full": [
+   "qsort"
+  ]
+ },
+ "Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-1.py": {
+  "decision": "new_version",
+  "class": "sorting",
+  "roots": [
+   "quick_sort"
+  ],
+  "nodes": [
+   "sequence_transformation>comparison_sort>partition_recursive"
+  ]
+ },
+ "Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-2.py": {
+  "decision": "new_version",
+  "class": "sorting",
+  "roots": [
+   "qsort"
+  ],
+  "nodes": [
+   "sequence_transformation>comparison_sort>partition_recursive"
+  ]
+ },
+ "Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-3.py": {
+  "decision": "new_version",
+  "class": "sorting",
+  "roots": [
+   "qsort"
+  ],
+  "nodes": [
+   "sequence_transformation>comparison_sort>partition_recursive"
+  ]
+ },
+ "Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-4.py": {
+  "decision": "new_algorithm",
+  "roots": [
+   "qSort"
+  ]
+ },
+ "Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-5.py": {
+  "decision": "new_algorithm",
+  "roots": [
+   "quickSort"
+  ]
+ },
+ "Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-6.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "qsort"
+  ],
+  "not_full": [
+   "qsort"
+  ]
+ },
+ "Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-7.py": {
+  "decision": "new_version",
+  "class": "sorting",
+  "roots": [
+   "quicksort"
+  ],
+  "nodes": [
+   "sequence_transformation"
+  ]
+ },
+ "Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-8.py": {
+  "decision": "new_version",
+  "class": "sorting",
+  "roots": [
+   "quicksort"
+  ],
+  "nodes": [
+   "sequence_transformation"
+  ]
+ },
+ "Task/Sorting-algorithms-Selection-sort/C/sorting-algorithms-selection-sort.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "selection_sort"
+  ],
+  "not_full": [
+   "selection_sort"
+  ]
+ },
+ "Task/Sorting-algorithms-Selection-sort/Common-Lisp/sorting-algorithms-selection-sort.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "selection_sort"
+  ],
+  "not_full": [
+   "selection_sort"
+  ]
+ },
+ "Task/Sorting-algorithms-Selection-sort/Haskell/sorting-algorithms-selection-sort-1.hs": {
+  "decision": "new_version",
+  "class": "sorting",
+  "roots": [
+   "selSort"
+  ],
+  "nodes": [
+   "sequence_transformation"
+  ]
+ },
+ "Task/Sorting-algorithms-Selection-sort/Haskell/sorting-algorithms-selection-sort-2.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "selectionSort"
+  ],
+  "not_full": [
+   "selectionSort"
+  ]
+ },
+ "Task/Sorting-algorithms-Selection-sort/Haskell/sorting-algorithms-selection-sort-3.hs": {
+  "decision": "new_version",
+  "class": "sorting",
+  "roots": [
+   "selectionSort"
+  ],
+  "nodes": [
+   "sequence_query",
+   "sequence_transformation"
+  ]
+ },
+ "Task/Sorting-algorithms-Selection-sort/Python/sorting-algorithms-selection-sort.py": {
+  "decision": "new_algorithm",
+  "roots": [
+   "selection_sort"
+  ]
+ },
+ "Task/Sorting-algorithms-Shell-sort/C/sorting-algorithms-shell-sort.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "shell_sort"
+  ],
+  "not_full": [
+   "shell_sort"
+  ]
+ },
+ "Task/Sorting-algorithms-Shell-sort/Common-Lisp/sorting-algorithms-shell-sort.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "shell_sort"
+  ],
+  "not_full": [
+   "shell_sort"
+  ]
+ },
+ "Task/Sorting-algorithms-Shell-sort/Haskell/sorting-algorithms-shell-sort.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "shellSort"
+  ],
+  "not_full": [
+   "shellSort"
+  ]
+ },
+ "Task/Sorting-algorithms-Shell-sort/Python/sorting-algorithms-shell-sort.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "shell"
+  ],
+  "not_full": [
+   "shell"
+  ]
+ },
+ "Task/Sorting-algorithms-Stooge-sort/C/sorting-algorithms-stooge-sort.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "StoogeSort"
+  ],
+  "not_full": [
+   "StoogeSort"
+  ]
+ },
+ "Task/Sorting-algorithms-Stooge-sort/Common-Lisp/sorting-algorithms-stooge-sort.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "stooge_sort"
+  ],
+  "not_full": [
+   "stooge_sort"
+  ]
+ },
+ "Task/Sorting-algorithms-Stooge-sort/Haskell/sorting-algorithms-stooge-sort-1.hs": {
+  "decision": "undecided",
+  "why": "no run: ValueError"
+ },
+ "Task/Sorting-algorithms-Stooge-sort/Haskell/sorting-algorithms-stooge-sort-2.hs": {
+  "decision": "undecided",
+  "why": "no run: ValueError"
+ },
+ "Task/Sorting-algorithms-Stooge-sort/Python/sorting-algorithms-stooge-sort-1.py": {
+  "decision": "new_algorithm",
+  "roots": [
+   "stoogesort"
+  ]
+ },
+ "Task/Sorting-algorithms-Stooge-sort/Python/sorting-algorithms-stooge-sort-2.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "stooge"
+  ],
+  "not_full": [
+   "stooge"
+  ]
+ },
+ "Task/Sum-digits-of-an-integer/C/sum-digits-of-an-integer.c": {
+  "decision": "new_algorithm",
+  "roots": [
+   "SumDigits"
+  ]
+ },
+ "Task/Sum-digits-of-an-integer/Common-Lisp/sum-digits-of-an-integer-1.lisp": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "sum_digits"
+  ],
+  "not_full": [
+   "sum_digits"
+  ]
+ },
+ "Task/Sum-digits-of-an-integer/Common-Lisp/sum-digits-of-an-integer-2.lisp": {
+  "decision": "undecided",
+  "why": "no root function"
+ },
+ "Task/Sum-digits-of-an-integer/Haskell/sum-digits-of-an-integer-1.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "digsum"
+  ],
+  "not_full": [
+   "digsum"
+  ]
+ },
+ "Task/Sum-digits-of-an-integer/Haskell/sum-digits-of-an-integer-2.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "baseDigitSum"
+  ],
+  "not_full": [
+   "baseDigitSum"
+  ]
+ },
+ "Task/Sum-digits-of-an-integer/Haskell/sum-digits-of-an-integer-3.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "digitSum",
+   "intDigitSum"
+  ],
+  "not_full": [
+   "digitSum",
+   "intDigitSum"
+  ]
+ },
+ "Task/Sum-digits-of-an-integer/Python/sum-digits-of-an-integer-1.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "sumDigits"
+  ],
+  "not_full": [
+   "sumDigits"
+  ]
+ },
+ "Task/Sum-digits-of-an-integer/Python/sum-digits-of-an-integer-2.py": {
+  "decision": "new_algorithm",
+  "roots": [
+   "sumDigits"
+  ]
+ },
+ "Task/Sum-digits-of-an-integer/Python/sum-digits-of-an-integer-3.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "sumDigits"
+  ],
+  "not_full": [
+   "sumDigits"
+  ]
+ },
+ "Task/Sum-digits-of-an-integer/Python/sum-digits-of-an-integer-4.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "digitChar",
+   "digitSum",
+   "fTable",
+   "uncurry"
+  ],
+  "not_full": [
+   "digitSum",
+   "fTable",
+   "uncurry"
+  ]
+ },
+ "Task/Towers-of-Hanoi/C/towers-of-hanoi-1.c": {
+  "decision": "new_algorithm",
+  "roots": [
+   "move"
+  ]
+ },
+ "Task/Towers-of-Hanoi/C/towers-of-hanoi-2.c": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "move",
+   "new_tower"
+  ],
+  "not_full": [
+   "move",
+   "new_tower"
+  ]
+ },
+ "Task/Towers-of-Hanoi/Common-Lisp/towers-of-hanoi.lisp": {
+  "decision": "new_algorithm",
+  "roots": [
+   "move"
+  ]
+ },
+ "Task/Towers-of-Hanoi/Haskell/towers-of-hanoi-1.hs": {
+  "decision": "new_algorithm",
+  "roots": [
+   "hanoi"
+  ]
+ },
+ "Task/Towers-of-Hanoi/Haskell/towers-of-hanoi-2.hs": {
+  "decision": "new_algorithm",
+  "roots": [
+   "hanoi"
+  ]
+ },
+ "Task/Towers-of-Hanoi/Haskell/towers-of-hanoi-3.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "hanoiIO"
+  ],
+  "not_full": [
+   "hanoiIO"
+  ]
+ },
+ "Task/Towers-of-Hanoi/Haskell/towers-of-hanoi-4.hs": {
+  "decision": "undecided",
+  "why": "no run: ValueError"
+ },
+ "Task/Towers-of-Hanoi/Haskell/towers-of-hanoi-5.hs": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "showHanoi"
+  ],
+  "not_full": [
+   "showHanoi"
+  ]
+ },
+ "Task/Towers-of-Hanoi/Python/towers-of-hanoi-1.py": {
+  "decision": "new_algorithm",
+  "roots": [
+   "hanoi"
+  ]
+ },
+ "Task/Towers-of-Hanoi/Python/towers-of-hanoi-2.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "fromTo",
+   "hanoi"
+  ],
+  "not_full": [
+   "fromTo",
+   "hanoi"
+  ]
+ },
+ "Task/Towers-of-Hanoi/Python/towers-of-hanoi-3.py": {
+  "decision": "undecided",
+  "why": "a root does not run on every input",
+  "roots": [
+   "concat",
+   "enumFromTo",
+   "hanoi",
+   "hanoiState",
+   "scanl",
+   "showHanoi",
+   "showLog"
+  ],
+  "not_full": [
+   "concat",
+   "enumFromTo",
+   "hanoi",
+   "hanoiState",
+   "scanl",
+   "showHanoi",
+   "showLog"
+  ]
+ }
+}

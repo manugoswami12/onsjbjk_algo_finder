@@ -1,0 +1,4 @@
+# The one Python package beyond the standard library (plus SWI-Prolog on PATH), pinned to the exact versions tested.
+# Offline, exactly as tested: python vendor/tree-sitter/install_offline.py  (see vendor/tree-sitter/README.md)
+tree-sitter==0.26.0
+tree-sitter-language-pack==1.22.1

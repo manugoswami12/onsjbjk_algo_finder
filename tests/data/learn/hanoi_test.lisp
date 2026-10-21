@@ -1,0 +1,5 @@
+(defun towers (n from to spare)
+  (when (> n 0)
+    (towers (1- n) from spare to)
+    (format t "~a -> ~a~%" from to)
+    (towers (1- n) spare to from)))

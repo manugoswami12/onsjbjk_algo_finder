@@ -1,0 +1,292 @@
+# Prompts: how each hard case was solved (doc 04 section 19)
+
+One prompt per kind of fix, written so it can be run again for a new case. Every prompt follows the same method.
+
+## The method (run this for every change)
+
+> A held-out file is answered wrongly. First find where the code's logic is traced wrongly: dump its facts
+> (`learn_facts.tree_facts`) and compare them with the facts of the TheAlgorithms file that does the same thing in
+> another form. Fix the conversion as a rule of the language, never of an algorithm, in our own layer (a front-end
+> subclass, a fact normalisation in `prolog/`), never in `polyglot_logic`. Then check it against all existing data,
+> in a copy of the repository:
+> 1. hand-check on about 5 programs: the broken one, the TheAlgorithms form it should equal, and near negatives;
+>    dump the broken program's facts and confirm they now equal the TheAlgorithms form, not only its node;
+> 2. the tree nodes of all 1346 TheAlgorithms and 450 held-out files, old against new: every change must be explained;
+> 3. relearn (`eval_ta.py --learn`), re-index the file-rule fingerprints (`ta_distinct.py --index`, then regenerate
+>    `prolog/ta_file_components.pl` only; never rewrite `ta_file_rules.pl`), run `--run` and `--heldout`;
+> 4. learnt code must stay 1344/1344 with 0 differences and no new wrong answer may appear.
+> Steps 2 to 4 are one command: `tools_manual/check/fullcheck.sh COPY NAME OUT_DIR` (see docs/HANDOVER.md section 5).
+> A file that worked before and breaks is checked once: regenerate its generated parts; if it still breaks and the
+> idea itself cannot fix it, drop the change.
+
+## Cases solved
+
+### Rule order in the tree (prolog/families_v02.pl)
+> AP13's one-level fallback nodes ([numeric], [sequence_query], [sequence_transformation]) must hold only when no
+> branch below applies. Find functions that reach both a deep v0.2 node and an unrelated fallback node; make
+> deepest_families_v02/2 drop the one-level fallback when a v0.2 branch below the root holds. Check that only the
+> stray fallback nodes disappear and no answer changes.
+
+Result: 12 files lost a stray node; 0 answers changed.
+
+### Stale rule placement (prolog/learned_ta.pl)
+> A fresh run of unchanged code loses answers the committed results have. Compare each lost file's current tree node
+> with the node its learned branch is placed at. If they differ, the branches were learned on an older tree: relearn
+> with the current tree and rerun everything; never reuse old evidence.
+
+Result: 11 lost answers back (dbscan, booths_algorithm, problem_074 ...); learnt 1344/1344 from fresh evidence.
+
+### The tier decision in Prolog (prolog/decide.pl)
+> Move the choice of the deciding tier from Python into Prolog: tiers as data (tier/2), every label of a tier
+> collected (setof), no cut, no clause order. Replay the stored evidence of every file through the old and the new
+> decision; they must agree on every file before the Python one is replaced.
+
+Result: 1767 decisions, all equal.
+
+### A return through the variable holding a recursive call (prolog/trace_returns.pl)
+> `z = 1; if n > 1: z = n * f(n - 1); return z` is not traced as `return n * f(n - 1)` (AP13 propagates only
+> single-definition variables). Trace two value-flow shapes by line order and guards: the last definition holding on
+> every path; a default plus one guarded override (split into two guarded returns). Only values holding a recursive
+> call; only when the variable is read nowhere but in the return; the call's facts move with its value.
+
+Faults met and how: `black_height` lost its node (its variables are also tested: trace only a variable used only in
+the return); three file rules stopped matching (their fingerprints were generated from the old facts: regenerate the
+fingerprints, the rules unchanged). Result: factorial-7.py problem_020 -> Factorial; learnt 1344/1344.
+Two later fixes, each re-checked against all data with no answer change: only reads AFTER the traced definition block
+the tracing (the appends that build `lesser` read its earlier value); never substitute inside a recursive call's
+arguments (`f(lesser)` was traced again into `f(f(lesser))`, eight times).
+
+Lesson: "no answer changed" is not enough. In the hand check, dump the facts of the very file the change is for and
+confirm they come out exactly in the TheAlgorithms form (`concat([f(lesser), equal, f(greater)])`); the nesting bug
+passed two full checks because no answer depended on it.
+
+### A Haskell recursion with no loop condition (haskell_logic.py base_case_conditions)
+> `go acc 0 = acc; go acc n = go (acc * n) (n - 1)` lowers with no loop condition, so the accumulation rule (an update
+> guarded only by the loop's continuation) cannot hold; the Python lowering derives the condition from every base
+> case. Derive it the same way in the Haskell front end: the guard of a return without a self-call gives
+> not(guard); a guard the self-call steps also carry is inherited context, not a base case.
+
+Faults met: sieve-of-eratosthenes-16.hs's `adjust` changed node because AP13 nests a called local function under its
+caller's loop (under/2) and both name an unnamed parameter `$arg0` (a separate lowering fix: unique names); no answer
+changed. Result: factorial-8.hs problem_020 -> UNKNOWN (no longer wrong).
+
+### Behaviour lowering: Lisp `finally`, C `x op= y` (lowering_v03.py, installed by crosslang_frontends)
+> A program runs to the wrong outputs on the battery (fib(n) = 1 for n >= 2; factorial(n) = n). Dump its behaviour
+> normal form (`io_trace.normal_form`) and find the statement lowered against the language's semantics: `finally`
+> placed inside the loop body; `x *= y` lowered as `x = y` because the operator sits in a field the lowerer reads only
+> for Python's kind. Fix the lowering method in our layer, then compare the normal forms of all files old against new:
+> none of TheAlgorithms may change (the catalog depends on it), and every changed held-out file must use the construct.
+
+Result: 28 normal forms change (C and Lisp only); fibonacci-sequence-9.lisp signum -> Fibonacci-sequence.
+
+### An input check that guards the loop (prolog/families_v02.pl continuation_guard/4)
+> A rule that requires an update to be unconditional fails because an early exit (`if (n < 0) return -1;`) puts its
+> guard on every later statement. Treat a guard that EVERY loop around the update also carries as the nest's
+> context, not a condition of the update; check sieves and other conditioned updates stay out.
+
+### Logic matches contradicted by behaviour (eval_ta.TaLogic.consistent)
+> An exact-logic (pattern) match names an unrelated algorithm. Drop the match only on a real contradiction:
+> every function of the match computes varying outputs and the matched function computes none, or both compute
+> outputs that differ on a common input. AP13's compare returning no verdict (too little evidence) is not one.
+
+### Python tells about its own programs (pyast_facts.py, prolog/ast_concat.pl, prolog/slice_write.pl)
+> Tree-sitter gives only the token: `a + b` cannot be told from a list join. Ask Python's own ast (static: the
+> program is never run) which names hold lists (every assignment a list, annotated ones included, or appended to),
+> which parameters are sliced and which functions return lists; add them as facts beside tree-sitter's. Rewrite an
+> add with a list operand as concat, flattened (the same form `[*a, *b]` lowers to). Then the rules the old wrong
+> reading had hidden must hold: a join of two recursive results is a partition sort only when the parts are split by
+> a comparison (appended under one, or filtered by one), else Hanoi's moves are a sort. For an in-place rewrite
+> `q[:] = E`: it is a write of q, and q the output, only in a function that returns nothing (one that returns
+> already names its output).
+
+Faults met and how (each one fix inside the idea, then all data again):
+- 34 files failed to load: one predicate's facts were written apart (swipl's discontiguous warning is a failure).
+  Write each predicate's facts together.
+- The Lisp path never loads ast_concat.pl: declare `ac_joined/1` dynamic where it is read (families_v02.pl).
+- problem_109 lost its file rule: Python did not see `singles: list[int] = ...` (annotated assignment), and the hand
+  rule quoted the old wrong reading of `singles + doubles + triples + [0]`; read annotated assignments, and restate
+  the rule's term in the corrected form (same rule, same uniqueness check).
+- `[x] + lcs(...)` in the LCS built branch: the rule read the join only as `op(add, [list([_]), D])`; it accepts the
+  corrected `concat([list([_]), D])` too (found by tests/test_uniform, not by the full check: run the tests too).
+- `q[:] = E` everywhere broke rotate_matrix's reverse_column (it returns the matrix): limited to no-return functions.
+
+Lesson: a corrected conversion changes the terms hand rules quote. Grep the hand rules and built branches for the
+old form before the full run.
+
+### A function that returns a function; a nested function; a helper (returns_function.py, behaviour_v04.py, interp_v04.pl, eval_ta.helper_functions)
+> First tell whether a function returns a value or a function (every own return a lambda). A value: nothing changes.
+> A function: lower it exactly as a new function, recursively: f(x) returning lambda y: E is f(x, y) returning E,
+> and h(a)(b) is h(a, b). Then make what it computes evaluable, again as rules of the language: a nested function
+> reading its enclosing function's variables takes them as parameters (lambda lifting; as a value it is a closure);
+> a parameter passed to list()/zip() is a sequence; the library relations the interpreter lacks (n-ary zip/min/max,
+> accumulate, reduce, a boolean as 0/1). Last, the decision: a function called by one that computes something else
+> is that function's step, so its evidence (behaviour, built/hand branch, exact logic) does not name the file.
+
+Method followed: each part built by hand on the two files first (scratch: the lifted normal form printed, the
+interpreter called on kitten/sitting -> 3, the helper rule applied to the printed per-function evidence), then in a
+copy of the code, hand-checked on the 13 held-out and 4 TheAlgorithms files with such functions, then all data.
+Faults met: interp_v03's reduce never worked (foldl/6 with a state pair: write the fold as plain recursion); the
+exact-logic tier is per file, so the helper rule needs the functions of each match (TaLogic.labels_matched by_match);
+the facts lowering must be installed where the facts are made (learn_facts), not only with the front ends.
+
+### The language's own parser checks tree-sitter's facts (haskell_ast_check.py, c_ast_check.py)
+> Ask the language's own compiler for its AST (parsed only: GHC -ddump-parsed-ast; clang -ast-dump=json) and list the
+> functions it defines. Compare with the functions and parameters tree-sitter's facts claim, over every file of the
+> language; explain each difference before any rule (local functions, lambda lifting, escaped names are not faults).
+> Drop only what the compiler says is not there; leave a file it cannot parse as it is.
+
+### Traced logic first, behaviour as fallback: two views (logic_canon.py, prolog/logic_canon.pl, eval_ta.CanonicalLogic)
+> When a file's logic equals a corpus file's but only behaviour names it, trace the exact-logic tier: which facts it
+> learns and scans (AP13's own, cli.facts_text), the learned pattern of the corpus file, the scan of the test file
+> against it; name the relation that fails. Keep the literal view as it is; add a canonical view (the tree's facts,
+> patterns canonical on the term: an input check on every statement as context, a range bound a variable) consulted
+> only where the literal view matches nothing, as its own tier after the learned branches, for labels learned at the
+> file's node. Behaviour may not veto it with a reference whose conversion fails to run.
+
+Faults met: editing patterns as text left an abstracted variable in the variable list and crashed AP13's scan (write
+the canonicaliser in Prolog, on the term); findall copies variables (collect statements without copying, compare with
+==); the canonical view as a whole replacement lost 19 answers (more canonical facts are less specific: keep the
+literal view first); canonical labels in the trace tier outranked an exact behaviour match (joint_probability: a tier
+of its own after learned).
+
+### Own-layer faults and rules from another language (haskell_core_pnf, learn_facts.c_expanded, crosslang_frontends.eta_expanded, generators.py, interp_v04.pl)
+> First try manually the 2nd and 3rd category of problems (faults of our own layer; rules we already have in another
+> language), then a full run on all files; if even one previous successful result fails, drop the idea.
+
+Kept: a multi-line Haskell import moved as a whole; C behaviour read after cpp as the tree is; a root returning a
+function partly applied eta-expanded; a Python generator as the list it yields; Python's extended slice store; Python's
+integer `//` as floor. Not fixed: sieve-18.hs (a fragment, GHC's typeError), caesar-4.py (string inputs and method
+calls: new support). Faults met: tree-sitter puts `yield` straight in a block (no expression_statement); Prolog's `//`
+truncates, which the sieve's loop bound exposed.
+
+### The language's own information (haskell_core_pnf.type_arities/typed_eta, not_in_scope, generators.is_generator)
+> For each, check how much decompile/AST information each language gives (Haskell, C, Python) so our Python can
+> deterministically create the correct Prolog rule. Manually check each case with information from the language
+> itself; if manually successful, try each of category 2 and 3, then test the whole pipeline; if even a single previous
+> successful case fails, drop the idea.
+
+Kept: Haskell arity from GHC's type signatures; definitions GHC finds out of scope reported by those names; the
+generator rule gated by Python's CO_GENERATOR flag. Faults met: GHC's deferred error strings use string gaps, which the
+Core tokenizer could not read; GHC prints the type signatures before the Core section (one call gives both); the
+battery has no string inputs, so mypy's constant alone does not make caesar-4 run.
+
+### The same evidence on every run (learn_facts._single_threaded_gc)
+> Make the logic tier repeatable: run it twice on the files whose evidence varied, find which matches come and go, find
+> the cause, fix it in a copy, hand-check, then one full run; drop if a previous success fails.
+
+Kept: every SWI-Prolog run with its garbage collector in the main thread. Faults met: the flag set after loading is too
+late (the collector already ran while references loaded); the scan's result also depends on the order of tabled
+answers in a fixed run (a matcher completeness question, left for later).
+
+### The closing round: left-out files' conversion faults and missing language support (lowering_v05.py, prolog/interp_v04.pl, haskell_core_pnf.py, behaviour_v04.py, decide_new_or_known.py)
+> Run every left-out held-out file through the current pipeline (roots, every root's runs, the first error) and group
+> them by cause. For the faults of our own conversion and the language support we lack, hand-build each solution as a
+> rule of the language in our own layer, test it on an own program with hand-computed values and a near negative, then
+> one full run; if even one previous success fails or a new wrong answer appears, try one fix, else drop that rule.
+
+One prompt per problem met, each with its solution:
+
+> **C: an expression with an effect** (`while (--n > 0)`, `a[i++] = x`, `for (i = 0, j = 1; ...; i++, j++)`, `a = b = n`).
+> Lower it as `effect(Statement, Value)`: `--n` is `n = n - 1` then `n`, `n++` is `t = n, n = n + 1` then `t`, `a = e`
+> the assignment then `a`, `a, b` is `a` then `b`; a comma statement is the two statements. The interpreter runs the
+> statement and gives the value (prolog/interp_v04.pl). Kept.
+
+> **C: arrays** (`int a[3] = {1, 2}`, `int c[4];`, `int b[] = {4, 5}`, `int m[2][3]`, `malloc(n * sizeof(int))`). As C
+> sizes them, counted in elements: one `c_array(Init, Sizes)` builtin pads with 0, gives each row a fresh list, takes a
+> missing size from the initializer; tree-sitter nests the last size outermost, so reverse the sizes; `sizeof` of an
+> array is its length, of anything else 1 (`sizeof a / sizeof a[0]` is the length); `malloc(n)`/`calloc(n, s)` give
+> n and n*s cells; `free()` does nothing. Kept.
+
+> **C: casts, literals, division** (`(int) x`, `2.0`, `0x10`, `017`, `10L`, `-7 / 2`, `-7 % 2`). An integer cast
+> truncates, a float or double cast is float(), a pointer cast the same value; literals as C reads them; `/` divides
+> two integers toward zero and is exact with a float; `%` keeps the dividend's sign (rem). `strlen` is the length.
+> Kept.
+
+> **C: a declarator without a value** (`int i;`, `int t, k;` read as `i`, giving unbound(i) even in
+> `int t; t = n * 2; return t;`). Lower it as nothing. The rule is right, but the code it lets run is named by
+> behaviour that is true and labelled otherwise: fibonacci-sequence-2.c -> climbing_stairs, the lone reversal helper of
+> sorting-algorithms-pancake-sort-2.c -> reverse_array. Fix tried: none in the conversion (both are converted right);
+> the one general tier fix (only a file's roots name it) was dropped before (19.x). Dropped.
+
+> **Python: a lambda as a value** (`reduce(lambda a, b: ..., s)`, `key=lambda x: ...`). Port pnf_v03.PNFv03's rule:
+> `lambda(Params, Body)`, a closure in interp_v03; leave a lambda that returns_function makes a function's own body to
+> that rule (lcm-2 and levenshtein-5 broke until then). Kept.
+
+> **Python: a generator as a call's only argument** (`sum(int(c) for c in str(n))`, lowered as junk). Port pnf_v03's
+> rule (one comprehension argument). The rule is right, but the code it lets run reads characters as numbers: a
+> character is its code, so `int('7')` gives 55; happy_number then ran wrongly and clashed with is_power_of_two, and
+> TheAlgorithms' perfect ran and vetoed the logic match of perfect-numbers-1.hs and -3.py. Fix tried: characters as
+> their own values, a change to every string operation, not a targeted fix. Dropped.
+
+> **Python: module-level names** (`TABLE = (...)` read inside a function, unbound). Emit `pnf_const(Name, Value)` for
+> each module-level `name = value` that no function assigns, stores into or appends to (a constant is evaluated where
+> it is read, so a memo table or a counter would lose its writes and stays unbound). Kept.
+
+> **Python: unpacking a list** (`x, y = pair` where pair is a list). Store each element, the lengths equal. Kept.
+
+> **Python: library functions** (`bisect.insort`, `enumerate(s, 1)`, `c.isalpha()`, `s.upper()`, `s.zfill(4)`). Each
+> builtin with the library's documented meaning, only where the program defines no function of that name (an own
+> `merge` or `insort` is never replaced). SWI-Prolog's `code_type(C, to_upper(U))` means C is the upper case of U: use
+> upcase_atom/downcase_atom. Kept.
+
+> **A parameter that is sliced or iterated by a comprehension** gets list inputs (`(subseq l 0 2)`, `[x for x in s]`).
+> Kept.
+
+> **Haskell: the Core reader** (`()`, an operator definition `(!)`, class methods `$c+_aTa`). Read `()` and `(op)` as
+> names and the method name with its unique suffix. The rule is right, but fibonacci-sequence-16.hs then ran its
+> matrix helpers while its root cannot run (a Num instance), and a helper's behaviour named it round_robin. Fix tried:
+> as above, none in the conversion. Dropped.
+
+> **Haskell: the Prelude's list functions** (`scanl`, `scanl1`, `concatMap`, `delete`, `digitToInt`). Their Prelude
+> definitions as loops over the Core terms, as map, filter and fold are. Kept.
+
+> **Haskell: point-free definitions** (`digitSum = foldr ((+) . digitToInt) 0`, `baseDigitSum base = sum . unfoldr go`).
+> A binding whose GHC type (`-ddump-types`) takes k more arguments than its lambdas name is applied to k new parameters
+> before lowering; `f . g` as a value is `\x -> f (g x)`; an operator as a value `(<)` is `\a b -> a < b`; a call
+> through a variable holding a closure applies it (interp_v04 callv). Kept.
+
+> **Lisp: `case`, `subseq`, `&optional`, `last`, `map`.** `case`/`ecase` compares the key with eql against each key or
+> key list, `t`/`otherwise` the default; `(subseq s a b)` is the slice and `(setf (subseq ...))` stores into it;
+> `&optional`: the function of the required parameters gives the defaults and calls `name$full` (all of them), as does
+> a call that passes more, the wrapper marking the sequence parameters (as haskell_core_pnf marks a list parameter);
+> `(last l)` is `l[-1:]`; `(map 'list f s)` is `(mapcar f s)`. Kept.
+
+> **The decision step's names** (`fibonacci_iterative` in the tree's facts, `fibonacci-iterative` in the normal form;
+> `(!)` and `!`). Compare root names with brackets dropped and other punctuation as `_`. Kept.
+
+Faults met on the way: a copy made with `--exclude=benchmark` also dropped polyglot_logic/benchmark, so two full runs
+crashed and compared stale answer files; fullcheck.sh now reports any traceback in its logs.
+
+## Tried and dropped (do not repeat)
+
+- `q[:] = E` as a write of q in every function (before Python's facts): insertion-sort-3 became Cycle-sort and two
+  learnt files were lost. Solved later, limited to functions that return nothing (above).
+- Library files (roots computing different things) naming nothing: volume.py, rotate_bits.py and seven other
+  learnt files lost or wrong; a file of several functions of one topic cannot be told from a library.
+- Uncurrying `return lambda` (hand-tested only): the behaviour becomes right for lcm-2, but the hand-built gcd branch
+  at its helper's node decides first; levenshtein-5's functional body (reduce, scanl, functions as values) still
+  cannot be evaluated.
+
+- `+` on lists as concatenation without types (prolog/list_concat.pl, removed): every `+` of a recursive result
+  became a join, and AP13's partition idiom takes any join of two recursive results as a partition sort; Hanoi's
+  moves and TheAlgorithms' huffman became Quicksort. Solved later with Python's facts and the partition test (above).
+
+- Naming a match by the matched function's algorithm, in Python rules added case by case (mixed answers): removed 9
+  wrong answers but lost 19 learnt answers and made 2 wrong. Rules in Python patched per case are hard coding.
+- Branches written from failing held-out files (partition through variables, `seq[:] = ...`): test-set rules; removed.
+- Placing a file's label only at its roots' nodes: moves 248 learnt files (136 to no node), because TheAlgorithms
+  often writes the algorithm in a helper (`all_combinations.py`'s root only calls `create_all_state`).
+- The perfect-number trace (doc 04 section 19.9): a generator argument as one comprehension plus an input-check rule
+  fixed perfect-numbers-1.hs by hand, but lost is_power_of_two.py (happy_number then runs, still converted wrongly)
+  and made primality-by-trial-division-1/2 wrong (`if n <= 3: return True` is part of is_prime, not an input check).
+  Fix first: int() of a character in the interpreter; an input check told from a base case.
+- A null input (0, []) as no evidence, with a mixed file's functions at other nodes naming nothing (doc 04 section
+  19.12): fixed perfect-numbers-1.hs by hand, lost six learnt answers (signum, not_gate, stooge_sort ...): for them
+  the null input is the algorithm, not a convention.
+- The exact-logic tier switched to the tree's facts as a whole (doc 04 section 19.13): 19 learnt answers lost. Solved
+  as two views, literal first and canonical second (above).
+- A C declarator without a value as nothing (doc 04 section 19.17): fibonacci-sequence-2.c named climbing_stairs and
+  pancake-sort-2.c reverse_array (both true behaviour, wrong labels).
+- A Python generator as a call's only argument (19.17): characters are codes, so int('7') is 55; is_power_of_two and
+  perfect-numbers-1/3 lost. Fix first: characters as their own values.
+- The Haskell Core reader's (), (op) and $c+ tokens (19.17): fibonacci-sequence-16.hs named round_robin by a helper.

@@ -1,0 +1,11 @@
+{
+  "_source": "TheAlgorithms/Python @ 25c712f2; the 6 files used in the two 3-file checks",
+  "files": {
+    "searches/binary_search.py": "interval_lookup",
+    "maths/factorial.py": "factorial_like",
+    "maths/greatest_common_divisor.py": "euclid_like",
+    "maths/sum_of_digits.py": "digit_processing",
+    "maths/prime_check.py": "divisor_search",
+    "maths/collatz_sequence.py": "collatz_like"
+  }
+}

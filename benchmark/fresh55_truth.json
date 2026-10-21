@@ -1,0 +1,85 @@
+{
+  "_source": "TheAlgorithms/Python @ 25c712f2692449e91a57748d328ef34fccf25654 (MIT). FRESH set: no file used in any earlier set or for learning. Labels from file names only, frozen and committed before any run. Negatives: seeded sample ('25c712f2-fresh55') of a name-labelled non-member pool. A list = any label accepted.",
+  "_allowed_on_negative": [
+    "recursive_decomposition"
+  ],
+  "files": {
+    "sorts/bitonic_sort.py": "comparison_driven_reordering",
+    "sorts/cycle_sort.py": [
+      "sequence_rearrangement",
+      "comparison_driven_reordering"
+    ],
+    "sorts/cyclic_sort.py": "sequence_rearrangement",
+    "sorts/double_sort.py": "comparison_driven_reordering",
+    "sorts/odd_even_transposition_single_threaded.py": "comparison_driven_reordering",
+    "sorts/pancake_sort.py": [
+      "sequence_rearrangement",
+      "comparison_driven_reordering"
+    ],
+    "sorts/reverse_selection.py": [
+      "sequence_rearrangement",
+      "comparison_driven_reordering",
+      "selection_exchange"
+    ],
+    "sorts/shrink_shell_sort.py": "comparison_driven_reordering",
+    "sorts/slowsort.py": "comparison_driven_reordering",
+    "sorts/intro_sort.py": [
+      "comparison_driven_reordering",
+      "shift_insertion"
+    ],
+    "sorts/quick_sort_3_partition.py": "comparison_driven_reordering",
+    "maths/least_common_multiple.py": "euclid_like",
+    "maths/extended_euclidean_algorithm.py": "euclid_like",
+    "maths/lucas_series.py": "fibonacci_like",
+    "maths/padovan_sequence.py": "recurrence",
+    "maths/pell_number.py": "recurrence",
+    "maths/sylvester_sequence.py": "recurrence",
+    "maths/persistence.py": "digit_processing",
+    "maths/disarium.py": "digit_processing",
+    "maths/keith_number.py": "digit_processing",
+    "maths/remove_digit.py": "digit_processing",
+    "maths/sieve_of_atkin.py": "sieve_like",
+    "maths/primelib.py": [
+      "divisor_search",
+      "sieve_like"
+    ],
+    "maths/average_mean.py": [
+      "aggregate",
+      "element_accumulation"
+    ],
+    "strings/manacher.py": [
+      "symmetric_compare",
+      "palindrome_check"
+    ],
+    "strings/edit_distance.py": null,
+    "maths/ceil.py": null,
+    "maths/euclidean_distance.py": null,
+    "maths/manhattan_distance.py": null,
+    "maths/addition_without_arithmetic.py": null,
+    "maths/decimal_isolate.py": null,
+    "maths/bearing.py": null,
+    "sorts/pigeon_sort.py": null,
+    "strings/word_occurrence.py": null,
+    "strings/check_anagrams.py": null,
+    "maths/area.py": null,
+    "strings/is_pangram.py": null,
+    "maths/perfect_square.py": null,
+    "strings/strip.py": null,
+    "strings/anagrams.py": null,
+    "strings/pig_latin.py": null,
+    "maths/entropy.py": null,
+    "maths/check_polygon.py": null,
+    "maths/trapezoidal_rule.py": null,
+    "maths/chebyshev_distance.py": null,
+    "maths/line_length.py": null,
+    "strings/remove_duplicate.py": null,
+    "strings/capitalize.py": null,
+    "strings/count_vowels.py": null,
+    "maths/gaussian.py": null,
+    "maths/binary_multiplication.py": null,
+    "maths/monte_carlo_dice.py": null,
+    "maths/pythagoras.py": null,
+    "strings/dna.py": null,
+    "maths/jaccard_similarity.py": null
+  }
+}

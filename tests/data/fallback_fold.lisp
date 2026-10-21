@@ -1,0 +1,5 @@
+(defun dotv (a b) (reduce #'+ (map 'vector #'* a b)))
+(defun mapped (a b) (map 'vector #'* a b))
+(defun vsum2 (vec) (let ((s 0)) (dotimes (i (length vec)) (setf s (+ s (aref vec i)))) s))
+(defun ping (x) (if (< x 0) x (pong (- x 1))))
+(defun pong (x) (ping (- x 1)))

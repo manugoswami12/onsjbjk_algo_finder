@@ -1,0 +1,7 @@
+(defun bubble-sort (a)
+  (let ((n (length a)))
+    (dotimes (i n)
+      (dotimes (j (- n i 1))
+        (when (> (aref a j) (aref a (+ j 1)))
+          (rotatef (aref a j) (aref a (+ j 1))))))
+    a))
