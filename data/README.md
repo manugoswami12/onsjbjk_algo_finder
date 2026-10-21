@@ -13,3 +13,24 @@ Rosetta Code content is from https://rosettacode.org and is available under the 
 task and language folder, as in RosettaCodeData.
 
 The source code in these folders is **only read, never executed**: the system turns it into Prolog and runs that.
+
+## Frozen copy
+
+Upstream projects keep changing their code, so these folders are a frozen copy: they are never updated from upstream.
+Every result of the project (`benchmark/`) was measured on exactly these files.
+
+| Folder | Files | Source commit |
+|---|---|---|
+| `TheAlgorithms-Python/` | 1736 | TheAlgorithms/Python `e1a2a8b016001309a73d5fec4818c35cca139795` |
+| `rosetta/Task/` | 494: C 76, Common Lisp 85, Haskell 157, Python 176 (the 450 held-out files among them) | acmeism/RosettaCodeData `1d475861d7141ef2fafff293d9339f56e4b0f5db` |
+
+`MANIFEST.sha256` holds the sha256 of every file here, plus the task labels the Rosetta files are scored against
+(`polyglot_logic/benchmark/rosetta_truth.json`). To check that nothing changed:
+
+```
+python tools_manual/check/verify_data.py
+```
+
+It ends with `all match the tested data`. A newer upstream version would be a new data set: add it beside this one and
+measure it separately, never in place of it.
+

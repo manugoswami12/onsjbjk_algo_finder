@@ -207,7 +207,22 @@ Haskell packages (`Data.MemoTrie`, `Data.CReal`, `Data.List.Split`, ...).
   (`pnf_v03.py`, used by `--v03`). They differ (v0.3 has the generator rule, v0.4 has the 19.17 rules). Merging them
   would make the left-out list and the pipeline agree.
 
-## 8. Where things are
+## 8. Frozen inputs (so results can be reproduced)
+
+Upstream code and tools change; the results here were measured with exactly these.
+
+- **Data, in the repository, never updated from upstream** (`data/README.md`): TheAlgorithms/Python, 1736 files at
+  commit `e1a2a8b0`; Rosetta Code, 494 files (C 76, Common Lisp 85, Haskell 157, Python 176; the 450 held-out files
+  among them) at RosettaCodeData commit `1d475861`; the task labels `polyglot_logic/benchmark/rosetta_truth.json`.
+  Every file's sha256 is in `data/MANIFEST.sha256`; `python tools_manual/check/verify_data.py` checks them (it ends
+  with `all match the tested data`). A newer upstream version is a new data set, measured beside this one.
+- **The parser, in the repository**: tree-sitter 0.26.0 and its 8 grammars, prebuilt and with source and checksums, in
+  `vendor/tree-sitter/` (install with `python vendor/tree-sitter/install_offline.py`).
+- **Tools, not in the repository; the tested versions**: Python 3.13.16, SWI-Prolog 9.0.4, GHC 9.4.7, ECL 21.2.1,
+  clang 18.1.3 (Ubuntu). Another version may give different facts or runs (GHC's Core output in particular changes
+  between releases): rerun the full check (section 5) before trusting results with other versions.
+
+## 9. Where things are
 
 | What | Where |
 |---|---|
@@ -216,6 +231,7 @@ Haskell packages (`Data.MemoTrie`, `Data.CReal`, `Data.List.Split`, ...).
 | Every fix as a prompt | `docs/CONVERSION_FIX_PROMPTS.md` |
 | Hand rules and their prompts | `docs/HAND_RULE_PROMPTS.md`, `docs/RULE_PROMPTS.md`, `docs/HAND_RULES_WRITTEN.md` |
 | Full check | `tools_manual/check/fullcheck.sh` |
+| Data check | `tools_manual/check/verify_data.py`, `data/MANIFEST.sha256` |
 | Tests | `tests/` (run each with `python -m unittest tests.test_NAME`; `test_frontends` alone) |
 | How to install and run | `README.md` |
 
