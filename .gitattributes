@@ -1,3 +1,5 @@
 # data/ is stored byte for byte as it was analysed (no line-ending conversion)
 data/** -text
 vendor/** -text
+*.cmd text eol=crlf
+*.sh text eol=lf
