@@ -703,6 +703,23 @@ hailstone-sequence.lisp and -2.hs, sieve-of-eratosthenes-3/5/6.py; sieve-9.py lo
 evidence of five learnt files (problem_111, segment_tree, bell_numbers, bifid, lazy_segment_tree) differs between runs
 of the unchanged code too; their answers are file rules.
 
+**19.15 The same cases with the language's own information (adopted).** User: "manually check each case with
+information from language itself ... then test for whole pipeline, if even single previous successful case fails then
+drop the idea". What each language's own tool tells, without running the program: GHC types every binder
+(`-ddump-types`, typed Core) and resolves every name (renamer); clang types every expression, keeps where a macro was
+defined and used, resolves every call to its declaration; Python's compiler marks generators (CO_GENERATOR), symtable
+gives scopes, mypy gives imported constants' values but `Any` for unannotated parameters. Used:
+| Case | Information | Rule |
+|---|---|---|
+| sum-digits-of-an-integer-1.hs | GHC's type `digsum :: Integral a => a -> a -> a`: 2 arguments, the equation names 1 | haskell_core_pnf.type_arities, typed_eta: the missing parameters added (replaces 19.14's call-shape test, crosslang_frontends.eta_expanded) |
+| sieve-of-eratosthenes-18.hs | GHC's deferred "Variable not in scope" (Core's typeError); the tokenizer reads Haskell string gaps (`\` newline `\`) | a definition using names the file does not define is `not_in_scope(emptyPQ, firstSievePrime, gaps, ...)`: a fragment by GHC's own names |
+| sieve-of-eratosthenes-6.py | Python's compiler: the code object's CO_GENERATOR flag (compiled, not run) | generators.py applies only to functions Python marks as generators |
+| caesar-cipher-4.py | mypy: `abc` is Literal['ABC...Z'] | none: even bound, module-level names are not passed to functions; string inputs, `s.upper()`, a bare generator argument (later stage) |
+sieve-1.hs (Haskell's layout rule for an import) and fibonacci-sequence-5.c (the C preprocessor) already use the
+language's own rules. All data: learnt 1344/1344, 0 differences; fingerprints 0; tree nodes 0; held-out 0 entries
+changed; the final report identical. Logic-tier evidence differs on 4 learnt files answered by file rules
+(bell_numbers and lazy_segment_tree vary between runs of unchanged code too; aho_corasick, lstm).
+
 **Later stage: the 242 held-out files that cannot be evaluated.** They are left out of this round's numbers (no
 answer, and no root function runs on every battery input). This is not "no algorithm": some are fragments
 (`binary-search-5.py` only calls bisect), most define functions the evaluator cannot run yet: the battery cannot call

@@ -17,7 +17,7 @@ import subprocess
 import tempfile
 from pathlib import Path
 
-GHC_FLAGS = ['-fforce-recomp', '-O0', '-c', '-ddump-ds', '-dsuppress-all', '-dno-typeable-binds',
+GHC_FLAGS = ['-fforce-recomp', '-O0', '-c', '-ddump-types', '-ddump-ds', '-dsuppress-all', '-dno-typeable-binds',
              '-dsuppress-module-prefixes', '-dppr-cols=200', '-w',
              '-fdefer-type-errors', '-fdefer-out-of-scope-variables']
 CLASH = {'gcd', 'lcm', 'product', 'sum', 'length', 'reverse', 'elem', 'maximum', 'minimum', 'lookup', 'filter',
@@ -54,6 +54,11 @@ def prepared_source(path: Path) -> str:
 
 
 def core_text(path: Path, timeout=90) -> str:
+    return ghc_output(path, timeout)[1]
+
+
+def ghc_output(path: Path, timeout=90):
+    """(GHC's type signatures of the top-level definitions, the desugared Core)."""
     src = prepared_source(path)
     with tempfile.TemporaryDirectory(prefix='v02_ghc_') as td:
         f = Path(td) / 'Main.hs'
@@ -64,13 +69,78 @@ def core_text(path: Path, timeout=90) -> str:
     out = proc.stdout
     if '==================== Desugar' not in out:
         raise ValueError('ghc: ' + (proc.stderr.strip().splitlines() or ['no Core'])[0][:200])
-    return out.split('==================== Desugar', 1)[1].split('\n', 1)[1]
+    types, core = out.split('==================== Desugar', 1)
+    return types, core.split('\n', 1)[1]
+
+
+def type_arities(types: str) -> dict:
+    """name -> the number of arguments its type takes (digsum :: forall a. Integral a => a -> a -> a: 2), from
+    GHC's TYPE SIGNATURES: the arrows outside brackets after the quantifier and the constraints."""
+    out, entries = {}, re.sub(r'\n {4,}', ' ', types.split('TYPE SIGNATURES', 1)[-1])
+    for line in entries.splitlines():
+        m = re.match(r'^  ([a-z_][\w\']*) :: (.*)$', line)
+        if not m:
+            continue
+        t = re.sub(r'^forall [^.]*\.\s*', '', m.group(2).strip())
+        depth, parts, cur = 0, [], ''
+        i = 0
+        while i < len(t):
+            c = t[i]
+            depth += c in '([' and 1 or c in ')]' and -1 or 0
+            if depth == 0 and t.startswith('=>', i):
+                parts, cur, i = [], '', i + 2
+                continue
+            if depth == 0 and t.startswith('->', i):
+                parts.append(cur)
+                cur, i = '', i + 2
+                continue
+            cur += c
+            i += 1
+        out[m.group(1)] = len(parts)
+    return out
+
+
+def typed_eta(funs, arity):
+    """A top-level definition whose type takes more arguments than its equation names returns a function (digsum
+    base = f 0 with digsum :: a -> a -> a): the missing parameters are added to it and to each call it returns
+    (digsum base n = f 0 n), as a Python function returning a function is lowered (returns_function, 19.8). Only when
+    every own return is a call."""
+    def returns(t, out):
+        if isinstance(t, tuple) and t:
+            if t[0] == 'return':
+                out.append(t)
+            else:
+                for x in t[1:]:
+                    returns(x, out)
+        elif isinstance(t, list):
+            for x in t:
+                returns(x, out)
+        return out
+
+    def extend(t, extra):
+        if isinstance(t, tuple) and t:
+            if t[0] == 'return':
+                return ('return', ('call', t[1][1], list(t[1][2]) + extra))
+            return tuple(extend(x, extra) if i else x for i, x in enumerate(t))
+        if isinstance(t, list):
+            return [extend(x, extra) for x in t]
+        return t
+
+    out = []
+    for n, ps, body in funs:
+        k = arity.get(n, 0) - len(ps)
+        rs = returns(body, [])
+        if k > 0 and rs and all(len(r) == 2 and isinstance(r[1], tuple) and r[1][:1] == ('call',) for r in rs):
+            extra = [f'eta${i}' for i in range(k)]
+            ps, body = list(ps) + extra, extend(body, [('var', v) for v in extra])
+        out.append((n, ps, body))
+    return out
 
 
 # --------------------------------------------------------------------------------- Core parse
 TOKEN = re.compile(r'''
   (?P<ws>\s+|--(?![!#$%&*+./<=>?^|~:])[^\n]*) | (?P<cast>\|>\s*<Co:\d+>|`cast`\s*<Co:\d+>\s*::\s*\.\.\.) | (?P<co><Co:\d+>)
-| (?P<str>"(?:\\.|[^"\\])*"\#*) | (?P<chr>'(?:\\.|[^'\\])'\#*)
+| (?P<str>"(?:\\[\s\S]|[^"\\])*"\#*) | (?P<chr>'(?:\\.|[^'\\])'\#*)
 | (?P<num>-?\d+\.\d+(?:e-?\d+)?\#*|-?\d+\#*)
 | (?P<punct>\\|->|[(){};,]|\[\]|=(?![=>])|@)
 | (?P<name>\$[A-Za-z0-9]*[!#%&*+./<=>?^|~:\-]+|\$?[A-Za-z_][\w$'#]*(?:\[\]|\(,+\))?|\(,+\)|\$[\w$']+)
@@ -362,7 +432,10 @@ class Lower:
     def function(self, name, params, body, extra=()):
         self.listy = set()
         saved, saved_alias = dict(self.local), dict(self.alias)
+        missing = sorted(set(re.findall(r'not in scope: ([\w\'.]+)', repr(body))))
         try:
+            if missing:                      # GHC's renamer: the definition uses names the file does not define
+                raise _Unsupported('not_in_scope(' + ','.join(missing) + ')')
             stmts, v = self.compile(body)
             stmts = stmts + [('return', v)]
         except _Unsupported as u:
@@ -831,6 +904,7 @@ class _Unsupported(Exception):
 
 
 def haskell_normal_form(path: Path):
-    binds = Parser(tokenize(core_text(path))).program()
+    types, core = ghc_output(path)
+    binds = Parser(tokenize(core)).program()
     low = Lower(binds)
-    return low.run()
+    return typed_eta(low.run(), type_arities(types))

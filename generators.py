@@ -1,6 +1,6 @@
 """A Python generator, lowered for behaviour as the list it yields (doc 04 section 19.14).
-A function whose own body has `yield e` statements (and no `yield from`, no yield inside an expression) gives the
-values it yields, in order: it is lowered as acc = [] at the start, each `yield e` as acc.append(e), each return and
+A function Python's compiler marks as a generator (CO_GENERATOR on its code object; the file is compiled, not run)
+whose own body has only `yield e` statements (no `yield from`, no yield inside an expression) gives the values it yields, in order: it is lowered as acc = [] at the start, each `yield e` as acc.append(e), each return and
 the end of the body as return acc. Otherwise nothing changes. install(): the behaviour lowerer (to_prolog)."""
 import compare_learners
 compare_learners._ap13()
@@ -27,6 +27,34 @@ def own_yields(fnode):
     return out
 
 
+def generator_lines(root):
+    """The `def` lines of the functions Python's compiler marks as generators (none if the source does not compile)."""
+    import inspect
+    try:
+        code = compile(root.text.decode('utf-8', 'replace'), '<source>', 'exec', dont_inherit=True)
+    except (SyntaxError, ValueError):
+        return set()
+    out, stack = set(), [code]
+    while stack:
+        c = stack.pop()
+        if c.co_flags & inspect.CO_GENERATOR:
+            out.add(c.co_firstlineno)
+        stack.extend(k for k in c.co_consts if inspect.iscode(k))
+    return out
+
+
+def is_generator(node):
+    root = node
+    while root.parent is not None:
+        root = root.parent
+    if getattr(is_generator, 'root', None) is not root:
+        is_generator.root, is_generator.lines = root, generator_lines(root)
+    starts = {node.start_point[0] + 1}
+    if node.parent is not None and node.parent.type == 'decorated_definition':
+        starts.add(node.parent.start_point[0] + 1)
+    return bool(starts & is_generator.lines)
+
+
 _installed = False
 
 
@@ -40,7 +68,8 @@ def install():
     fun0, st0 = cls.function, cls.st
 
     def function(self, node, roles, prefix, name=None):
-        ys = own_yields(node) if self.lang == 'python' and node.type == 'function_definition' else None
+        ys = own_yields(node) if self.lang == 'python' and node.type == 'function_definition' and is_generator(node) \
+            else None
         if not ys:
             return fun0(self, node, roles, prefix, name)
         outer, self.gen_yields = getattr(self, 'gen_yields', None), {(y.start_byte, y.end_byte) for y in ys}

@@ -4389,7 +4389,9 @@
 "lazy_segment_tree",
 "segment_tree"
 ],
-"held_trace": [],
+"held_trace": [
+"lazy_segment_tree"
+],
 "io": [
 "dijkstra_algorithm",
 "heap_generic",
@@ -4397,7 +4399,9 @@
 "min_heap",
 "segment_tree"
 ],
-"logic": [],
+"logic": [
+"lazy_segment_tree"
+],
 "nodes": [
 "numeric>recurrence>double_recursion",
 "sequence_query"
@@ -15584,11 +15588,14 @@
 "got": "bell_numbers",
 "held": [],
 "held_trace": [
-"bell_numbers"
+"bell_numbers",
+"combinations"
 ],
 "io": [],
 "logic": [
-"bell_numbers"
+"bell_numbers",
+"combinations",
+"number_of_possible_binary_trees"
 ],
 "nodes": [
 "numeric"
@@ -17189,7 +17196,8 @@
 ],
 "logic": [
 "capacitor_equivalence",
-"resistor_equivalence"
+"resistor_equivalence",
+"simple_neural_network"
 ],
 "nodes": [
 "marking>table_fill",
@@ -25951,14 +25959,16 @@
 },
 "strings/aho_corasick.py": {
 "built": [],
-"canonical": [
-"aho_corasick"
-],
+"canonical": [],
 "got": "aho_corasick",
 "held": [],
-"held_trace": [],
+"held_trace": [
+"aho_corasick"
+],
 "io": [],
-"logic": [],
+"logic": [
+"aho_corasick"
+],
 "nodes": [
 "numeric"
 ],

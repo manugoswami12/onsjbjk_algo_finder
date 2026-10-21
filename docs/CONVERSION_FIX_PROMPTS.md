@@ -158,6 +158,17 @@ integer `//` as floor. Not fixed: sieve-18.hs (a fragment, GHC's typeError), cae
 calls: new support). Faults met: tree-sitter puts `yield` straight in a block (no expression_statement); Prolog's `//`
 truncates, which the sieve's loop bound exposed.
 
+### The language's own information (haskell_core_pnf.type_arities/typed_eta, not_in_scope, generators.is_generator)
+> For each, check how much decompile/AST information each language gives (Haskell, C, Python) so our Python can
+> deterministically create the correct Prolog rule. Manually check each case with information from the language
+> itself; if manually successful, try each of category 2 and 3, then test the whole pipeline; if even a single previous
+> successful case fails, drop the idea.
+
+Kept: Haskell arity from GHC's type signatures; definitions GHC finds out of scope reported by those names; the
+generator rule gated by Python's CO_GENERATOR flag. Faults met: GHC's deferred error strings use string gaps, which the
+Core tokenizer could not read; GHC prints the type signatures before the Core section (one call gives both); the
+battery has no string inputs, so mypy's constant alone does not make caesar-4 run.
+
 ## Tried and dropped (do not repeat)
 
 - `q[:] = E` as a write of q in every function (before Python's facts): insertion-sort-3 became Cycle-sort and two
