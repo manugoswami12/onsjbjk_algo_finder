@@ -2115,9 +2115,13 @@
 ],
 "canonical": [],
 "got": "Fibonacci-sequence",
-"held": [],
+"held": [
+"fibonacci"
+],
 "held_trace": [],
-"io": [],
+"io": [
+"fibonacci"
+],
 "logic": [],
 "nodes": [
 "numeric>recurrence>pair_recurrence"
@@ -2414,9 +2418,13 @@
 ],
 "canonical": [],
 "got": "Hailstone-sequence",
-"held": [],
+"held": [
+"collatz_sequence"
+],
 "held_trace": [],
-"io": [],
+"io": [
+"collatz_sequence"
+],
 "logic": [],
 "nodes": [
 "numeric>conditional_iteration"
@@ -2444,9 +2452,13 @@
 ],
 "canonical": [],
 "got": "Hailstone-sequence",
-"held": [],
+"held": [
+"collatz_sequence"
+],
 "held_trace": [],
-"io": [],
+"io": [
+"collatz_sequence"
+],
 "logic": [],
 "nodes": [
 "numeric>conditional_iteration"
@@ -5409,9 +5421,25 @@
 ],
 "canonical": [],
 "got": "Sieve-of-Eratosthenes",
-"held": [],
+"held": [
+"prime_sieve_eratosthenes",
+"problem_187",
+"problem_800",
+"sieve_of_atkin",
+"sieve_of_eratosthenes"
+],
 "held_trace": [],
-"io": [],
+"io": [
+"prime_sieve_eratosthenes",
+"primelib",
+"problem_050",
+"problem_051",
+"problem_187",
+"problem_234",
+"problem_800",
+"sieve_of_atkin",
+"sieve_of_eratosthenes"
+],
 "logic": [],
 "nodes": [
 "marking>stride_marking"
@@ -5434,32 +5462,64 @@
 "why": "none"
 },
 "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-5.py": {
+"at": "io",
 "built": [],
 "canonical": [],
+"clash": [
+"Sieve-of-Eratosthenes",
+"prime_sieve_eratosthenes",
+"primelib",
+"problem_050",
+"problem_051",
+"problem_187",
+"problem_234",
+"problem_800",
+"sieve_of_atkin"
+],
 "got": null,
 "held": [],
 "held_trace": [],
-"io": [],
+"io": [
+"prime_sieve_eratosthenes",
+"primelib",
+"problem_050",
+"problem_051",
+"problem_187",
+"problem_234",
+"problem_800",
+"sieve_of_atkin",
+"sieve_of_eratosthenes"
+],
 "logic": [],
 "nodes": [],
 "specific": [],
 "task": "Sieve-of-Eratosthenes",
-"why": "none"
+"why": "ambiguous"
 },
 "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-6.py": {
+"at": "io",
 "built": [],
 "canonical": [],
+"clash": [
+"problem_050",
+"problem_051",
+"problem_234"
+],
 "got": null,
 "held": [],
 "held_trace": [],
-"io": [],
+"io": [
+"problem_050",
+"problem_051",
+"problem_234"
+],
 "logic": [],
 "nodes": [
 "numeric"
 ],
 "specific": [],
 "task": "Sieve-of-Eratosthenes",
-"why": "none"
+"why": "ambiguous"
 },
 "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-7.py": {
 "built": [],
@@ -5490,26 +5550,12 @@
 "why": "none"
 },
 "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-9.py": {
-"at": "io",
 "built": [],
 "canonical": [],
-"clash": [
-"closest_pair_of_points",
-"msd_radix_sort",
-"rail_fence_cipher",
-"skytale_cipher",
-"viterbi"
-],
 "got": null,
 "held": [],
 "held_trace": [],
-"io": [
-"closest_pair_of_points",
-"msd_radix_sort",
-"rail_fence_cipher",
-"skytale_cipher",
-"viterbi"
-],
+"io": [],
 "logic": [],
 "nodes": [
 "numeric",
@@ -5518,7 +5564,7 @@
 ],
 "specific": [],
 "task": "Sieve-of-Eratosthenes",
-"why": "ambiguous"
+"why": "none"
 },
 "Task/Sorting-algorithms-Bubble-sort/C/sorting-algorithms-bubble-sort.c": {
 "built": [

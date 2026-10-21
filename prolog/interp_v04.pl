@@ -6,6 +6,11 @@
 % read as a number; the other operator forms are interp.pl's (lit/1 values go to its clause)
 eval(op(O, [A, B]), S0, S, V) :- memberchk(O, [add, sub, mul]), \+ ( A = lit(_), B = lit(_) ), !,
     eval(A, S0, S1, AV), eval(B, S1, S2, BV), bool_number(AV, A1), bool_number(BV, B1), eval(op(O, [lit(A1), lit(B1)]), S2, S, V).
+% Python's // of two integers floors (-1 // 2 == -1); Prolog's // truncates toward zero
+eval(op(div, [A, B]), S0, S, V) :- pnf_lang(python), \+ ( A = lit(_), B = lit(_) ), !,
+    eval(A, S0, S1, AV), eval(B, S1, S, BV), eval(op(div, [lit(AV), lit(BV)]), S, _, V).
+eval(op(div, [lit(A), lit(B)]), S, S, V) :- pnf_lang(python), integer(A), integer(B), !,
+    ( B =:= 0 -> throw(pnf_error(div0)) ; V is A div B ).
 bool_number(true, 1) :- !.
 bool_number(false, 0) :- !.
 bool_number(X, X).
@@ -27,4 +32,24 @@ zip_n(Ls, []) :- member([], Ls), !.
 zip_n(Ls, [t(Hs)|Ts]) :- maplist([[X|Xs], X, Xs]>>true, Ls, Hs, Rest), zip_n(Rest, Ts).
 sums([], _, []).
 sums([X|Xs], A0, [A|As]) :- A is A0 + X, sums(Xs, A, As).
+% a[i:j:k] = ... with a step other than 1 (Python's extended slice store): the values go to the positions of
+% range(i, j, k) as Python normalises them, one each; the other slice stores are interp.pl's
+:- multifile store/4.
+store(slice(Q, A, B, C), V, S0, S) :- C \== none, \+ C = lit(1),
+    eval(C, S0, S1, CV), integer(CV), CV =\= 1, CV =\= 0, !,
+    eval(Q, S1, S2, ref(R)), eval(A, S2, S3, AV), eval(B, S3, S4, BV),
+    S4 = s(E, H0, N, T), get_assoc(R, H0, L0), length(L0, Len), elements(V, H0, New),
+    step_positions(AV, BV, CV, Len, Ks),
+    ( length(Ks, M), length(New, M) -> true ; throw(pnf_error(slice_length)) ),
+    foldl([K, X, La, Lb]>>set_nth0(K, La, X, Lb), Ks, New, L0, L), put_assoc(R, H0, L, H), S = s(E, H, N, T).
+step_positions(A, B, St, Len, Ks) :- St > 0, !,
+    slice_end(A, Len, 0, 0, Len, I0), slice_end(B, Len, Len, 0, Len, I1), positions_up(I0, I1, St, Ks).
+step_positions(A, B, St, Len, Ks) :- Hi is Len - 1,
+    slice_end(A, Len, Hi, -1, Hi, I0), slice_end(B, Len, -1, -1, Hi, I1), positions_down(I0, I1, St, Ks).
+slice_end(none, _, D, _, _, D) :- !.
+slice_end(X, Len, _, Lo, Hi, I) :- integer(X), ( X < 0 -> Y is X + Len ; Y = X ), I is max(Lo, min(Hi, Y)).
+positions_up(I, J, _, []) :- I >= J, !.
+positions_up(I, J, St, [I|Ks]) :- I1 is I + St, positions_up(I1, J, St, Ks).
+positions_down(I, J, _, []) :- I =< J, !.
+positions_down(I, J, St, [I|Ks]) :- I1 is I + St, positions_down(I1, J, St, Ks).
 :- prolog_load_context(directory, Dir), directory_file_path(Dir, 'interp_v03.pl', P), load_files(P, [if(not_loaded)]).

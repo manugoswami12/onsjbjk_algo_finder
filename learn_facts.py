@@ -65,15 +65,21 @@ def session_facts(path: Path) -> str:
 def c_facts(path: Path) -> str:
     """AP13 facts of a C file after its own macros are expanded by the C preprocessor (a function-like macro
     MAT_ELEM(r, c) is the expression it stands for); system headers are not read (#include lines dropped)."""
-    text = ''.join(line for line in path.read_text(encoding='utf-8', errors='replace').splitlines(keepends=True)
-                   if not line.lstrip().startswith('#include'))
-    done = subprocess.run(['cpp', '-P', '-w', '-undef'], input=text, capture_output=True, text=True, check=False)
-    if done.returncode != 0 or not done.stdout.strip():
+    text = c_expanded(path)
+    if text is None:
         return imperative_facts(path)                # the preprocessor cannot read it: the file as it is
     with tempfile.TemporaryDirectory(prefix='v02_cpp_') as td:
         f = Path(td) / path.name
-        f.write_text(done.stdout, encoding='utf-8')
+        f.write_text(text, encoding='utf-8')
         return imperative_facts(f)
+
+
+def c_expanded(path: Path):
+    """A C file's text with its own macros expanded (#include lines dropped), or None if cpp cannot read it."""
+    text = ''.join(line for line in path.read_text(encoding='utf-8', errors='replace').splitlines(keepends=True)
+                   if not line.lstrip().startswith('#include'))
+    done = subprocess.run(['cpp', '-P', '-w', '-undef'], input=text, capture_output=True, text=True, check=False)
+    return done.stdout if done.returncode == 0 and done.stdout.strip() else None
 
 
 def defines_code(path: Path) -> bool:

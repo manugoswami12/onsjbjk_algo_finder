@@ -684,6 +684,25 @@ matches perfect-numbers-1.hs (5 of 5 relations); all 19 files and every earlier-
 learnt 1344/1344, 0 differences; new code perfect-numbers-1.hs primelib -> Perfect-numbers, perfect-numbers-3.py
 UNKNOWN -> Perfect-numbers. 185 correct, 0 wrong, precision 100%, recall 88.9%.
 
+**19.14 Six left-out files by hand: faults of our own layer, rules from another language (adopted: four rules).**
+User: "first try manually 2nd and 3rd category of problems ... then full run on all files, if even one previous
+successful result fail then drop the idea". Each case by hand, then all four rules in one full run:
+| Case | Fault | Rule | After |
+|---|---|---|---|
+| sieve-of-eratosthenes-1.hs | haskell_core_pnf.prepared_source moved `import` lines one at a time, splitting a multi-line import list | an import is its line and the indented lines after it | GHC parses; next: `runST` (monads, later stage) |
+| fibonacci-sequence-5.c | behaviour read the C file without its macros (`unbound('CSIZE')`), the tree read it after cpp | learn_facts.c_expanded: both read the cpp-expanded text (crosslang_frontends normal_form) | macros gone; next: pointer declarators, GMP (later stage) |
+| sum-digits-of-an-integer-1.hs | `digsum base = f 0`: a root returning a local function partly applied (`arity('f$0',3,2)`) | crosslang_frontends.eta_expanded: when every own return is a call with too few arguments, the missing parameters are added to the root and the call (as returns_function for Python) | digsum runs |
+| sieve-of-eratosthenes-6.py | a generator: `yield` lowered as return, so only the first value (2) | generators.py: acc = [], each `yield e` as acc.append(e), each return and the end as return acc (plain `yield e` statements only) | gives its primes; then two interpreter faults found and fixed: |
+| | `buf[s::p] = ...` (extended slice store) threw | interp_v04 store: the values go to the positions of range(i, j, k) as Python normalises them | |
+| | Python `//` truncated toward zero (Prolog's //): `(2-3)//2` gave 0, not -1 | interp_v04: Python's integer // floors (`div`) | sieve-6 equals TheAlgorithms' prime_sieve except below 2 (it always yields 2) |
+| sieve-of-eratosthenes-18.hs | "core token" | none: GHC defers `Variable not in scope: gaps` into a typeError string; the file is a fragment | unchanged |
+| caesar-cipher-4.py | `abc` imported, `s.upper()` lost, a bare generator argument read as `for_in_clause`, no string inputs in the battery | none: new language support (later stage) | unchanged |
+All data: learnt 1344/1344, 0 differences, fingerprints 0, tree nodes 0 changed; new code 185 correct, 0 wrong (no
+answer changed). Behaviour evidence gained: collatz_sequence (learnt), fibonacci-sequence-8.py,
+hailstone-sequence.lisp and -2.hs, sieve-of-eratosthenes-3/5/6.py; sieve-9.py lost a five-label clash. The exact-logic
+evidence of five learnt files (problem_111, segment_tree, bell_numbers, bifid, lazy_segment_tree) differs between runs
+of the unchanged code too; their answers are file rules.
+
 **Later stage: the 242 held-out files that cannot be evaluated.** They are left out of this round's numbers (no
 answer, and no root function runs on every battery input). This is not "no algorithm": some are fragments
 (`binary-search-5.py` only calls bisect), most define functions the evaluator cannot run yet: the battery cannot call

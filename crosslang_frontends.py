@@ -5,9 +5,12 @@ pipeline (polyglot_logic/tools/io_trace.py) at run time; polyglot_logic itself i
   .lisp  SBCL macro-expansion of standard macros, then the AP13 Lisp translator (lisp_sbcl_pnf.py)
   any    a formatted result string is its value (without_formatting)
   .lisp, .c  lowering_v03.py: the Lisp loop's `finally` runs after the loop; C's x op= y keeps its operator
+  .c     the program after its own macros (learn_facts.c_expanded), as the tree reads it (19.14)
+  .hs    a root returning a function partly applied, eta-expanded (eta_expanded, 19.14)
 """
 from __future__ import annotations
 
+import tempfile
 from pathlib import Path
 
 _installed = False
@@ -28,10 +31,20 @@ def install(lisp_sbcl: bool = True):
         suffix = Path(path).suffix.lower()
         if suffix == '.hs':
             from haskell_core_pnf import haskell_normal_form
-            return 'haskell', with_swapped_search(with_comparator_wrappers(haskell_normal_form(Path(path)), '<='))
+            funs = eta_expanded(haskell_normal_form(Path(path)))
+            return 'haskell', with_swapped_search(with_comparator_wrappers(funs, '<='))
         if lisp_sbcl and suffix in ('.lisp', '.cl', '.lsp'):
             from lisp_sbcl_pnf import lisp_normal_form_sbcl
             return 'commonlisp', with_swapped_search(with_comparator_wrappers(lisp_normal_form_sbcl(Path(path)), '<'))
+        if suffix == '.c':                    # the program as its macros make it, as the tree reads it
+            from learn_facts import c_expanded
+            text = c_expanded(Path(path))
+            if text is not None:
+                with tempfile.TemporaryDirectory(prefix='v04_cpp_') as td:
+                    f = Path(td) / Path(path).name
+                    f.write_text(text, encoding='utf-8')
+                    lang, funs = original(f)
+                    return lang, without_formatting(funs)
         lang, funs = original(path)
         return lang, without_formatting(funs)
     io_trace.normal_form = normal_form
@@ -39,9 +52,58 @@ def install(lisp_sbcl: bool = True):
     lowering_v03.install()
     import returns_function                   # a function returning a function, lowered as a new one (19.8)
     returns_function.install()
+    import generators                         # a generator gives the list it yields (19.14)
+    generators.install()
     import behaviour_v04                      # nested functions lifted, the v0.4 interpreter (19.8)
     behaviour_v04.install()
     _installed = True
+
+
+def eta_expanded(funs):
+    """A definition that returns a function partly applied (digsum base = f 0) is the function of all the
+    arguments: the missing parameters are added to it and to the call (digsum base n = f 0 n), as a Python
+    function returning a function is (returns_function, 19.8). Only when every own return is such a call."""
+    arity = {n: len(ps) for n, ps, _ in funs}
+
+    def returns(t, out):
+        if isinstance(t, tuple) and t:
+            if t[0] == 'return':
+                out.append(t)
+                return out
+            for x in t[1:]:
+                returns(x, out)
+        elif isinstance(t, list):
+            for x in t:
+                returns(x, out)
+        return out
+
+    def missing(body):
+        rs = returns(body, [])
+        ks = {arity[r[1][1]] - len(r[1][2]) if len(r) == 2 and isinstance(r[1], tuple) and r[1][:1] == ('call',)
+              and r[1][1] in arity and len(r[1][2]) < arity[r[1][1]] else 0 for r in rs}
+        return ks.pop() if rs and len(ks) == 1 else 0
+
+    def extend(t, extra):
+        if isinstance(t, tuple) and t:
+            if t[0] == 'return' and len(t) == 2 and t[1][:1] == ('call',):
+                return ('return', ('call', t[1][1], list(t[1][2]) + extra))
+            return tuple(extend(x, extra) if i else x for i, x in enumerate(t))
+        if isinstance(t, list):
+            return [extend(x, extra) for x in t]
+        return t
+
+    changed = True
+    while changed:
+        changed, out = False, []
+        for n, ps, body in funs:
+            k = missing(body)
+            if k:
+                extra = [f'eta${i}' for i in range(k)]
+                body, ps, changed = extend(body, [('var', v) for v in extra]), list(ps) + extra, True
+                arity[n] = len(ps)
+            out.append((n, ps, body))
+        funs = out
+    return funs
 
 
 def without_formatting(funs):

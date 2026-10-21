@@ -45,8 +45,9 @@ def prepared_source(path: Path) -> str:
         has_main = re.search(r'^main\s*(::|=)', src, re.M)
         head = ('module Main where\n' if has_main else 'module M where\n') + hiding
         # imports must come right after the header: move them up
-        imports = re.findall(r'^import .*$', src, re.M)
-        body = re.sub(r'^import .*$', '', src, flags=re.M)
+        imp = r'^import .*(?:\n[ \t]+\S.*)*'           # an import with its indented continuation lines
+        imports = re.findall(imp, src, re.M)
+        body = re.sub(imp, '', src, flags=re.M)
         src = head + '\n'.join(imports) + '\n' + body
     src = '\n'.join(pragmas) + '\n' + src
     return src

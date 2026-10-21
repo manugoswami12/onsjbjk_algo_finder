@@ -148,6 +148,16 @@ the canonicaliser in Prolog, on the term); findall copies variables (collect sta
 literal view first); canonical labels in the trace tier outranked an exact behaviour match (joint_probability: a tier
 of its own after learned).
 
+### Own-layer faults and rules from another language (haskell_core_pnf, learn_facts.c_expanded, crosslang_frontends.eta_expanded, generators.py, interp_v04.pl)
+> First try manually the 2nd and 3rd category of problems (faults of our own layer; rules we already have in another
+> language), then a full run on all files; if even one previous successful result fails, drop the idea.
+
+Kept: a multi-line Haskell import moved as a whole; C behaviour read after cpp as the tree is; a root returning a
+function partly applied eta-expanded; a Python generator as the list it yields; Python's extended slice store; Python's
+integer `//` as floor. Not fixed: sieve-18.hs (a fragment, GHC's typeError), caesar-4.py (string inputs and method
+calls: new support). Faults met: tree-sitter puts `yield` straight in a block (no expression_statement); Prolog's `//`
+truncates, which the sieve's loop bound exposed.
+
 ## Tried and dropped (do not repeat)
 
 - `q[:] = E` as a write of q in every function (before Python's facts): insertion-sort-3 became Cycle-sort and two

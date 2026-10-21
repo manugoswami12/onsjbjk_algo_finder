@@ -1662,13 +1662,9 @@
 "canonical": [],
 "got": "bifid",
 "held": [],
-"held_trace": [
-"bifid"
-],
+"held_trace": [],
 "io": [],
-"logic": [
-"bifid"
-],
+"logic": [],
 "nodes": [],
 "specific": [
 "bifid"
@@ -4387,9 +4383,7 @@
 },
 "data_structures/binary_tree/lazy_segment_tree.py": {
 "built": [],
-"canonical": [
-"lazy_segment_tree"
-],
+"canonical": [],
 "got": "lazy_segment_tree",
 "held": [
 "lazy_segment_tree",
@@ -4634,9 +4628,7 @@
 "lazy_segment_tree",
 "segment_tree"
 ],
-"held_trace": [
-"segment_tree"
-],
+"held_trace": [],
 "io": [
 "dijkstra_algorithm",
 "heap_generic",
@@ -4644,9 +4636,7 @@
 "min_heap",
 "segment_tree"
 ],
-"logic": [
-"segment_tree"
-],
+"logic": [],
 "nodes": [
 "numeric>recurrence>double_recursion"
 ],
@@ -12739,11 +12729,15 @@
 ],
 "canonical": [],
 "got": "Hailstone-sequence",
-"held": [],
+"held": [
+"collatz_sequence"
+],
 "held_trace": [
 "collatz_sequence"
 ],
-"io": [],
+"io": [
+"collatz_sequence"
+],
 "logic": [
 "collatz_sequence"
 ],
@@ -15590,14 +15584,11 @@
 "got": "bell_numbers",
 "held": [],
 "held_trace": [
-"bell_numbers",
-"combinations"
+"bell_numbers"
 ],
 "io": [],
 "logic": [
-"bell_numbers",
-"combinations",
-"number_of_possible_binary_trees"
+"bell_numbers"
 ],
 "nodes": [
 "numeric"
@@ -21765,14 +21756,9 @@
 "canonical": [],
 "got": "problem_111",
 "held": [],
-"held_trace": [
-"problem_111"
-],
+"held_trace": [],
 "io": [],
-"logic": [
-"problem_111",
-"problem_124"
-],
+"logic": [],
 "nodes": [
 "sequence_transformation>elementwise_map"
 ],
