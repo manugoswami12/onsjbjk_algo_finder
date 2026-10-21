@@ -233,6 +233,7 @@ Upstream code and tools change; the results here were measured with exactly thes
 | Full check | `tools_manual/check/fullcheck.sh` |
 | Data check | `tools_manual/check/verify_data.py`, `data/MANIFEST.sha256` |
 | Tests | `tests/` (run each with `python -m unittest tests.test_NAME`; `test_frontends` alone) |
+| Analyse a file (one command) | `./analyze.sh FILE` or `analyze.cmd FILE` (`analyze.py`; what it learns is cached in `.cache/`, rebuilt when code or data change) |
 | How to install and run | `README.md` |
 
 ---
