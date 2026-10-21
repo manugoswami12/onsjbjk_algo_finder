@@ -238,6 +238,83 @@ Upstream code and tools change; the results here were measured with exactly thes
 
 ---
 
+## 10. Next phase: clean up first, then egg
+
+The order agreed at close: tidy the existing code first, then build the next layer on it.
+
+### 10.1 Clean-up (do this first)
+
+1. **Merge the two behaviour runners**, v0.3 (`pnf_v03.py`) and v0.4 (`behaviour_v04.py`), so the pipeline and the class
+   fallback see the same thing (today the left-out list uses v0.3, which lacks the 19.17 rules).
+2. **Fold the layers of patches into one front end per language**: `lowering_v03`, `returns_function`, `generators`,
+   `lowering_v05` and so on each patch the previous one at install time, which makes them hard to follow.
+3. **Remove dead code and old experiments**: `older_code/` except the two pieces `polyglot_logic/` still loads, and the
+   unused tools in `tools_manual/`.
+4. **Replace the 120-second wall-clock limits with inference limits**, so results never depend on machine load.
+
+Every clean-up step is a change like any other: run the full check (section 5); the results must not move.
+
+### 10.2 Real code: what one PostgreSQL and one GTK file showed
+
+At close, one file of each was put through `analyze.sh` (not part of the repository or the numbers):
+- PostgreSQL `src/common/binaryheap.c` (352 lines): only its three heap index formulas (2i+1, 2i+2, (i-1)/2) could
+  run; the rest works through C structs. It was named `minimum_spanning_tree_prims`: the right direction, since
+  TheAlgorithms' Prim file builds the same binary heap inside it; the label names the larger algorithm the part came
+  from.
+- GTK `gtk/gtkrbtree.c` (800 lines): none of its 40 functions can run (pointers and struct fields): UNKNOWN.
+- Both rewritten by hand as the known algorithms they are made of (heap: index relations, sift-down, sift-up, Floyd's
+  build, heap sort, 53 lines; red-black tree: BST insert, two rotations, the insert fix-up, an in-order walk, nodes as
+  array indexes, 112 lines): both roots then run and sort every test input correctly, and the pipeline answers "a
+  comparison sort" at the comparison_sort node, without claiming which one.
+The lesson: production code hides simple, known algorithms behind memory management and pointers. Pulled out into
+known parts, it can be run, checked, recognised, and improved. C structs and pointers (section 7, item 5) are the
+support that matters most for real code.
+
+### 10.3 Then: egg (equality saturation), the modern Karnaugh map for code
+
+The idea: the knowledge base knows what code *is*; an e-graph (the `egg` library, Rust) searches what it *could be*,
+holding every equivalent form at once and extracting the cheapest by a cost function, as a Karnaugh map does for
+logic circuits. Our Prolog normal form is already made of terms, which map almost directly onto egg's S-expressions.
+
+The division of work:
+- **egg** does local algebra and the systematic search and extraction;
+- **our pipeline** supplies what egg cannot prove by rewriting alone: algorithm-level equivalences ("this function is
+  gcd"), found by logic and behaviour, given to egg as rewrite rules (lemmas).
+
+Example 1, heap index algebra (from the PostgreSQL file): `a[(2*i + 1 - 1) / 2]`, the parent of the left child.
+
+```
+(index a (/ (- (+ (* 2 i) 1) 1) 2))
+rules:  (- (+ x y) y) => x        (/ (* 2 x) 2) => x
+result: (index a i)               ; egg shows parent(left(i)) = i and simplifies
+```
+
+Example 2, gcd at the algorithm level: someone wrote gcd by repeated subtraction.
+
+```
+(define (g a b) (if (= a b) a (if (> a b) (g (- a b) b) (g a (- b a)))))
+(g ?a ?b)   => (gcd ?a ?b)              ; from our pipeline: tested, not proved
+(gcd ?a ?b) => (gcd-euclid ?a ?b)       ; known equivalent forms in the knowledge base
+(gcd ?a ?b) => (gcd-binary ?a ?b)
+cost: euclid O(log n) < binary < subtraction O(n)   ->  extracts gcd-euclid
+```
+
+The answer becomes: "your function is gcd; here is the equivalent Euclid version, which is faster": recognition and
+optimisation in one step.
+
+What makes it a real task, not a toy:
+1. Only pure code goes in: loops must become recursion and assignments SSA (each variable assigned once) first. The
+   Haskell side is pure already (GHC Core); C and Python need that step.
+2. A lemma our pipeline found by testing is *tested*, not *proved*, and the output must say so ("never claim more than
+   you know").
+3. Saturation can blow up: cap the e-graph's nodes and time (egg supports both).
+4. The bridge is small: a Python exporter from our normal-form terms to S-expressions, and a small Rust program on
+   `egg` that takes the rules and terms and returns the cheapest extraction.
+
+A first step (about a week): pure integer and list functions only (gcd, power, Fibonacci, heap indexing), an algebra
+rule set plus our recognised-algorithm lemmas, reporting "is / is not / cheaper equivalent" on the Rosetta files we
+already evaluate; then loops through the SSA step.
+
 ## Appendix A: the code of the three dropped rules
 
 They were never committed (each was dropped in a scratch copy before the commit), so their exact code is kept here,
