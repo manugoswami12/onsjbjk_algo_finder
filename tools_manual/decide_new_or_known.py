@@ -9,6 +9,7 @@ functions no other own function calls, so a helper's class is never the file's),
 usage: PYTHONPATH=. python tools_manual/decide_new_or_known.py ROOT FILES.json OUT.json [--v03]
 """
 import json
+import re
 import sys
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -49,7 +50,10 @@ def roots(p: Path) -> set[str]:
 
 
 def base(name: str) -> str:
-    return name.split('$')[0]                       # io_trace names a where-function gs$1
+    """io_trace names a where-function gs$1; the tree's facts and the normal form spell a name differently in some
+    languages (Lisp fibonacci-iterative and gcd* as fibonacci_iterative and gcd_, a Haskell operator (!) as !):
+    compared with brackets dropped and other punctuation as _ (doc 04 section 19.17)."""
+    return re.sub(r'[^A-Za-z0-9_\']', '_', name.split('$')[0].strip('()')) or name
 
 
 def decide(p: Path) -> dict:
@@ -60,7 +64,9 @@ def decide(p: Path) -> dict:
         return {'decision': 'undecided', 'why': 'no run: ' + type(e).__name__}
     if not rts:
         return {'decision': 'undecided', 'why': 'no root function'}
-    full = {n for n, d in info.items() if d.get('runs') and not d.get('unsupported') and all(r[0] for r in d['runs'])}
+    rts = {base(r) for r in rts}
+    full = {base(n) for n, d in info.items() if d.get('runs') and not d.get('unsupported') and all(r[0] for r in d['runs'])
+            and n == n.split('$')[0]}
     if not rts <= full:                             # every root runs on every input (a root left out could be the
         return {'decision': 'undecided', 'why': 'a root does not run on every input', 'roots': sorted(rts),
                 'not_full': sorted(rts - full)}     # algorithm itself: simpson_integration beside f(x) = x*x)

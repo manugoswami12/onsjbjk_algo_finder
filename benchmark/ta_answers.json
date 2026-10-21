@@ -66,9 +66,13 @@
 "built": [],
 "canonical": [],
 "got": "show_response",
-"held": [],
+"held": [
+"show_response"
+],
 "held_trace": [],
-"io": [],
+"io": [
+"show_response"
+],
 "logic": [],
 "nodes": [],
 "specific": [
@@ -1989,11 +1993,15 @@
 "built": [],
 "canonical": [],
 "got": "onepad_cipher",
-"held": [],
+"held": [
+"onepad_cipher"
+],
 "held_trace": [
 "onepad_cipher"
 ],
-"io": [],
+"io": [
+"onepad_cipher"
+],
 "logic": [
 "onepad_cipher"
 ],
@@ -2130,6 +2138,7 @@
 ],
 "io": [
 "closest_pair_of_points",
+"iterative_merge_sort",
 "msd_radix_sort",
 "rail_fence_cipher",
 "recursive_insertion_sort",
@@ -2344,6 +2353,7 @@
 ],
 "io": [
 "closest_pair_of_points",
+"iterative_merge_sort",
 "msd_radix_sort",
 "rail_fence_cipher",
 "recursive_insertion_sort",
@@ -3869,7 +3879,8 @@
 "reverse_array"
 ],
 "io": [
-"reverse_array"
+"reverse_array",
+"rotate_matrix"
 ],
 "logic": [
 "reverse_array"
@@ -6697,6 +6708,7 @@
 ],
 "io": [
 "closest_pair_of_points",
+"iterative_merge_sort",
 "msd_radix_sort",
 "rail_fence_cipher",
 "skytale_cipher",
@@ -6893,9 +6905,11 @@
 "recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
+"reversort",
 "selection_sort",
 "shell_sort",
 "shrink_shell_sort",
+"smoothsort",
 "stooge_sort",
 "tim_sort"
 ],
@@ -7011,11 +7025,16 @@
 "built": [],
 "canonical": [],
 "got": "abbreviation",
-"held": [],
+"held": [
+"abbreviation"
+],
 "held_trace": [
 "abbreviation"
 ],
-"io": [],
+"io": [
+"abbreviation",
+"regex_match"
+],
 "logic": [
 "abbreviation"
 ],
@@ -7857,6 +7876,7 @@
 "regex_match"
 ],
 "io": [
+"abbreviation",
 "regex_match"
 ],
 "logic": [
@@ -8000,6 +8020,7 @@
 ],
 "io": [
 "closest_pair_of_points",
+"iterative_merge_sort",
 "msd_radix_sort",
 "rail_fence_cipher",
 "skytale_cipher",
@@ -8728,11 +8749,15 @@
 "built": [],
 "canonical": [],
 "got": "barnsley_fern",
-"held": [],
+"held": [
+"barnsley_fern"
+],
 "held_trace": [
 "barnsley_fern"
 ],
-"io": [],
+"io": [
+"barnsley_fern"
+],
 "logic": [
 "barnsley_fern"
 ],
@@ -8746,11 +8771,15 @@
 "built": [],
 "canonical": [],
 "got": "hilbert_curve",
-"held": [],
+"held": [
+"hilbert_curve"
+],
 "held_trace": [
 "hilbert_curve"
 ],
-"io": [],
+"io": [
+"hilbert_curve"
+],
 "logic": [
 "hilbert_curve"
 ],
@@ -8912,11 +8941,15 @@
 "built": [],
 "canonical": [],
 "got": "basic_string",
-"held": [],
+"held": [
+"basic_string"
+],
 "held_trace": [
 "basic_string"
 ],
-"io": [],
+"io": [
+"basic_string"
+],
 "logic": [
 "basic_string"
 ],
@@ -10368,11 +10401,15 @@
 "built": [],
 "canonical": [],
 "got": "multi_heuristic_astar",
-"held": [],
+"held": [
+"multi_heuristic_astar"
+],
 "held_trace": [
 "multi_heuristic_astar"
 ],
-"io": [],
+"io": [
+"multi_heuristic_astar"
+],
 "logic": [
 "multi_heuristic_astar"
 ],
@@ -10738,11 +10775,15 @@
 "built": [],
 "canonical": [],
 "got": "adler32",
-"held": [],
+"held": [
+"adler32"
+],
 "held_trace": [
 "adler32"
 ],
-"io": [],
+"io": [
+"adler32"
+],
 "logic": [
 "adler32"
 ],
@@ -12407,9 +12448,11 @@
 "recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
+"reversort",
 "selection_sort",
 "shell_sort",
 "shrink_shell_sort",
+"smoothsort",
 "stooge_sort",
 "tim_sort"
 ],
@@ -13486,7 +13529,6 @@
 ],
 "io": [
 "is_int_palindrome",
-"problem_036",
 "problem_055"
 ],
 "logic": [
@@ -15805,9 +15847,13 @@
 "built": [],
 "canonical": [],
 "got": "kaprekar_constant",
-"held": [],
+"held": [
+"kaprekar_constant"
+],
 "held_trace": [],
-"io": [],
+"io": [
+"kaprekar_constant"
+],
 "logic": [],
 "nodes": [],
 "specific": [
@@ -16774,6 +16820,7 @@
 ],
 "held_trace": [],
 "io": [
+"reverse_array",
 "rotate_matrix"
 ],
 "logic": [],
@@ -17412,9 +17459,14 @@
 "built": [],
 "canonical": [],
 "got": "cheap_progress",
-"held": [],
+"held": [
+"cheap_progress"
+],
 "held_trace": [],
-"io": [],
+"io": [
+"cheap_progress",
+"problem_124"
+],
 "logic": [],
 "nodes": [
 "sequence_query"
@@ -18196,9 +18248,13 @@
 "built": [],
 "canonical": [],
 "got": "ideal_gas_law",
-"held": [],
+"held": [
+"ideal_gas_law"
+],
 "held_trace": [],
-"io": [],
+"io": [
+"ideal_gas_law"
+],
 "logic": [],
 "nodes": [],
 "specific": [
@@ -18276,9 +18332,13 @@
 "built": [],
 "canonical": [],
 "got": "lorentz_transformation_four_vector",
-"held": [],
+"held": [
+"lorentz_transformation_four_vector"
+],
 "held_trace": [],
-"io": [],
+"io": [
+"lorentz_transformation_four_vector"
+],
 "logic": [],
 "nodes": [
 "sequence_transformation"
@@ -18451,9 +18511,13 @@
 "built": [],
 "canonical": [],
 "got": "photoelectric_effect",
-"held": [],
+"held": [
+"photoelectric_effect"
+],
 "held_trace": [],
-"io": [],
+"io": [
+"photoelectric_effect"
+],
 "logic": [],
 "nodes": [],
 "specific": [
@@ -18507,9 +18571,13 @@
 "built": [],
 "canonical": [],
 "got": "relativistic_velocity_summation",
-"held": [],
+"held": [
+"relativistic_velocity_summation"
+],
 "held_trace": [],
-"io": [],
+"io": [
+"relativistic_velocity_summation"
+],
 "logic": [],
 "nodes": [],
 "specific": [
@@ -18535,9 +18603,13 @@
 "built": [],
 "canonical": [],
 "got": "rms_speed_of_molecule",
-"held": [],
+"held": [
+"rms_speed_of_molecule"
+],
 "held_trace": [],
-"io": [],
+"io": [
+"rms_speed_of_molecule"
+],
 "logic": [],
 "nodes": [],
 "specific": [
@@ -20366,8 +20438,7 @@
 "canonical": [],
 "got": "problem_036",
 "held": [
-"problem_036",
-"problem_055"
+"problem_036"
 ],
 "held_trace": [
 "capacitor_equivalence",
@@ -20375,9 +20446,9 @@
 "resistor_equivalence"
 ],
 "io": [
-"is_int_palindrome",
+"palindrome",
 "problem_036",
-"problem_055"
+"problem_047"
 ],
 "logic": [
 "capacitor_equivalence",
@@ -20655,6 +20726,7 @@
 "basic_maths",
 "palindrome",
 "prime_factors",
+"problem_036",
 "problem_047"
 ],
 "logic": [
@@ -20859,7 +20931,6 @@
 "canonical": [],
 "got": "problem_055",
 "held": [
-"problem_036",
 "problem_055"
 ],
 "held_trace": [
@@ -20867,7 +20938,6 @@
 ],
 "io": [
 "is_int_palindrome",
-"problem_036",
 "problem_055"
 ],
 "logic": [
@@ -21447,11 +21517,15 @@
 "built": [],
 "canonical": [],
 "got": "problem_085",
-"held": [],
+"held": [
+"problem_085"
+],
 "held_trace": [
 "problem_085"
 ],
-"io": [],
+"io": [
+"problem_085"
+],
 "logic": [
 "problem_085"
 ],
@@ -21995,6 +22069,7 @@
 "problem_124"
 ],
 "io": [
+"cheap_progress",
 "problem_124"
 ],
 "logic": [
@@ -22899,7 +22974,8 @@
 "double_linear_search",
 "exponential_search",
 "jump_search",
-"linear_search"
+"linear_search",
+"ternary_search"
 ],
 "logic": [
 "binary_search"
@@ -22939,7 +23015,8 @@
 "got": "double_linear_search",
 "held": [
 "double_linear_search",
-"linear_search"
+"linear_search",
+"ternary_search"
 ],
 "held_trace": [
 "double_linear_search"
@@ -22949,7 +23026,8 @@
 "double_linear_search",
 "exponential_search",
 "jump_search",
-"linear_search"
+"linear_search",
+"ternary_search"
 ],
 "logic": [
 "double_linear_search"
@@ -23002,7 +23080,8 @@
 "double_linear_search",
 "exponential_search",
 "jump_search",
-"linear_search"
+"linear_search",
+"ternary_search"
 ],
 "logic": [
 "binary_search",
@@ -23098,7 +23177,8 @@
 "double_linear_search",
 "exponential_search",
 "jump_search",
-"linear_search"
+"linear_search",
+"ternary_search"
 ],
 "logic": [
 "jump_search"
@@ -23117,7 +23197,8 @@
 "got": "linear_search",
 "held": [
 "double_linear_search",
-"linear_search"
+"linear_search",
+"ternary_search"
 ],
 "held_trace": [
 "double_linear_search",
@@ -23128,7 +23209,8 @@
 "double_linear_search",
 "exponential_search",
 "jump_search",
-"linear_search"
+"linear_search",
+"ternary_search"
 ],
 "logic": [
 "double_linear_search",
@@ -23270,11 +23352,22 @@
 "built": [],
 "canonical": [],
 "got": "ternary_search",
-"held": [],
+"held": [
+"double_linear_search",
+"linear_search",
+"ternary_search"
+],
 "held_trace": [
 "ternary_search"
 ],
-"io": [],
+"io": [
+"binary_search",
+"double_linear_search",
+"exponential_search",
+"jump_search",
+"linear_search",
+"ternary_search"
+],
 "logic": [
 "ternary_search"
 ],
@@ -23334,9 +23427,11 @@
 "recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
+"reversort",
 "selection_sort",
 "shell_sort",
 "shrink_shell_sort",
+"smoothsort",
 "stooge_sort",
 "tim_sort"
 ],
@@ -23430,9 +23525,11 @@
 "recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
+"reversort",
 "selection_sort",
 "shell_sort",
 "shrink_shell_sort",
+"smoothsort",
 "stooge_sort",
 "tim_sort"
 ],
@@ -23536,9 +23633,11 @@
 "recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
+"reversort",
 "selection_sort",
 "shell_sort",
 "shrink_shell_sort",
+"smoothsort",
 "stooge_sort",
 "tim_sort"
 ],
@@ -23603,9 +23702,11 @@
 "recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
+"reversort",
 "selection_sort",
 "shell_sort",
 "shrink_shell_sort",
+"smoothsort",
 "stooge_sort",
 "tim_sort"
 ],
@@ -23683,9 +23784,11 @@
 "recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
+"reversort",
 "selection_sort",
 "shell_sort",
 "shrink_shell_sort",
+"smoothsort",
 "stooge_sort",
 "tim_sort"
 ],
@@ -23750,9 +23853,11 @@
 "recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
+"reversort",
 "selection_sort",
 "shell_sort",
 "shrink_shell_sort",
+"smoothsort",
 "stooge_sort",
 "tim_sort"
 ],
@@ -23811,9 +23916,11 @@
 "recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
+"reversort",
 "selection_sort",
 "shell_sort",
 "shrink_shell_sort",
+"smoothsort",
 "stooge_sort",
 "tim_sort"
 ],
@@ -23872,9 +23979,11 @@
 "recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
+"reversort",
 "selection_sort",
 "shell_sort",
 "shrink_shell_sort",
+"smoothsort",
 "stooge_sort",
 "tim_sort"
 ],
@@ -23931,9 +24040,11 @@
 "recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
+"reversort",
 "selection_sort",
 "shell_sort",
 "shrink_shell_sort",
+"smoothsort",
 "stooge_sort",
 "tim_sort"
 ],
@@ -24013,9 +24124,11 @@
 "recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
+"reversort",
 "selection_sort",
 "shell_sort",
 "shrink_shell_sort",
+"smoothsort",
 "stooge_sort",
 "tim_sort"
 ],
@@ -24093,9 +24206,11 @@
 "recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
+"reversort",
 "selection_sort",
 "shell_sort",
 "shrink_shell_sort",
+"smoothsort",
 "stooge_sort",
 "tim_sort"
 ],
@@ -24199,9 +24314,11 @@
 "recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
+"reversort",
 "selection_sort",
 "shell_sort",
 "shrink_shell_sort",
+"smoothsort",
 "stooge_sort",
 "tim_sort"
 ],
@@ -24259,9 +24376,11 @@
 "recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
+"reversort",
 "selection_sort",
 "shell_sort",
 "shrink_shell_sort",
+"smoothsort",
 "stooge_sort",
 "tim_sort"
 ],
@@ -24320,9 +24439,11 @@
 "recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
+"reversort",
 "selection_sort",
 "shell_sort",
 "shrink_shell_sort",
+"smoothsort",
 "stooge_sort",
 "tim_sort"
 ],
@@ -24379,9 +24500,11 @@
 "recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
+"reversort",
 "selection_sort",
 "shell_sort",
 "shrink_shell_sort",
+"smoothsort",
 "stooge_sort",
 "tim_sort"
 ],
@@ -24403,10 +24526,12 @@
 "got": "Sorting-algorithms-Merge-sort",
 "held": [
 "binary_insertion_sort",
+"closest_pair_of_points",
 "cycle_sort",
 "iterative_merge_sort",
 "merge_sort",
-"pancake_sort"
+"pancake_sort",
+"rail_fence_cipher"
 ],
 "held_trace": [
 "iterative_merge_sort"
@@ -24418,6 +24543,7 @@
 "bubble_sort",
 "bubble_sort_recursive",
 "circle_sort",
+"closest_pair_of_points",
 "cocktail_shaker_sort",
 "comb_sort",
 "counting_sort",
@@ -24432,6 +24558,7 @@
 "merge_insertion_sort",
 "merge_sort",
 "mergesort",
+"msd_radix_sort",
 "natural_sort",
 "odd_even_sort",
 "odd_even_transposition_single_threaded",
@@ -24440,15 +24567,20 @@
 "pigeonhole_sort",
 "quick_sort",
 "quick_sort_3_partition",
+"rail_fence_cipher",
 "recursive_insertion_sort",
 "recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
+"reversort",
 "selection_sort",
 "shell_sort",
 "shrink_shell_sort",
+"skytale_cipher",
+"smoothsort",
 "stooge_sort",
-"tim_sort"
+"tim_sort",
+"viterbi"
 ],
 "logic": [
 "iterative_merge_sort"
@@ -24522,9 +24654,11 @@
 "recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
+"reversort",
 "selection_sort",
 "shell_sort",
 "shrink_shell_sort",
+"smoothsort",
 "stooge_sort",
 "tim_sort"
 ],
@@ -24588,9 +24722,11 @@
 "recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
+"reversort",
 "selection_sort",
 "shell_sort",
 "shrink_shell_sort",
+"smoothsort",
 "stooge_sort",
 "tim_sort"
 ],
@@ -24616,6 +24752,7 @@
 ],
 "io": [
 "closest_pair_of_points",
+"iterative_merge_sort",
 "msd_radix_sort",
 "rail_fence_cipher",
 "skytale_cipher",
@@ -24674,9 +24811,11 @@
 "recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
+"reversort",
 "selection_sort",
 "shell_sort",
 "shrink_shell_sort",
+"smoothsort",
 "stooge_sort",
 "tim_sort"
 ],
@@ -24738,9 +24877,11 @@
 "recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
+"reversort",
 "selection_sort",
 "shell_sort",
 "shrink_shell_sort",
+"smoothsort",
 "stooge_sort",
 "tim_sort"
 ],
@@ -24819,9 +24960,11 @@
 "recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
+"reversort",
 "selection_sort",
 "shell_sort",
 "shrink_shell_sort",
+"smoothsort",
 "stooge_sort",
 "tim_sort"
 ],
@@ -24881,9 +25024,11 @@
 "recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
+"reversort",
 "selection_sort",
 "shell_sort",
 "shrink_shell_sort",
+"smoothsort",
 "stooge_sort",
 "tim_sort"
 ],
@@ -24961,9 +25106,11 @@
 "recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
+"reversort",
 "selection_sort",
 "shell_sort",
 "shrink_shell_sort",
+"smoothsort",
 "stooge_sort",
 "tim_sort"
 ],
@@ -25022,9 +25169,11 @@
 "recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
+"reversort",
 "selection_sort",
 "shell_sort",
 "shrink_shell_sort",
+"smoothsort",
 "stooge_sort",
 "tim_sort"
 ],
@@ -25111,9 +25260,11 @@
 "recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
+"reversort",
 "selection_sort",
 "shell_sort",
 "shrink_shell_sort",
+"smoothsort",
 "stooge_sort",
 "tim_sort"
 ],
@@ -25175,9 +25326,11 @@
 "recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
+"reversort",
 "selection_sort",
 "shell_sort",
 "shrink_shell_sort",
+"smoothsort",
 "stooge_sort",
 "tim_sort"
 ],
@@ -25262,10 +25415,12 @@
 "recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
+"reversort",
 "selection_sort",
 "shell_sort",
 "shrink_shell_sort",
 "skytale_cipher",
+"smoothsort",
 "stooge_sort",
 "tim_sort"
 ],
@@ -25325,9 +25480,11 @@
 "recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
+"reversort",
 "selection_sort",
 "shell_sort",
 "shrink_shell_sort",
+"smoothsort",
 "stooge_sort",
 "tim_sort"
 ],
@@ -25390,9 +25547,11 @@
 "recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
+"reversort",
 "selection_sort",
 "shell_sort",
 "shrink_shell_sort",
+"smoothsort",
 "stooge_sort",
 "tim_sort"
 ],
@@ -25410,7 +25569,8 @@
 "canonical": [],
 "got": "reverse_selection",
 "held": [
-"reverse_selection"
+"reverse_selection",
+"smoothsort"
 ],
 "held_trace": [
 "reverse_selection"
@@ -25448,9 +25608,11 @@
 "recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
+"reversort",
 "selection_sort",
 "shell_sort",
 "shrink_shell_sort",
+"smoothsort",
 "stooge_sort",
 "tim_sort"
 ],
@@ -25470,11 +25632,53 @@
 "built": [],
 "canonical": [],
 "got": "reversort",
-"held": [],
+"held": [
+"reversort"
+],
 "held_trace": [
 "reversort"
 ],
-"io": [],
+"io": [
+"adaptive_merge_sort",
+"average_mode",
+"binary_insertion_sort",
+"bubble_sort",
+"bubble_sort_recursive",
+"circle_sort",
+"cocktail_shaker_sort",
+"comb_sort",
+"counting_sort",
+"cycle_sort",
+"double_sort",
+"exchange_sort",
+"gnome_sort",
+"heap_sort",
+"insertion_sort",
+"intro_sort",
+"iterative_merge_sort",
+"merge_insertion_sort",
+"merge_sort",
+"mergesort",
+"natural_sort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded",
+"pancake_sort",
+"pigeon_sort",
+"pigeonhole_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"recursive_insertion_sort",
+"recursive_mergesort_array",
+"recursive_quick_sort",
+"reverse_selection",
+"reversort",
+"selection_sort",
+"shell_sort",
+"shrink_shell_sort",
+"smoothsort",
+"stooge_sort",
+"tim_sort"
+],
 "logic": [
 "reversort"
 ],
@@ -25530,9 +25734,11 @@
 "recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
+"reversort",
 "selection_sort",
 "shell_sort",
 "shrink_shell_sort",
+"smoothsort",
 "stooge_sort",
 "tim_sort"
 ],
@@ -25594,9 +25800,11 @@
 "recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
+"reversort",
 "selection_sort",
 "shell_sort",
 "shrink_shell_sort",
+"smoothsort",
 "stooge_sort",
 "tim_sort"
 ],
@@ -25655,9 +25863,11 @@
 "recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
+"reversort",
 "selection_sort",
 "shell_sort",
 "shrink_shell_sort",
+"smoothsort",
 "stooge_sort",
 "tim_sort"
 ],
@@ -25694,11 +25904,54 @@
 "built": [],
 "canonical": [],
 "got": "smoothsort",
-"held": [],
+"held": [
+"reverse_selection",
+"smoothsort"
+],
 "held_trace": [
 "smoothsort"
 ],
-"io": [],
+"io": [
+"adaptive_merge_sort",
+"average_mode",
+"binary_insertion_sort",
+"bubble_sort",
+"bubble_sort_recursive",
+"circle_sort",
+"cocktail_shaker_sort",
+"comb_sort",
+"counting_sort",
+"cycle_sort",
+"double_sort",
+"exchange_sort",
+"gnome_sort",
+"heap_sort",
+"insertion_sort",
+"intro_sort",
+"iterative_merge_sort",
+"merge_insertion_sort",
+"merge_sort",
+"mergesort",
+"natural_sort",
+"odd_even_sort",
+"odd_even_transposition_single_threaded",
+"pancake_sort",
+"pigeon_sort",
+"pigeonhole_sort",
+"quick_sort",
+"quick_sort_3_partition",
+"recursive_insertion_sort",
+"recursive_mergesort_array",
+"recursive_quick_sort",
+"reverse_selection",
+"reversort",
+"selection_sort",
+"shell_sort",
+"shrink_shell_sort",
+"smoothsort",
+"stooge_sort",
+"tim_sort"
+],
 "logic": [
 "smoothsort"
 ],
@@ -25776,9 +26029,11 @@
 "recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
+"reversort",
 "selection_sort",
 "shell_sort",
 "shrink_shell_sort",
+"smoothsort",
 "stooge_sort",
 "tim_sort"
 ],
@@ -25854,9 +26109,11 @@
 "recursive_mergesort_array",
 "recursive_quick_sort",
 "reverse_selection",
+"reversort",
 "selection_sort",
 "shell_sort",
 "shrink_shell_sort",
+"smoothsort",
 "stooge_sort",
 "tim_sort"
 ],
@@ -26141,17 +26398,17 @@
 "built": [],
 "canonical": [],
 "got": "camel_case_to_snake_case",
-"held": [],
+"held": [
+"camel_case_to_snake_case"
+],
 "held_trace": [
 "camel_case_to_snake_case"
 ],
-"io": [],
+"io": [
+"camel_case_to_snake_case"
+],
 "logic": [
-"camel_case_to_snake_case",
-"capacitor_equivalence",
-"from_sequence",
-"magicdiamondpattern",
-"resistor_equivalence"
+"camel_case_to_snake_case"
 ],
 "nodes": [
 "sequence_transformation"
@@ -26750,6 +27007,7 @@
 ],
 "io": [
 "palindrome",
+"problem_036",
 "problem_047"
 ],
 "logic": [
@@ -26805,9 +27063,13 @@
 ],
 "canonical": [],
 "got": "rabin_karp",
-"held": [],
+"held": [
+"rabin_karp"
+],
 "held_trace": [],
-"io": [],
+"io": [
+"rabin_karp"
+],
 "logic": [],
 "nodes": [],
 "specific": [],

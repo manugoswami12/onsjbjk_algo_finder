@@ -86,10 +86,10 @@ TheAlgorithms are right.
 | New code (held-out Rosetta) | analysable files | precision | recall (analysable) | recall (all files) |
 |---|---|---|---|---|
 | C | 35 of 69 | 100.0% | 91.4% | 46.4% |
-| Common Lisp | 46 of 75 | 100.0% | 97.8% | 60.0% |
-| Haskell | 42 of 144 | 100.0% | 83.3% | 24.3% |
-| Python | 85 of 162 | 100.0% | 85.9% | 45.1% |
-| **all** | **208 of 450** | **100.0%** | **88.9%** | **41.1%** |
+| Common Lisp | 48 of 75 | 100.0% | 95.8% | 61.3% |
+| Haskell | 43 of 144 | 100.0% | 83.7% | 25.0% |
+| Python | 85 of 162 | 100.0% | 88.2% | 46.3% |
+| **all** | **211 of 450** | **100.0%** | **89.6%** | **42.0%** |
 
 No answer on new code is wrong (main pipeline and separate fallback alike).
 

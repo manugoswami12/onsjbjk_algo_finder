@@ -1383,56 +1383,56 @@
   },
   "all": {
    "n": 450,
-   "ok": 185,
-   "unanswered": 265,
-   "not_analysable": 242,
+   "ok": 189,
+   "unanswered": 261,
+   "not_analysable": 239,
    "wrong": 0
   },
   "Common-Lisp": {
    "n": 75,
-   "ok": 45,
-   "unanswered": 30,
-   "not_analysable": 29,
+   "ok": 46,
+   "unanswered": 29,
+   "not_analysable": 27,
    "wrong": 0
   },
   "Haskell": {
    "n": 144,
-   "unanswered": 109,
-   "not_analysable": 102,
-   "ok": 35,
+   "unanswered": 108,
+   "not_analysable": 101,
+   "ok": 36,
    "wrong": 0
   },
   "Python": {
    "n": 162,
-   "ok": 73,
-   "unanswered": 89,
+   "ok": 75,
+   "unanswered": 87,
    "not_analysable": 77,
    "wrong": 0
   }
  },
  "excluded": {
   "Haskell": {
-   "a root does not run on every input": 49,
-   "no run": 52,
-   "no root function": 1
+   "a root does not run on every input": 62,
+   "no root function": 6,
+   "no run": 33
   },
   "all": {
-   "a root does not run on every input": 158,
-   "no root function": 28,
-   "no run": 53,
-   "output does not depend on the input": 3
+   "a root does not run on every input": 171,
+   "no root function": 33,
+   "no run": 34,
+   "output does not depend on the input": 1
   },
   "Python": {
-   "a root does not run on every input": 61,
+   "a root does not run on every input": 63,
    "no root function": 13,
-   "output does not depend on the input": 3
+   "output does not depend on the input": 1
   },
   "C": {
    "a root does not run on every input": 26,
    "no root function": 8
   },
   "Common-Lisp": {
-   "a root does not run on every input": 22,
+   "a root does not run on every input": 20,
    "no root function": 6,
    "no run": 1
   }

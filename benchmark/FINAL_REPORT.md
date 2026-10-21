@@ -18,19 +18,19 @@ Reporting criteria (final_report.py): a held-out file is not analysable when the
 | language | files | not analysable (excluded) | scored | correct | false positives | false negatives | precision | recall (analysable) | recall (all files) |
 |---|---|---|---|---|---|---|---|---|---|
 | C | 69 | 34 | 35 | 32 | 0 | 3 | 100.0% | 91.4% | 46.4% |
-| Common-Lisp | 75 | 29 | 46 | 45 | 0 | 1 | 100.0% | 97.8% | 60.0% |
-| Haskell | 144 | 102 | 42 | 35 | 0 | 7 | 100.0% | 83.3% | 24.3% |
-| Python | 162 | 77 | 85 | 73 | 0 | 12 | 100.0% | 85.9% | 45.1% |
-| all | 450 | 242 | 208 | 185 | 0 | 23 | 100.0% | 88.9% | 41.1% |
+| Common-Lisp | 75 | 27 | 48 | 46 | 0 | 2 | 100.0% | 95.8% | 61.3% |
+| Haskell | 144 | 101 | 43 | 36 | 0 | 7 | 100.0% | 83.7% | 25.0% |
+| Python | 162 | 77 | 85 | 75 | 0 | 10 | 100.0% | 88.2% | 46.3% |
+| all | 450 | 239 | 211 | 189 | 0 | 22 | 100.0% | 89.6% | 42.0% |
 
 False negatives = scored files without a correct answer (wrong ones included).
 
 ### Why files are not analysable (all languages)
 
-- a root does not run on every input: 158
-- no run: 53
-- no root function: 28
-- output does not depend on the input: 3
+- a root does not run on every input: 171
+- no run: 34
+- no root function: 33
+- output does not depend on the input: 1
 
 These files are left out of this round's numbers: some are fragments, most define functions the evaluator cannot run yet (in-place void functions on an array plus a length, GMP, Python 2, Haskell operator definitions, ...). They are taken up when the code is upgraded.
 

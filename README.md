@@ -12,9 +12,9 @@ other people's code from [Rosetta Code](https://rosettacode.org) in four languag
 | | correct | wrong | precision | recall |
 |---|---|---|---|---|
 | Code it learned from (1344 TheAlgorithms files) | 1344 | 0 | 100% | 100% |
-| New code it never saw (208 analysable Rosetta files) | 185 | 0 | 100% | 88.9% (41.1% of all 450 files) |
+| New code it never saw (211 analysable Rosetta files) | 189 | 0 | 100% | 89.6% (42.0% of all 450 files) |
 
-Recall counts the 208 files the system can evaluate. The other 242 held-out files are left out this round (fragments,
+Recall counts the 211 files the system can evaluate. The other 239 held-out files are left out this round (fragments,
 and functions the evaluator cannot run yet); they are taken up when the code is upgraded.
 
 Honest note on the new-code row: 12 hand-built branches of the tree (Ackermann, knapsack, Caesar, matrix product,

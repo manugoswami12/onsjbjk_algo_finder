@@ -298,12 +298,8 @@
   ]
  },
  "Task/Factorial/Common-Lisp/factorial-3.lisp": {
-  "decision": "undecided",
-  "why": "a root does not run on every input",
+  "decision": "new_algorithm",
   "roots": [
-   "factorial"
-  ],
-  "not_full": [
    "factorial"
   ]
  },
@@ -375,7 +371,7 @@
  },
  "Task/Factorial/Haskell/factorial-6.hs": {
   "decision": "undecided",
-  "why": "no run: ValueError"
+  "why": "no root function"
  },
  "Task/Factorial/Haskell/factorial-7.hs": {
   "decision": "undecided",
@@ -501,8 +497,7 @@
    "lambda"
   ],
   "not_full": [
-   "fibonacci",
-   "lambda"
+   "fibonacci"
   ]
  },
  "Task/Fibonacci-sequence/C/fibonacci-sequence-5.c": {
@@ -560,12 +555,8 @@
   ]
  },
  "Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-5.lisp": {
-  "decision": "undecided",
-  "why": "a root does not run on every input",
+  "decision": "new_algorithm",
   "roots": [
-   "fibonacci_tail_recursive"
-  ],
-  "not_full": [
    "fibonacci_tail_recursive"
   ]
  },
@@ -673,7 +664,13 @@
  },
  "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-18.hs": {
   "decision": "undecided",
-  "why": "no run: ValueError"
+  "why": "a root does not run on every input",
+  "roots": [
+   "fibs"
+  ],
+  "not_full": [
+   "fibs"
+  ]
  },
  "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-19.hs": {
   "decision": "undecided",
@@ -685,7 +682,7 @@
  },
  "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-20.hs": {
   "decision": "undecided",
-  "why": "no run: ValueError"
+  "why": "no root function"
  },
  "Task/Fibonacci-sequence/Haskell/fibonacci-sequence-21.hs": {
   "decision": "undecided",
@@ -1117,8 +1114,12 @@
   ]
  },
  "Task/Hailstone-sequence/Python/hailstone-sequence-2.py": {
-  "decision": "new_algorithm",
+  "decision": "undecided",
+  "why": "a root does not run on every input",
   "roots": [
+   "hailstone"
+  ],
+  "not_full": [
    "hailstone"
   ]
  },
@@ -1560,7 +1561,13 @@
  },
  "Task/Longest-common-subsequence/Haskell/longest-common-subsequence-3.hs": {
   "decision": "undecided",
-  "why": "no run: ValueError"
+  "why": "a root does not run on every input",
+  "roots": [
+   "lcs"
+  ],
+  "not_full": [
+   "lcs"
+  ]
  },
  "Task/Longest-common-subsequence/Haskell/longest-common-subsequence-4.hs": {
   "decision": "undecided",
@@ -1682,7 +1689,7 @@
  "Task/Luhn-test-of-credit-card-numbers/Python/luhn-test-of-credit-card-numbers-4.py": {
   "decision": "new_algorithm",
   "roots": [
-   "v\u00e9rifLuhn"
+   "v_rifLuhn"
   ]
  },
  "Task/N-queens-problem/C/n-queens-problem-1.c": {
@@ -1745,8 +1752,7 @@
    "print_solution"
   ],
   "not_full": [
-   "print_queens",
-   "print_solution"
+   "print_queens"
   ]
  },
  "Task/N-queens-problem/Common-Lisp/n-queens-problem-2.lisp": {
@@ -1994,14 +2000,12 @@
   ]
  },
  "Task/Palindrome-detection/Python/palindrome-detection-1.py": {
-  "decision": "undecided",
-  "why": "a root does not run on every input",
+  "decision": "new_version",
+  "class": "palindrome_check",
   "roots": [
    "is_palindrome"
   ],
-  "not_full": [
-   "is_palindrome"
-  ]
+  "nodes": []
  },
  "Task/Palindrome-detection/Python/palindrome-detection-2.py": {
   "decision": "undecided",
@@ -2282,12 +2286,8 @@
   ]
  },
  "Task/Roman-numerals-Encode/Common-Lisp/roman-numerals-encode.lisp": {
-  "decision": "undecided",
-  "why": "a root does not run on every input",
+  "decision": "new_algorithm",
   "roots": [
-   "roman_numeral"
-  ],
-  "not_full": [
    "roman_numeral"
   ]
  },
@@ -2427,7 +2427,15 @@
  },
  "Task/Run-length-encoding/Haskell/run-length-encoding-1.hs": {
   "decision": "undecided",
-  "why": "no run: ValueError"
+  "why": "a root does not run on every input",
+  "roots": [
+   "rldecode",
+   "rlencode"
+  ],
+  "not_full": [
+   "rldecode",
+   "rlencode"
+  ]
  },
  "Task/Run-length-encoding/Haskell/run-length-encoding-2.hs": {
   "decision": "undecided",
@@ -2537,15 +2545,27 @@
  },
  "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-1.hs": {
   "decision": "undecided",
-  "why": "no run: ValueError"
+  "why": "a root does not run on every input",
+  "roots": [
+   "primesTo"
+  ],
+  "not_full": [
+   "primesTo"
+  ]
  },
  "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-10.hs": {
   "decision": "undecided",
-  "why": "no run: ValueError"
+  "why": "no root function"
  },
  "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-11.hs": {
   "decision": "undecided",
-  "why": "no run: ValueError"
+  "why": "a root does not run on every input",
+  "roots": [
+   "primesB"
+  ],
+  "not_full": [
+   "primesB"
+  ]
  },
  "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-12.hs": {
   "decision": "undecided",
@@ -2559,7 +2579,15 @@
  },
  "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-13.hs": {
   "decision": "undecided",
-  "why": "no run: ValueError"
+  "why": "a root does not run on every input",
+  "roots": [
+   "primesW",
+   "wheel"
+  ],
+  "not_full": [
+   "primesW",
+   "wheel"
+  ]
  },
  "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-14.hs": {
   "decision": "undecided",
@@ -2579,19 +2607,45 @@
  },
  "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-16.hs": {
   "decision": "undecided",
-  "why": "no run: ValueError"
+  "why": "a root does not run on every input",
+  "roots": [
+   "primesPQ"
+  ],
+  "not_full": [
+   "primesPQ"
+  ]
  },
  "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-17.hs": {
   "decision": "undecided",
-  "why": "no run: ValueError"
+  "why": "a root does not run on every input",
+  "roots": [
+   "primesPQx"
+  ],
+  "not_full": [
+   "primesPQx"
+  ]
  },
  "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-18.hs": {
   "decision": "undecided",
-  "why": "no run: ValueError"
+  "why": "a root does not run on every input",
+  "roots": [
+   "primesPQWheeled"
+  ],
+  "not_full": [
+   "primesPQWheeled"
+  ]
  },
  "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-19.hs": {
   "decision": "undecided",
-  "why": "no run: ValueError"
+  "why": "a root does not run on every input",
+  "roots": [
+   "cSieveBufferRange",
+   "primes"
+  ],
+  "not_full": [
+   "cSieveBufferRange",
+   "primes"
+  ]
  },
  "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-2.hs": {
   "decision": "undecided",
@@ -2629,7 +2683,13 @@
  },
  "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-3.hs": {
   "decision": "undecided",
-  "why": "no run: ValueError"
+  "why": "a root does not run on every input",
+  "roots": [
+   "primesTo"
+  ],
+  "not_full": [
+   "primesTo"
+  ]
  },
  "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-4.hs": {
   "decision": "undecided",
@@ -2657,15 +2717,19 @@
  },
  "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-8.hs": {
   "decision": "undecided",
-  "why": "no run: ValueError"
+  "why": "no root function"
  },
  "Task/Sieve-of-Eratosthenes/Haskell/sieve-of-eratosthenes-9.hs": {
   "decision": "undecided",
-  "why": "no run: ValueError"
+  "why": "no root function"
  },
  "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-1.py": {
-  "decision": "new_algorithm",
+  "decision": "undecided",
+  "why": "a root does not run on every input",
   "roots": [
+   "eratosthenes2"
+  ],
+  "not_full": [
    "eratosthenes2"
   ]
  },
@@ -2761,15 +2825,21 @@
  },
  "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-6.py": {
   "decision": "undecided",
-  "why": "output does not depend on the input",
+  "why": "a root does not run on every input",
   "roots": [
+   "iprimes2"
+  ],
+  "not_full": [
    "iprimes2"
   ]
  },
  "Task/Sieve-of-Eratosthenes/Python/sieve-of-eratosthenes-7.py": {
   "decision": "undecided",
-  "why": "output does not depend on the input",
+  "why": "a root does not run on every input",
   "roots": [
+   "primes235"
+  ],
+  "not_full": [
    "primes235"
   ]
  },
@@ -2795,7 +2865,8 @@
   "not_full": [
    "countPrimesTo",
    "mkstrts",
-   "mkwhlptrn"
+   "mkwhlptrn",
+   "primesTo"
   ]
  },
  "Task/Sorting-algorithms-Bubble-sort/C/sorting-algorithms-bubble-sort.c": {
@@ -3134,12 +3205,8 @@
   "not_full": [
    "__lambda0",
    "__lambda1",
-   "heap_empty_p",
    "heapsort",
-   "left_index",
-   "make_heap",
-   "parent_index",
-   "right_index"
+   "make_heap"
   ]
  },
  "Task/Sorting-algorithms-Heapsort/Haskell/sorting-algorithms-heapsort-1.hs": {
@@ -3260,7 +3327,9 @@
   "roots": [
    "insertion_sort_bin"
   ],
-  "nodes": []
+  "nodes": [
+   "sequence_transformation"
+  ]
  },
  "Task/Sorting-algorithms-Insertion-sort/Python/sorting-algorithms-insertion-sort-4.py": {
   "decision": "undecided",
@@ -3315,11 +3384,23 @@
  },
  "Task/Sorting-algorithms-Merge-sort/Haskell/sorting-algorithms-merge-sort-2.hs": {
   "decision": "undecided",
-  "why": "no run: ValueError"
+  "why": "a root does not run on every input",
+  "roots": [
+   "mergeSortBottomUp"
+  ],
+  "not_full": [
+   "mergeSortBottomUp"
+  ]
  },
  "Task/Sorting-algorithms-Merge-sort/Haskell/sorting-algorithms-merge-sort-3.hs": {
   "decision": "undecided",
-  "why": "no run: ValueError"
+  "why": "a root does not run on every input",
+  "roots": [
+   "sort"
+  ],
+  "not_full": [
+   "sort"
+  ]
  },
  "Task/Sorting-algorithms-Merge-sort/Python/sorting-algorithms-merge-sort-1.py": {
   "decision": "undecided",
@@ -3338,13 +3419,14 @@
   ]
  },
  "Task/Sorting-algorithms-Merge-sort/Python/sorting-algorithms-merge-sort-3.py": {
-  "decision": "undecided",
-  "why": "a root does not run on every input",
+  "decision": "new_version",
+  "class": "sorting",
   "roots": [
    "sort"
   ],
-  "not_full": [
-   "sort"
+  "nodes": [
+   "numeric>recurrence>double_recursion",
+   "sequence_transformation"
   ]
  },
  "Task/Sorting-algorithms-Pancake-sort/C/sorting-algorithms-pancake-sort-1.c": {
@@ -3508,7 +3590,7 @@
    "quick_sort"
   ],
   "nodes": [
-   "sequence_query"
+   "sequence_transformation>comparison_sort>partition_recursive"
   ]
  },
  "Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-2.py": {
@@ -3518,7 +3600,7 @@
    "qsort"
   ],
   "nodes": [
-   "sequence_transformation"
+   "sequence_transformation>comparison_sort>partition_recursive"
   ]
  },
  "Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-3.py": {
@@ -3528,7 +3610,7 @@
    "qsort"
   ],
   "nodes": [
-   "sequence_transformation"
+   "sequence_transformation>comparison_sort>partition_recursive"
   ]
  },
  "Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-4.py": {
@@ -3594,18 +3676,24 @@
   ]
  },
  "Task/Sorting-algorithms-Selection-sort/Haskell/sorting-algorithms-selection-sort-1.hs": {
-  "decision": "undecided",
-  "why": "a root does not run on every input",
+  "decision": "new_version",
+  "class": "sorting",
   "roots": [
    "selSort"
   ],
-  "not_full": [
-   "selSort"
+  "nodes": [
+   "sequence_transformation"
   ]
  },
  "Task/Sorting-algorithms-Selection-sort/Haskell/sorting-algorithms-selection-sort-2.hs": {
   "decision": "undecided",
-  "why": "no run: ValueError"
+  "why": "a root does not run on every input",
+  "roots": [
+   "selectionSort"
+  ],
+  "not_full": [
+   "selectionSort"
+  ]
  },
  "Task/Sorting-algorithms-Selection-sort/Haskell/sorting-algorithms-selection-sort-3.hs": {
   "decision": "new_version",
@@ -3839,7 +3927,13 @@
  },
  "Task/Towers-of-Hanoi/Haskell/towers-of-hanoi-3.hs": {
   "decision": "undecided",
-  "why": "no run: ValueError"
+  "why": "a root does not run on every input",
+  "roots": [
+   "hanoiIO"
+  ],
+  "not_full": [
+   "hanoiIO"
+  ]
  },
  "Task/Towers-of-Hanoi/Haskell/towers-of-hanoi-4.hs": {
   "decision": "undecided",
@@ -3856,8 +3950,7 @@
   ]
  },
  "Task/Towers-of-Hanoi/Python/towers-of-hanoi-1.py": {
-  "decision": "undecided",
-  "why": "output does not depend on the input",
+  "decision": "new_algorithm",
   "roots": [
    "hanoi"
   ]

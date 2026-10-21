@@ -502,10 +502,10 @@
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-6.lisp": {
-   "answer": "variation_root",
-   "correct": null,
-   "family_correct": true,
-   "name": "numeric",
+   "answer": "algorithm",
+   "correct": true,
+   "family_correct": null,
+   "name": "Fibonacci-sequence",
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-7.lisp": {
@@ -761,10 +761,10 @@
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Python/fibonacci-sequence-16.py": {
-   "answer": "error_or_new",
-   "correct": null,
+   "answer": "algorithm",
+   "correct": true,
    "family_correct": null,
-   "name": null,
+   "name": "Fibonacci-sequence",
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Python/fibonacci-sequence-17.py": {
@@ -2679,10 +2679,10 @@
    "task": "Sorting-algorithms-Insertion-sort"
   },
   "Task/Sorting-algorithms-Insertion-sort/Python/sorting-algorithms-insertion-sort-3.py": {
-   "answer": "variation_root",
-   "correct": null,
-   "family_correct": true,
-   "name": "sequence_transformation",
+   "answer": "class",
+   "correct": true,
+   "family_correct": null,
+   "name": "sorting",
    "task": "Sorting-algorithms-Insertion-sort"
   },
   "Task/Sorting-algorithms-Insertion-sort/Python/sorting-algorithms-insertion-sort-4.py": {
@@ -2945,10 +2945,10 @@
    "task": "Sorting-algorithms-Selection-sort"
   },
   "Task/Sorting-algorithms-Selection-sort/Haskell/sorting-algorithms-selection-sort-1.hs": {
-   "answer": "variation_root",
-   "correct": null,
-   "family_correct": true,
-   "name": "sequence_transformation",
+   "answer": "class",
+   "correct": true,
+   "family_correct": null,
+   "name": "sorting",
    "task": "Sorting-algorithms-Selection-sort"
   },
   "Task/Sorting-algorithms-Selection-sort/Haskell/sorting-algorithms-selection-sort-2.hs": {

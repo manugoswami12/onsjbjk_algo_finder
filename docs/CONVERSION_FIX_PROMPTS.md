@@ -177,6 +177,85 @@ Kept: every SWI-Prolog run with its garbage collector in the main thread. Faults
 late (the collector already ran while references loaded); the scan's result also depends on the order of tabled
 answers in a fixed run (a matcher completeness question, left for later).
 
+### The closing round: left-out files' conversion faults and missing language support (lowering_v05.py, prolog/interp_v04.pl, haskell_core_pnf.py, behaviour_v04.py, decide_new_or_known.py)
+> Run every left-out held-out file through the current pipeline (roots, every root's runs, the first error) and group
+> them by cause. For the faults of our own conversion and the language support we lack, hand-build each solution as a
+> rule of the language in our own layer, test it on an own program with hand-computed values and a near negative, then
+> one full run; if even one previous success fails or a new wrong answer appears, try one fix, else drop that rule.
+
+One prompt per problem met, each with its solution:
+
+> **C: an expression with an effect** (`while (--n > 0)`, `a[i++] = x`, `for (i = 0, j = 1; ...; i++, j++)`, `a = b = n`).
+> Lower it as `effect(Statement, Value)`: `--n` is `n = n - 1` then `n`, `n++` is `t = n, n = n + 1` then `t`, `a = e`
+> the assignment then `a`, `a, b` is `a` then `b`; a comma statement is the two statements. The interpreter runs the
+> statement and gives the value (prolog/interp_v04.pl). Kept.
+
+> **C: arrays** (`int a[3] = {1, 2}`, `int c[4];`, `int b[] = {4, 5}`, `int m[2][3]`, `malloc(n * sizeof(int))`). As C
+> sizes them, counted in elements: one `c_array(Init, Sizes)` builtin pads with 0, gives each row a fresh list, takes a
+> missing size from the initializer; tree-sitter nests the last size outermost, so reverse the sizes; `sizeof` of an
+> array is its length, of anything else 1 (`sizeof a / sizeof a[0]` is the length); `malloc(n)`/`calloc(n, s)` give
+> n and n*s cells; `free()` does nothing. Kept.
+
+> **C: casts, literals, division** (`(int) x`, `2.0`, `0x10`, `017`, `10L`, `-7 / 2`, `-7 % 2`). An integer cast
+> truncates, a float or double cast is float(), a pointer cast the same value; literals as C reads them; `/` divides
+> two integers toward zero and is exact with a float; `%` keeps the dividend's sign (rem). `strlen` is the length.
+> Kept.
+
+> **C: a declarator without a value** (`int i;`, `int t, k;` read as `i`, giving unbound(i) even in
+> `int t; t = n * 2; return t;`). Lower it as nothing. The rule is right, but the code it lets run is named by
+> behaviour that is true and labelled otherwise: fibonacci-sequence-2.c -> climbing_stairs, the lone reversal helper of
+> sorting-algorithms-pancake-sort-2.c -> reverse_array. Fix tried: none in the conversion (both are converted right);
+> the one general tier fix (only a file's roots name it) was dropped before (19.x). Dropped.
+
+> **Python: a lambda as a value** (`reduce(lambda a, b: ..., s)`, `key=lambda x: ...`). Port pnf_v03.PNFv03's rule:
+> `lambda(Params, Body)`, a closure in interp_v03; leave a lambda that returns_function makes a function's own body to
+> that rule (lcm-2 and levenshtein-5 broke until then). Kept.
+
+> **Python: a generator as a call's only argument** (`sum(int(c) for c in str(n))`, lowered as junk). Port pnf_v03's
+> rule (one comprehension argument). The rule is right, but the code it lets run reads characters as numbers: a
+> character is its code, so `int('7')` gives 55; happy_number then ran wrongly and clashed with is_power_of_two, and
+> TheAlgorithms' perfect ran and vetoed the logic match of perfect-numbers-1.hs and -3.py. Fix tried: characters as
+> their own values, a change to every string operation, not a targeted fix. Dropped.
+
+> **Python: module-level names** (`TABLE = (...)` read inside a function, unbound). Emit `pnf_const(Name, Value)` for
+> each module-level `name = value` that no function assigns, stores into or appends to (a constant is evaluated where
+> it is read, so a memo table or a counter would lose its writes and stays unbound). Kept.
+
+> **Python: unpacking a list** (`x, y = pair` where pair is a list). Store each element, the lengths equal. Kept.
+
+> **Python: library functions** (`bisect.insort`, `enumerate(s, 1)`, `c.isalpha()`, `s.upper()`, `s.zfill(4)`). Each
+> builtin with the library's documented meaning, only where the program defines no function of that name (an own
+> `merge` or `insort` is never replaced). SWI-Prolog's `code_type(C, to_upper(U))` means C is the upper case of U: use
+> upcase_atom/downcase_atom. Kept.
+
+> **A parameter that is sliced or iterated by a comprehension** gets list inputs (`(subseq l 0 2)`, `[x for x in s]`).
+> Kept.
+
+> **Haskell: the Core reader** (`()`, an operator definition `(!)`, class methods `$c+_aTa`). Read `()` and `(op)` as
+> names and the method name with its unique suffix. The rule is right, but fibonacci-sequence-16.hs then ran its
+> matrix helpers while its root cannot run (a Num instance), and a helper's behaviour named it round_robin. Fix tried:
+> as above, none in the conversion. Dropped.
+
+> **Haskell: the Prelude's list functions** (`scanl`, `scanl1`, `concatMap`, `delete`, `digitToInt`). Their Prelude
+> definitions as loops over the Core terms, as map, filter and fold are. Kept.
+
+> **Haskell: point-free definitions** (`digitSum = foldr ((+) . digitToInt) 0`, `baseDigitSum base = sum . unfoldr go`).
+> A binding whose GHC type (`-ddump-types`) takes k more arguments than its lambdas name is applied to k new parameters
+> before lowering; `f . g` as a value is `\x -> f (g x)`; an operator as a value `(<)` is `\a b -> a < b`; a call
+> through a variable holding a closure applies it (interp_v04 callv). Kept.
+
+> **Lisp: `case`, `subseq`, `&optional`, `last`, `map`.** `case`/`ecase` compares the key with eql against each key or
+> key list, `t`/`otherwise` the default; `(subseq s a b)` is the slice and `(setf (subseq ...))` stores into it;
+> `&optional`: the function of the required parameters gives the defaults and calls `name$full` (all of them), as does
+> a call that passes more, the wrapper marking the sequence parameters (as haskell_core_pnf marks a list parameter);
+> `(last l)` is `l[-1:]`; `(map 'list f s)` is `(mapcar f s)`. Kept.
+
+> **The decision step's names** (`fibonacci_iterative` in the tree's facts, `fibonacci-iterative` in the normal form;
+> `(!)` and `!`). Compare root names with brackets dropped and other punctuation as `_`. Kept.
+
+Faults met on the way: a copy made with `--exclude=benchmark` also dropped polyglot_logic/benchmark, so two full runs
+crashed and compared stale answer files; fullcheck.sh now reports any traceback in its logs.
+
 ## Tried and dropped (do not repeat)
 
 - `q[:] = E` as a write of q in every function (before Python's facts): insertion-sort-3 became Cycle-sort and two
@@ -205,3 +284,8 @@ answers in a fixed run (a matcher completeness question, left for later).
   the null input is the algorithm, not a convention.
 - The exact-logic tier switched to the tree's facts as a whole (doc 04 section 19.13): 19 learnt answers lost. Solved
   as two views, literal first and canonical second (above).
+- A C declarator without a value as nothing (doc 04 section 19.17): fibonacci-sequence-2.c named climbing_stairs and
+  pancake-sort-2.c reverse_array (both true behaviour, wrong labels).
+- A Python generator as a call's only argument (19.17): characters are codes, so int('7') is 55; is_power_of_two and
+  perfect-numbers-1/3 lost. Fix first: characters as their own values.
+- The Haskell Core reader's (), (op) and $c+ tokens (19.17): fibonacci-sequence-16.hs named round_robin by a helper.

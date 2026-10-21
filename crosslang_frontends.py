@@ -51,6 +51,8 @@ def install(lisp_sbcl: bool = True):
     import returns_function                   # a function returning a function, lowered as a new one (19.8)
     returns_function.install()
     import generators                         # a generator gives the list it yields (19.14)
+    import lowering_v05                       # the closing round's lowering rules (19.17)
+    lowering_v05.install()
     generators.install()
     import behaviour_v04                      # nested functions lifted, the v0.4 interpreter (19.8)
     behaviour_v04.install()

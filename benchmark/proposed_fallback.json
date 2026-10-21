@@ -656,11 +656,11 @@
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-6.lisp": {
-   "answer": "unknown",
+   "answer": "pipeline",
    "branch": null,
    "branch_correct": null,
-   "correct": null,
-   "pipeline": null,
+   "correct": true,
+   "pipeline": "Fibonacci-sequence",
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Common-Lisp/fibonacci-sequence-7.lisp": {
@@ -952,11 +952,11 @@
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Python/fibonacci-sequence-16.py": {
-   "answer": "unknown",
+   "answer": "pipeline",
    "branch": null,
    "branch_correct": null,
-   "correct": null,
-   "pipeline": null,
+   "correct": true,
+   "pipeline": "Fibonacci-sequence",
    "task": "Fibonacci-sequence"
   },
   "Task/Fibonacci-sequence/Python/fibonacci-sequence-17.py": {
@@ -3369,24 +3369,24 @@
   },
   "Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-1.py": {
    "answer": "pipeline",
-   "branch": null,
-   "branch_correct": null,
+   "branch": "sorting",
+   "branch_correct": true,
    "correct": true,
    "pipeline": "Sorting-algorithms-Quicksort",
    "task": "Sorting-algorithms-Quicksort"
   },
   "Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-2.py": {
    "answer": "pipeline",
-   "branch": null,
-   "branch_correct": null,
+   "branch": "sorting",
+   "branch_correct": true,
    "correct": true,
    "pipeline": "Sorting-algorithms-Quicksort",
    "task": "Sorting-algorithms-Quicksort"
   },
   "Task/Sorting-algorithms-Quicksort/Python/sorting-algorithms-quicksort-3.py": {
    "answer": "pipeline",
-   "branch": null,
-   "branch_correct": null,
+   "branch": "sorting",
+   "branch_correct": true,
    "correct": true,
    "pipeline": "Sorting-algorithms-Quicksort",
    "task": "Sorting-algorithms-Quicksort"

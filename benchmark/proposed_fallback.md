@@ -5,10 +5,10 @@ The pipeline answer is kept; a proposed branch (prolog/proposed_branches.pl, lea
 | language | files | pipeline answers | branch answers (new) | correct / wrong | precision | recall | branch fired (all files) | branch right / wrong |
 |---|---|---|---|---|---|---|---|---|
 | C | 69 | 32 | 0 | 32 / 0 | 100.0% | 46.4% | 2 | 2 / 0 |
-| Common-Lisp | 75 | 43 | 0 | 43 / 0 | 100.0% | 57.3% | 0 | 0 / 0 |
+| Common-Lisp | 75 | 44 | 0 | 44 / 0 | 100.0% | 58.7% | 0 | 0 / 0 |
 | Haskell | 144 | 31 | 1 | 32 / 0 | 100.0% | 22.2% | 3 | 3 / 0 |
-| Python | 162 | 65 | 1 | 66 / 0 | 100.0% | 40.7% | 9 | 9 / 0 |
-| all | 450 | 171 | 2 | 173 / 0 | 100.0% | 38.4% | 14 | 14 / 0 |
+| Python | 162 | 66 | 1 | 67 / 0 | 100.0% | 41.4% | 12 | 12 / 0 |
+| all | 450 | 173 | 2 | 175 / 0 | 100.0% | 38.9% | 17 | 17 / 0 |
 
 ## Held-out files answered by a branch (2)
 

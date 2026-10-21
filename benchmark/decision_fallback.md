@@ -7,10 +7,10 @@ Identified = algorithm or class. A family answer is right when TheAlgorithms fil
 | language | files | identified: correct / wrong | precision | recall | variation, deep node: right / wrong | variation, root node only: right / wrong | error or new class (no node) |
 |---|---|---|---|---|---|---|---|
 | C | 69 | 32 / 0 | 100.0% | 46.4% | 7 / 1 | 7 / 7 | 15 |
-| Common-Lisp | 75 | 45 / 0 | 100.0% | 60.0% | 9 / 2 | 4 / 5 | 10 |
-| Haskell | 144 | 35 / 0 | 100.0% | 24.3% | 4 / 3 | 16 / 29 | 57 |
-| Python | 162 | 73 / 0 | 100.0% | 45.1% | 10 / 4 | 21 / 13 | 41 |
-| all | 450 | 185 / 0 | 100.0% | 41.1% | 30 / 10 | 48 / 54 | 123 |
+| Common-Lisp | 75 | 46 / 0 | 100.0% | 61.3% | 9 / 2 | 3 / 5 | 10 |
+| Haskell | 144 | 36 / 0 | 100.0% | 25.0% | 4 / 3 | 15 / 29 | 57 |
+| Python | 162 | 75 / 0 | 100.0% | 46.3% | 10 / 4 | 20 / 13 | 40 |
+| all | 450 | 189 / 0 | 100.0% | 42.0% | 30 / 10 | 45 / 54 | 122 |
 
 ## Wrong answers (0)
 
@@ -28,7 +28,7 @@ Identified = algorithm or class. A family answer is right when TheAlgorithms fil
 - Task/Sorting-algorithms-Stooge-sort/Haskell/sorting-algorithms-stooge-sort-1.hs: numeric>recurrence>double_recursion, task Sorting-algorithms-Stooge-sort
 - Task/Towers-of-Hanoi/Haskell/towers-of-hanoi-1.hs: sequence_transformation>comparison_sort>partition_recursive, task Towers-of-Hanoi
 
-## Error or new class: reaches no tree node (123; every held-out task is known, so each is a program the lowering or interpreter cannot handle)
+## Error or new class: reaches no tree node (122; every held-out task is known, so each is a program the lowering or interpreter cannot handle)
 
 - Task/Binary-search/Haskell/binary-search-2.hs (task Binary-search)
 - Task/Binary-search/Haskell/binary-search-3.hs (task Binary-search)
@@ -62,7 +62,6 @@ Identified = algorithm or class. A family answer is right when TheAlgorithms fil
 - Task/Fibonacci-sequence/Haskell/fibonacci-sequence-8.hs (task Fibonacci-sequence)
 - Task/Fibonacci-sequence/Python/fibonacci-sequence-1.py (task Fibonacci-sequence)
 - Task/Fibonacci-sequence/Python/fibonacci-sequence-15.py (task Fibonacci-sequence)
-- Task/Fibonacci-sequence/Python/fibonacci-sequence-16.py (task Fibonacci-sequence)
 - Task/Fibonacci-sequence/Python/fibonacci-sequence-17.py (task Fibonacci-sequence)
 - Task/Fibonacci-sequence/Python/fibonacci-sequence-18.py (task Fibonacci-sequence)
 - Task/Fibonacci-sequence/Python/fibonacci-sequence-2.py (task Fibonacci-sequence)

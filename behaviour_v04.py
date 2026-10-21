@@ -123,14 +123,49 @@ def lift(funs):
 
 
 def uses(body, p, _original=None):
-    """io_trace._uses, and a parameter passed to a sequence call is a sequence."""
+    """io_trace._uses, and a parameter passed to a sequence call, sliced or iterated by a comprehension is a sequence."""
     k = _original(body, p)
     if k != 'int':
         return k
     found = []
     walk(body, lambda t: found.append(1) if isinstance(t, tuple) and t[:1] == ('call',) and t[1] in SEQ_CALLS
          and len(t) > 2 and any(a == ('var', p) for a in t[2]) else None)
+    walk(body, lambda t: found.append(1) if isinstance(t, tuple) and t[:1] == ('slice',) and len(t) > 1
+         and t[1] == ('var', p) else None)                     # a sliced parameter is a sequence (19.17)
+    walk(body, lambda t: found.append(1) if isinstance(t, tuple) and t[:1] == ('comp',) and len(t) > 2
+         and t[2] == ('var', p) else None)                     # so is one a comprehension iterates over
     return 'list' if found else k
+
+
+def constants(funs):
+    """[(name, value)] of the module-level `name = value` statements (pnf_v03.constants) that no function writes:
+    a constant is evaluated where it is read (prolog/interp_v03.pl global_value), so a name a function assigns, stores
+    into or appends to (a memo table, a counter) stays unbound rather than losing its writes (doc 04 section 19.17)."""
+    out = []
+    for name, _, body in funs:
+        if name == '<toplevel>' and body and body[0] == 'seq':
+            for st in body[1]:
+                if isinstance(st, tuple) and len(st) == 3 and st[0] == 'assign' and isinstance(st[1], tuple) \
+                        and st[1][0] == 'var':
+                    out.append((st[1][1], st[2]))
+    written = set()
+
+    def visit(t):
+        if isinstance(t, tuple) and t[:1] in (('assign',), ('aug_assign',)) and len(t) > 1:
+            x = t[1]
+            while isinstance(x, tuple) and x[:1] in (('elem',), ('slice',), ('attr',)):
+                x = x[1]
+            if isinstance(x, tuple) and x[:1] == ('var',):
+                written.add(x[1])
+        if isinstance(t, tuple) and t[:1] == ('call',) and len(t) > 2 and t[2] and isinstance(t[2][0], tuple) \
+                and t[2][0][:1] == ('var',) and t[1] in ('append', 'extend', 'insert', 'pop', 'remove', 'update',
+                                                         'add', 'clear', 'setdefault', 'sort', 'reverse', 'discard'):
+            written.add(t[2][0][1])
+    for name, _, body in funs:
+        if name != '<toplevel>':
+            walk(body, visit)
+    names = [n for n, _ in out]
+    return [(n, v) for n, v in out if n not in written and names.count(n) == 1]
 
 
 def run_functions(path: Path, functions=None, timeout=120):
@@ -143,6 +178,7 @@ def run_functions(path: Path, functions=None, timeout=120):
     if lang == 'python':
         funs = lift(funs)
     pnf = [f"pnf_lang({term(lang)})."] + [f"pnf_fun({term(n)},{term(list(ps))},{render(b)})." for n, ps, b in funs]
+    pnf += [f"pnf_const({term(n)},{render(v)})." for n, v in constants(funs)]
     info, jobs = {}, []
     for name, params, body in funs:
         if functions and name not in functions:

@@ -734,7 +734,36 @@ code: 0 entries differ (learnt and held-out). Still open: the matcher's result d
 (segment_tree.py does not match its own pattern in the order now fixed, bell_numbers.py's helper matches combinations in
 one order and not the other): a search for any matching order is AP13 work for later.
 
-**Later stage: the 242 held-out files that cannot be evaluated.** They are left out of this round's numbers (no
+**19.17 The closing round: the left-out files' conversion faults and missing language support (adopted, three rules
+dropped).** User: "now only focus on 3 and 4 category. hand build solutions for each, if successful do full run and if
+even one previous success fails then try to fix once and if you fail then drop that particular idea". All 242
+left-out files were first run through the pipeline and grouped by their first blocker (55 fragments, 6 broken source,
+6 missing packages; 6 already running since 19.14; 33 faults of our own conversion; 125 missing language support; 11
+input shapes). Each rule a language's own semantics in our layer, hand-tested on own programs with hand-computed values
+(tests/test_closing_round.py):
+| Rule | Where | Result |
+|---|---|---|
+| C: an expression with an effect is effect(Statement, Value) (--n, n++, a = e, a, b; a comma statement is two) | lowering_v05.py, interp_v04.pl | kept |
+| C: arrays as C sizes them, in elements (c_array: padding, a[N][M], int b[] = {...}, malloc/calloc, sizeof, free) | lowering_v05.py, interp_v04.pl | kept |
+| C: casts (int truncates, float, pointer), number literals (0x, 0, L, f), / exact with a float, % as rem, strlen | lowering_v05.py, interp_v04.pl | kept |
+| C: a declarator without a value (int i;) does nothing | lowering_v05.py | dropped: fibonacci-sequence-2.c named climbing_stairs, pancake-sort-2.c (a lone reversal helper) reverse_array; true behaviour, wrong labels; no conversion fix exists |
+| Python: lambda as a value (from pnf_v03) | lowering_v05.py | kept (a returned lambda stays returns_function's) |
+| Python: a generator as a call's only argument (from pnf_v03) | lowering_v05.py | dropped: a character is its code, so int('7') is 55; happy_number then clashed with is_power_of_two (learnt lost) and TheAlgorithms' perfect vetoed perfect-numbers-1/3; the fix (characters as their own values) touches every string operation |
+| Python: module constants no function writes; unpacking a list; library functions only where the program has no function of that name (insort, enumerate start, isalpha..., upper/lower, zfill) | behaviour_v04.py, interp_v04.pl | kept |
+| a parameter sliced or iterated by a comprehension is a sequence | behaviour_v04.py | kept |
+| Haskell Core reader: (), (op) binders, $c+_aTa | haskell_core_pnf.py | dropped: fibonacci-sequence-16.hs ran its matrix helpers (the root needs a Num instance) and was named round_robin |
+| Haskell: scanl, scanl1, concatMap, delete, digitToInt; a binding whose GHC type takes k more arguments than its lambdas is applied to k new ones; f . g and (<) as values; callv applies closures | haskell_core_pnf.py, interp_v04.pl | kept |
+| Lisp: case/ecase, subseq and its setf place, &optional (name + name$full), last, map | lowering_v05.py | kept |
+| Decision step: root names compared with brackets dropped and punctuation as _ (fibonacci_iterative = fibonacci-iterative) | tools_manual/decide_new_or_known.py | kept |
+Full runs: round 1 lost is_power_of_two and perfect-numbers-1/3 (the generator rule, dropped); round 2 gave three new
+wrong answers (the C declaration and Core token rules, dropped); the last run: learnt 1344/1344, 0 differences;
+fingerprints 0; tree nodes 0; new code 173 pipeline answers right, 0 wrong (fibonacci-sequence-6.lisp,
+fibonacci-sequence-16.py newly named). The left-out list (held_decided.json, stale since 19.14) recomputed with the
+documented v0.3 runner (`--v03`; with the pipeline's own runner two class answers of the fallback, primality-1/2.py,
+were lost, as they need the generator rule only v0.3 has); corpus_decided.json unchanged. Final report: new code 189
+correct, 0 false positives, 211 scored, 239 left out; precision 100%, recall 89.6% (42.0% of all 450).
+
+**Later stage: the 239 held-out files that cannot be evaluated** (242 before 19.17). They are left out of this round's numbers (no
 answer, and no root function runs on every battery input). This is not "no algorithm": some are fragments
 (`binary-search-5.py` only calls bisect), most define functions the evaluator cannot run yet: the battery cannot call
 the shape (comb-sort.c: `void f(double a[], int n)` sorting in place), a library (fibonacci-sequence-5.c: GMP), a

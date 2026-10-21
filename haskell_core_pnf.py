@@ -343,7 +343,7 @@ IDENT = {'fromInteger', 'fromIntegral', 'toInteger', 'realToFrac', 'fromEnum', '
          'D#', 'C#', 'F#', 'integerToInt', 'integerFromInt', 'unsafeCoerce', 'lazy', 'inline', 'fromRational'}
 CALL1 = {'abs': 'abs', 'sqrt': 'sqrt', 'floor': 'floor', 'ceiling': 'ceil', 'truncate': 'int', 'round': 'round',
          'sum': 'sum', 'product': 'product', 'maximum': 'max', 'minimum': 'min', 'reverse': 'reverse',
-         'length': 'len', 'genericLength': 'len', 'sort': 'sorted', 'isqrt': 'isqrt'}
+         'length': 'len', 'genericLength': 'len', 'sort': 'sorted', 'isqrt': 'isqrt', 'digitToInt': 'digit_to_int'}
 CALL2 = {'gcd': 'gcd', 'max': 'max', 'min': 'min'}
 RAISE = {'error', 'errorWithoutStackTrace', 'undefined', 'patError'}
 
@@ -369,6 +369,10 @@ class Lower:
             if name.startswith('$') or name == 'main':
                 continue
             params, body = strip_lams(e)
+            k = getattr(self, 'arity', {}).get(name, 0) - len(params)
+            if k > 0 and body[0] in ('app', 'v'):     # its GHC type takes k more arguments than its lambdas name
+                extra = [f'eta${i}' for i in range(k)]   # (sum . unfoldr go, foldr f 0): applied to k new ones
+                body, params = ('app', body, [('v', x) for x in extra]), params + extra
             if params:
                 self.function(name, params, body)
             else:
@@ -518,6 +522,8 @@ class Lower:
             return [], ('call', n, [])
         if n in RAISE:
             return [('raise',)], ('none',)
+        if n in BIN:                            # an operator as a value, (<): \a b -> a < b (doc 04 section 19.17)
+            return [], ('lambda', ['op$a', 'op$b'], ('op', BIN[n], [('var', 'op$a'), ('var', 'op$b')]))
         return [], ('var', n)
 
     def let(self, e):
@@ -640,6 +646,11 @@ class Lower:
             return self.apply(args[0], args[1:])
         if h == '.' and len(args) >= 3:
             return self.apply(args[0], [('app', args[1], [args[2]])] + args[3:])
+        if h == '.' and len(args) == 2:            # f . g as a value: \x -> f (g x) (doc 04 section 19.17)
+            x = f'cmp${next(self.tmp)}'
+            sb, vb = self.apply(args[0], [('app', args[1], [('v', x)])])
+            if not sb:
+                return [], ('lambda', [x], vb)
         if h in ('quotRem', 'divMod') and len(args) == 2:
             s, (a, b) = self.many(args)
             return s, ('tuple', [('op', 'div', [a, b]), ('op', 'mod', [a, b])])
@@ -783,6 +794,9 @@ class Lower:
             return s, ('elem', q, ('int', 0 if h == 'fst' else 1))
         if h in ('flip',) and len(args) >= 3:
             return self.apply(args[0], [args[2], args[1]] + args[3:])
+        if h in ('scanl', 'scanl1', 'concatMap', 'delete') and h not in self.globals \
+                and len(args) == (2 if h in ('scanl1', 'concatMap', 'delete') else 3):
+            return self.prelude_list(h, args)           # the Prelude's definitions as loops (doc 04 section 19.17)
         if re.search(r'_[a-zA-Z0-9]{3,5}$', h) and h not in self.local and h not in self.globals:
             s, vs = self.many(args)                    # a function-valued parameter / local
             return s, ('callv', ('var', h), vs)
@@ -840,6 +854,38 @@ class Lower:
         return s + [('assign', C, v0), ('assign', O, ('list', [])),
                     ('while', ('bool', 'true'), ('seq', emit + sp + [('if', vp, ('skip',), 'break'),
                                                                 ('assign', O, ('op', 'add', [O, ('list', [G])]))] + stepper))], O
+
+    def prelude_list(self, h, args):
+        """scanl f z xs = z, f z x1, ...; scanl1 f xs starts from x1; concatMap f xs = f x1 ++ f x2 ++ ...;
+        delete x xs drops the first element equal to x."""
+        out, x = ('var', self.fresh()), self.fresh()
+        if h == 'delete':
+            s, (y, q) = self.many(args)
+            found = ('var', self.fresh())
+            self.mark_list(q)
+            return s + [('assign', out, ('list', [])), ('assign', found, ('bool', 'false')),
+                        ('for_each', x, q, ('if', ('op', 'and', [('op', 'not', [found]), ('op', 'eq', [('var', x), y])]),
+                                            ('assign', found, ('bool', 'true')),
+                                            ('assign', out, ('op', 'add', [out, ('list', [('var', x)])]))))], out
+        if h == 'concatMap':
+            s, q = self.compile(args[1])
+            self.mark_list(q)
+            sb, vb = self.apply(args[0], [('v', x)])
+            return s + [('assign', out, ('list', [])),
+                        ('for_each', x, q, ('seq', sb + [('assign', out, ('op', 'add', [out, vb]))]))], out
+        acc = self.fresh()
+        if h == 'scanl':
+            s, z = self.compile(args[1])
+            sq, q = self.compile(args[2])
+            s, seq = s + sq, q
+        else:
+            s, q = self.compile(args[1])
+            z, seq = ('elem', q, ('int', 0)), ('slice', q, ('int', 1), ('none',), ('none',))
+        self.mark_list(q)
+        sb, vb = self.apply(args[0], [('v', acc), ('v', x)])
+        return s + [('assign', ('var', acc), z), ('assign', out, ('list', [('var', acc)])),
+                    ('for_each', x, seq, ('seq', sb + [('assign', ('var', acc), vb),
+                                                      ('assign', out, ('op', 'add', [out, ('list', [('var', acc)])]))]))], out
 
     def loop_over(self, h, q, x, sb, vb, s):
         """map/filter/all/any whose element function needs statements: an explicit loop."""
@@ -907,4 +953,5 @@ def haskell_normal_form(path: Path):
     types, core = ghc_output(path)
     binds = Parser(tokenize(core)).program()
     low = Lower(binds)
-    return typed_eta(low.run(), type_arities(types))
+    low.arity = type_arities(types)
+    return typed_eta(low.run(), low.arity)
