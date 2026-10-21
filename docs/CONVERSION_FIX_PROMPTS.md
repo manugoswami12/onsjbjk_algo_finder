@@ -15,6 +15,7 @@ One prompt per kind of fix, written so it can be run again for a new case. Every
 > 3. relearn (`eval_ta.py --learn`), re-index the file-rule fingerprints (`ta_distinct.py --index`, then regenerate
 >    `prolog/ta_file_components.pl` only; never rewrite `ta_file_rules.pl`), run `--run` and `--heldout`;
 > 4. learnt code must stay 1344/1344 with 0 differences and no new wrong answer may appear.
+> Steps 2 to 4 are one command: `tools_manual/check/fullcheck.sh COPY NAME OUT_DIR` (see docs/HANDOVER.md section 5).
 > A file that worked before and breaks is checked once: regenerate its generated parts; if it still breaks and the
 > idea itself cannot fix it, drop the change.
 

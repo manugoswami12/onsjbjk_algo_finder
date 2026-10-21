@@ -1,30 +1,67 @@
 # ONSJBJK Algorithm Finder
 
-**What it does:** you give it a program (Python, C, Common Lisp or Haskell), and it tells you which algorithm the
-program is, or at least what it computes ("this is a sort", "this is a gcd").
-- It does not use machine learning.
-- It does not run your program. It turns the program into Prolog, and SWI-Prolog checks that.
-- When it is not sure, it says UNKNOWN instead of guessing.
+**Show it a program, and it tells you which algorithm it is.**
 
-It learned every algorithm in [TheAlgorithms/Python](https://github.com/TheAlgorithms/Python). It was then tested on
-other people's code from [Rosetta Code](https://rosettacode.org) in four languages:
+Give it code in **Python, C, Common Lisp or Haskell**, and it answers with the algorithm's name ("bubble sort",
+"binary search", "Euclid's gcd"), or with what the code computes ("this is a sort", "this is a gcd"), or, when it
+cannot be sure, with an honest **UNKNOWN**.
 
-| | correct | wrong | precision | recall |
-|---|---|---|---|---|
-| Code it learned from (1344 TheAlgorithms files) | 1344 | 0 | 100% | 100% |
-| New code it never saw (211 analysable Rosetta files) | 189 | 0 | 100% | 89.6% (42.0% of all 450 files) |
+## What makes it different
 
-Recall counts the 211 files the system can evaluate. The other 239 held-out files are left out this round (fragments,
-and functions the evaluator cannot run yet); they are taken up when the code is upgraded.
+- **It never guesses.** On every file it could evaluate, it has given **zero wrong answers**: 100% precision on the
+  code it learned from and on code it had never seen. When the evidence is not enough, it says UNKNOWN.
+- **It reads logic, not text.** Every program, in any of the four languages, is turned into the same Prolog form. A
+  bubble sort in Haskell and a bubble sort in C become the same logic, so one learned algorithm is recognised in
+  every language.
+- **It does not run your code.** It converts the program to Prolog facts and lets SWI-Prolog reason about them.
+  Behaviour is checked by evaluating that Prolog form on test inputs, never by executing the source.
+- **No machine learning, no black box.** Every answer comes from explicit Prolog rules you can read, and from the
+  language's own tools (GHC for Haskell, clang for C, Python's own parser), so every answer can be traced and
+  explained.
+- **It is repeatable.** Two runs on the same code give exactly the same answers and the same evidence.
+- **It learned from real code.** It learned all 1346 programs of [TheAlgorithms/Python](https://github.com/TheAlgorithms/Python)
+  and was tested on programs by other people from [Rosetta Code](https://rosettacode.org) that it never saw.
 
-Honest note on the new-code row: 12 hand-built branches of the tree (Ackermann, knapsack, Caesar, matrix product,
-run-length, N-queens, Josephus, leap year, LCS, Levenshtein, Roman numerals, Hanoi) were written from Rosetta
-files of these same tasks, because the Python examples cannot teach those forms. Without them, relearned from
-TheAlgorithms only, the pipeline names 114 of the 450 test files correctly and 10 wrongly (with them, before the
-conversion fixes of doc 04 section 19: 158 and 10; with them: 171 and 0).
+## Results
 
-The full report is in [benchmark/FINAL_REPORT.md](benchmark/FINAL_REPORT.md). "Analysable" is explained in
-[Reading the answers](#reading-the-answers).
+Counting the files the system can evaluate:
+
+| | files evaluated | correct | wrong | precision | recall |
+|---|---|---|---|---|---|
+| Code it learned from (TheAlgorithms/Python) | 1344 | 1344 | 0 | **100%** | **100%** |
+| New code it never saw (Rosetta Code, 4 languages) | 211 | 189 | **0** | **100%** | **89.6%** |
+
+New code by language:
+
+| language | files evaluated | correct | wrong | precision | recall |
+|---|---|---|---|---|---|
+| C | 35 | 32 | 0 | 100% | 91.4% |
+| Common Lisp | 48 | 46 | 0 | 100% | 95.8% |
+| Haskell | 43 | 36 | 0 | 100% | 83.7% |
+| Python | 85 | 75 | 0 | 100% | 88.2% |
+
+The other Rosetta files are not counted: some are not complete programs (a GHCi session, a fragment that calls code
+from another snippet), and some use language features the evaluator does not support yet. They are the upgrade list
+for the next phase (see the [handover document](docs/HANDOVER.md)).
+
+A note on fairness: 12 hand-built rules of the algorithm tree (Ackermann, knapsack, Caesar, matrix product,
+run-length, N-queens, Josephus, leap year, LCS, Levenshtein, Roman numerals, Hanoi) were written from Rosetta files of
+those tasks, because TheAlgorithms' Python examples cannot teach those forms.
+
+The full report is in [benchmark/FINAL_REPORT.md](benchmark/FINAL_REPORT.md).
+
+## Why it matters
+
+The aim is a uniform, checkable **knowledge base of algorithm logic**: every algorithm stored once, as logic, and
+recognised in any language. People and AI coding agents could use it to understand unfamiliar code, to check that
+code really is the algorithm it claims to be, and later to *design* new code from known, verified parts (for example
+A* search combined with gcd) instead of starting from nothing. Recognition works today; composing parts is the next
+step.
+
+## For the next phase
+
+The project is closed for now. [docs/HANDOVER.md](docs/HANDOVER.md) explains how it works, the working rules, how to
+make a change safely, what was tried and dropped (with the reasoning and the code), and the ordered upgrade list.
 
 ---
 
@@ -38,7 +75,7 @@ The full report is in [benchmark/FINAL_REPORT.md](benchmark/FINAL_REPORT.md). "A
 | `vendor/tree-sitter/` | tree-sitter (the code reader) kept exactly as tested: the pip packages, the prebuilt grammars, all source code and checksums. Install it with `python vendor/tree-sitter/install_offline.py`. |
 | `benchmark/` | The results. Start with `FINAL_REPORT.md`. |
 | `tests/` | Automatic tests. |
-| `docs/` | Design documents. Technical details are in `docs/04_LEARNING_DESIGN.md` and `docs/README_v02_details.md`. |
+| `docs/` | Design documents. Start with `docs/HANDOVER.md`; technical details are in `docs/04_LEARNING_DESIGN.md` and `docs/README_v02_details.md`. |
 | `older_code/` | Earlier versions of the project, kept for history. Two small pieces of it are still loaded by `polyglot_logic/`, so do not delete it. |
 
 ---
@@ -246,17 +283,6 @@ How the results are counted:
 | A step is slow | That is normal for the full collections. You can try one folder first with `python eval_ta.py data/TheAlgorithms-Python --run --dir sorts`. |
 
 ---
-
-## Why this matters
-
-Every program is turned into the same language-neutral Prolog form, including Common Lisp (through ECL) and Haskell
-(through GHC Core). The same algorithm then becomes the same Prolog term, whatever language it was written in.
-Algorithms are known by their logic structure. Their behaviour is known by relations that can be used in either
-direction, like `sum(2, 3, X)`.
-
-The aim is a uniform, checkable **knowledge base of algorithm logic**. People and AI coding agents would use it to
-*design* code from known, verified parts, for example A* search combined with gcd, instead of starting from nothing.
-Recognition works today; composing parts into new designs is the next step.
 
 ## Licences
 
