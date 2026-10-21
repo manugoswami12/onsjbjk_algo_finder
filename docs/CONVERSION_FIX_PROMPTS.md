@@ -169,6 +169,14 @@ generator rule gated by Python's CO_GENERATOR flag. Faults met: GHC's deferred e
 Core tokenizer could not read; GHC prints the type signatures before the Core section (one call gives both); the
 battery has no string inputs, so mypy's constant alone does not make caesar-4 run.
 
+### The same evidence on every run (learn_facts._single_threaded_gc)
+> Make the logic tier repeatable: run it twice on the files whose evidence varied, find which matches come and go, find
+> the cause, fix it in a copy, hand-check, then one full run; drop if a previous success fails.
+
+Kept: every SWI-Prolog run with its garbage collector in the main thread. Faults met: the flag set after loading is too
+late (the collector already ran while references loaded); the scan's result also depends on the order of tabled
+answers in a fixed run (a matcher completeness question, left for later).
+
 ## Tried and dropped (do not repeat)
 
 - `q[:] = E` as a write of q in every function (before Python's facts): insertion-sort-3 became Cycle-sort and two

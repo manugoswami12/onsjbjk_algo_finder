@@ -720,6 +720,20 @@ language's own rules. All data: learnt 1344/1344, 0 differences; fingerprints 0;
 changed; the final report identical. Logic-tier evidence differs on 4 learnt files answered by file rules
 (bell_numbers and lazy_segment_tree vary between runs of unchanged code too; aho_corasick, lstm).
 
+**19.16 The same evidence on every run (adopted).** The exact-logic evidence of a few learnt files (problem_111,
+segment_tree, bell_numbers, bifid, lazy_segment_tree, aho_corasick, lstm) differed between runs of unchanged code. Traced
+by hand: learning is fast (at most 0.3 s a file) and never fails; facts and the reference list are identical on every
+call; the AP13 scan itself, given the same files, returned 3 matches for bell_numbers.py in 10 of 20 runs and 1 in the
+others, with fixed paths and without address randomisation too. With SWI-Prolog's garbage collector in the main thread
+(`gc_thread` false) the result is the same every run: when the collector thread frees atoms changes the order of
+tabled answers (canon.pl tables under/2 and reaches/2), and the matcher keeps the first solution. The flag must be set
+before anything is loaded. learn_facts wraps env_run.run so every swipl goal starts with
+`set_prolog_flag(gc_thread,false)` (polyglot_logic is not edited). All data: learnt 1344/1344, 0 differences;
+fingerprints 0; tree nodes 0; held-out 0 entries changed; final report identical; a second full evaluation of the same
+code: 0 entries differ (learnt and held-out). Still open: the matcher's result depends on the order of tabled answers
+(segment_tree.py does not match its own pattern in the order now fixed, bell_numbers.py's helper matches combinations in
+one order and not the other): a search for any matching order is AP13 work for later.
+
 **Later stage: the 242 held-out files that cannot be evaluated.** They are left out of this round's numbers (no
 answer, and no root function runs on every battery input). This is not "no algorithm": some are fragments
 (`binary-search-5.py` only calls bisect), most define functions the evaluator cannot run yet: the battery cannot call

@@ -1662,9 +1662,13 @@
 "canonical": [],
 "got": "bifid",
 "held": [],
-"held_trace": [],
+"held_trace": [
+"bifid"
+],
 "io": [],
-"logic": [],
+"logic": [
+"bifid"
+],
 "nodes": [],
 "specific": [
 "bifid"
@@ -1695,10 +1699,7 @@
 ],
 "io": [],
 "logic": [
-"base64_to_binary",
-"caesar_cipher",
-"decimal_to_hexadecimal",
-"harshad_numbers"
+"caesar_cipher"
 ],
 "nodes": [
 "sequence_query",
@@ -4389,9 +4390,7 @@
 "lazy_segment_tree",
 "segment_tree"
 ],
-"held_trace": [
-"lazy_segment_tree"
-],
+"held_trace": [],
 "io": [
 "dijkstra_algorithm",
 "heap_generic",
@@ -4399,9 +4398,7 @@
 "min_heap",
 "segment_tree"
 ],
-"logic": [
-"lazy_segment_tree"
-],
+"logic": [],
 "nodes": [
 "numeric>recurrence>double_recursion",
 "sequence_query"
@@ -4626,7 +4623,9 @@
 },
 "data_structures/binary_tree/segment_tree.py": {
 "built": [],
-"canonical": [],
+"canonical": [
+"segment_tree"
+],
 "got": "segment_tree",
 "held": [
 "lazy_segment_tree",
@@ -11770,16 +11769,14 @@
 },
 "machine_learning/mab.py": {
 "built": [],
-"canonical": [],
+"canonical": [
+"mab"
+],
 "got": "mab",
 "held": [],
-"held_trace": [
-"mab"
-],
+"held_trace": [],
 "io": [],
-"logic": [
-"mab"
-],
+"logic": [],
 "nodes": [],
 "specific": [
 "mab"
@@ -21761,7 +21758,9 @@
 },
 "project_euler/problem_111/sol1.py": {
 "built": [],
-"canonical": [],
+"canonical": [
+"problem_111"
+],
 "got": "problem_111",
 "held": [],
 "held_trace": [],

@@ -14,6 +14,24 @@ compare_learners._ap13()
 import cli  # AP13: tree-sitter lowerers (Python, C, Haskell, ...)
 import env_run
 
+
+def _single_threaded_gc(run):
+    """Every SWI-Prolog run collects garbage in its own thread (gc_thread false, set before anything is loaded): with
+    the collector thread, when atoms are collected changes the order of tabled answers, and AP13's scan gave different
+    matches on identical input (bell_numbers.py: 3 matches in half the runs, 1 in the others)."""
+    def wrapped(argv, timeout=60, cwd=None):
+        argv = list(argv)
+        if argv and Path(argv[0]).name == 'swipl' and '-g' in argv:
+            i = argv.index('-g') + 1
+            argv[i] = 'set_prolog_flag(gc_thread,false),' + argv[i]
+        return run(argv, timeout, cwd)
+    wrapped.single_threaded_gc = True
+    return wrapped
+
+
+if not getattr(env_run.run, 'single_threaded_gc', False):
+    env_run.run = _single_threaded_gc(env_run.run)
+
 TREE_MAIN = Path(__file__).resolve().parent / 'prolog' / 'tree_main.pl'
 
 
