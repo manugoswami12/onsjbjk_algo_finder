@@ -6,6 +6,28 @@ Give it code in **Python, C, Common Lisp or Haskell**, and it answers with the a
 "binary search", "Euclid's gcd"), or with what the code computes ("this is a sort", "this is a gcd"), or, when it
 cannot be sure, with an honest **UNKNOWN**.
 
+## Try it: one command
+
+Point it at your file; it does the rest.
+
+| Linux / macOS | Windows |
+|---|---|
+| `./analyze.sh path/to/your_program.py` | `analyze.cmd path\to\your_program.py` |
+
+It works for Python (`.py`), C (`.c`), Common Lisp (`.lisp`) and Haskell (`.hs`), and you can give several files at
+once. For example, a bubble sort you wrote yourself prints:
+
+```
+my_sort.py (Python)
+  algorithm: Sorting-algorithms-Bubble-sort
+  because:   a hand-built rule of the algorithm tree
+  tree node: sequence_transformation>comparison_sort
+```
+
+The first run learns TheAlgorithms/Python once (about 7 minutes) and keeps what it learned in `.cache/`; every later
+run takes seconds. You need Python and SWI-Prolog installed first (GHC for Haskell files, ECL for Lisp files): see
+[section 1](#1-install-what-it-needs-once).
+
 ## What makes it different
 
 - **It never guesses.** On every file it could evaluate, it has given **zero wrong answers**: 100% precision on the
