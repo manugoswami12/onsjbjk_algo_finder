@@ -240,7 +240,8 @@ Upstream code and tools change; the results here were measured with exactly thes
 
 ## 10. Next phase: clean up first, then egg
 
-The order agreed at close: tidy the existing code first, then build the next layer on it.
+The order agreed at close: tidy the existing code first, then build the next layer on it. The step-by-step plan is in
+`docs/NEXT_PHASE_PLAN.md`.
 
 ### 10.1 Clean-up (do this first)
 
